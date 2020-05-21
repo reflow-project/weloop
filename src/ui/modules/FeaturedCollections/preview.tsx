@@ -75,8 +75,9 @@ const Img = styled.div`
 `;
 const Infos = styled.div``;
 const Title = styled(Text)`
-  color: ${props => props.theme.colors.mediumdark};
-  ${ellipsis('200px')};
+  color: ${props => props.theme.colors.dark};
+  ${ellipsis('170px')};
+  font-size: 14px;
 `;
 
 const Remove = styled(Box)`
