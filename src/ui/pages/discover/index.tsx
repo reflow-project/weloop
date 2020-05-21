@@ -67,9 +67,9 @@ export const Discover: React.FC<Props> = ({
 
 const Menu = ({ basePath }: { basePath: string }) => (
   <>
-    <Box p={2} mt={2}>
+    <Title px={2} mt={2}>
       <Text variant="suptitle">Browse Home instance</Text>
-    </Box>
+    </Title>
     <MenuList>
       <NavLink exact to={`${basePath}`}>
         <Trans>Timeline</Trans>
@@ -83,6 +83,11 @@ const Menu = ({ basePath }: { basePath: string }) => (
     </MenuList>
   </>
 );
+const Title = styled(Box)`
+  background: ${props => props.theme.colors.appInverse};
+  height: 40px;
+  line-height: 40px;
+`;
 
 const WrapperFeatured = styled(Flex)`
   display: flex;

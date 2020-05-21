@@ -6,6 +6,7 @@ import {
   Props as AllCommunitiesUIProps
 } from 'ui/pages/allCommunities';
 import { useFormik } from 'formik';
+import { Box } from 'rebass';
 
 export interface AllCommunitiesPage {}
 export const AllCommunitiesPage: FC<AllCommunitiesPage> = () => {
@@ -18,11 +19,11 @@ export const AllCommunitiesPage: FC<AllCommunitiesPage> = () => {
 
   const allCommunitiesUIProps = useMemo<AllCommunitiesUIProps>(() => {
     const CommunitiesBoxes = (
-      <>
+      <Box m={2}>
         {allCommunitiesPage.edges.map(communityPreview => (
           <CommunityPreviewHOC communityId={communityPreview.id} />
         ))}
-      </>
+      </Box>
     );
     const props: AllCommunitiesUIProps = {
       CommunitiesBoxes,
