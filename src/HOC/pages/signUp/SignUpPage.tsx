@@ -64,7 +64,8 @@ export const SignUpPageHOC: FC<SignUpPageHOC> = () => {
       signUpStatus.called && signUpStatus.data?.createUser?.user.name
         ? {
             formik,
-            registeredUsername: signUpStatus.data.createUser.user.name
+            registeredUsername: signUpStatus.data.createUser.user.name,
+            registeredEmail: signUpStatus.data.createUser.email
           }
         : {
             formik
