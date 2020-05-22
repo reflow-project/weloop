@@ -105,13 +105,15 @@ export const MenuList = styled(Flex)`
 
 export const ObjectsList = styled(Box)`
   background: ${props => props.theme.colors.appInverse};
+
   &.replies > div {
     margin-bottom: 0;
-    background: none;
+    border-bottom: ${props => props.theme.colors.border};
   }
   > div {
     &:last-of-type {
       margin-bottom: 4px;
+      border-bottom: 0;
     }
   }
 `;
