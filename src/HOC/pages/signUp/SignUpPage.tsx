@@ -41,7 +41,7 @@ export const SignUpPageHOC: FC<SignUpPageHOC> = () => {
     passwordConfirm: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Passwords must match')
       .required(),
-    terms: Yup.boolean()
+    terms: Yup.boolean().required()
   });
 
   const formik = useFormik<SignUpFormValues>({
