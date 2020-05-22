@@ -4,11 +4,12 @@ import { Box, Text, Flex } from 'rebass/styled-components';
 import { DateTime } from 'luxon';
 import { Trans } from '@lingui/react';
 import { NavLink } from 'react-router-dom';
+import { MessageSquare, Star } from 'react-feather';
 
 export interface CommentProps {
   content: string;
   // title: string;
-  createdAt: string;
+  lastActivity: string;
   totalReplies: string;
   totalLikes: string;
   members: string[];
@@ -18,29 +19,38 @@ export interface CommentProps {
 export const Thread: React.SFC<CommentProps> = ({
   content,
   // title,
-  createdAt,
+  lastActivity,
   totalReplies,
   totalLikes,
   members,
   link
 }) => {
   return (
-    <Wrapper p={2}>
+    <Wrapper p={3}>
       {/* <Text variant="heading" sx={{ fontSize: '16px' }}>
         {title || 'no title'}
       </Text> */}
       <NavLink to={link}>
         <Summary variant="text">{content}</Summary>
-        <Flex mt={1} alignItems="center">
+        <Flex mt={2} alignItems="center">
           <Flex flex={1}>
-            <Date>{DateTime.fromSQL(createdAt).toRelative()}</Date>
-            <Spacer mx={1}>·</Spacer>
+            <Date>
+              <Trans>Last activity</Trans>{' '}
+              {DateTime.fromSQL(lastActivity).toRelative()}
+            </Date>
             <Meta>
-              {totalReplies || 0} <Trans>Replies</Trans>
-            </Meta>
-            <Spacer mx={1}>·</Spacer>
-            <Meta>
-              {totalLikes || 0} <Trans>Stars</Trans>
+              <Flex alignItems="center">
+                <Icon mr={1}>
+                  <MessageSquare size={16} />
+                </Icon>{' '}
+                {totalReplies || 0}
+              </Flex>
+              <Flex ml={3} alignItems="center">
+                <Icon mr={1}>
+                  <Star size={16} />
+                </Icon>
+                {totalLikes || 0}
+              </Flex>
             </Meta>
           </Flex>
           <Flex>
@@ -53,6 +63,13 @@ export const Thread: React.SFC<CommentProps> = ({
     </Wrapper>
   );
 };
+
+const Icon = styled(Box)`
+  svg {
+    vertical-align: middle;
+  }
+`;
+
 const Summary = styled(Text)`
   color: ${props => props.theme.colors.dark};
 `;
@@ -69,26 +86,21 @@ const Member = styled(Box)<{ src: string }>`
   background-size: cover;
 `;
 
-const Meta = styled(Text)`
+const Meta = styled(Flex)`
   color: ${props => props.theme.colors.mediumdark};
   font-weight: 500;
   font-size: 13px;
-`;
-
-const Spacer = styled(Text)`
-  color: ${props => props.theme.colors.mediumdark};
-  font-weight: 500;
 `;
 
 const Date = styled(Text)`
   color: ${props => props.theme.colors.mediumdark};
   font-weight: 500;
   font-size: 13px;
+  flex: 1;
 `;
 
 const Wrapper = styled(Box)`
-  border: ${props => props.theme.colors.border};
-  border-radius: 4px;
+  border-bottom: ${props => props.theme.colors.border};
   background: ${props => props.theme.colors.appInverse};
   cursor: pointer;
   &:hover {

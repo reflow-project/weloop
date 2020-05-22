@@ -187,7 +187,7 @@ export function ThreadPreviewProps(
     // title:"What do the avatars in the topic list mean?",
     content:
       'Hey everyone, new here and just wondering where the best place would be to go and find more information about how to deploy MoodleNet? Thanks in advance!',
-    createdAt: '2019-11-09',
+    lastActivity: '2019-11-09',
     totalReplies: '24',
     totalLikes: '17',
     members: [

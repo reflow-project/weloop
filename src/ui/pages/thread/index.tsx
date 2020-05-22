@@ -4,8 +4,9 @@ import styled from 'ui/themes/styled';
 import { Link } from 'react-router-dom';
 import Avatar from 'ui/elements/Avatar';
 import { WrapperPanel } from 'ui/elements/Panel';
-import { FormikHook } from 'ui/@types/types';
 import { LoadMore } from 'ui/modules/Loadmore';
+import { FormikHook } from 'ui/@types/types';
+
 import {
   Wrapper,
   WrapperCont,
@@ -13,7 +14,19 @@ import {
   MainContainer,
   HomeBox
 } from 'ui/elements/Layout';
+import SocialText from 'ui/modules/SocialText';
+import { i18nMark, Trans } from '@lingui/react';
+import { LocaleContext } from '../../../context/global/localizationCtx';
 
+const tt = {
+  placeholders: {
+    name: i18nMark('Post a reply')
+  }
+};
+
+export interface ReplyActions {
+  replyFormik: FormikHook<{ replyMessage: string }>;
+}
 export interface Props {
   MainThread: JSX.Element;
   Comments: JSX.Element;
@@ -22,6 +35,7 @@ export interface Props {
   communityName: string;
   communityIcon: string;
   isCommunityContext: boolean;
+  reply: ReplyActions | null;
   loadMoreComments: FormikHook | null;
 }
 
@@ -33,12 +47,14 @@ export const Thread: React.FC<Props> = ({
   communityIcon,
   Context,
   isCommunityContext,
-  loadMoreComments
+  loadMoreComments,
+  reply
 }) => {
   // console.log(Context);
+  const { i18n } = React.useContext(LocaleContext);
   return (
     <MainContainer>
-      <HomeBox>
+      <HomeBox mb={3}>
         <WrapperCont>
           <Wrapper>
             <Box mb={2}>
@@ -47,10 +63,25 @@ export const Thread: React.FC<Props> = ({
             </Box>
             <ObjectsList className="replies">{Comments}</ObjectsList>
             {loadMoreComments && <LoadMore LoadMoreFormik={loadMoreComments} />}
+            {reply && (
+              <SocialWrapper my={3}>
+                <SocialText
+                  placeholder={i18n._(tt.placeholders.name)}
+                  defaultValue={''}
+                  submit={msg => {
+                    reply.replyFormik.setValues({ replyMessage: msg });
+                    reply.replyFormik.submitForm();
+                  }}
+                />
+              </SocialWrapper>
+            )}
           </Wrapper>
         </WrapperCont>
       </HomeBox>
       <WrapperPanel>
+        <TitleSection mb={2} variant="suptitle">
+          <Trans>Community</Trans>
+        </TitleSection>
         <HeaderWrapper
           id={communityId}
           name={communityName}
@@ -81,6 +112,14 @@ const HeaderWrapper: React.FC<{ id: string; name: string; icon: string }> = ({
     </>
   );
 };
+
+const TitleSection = styled(Text)`
+  text-transform: capitalize;
+`;
+
+const SocialWrapper = styled(Box)`
+  // background: ${props => props.theme.colors.appInverse};
+`;
 
 const MainThreadContainer = styled(Box)`
   //  border-bottom: ${props => props.theme.colors.border};

@@ -13,6 +13,8 @@ import { getActivityActor } from 'fe/lib/activity/getActivityActor';
 import { useThreadComments } from 'fe/comment/thread/useThreadComments';
 import { PreviewIndex } from 'HOC/modules/previews';
 import { useFormikPage } from 'fe/lib/helpers/usePage';
+import { useFormik } from 'formik';
+import { Box } from 'rebass';
 
 export interface ThreadPage {
   threadId: Thread['id'];
@@ -20,8 +22,13 @@ export interface ThreadPage {
 export const ThreadPage: FC<ThreadPage> = ({ threadId }) => {
   const { commentPage } = useThreadComments(threadId);
   const [loadMoreComments] = useFormikPage(commentPage);
-
   const thread = useThreadPreview(threadId);
+
+  const replyFormik = useFormik<{ replyMessage: string }>({
+    initialValues: { replyMessage: '' },
+    onSubmit: ({ replyMessage }) => thread.reply(replyMessage)
+  });
+
   const uiProps = useMemo<null | Props>(() => {
     const { context, mainComment } = thread;
     if (!(mainComment && context)) {
@@ -59,32 +66,36 @@ export const ThreadPage: FC<ThreadPage> = ({ threadId }) => {
         }}
       />
     );
+
     const Comments = (
       <>
         {commentPage.edges
           .filter(comment => comment.id !== thread.mainComment?.id)
           .map(comment => (
-            <ActivityPreview
-              key={comment.id}
-              {...{
-                ...activityProps,
-                event: 'replied',
-                actor: comment.creator
-                  ? getActivityActor(comment.creator)
-                  : { icon: '', link: '', name: '' },
-                preview: (
-                  <CommentPreviewHOC
-                    commentId={comment.id}
-                    mainComment={false}
-                    hideActions={true}
-                  />
-                ),
-                createdAt: comment.createdAt
-              }}
-            />
+            <Box mb={1}>
+              <ActivityPreview
+                key={comment.id}
+                {...{
+                  ...activityProps,
+                  event: 'replied',
+                  actor: comment.creator
+                    ? getActivityActor(comment.creator)
+                    : { icon: '', link: '', name: '' },
+                  preview: (
+                    <CommentPreviewHOC
+                      commentId={comment.id}
+                      mainComment={false}
+                      hideActions={true}
+                    />
+                  ),
+                  createdAt: comment.createdAt
+                }}
+              />
+            </Box>
           ))}
       </>
     );
+
     const Context = <PreviewIndex ctx={thread.context} />;
     const props: Props = {
       Comments,
@@ -93,6 +104,11 @@ export const ThreadPage: FC<ThreadPage> = ({ threadId }) => {
       communityIcon,
       communityId,
       communityName,
+      reply: thread.canReply
+        ? {
+            replyFormik
+          }
+        : null,
       isCommunityContext: thread.context?.__typename === 'Community',
       loadMoreComments
     };

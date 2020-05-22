@@ -107,6 +107,7 @@ export const ObjectsList = styled(Box)`
   background: ${props => props.theme.colors.appInverse};
   &.replies > div {
     margin-bottom: 0;
+    background: none;
   }
   > div {
     &:last-of-type {

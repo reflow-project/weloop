@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
-import { Flex, Box } from 'rebass/styled-components';
+import { Flex, Box, Text } from 'rebass/styled-components';
 import SocialText from 'ui/modules/SocialText';
 import { Trans } from '@lingui/react';
 import Button from 'ui/elements/Button';
@@ -113,6 +113,9 @@ export const Community: React.FC<Props> = ({
                       />
                     )}
                   </WrapSocialText>
+                  <Title px={3} mt={2}>
+                    <Text variant="suptitle">All discussions</Text>
+                  </Title>
                   <ObjectsList>{ThreadsBox}</ObjectsList>
                   {loadMoreThreads && (
                     <LoadMore LoadMoreFormik={loadMoreThreads} />
@@ -151,6 +154,13 @@ const Menu = ({ basePath }: { basePath: string }) => (
     <NavLink to={`${basePath}/discussions`}>Discussions</NavLink>
   </MenuList>
 );
+
+const Title = styled(Box)`
+  background: ${props => props.theme.colors.appInverse};
+  height: 50px;
+  line-height: 50px;
+  border-bottom: ${props => props.theme.colors.border};
+`;
 
 const Container = styled(Box)`
   background: ${props => props.theme.colors.appInverse};

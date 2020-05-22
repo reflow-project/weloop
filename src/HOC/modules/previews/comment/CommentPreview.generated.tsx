@@ -132,7 +132,6 @@ export const CommentPreviewFragmentDoc = gql`
   myLike {
     id
   }
-  likerCount
   myFlag {
     id
   }
