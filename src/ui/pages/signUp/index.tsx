@@ -28,6 +28,7 @@ let tt = {
 export interface Props {
   formik: FormikHook<SignUpFormValues>;
   registeredUsername?: string;
+  registeredEmail?: string;
 }
 
 export interface SignUpFormValues {
@@ -39,19 +40,28 @@ export interface SignUpFormValues {
   terms: boolean;
 }
 
-export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername }) => {
+export const SignUpPage: React.FC<Props> = ({
+  formik,
+  registeredUsername,
+  registeredEmail
+}) => {
   return (
     <Container>
-      {!formik.isSubmitting && formik.submitCount && registeredUsername ? (
+      {!formik.isSubmitting &&
+      formik.submitCount &&
+      registeredUsername &&
+      registeredEmail ? (
         <Box mt={3}>
           <LogoContainer />
           <Text variant="suptitle">
             <Trans>Welcome</Trans> <b>{registeredUsername}</b>
           </Text>
           <Text mt={2} variant="text">
+            <Trans>Please confirm your email address</Trans>
+            <b>{registeredEmail}</b>
             <Trans>
-              Please confirm your email address by clicking on the link we
-              emailed you (check your spam folder if necessary).
+              by clicking on the link we emailed you (check your spam folder if
+              necessary).
             </Trans>
           </Text>
 
