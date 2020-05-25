@@ -17,7 +17,7 @@ import { CommentPreviewFragment, CommentPreviewFragmentDoc } from '../comment/Co
 
 export type ThreadPreviewFragment = (
   { __typename: 'Thread' }
-  & Pick<Types.Thread, 'id' | 'lastActivity'>
+  & Pick<Types.Thread, 'id' | 'lastActivity' | 'createdAt'>
   & { context: Types.Maybe<(
     { __typename: 'Collection' }
     & CollectionPreviewFragment
@@ -44,6 +44,7 @@ export const ThreadPreviewFragmentDoc = gql`
     fragment ThreadPreview on Thread {
   id
   lastActivity
+  createdAt
   context {
     ... on Community {
       ...CommunityPreview

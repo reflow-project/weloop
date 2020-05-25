@@ -33,7 +33,7 @@ export interface Props {
   name: string;
   summary: string;
   link: string;
-  like: LikeActions;
+  like: null | LikeActions;
   license: string | null;
   acceptedLicenses?: string[];
   isLocal: boolean;
@@ -101,21 +101,23 @@ export const Resource: React.FC<Props> = ({
       </Wrapper>
       {hideActions ? null : (
         <Actions>
-          <ActionItem
-            liked={like.iLikeIt ? true : false}
-            onClick={like.toggleLikeFormik.submitForm}
-          >
-            <ActionIcon>
-              <Star strokeWidth="1" size="18" />
-            </ActionIcon>
-            <ActionText
-              variant={'text'}
-              sx={{ textTransform: 'capitalize' }}
-              ml={1}
+          {like && (
+            <ActionItem
+              liked={like.iLikeIt ? true : false}
+              onClick={like.toggleLikeFormik.submitForm}
             >
-              {like.totalLikes + ' '} <Trans>Star</Trans>
-            </ActionText>
-          </ActionItem>
+              <ActionIcon>
+                <Star strokeWidth="1" size="18" />
+              </ActionIcon>
+              <ActionText
+                variant={'text'}
+                sx={{ textTransform: 'capitalize' }}
+                ml={1}
+              >
+                {like.totalLikes + ' '} <Trans>Star</Trans>
+              </ActionText>
+            </ActionItem>
+          )}
           <ActionItem
             onClick={() => onOpen(true)}
             sx={{ position: 'relative' }}

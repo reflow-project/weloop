@@ -1,20 +1,16 @@
-import React, { useState, useCallback, ComponentType } from 'react';
+import React from 'react';
 import { Box } from 'rebass/styled-components';
+import { ComponentBag } from 'ui/lib/componentBag';
 import styled from 'ui/themes/styled';
 // import Footer from 'ui/modules/Footer';
 
 export interface Props {
-  HeaderBox?: ComponentType<{ toggleSideBar(): unknown }>;
+  HeaderBox?: ComponentBag;
 }
 export const Guest: React.FC<Props> = ({ children, HeaderBox }) => {
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const toggleSideBar = useCallback(() => setSidebarOpen(!isSidebarOpen), [
-    isSidebarOpen
-  ]);
-
   return (
     <Page>
-      {HeaderBox && <HeaderBox toggleSideBar={toggleSideBar} />}
+      {HeaderBox && <HeaderBox.Comp {...HeaderBox.props} />}
       <Wrapper>{children}</Wrapper>
       {/* <Footer /> */}
     </Page>

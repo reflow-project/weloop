@@ -3,14 +3,11 @@
 import { i18nMark } from '@lingui/react';
 import { clearFix } from 'polished';
 import * as React from 'react';
-// import { graphql, OperationOption } from 'react-apollo';
-// import { compose, withState } from 'recompose';
 import { FormikHook } from 'ui/@types/types';
 import styled from 'ui/themes/styled';
 import { Search } from 'react-feather';
 import Loader from 'ui/elements/Loader';
 import { Row } from 'ui/modules/Modal';
-// import Fetched from './fetched';
 import { Input } from '@rebass/forms';
 import { LocaleContext } from '../../../context/global/localizationCtx';
 import Alert from 'ui/elements/Alert';
@@ -27,8 +24,6 @@ const tt = {
   }
 };
 
-// const FETCH_RESOURCE = require('../../../graphql/fetchResource.graphql');
-
 export interface Props {
   FetchLinkFormik: FormikHook<{ fetchUrl: string }>;
   isFetched: boolean;
@@ -36,23 +31,8 @@ export interface Props {
   cancelFetched(): any;
 }
 
-// interface FormValues {
-//   fetchUrl: string;
-// }
-
-// const withFetchResource = graphql<{}>(FETCH_RESOURCE, {
-//   name: 'fetchResource'
-//   // TODO enforce proper types for OperationOption
-// } as OperationOption<{}, {}>);
-
 export const ShareLink = (props: Props) => {
   const { i18n } = React.useContext(LocaleContext);
-
-  // const [fetched, isFetched] = React.useState(false);
-  // const [name, onName] = React.useState("");
-  // const [summary, onSummary] = React.useState("");
-  // const [image, onImage] = React.useState("");
-  // const [url, onUrl] = React.useState("");
 
   return (
     <>
