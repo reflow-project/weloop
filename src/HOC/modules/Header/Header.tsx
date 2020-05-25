@@ -1,14 +1,13 @@
 import { useMe } from 'fe/session/useMe';
+import { SideBarContext } from 'HOC/context/SideBar';
+import { CreateCommunityPanelHOC } from 'HOC/modules/CreateCommunityPanel/createCommunityPanelHOC';
 import { SearchBox } from 'HOC/modules/SearchBox/SearchBox';
-import React, { FC, useMemo, useRef } from 'react';
+import React, { FC, useContext, useMemo, useRef } from 'react';
 import { MainHeader, Props as MainHeaderProps } from 'ui/modules/MainHeader';
 import Modal from 'ui/modules/Modal';
-import { CreateCommunityPanelHOC } from 'HOC/modules/CreateCommunityPanel/createCommunityPanelHOC';
 
-export interface MainHeaderHOC {
-  toggleSideBar(): unknown;
-}
-export const MainHeaderHOC: FC<MainHeaderHOC> = ({ toggleSideBar }) => {
+export interface MainHeaderHOC {}
+export const MainHeaderHOC: FC<MainHeaderHOC> = () => {
   const meQ = useMe();
   const user = meQ.me?.user;
   const { current: CreateCommunityModal } = useRef<
@@ -18,9 +17,11 @@ export const MainHeaderHOC: FC<MainHeaderHOC> = ({ toggleSideBar }) => {
       <CreateCommunityPanelHOC done={done} />
     </Modal>
   ));
+  const { toggleOpen: toggleSideBar } = useContext(SideBarContext);
+
   const headerProps = useMemo<MainHeaderProps>(() => {
     const props: MainHeaderProps = {
-      Search: <SearchBox />,
+      Search: <SearchBox key="search" />,
       user: user
         ? {
             logout: meQ.logout,

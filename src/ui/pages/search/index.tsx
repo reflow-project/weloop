@@ -1,29 +1,20 @@
 import React, { SFC } from 'react';
 import { Box } from 'rebass/styled-components';
-import { WrapperPanel } from 'ui/elements/Panel';
-import { Header } from 'ui/modules/Header';
-import { Props as UserProps } from 'ui/modules/Previews/User';
-import { Props as CollectionProps } from 'ui/modules/Previews/Collection';
-import { Props as CommunityProps } from 'ui/modules/Previews/Community';
-import { Props as ResourceProps } from 'ui/modules/Previews/Resource';
 import {
-  Wrapper,
-  WrapperCont,
+  HomeBox,
   MainContainer,
-  HomeBox
+  Wrapper,
+  WrapperCont
 } from 'ui/elements/Layout';
+import { WrapperPanel } from 'ui/elements/Panel';
+import { ComponentBag } from 'ui/lib/componentBag';
+import { Header } from 'ui/modules/Header';
 
 export interface Props {
-  hits: Result[];
+  previews: ComponentBag[];
 }
 
-export type Result =
-  | UserProps
-  | CollectionProps
-  | CommunityProps
-  | ResourceProps;
-
-export const Search: SFC<Props> = ({ hits }) => {
+export const Search: SFC<Props> = ({ previews }) => {
   return (
     <>
       <link
@@ -36,7 +27,11 @@ export const Search: SFC<Props> = ({ hits }) => {
           <WrapperCont>
             <Wrapper>
               <Header name="Search results" />
-              <Box>{hits}</Box>
+              <Box>
+                {previews.map(bag => (
+                  <bag.Comp {...bag.props} key={bag.key} />
+                ))}
+              </Box>
             </Wrapper>
           </WrapperCont>
         </HomeBox>

@@ -168,8 +168,8 @@ export const typography = {
 /* log ENV if DEV */
 IS_DEV &&
   console.log(`-environment-
-${Object.keys(process.env)
-  .map(key => `${key}=${process.env[key]}`)
+${Object.entries(process.env)
+  .map(([key, value]) => `${key}=${value}`)
   .join('\n')}
 -------------
 `);

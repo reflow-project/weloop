@@ -4,10 +4,11 @@ import { CollectionPreviewFragment } from 'HOC/modules/previews/collection/Colle
 import { CommunityPreviewFragment } from 'HOC/modules/previews/community/CommunityPreview.generated';
 import { ResourcePreviewFragment } from 'HOC/modules/previews/resource/ResourcePreview.generated';
 
-export const resourceHit2lms = (
-  resource: Maybe<ResourceHit>
+export const resourceHit2gql = (
+  resource: Maybe<ResourceHit>,
+  isLocal: boolean
 ): ResourcePreviewFragment | null => {
-  const collection = collectionHit2lms(resource?.collection);
+  const collection = collectionHit2gql(resource?.collection, isLocal);
   const url = resource?.url;
   if (!(resource && collection && url)) {
     return null;
@@ -55,10 +56,11 @@ export const resourceHit2lms = (
   };
 };
 
-export const collectionHit2lms = (
-  collection: Maybe<CollectionHit>
+export const collectionHit2gql = (
+  collection: Maybe<CollectionHit>,
+  isLocal: boolean
 ): CollectionPreviewFragment | null => {
-  const community = communityHit2lms(collection?.community);
+  const community = communityHit2gql(collection?.community, isLocal);
   if (!(collection && community)) {
     return null;
   }
@@ -82,7 +84,7 @@ export const collectionHit2lms = (
     displayUsername: name,
     icon: icon ? { __typename: 'Content', id: '', url: icon } : null,
     id: index_mothership_object_id,
-    isLocal: false,
+    isLocal,
     myFlag: null,
     myFollow: null,
     name,
@@ -92,8 +94,9 @@ export const collectionHit2lms = (
   };
 };
 
-export const communityHit2lms = (
-  community: Maybe<CommunityHit>
+export const communityHit2gql = (
+  community: Maybe<CommunityHit>,
+  isLocal: boolean
 ): CommunityPreviewFragment | null => {
   if (!community) {
     return null;
@@ -116,7 +119,7 @@ export const communityHit2lms = (
     __typename: 'Community',
     icon: icon ? { __typename: 'Content', id: '', url: icon } : null,
     id: index_mothership_object_id,
-    isLocal: false,
+    isLocal,
     name,
     canonicalUrl,
     summary,
