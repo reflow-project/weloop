@@ -5,6 +5,10 @@ import { Box, Flex } from 'rebass/styled-components';
 // import { UploadCloud } from 'react-feather';
 // import { Trans } from '@lingui/macro';
 import styled from 'ui/themes/styled';
+import { useInstanceInfoQuery } from 'fe/instance/info/useInstanceInfo.generated';
+import { Trans } from '@lingui/react';
+import Alert from 'ui/elements/Alert';
+import { AlertWrapper } from '../Modal';
 
 // const ThumbsContainer = styled.aside`
 //   display: flex;
@@ -70,7 +74,7 @@ const Img = styled(Box)`
 
 interface Props {
   initialUrl: string | undefined | null;
-  onFileSelect(file: File): unknown;
+  onFileSelect(file: File | undefined): unknown;
   uploadType?: 'resource' | string;
   filePattern?: FilePattern;
 }
@@ -84,6 +88,8 @@ const DropzoneArea: React.FC<Props> = ({
   filePattern
 }) => {
   const [fileUrl, setFileUrl] = useState<undefined | null | string>();
+  const { data: instanceInfoData } = useInstanceInfoQuery();
+  const uploadMaxBytes = instanceInfoData?.instance?.uploadMaxBytes || 0;
 
   const [currentFile, setCurrentFile] = useState<{
     file: File;
@@ -101,18 +107,28 @@ const DropzoneArea: React.FC<Props> = ({
     setFileUrl(initialUrl);
   }, [initialUrl]);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    rejectedFiles,
+    acceptedFiles
+  } = useDropzone({
     accept: filePattern,
+    maxSize: uploadMaxBytes,
     onDrop: acceptedFiles => {
       const file = acceptedFiles[0];
       if (!file) {
+        onFileSelect(void 0);
+        setCurrentFile(void 0);
         return;
       }
       onFileSelect(file);
       setCurrentFile({ file, localUrl: URL.createObjectURL(file) });
     }
   });
-
+  const rejectedFile = rejectedFiles[0];
+  console.log({ rejectedFiles, acceptedFiles });
   return (
     <>
       <Box sx={{ height: '100%' }} {...getRootProps({ className: 'dropzone' })}>
@@ -172,6 +188,16 @@ const DropzoneArea: React.FC<Props> = ({
               <Trans>Drag 'n' drop a file here, or click to select file</Trans>
             </Info>
           )} */}
+          {rejectedFile ? (
+            <AlertWrapper>
+              <Alert variant="bad">
+                <Trans>
+                  File {rejectedFile.name} too big, can't exceed{' '}
+                  {Math.floor(uploadMaxBytes / 1024 / 1024)}MB
+                </Trans>
+              </Alert>
+            </AlertWrapper>
+          ) : null}
         </InfoContainer>
       </Box>
     </>
