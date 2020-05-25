@@ -5,10 +5,10 @@ import { Box, Flex } from 'rebass/styled-components';
 // import { UploadCloud } from 'react-feather';
 // import { Trans } from '@lingui/macro';
 import styled from 'ui/themes/styled';
-import { useInstanceInfoQuery } from 'fe/instance/info/useInstanceInfo.generated';
-import { Trans } from '@lingui/react';
-import Alert from 'ui/elements/Alert';
-import { AlertWrapper } from '../Modal';
+// import { useInstanceInfoQuery } from 'fe/instance/info/useInstanceInfo.generated';
+// import { Trans } from '@lingui/react';
+// import Alert from 'ui/elements/Alert';
+// import { AlertWrapper } from '../Modal';
 
 // const ThumbsContainer = styled.aside`
 //   display: flex;
@@ -88,8 +88,8 @@ const DropzoneArea: React.FC<Props> = ({
   filePattern
 }) => {
   const [fileUrl, setFileUrl] = useState<undefined | null | string>();
-  const { data: instanceInfoData } = useInstanceInfoQuery();
-  const uploadMaxBytes = instanceInfoData?.instance?.uploadMaxBytes || 0;
+  // const { data: instanceInfoData } = useInstanceInfoQuery();
+  // const uploadMaxBytes = instanceInfoData?.instance?.uploadMaxBytes || 0;
 
   const [currentFile, setCurrentFile] = useState<{
     file: File;
@@ -115,7 +115,7 @@ const DropzoneArea: React.FC<Props> = ({
     acceptedFiles
   } = useDropzone({
     accept: filePattern,
-    maxSize: uploadMaxBytes,
+    // maxSize: uploadMaxBytes,
     onDrop: acceptedFiles => {
       const file = acceptedFiles[0];
       if (!file) {
@@ -127,7 +127,7 @@ const DropzoneArea: React.FC<Props> = ({
       setCurrentFile({ file, localUrl: URL.createObjectURL(file) });
     }
   });
-  const rejectedFile = rejectedFiles[0];
+  // const rejectedFile = rejectedFiles[0];
   console.log({ rejectedFiles, acceptedFiles });
   return (
     <>
@@ -188,7 +188,7 @@ const DropzoneArea: React.FC<Props> = ({
               <Trans>Drag 'n' drop a file here, or click to select file</Trans>
             </Info>
           )} */}
-          {rejectedFile ? (
+          {/* rejectedFile ? (
             <AlertWrapper>
               <Alert variant="bad">
                 <Trans>
@@ -197,7 +197,7 @@ const DropzoneArea: React.FC<Props> = ({
                 </Trans>
               </Alert>
             </AlertWrapper>
-          ) : null}
+          ) : null */}
         </InfoContainer>
       </Box>
     </>
