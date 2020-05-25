@@ -22,7 +22,7 @@ export const getUrlParamsFromEntryPointForMoodleLMS = (): LMSPrefs | null => {
 export const sendToMoodle = (
   resourceurl: string,
   resource_info: string,
-  type: string,
+  type: 'file' | 'link',
   { site, course, section }: LMSPrefs
 ) => {
   const form = document.createElement('form');

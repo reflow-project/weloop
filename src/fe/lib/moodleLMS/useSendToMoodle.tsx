@@ -44,13 +44,13 @@ export const useLMS = (resource: Maybe<ResourceLMS>) => {
       if (!(instanceInfo?.instance && resource)) {
         return false;
       }
-      const resource_info = JSON.stringify(resource);
+      const resource_info_stringified = JSON.stringify(resource);
       const type = instanceInfo.instance.uploadResourceTypes.includes(
         resource.mediaType
       )
         ? 'file'
         : 'link';
-      sendToMoodle(resource.url, resource_info, type, LMS);
+      sendToMoodle(resource.url, resource_info_stringified, type, LMS);
       return true;
     },
     [instanceInfo, resource]
