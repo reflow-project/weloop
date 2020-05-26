@@ -61,7 +61,7 @@ export const resourceFragment2UIProps = (args: {
     name: resource.name || '',
     summary: resource.summary || '',
     like,
-    isLocal: !!resource.payload?.upload,
+    isFile: !!resource.payload?.upload,
     acceptedLicenses: accepted_license_types,
     license: resource.license || null,
     isFlagged: !!resource.myFlag,

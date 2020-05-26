@@ -36,7 +36,7 @@ export interface Props {
   like: null | LikeActions;
   license: string | null;
   acceptedLicenses?: string[];
-  isLocal: boolean;
+  isFile: boolean;
   type?: string;
   isFlagged: boolean;
   FlagModal: null | React.ComponentType<{ done(): unknown }>;
@@ -51,7 +51,7 @@ export const Resource: React.FC<Props> = ({
   summary,
   link,
   like,
-  isLocal,
+  isFile,
   license,
   acceptedLicenses,
   type,
@@ -73,7 +73,7 @@ export const Resource: React.FC<Props> = ({
           <TitleLink href={link} target="_blank">
             {/* <Badge mt={1}>Video</Badge> */}
             <Title flex="1">
-              {isLocal ? (
+              {isFile ? (
                 <Paperclip strokeWidth="1" size={18} />
               ) : (
                 <ExternalLink strokeWidth="1" size={18} />
@@ -81,7 +81,7 @@ export const Resource: React.FC<Props> = ({
               {name}
             </Title>
           </TitleLink>
-          {isLocal ? (
+          {isFile ? (
             <>
               <TypeItem mt={1}>{license}</TypeItem>
             </>
