@@ -69,7 +69,7 @@ export const Resource: React.FC<Props> = ({
       <Wrapper p={2}>
         {icon != '' ? (
           <Avatar size="m" src={icon} />
-        ) : isLocal ? (
+        ) : isFile ? (
           <ResourceThumb>
             <IconWrapper>
               <Paperclip strokeWidth="2" size={64} />
