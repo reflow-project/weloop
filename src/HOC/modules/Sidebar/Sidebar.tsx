@@ -38,7 +38,8 @@ export const SidebarHOC: FC<SidebarHOC> = () => {
     const props: PropsUI = {
       isSidebarOpen,
       status: StatusUI.Loaded,
-      communities
+      communities,
+      LoadMoreFormik: null //FIX ME
     };
     return props;
   }, [communities, isSidebarOpen]);
