@@ -10,7 +10,9 @@ interface Props {
 }
 export const Dropdown: FC<Props> = ({ orientation, cb, children }) => (
   <OutsideClickHandler onOutsideClick={() => cb(false)}>
-    <Wrapper orientation={orientation}>{children}</Wrapper>
+    <Wrapper className="dropdown" orientation={orientation}>
+      {children}
+    </Wrapper>
   </OutsideClickHandler>
 );
 

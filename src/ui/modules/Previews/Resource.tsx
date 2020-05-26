@@ -23,6 +23,7 @@ export interface LikeActions {
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
 import Modal from 'ui/modules/Modal';
 import { typography } from 'mn-constants';
+// import {Link} from 'react-router-dom'
 
 // const LicenseIcon0 = require('./cc-zero.png');
 // const LicenseIcon1 = require('./by.png');
@@ -99,68 +100,70 @@ export const Resource: React.FC<Props> = ({
           </Summary>
         </Infos>
       </Wrapper>
-      {hideActions ? null : (
-        <Actions>
-          {like && (
-            <ActionItem
-              liked={like.iLikeIt ? true : false}
-              onClick={like.toggleLikeFormik.submitForm}
+      <Meta>
+        <Collection ml={2}></Collection>
+        {hideActions ? null : (
+          <Actions>
+            {like && (
+              <ActionItem
+                bordered
+                liked={like.iLikeIt ? true : false}
+                onClick={like.toggleLikeFormik.submitForm}
+              >
+                <ActionIcon>
+                  <Star strokeWidth="1" size="18" />
+                </ActionIcon>
+                <ActionText
+                  variant={'text'}
+                  sx={{ textTransform: 'capitalize' }}
+                  ml={1}
+                >
+                  {like.totalLikes}
+                </ActionText>
+              </ActionItem>
+            )}
+            <MoreItem
+              onClick={() => onOpen(true)}
+              sx={{ position: 'relative' }}
             >
               <ActionIcon>
-                <Star strokeWidth="1" size="18" />
+                <MoreHorizontal className="hover" size={18} />
               </ActionIcon>
-              <ActionText
-                variant={'text'}
-                sx={{ textTransform: 'capitalize' }}
-                ml={1}
-              >
-                {like.totalLikes + ' '} <Trans>Star</Trans>
-              </ActionText>
-            </ActionItem>
-          )}
-          <ActionItem
-            onClick={() => onOpen(true)}
-            sx={{ position: 'relative' }}
-          >
-            <ActionIcon>
-              <MoreHorizontal className="hover" size={18} />
-            </ActionIcon>
-            <ActionText
-              variant={'text'}
-              sx={{ textTransform: 'capitalize' }}
-              ml={1}
-            >
-              <Trans>More</Trans>
-            </ActionText>
-            {isOpen && (
-              <Dropdown orientation="bottom" cb={onOpen}>
-                {FlagModal && (
-                  <DropdownItem onClick={() => setOpenFlagModal(true)}>
-                    <Flag size={18} />
-                    <Text sx={{ flex: 1 }} ml={2}>
-                      {!isFlagged ? (
-                        <Trans>Flag this resource</Trans>
-                      ) : (
-                        <Trans>Unflag this resource</Trans>
-                      )}
-                    </Text>
-                  </DropdownItem>
-                )}
-                <DropdownItem
-                  onClick={() => {
-                    /* sendToMoodle?sendToMoodle(): */ setOpenMoodleModal(true);
-                  }}
-                >
-                  <Share size={18} />
-                  <Text sx={{ flex: 1 }} ml={2}>
-                    <Trans>Send to Moodle</Trans>
-                  </Text>
-                </DropdownItem>
-              </Dropdown>
-            )}
-          </ActionItem>
-        </Actions>
-      )}
+              {isOpen && (
+                <Right>
+                  <Dropdown orientation="bottom" cb={onOpen}>
+                    {FlagModal && (
+                      <DropdownItem onClick={() => setOpenFlagModal(true)}>
+                        <Flag size={18} />
+                        <Text sx={{ flex: 1 }} ml={2}>
+                          {!isFlagged ? (
+                            <Trans>Flag this resource</Trans>
+                          ) : (
+                            <Trans>Unflag this resource</Trans>
+                          )}
+                        </Text>
+                      </DropdownItem>
+                    )}
+                    <DropdownItem
+                      onClick={() => {
+                        /* sendToMoodle?sendToMoodle(): */ setOpenMoodleModal(
+                          true
+                        );
+                      }}
+                    >
+                      <Share size={18} />
+                      <Text sx={{ flex: 1 }} ml={2}>
+                        <Trans>Send to Moodle</Trans>
+                      </Text>
+                    </DropdownItem>
+                  </Dropdown>
+                </Right>
+              )}
+            </MoreItem>
+          </Actions>
+        )}
+      </Meta>
+
       {FlagModal && isOpenFlagModal && (
         <Modal closeModal={() => setOpenFlagModal(false)}>
           <FlagModal done={() => setOpenFlagModal(false)} />
@@ -174,11 +177,28 @@ export const Resource: React.FC<Props> = ({
     </Bordered>
   );
 };
+
+const Right = styled(Box)`
+  .dropdown {
+    right: 0;
+    left: auto;
+  }
+`;
+
+const Meta = styled(Flex)`
+  align-items: center;
+`;
+
+const Collection = styled(Flex)`
+  flex: 1;
+`;
+
 const Summary = styled(Text)`
   color: ${props => props.theme.colors.dark};
 `;
 const ActionText = styled(Text)`
   font-size: ${typography.size.s1};
+  color: ${props => props.theme.colors.darker};
 `;
 const ActionIcon = styled(Box)`
   width: 30px;
@@ -212,13 +232,19 @@ const LinkResource = styled(Box)`
 `;
 
 const Actions = styled(Flex)`
-  flex: 1;
   justify-content: start;
   padding: 8px;
   padding-top: 0;
 `;
 
-const ActionItem = styled(Flex)<{ liked?: boolean }>`
+const MoreItem = styled(Flex)`
+  align-items: center;
+  cursor: pointer;
+  margin-right: 8px;
+  margin-left: 8px;
+`;
+
+const ActionItem = styled(Flex)<{ liked?: boolean; bordered?: boolean }>`
   align-items: center;
   color: ${props =>
     props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
@@ -228,17 +254,20 @@ const ActionItem = styled(Flex)<{ liked?: boolean }>`
   }
   cursor: pointer;
   background: ${props =>
-    props.liked
-      ? props.theme.colors.secondary
-      : props.theme.colors.mediumlight};
+    props.liked ? props.theme.colors.primary : 'transparent'};
+  border: 1px solid
+    ${props => (props.liked ? props.theme.colors.primary : 'transparent')};
+  border: 1px solid
+    ${props => (props.bordered ? props.theme.colors.primary : 'transparent')};
   border-radius: 4px;
   padding: 0 8px;
   margin-right: 8px;
   text-align: center;
   font-size: ${typography.size.s1};
   svg {
-    stroke: ${props =>
-      props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+    stroke: none;
+    fill: ${props =>
+      props.liked ? props.theme.colors.lightest : props.theme.colors.primary};
   }
   a {
     display: flex;
@@ -247,54 +276,31 @@ const ActionItem = styled(Flex)<{ liked?: boolean }>`
     z-index: 9;
   }
   &:hover {
-    svg.hover {
-      stroke: ${props => props.theme.colors.mediumdark};
-      // fill: ${props => props.theme.colors.mediumdark};
-    }
+    background: ${props =>
+      props.liked ? props.theme.colors.mediumdark : props.theme.colors.primary};
+    border-color: ${props =>
+      props.liked ? props.theme.colors.mediumdark : props.theme.colors.primary};
   }
 `;
 
 const TypeItem = styled(Text)`
   border-radius: 5px;
-  color: ${props => props.theme.colors.medium};
+  color: ${props => props.theme.colors.dark};
   text-transform: uppercase;
-  border-radius: 10px;
-  padding: 0px 6px;
-  font-size: 10px;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
   font-weight: 600;
   cursor: default;
   margin-right: 4px;
   display: inline-flex;
-  border: 1px solid ${props => props.theme.colors.primary};
+  border: 1px solid ${props => props.theme.colors.secondary};
 `;
-
-// const ResourceType = styled(Text)`
-//   border-radius: 5px;
-//   color: ${props => props.theme.colors.primary};
-//   text-transform: uppercase;
-//   border-radius: 10px;
-//   border: 1px solid;
-//   padding: 0px 6px;
-//   font-size: 11px;
-//   cursor: default;
-//   margin-right: 6px;
-//   display: inline-flex;
-// `;
 
 const TextLink = styled(Text)`
   ${ellipsis('250px')};
   color: ${props => props.theme.colors.mediumdark};
 `;
-
-// const Img = styled(Image)`
-//   max-width: 82px;
-//   margin-top: 5px;
-//   height: 24px;
-// `;
-
-// const WrapperLink = styled(NavLink)`
-//   text-decoration: none;
-// `;
 
 const Bordered = styled(Box)`
   border: ${props => props.theme.colors.border};
@@ -318,24 +324,6 @@ const TitleLink = styled.a`
     text-decoration: underline;
   }
 `;
-// const Hashtags = styled(Flex)`
-//   div {
-//     color: ${props => props.theme.colors.primary};
-//   }
-// `;
-
-// const Badge = styled(Box)`
-//   border: 1px solid ${props => props.theme.colors.primary};
-//   margin-right: 8px;
-//   text-transform: uppercase;
-//   font-size: 10px;
-//   font-weight: 600;
-//   border-radius: 30px;
-//   line-height: 20px;
-//   height: 20px;
-//   padding: 0 8px;
-//   color: ${props => props.theme.colors.mediumdark};
-// `;
 
 const Wrapper = styled(Flex)`
   position: relative;

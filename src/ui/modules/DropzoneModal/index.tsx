@@ -190,7 +190,7 @@ const DropzoneArea: React.FC<Props> = ({
           )} */}
           {/* rejectedFile ? (
             <AlertWrapper>
-              <Alert variant="bad">
+              <Alert variant="negative">
                 <Trans>
                   File {rejectedFile.name} too big, can't exceed{' '}
                   {Math.floor(uploadMaxBytes / 1024 / 1024)}MB

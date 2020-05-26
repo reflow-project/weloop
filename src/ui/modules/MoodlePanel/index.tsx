@@ -65,7 +65,7 @@ export const MoodlePanel: React.FC<Props> = ({
           </CounterChars>
           {sendToMoodleFormik.errors.site && (
             <AlertWrapper>
-              <Alert variant="bad">{sendToMoodleFormik.errors.site}</Alert>
+              <Alert variant="negative">{sendToMoodleFormik.errors.site}</Alert>
             </AlertWrapper>
           )}
         </ContainerForm>

@@ -95,7 +95,9 @@ export const Community: React.FC<Props> = ({
                       </Button>
                     )}
                   </Title>
-                  <ObjectsList>{CollectionsBox}</ObjectsList>
+                  <ObjectsList>
+                    <CollectionsBoxes>{CollectionsBox}</CollectionsBoxes>
+                  </ObjectsList>
                   {loadMoreCollections && (
                     <LoadMore LoadMoreFormik={loadMoreCollections} />
                   )}
@@ -139,6 +141,15 @@ export const Community: React.FC<Props> = ({
     </MainContainer>
   );
 };
+
+const CollectionsBoxes = styled(Box)`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 8px;
+  row-gap: 8px;
+  margin: 8px;
+  margin-bottom: 24px !important;
+`;
 
 const FollowersMenu = ({ basePath }: { basePath: string }) => (
   <MenuList m={2}>

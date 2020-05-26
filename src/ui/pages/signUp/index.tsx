@@ -65,7 +65,7 @@ export const SignUpPage: React.FC<Props> = ({
             </Trans>
           </Text>
 
-          <Alert variant="bad">{formik.errors.email}</Alert>
+          <Alert variant="negative">{formik.errors.email}</Alert>
         </Box>
       ) : (
         <LoginWrapper>
@@ -92,7 +92,7 @@ export const SignUpPage: React.FC<Props> = ({
                 />
                 {formik.errors.email && (
                   <AlertWrapper>
-                    <Alert variant="bad">{formik.errors.email}</Alert>
+                    <Alert variant="negative">{formik.errors.email}</Alert>
                   </AlertWrapper>
                 )}
               </Box>
@@ -108,7 +108,7 @@ export const SignUpPage: React.FC<Props> = ({
                 />
                 {formik.errors.name && (
                   <AlertWrapper>
-                    <Alert variant="bad">{formik.errors.name}</Alert>
+                    <Alert variant="negative">{formik.errors.name}</Alert>
                   </AlertWrapper>
                 )}
               </Box>
@@ -124,7 +124,7 @@ export const SignUpPage: React.FC<Props> = ({
                 />
                 {formik.errors.username && (
                   <AlertWrapper>
-                    <Alert variant="bad">{formik.errors.username}</Alert>
+                    <Alert variant="negative">{formik.errors.username}</Alert>
                   </AlertWrapper>
                 )}
               </Box>
@@ -141,7 +141,7 @@ export const SignUpPage: React.FC<Props> = ({
                 />
                 {formik.errors.password && (
                   <AlertWrapper>
-                    <Alert variant="bad">{formik.errors.password}</Alert>
+                    <Alert variant="negative">{formik.errors.password}</Alert>
                   </AlertWrapper>
                 )}
               </Box>
@@ -158,7 +158,9 @@ export const SignUpPage: React.FC<Props> = ({
                 />
                 {formik.errors.passwordConfirm && (
                   <AlertWrapper>
-                    <Alert variant="bad">{formik.errors.passwordConfirm}</Alert>
+                    <Alert variant="negative">
+                      {formik.errors.passwordConfirm}
+                    </Alert>
                   </AlertWrapper>
                 )}
               </Box>
@@ -272,7 +274,7 @@ const FormWrapper = styled(Box)`
 
 const Aware = styled(Flex)<{ green: boolean }>`
   background: ${props =>
-    props.green ? '#546d4f' : props.theme.colors.primary};
+    props.green ? '#546d4f' : props.theme.colors.secondary};
   border-radius: 4px;
   align-items: center;
   div {

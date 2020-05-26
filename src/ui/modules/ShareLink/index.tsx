@@ -53,7 +53,9 @@ export const ShareLink = (props: Props) => {
           </Span>
         </ContainerForm>
         {props.FetchLinkFormik.errors.fetchUrl && (
-          <Alert variant="bad">{props.FetchLinkFormik.errors.fetchUrl}</Alert>
+          <Alert variant="negative">
+            {props.FetchLinkFormik.errors.fetchUrl}
+          </Alert>
         )}
       </FetchedRow>
       {props.FetchLinkFormik.isSubmitting ? (
