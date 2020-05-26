@@ -55,7 +55,7 @@ export const ResetPassword: React.FC<Props> = ({ formik, isSubmitted }) => {
               />
               {formik.errors.email && (
                 <AlertWrapper>
-                  <Alert variant="bad">{formik.errors.email}</Alert>
+                  <Alert variant="negative">{formik.errors.email}</Alert>
                 </AlertWrapper>
               )}
               <Button

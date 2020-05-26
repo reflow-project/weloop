@@ -196,6 +196,7 @@ const Total = styled(Text)`
 `;
 
 const Title = styled(Text)`
+  color: ${props => props.theme.colors.darker};
   ${media.lessThan('medium')`
 font-size: 20px !important;
 `};

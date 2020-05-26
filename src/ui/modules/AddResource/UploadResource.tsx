@@ -103,7 +103,7 @@ export const UploadResource: React.FC<Props> = ({
           </>
           {formik.errors.name && (
             <AlertWrapper>
-              <Alert variant="bad">{formik.errors.name}</Alert>
+              <Alert variant="negative">{formik.errors.name}</Alert>
             </AlertWrapper>
           )}
         </ContainerForm>
@@ -124,7 +124,7 @@ export const UploadResource: React.FC<Props> = ({
           </>
           {formik.errors.author && (
             <AlertWrapper>
-              <Alert variant="bad">{formik.errors.author}</Alert>
+              <Alert variant="negative">{formik.errors.author}</Alert>
             </AlertWrapper>
           )}
         </ContainerForm>
