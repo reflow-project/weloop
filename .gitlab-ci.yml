@@ -20,7 +20,7 @@ default:
   before_script:
     - mkdir -p .pip # prepare to cache pip packages
     - export PATH=$PATH:.pip
-    - apk add --update py-pip && pip install -U pip # install python & pip
+    - apk add --update -no-cache py-pip cmake && pip --cache-dir=.pip install -U pip # install python & pip
     - pip --cache-dir=.pip install awscli 
     - if [ ! -z "$TX_TOKEN" ]; then pip --cache-dir=.pip install transifex-client ; else echo "Skipping..."; fi # install transifex cli
     #- rm -rf node_modules
