@@ -82,16 +82,19 @@ export const Community: React.FC<Props> = ({
                 <>
                   {HeroCommunityBox}
                   <Menu basePath={basePath} />
-                  {isJoined && (
-                    <WrapButton p={2} mb={2}>
+                  <Title px={3} mt={2}>
+                    <Text sx={{ flex: 1 }} variant="suptitle">
+                      <Trans>All collections</Trans>
+                    </Text>
+                    {isJoined && (
                       <Button
                         variant="outline"
                         onClick={() => setOpenCreateCollection(true)}
                       >
                         <Trans>Create a new collection</Trans>
                       </Button>
-                    </WrapButton>
-                  )}
+                    )}
+                  </Title>
                   <ObjectsList>{CollectionsBox}</ObjectsList>
                   {loadMoreCollections && (
                     <LoadMore LoadMoreFormik={loadMoreCollections} />
@@ -155,23 +158,28 @@ const Menu = ({ basePath }: { basePath: string }) => (
   </MenuList>
 );
 
-const Title = styled(Box)`
+const Title = styled(Flex)`
   background: ${props => props.theme.colors.appInverse};
   height: 50px;
   line-height: 50px;
+  align-items: center;
   border-bottom: ${props => props.theme.colors.border};
+  button {
+    width: 190px;
+    font-size: 14px;
+    text-transform: inherit;
+    letter-spacing: 0;
+    padding: 0;
+    height: 32px;
+    line-height: 32px;
+    background: #ffe5cd;
+    color: #ca6a11;
+    border: none;
+  }
 `;
 
 const Container = styled(Box)`
   background: ${props => props.theme.colors.appInverse};
-`;
-
-const WrapButton = styled(Flex)`
-  background: ${props => props.theme.colors.appInverse};
-  button {
-    width: 100%;
-    height: 50px;
-  }
 `;
 
 const WrapSocialText = styled(Box)`
