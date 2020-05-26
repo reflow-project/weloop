@@ -6,9 +6,8 @@
         "name": "LikeContext",
         "possibleTypes": [
           { "name": "Collection" },
-          { "name": "Comment" },
           { "name": "Community" },
-          { "name": "Resource" },
+          { "name": "Thread" },
           { "name": "User" }
         ]
       },
@@ -66,14 +65,11 @@
       },
       {
         "kind": "UNION",
-        "name": "ActivityContext",
+        "name": "FlagContext",
         "possibleTypes": [
           { "name": "Collection" },
           { "name": "Comment" },
           { "name": "Community" },
-          { "name": "Flag" },
-          { "name": "Follow" },
-          { "name": "Like" },
           { "name": "Resource" },
           { "name": "User" }
         ]

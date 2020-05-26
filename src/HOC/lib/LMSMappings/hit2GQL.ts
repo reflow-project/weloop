@@ -4,10 +4,12 @@ import { CollectionPreviewFragment } from 'HOC/modules/previews/collection/Colle
 import { CommunityPreviewFragment } from 'HOC/modules/previews/community/CommunityPreview.generated';
 import { ResourcePreviewFragment } from 'HOC/modules/previews/resource/ResourcePreview.generated';
 
-export const resourceHit2gql = (
-  resource: Maybe<ResourceHit>,
-  isLocal: boolean
-): ResourcePreviewFragment | null => {
+export const resourceHit2gql = (args: {
+  resource: Maybe<ResourceHit>;
+  isLocal: boolean;
+  isFile: boolean;
+}): ResourcePreviewFragment | null => {
+  const { resource, isLocal, isFile } = args;
   const collection = collectionHit2gql(resource?.collection, isLocal);
   const url = resource?.url;
   if (!(resource && collection && url)) {
@@ -51,7 +53,7 @@ export const resourceHit2gql = (
       url,
       mirror: { __typename: 'ContentMirror', url },
       mediaType: mediaType || '',
-      upload: { __typename: 'ContentUpload' }
+      upload: isFile ? { __typename: 'ContentUpload' } : null
     }
   };
 };

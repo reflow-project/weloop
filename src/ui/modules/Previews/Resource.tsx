@@ -37,7 +37,7 @@ export interface Props {
   like: null | LikeActions;
   license: string | null;
   acceptedLicenses?: string[];
-  isLocal: boolean;
+  isFile: boolean;
   type?: string;
   isFlagged: boolean;
   FlagModal: null | React.ComponentType<{ done(): unknown }>;
@@ -52,7 +52,7 @@ export const Resource: React.FC<Props> = ({
   summary,
   link,
   like,
-  isLocal,
+  isFile,
   license,
   acceptedLicenses,
   type,
@@ -69,12 +69,26 @@ export const Resource: React.FC<Props> = ({
   return (
     <Bordered>
       <Wrapper p={2}>
-        <Avatar size="m" src={icon} />
+        {icon != '' ? (
+          <Avatar size="m" src={icon} />
+        ) : isFile ? (
+          <ResourceThumb>
+            <IconWrapper>
+              <Paperclip strokeWidth="2" size={64} />
+            </IconWrapper>
+          </ResourceThumb>
+        ) : (
+          <ResourceThumb>
+            <IconWrapper>
+              <ExternalLink strokeWidth="2" size={64} />
+            </IconWrapper>
+          </ResourceThumb>
+        )}
         <Infos flex={1} ml={3}>
           <TitleLink href={link} target="_blank">
             {/* <Badge mt={1}>Video</Badge> */}
             <Title flex="1">
-              {isLocal ? (
+              {isFile ? (
                 <Paperclip strokeWidth="1" size={18} />
               ) : (
                 <ExternalLink strokeWidth="1" size={18} />
@@ -82,7 +96,7 @@ export const Resource: React.FC<Props> = ({
               {name}
             </Title>
           </TitleLink>
-          {isLocal ? (
+          {isFile ? (
             <>
               <TypeItem mt={1}>{license}</TypeItem>
             </>
@@ -195,6 +209,7 @@ const Collection = styled(Flex)`
 
 const Summary = styled(Text)`
   color: ${props => props.theme.colors.dark};
+  word-break: break-word;
 `;
 const ActionText = styled(Text)`
   font-size: ${typography.size.s1};
@@ -296,6 +311,37 @@ const TypeItem = styled(Text)`
   display: inline-flex;
   border: 1px solid ${props => props.theme.colors.secondary};
 `;
+
+const ResourceThumb = styled(Box)<{ bg?: string }>`
+  border-radius: 4px;
+  min-width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+
+  vertical-align: text-center;
+  background-color: ${props => props.theme.colors.light};
+`;
+
+const IconWrapper = styled.div`
+  margin: auto;
+  & svg {
+    stroke: ${props => props.theme.colors.medium};
+  }
+`;
+
+// const ResourceType = styled(Text)`
+//   border-radius: 5px;
+//   color: ${props => props.theme.colors.primary};
+//   text-transform: uppercase;
+//   border-radius: 10px;
+//   border: 1px solid;
+//   padding: 0px 6px;
+//   font-size: 11px;
+//   cursor: default;
+//   margin-right: 6px;
+//   display: inline-flex;
+// `;
 
 const TextLink = styled(Text)`
   ${ellipsis('250px')};
