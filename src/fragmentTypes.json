@@ -21,9 +21,8 @@
         "name": "LikeContext",
         "possibleTypes": [
           { "name": "Collection" },
-          { "name": "Comment" },
           { "name": "Community" },
-          { "name": "Resource" },
+          { "name": "Thread" },
           { "name": "User" }
         ]
       },

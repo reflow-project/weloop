@@ -23,7 +23,6 @@ export interface LikeActions {
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
 import Modal from 'ui/modules/Modal';
 import { typography } from 'mn-constants';
-
 // const LicenseIcon0 = require('./cc-zero.png');
 // const LicenseIcon1 = require('./by.png');
 // const LicenseIcon2 = require('./by-sa.png');
@@ -68,7 +67,21 @@ export const Resource: React.FC<Props> = ({
   return (
     <Bordered>
       <Wrapper p={2}>
-        <Avatar size="m" src={icon} />
+        {icon != '' ? (
+          <Avatar size="m" src={icon} />
+        ) : isLocal ? (
+          <ResourceThumb>
+            <IconWrapper>
+              <Paperclip strokeWidth="2" size={64} />
+            </IconWrapper>
+          </ResourceThumb>
+        ) : (
+          <ResourceThumb>
+            <IconWrapper>
+              <ExternalLink strokeWidth="2" size={64} />
+            </IconWrapper>
+          </ResourceThumb>
+        )}
         <Infos flex={1} ml={3}>
           <TitleLink href={link} target="_blank">
             {/* <Badge mt={1}>Video</Badge> */}
@@ -266,6 +279,24 @@ const TypeItem = styled(Text)`
   margin-right: 4px;
   display: inline-flex;
   border: 1px solid ${props => props.theme.colors.primary};
+`;
+
+const ResourceThumb = styled(Box)<{ bg?: string }>`
+  border-radius: 4px;
+  min-width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+
+  vertical-align: text-center;
+  background-color: ${props => props.theme.colors.light};
+`;
+
+const IconWrapper = styled.div`
+  margin: auto;
+  & svg {
+    stroke: ${props => props.theme.colors.medium};
+  }
 `;
 
 // const ResourceType = styled(Text)`

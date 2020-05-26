@@ -43,7 +43,7 @@ const Avatar: React.FC<{
   variant?: string;
   size?: string;
 }> = ({ size, src, initials, variant }) => (
-  <Wrapper size={size} bg={src} variant={variant}>
+  <Wrapper size={size} bg={src}>
     {initials && !src ? (
       <span>{initials.substr(0, 2).toUpperCase()}</span>
     ) : null}

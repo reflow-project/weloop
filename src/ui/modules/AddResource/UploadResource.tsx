@@ -241,11 +241,11 @@ const Link = styled.a`
 const Label = styled.label`
   background-repeat: no-repeat;
   background-position: center center;
-  width: 115px !important;
+  width: 110px !important;
   line-height: 38px !important;
   display: inline-block;
   background-size: contain;
-  margin-right: 5px;
+  margin-right: 4px;
   border: 4px solid transparent;
   text-indent: -9999px;
   cursor: pointer;
