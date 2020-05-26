@@ -8,7 +8,8 @@ import {
   WrapperCont,
   MainContainer,
   HomeBox,
-  ObjectsList
+  ObjectsList,
+  CollectionsWrapper
 } from 'ui/elements/Layout';
 
 export interface Props {
@@ -26,7 +27,9 @@ export const AllCollections: React.FC<Props> = ({
         <WrapperCont>
           <Wrapper>
             <Header name="All Collections" />
-            <ObjectsList>{CollectionsBoxes}</ObjectsList>
+            <ObjectsList>
+              <CollectionsWrapper>{CollectionsBoxes}</CollectionsWrapper>
+            </ObjectsList>
             {LoadMoreFormik && <LoadMore LoadMoreFormik={LoadMoreFormik} />}
           </Wrapper>
         </WrapperCont>

@@ -34,7 +34,7 @@ export const LikedCommentPreviewHOC: FC<LikedCommentPreviewHOC> = ({
     }
     const { communityLink, communityName } = getCommunityInfoStrings(comment);
     const props: LikedCommentProps = {
-      // url: comment.thread ? `/thread/${comment.thread.id}` : '',
+      url: comment.thread ? `/thread/${comment.thread.id}` : '',
       communityLink,
       communityName,
       actor: comment.creator

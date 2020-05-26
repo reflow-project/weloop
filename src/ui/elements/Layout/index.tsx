@@ -117,3 +117,12 @@ export const ObjectsList = styled(Box)`
     }
   }
 `;
+
+export const CollectionsWrapper = styled(Box)`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 16px;
+  row-gap: 16px;
+  margin: 16px;
+  margin-bottom: 24px !important;
+`;

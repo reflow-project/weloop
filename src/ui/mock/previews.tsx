@@ -166,6 +166,7 @@ export function LikedCommentPreviewProps(
     createdAt,
     communityName,
     communityLink,
+    url: '/',
     content
   };
 }

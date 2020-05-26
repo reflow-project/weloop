@@ -13,7 +13,8 @@ import {
   ObjectsList,
   MainContainer,
   HomeBox,
-  MenuList
+  MenuList,
+  CollectionsWrapper
 } from 'ui/elements/Layout';
 import {
   Nav,
@@ -97,7 +98,9 @@ export const User: React.FC<Props> = ({
                 )}
               </Route>
               <Route path={`${basePath}/collections`}>
-                <ObjectsList>{CollectionsBoxes}</ObjectsList>
+                <ObjectsList>
+                  <CollectionsWrapper>{CollectionsBoxes}</CollectionsWrapper>
+                </ObjectsList>
                 {loadMoreCollections && (
                   <LoadMore LoadMoreFormik={loadMoreCollections} />
                 )}

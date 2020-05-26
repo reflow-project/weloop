@@ -145,9 +145,9 @@ export const Community: React.FC<Props> = ({
 const CollectionsBoxes = styled(Box)`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  column-gap: 8px;
-  row-gap: 8px;
-  margin: 8px;
+  column-gap: 16px;
+  row-gap: 16px;
+  margin: 16px;
   margin-bottom: 24px !important;
 `;
 
