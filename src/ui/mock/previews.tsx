@@ -55,13 +55,13 @@ export function ResourcePreviewProps(
   icon = 'https://images.pexels.com/photos/745365/pexels-photo-745365.jpeg',
   license = null,
   type = 'image',
-  isLocal = false,
+  isFile = false,
   name = 'Intro to Spaced Repetition',
   summary = 'I find these resources really useful for introducing the concept of spaced repetition to the students that I teach, especially the ones revising for exams!'
 ): ResourceProps {
   return {
     icon,
-    isLocal,
+    isFile,
     license,
     acceptedLicenses: ['license 1', 'license 2', 'license 3'],
     name,
@@ -88,13 +88,13 @@ export function ResourcePreviewUploadedProps(
   icon = 'https://images.pexels.com/photos/745365/pexels-photo-745365.jpeg',
   license = 'CC0-1.0',
   type = 'image',
-  isLocal = true,
+  isFile = true,
   name = 'Intro to Spaced Repetition',
   summary = 'I find these resources really useful for introducing the concept of spaced repetition to the students that I teach, especially the ones revising for exams!'
 ): ResourceProps {
   return {
     icon,
-    isLocal,
+    isFile,
     license,
     acceptedLicenses: ['CC0-1.0', 'CC-BY-4.0', 'CC-BY-SA-4.0'],
     name,

@@ -215,7 +215,7 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
             link={'anime.pdf'}
             license={'CC-BY-4.0'}
             acceptedLicenses={['CC0-1.0', 'CC-BY-4.0', 'CC-BY-SA-4.0']}
-            isLocal={true}
+            isFile={true}
             type={'pdf'}
             FlagModal={({ done }) => {
               return <></>;

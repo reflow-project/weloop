@@ -26,6 +26,7 @@ import { Community } from 'ui/modules/Previews/Community';
 import { Resource } from 'ui/modules/Previews/Resource';
 import { Props, Search } from 'ui/pages/search';
 import { useLMSGQL } from 'fe/lib/moodleLMS/useSendToMoodle';
+import { useInstanceInfoQuery } from 'fe/instance/info/useInstanceInfo.generated';
 
 const _SearchPageHOC: React.FC<{ hits: Hit[] }> = ({ hits }) => {
   const previews = React.useMemo(
@@ -97,7 +98,15 @@ const CommunityPreviewHit: React.FC<{ hit: CommunityHit }> = ({ hit }) => {
 
 const ResourcePreviewHit: React.FC<{ hit: ResourceHit }> = ({ hit }) => {
   const isLocal = useIsLocal(hit);
-  const previewFragment = resourceHit2gql(hit, isLocal);
+  const { data } = useInstanceInfoQuery();
+  const isFile = !!(data?.instance?.uploadResourceTypes || []).find(
+    uploadResType =>
+      uploadResType.toLowerCase() !== 'text/html' &&
+      uploadResType.toLowerCase() === hit.mediaType?.toLowerCase()
+  );
+  // console.table({ name:hit.name, isLocal, isFile })
+  // console.log(hit, data?.instance?.uploadResourceTypes)
+  const previewFragment = resourceHit2gql({ resource: hit, isLocal, isFile });
   const { LMSPrefsPanel } = useLMSGQL(previewFragment);
   const props =
     previewFragment &&
