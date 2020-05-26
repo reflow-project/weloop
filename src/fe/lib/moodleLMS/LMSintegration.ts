@@ -37,6 +37,7 @@ export const sendToMoodle = (
     type,
     resource_info
   };
+  // console.table({site,...params})
   Object.entries(params).forEach(([name, val]) => {
     const hiddenField = document.createElement('input');
     hiddenField.type = 'hidden';

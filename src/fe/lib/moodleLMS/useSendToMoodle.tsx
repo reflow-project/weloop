@@ -15,6 +15,7 @@ import {
 } from 'HOC/lib/LMSMappings/types';
 import { resourceGql2lms } from 'HOC/lib/LMSMappings/gql2LMS';
 import { resourceHit2lms } from 'HOC/lib/LMSMappings/hit2LMS';
+import { useMe } from 'fe/session/useMe';
 const storage = createLocalSessionKVStorage(SESSION)('LMS_');
 const LMS_KEY = 'LMS';
 
@@ -25,19 +26,9 @@ export const useLMSHit = (resource: Maybe<ResourceHitMin>) => {
   return useLMS(resourceHit2lms(resource));
 };
 export const useLMS = (resource: Maybe<ResourceLMS>) => {
-  const { profile, updateProfile } = useProfile();
   const { data: instanceInfo } = useInstanceInfoQuery();
-  const LMSPrefs = profile?.extraInfo?.LMS;
 
-  const updateLMSPrefs = useCallback(
-    async (LMS: LMSPrefs) => {
-      storage.set(LMS_KEY, LMS);
-      if (profile) {
-        await updateProfile({ profile: { extraInfo: { LMS } } });
-      }
-    },
-    [updateProfile]
-  );
+  const { updateLMSPrefs, currentLMSPrefs } = useLMSPrefs();
 
   const sendToLMS = useCallback(
     (LMS: LMSPrefs) => {
@@ -61,18 +52,48 @@ export const useLMS = (resource: Maybe<ResourceLMS>) => {
       updateLMSPrefs,
       sendToLMS,
       sendToMoodle,
-      LMSPrefsPanel: ({ done }) => (
-        <LMSPrefsPanel
-          done={done}
-          lmsParams={LMSPrefs || storage.get(LMS_KEY)}
-          sendToLMS={async (LMS, update) => {
-            done();
-            (await update) && updateLMSPrefs(LMS);
-            return sendToLMS(LMS);
-          }}
-        />
-      )
+      LMSPrefsPanel: ({ done }) =>
+        currentLMSPrefs ? (
+          <LMSPrefsPanel
+            done={done}
+            lmsParams={currentLMSPrefs || storage.get(LMS_KEY)}
+            sendToLMS={async (BasicLMS, update) => {
+              await done();
+              const useThisLMSPrefs: LMSPrefs = update
+                ? { ...BasicLMS, course: undefined, section: undefined }
+                : currentLMSPrefs;
+              update && updateLMSPrefs(useThisLMSPrefs);
+              return sendToLMS(useThisLMSPrefs);
+            }}
+          />
+        ) : null
     }),
-    [sendToLMS, updateLMSPrefs, sendToMoodle, LMSPrefs]
+    [sendToLMS, updateLMSPrefs, sendToMoodle, currentLMSPrefs]
+  );
+};
+
+export const useLMSPrefs = () => {
+  const { loading: loadingMe } = useMe();
+  const { profile, updateProfile, loading: loadingProfile } = useProfile();
+  const loading = loadingMe || loadingProfile;
+  const currentLMSPrefs = profile?.extraInfo?.LMS;
+
+  const updateLMSPrefs = useCallback(
+    async (LMS: LMSPrefs) => {
+      storage.set(LMS_KEY, LMS);
+      if (!loading && profile) {
+        await updateProfile({ profile: { extraInfo: { LMS } } });
+      }
+    },
+    [updateProfile, profile, loading]
+  );
+
+  return useMemo(
+    () => ({
+      updateLMSPrefs,
+      currentLMSPrefs,
+      loading
+    }),
+    [updateLMSPrefs, currentLMSPrefs, loading]
   );
 };

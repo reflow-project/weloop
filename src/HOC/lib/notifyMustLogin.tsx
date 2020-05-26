@@ -19,7 +19,7 @@ export function useCallOrNotifyMustLogin<T, Args extends any[]>(
   _fn: (...args: Args) => Promise<T>,
   deps: any[],
   opts?: Opts
-) {
+): (...args: Args) => Promise<T | null> {
   const { me } = useMe();
   const loggedIn = !!me?.user?.id;
   const fn = useCallback(_fn, deps);
