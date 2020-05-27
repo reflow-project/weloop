@@ -291,6 +291,20 @@ const ActionItem = styled(Flex)<{ liked?: boolean; bordered?: boolean }>`
     z-index: 9;
   }
   &:hover {
+    svg {
+      fill: ${props =>
+        props.liked
+          ? props.theme.colors.lightest
+          : props.theme.colors.lightest};
+    }
+    div {
+      color: ${props =>
+        props.liked
+          ? props.theme.colors.lightest
+          : props.theme.colors.lightest};
+    }
+    color: ${props =>
+      props.liked ? props.theme.colors.lightest : props.theme.colors.lightest};
     background: ${props =>
       props.liked ? props.theme.colors.mediumdark : props.theme.colors.primary};
     border-color: ${props =>
@@ -344,7 +358,8 @@ const IconWrapper = styled.div`
 // `;
 
 const TextLink = styled(Text)`
-  ${ellipsis('250px')};
+  ${ellipsis('380px')};
+  font-size: 13px;
   color: ${props => props.theme.colors.mediumdark};
 `;
 
@@ -388,6 +403,6 @@ const Infos = styled(Box)`
 `;
 const Title = styled(Heading)`
   color: ${props => props.theme.colors.darker};
-  font-size: 20px;
+  font-size: 18px;
   text-decoration: none;
 `;
