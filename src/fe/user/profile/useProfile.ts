@@ -44,6 +44,7 @@ export const useProfile = () => {
       }),
     [updateProfileMutation, profileQ]
   );
+
   return useMemo(() => {
     const user = profileQ.data?.me?.user;
     const profile = user as Maybe<

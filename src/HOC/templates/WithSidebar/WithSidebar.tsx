@@ -21,7 +21,7 @@ export const WithSidebarTemplate: FC<WithSidebarTemplate> = ({ children }) => {
     };
     return props;
   }, [meQ]);
-  console.log('withSidebarProps', withSidebarProps);
+  // console.log('withSidebarProps', withSidebarProps);
   return withSidebarProps ? (
     <ProvideSideBarContext>
       <WithSidebar {...withSidebarProps}>{children}</WithSidebar>
