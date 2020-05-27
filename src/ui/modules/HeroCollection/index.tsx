@@ -103,40 +103,44 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
               <More ml={2} onClick={() => setOpenDropdown(true)}>
                 <MoreVertical size={20} />
                 {isOpenDropdown && (
-                  <Dropdown orientation={'bottom'} cb={setOpenDropdown}>
-                    {c.canModify && (
-                      <DropdownItem onClick={() => setOpenSettings(true)}>
-                        <Settings size={20} color={'rgb(101, 119, 134)'} />
+                  <RightDd>
+                    <Dropdown orientation={'bottom'} cb={setOpenDropdown}>
+                      {c.canModify && (
+                        <DropdownItem onClick={() => setOpenSettings(true)}>
+                          <Settings size={20} color={'rgb(101, 119, 134)'} />
+                          <Text sx={{ flex: 1 }} ml={2}>
+                            <Trans>Edit the collection</Trans>
+                          </Text>
+                        </DropdownItem>
+                      )}
+                      <DropdownItem onClick={() => setOpenFlag(true)}>
+                        <FlagIcon size={20} color={'rgb(101, 119, 134)'} />
                         <Text sx={{ flex: 1 }} ml={2}>
-                          <Trans>Edit the collection</Trans>
+                          {!c.isFlagged ? (
+                            <Trans>Flag this collection</Trans>
+                          ) : (
+                            <Trans>Unflag this collection</Trans>
+                          )}
                         </Text>
                       </DropdownItem>
-                    )}
-                    <DropdownItem onClick={() => setOpenFlag(true)}>
-                      <FlagIcon size={20} color={'rgb(101, 119, 134)'} />
-                      <Text sx={{ flex: 1 }} ml={2}>
-                        {!c.isFlagged ? (
-                          <Trans>Flag this collection</Trans>
-                        ) : (
-                          <Trans>Unflag this collection</Trans>
-                        )}
-                      </Text>
-                    </DropdownItem>
-                    {c.isAdmin ? (
-                      <AdminDropdownItem onClick={() => setOpenFeatured(true)}>
-                        <Star size={20} color={'rgb(211, 103, 5)'} />
-                        <Text sx={{ flex: 1 }} ml={2}>
-                          {
-                            /* c.isFeatured ? (
+                      {c.isAdmin ? (
+                        <AdminDropdownItem
+                          onClick={() => setOpenFeatured(true)}
+                        >
+                          <Star size={20} color={'rgb(211, 103, 5)'} />
+                          <Text sx={{ flex: 1 }} ml={2}>
+                            {
+                              /* c.isFeatured ? (
                           <Trans>Remove from featured list</Trans>
                         ) :  */ <Trans>
-                              Add to featured list
-                            </Trans>
-                          }
-                        </Text>
-                      </AdminDropdownItem>
-                    ) : null}
-                  </Dropdown>
+                                Add to featured list
+                              </Trans>
+                            }
+                          </Text>
+                        </AdminDropdownItem>
+                      ) : null}
+                    </Dropdown>
+                  </RightDd>
                 )}
               </More>
             </ActionsHero>
@@ -163,6 +167,14 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
 };
 
 export default HeroCollection;
+
+const RightDd = styled(Box)`
+  .dropdown {
+    right: 0;
+    left: auto;
+  }
+`;
+
 const Info = styled(Flex)`
   align-items: center;
 `;

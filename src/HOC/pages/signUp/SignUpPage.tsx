@@ -41,12 +41,15 @@ export const SignUpPageHOC: FC<SignUpPageHOC> = () => {
     passwordConfirm: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Passwords must match')
       .required(),
-    terms: Yup.boolean().required()
+    terms: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions')
   });
 
   const formik = useFormik<SignUpFormValues>({
     initialValues,
     enableReinitialize: true,
+    validateOnChange: false,
+    validateOnBlur: false,
+    validationSchema,
     onSubmit: regInput =>
       signUp({
         email: regInput.email,
@@ -55,8 +58,7 @@ export const SignUpPageHOC: FC<SignUpPageHOC> = () => {
         preferredUsername: regInput.username,
         wantsEmailDigest: false,
         wantsNotifications: false
-      }),
-    validationSchema
+      })
   });
 
   const props = useMemo<Props>(

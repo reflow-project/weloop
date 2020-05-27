@@ -8,6 +8,7 @@ import {
   MainContainer,
   HomeBox,
   ObjectsList,
+  CollectionsWrapper,
   MenuList
 } from 'ui/elements/Layout';
 import { Flex, Box, Text } from 'rebass/styled-components';
@@ -49,7 +50,9 @@ export const Discover: React.FC<Props> = ({
                 {LoadMoreFormik && <LoadMore LoadMoreFormik={LoadMoreFormik} />}
               </Route>
               <Route path={`${basePath}/collections`}>
-                <ObjectsList>{CollectionsBoxes}</ObjectsList>
+                <ObjectsList>
+                  <CollectionsWrapper>{CollectionsBoxes}</CollectionsWrapper>
+                </ObjectsList>
                 {LoadMoreFormik && <LoadMore LoadMoreFormik={LoadMoreFormik} />}
               </Route>
               <Route path={`${basePath}`}>

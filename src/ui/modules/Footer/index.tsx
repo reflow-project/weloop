@@ -11,7 +11,7 @@ const Footer = () => {
       <ul>
         <li>
           <a href={related_urls.project_homepage} target="blank">
-            <Trans>About {APP_NAME}</Trans>
+            <Trans>About </Trans> {APP_NAME}
           </a>
         </li>
         <li>

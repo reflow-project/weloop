@@ -24,6 +24,7 @@ export interface Activity {
   createdAt: string;
   actor: Actor | null;
   event: string;
+  threadUrl?: string;
   preview: JSX.Element;
   communityLink: string;
   communityName: string;
@@ -35,13 +36,24 @@ export const ActivityPreview: FC<Props> = activity => {
   if (activity.status === Status.Loading) {
     return <Trans>loading...</Trans>;
   }
-  // console.log(activity.event);
   return (
     <FeedItem mb={2}>
       {activity.event.toLowerCase().includes('like') ||
       activity.event.toLowerCase().includes('flag')
         ? activity.actor && (
             <SmallActorComp actor={activity.actor} event={activity.event} />
+          )
+        : activity.event.toLowerCase().includes('discussion') ||
+          activity.event.toLowerCase().includes('comment')
+        ? activity.actor && (
+            <ActorComp
+              actor={activity.actor}
+              createdAt={activity.createdAt}
+              threadUrl={activity.threadUrl}
+              event={activity.event}
+              communityLink={activity.communityLink}
+              communityName={activity.communityName}
+            />
           )
         : activity.actor && (
             <ActorComp
@@ -64,6 +76,7 @@ export interface ActorProps {
   actor?: Actor;
   createdAt: string;
   event: string;
+  threadUrl?: string;
   communityName: string;
   communityLink: string;
 }
@@ -71,6 +84,7 @@ export const ActorComp: FC<ActorProps> = ({
   actor,
   createdAt,
   event,
+  threadUrl,
   communityName,
   communityLink
 }) => {
@@ -90,7 +104,11 @@ export const ActorComp: FC<ActorProps> = ({
                   variant="text"
                   ml={1}
                 >
-                  {event}
+                  {threadUrl ? (
+                    <Link to={`/thread/${threadUrl}`}>{event}</Link>
+                  ) : (
+                    event
+                  )}
                 </TextEvent>
               </Flex>
             </Flex>
@@ -144,6 +162,10 @@ const CommunityName = styled(Link)`
 
 const TextEvent = styled(Text)`
   color: ${props => props.theme.colors.dark};
+  a {
+    font-weight: 600;
+    color: ${props => props.theme.colors.darker};
+  }
 `;
 
 const Contents = styled(Box)``;

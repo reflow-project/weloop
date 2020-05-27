@@ -10,6 +10,7 @@ import Button from 'ui/elements/Button';
 import { Input } from '@rebass/forms';
 import { Panel, WrapperPanel } from 'ui/elements/Panel';
 import LogoContainer from 'ui/elements/Logo';
+// import {Form} from 'formik'
 // const MnetLogin = require('static/img/login.jpg');
 import {
   INSTANCE_DESCRIPTION,
@@ -41,34 +42,36 @@ export const Login: React.FC<Props> = ({ formik }) => {
         <LoginWrapper>
           <LogoContainer isHome={true} />
           <FormWrapper>
-            <Form>
+            <FormLogin>
               <LoginForm>
                 <Box p={3}>
-                  <Input
-                    placeholder={tt.placeholders.email}
-                    name="email"
-                    value={formik.values.email}
-                    onChange={formik.handleChange}
-                  />
-                  <Spacer />
-                  <Input
-                    type="password"
-                    placeholder={tt.placeholders.password}
-                    name="password"
-                    value={formik.values.password}
-                    onChange={formik.handleChange}
-                  />
-                  <Button
-                    mt={3}
-                    variant="primary"
-                    isSubmitting={formik.isSubmitting}
-                    isDisabled={formik.isSubmitting}
-                    type="submit"
-                    style={{ width: '100%' }}
-                    onClick={formik.submitForm}
-                  >
-                    <Trans>Sign in</Trans>
-                  </Button>
+                  <form onSubmit={formik.handleSubmit}>
+                    <Input
+                      placeholder={tt.placeholders.email}
+                      name="email"
+                      value={formik.values.email}
+                      onChange={formik.handleChange}
+                    />
+                    <Spacer />
+                    <Input
+                      type="password"
+                      placeholder={tt.placeholders.password}
+                      name="password"
+                      value={formik.values.password}
+                      onChange={formik.handleChange}
+                    />
+                    <Button
+                      mt={3}
+                      variant="primary"
+                      isSubmitting={formik.isSubmitting}
+                      isDisabled={formik.isSubmitting}
+                      type="submit"
+                      style={{ width: '100%' }}
+                      // onClick={formik.submitForm}
+                    >
+                      <Trans>Sign in</Trans>
+                    </Button>
+                  </form>
                 </Box>
               </LoginForm>
               <ResetPass variant="text" my={3} mt={2}>
@@ -76,7 +79,7 @@ export const Login: React.FC<Props> = ({ formik }) => {
                   <Trans>Trouble logging in?</Trans>
                 </Link>
               </ResetPass>
-            </Form>
+            </FormLogin>
             <Or>
               <Trans>Or</Trans>
             </Or>
@@ -168,7 +171,7 @@ const FormWrapper = styled.div`
   grid-area: form;
 `;
 
-const Form = styled.div`
+const FormLogin = styled.div`
   background: ${props => props.theme.colors.appInverse};
   border-radius: 4px;
   height: inherit;
@@ -236,7 +239,7 @@ const ResetPass = styled(Text)`
   }
 `;
 
-const LoginForm = styled.form`
+const LoginForm = styled.div`
   margin: 0;
   margin-bottom: 16px;
   input {

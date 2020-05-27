@@ -20,14 +20,14 @@ default:
   before_script:
     - mkdir -p .pip # prepare to cache pip packages
     - export PATH=$PATH:.pip
-    - apk add --update py-pip && pip install -U pip # install python & pip
-    - pip --cache-dir=.pip install awscli 
+    - apk add --update --no-cache py-pip build-base # install python & make
+    - pip --cache-dir=.pip install -U pip # upgrade pip
+    - pip --cache-dir=.pip install awscli # for AWS api
     - if [ ! -z "$TX_TOKEN" ]; then pip --cache-dir=.pip install transifex-client ; else echo "Skipping..."; fi # install transifex cli
     #- rm -rf node_modules
     - yarn # Install all JS dependencies
-    # - yarn add-locale en_GB # make sure we have default language
-    # - yarn extract # extract latest strings from source into English PO file for localisation
-    - if [ ! -z "$TX_TOKEN" ]; then tx pull --force --no-interactive ; else echo "Skipping..."; fi #  pull all the latest localised PO files from transifex to be used by frontend
+    # - make dev-l8n-extract # extract latest strings from source into English PO file for localisation
+    - make dev-l8n-download #  pull all the latest localised PO files from transifex to be used by frontend
     # - yarn compile # compile localisation PO files into .js files 
 
 docs: # build and deploy documentation
@@ -50,7 +50,6 @@ deploy-staging: # build and deploy develop branch to app.next.moodle.net
   only:
     - develop # Only run on specific branch
   script:
-    - if [ ! -z "$TX_TOKEN" ]; then tx push --source --no-interactive ; else echo "Skipping..."; fi # then push latest English PO file to transifex for translators (only need to run this once per new commit)
     - REACT_APP_GRAPHQL_ENDPOINT=/api/graphql REACT_APP_MOTHERSHIP_API_ID=KVG4RFL0JJ REACT_APP_MOTHERSHIP_API_KEY=${HQ_MOTHERSHIP_API_KEY} REACT_APP_MOTHERSHIP_ENV=moodlenet_mothership_next CI=false yarn build --prod # Build for prod, need to specify URL of backend API, and CI=false to avoid failing on warnings
     - rm -rf public # CRA and gitlab pages both use the public folder. Only do this in a build pipeline.
     - mv build public # Move build files to public dir for Gitlab Pages
@@ -71,6 +70,8 @@ deploy-prod: # build and deploy master branch to app.moodle.net
   only:
     - master # Only run on production branch
   script:
+    - make dev-l8n-extract # extract latest localisable strings
+    - if [ ! -z "$TX_TOKEN" ]; then tx push --source --no-interactive ; else echo "Skipping..."; fi # then push latest English PO file to transifex for translators (only need to run this once per new commit)
     - REACT_APP_GRAPHQL_ENDPOINT=https://home.moodle.net/api/graphql REACT_APP_MOTHERSHIP_API_ID=KVG4RFL0JJ REACT_APP_MOTHERSHIP_API_KEY=${PROD_MOTHERSHIP_API_KEY} REACT_APP_MOTHERSHIP_ENV=moodlenet_mothership CI=false yarn build --prod # Build for prod, need to specify URL of backend API, and CI=false to avoid failing on warnings
     - rm -rf public # CRA and gitlab pages both use the public folder. Only do this in a build pipeline.
     - mv build public # Move build files to public dir for Gitlab Pages

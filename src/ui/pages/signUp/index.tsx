@@ -79,7 +79,7 @@ export const SignUpPage: React.FC<Props> = ({
             </Aware>
           </Header>
           <Flex mt={2}>
-            <FormWrapper>
+            <FormWrapper onSubmit={formik.handleSubmit}>
               <Box>
                 <label>
                   <Trans>Email</Trans>
@@ -177,6 +177,11 @@ export const SignUpPage: React.FC<Props> = ({
                     Terms and Conditions
                   </NavLink>
                 </Label>
+                {formik.errors.terms && (
+                  <AlertWrapper>
+                    <Alert variant="negative">{formik.errors.terms}</Alert>
+                  </AlertWrapper>
+                )}
               </Box>
               <Box mt={3}>
                 <Button
@@ -184,7 +189,7 @@ export const SignUpPage: React.FC<Props> = ({
                   isSubmitting={formik.isSubmitting}
                   isDisabled={formik.isSubmitting}
                   type="submit"
-                  onClick={formik.submitForm}
+                  // onClick={formik.submitForm}
                 >
                   <Trans>Signup</Trans>
                 </Button>
@@ -217,7 +222,7 @@ const Header = styled.div`
   text-align: center;
 `;
 
-const FormWrapper = styled(Box)`
+const FormWrapper = styled.form`
   margin: 0;
   flex: 1;
   input {
