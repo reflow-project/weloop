@@ -66,7 +66,7 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
           <Title variant="heading" mt={0}>
             {c.name}
           </Title>
-          <Username fontSize={1}>@{c.fullName}</Username>
+          <Username fontSize={0}>@{c.fullName}</Username>
           {c.summary && (
             <Box mt={2}>
               <MD_Comment content={c.summary} />
@@ -221,6 +221,7 @@ const Username = styled(Text)`
   color: ${props => props.theme.colors.mediumdark};
   font-weight: 500;
   text-transform: lowercase;
+  font-size: 14px;
 `;
 
 const MembersTot = styled(NavLink)`
