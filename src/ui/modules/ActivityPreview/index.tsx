@@ -23,6 +23,7 @@ export interface ActivityLoading {
 export interface Activity {
   createdAt: string;
   actor: Actor | null;
+  commentActor?: Actor;
   event: string;
   threadUrl?: string;
   preview: JSX.Element;
@@ -42,6 +43,15 @@ export const ActivityPreview: FC<Props> = activity => {
       activity.event.toLowerCase().includes('flag')
         ? activity.actor && (
             <SmallActorComp actor={activity.actor} event={activity.event} />
+          )
+        : activity.event.toLowerCase().includes('commented')
+        ? activity.actor && (
+            <SmallActorComp
+              actor={activity.actor}
+              commentActor={activity.commentActor}
+              event={activity.event}
+              threadUrl={activity.threadUrl}
+            />
           )
         : activity.event.toLowerCase().includes('discussion') ||
           activity.event.toLowerCase().includes('comment')
@@ -126,27 +136,45 @@ export const ActorComp: FC<ActorProps> = ({
 
 export interface SmallActorProps {
   actor: Actor;
+  commentActor?: Actor;
   event: string;
+  threadUrl?: string;
 }
 
-export const SmallActorComp: FC<SmallActorProps> = ({ actor, event }) => {
+export const SmallActorComp: FC<SmallActorProps> = ({
+  actor,
+  commentActor,
+  event,
+  threadUrl
+}) => {
+  console.log('commentActor ' + commentActor + ' event ' + event);
   return (
     <Member sx={{ alignItems: 'center !important' }}>
       <Avatar
         size="s"
-        initials={actor.name}
-        src={actor.icon}
+        initials={commentActor ? commentActor.name : actor.name}
+        src={commentActor ? commentActor.icon : actor.icon}
         variant="avatar"
       />
       <MemberInfo sx={{ marginTop: 0 }} ml={2}>
         <Flex alignItems="center">
           <Flex flex={1}>
             <Name>
-              <Link to={actor.link}>{actor.name}</Link>
+              <Link to={commentActor ? commentActor.link : actor.link}>
+                {commentActor ? commentActor.name : actor.name}
+              </Link>
             </Name>
-            <Text sx={{ textTransform: 'lowercase' }} variant="text" ml={1}>
-              {event}
-            </Text>
+            <TextEvent
+              sx={{ textTransform: 'lowercase' }}
+              variant="text"
+              ml={1}
+            >
+              {threadUrl ? (
+                <Link to={`/thread/${threadUrl}`}>{event}</Link>
+              ) : (
+                event
+              )}
+            </TextEvent>
           </Flex>
         </Flex>
       </MemberInfo>
