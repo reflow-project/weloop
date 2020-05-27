@@ -147,7 +147,6 @@ export const SmallActorComp: FC<SmallActorProps> = ({
   event,
   threadUrl
 }) => {
-  console.log('commentActor ' + commentActor + ' event ' + event);
   return (
     <Member sx={{ alignItems: 'center !important' }}>
       <Avatar
