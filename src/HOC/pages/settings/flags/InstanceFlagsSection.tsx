@@ -5,6 +5,7 @@ import { FlagPreviewHOC } from 'HOC/modules/previews/flag/FlagPreview';
 import React, { FC, useMemo } from 'react';
 import { ActivityPreview, Status } from 'ui/modules/ActivityPreview';
 import Flags, { Props } from 'ui/pages/settings/flags';
+import { BottomBordered } from 'ui/elements/Layout';
 
 export interface InstanceFlagsSection {}
 
@@ -19,15 +20,17 @@ export const InstanceFlagsSection: FC<InstanceFlagsSection> = () => {
           const actor = flag.creator && getActivityActor(flag.creator);
 
           return (
-            <ActivityPreview
-              actor={actor}
-              communityLink=""
-              communityName=""
-              createdAt={flag.createdAt}
-              event="flagged"
-              preview={context}
-              status={Status.Loaded}
-            />
+            <BottomBordered>
+              <ActivityPreview
+                actor={actor}
+                communityLink=""
+                communityName=""
+                createdAt={flag.createdAt}
+                event="flagged"
+                preview={context}
+                status={Status.Loaded}
+              />
+            </BottomBordered>
           );
         })}
       </>

@@ -118,6 +118,10 @@ export const ObjectsList = styled(Box)`
   }
 `;
 
+export const BottomBordered = styled(Box)`
+  border-bottom: ${props => props.theme.colors.border};
+`;
+
 export const CollectionsWrapper = styled(Box)`
   display: grid;
   grid-template-columns: 1fr 1fr;

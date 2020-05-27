@@ -94,40 +94,44 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
               <More onClick={() => setOpenDropdown(true)}>
                 <MoreVertical size={20} />
                 {isOpenDropdown && (
-                  <Dropdown orientation={'bottom'} cb={setOpenDropdown}>
-                    {c.canModify && (
-                      <DropdownItem onClick={() => setOpenSettings(true)}>
-                        <Settings size={20} color={'rgb(101, 119, 134)'} />
+                  <RightDd>
+                    <Dropdown orientation={'bottom'} cb={setOpenDropdown}>
+                      {c.canModify && (
+                        <DropdownItem onClick={() => setOpenSettings(true)}>
+                          <Settings size={20} color={'rgb(101, 119, 134)'} />
+                          <Text sx={{ flex: 1 }} ml={2}>
+                            <Trans>Edit the community</Trans>
+                          </Text>
+                        </DropdownItem>
+                      )}
+                      <DropdownItem onClick={() => setOpenFlag(true)}>
+                        <Flag size={20} color={'rgb(101, 119, 134)'} />
                         <Text sx={{ flex: 1 }} ml={2}>
-                          <Trans>Edit the community</Trans>
+                          {!c.isFlagged ? (
+                            <Trans>Flag this community</Trans>
+                          ) : (
+                            <Trans>Unflag this community</Trans>
+                          )}
                         </Text>
                       </DropdownItem>
-                    )}
-                    <DropdownItem onClick={() => setOpenFlag(true)}>
-                      <Flag size={20} color={'rgb(101, 119, 134)'} />
-                      <Text sx={{ flex: 1 }} ml={2}>
-                        {!c.isFlagged ? (
-                          <Trans>Flag this community</Trans>
-                        ) : (
-                          <Trans>Unflag this community</Trans>
-                        )}
-                      </Text>
-                    </DropdownItem>
-                    {c.isAdmin ? (
-                      <AdminDropdownItem onClick={() => setOpenFeatured(true)}>
-                        <Star size={20} color={'rgb(211, 103, 5)'} />
-                        <Text sx={{ flex: 1 }} ml={2}>
-                          {
-                            /* c.isFeatured ? (
+                      {c.isAdmin ? (
+                        <AdminDropdownItem
+                          onClick={() => setOpenFeatured(true)}
+                        >
+                          <Star size={20} color={'rgb(211, 103, 5)'} />
+                          <Text sx={{ flex: 1 }} ml={2}>
+                            {
+                              /* c.isFeatured ? (
                             <Trans>Remove from featured list</Trans>
                           ) :  */ <Trans>
-                              Add to featured list
-                            </Trans>
-                          }
-                        </Text>
-                      </AdminDropdownItem>
-                    ) : null}
-                  </Dropdown>
+                                Add to featured list
+                              </Trans>
+                            }
+                          </Text>
+                        </AdminDropdownItem>
+                      ) : null}
+                    </Dropdown>
+                  </RightDd>
                 )}
               </More>
             </Actions>
@@ -155,6 +159,13 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
 
 const InfoCommunity = styled(Flex)`
   align-items: center;
+`;
+
+const RightDd = styled(Box)`
+  .dropdown {
+    right: 0;
+    left: auto;
+  }
 `;
 
 // const Badge = styled(Box)`
