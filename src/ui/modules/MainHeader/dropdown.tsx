@@ -35,17 +35,32 @@ const Item = styled(Flex)`
   }
 `;
 
+const ItemButton = styled(Item)`
+  border: 1px solid ${props => props.theme.colors.medium};
+  border-radius: 4px;
+  height: 34px;
+  &:hover {
+    background: ${props => props.theme.colors.light};
+  }
+  div {
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+`;
+
 export interface Props {
   logout(): void;
   setOpenDropdown: any;
   userLink: string;
   createCommunity: any;
+  isAdmin: boolean;
 }
 
 export const DropdownSidebar: React.FC<Props> = ({
   logout,
   userLink,
   setOpenDropdown,
+  isAdmin,
   createCommunity
 }) => {
   const { push } = useHistory();
@@ -69,6 +84,15 @@ export const DropdownSidebar: React.FC<Props> = ({
           </Text>
         </Item>
       </List>
+      {isAdmin && (
+        <List lined>
+          <ItemButton variant="link" onClick={() => push('/settings/instance')}>
+            <Text variant="text" sx={{ flex: 1, textAlign: 'center' }}>
+              <Trans>Admin dashboard</Trans>
+            </Text>
+          </ItemButton>
+        </List>
+      )}
       <List lined>
         <Item variant="link" onClick={() => createCommunity()}>
           <span>

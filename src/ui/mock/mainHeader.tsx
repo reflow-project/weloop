@@ -10,6 +10,7 @@ export const getMainHeaderProps = (): Props => {
       icon:
         'https://docs.moodle.org/dev/images_dev/thumb/2/2b/estrella.jpg/100px-estrella.jpg',
       link: '/',
+      isAdmin: false,
       logout: () => console.log(false)
     },
     toggleSideBar: () => console.log(true),

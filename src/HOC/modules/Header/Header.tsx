@@ -24,6 +24,7 @@ export const MainHeaderHOC: FC<MainHeaderHOC> = () => {
       Search: <SearchBox key="search" />,
       user: user
         ? {
+            isAdmin: meQ.isAdmin,
             logout: meQ.logout,
             icon: user.icon?.url || '',
             link: `/user/${user.id}`,

@@ -46,6 +46,6 @@ export const DropdownItem = styled(Flex)`
     div {
       color: ${props => props.theme.colors.mediumdark} !important;
     }
-    background: ${props => props.theme.colors.lighter} !important;
+    background: ${props => props.theme.colors.light} !important;
   }
 `;
