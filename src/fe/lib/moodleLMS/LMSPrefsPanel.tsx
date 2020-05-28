@@ -30,7 +30,7 @@ export const LMSPrefsPanel: FC<LMSPrefsPanel> = ({
     enableReinitialize: true,
     validationSchema,
     onSubmit: BasicLMSPrefs => {
-      const shallUpdate = !!lmsParams && lmsParams.site !== BasicLMSPrefs.site;
+      const shallUpdate = !lmsParams || lmsParams.site !== BasicLMSPrefs.site;
       return sendToLMS(BasicLMSPrefs, shallUpdate);
     }
   });
