@@ -86,7 +86,7 @@ export const mothershipCreds =
     : null;
 export const searchDisabled = !mothershipCreds;
 
-export const USERNAME_REGEX = /^[a-ZA-Z][a-ZA-Z0-9-]{2,}$/;
+export const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9-]{2,}$/;
 
 export const max_file_size = '10MB';
 
