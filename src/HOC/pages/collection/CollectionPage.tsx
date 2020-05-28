@@ -62,8 +62,8 @@ export const CollectionPage: FC<CollectionPage> = props => {
     const ResourcesBox = (
       <>
         {resourcesPage.edges.map(resource => (
-          <Box mx={3} my={2} mb={3}>
-            <ResourcePreviewHOC resourceId={resource.id} key={resource.id} />
+          <Box mx={3} my={2} mb={3} key={resource.id}>
+            <ResourcePreviewHOC resourceId={resource.id} />
           </Box>
         ))}
       </>
@@ -81,7 +81,12 @@ export const CollectionPage: FC<CollectionPage> = props => {
       <>
         {collectionFollowersPage.edges.map(
           follow =>
-            follow.creator && <UserPreviewHOC userId={follow.creator?.userId} />
+            follow.creator && (
+              <UserPreviewHOC
+                userId={follow.creator.userId}
+                key={follow.creator.userId}
+              />
+            )
         )}
       </>
     );
