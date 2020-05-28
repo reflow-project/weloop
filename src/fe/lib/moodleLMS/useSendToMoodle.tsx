@@ -29,7 +29,7 @@ export const useLMS = (resource: Maybe<ResourceLMS>) => {
   const { data: instanceInfo } = useInstanceInfoQuery();
 
   const { updateLMSPrefs, currentLMSPrefs } = useLMSPrefs();
-  console.table({ currentLMSPrefs, canonicalUrl: resource?.canonicalUrl });
+  // console.table({ currentLMSPrefs, canonicalUrl: resource?.canonicalUrl });
 
   const sendToLMS = useCallback(
     (LMS: LMSPrefs) => {
