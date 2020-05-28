@@ -1,6 +1,6 @@
 import { useProfile } from 'fe/user/profile/useProfile';
 import { LMSPrefsPanel } from './LMSPrefsPanel';
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useState, useEffect } from 'react';
 import { LMSPrefs, sendToMoodle } from './LMSintegration';
 import {
   SESSION,
@@ -17,7 +17,7 @@ import { resourceGql2lms } from 'HOC/lib/LMSMappings/gql2LMS';
 import { resourceHit2lms } from 'HOC/lib/LMSMappings/hit2LMS';
 import { useMe } from 'fe/session/useMe';
 const storage = createLocalSessionKVStorage(SESSION)('LMS_');
-const LMS_KEY = 'LMS';
+const LMS_PREFS_KEY = 'Prefs';
 
 export const useLMSGQL = (resource: Maybe<ResourceGqlMin>) => {
   return useLMS(resourceGql2lms(resource));
@@ -29,6 +29,7 @@ export const useLMS = (resource: Maybe<ResourceLMS>) => {
   const { data: instanceInfo } = useInstanceInfoQuery();
 
   const { updateLMSPrefs, currentLMSPrefs } = useLMSPrefs();
+  console.table({ currentLMSPrefs, canonicalUrl: resource?.canonicalUrl });
 
   const sendToLMS = useCallback(
     (LMS: LMSPrefs) => {
@@ -52,21 +53,23 @@ export const useLMS = (resource: Maybe<ResourceLMS>) => {
       updateLMSPrefs,
       sendToLMS,
       sendToMoodle,
-      LMSPrefsPanel: ({ done }) =>
-        currentLMSPrefs ? (
-          <LMSPrefsPanel
-            done={done}
-            lmsParams={currentLMSPrefs || storage.get(LMS_KEY)}
-            sendToLMS={async (BasicLMS, update) => {
-              await done();
-              const useThisLMSPrefs: LMSPrefs = update
-                ? { ...BasicLMS, course: undefined, section: undefined }
-                : currentLMSPrefs;
-              update && updateLMSPrefs(useThisLMSPrefs);
-              return sendToLMS(useThisLMSPrefs);
-            }}
-          />
-        ) : null
+      LMSPrefsPanel: ({ done }) => (
+        <LMSPrefsPanel
+          done={done}
+          lmsParams={currentLMSPrefs}
+          sendToLMS={async (BasicLMS, update) => {
+            await done();
+            const useThisLMSPrefs: LMSPrefs | null = update
+              ? { ...BasicLMS, course: undefined, section: undefined }
+              : currentLMSPrefs;
+            if (!useThisLMSPrefs) {
+              return;
+            }
+            update && updateLMSPrefs(useThisLMSPrefs);
+            return sendToLMS(useThisLMSPrefs);
+          }}
+        />
+      )
     }),
     [sendToLMS, updateLMSPrefs, sendToMoodle, currentLMSPrefs]
   );
@@ -76,18 +79,27 @@ export const useLMSPrefs = () => {
   const { loading: loadingMe } = useMe();
   const { profile, updateProfile, loading: loadingProfile } = useProfile();
   const loading = loadingMe || loadingProfile;
-  const currentLMSPrefs = profile?.extraInfo?.LMS;
+
+  const [currentLMSPrefs, setCurrentLMSPrefs] = useState(
+    storage.get(LMS_PREFS_KEY) as LMSPrefs | null
+  );
+
+  useEffect(() => {
+    profile?.extraInfo?.LMS
+      ? setCurrentLMSPrefs(profile.extraInfo.LMS)
+      : setCurrentLMSPrefs(storage.get(LMS_PREFS_KEY) as LMSPrefs | null);
+  }, [profile?.extraInfo?.LMS]);
 
   const updateLMSPrefs = useCallback(
     async (LMS: LMSPrefs) => {
-      storage.set(LMS_KEY, LMS);
+      setCurrentLMSPrefs(LMS);
+      storage.set(LMS_PREFS_KEY, LMS);
       if (!loading && profile) {
         await updateProfile({ profile: { extraInfo: { LMS } } });
       }
     },
     [updateProfile, profile, loading]
   );
-
   return useMemo(
     () => ({
       updateLMSPrefs,
