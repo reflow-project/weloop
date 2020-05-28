@@ -8,11 +8,13 @@ import {
 } from 'ui/modules/Sidebar/index';
 import { MyFollowedCommunityDataFragment } from 'fe/community/myFollowed/myFollowedCommunities.generated';
 import { SideBarContext } from 'HOC/context/SideBar';
+import { useFormikPage } from 'fe/lib/helpers/usePage';
 
 export interface SidebarHOC {}
 export const SidebarHOC: FC<SidebarHOC> = () => {
   const { isOpen: isSidebarOpen } = useContext(SideBarContext);
   const { myCommunityFollowsPage } = useMyFollowedCommunities();
+  const [LoadMoreFormik] = useFormikPage(myCommunityFollowsPage);
   const communities = useMemo(
     () =>
       myCommunityFollowsPage.edges
@@ -39,9 +41,9 @@ export const SidebarHOC: FC<SidebarHOC> = () => {
       isSidebarOpen,
       status: StatusUI.Loaded,
       communities,
-      LoadMoreFormik: null //FIX ME
+      LoadMoreFormik
     };
     return props;
-  }, [communities, isSidebarOpen]);
+  }, [communities, isSidebarOpen, LoadMoreFormik]);
   return <SidebarUI {...propsUI} />;
 };
