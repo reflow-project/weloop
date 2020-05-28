@@ -1,9 +1,11 @@
 import { Props, Status } from 'ui/modules/Sidebar';
+import { ToggleFormik } from './formik';
 
 export const getSidebarProps = (): Props => {
   return {
     status: Status.Loaded,
     isSidebarOpen: true,
+    LoadMoreFormik: ToggleFormik(),
     communities: [
       {
         link: {

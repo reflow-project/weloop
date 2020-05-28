@@ -11,6 +11,8 @@ import styled from '../../themes/styled';
 import Avatar from 'ui/elements/Avatar';
 import { my_timeline, logo_small_url } from '../../../mn-constants';
 // const MnetLogo = require('static/img/logo-icon.png');
+import { FormikHook } from 'ui/@types/types';
+import { LoadMore } from 'ui/modules/Loadmore';
 
 export enum Status {
   Loading,
@@ -160,6 +162,7 @@ interface SidebarLoaded {
   status: Status.Loaded;
   isSidebarOpen: boolean;
   communities: CommunityPreview[];
+  LoadMoreFormik: FormikHook | null;
 }
 
 export interface SidebarLoading {
@@ -221,6 +224,9 @@ export const Sidebar: React.FC<Props> = props => {
                             </NavItem>
                           </CommunityLink>
                         )
+                      )}
+                      {props.LoadMoreFormik && (
+                        <LoadMore LoadMoreFormik={props.LoadMoreFormik} />
                       )}
                     </Nav>
                   </>

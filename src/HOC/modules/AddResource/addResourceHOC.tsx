@@ -15,7 +15,7 @@ export const validationSchema: Yup.ObjectSchema<ResourceFormValues> = Yup.object
 >({
   name: Yup.string()
     .max(90)
-    .required(),
+    .required('title is required'),
   summary: Yup.string().max(1000),
   icon: Yup.mixed<File | string>().test(...TestUrlOrFile),
   resource: Yup.mixed<File>().required(),

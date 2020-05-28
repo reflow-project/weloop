@@ -16,8 +16,8 @@ export const validationSchema = Yup.object<ShareResource>({
 });
 export const urlValidationSchema = Yup.object<{ fetchUrl: string }>({
   fetchUrl: Yup.string()
-    .url()
-    .required()
+    .url('Please enter a valid url')
+    .required('url is required')
 });
 
 export const shareResourceInitialValues: ShareResource = {
