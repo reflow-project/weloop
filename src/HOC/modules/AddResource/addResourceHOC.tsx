@@ -45,6 +45,8 @@ export const AddResourceHOC: FC<AddResourceHOC> = ({
     validationSchema,
     initialValues,
     enableReinitialize: true,
+    validateOnBlur: false,
+    validateOnChange: false,
     onSubmit: vals => {
       const { resource: resourceFile, icon, name, license, summary } = vals;
       if (!resourceFile) {
