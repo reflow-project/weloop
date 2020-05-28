@@ -18,7 +18,8 @@ import * as React from 'react';
 import {
   connectInfiniteHits,
   Pagination,
-  Configure
+  Configure,
+  RefinementList
 } from 'react-instantsearch-dom';
 import { ComponentBag } from 'ui/lib/componentBag';
 import { Collection } from 'ui/modules/Previews/Collection';
@@ -55,6 +56,7 @@ const _SearchPageHOC: React.FC<{ hits: Hit[] }> = ({ hits }) => {
   return (
     <>
       <Configure hitsPerPage={8} />
+      <RefinementList attribute="index_type" />
       <Search {...props} />
       <Pagination showNext />
     </>
