@@ -3,6 +3,7 @@ import React, { FC, useMemo } from 'react';
 import SignUpPage, { SignUpFormValues, Props } from 'ui/pages/signUp';
 import * as Yup from 'yup';
 import { useAnon } from 'fe/session/useAnon';
+import { USERNAME_REGEX } from 'mn-constants';
 
 const initialValues: SignUpFormValues = {
   name: '',
@@ -22,6 +23,7 @@ export const SignUpPageHOC: FC<SignUpPageHOC> = () => {
     username: Yup.string()
       .min(3)
       .max(16)
+      .matches(USERNAME_REGEX)
       .required()
       .test(
         'checkDuplUsername',
