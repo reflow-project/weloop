@@ -23,6 +23,7 @@ export interface Props {
   isFollowing: boolean;
   toggleFollowFormik: FormikHook;
   hideActions?: boolean;
+  isSearch?: boolean;
 }
 
 export const Collection: React.FC<Props> = ({
@@ -34,10 +35,16 @@ export const Collection: React.FC<Props> = ({
   totalResources,
   isFollowing,
   toggleFollowFormik,
-  hideActions
+  hideActions,
+  isSearch
 }) => {
   return (
     <CollectionWrapper>
+      {isSearch && (
+        <Search variant="text">
+          <Trans>Collection</Trans>
+        </Search>
+      )}
       <WrapperLink to={link.url} />
       <Previews>
         <Big src={icon} />
@@ -79,6 +86,17 @@ export const Collection: React.FC<Props> = ({
     </CollectionWrapper>
   );
 };
+
+export const Search = styled(Text)`
+  padding: 8px;
+  background-color: ${props => props.theme.colors.appInverse};
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: ${props => props.theme.colors.dark};
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+`;
 
 const Meta = styled(Flex)`
   color: ${props => props.theme.colors.mediumdark};

@@ -9,6 +9,7 @@ import {
 import { WrapperPanel } from 'ui/elements/Panel';
 import { ComponentBag } from 'ui/lib/componentBag';
 import { Header } from 'ui/modules/Header';
+import styled from 'ui/themes/styled';
 
 export interface Props {
   previews: ComponentBag[];
@@ -24,19 +25,27 @@ export const Search: SFC<Props> = ({ previews }) => {
 
       <MainContainer>
         <HomeBox>
-          <WrapperCont>
-            <Wrapper>
-              <Header name="Search results" />
-              <Box>
-                {previews.map(bag => (
-                  <bag.Comp {...bag.props} key={bag.key} />
-                ))}
-              </Box>
-            </Wrapper>
-          </WrapperCont>
+          <SearchWrapper>
+            <WrapperCont>
+              <Wrapper>
+                <Header name="Search results" />
+                <Box>
+                  {previews.map(bag => (
+                    <Box m={2}>
+                      <bag.Comp {...bag.props} key={bag.key} />
+                    </Box>
+                  ))}
+                </Box>
+              </Wrapper>
+            </WrapperCont>
+          </SearchWrapper>
         </HomeBox>
         <WrapperPanel />
       </MainContainer>
     </>
   );
 };
+
+const SearchWrapper = styled(Box)`
+  background: ${props => props.theme.colors.appInverse};
+`;

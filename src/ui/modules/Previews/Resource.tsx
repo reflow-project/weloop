@@ -23,6 +23,7 @@ export interface LikeActions {
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
 import Modal from 'ui/modules/Modal';
 import { typography } from 'mn-constants';
+import { Search } from './Collection';
 // import {Link} from 'react-router-dom'
 
 // const LicenseIcon0 = require('./cc-zero.png');
@@ -43,6 +44,7 @@ export interface Props {
   FlagModal: null | React.ComponentType<{ done(): unknown }>;
   MoodlePanel: null | React.ComponentType<{ done(): unknown }>;
   hideActions?: boolean;
+  isSearch?: boolean;
   // sendToMoodle:null|(()=>unknown)
 }
 
@@ -59,6 +61,7 @@ export const Resource: React.FC<Props> = ({
   isFlagged,
   FlagModal,
   MoodlePanel,
+  isSearch,
   // sendToMoodle,
   hideActions
 }) => {
@@ -68,6 +71,11 @@ export const Resource: React.FC<Props> = ({
 
   return (
     <Bordered>
+      {isSearch && (
+        <Search>
+          <Trans>Resource</Trans>
+        </Search>
+      )}
       <Wrapper p={2}>
         {icon != '' ? (
           <Avatar size="m" src={icon} />

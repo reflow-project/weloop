@@ -22,6 +22,7 @@ export function CollectionPreviewProps(
     displayUsername: username,
     isFollowing,
     icon,
+    isSearch: true,
     name: username,
     summary,
     totalResources: 12,
@@ -39,6 +40,7 @@ export function CommunityPreviewProps(
     isCreator: false,
     hideActions: false,
     icon,
+    isSearch: true,
     name,
     link: { url: '/', external: true },
     displayUsername,
@@ -65,6 +67,7 @@ export function ResourcePreviewProps(
     license,
     acceptedLicenses: ['license 1', 'license 2', 'license 3'],
     name,
+    isSearch: true,
     like: {
       toggleLikeFormik: ToggleFormik(),
       iLikeIt: true,

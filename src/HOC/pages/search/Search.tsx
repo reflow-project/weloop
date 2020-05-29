@@ -78,7 +78,7 @@ const CollectionPreviewHit: React.FC<{ hit: CollectionHit }> = ({ hit }) => {
     });
   !props && console.warn(`Could not preview searchHit:`, hit);
   // console.log(`Collection:`, props)
-  return props && <Collection {...props} />;
+  return props && <Collection isSearch {...props} />;
 };
 
 const CommunityPreviewHit: React.FC<{ hit: CommunityHit }> = ({ hit }) => {
@@ -95,7 +95,7 @@ const CommunityPreviewHit: React.FC<{ hit: CommunityHit }> = ({ hit }) => {
     });
   !props && console.warn(`Could not preview searchHit:`, hit);
   // console.log(`Community:`, props)
-  return props && <Community {...props} />;
+  return props && <Community isSearch {...props} />;
 };
 
 const ResourcePreviewHit: React.FC<{ hit: ResourceHit }> = ({ hit }) => {
@@ -121,7 +121,7 @@ const ResourcePreviewHit: React.FC<{ hit: ResourceHit }> = ({ hit }) => {
     });
   !props && console.warn(`Could not preview searchHit:`, hit);
   // console.log(`Resource:`, props)
-  return props && <Resource {...props} />;
+  return props && <Resource isSearch {...props} />;
 };
 
 const useIsLocal = (hit: Hit) => {
