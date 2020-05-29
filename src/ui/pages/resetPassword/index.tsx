@@ -36,8 +36,10 @@ export const ResetPassword: React.FC<Props> = ({ formik, isSubmitted }) => {
             <Wrapper>
               <VerifiedBox variant="text">
                 <Trans>
-                  If your email is present in our database, in a few minutes you
-                  will receive a link to recover your password in your inbox.
+                  If your email is linked to an account in our database, we have
+                  sent you an email with which you can reset your password. It
+                  may take a few minutes to arrive depending on your mail
+                  provider.
                 </Trans>
               </VerifiedBox>
               <ButtonLink to="/login">
