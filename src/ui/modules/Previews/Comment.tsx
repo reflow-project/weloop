@@ -71,18 +71,17 @@ export const Comment: React.SFC<CommentProps> = ({
         <Actions mt={2}>
           {/* {talkModalVisible && (
             <Box mb={2}>
-              <SocialText
-                placeholder={i18n._(tt.placeholders.name)}
-                defaultValue={''}
-                submit={msg => {
-                  showTalkModal(false);
-                  reply.replyFormik.setValues({ replyMessage: msg });
-                  reply.replyFormik.submitForm();
-                }}
-              />
+            <SocialText
+            placeholder={i18n._(tt.placeholders.name)}
+            defaultValue={''}
+            submit={msg => {
+              showTalkModal(false);
+              reply.replyFormik.setValues({ replyMessage: msg });
+              reply.replyFormik.submitForm();
+            }}
+            />
             </Box>
           )} */}
-
           <Box>
             <Items>
               <ActionItem>

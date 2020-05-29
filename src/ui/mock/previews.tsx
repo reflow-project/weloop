@@ -22,6 +22,7 @@ export function CollectionPreviewProps(
     displayUsername: username,
     isFollowing,
     icon,
+    isSearch: true,
     name: username,
     summary,
     totalResources: 12,
@@ -39,6 +40,7 @@ export function CommunityPreviewProps(
     isCreator: false,
     hideActions: false,
     icon,
+    isSearch: true,
     name,
     link: { url: '/', external: true },
     displayUsername,
@@ -55,16 +57,17 @@ export function ResourcePreviewProps(
   icon = 'https://images.pexels.com/photos/745365/pexels-photo-745365.jpeg',
   license = null,
   type = 'image',
-  isLocal = false,
+  isFile = false,
   name = 'Intro to Spaced Repetition',
   summary = 'I find these resources really useful for introducing the concept of spaced repetition to the students that I teach, especially the ones revising for exams!'
 ): ResourceProps {
   return {
     icon,
-    isLocal,
+    isFile,
     license,
     acceptedLicenses: ['license 1', 'license 2', 'license 3'],
     name,
+    isSearch: true,
     like: {
       toggleLikeFormik: ToggleFormik(),
       iLikeIt: true,
@@ -88,13 +91,13 @@ export function ResourcePreviewUploadedProps(
   icon = 'https://images.pexels.com/photos/745365/pexels-photo-745365.jpeg',
   license = 'CC0-1.0',
   type = 'image',
-  isLocal = true,
+  isFile = true,
   name = 'Intro to Spaced Repetition',
   summary = 'I find these resources really useful for introducing the concept of spaced repetition to the students that I teach, especially the ones revising for exams!'
 ): ResourceProps {
   return {
     icon,
-    isLocal,
+    isFile,
     license,
     acceptedLicenses: ['CC0-1.0', 'CC-BY-4.0', 'CC-BY-SA-4.0'],
     name,
@@ -166,6 +169,7 @@ export function LikedCommentPreviewProps(
     createdAt,
     communityName,
     communityLink,
+    url: '/',
     content
   };
 }
@@ -187,7 +191,7 @@ export function ThreadPreviewProps(
     // title:"What do the avatars in the topic list mean?",
     content:
       'Hey everyone, new here and just wondering where the best place would be to go and find more information about how to deploy MoodleNet? Thanks in advance!',
-    createdAt: '2019-11-09',
+    lastActivity: '2019-11-09',
     totalReplies: '24',
     totalLikes: '17',
     members: [

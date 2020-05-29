@@ -83,13 +83,19 @@ export const Collection: React.FC<Props> = ({
                     <WrapButton p={3}>
                       <Button
                         mr={2}
-                        onClick={() => setOpenShareLink(true)}
+                        onClick={() => {
+                          setOpenShareLink(true);
+                          setUploadOpen(false);
+                        }}
                         variant="outline"
                       >
                         <Trans>Share link</Trans>
                       </Button>
                       <Button
-                        onClick={() => setUploadOpen(true)}
+                        onClick={() => {
+                          setUploadOpen(true);
+                          setOpenShareLink(false);
+                        }}
                         variant="outline"
                       >
                         <Trans>Add new resource</Trans>

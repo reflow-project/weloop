@@ -5,13 +5,15 @@ import {
   MoodlePanel
 } from 'ui/modules/MoodlePanel';
 import * as Yup from 'yup';
-import { LMSPrefs } from './LMSintegration';
 import Maybe from 'graphql/tsutils/Maybe';
 
 export interface LMSPrefsPanel {
   done(): unknown;
-  sendToLMS(_: LMSPrefs, updatePrefs: boolean): void | Promise<unknown>;
-  lmsParams: Maybe<LMSPrefs>;
+  sendToLMS(
+    _: BasicMoodleLMSConfigFormValues,
+    updatePrefs: boolean
+  ): void | Promise<unknown>;
+  lmsParams: Maybe<BasicMoodleLMSConfigFormValues>;
 }
 const validationSchema = Yup.object<BasicMoodleLMSConfigFormValues>({
   site: Yup.string()
@@ -27,7 +29,10 @@ export const LMSPrefsPanel: FC<LMSPrefsPanel> = ({
     initialValues: lmsParams || { site: '' },
     enableReinitialize: true,
     validationSchema,
-    onSubmit: LMSPrefs => sendToLMS(LMSPrefs, sendToMoodleFormik.dirty)
+    onSubmit: BasicLMSPrefs => {
+      const shallUpdate = !lmsParams || lmsParams.site !== BasicLMSPrefs.site;
+      return sendToLMS(BasicLMSPrefs, shallUpdate);
+    }
   });
   const cancel = useCallback(() => done(), [done]);
   return (

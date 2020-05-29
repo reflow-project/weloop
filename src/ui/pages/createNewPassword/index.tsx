@@ -41,7 +41,7 @@ export const CreateNewPassword: React.FC<Props> = ({ formik }) => {
             />
             {formik.errors.password && (
               <AlertWrapper>
-                <Alert variant="bad">{formik.errors.password}</Alert>
+                <Alert variant="negative">{formik.errors.password}</Alert>
               </AlertWrapper>
             )}
             <Spacer />
@@ -54,7 +54,9 @@ export const CreateNewPassword: React.FC<Props> = ({ formik }) => {
             />
             {formik.errors.passwordConfirm && (
               <AlertWrapper>
-                <Alert variant="bad">{formik.errors.passwordConfirm}</Alert>
+                <Alert variant="negative">
+                  {formik.errors.passwordConfirm}
+                </Alert>
               </AlertWrapper>
             )}
             <Button

@@ -1,13 +1,13 @@
 import { Trans } from '@lingui/react';
 import * as React from 'react';
-import { Eye, EyeOff, Archive } from 'react-feather';
+import { Archive } from 'react-feather';
 import { Box, Flex, Heading, Text } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
 // import Avatar from 'ui/elements/Avatar';
 // import { SimpleLink } from 'ui/helpers/SimpleLink';
 import styled from 'ui/themes/styled';
 import { typography } from 'mn-constants';
-import { darken } from 'polished';
+import { darken, ellipsis } from 'polished';
 import { NavLink } from 'react-router-dom';
 
 export interface Props {
@@ -23,6 +23,7 @@ export interface Props {
   isFollowing: boolean;
   toggleFollowFormik: FormikHook;
   hideActions?: boolean;
+  isSearch?: boolean;
 }
 
 export const Collection: React.FC<Props> = ({
@@ -34,9 +35,143 @@ export const Collection: React.FC<Props> = ({
   totalResources,
   isFollowing,
   toggleFollowFormik,
+  hideActions,
+  isSearch
+}) => {
+  return (
+    <CollectionWrapper>
+      {isSearch && (
+        <Search variant="text">
+          <Trans>Collection</Trans>
+        </Search>
+      )}
+      <WrapperLink to={link.url} />
+      <Previews>
+        <Big src={icon} />
+        {/* <Smalls>
+        <Small>a</Small>
+        <Small>b</Small>
+        <Small>c</Small>
+      </Smalls> */}
+      </Previews>
+      <Info>
+        <Title>{name}</Title>
+        <Meta>
+          <TotResources variant="text">
+            {totalResources || 0} <Trans>Resources</Trans>
+          </TotResources>
+          <Action>
+            {hideActions ? null : (
+              <ActionItem
+                bordered
+                isFollowing={isFollowing ? true : false}
+                onClick={toggleFollowFormik.submitForm}
+              >
+                <ActionText
+                  ml={1}
+                  variant={'suptitle'}
+                  sx={{ textTransform: 'capitalize' }}
+                >
+                  {isFollowing ? (
+                    <Trans>Following </Trans>
+                  ) : (
+                    <Trans>follow</Trans>
+                  )}
+                </ActionText>
+              </ActionItem>
+            )}
+          </Action>
+        </Meta>
+      </Info>
+    </CollectionWrapper>
+  );
+};
+
+export const Search = styled(Text)`
+  padding: 8px;
+  background-color: ${props => props.theme.colors.appInverse};
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: ${props => props.theme.colors.dark};
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+`;
+
+const Meta = styled(Flex)`
+  color: ${props => props.theme.colors.mediumdark};
+  align-items: center;
+  position: relative;
+  z-index: 99999999;
+`;
+
+const Title = styled(Heading)`
+  color: ${props => props.theme.colors.darker};
+  font-size: 16px;
+  text-decoration: none;
+  word-break: break-all;
+  margin-top: 4px;
+  ${ellipsis('280px')};
+`;
+
+const CollectionWrapper = styled(Box)`
+  max-width: 300px;
+  position: relative;
+`;
+const Previews = styled(Box)`
+  display: grid;
+  // grid-template-rows: 150px 90px;
+  grid-template-rows: 150px;
+  grid-template-areas: 'big big big';
+  // grid-template-areas: "big big big"
+  //                       "small small small ";
+  column-gap: 4px;
+  row-gap: 4px;
+`;
+const Big = styled(Box)<{ src?: string }>`
+  height: 150px;
+  background: ${props => props.theme.colors.medium};
+  border-radius: 4px;
+  grid-area: big;
+
+  background-image: url("${props => props.src}");
+  background-size: cover;
+  background-position: center center;
+`;
+// const Smalls = styled(Box)`
+// grid-area: small;
+// display: grid;
+// grid-template-columns: 1fr 1fr 1fr;
+// column-gap: 4px;
+// `
+// const Small = styled(Box)`
+//   background: ${props => props.theme.colors.medium};
+//   border-radius: 4px;
+//   `
+const Info = styled(Box)``;
+const TotResources = styled(Text)`
+  font-size: 13px;
+  flex: 1;
+`;
+const Action = styled(Box)``;
+
+const ActionText = styled(Text)`
+  color: ${props => props.theme.colors.darker};
+  font-weight: 600;
+  font-size: 13px;
+`;
+
+export const tempCollection: React.FC<Props> = ({
+  link,
+  icon,
+  name,
+  summary,
+  displayUsername,
+  totalResources,
+  isFollowing,
+  toggleFollowFormik,
   hideActions
 }) => {
-  // const { push } = useHistory();
   return (
     <Bordered mb={1}>
       <WrapperLink to={link.url} />
@@ -44,11 +179,7 @@ export const Collection: React.FC<Props> = ({
       <Infos ml={3}>
         <Flex>
           <Box flex={1}>
-            <Title>
-              {name.length > 80
-                ? name.replace(/^(.{76}[^\s]*).*/, '$1...')
-                : name}
-            </Title>
+            <Title>{name}</Title>
             {/* <C>+{displayUsername}</Username> */}
           </Box>
         </Flex>
@@ -67,21 +198,11 @@ export const Collection: React.FC<Props> = ({
         <Meta mt={2}>
           {hideActions ? null : (
             <ActionItem
+              bordered
               isFollowing={isFollowing ? true : false}
               onClick={toggleFollowFormik.submitForm}
             >
-              <ActionIcon>
-                {isFollowing ? (
-                  <EyeOff strokeWidth="1" size="18" />
-                ) : (
-                  <Eye strokeWidth="1" size="18" />
-                )}
-              </ActionIcon>
-              <Text
-                ml={1}
-                variant={'suptitle'}
-                sx={{ textTransform: 'capitalize' }}
-              >
+              <Text variant={'suptitle'} sx={{ textTransform: 'capitalize' }}>
                 {isFollowing ? <Trans>Unfollow </Trans> : <Trans>follow</Trans>}
               </Text>
             </ActionItem>
@@ -124,10 +245,8 @@ const AvatarCollection = styled(Box)<{ src?: string }>`
   background-position: center center;
 `;
 
-const ActionItem = styled(Flex)<{ isFollowing?: boolean }>`
+const ActionItem = styled(Flex)<{ isFollowing?: boolean; bordered?: boolean }>`
   align-items: center;
-  margin-top: 16px;
-  margin-bottom: 8px;
 
   color: ${props =>
     props.isFollowing
@@ -137,24 +256,20 @@ const ActionItem = styled(Flex)<{ isFollowing?: boolean }>`
     color: ${props =>
       props.isFollowing
         ? props.theme.colors.lighter
-        : props.theme.colors.mediumdark};
-  }
-  background: ${props =>
-    props.isFollowing
-      ? props.theme.colors.secondary
-      : props.theme.colors.mediumlight};
-  border-radius: 4px;
-  padding: 0 8px;
-  margin-right: 8px;
-  text-align: center;
-  font-size: ${typography.size.s1};
-  svg {
-    stroke: ${props =>
-      props.isFollowing
-        ? props.theme.colors.lighter
-        : props.theme.colors.mediumdark};
+        : props.theme.colors.darker};
   }
   cursor: pointer;
+  background: ${props =>
+    props.isFollowing ? props.theme.colors.primary : 'transparent'};
+  border: 1px solid
+    ${props => (props.isFollowing ? props.theme.colors.primary : 'transparent')};
+  border: 1px solid
+    ${props => (props.bordered ? props.theme.colors.primary : 'transparent')};
+  border-radius: 4px;
+  padding: 2px 8px;
+  text-align: center;
+  font-size: ${typography.size.s1};
+
   a {
     display: flex;
     align-items: center;
@@ -163,31 +278,29 @@ const ActionItem = styled(Flex)<{ isFollowing?: boolean }>`
   }
   &:hover {
     background: ${props =>
-      darken(
-        '0.1',
-        props.isFollowing
-          ? props.theme.colors.secondary
-          : props.theme.colors.mediumlight
-      )};
-    svg.hover {
-      stroke: ${props => props.theme.colors.mediumdark};
-    }
+      props.isFollowing
+        ? props.theme.colors.mediumdark
+        : props.theme.colors.primary};
+    border-color: ${props =>
+      props.isFollowing
+        ? props.theme.colors.mediumdark
+        : props.theme.colors.primary};
   }
 `;
 
-const ActionIcon = styled(Box)`
-  width: 30px;
-  height: 30px;
-  border-radius: 99999px;
-  display: inline-flex;
-  align-items: center;
-  align-content: center;
-  text-align: center;
-  margin-left: -8px;
-  svg {
-    margin: 0 auto;
-  }
-`;
+// const ActionIcon = styled(Box)`
+//   width: 30px;
+//   height: 30px;
+//   border-radius: 99999px;
+//   display: inline-flex;
+//   align-items: center;
+//   align-content: center;
+//   text-align: center;
+//   margin-left: -8px;
+//   svg {
+//     margin: 0 auto;
+//   }
+// `;
 
 // const TitleLink = styled(SimpleLink)`
 //   text-decoration: none;
@@ -198,13 +311,13 @@ const ActionIcon = styled(Box)`
 //   }
 // `;
 
-const Meta = styled(Flex)`
-  color: ${props => props.theme.colors.medium};
-  position: absolute;
-  z-index: 2;
-  bottom: 0;
-  left: 0;
-`;
+// const Meta = styled(Flex)`
+//   color: ${props => props.theme.colors.medium};
+//   position: absolute;
+//   z-index: 2;
+//   bottom: 0;
+//   left: 0;
+// `;
 
 // const Username = styled(Text)`
 //   color: ${props => props.theme.colors.mediumdark};
@@ -237,10 +350,11 @@ const Infos = styled(Box)`
     text-decoration: none;
   }
 `;
-const Title = styled(Heading)`
-  color: ${props => props.theme.colors.darker};
-  font-size: 20px;
-  text-decoration: none;
-  word-break: break-all;
-  margin-top: 8px;
-`;
+// const Title = styled(Heading)`
+//   color: ${props => props.theme.colors.darker};
+//   font-size: 20px;
+//   text-decoration: none;
+//   word-break: break-all;
+//   margin-top: 8px;
+//   ${ellipsis('380px')};
+// `;

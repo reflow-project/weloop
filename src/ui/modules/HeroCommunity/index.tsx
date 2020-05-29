@@ -66,7 +66,7 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
           <Title variant="heading" mt={0}>
             {c.name}
           </Title>
-          <Username fontSize={1}>@{c.fullName}</Username>
+          <Username fontSize={0}>@{c.fullName}</Username>
           {c.summary && (
             <Box mt={2}>
               <MD_Comment content={c.summary} />
@@ -94,40 +94,44 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
               <More onClick={() => setOpenDropdown(true)}>
                 <MoreVertical size={20} />
                 {isOpenDropdown && (
-                  <Dropdown orientation={'bottom'} cb={setOpenDropdown}>
-                    {c.canModify && (
-                      <DropdownItem onClick={() => setOpenSettings(true)}>
-                        <Settings size={20} color={'rgb(101, 119, 134)'} />
+                  <RightDd>
+                    <Dropdown orientation={'bottom'} cb={setOpenDropdown}>
+                      {c.canModify && (
+                        <DropdownItem onClick={() => setOpenSettings(true)}>
+                          <Settings size={20} color={'rgb(101, 119, 134)'} />
+                          <Text sx={{ flex: 1 }} ml={2}>
+                            <Trans>Edit the community</Trans>
+                          </Text>
+                        </DropdownItem>
+                      )}
+                      <DropdownItem onClick={() => setOpenFlag(true)}>
+                        <Flag size={20} color={'rgb(101, 119, 134)'} />
                         <Text sx={{ flex: 1 }} ml={2}>
-                          <Trans>Edit the community</Trans>
+                          {!c.isFlagged ? (
+                            <Trans>Flag this community</Trans>
+                          ) : (
+                            <Trans>Unflag this community</Trans>
+                          )}
                         </Text>
                       </DropdownItem>
-                    )}
-                    <DropdownItem onClick={() => setOpenFlag(true)}>
-                      <Flag size={20} color={'rgb(101, 119, 134)'} />
-                      <Text sx={{ flex: 1 }} ml={2}>
-                        {!c.isFlagged ? (
-                          <Trans>Flag this community</Trans>
-                        ) : (
-                          <Trans>Unflag this community</Trans>
-                        )}
-                      </Text>
-                    </DropdownItem>
-                    {c.isAdmin ? (
-                      <AdminDropdownItem onClick={() => setOpenFeatured(true)}>
-                        <Star size={20} color={'rgb(211, 103, 5)'} />
-                        <Text sx={{ flex: 1 }} ml={2}>
-                          {
-                            /* c.isFeatured ? (
+                      {c.isAdmin ? (
+                        <AdminDropdownItem
+                          onClick={() => setOpenFeatured(true)}
+                        >
+                          <Star size={20} color={'rgb(211, 103, 5)'} />
+                          <Text sx={{ flex: 1 }} ml={2}>
+                            {
+                              /* c.isFeatured ? (
                             <Trans>Remove from featured list</Trans>
                           ) :  */ <Trans>
-                              Add to featured list
-                            </Trans>
-                          }
-                        </Text>
-                      </AdminDropdownItem>
-                    ) : null}
-                  </Dropdown>
+                                Add to featured list
+                              </Trans>
+                            }
+                          </Text>
+                        </AdminDropdownItem>
+                      ) : null}
+                    </Dropdown>
+                  </RightDd>
                 )}
               </More>
             </Actions>
@@ -155,6 +159,13 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
 
 const InfoCommunity = styled(Flex)`
   align-items: center;
+`;
+
+const RightDd = styled(Box)`
+  .dropdown {
+    right: 0;
+    left: auto;
+  }
 `;
 
 // const Badge = styled(Box)`
@@ -196,6 +207,7 @@ const Total = styled(Text)`
 `;
 
 const Title = styled(Text)`
+  color: ${props => props.theme.colors.darker};
   ${media.lessThan('medium')`
 font-size: 20px !important;
 `};
@@ -209,6 +221,7 @@ const Username = styled(Text)`
   color: ${props => props.theme.colors.mediumdark};
   font-weight: 500;
   text-transform: lowercase;
+  font-size: 14px;
 `;
 
 const MembersTot = styled(NavLink)`

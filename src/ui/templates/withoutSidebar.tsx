@@ -1,19 +1,15 @@
-import React, { ComponentType, useCallback, useState } from 'react';
+import React from 'react';
 import { Flex } from 'rebass/styled-components';
+import { ComponentBag } from 'ui/lib/componentBag';
 import styled from 'ui/themes/styled';
 
 export interface Props {
-  HeaderBox: ComponentType<{ toggleSideBar(): unknown }>;
+  HeaderBox: ComponentBag;
 }
 export const WithoutSidebar: React.FC<Props> = ({ children, HeaderBox }) => {
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const toggleSideBar = useCallback(() => setSidebarOpen(!isSidebarOpen), [
-    isSidebarOpen
-  ]);
-
   return (
     <Wrapper>
-      <HeaderBox toggleSideBar={toggleSideBar} />
+      <HeaderBox.Comp {...HeaderBox.props} />
       <CenteredWrapper>
         <Flex ml={2}>{children}</Flex>
       </CenteredWrapper>
@@ -34,5 +30,5 @@ const CenteredWrapper = styled(Flex)`
   width: 100%;
   height: 100%;
   min-height: 100vh;
-  margin-top: 66px;
+  margin-top: 16px;
 `;

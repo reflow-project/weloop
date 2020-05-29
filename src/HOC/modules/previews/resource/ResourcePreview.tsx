@@ -9,6 +9,7 @@ import {
   Props as ResourcePreviewProps,
   Resource as ResourcePreviewUI
 } from 'ui/modules/Previews/Resource';
+import { ResourcePreviewFragment } from './ResourcePreview.generated';
 
 export interface Props {
   resourceId: Resource['id'];
@@ -28,31 +29,47 @@ export const ResourcePreviewHOC: FC<Props> = ({ resourceId, flagged }) => {
       return null;
     }
     const hideActions = flagged ? true : false;
-
-    const props: ResourcePreviewProps = {
-      icon: resource.icon?.url || '',
-      link: resource.payload?.url || '',
-      name: resource.name || '',
-      summary: resource.summary || '',
+    return resourceFragment2UIProps({
+      resource,
+      FlagModal: ({ done }) => <FlagModalHOC done={done} ctx={resource} />,
       like: {
         iLikeIt: !!resource.myLike,
         toggleLikeFormik,
         totalLikes: resource.likers?.totalCount || 0
       },
-      isLocal: !!resource.payload?.upload,
-      acceptedLicenses: accepted_license_types,
-      license: resource.license || null,
-      isFlagged: !!resource.myFlag,
-      FlagModal: ({ done }) => <FlagModalHOC done={done} ctx={resource} />,
-      // sendToMoodle,
       MoodlePanel: LMSPrefsPanel,
-      type: resource.payload?.mediaType,
-      hideActions: hideActions
-    };
-    return props;
+      hideActions
+    });
   }, [resource, toggleLikeFormik, /* sendToMoodle, */ LMSPrefsPanel]);
 
   return (
     resourcePreviewProps && <ResourcePreviewUI {...resourcePreviewProps} />
   );
+};
+
+export const resourceFragment2UIProps = (args: {
+  resource: ResourcePreviewFragment;
+  like: ResourcePreviewProps['like'];
+  FlagModal: ResourcePreviewProps['FlagModal'];
+  MoodlePanel: ResourcePreviewProps['MoodlePanel'];
+  hideActions: boolean;
+}) => {
+  const { FlagModal, MoodlePanel, hideActions, like, resource } = args;
+  const props: ResourcePreviewProps = {
+    icon: resource.icon?.url || '',
+    link: resource.payload?.url || '',
+    name: resource.name || '',
+    summary: resource.summary || '',
+    like,
+    isFile: !!resource.payload?.upload,
+    acceptedLicenses: accepted_license_types,
+    license: resource.license || null,
+    isFlagged: !!resource.myFlag,
+    FlagModal,
+    // sendToMoodle,
+    MoodlePanel,
+    type: resource.payload?.mediaType,
+    hideActions: hideActions
+  };
+  return props;
 };

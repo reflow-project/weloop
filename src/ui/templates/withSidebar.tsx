@@ -1,10 +1,11 @@
-import React, { ComponentType, useState, useCallback } from 'react';
+import React from 'react';
 import { Box } from 'rebass/styled-components';
+import { ComponentBag } from 'ui/lib/componentBag';
 import styled from 'ui/themes/styled';
 export interface SidebarProps {
   // SidebarBox: JSX.Element;
-  SidebarBox: ComponentType<{ isSidebarOpen: boolean }>;
-  HeaderBox: ComponentType<{ toggleSideBar(): unknown }>;
+  SidebarBox: ComponentBag;
+  HeaderBox: ComponentBag;
 }
 
 export const WithSidebar: React.FC<SidebarProps> = ({
@@ -12,17 +13,13 @@ export const WithSidebar: React.FC<SidebarProps> = ({
   HeaderBox,
   children
 }) => {
-  const [isSidebarOpen, setSidebarOpen] = useState(true);
-  const toggleSideBar = useCallback(() => setSidebarOpen(!isSidebarOpen), [
-    isSidebarOpen
-  ]);
   return (
     <Page>
-      <HeaderBox toggleSideBar={toggleSideBar} />
+      <HeaderBox.Comp {...HeaderBox.props} />
       <Wrapper>
         <Panel>
           <Sidebar>
-            <SidebarBox isSidebarOpen={isSidebarOpen} />
+            <SidebarBox.Comp {...SidebarBox.props} />
           </Sidebar>
         </Panel>
         <Panel>

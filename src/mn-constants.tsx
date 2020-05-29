@@ -86,6 +86,8 @@ export const mothershipCreds =
     : null;
 export const searchDisabled = !mothershipCreds;
 
+export const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9-]{2,}$/;
+export const URL_WITH_OR_WITHOUT_PROTOCOL = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
 export const max_file_size = '10MB';
 
 export const accepted_file_types =
@@ -168,8 +170,8 @@ export const typography = {
 /* log ENV if DEV */
 IS_DEV &&
   console.log(`-environment-
-${Object.keys(process.env)
-  .map(key => `${key}=${process.env[key]}`)
+${Object.entries(process.env)
+  .map(([key, value]) => `${key}=${value}`)
   .join('\n')}
 -------------
 `);

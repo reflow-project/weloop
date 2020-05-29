@@ -34,15 +34,18 @@ export const FlagPreviewHOC: FC<FlagPreviewHOC> = ({ flagId }) => {
         />
       );
       const actor = flag.creator && getActivityActor(flag.creator);
-
       return (
         <ActivityPreview
           actor={actor}
+          commentActor={
+            comment.creator ? getActivityActor(comment.creator) : undefined
+          }
           createdAt={comment.createdAt}
           event={'commented'}
           communityLink={communityLink}
           communityName={communityName}
           status={Status.Loaded}
+          threadUrl={comment.thread?.id}
           preview={CommentPreview}
         />
       );

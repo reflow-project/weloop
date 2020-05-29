@@ -66,9 +66,21 @@ export const languages = {
   es_MX: 'Español, Méjico',
   es_ES: 'Español, España',
   fr_FR: 'Français, France',
-  eu: 'Euskara',
-  ar_SA: 'العربية, المملكة العربية السعودية'
+  eu: 'Euskara (Basque)',
+  ca: 'Catalan',
+  ar: 'Arabic',
+  de: 'German',
+  el_GR: 'Greek',
+  bn_IN: 'Bengali (India)',
+  hi_IN: 'Hindi (India)',
+  ur: 'Urdu',
+  pt_BR: 'Portuguese (Brazil)',
+  uk_UA: 'Ukrainian',
+  zh_CN: 'Chinese (China)',
+  he: 'Hebrew',
+  ru: 'Russian'
 };
+
 export type LocaleKey = keyof typeof languages;
 export const locales = Object.keys(languages) as LocaleKey[];
 

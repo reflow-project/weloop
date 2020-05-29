@@ -36,7 +36,12 @@ async function run() {
       * {
         box-sizing: border-box;
       }
-
+      input, textarea {
+        ::placeholder {
+          font-size: 13px;
+          font-family: ${typography.type.primary} !important;
+        }
+      }
       body {
       background: ${colors.app};
       .ais-SearchBox {

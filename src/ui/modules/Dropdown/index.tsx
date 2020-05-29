@@ -10,7 +10,9 @@ interface Props {
 }
 export const Dropdown: FC<Props> = ({ orientation, cb, children }) => (
   <OutsideClickHandler onOutsideClick={() => cb(false)}>
-    <Wrapper orientation={orientation}>{children}</Wrapper>
+    <Wrapper className="dropdown" orientation={orientation}>
+      {children}
+    </Wrapper>
   </OutsideClickHandler>
 );
 
@@ -24,10 +26,8 @@ const Wrapper = styled(Box)<{ orientation: string }>`
     rgba(101, 119, 134, 0.15) 0px 0px 3px 1px;
   position: absolute;
   top: ${props => (props.orientation === 'top' ? '8px' : 'auto')};
-
   bottom: ${props => (props.orientation === 'bottom' ? '4px' : 'auto')};
-
-  left: ${props => (props.orientation === 'top' ? '0px' : 'auto')};
+  left: ${props => (props.orientation === 'top' ? '0px' : '0px')};
   right: ${props => (props.orientation === 'bottom' ? '0px' : 'auto')};
   z-index: 9999999999999999999999999999;
 `;
@@ -46,6 +46,6 @@ export const DropdownItem = styled(Flex)`
     div {
       color: ${props => props.theme.colors.mediumdark} !important;
     }
-    background: ${props => props.theme.colors.lighter} !important;
+    background: ${props => props.theme.colors.light} !important;
   }
 `;

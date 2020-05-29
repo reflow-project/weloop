@@ -77,7 +77,7 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath }) => {
     const ThreadsBox = (
       <>
         {threadsPage.edges.map(thread => (
-          <Box my={1} key={thread.id}>
+          <Box key={thread.id}>
             <ThreadPreviewHOC threadId={thread.id} />
           </Box>
         ))}

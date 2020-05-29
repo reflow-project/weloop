@@ -1,76 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { FileText, Image } from 'react-feather';
+import { Image, File } from 'react-feather';
 import { Box, Flex } from 'rebass/styled-components';
 // import { UploadCloud } from 'react-feather';
 // import { Trans } from '@lingui/macro';
 import styled from 'ui/themes/styled';
-
-// const ThumbsContainer = styled.aside`
-//   display: flex;
-//   flex-direction: row;
-//   flex-wrap: wrap;
-//   margin-top: 16;
-// `;
-
-const WrapperIcon = styled(Flex)`
-  width: 40px;
-  height: 40px;
-  align-items: center;
-  border-radius: 100px;
-  position: absolute;
-  left: 50%;
-  margin-left: -20px;
-  top: 50%;
-  margin-top: -20px;
-  z-index: 9;
-  &:hover {
-    background: #ffffff4a;
-  }
-`;
-
-const WrapperFile = styled.div`
-  padding: 20px 10px;
-`;
-
-const Thumb = styled.div`
-  width: 100%;
-  box-sizing: border-box;
-  position: relative;
-  height: 120px;
-  &:after {
-    position: absolute;
-    content: '';
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    border-radius: 4px;
-    display: block;
-    background: rgba(0, 0, 0, 0.3);
-  }
-  svg {
-    width: 40px;
-  }
-`;
-
-// const ThumbInner = styled.div`
-//   // display: flex;
-//   min-width: 0;
-//   overflow: hidden;
-// `;
-
-const Img = styled(Box)`
-    display: block;
-    border-radius: 4px;
-    height: inherit;
-    background-size: cover;
-}
-`;
+// import { useInstanceInfoQuery } from 'fe/instance/info/useInstanceInfo.generated';
+// import { Trans } from '@lingui/react';
+// import Alert from 'ui/elements/Alert';
+// import { AlertWrapper } from '../Modal';
 
 interface Props {
   initialUrl: string | undefined | null;
-  onFileSelect(file: File): unknown;
+  onFileSelect(file: File | undefined): unknown;
   uploadType?: 'resource' | string;
   filePattern?: FilePattern;
 }
@@ -84,6 +26,8 @@ const DropzoneArea: React.FC<Props> = ({
   filePattern
 }) => {
   const [fileUrl, setFileUrl] = useState<undefined | null | string>();
+  // const { data: instanceInfoData } = useInstanceInfoQuery();
+  // const uploadMaxBytes = instanceInfoData?.instance?.uploadMaxBytes || 0;
 
   const [currentFile, setCurrentFile] = useState<{
     file: File;
@@ -101,22 +45,43 @@ const DropzoneArea: React.FC<Props> = ({
     setFileUrl(initialUrl);
   }, [initialUrl]);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    rejectedFiles,
+    acceptedFiles
+  } = useDropzone({
     accept: filePattern,
+    // maxSize: uploadMaxBytes,
     onDrop: acceptedFiles => {
       const file = acceptedFiles[0];
       if (!file) {
+        onFileSelect(void 0);
+        setCurrentFile(void 0);
         return;
       }
       onFileSelect(file);
       setCurrentFile({ file, localUrl: URL.createObjectURL(file) });
     }
   });
-
+  // const rejectedFile = rejectedFiles[0];
+  console.log({ rejectedFiles, acceptedFiles });
   return (
     <>
       <Box sx={{ height: '100%' }} {...getRootProps({ className: 'dropzone' })}>
         <InfoContainer className={isDragActive ? 'active' : 'none'}>
+          {!currentFile && uploadType == 'resource' ? (
+            <Thumb className="thumb">
+              <WrapperIcon>
+                <File
+                  size={30}
+                  strokeWidth={1}
+                  color={'rgba(250,250,250, .5)'}
+                />
+              </WrapperIcon>
+            </Thumb>
+          ) : null}
           {uploadType !== 'resource' ? (
             <Thumb className="thumb">
               <WrapperIcon>
@@ -137,11 +102,13 @@ const DropzoneArea: React.FC<Props> = ({
           ) : null}
           {!currentFile ? null : uploadType === 'resource' ? (
             currentFile.file.type.indexOf('image') == -1 ? (
-              <WrapperFile>
-                <FileText size={20} />
+              // <WrapperFile>
+              <FileThumb>
+                <File size={20} />
                 {currentFile && <FileName>{currentFile.file.name}</FileName>}
-              </WrapperFile>
+              </FileThumb>
             ) : (
+              // </WrapperFile>
               <WrapperFile>
                 <Thumb>
                   <WrapperIcon>
@@ -172,6 +139,16 @@ const DropzoneArea: React.FC<Props> = ({
               <Trans>Drag 'n' drop a file here, or click to select file</Trans>
             </Info>
           )} */}
+          {/* rejectedFile ? (
+            <AlertWrapper>
+              <Alert variant="negative">
+                <Trans>
+                  File {rejectedFile.name} too big, can't exceed{' '}
+                  {Math.floor(uploadMaxBytes / 1024 / 1024)}MB
+                </Trans>
+              </Alert>
+            </AlertWrapper>
+          ) : null */}
         </InfoContainer>
       </Box>
     </>
@@ -202,16 +179,64 @@ const FileName = styled.p`
   font-style: italic;
 `;
 
-// const Info = styled.p`
-//   margin-top: 0px;
-//   margin-bottom: 5px;
-// `;
+const WrapperIcon = styled(Flex)`
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  border-radius: 100px;
+  position: absolute;
+  left: 50%;
+  margin-left: -20px;
+  top: 50%;
+  margin-top: -20px;
+  z-index: 9;
+`;
 
-// const ClearButton = styled.button`
-//   width: 100px;
-//   cursor: pointer;
-//   border: 1px solid ${props => props.theme.colors.medium};
-//   margin-left: 20px;
-//   padding: 10px;
-//   border-radius: 2px;
-// `;
+const WrapperFile = styled.div`
+  padding: 20px 10px;
+  border-radius: 4px;
+`;
+
+const FileThumb = styled.div`
+  padding: 20px 10px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.3);
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.2);
+  }
+`;
+
+const Thumb = styled.div`
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  height: 120px;
+  &:after {
+    position: absolute;
+    content: '';
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 4px;
+    display: block;
+    background: rgba(0, 0, 0, 0.3);
+  }
+  &:hover {
+    &:after {
+      background: rgba(0, 0, 0, 0.1);
+    }
+  }
+  svg {
+    width: 40px;
+  }
+`;
+
+const Img = styled(Box)`
+    display: block;
+    border-radius: 4px;
+    height: inherit;
+    background-size: cover;
+}
+`;

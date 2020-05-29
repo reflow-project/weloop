@@ -19,11 +19,17 @@ export const ActivityPreviewHOC: FC<Props> = ({ activityId }) => {
         console.error('ActivityPreviewHOC: user or context :null', activity);
         return null;
       }
-
       const props: UI.Props = {
         status: UI.Status.Loaded,
         createdAt: activity.createdAt,
         actor: activity.user && getActivityActor(activity.user),
+        threadUrl:
+          activity.context.__typename === 'Comment'
+            ? activity.context.thread?.id
+            : activity.context.__typename === 'Like' &&
+              activity.context.context?.__typename === 'Comment'
+            ? activity.context.context.thread?.id
+            : undefined,
         event: eventString,
         ...communityInfoStrings,
         preview: <PreviewComponent context={activity.context} />

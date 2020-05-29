@@ -12,9 +12,9 @@ export const useInstanceRegistrationAllowLists = () => {
   const [
     removeEmailDomainMut /* ,removeEmailDomainStatus */
   ] = GQL.useRemoveEmailDomainFromAllowListMutation();
-  const [
-    addEmailMut /* ,addEmailStatus */
-  ] = GQL.useAddEmailToAllowListMutation();
+  // const [
+  //   addEmailMut /* ,addEmailStatus */
+  // ] = GQL.useAddEmailToAllowListMutation();
   const [
     removeEmailMut /* ,removeEmailStatus */
   ] = GQL.useRemoveEmailFromAllowListMutation();
@@ -105,13 +105,14 @@ export const useInstanceRegistrationAllowLists = () => {
 
   const addEmail = useCallOrNotifyMustLogin(
     (email: string) => {
-      return addEmailMut({
+      return sendInviteEmailMut({
         variables: { email },
         refetchQueries: [GQL.InstanceRegisterEmailAccessesQueryRefetch({})]
       });
     },
-    [addEmailMut]
+    [sendInviteEmailMut]
   );
+
   const removeEmail = useCallOrNotifyMustLogin(
     (id: string) => {
       return removeEmailMut({

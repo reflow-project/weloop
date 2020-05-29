@@ -105,12 +105,28 @@ export const MenuList = styled(Flex)`
 
 export const ObjectsList = styled(Box)`
   background: ${props => props.theme.colors.appInverse};
+
   &.replies > div {
     margin-bottom: 0;
+    border-bottom: ${props => props.theme.colors.border};
   }
   > div {
     &:last-of-type {
       margin-bottom: 4px;
+      border-bottom: 0;
     }
   }
+`;
+
+export const BottomBordered = styled(Box)`
+  border-bottom: ${props => props.theme.colors.border};
+`;
+
+export const CollectionsWrapper = styled(Box)`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 16px;
+  row-gap: 16px;
+  margin: 16px;
+  margin-bottom: 24px !important;
 `;

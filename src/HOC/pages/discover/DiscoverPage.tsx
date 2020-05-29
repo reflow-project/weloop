@@ -9,6 +9,7 @@ import { CommunityPreviewHOC } from 'HOC/modules/previews/community/CommunityPre
 import { CollectionPreviewHOC } from 'HOC/modules/previews/collection/CollectionPreview';
 import { useAllCollections } from 'fe/collection/all/useAllCollections';
 import { useFormikPage } from 'fe/lib/helpers/usePage';
+import { Box } from 'rebass';
 
 export enum DiscoverPageTabs {
   Activities,
@@ -50,17 +51,24 @@ export const DiscoverPage: FC<DiscoverPage> = ({ basePath, tab }) => {
     const CollectionsBoxes = (
       <>
         {allCollectionsPage.edges.map(collection => (
-          <CollectionPreviewHOC
-            collectionId={collection.id}
-            key={collection.id}
-          />
+          <Box m={2}>
+            <CollectionPreviewHOC
+              collectionId={collection.id}
+              key={collection.id}
+            />
+          </Box>
         ))}
       </>
     );
     const CommunitiesBoxes = (
       <>
         {allCommunitiesPage.edges.map(community => (
-          <CommunityPreviewHOC communityId={community.id} key={community.id} />
+          <Box m={2}>
+            <CommunityPreviewHOC
+              communityId={community.id}
+              key={community.id}
+            />
+          </Box>
         ))}
       </>
     );

@@ -1,5 +1,5 @@
 import { useMyFollowedCommunities } from 'fe/community/myFollowed/myFollowedCommunities';
-import React, { FC, useMemo } from 'react';
+import React, { FC, useMemo, useContext } from 'react';
 import {
   CommunityPreview,
   Props as PropsUI,
@@ -7,14 +7,14 @@ import {
   Status as StatusUI
 } from 'ui/modules/Sidebar/index';
 import { MyFollowedCommunityDataFragment } from 'fe/community/myFollowed/myFollowedCommunities.generated';
+import { SideBarContext } from 'HOC/context/SideBar';
+import { useFormikPage } from 'fe/lib/helpers/usePage';
 
-export interface Sidebar {
-  isSidebarOpen: boolean;
-  //FIXME: delete commented out stuff
-  // user: SidebarMeUserFragment;
-}
-export const Sidebar: FC<Sidebar> = (/* { user } */ { isSidebarOpen }) => {
+export interface SidebarHOC {}
+export const SidebarHOC: FC<SidebarHOC> = () => {
+  const { isOpen: isSidebarOpen } = useContext(SideBarContext);
   const { myCommunityFollowsPage } = useMyFollowedCommunities();
+  const [LoadMoreFormik] = useFormikPage(myCommunityFollowsPage);
   const communities = useMemo(
     () =>
       myCommunityFollowsPage.edges
@@ -40,9 +40,10 @@ export const Sidebar: FC<Sidebar> = (/* { user } */ { isSidebarOpen }) => {
     const props: PropsUI = {
       isSidebarOpen,
       status: StatusUI.Loaded,
-      communities
+      communities,
+      LoadMoreFormik
     };
     return props;
-  }, [communities, isSidebarOpen]);
+  }, [communities, isSidebarOpen, LoadMoreFormik]);
   return <SidebarUI {...propsUI} />;
 };

@@ -24,5 +24,10 @@ export const ResetPasswordPageHOC: FC<Props> = ({}: Props) => {
     initialValues,
     validationSchema
   });
-  return <ResetPasswordRequestPage formik={formik} />;
+  return (
+    <ResetPasswordRequestPage
+      formik={formik}
+      isSubmitted={formik.submitCount > 0 ? true : false} // https://github.com/jaredpalmer/formik/issues/213#issuecomment-619593592 // Double-Check if correct
+    />
+  );
 };

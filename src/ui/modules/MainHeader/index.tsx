@@ -20,6 +20,7 @@ export interface Props {
     icon: string;
     name: string;
     link: string;
+    isAdmin: boolean;
     logout(): unknown;
   };
   Search: JSX.Element;
@@ -79,6 +80,7 @@ export const MainHeader: React.FC<Props> = props => {
               </Right>
               {isOpenDropdown && (
                 <DropdownSidebar
+                  isAdmin={props.user.isAdmin}
                   createCommunity={openCreateCommunity}
                   logout={props.user.logout}
                   userLink={props.user.link}

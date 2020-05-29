@@ -10,6 +10,7 @@ import DOMPurify from 'dompurify';
 import { ActorComp } from '../ActivityPreview';
 import { Actor } from '../ActivityPreview/types';
 import { typography } from 'mn-constants';
+import { NavLink } from 'react-router-dom';
 
 export interface LikeActions {
   toggleLikeFormik: FormikHook<{}>;
@@ -29,6 +30,7 @@ export interface CommentProps {
   communityName: string;
   communityLink: string;
   hideActions?: boolean;
+  url: string;
 }
 
 const tt = {
@@ -50,7 +52,8 @@ export const LikedComment: React.SFC<CommentProps> = ({
   createdAt,
   communityName,
   communityLink,
-  hideActions
+  hideActions,
+  url
 }) => {
   const [talkModalVisible, showTalkModal] = React.useState(false);
   const { i18n } = React.useContext(LocaleContext);
@@ -87,22 +90,24 @@ export const LikedComment: React.SFC<CommentProps> = ({
         {hideActions ? null : (
           <Box>
             <Items>
-              <ActionItem onClick={() => showTalkModal(!talkModalVisible)}>
-                <ActionIcon>
-                  <CornerDownLeft
-                    className="hover"
-                    strokeWidth="1"
-                    color="rgba(0,0,0,.4)"
-                    size="18"
-                  />
-                </ActionIcon>
-                <ActionText
-                  ml={1}
-                  variant={'text'}
-                  sx={{ textTransform: 'capitalize' }}
-                >
-                  <Trans>Reply</Trans>
-                </ActionText>
+              <ActionItem>
+                <NavLink to={url}>
+                  <ActionIcon>
+                    <CornerDownLeft
+                      className="hover"
+                      strokeWidth="1"
+                      color="rgba(0,0,0,.4)"
+                      size="18"
+                    />
+                  </ActionIcon>
+                  <ActionText
+                    ml={1}
+                    variant={'text'}
+                    sx={{ textTransform: 'capitalize', textDecoration: 'none' }}
+                  >
+                    <Trans>Reply</Trans>
+                  </ActionText>
+                </NavLink>
               </ActionItem>
               <ActionItem
                 liked={like.iLikeIt ? true : false}

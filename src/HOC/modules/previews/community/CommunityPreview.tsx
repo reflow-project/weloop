@@ -6,6 +6,8 @@ import {
   Props as CommunityPreviewProps
 } from 'ui/modules/Previews/Community';
 import { useFormik } from 'formik';
+import { CommunityPreviewFragment } from './CommunityPreview.generated';
+import { FormikHook } from 'ui/@types/types';
 
 export interface Props {
   communityId: Community['id'];
@@ -24,40 +26,56 @@ export const CommunityPreviewHOC: FC<Props> = ({ communityId, flagged }) => {
       return null;
     }
     const hideActions = flagged ? true : false;
-    const {
-      icon,
-      isLocal,
-      name,
-      summary,
-      myFollow,
-      collectionCount,
-      followerCount,
-      threads,
-      canonicalUrl,
-      displayUsername
-    } = community;
-
-    const props: CommunityPreviewProps = {
-      icon: icon?.url || '',
-      name,
+    return communityFragment2UIProps({
+      community,
+      hideActions,
       isCreator,
-      summary: summary || '',
-      collectionsCount: collectionCount || 0,
-      joined: !!myFollow,
-      followersCount: followerCount || 0,
-      threadsCount: threads?.totalCount || 0,
-      toggleJoinFormik,
-      link: {
-        url: isLocal ? `/communities/${communityId}` : canonicalUrl || '',
-        external: !isLocal
-      },
-      displayUsername,
-      hideActions: hideActions
-    };
-    return props;
+      toggleJoinFormik
+    });
   }, [community, toggleJoinFormik]);
 
   return (
     communityPreviewProps && <CommunityPreviewUI {...communityPreviewProps} />
   );
+};
+
+export const communityFragment2UIProps = (args: {
+  community: CommunityPreviewFragment;
+  toggleJoinFormik: FormikHook;
+  hideActions: boolean;
+  isCreator: boolean;
+}) => {
+  const { community, hideActions, toggleJoinFormik, isCreator } = args;
+  const {
+    id,
+    canonicalUrl,
+    icon,
+    name,
+    summary,
+    myFollow,
+    collectionCount,
+    followerCount,
+    threads,
+    displayUsername,
+    isLocal
+  } = community;
+
+  const props: CommunityPreviewProps = {
+    icon: icon?.url || '',
+    name,
+    isCreator,
+    summary: summary || '',
+    collectionsCount: collectionCount || 0,
+    joined: !!myFollow,
+    followersCount: followerCount || 0,
+    threadsCount: threads?.totalCount || 0,
+    toggleJoinFormik,
+    link: {
+      url: isLocal ? `/communities/${id}` : canonicalUrl || '',
+      external: !isLocal
+    },
+    displayUsername,
+    hideActions: hideActions
+  };
+  return props;
 };

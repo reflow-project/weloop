@@ -103,7 +103,7 @@ export const UploadResource: React.FC<Props> = ({
           </>
           {formik.errors.name && (
             <AlertWrapper>
-              <Alert variant="bad">{formik.errors.name}</Alert>
+              <Alert variant="negative">{formik.errors.name}</Alert>
             </AlertWrapper>
           )}
         </ContainerForm>
@@ -124,7 +124,7 @@ export const UploadResource: React.FC<Props> = ({
           </>
           {formik.errors.author && (
             <AlertWrapper>
-              <Alert variant="bad">{formik.errors.author}</Alert>
+              <Alert variant="negative">{formik.errors.author}</Alert>
             </AlertWrapper>
           )}
         </ContainerForm>
@@ -241,11 +241,11 @@ const Link = styled.a`
 const Label = styled.label`
   background-repeat: no-repeat;
   background-position: center center;
-  width: 115px !important;
+  width: 110px !important;
   line-height: 38px !important;
   display: inline-block;
   background-size: contain;
-  margin-right: 5px;
+  margin-right: 4px;
   border: 4px solid transparent;
   text-indent: -9999px;
   cursor: pointer;

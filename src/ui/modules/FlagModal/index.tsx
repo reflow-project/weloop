@@ -66,7 +66,7 @@ export const FlagModal: React.FC<Props> = ({
           <CounterChars>{200 - flagFormik.values.reason.length}</CounterChars>
           {flagFormik.errors.reason && (
             <AlertWrapper>
-              <Alert variant="bad">{flagFormik.errors.reason}</Alert>
+              <Alert variant="negative">{flagFormik.errors.reason}</Alert>
             </AlertWrapper>
           )}
         </ContainerForm>

@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'ui/themes/styled';
 import { Box, Text, Flex } from 'rebass/styled-components';
-import SocialText from 'ui/modules/SocialText';
-import { i18nMark, Trans } from '@lingui/react';
-import { LocaleContext } from '../../../context/global/localizationCtx';
+// import SocialText from 'ui/modules/SocialText';
+// import { i18nMark, Trans } from '@lingui/react';
+import { Trans } from '@lingui/react';
+// import { LocaleContext } from '../../../context/global/localizationCtx';
 import { FormikHook } from 'ui/@types/types';
 import { Star, MoreHorizontal, Flag } from 'react-feather';
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
@@ -29,15 +30,11 @@ export interface CommentProps {
   hideActions?: boolean;
 }
 
-const tt = {
-  placeholders: {
-    name: i18nMark('Post a reply'),
-    summary: i18nMark(
-      'Please describe what the collection is for and what kind of resources it is likely to contain...'
-    ),
-    image: i18nMark('Enter the URL of an image to represent the collection')
-  }
-};
+// const tt = {
+//   placeholders: {
+//     name: i18nMark('Post a reply')
+//   }
+// };
 
 export const MainComment: React.SFC<CommentProps> = ({
   content,
@@ -47,7 +44,7 @@ export const MainComment: React.SFC<CommentProps> = ({
   isFlagged,
   hideActions
 }) => {
-  const { i18n } = React.useContext(LocaleContext);
+  // const { i18n } = React.useContext(LocaleContext);
   const [isOpenFlagModal, setOpenFlagModal] = React.useState(false);
   const [isOpen, onOpen] = React.useState(false);
 
@@ -120,7 +117,7 @@ export const MainComment: React.SFC<CommentProps> = ({
           )}
         </Actions>
       </Wrapper>
-      {reply && (
+      {/* {reply && (
         <SocialWrapper my={2}>
           <SocialText
             placeholder={i18n._(tt.placeholders.name)}
@@ -131,14 +128,14 @@ export const MainComment: React.SFC<CommentProps> = ({
             }}
           />
         </SocialWrapper>
-      )}
+      )} */}
     </Box>
   );
 };
 
-const SocialWrapper = styled(Box)`
-  background: ${props => props.theme.colors.appInverse};
-`;
+// const SocialWrapper = styled(Box)`
+//   background: ${props => props.theme.colors.appInverse};
+// `;
 
 const ActionText = styled(Text)`
   font-size: ${typography.size.s1};

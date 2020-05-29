@@ -3,6 +3,7 @@ import React, { FC, useMemo } from 'react';
 import SignUpPage, { SignUpFormValues, Props } from 'ui/pages/signUp';
 import * as Yup from 'yup';
 import { useAnon } from 'fe/session/useAnon';
+import { USERNAME_REGEX } from 'mn-constants';
 
 const initialValues: SignUpFormValues = {
   name: '',
@@ -22,6 +23,7 @@ export const SignUpPageHOC: FC<SignUpPageHOC> = () => {
     username: Yup.string()
       .min(3)
       .max(16)
+      .matches(USERNAME_REGEX)
       .required()
       .test(
         'checkDuplUsername',
@@ -41,12 +43,15 @@ export const SignUpPageHOC: FC<SignUpPageHOC> = () => {
     passwordConfirm: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Passwords must match')
       .required(),
-    terms: Yup.boolean()
+    terms: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions')
   });
 
   const formik = useFormik<SignUpFormValues>({
     initialValues,
     enableReinitialize: true,
+    validateOnChange: false,
+    validateOnBlur: false,
+    validationSchema,
     onSubmit: regInput =>
       signUp({
         email: regInput.email,
@@ -55,8 +60,7 @@ export const SignUpPageHOC: FC<SignUpPageHOC> = () => {
         preferredUsername: regInput.username,
         wantsEmailDigest: false,
         wantsNotifications: false
-      }),
-    validationSchema
+      })
   });
 
   const props = useMemo<Props>(
@@ -64,7 +68,8 @@ export const SignUpPageHOC: FC<SignUpPageHOC> = () => {
       signUpStatus.called && signUpStatus.data?.createUser?.user.name
         ? {
             formik,
-            registeredUsername: signUpStatus.data.createUser.user.name
+            registeredUsername: signUpStatus.data.createUser.user.name,
+            registeredEmail: signUpStatus.data.createUser.email
           }
         : {
             formik
