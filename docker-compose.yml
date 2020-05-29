@@ -28,8 +28,8 @@ services:
       - .env
     volumes:
       - type: bind
-        source: ./Caddyfile
-        target: /etc/Caddyfile
+        source: ./Caddyfile2
+        target: /etc/caddy/Caddyfile
         read_only: true
       - type: bind
         source: ./uploads
