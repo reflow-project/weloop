@@ -13,7 +13,7 @@ COPY . .
 RUN yarn build --prod
 
 # Production stage - Caddy web server serving static files
-FROM abiosoft/caddy:no-stats as production-stage
+FROM caddy:alpine as production-stage
 COPY --from=build-stage /app/build /frontend
 EXPOSE 80
 EXPOSE 443

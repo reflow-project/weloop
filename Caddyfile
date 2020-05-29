@@ -1,3 +1,4 @@
+# config for Cadde v1
 :80, # for testing only - make sure to disable in prod
 :443
 {
