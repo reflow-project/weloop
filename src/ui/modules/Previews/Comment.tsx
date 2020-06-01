@@ -67,7 +67,65 @@ export const Comment: React.SFC<CommentProps> = ({
         mb={2}
       /> */}
       {/* </Link> */}
-      {hideActions ? null : (
+      {hideActions ? (
+        <Actions mt={2}>
+          <Box>
+            <Items>
+              <ActionItem
+                liked={like.iLikeIt ? true : false}
+                onClick={like.toggleLikeFormik.submitForm}
+              >
+                <ActionIcon>
+                  <Star strokeWidth="1" size="18" />
+                </ActionIcon>
+                <ActionText
+                  variant={'text'}
+                  sx={{ textTransform: 'capitalize' }}
+                  ml={1}
+                >
+                  {like.totalLikes + ' '} <Trans>Star</Trans>
+                </ActionText>
+              </ActionItem>
+              <ActionItem
+                onClick={() => onOpen(true)}
+                sx={{ position: 'relative' }}
+              >
+                <ActionIcon>
+                  <MoreHorizontal className="hover" size={18} />
+                </ActionIcon>
+                <ActionText
+                  variant={'text'}
+                  sx={{ textTransform: 'capitalize' }}
+                  ml={1}
+                >
+                  <Trans>More</Trans>
+                </ActionText>
+                {isOpen && (
+                  <Dropdown orientation="bottom" cb={onOpen}>
+                    {FlagModal && (
+                      <DropdownItem onClick={() => setOpenFlagModal(true)}>
+                        <Flag size={20} color={'rgb(101, 119, 134)'} />
+                        <Text sx={{ flex: 1 }} ml={2}>
+                          {!isFlagged ? (
+                            <Trans>Flag this comment</Trans>
+                          ) : (
+                            <Trans>Unflag this comment</Trans>
+                          )}
+                        </Text>
+                      </DropdownItem>
+                    )}
+                  </Dropdown>
+                )}
+              </ActionItem>
+            </Items>
+            {FlagModal && isOpenFlagModal && (
+              <Modal closeModal={() => setOpenFlagModal(false)}>
+                <FlagModal done={() => setOpenFlagModal(false)} />
+              </Modal>
+            )}
+          </Box>
+        </Actions>
+      ) : (
         <Actions mt={2}>
           {/* {talkModalVisible && (
             <Box mb={2}>
