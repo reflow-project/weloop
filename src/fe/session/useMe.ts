@@ -31,7 +31,7 @@ export const useMe = () => {
   const [
     updateProfileMutation,
     updateProfileMutationStatus
-  ] = GQL.useMeLogoutMutation();
+  ] = GQL.useMeUpdateMyProfileMutation();
 
   const { push } = useHistory();
   const me = meQ.data?.me;
