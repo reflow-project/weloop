@@ -70,13 +70,7 @@ export const useMe = () => {
     },
     [updateProfileMutation, me, updateProfileMutationStatus]
   );
-  console.table({
-    me,
-    isAdmin,
-    logout,
-    loading,
-    updateProfile
-  });
+
   return useMemo(() => {
     return {
       me,
