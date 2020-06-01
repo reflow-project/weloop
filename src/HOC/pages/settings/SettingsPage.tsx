@@ -1,5 +1,4 @@
 import { useMe } from 'fe/session/useMe';
-import { useProfile } from 'fe/user/profile/useProfile';
 import { useFormik } from 'formik';
 import React, { FC, useMemo } from 'react';
 import {
@@ -27,8 +26,8 @@ export interface SettingsPage {
 }
 
 export const SettingsPage: FC<SettingsPage> = ({ basePath }) => {
-  const { me } = useMe();
-  const { profile, updateProfile } = useProfile();
+  const { me, updateProfile } = useMe();
+  const profile = me?.user;
 
   const initialValues = useMemo<EditProfile>(
     () => ({

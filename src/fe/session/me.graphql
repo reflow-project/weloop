@@ -17,8 +17,15 @@ fragment UseMeData on Me {
   wantsNotifications 
   user{
     id
+    ...SettingsPageMeUser
     ...SidebarMeUser
-    extraInfo
   }
 }
 
+mutation meUpdateMyProfile($profile:UpdateProfileInput!, $icon: UploadInput, $image: UploadInput) {
+  updateProfile(profile:$profile, icon: $icon, image: $image){
+    user {
+      ...SettingsPageMeUser
+    }
+  }
+}
