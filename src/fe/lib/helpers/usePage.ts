@@ -2,6 +2,7 @@ import Maybe from 'graphql/tsutils/Maybe';
 import { PageInfo } from 'graphql/types.generated';
 import { useMemo, useCallback } from 'react';
 import { useFormik } from 'formik';
+import { FormikHook } from 'ui/@types/types';
 
 interface Page<EdgeType> {
   edges: EdgeType[];
@@ -54,7 +55,10 @@ export type MngPage<EdgeType> =
   | MngPageUninitialized<EdgeType>
   | MngPageInitialized<EdgeType>;
 
-export const useFormikPage = <EdgeType>(page: MngPage<EdgeType>) => {
+export type FormikPaging = [FormikHook | null, FormikHook | null];
+export const useFormikPaging = <EdgeType>(
+  page: MngPage<EdgeType>
+): FormikPaging => {
   const nextPageFormik = useFormik({
     initialValues: {},
     onSubmit: useCallback(() => (page?.ready ? page.next() : undefined), [page])
@@ -75,10 +79,22 @@ export const useFormikPage = <EdgeType>(page: MngPage<EdgeType>) => {
 };
 
 export const usePage = <EdgeType>(
-  page: Maybe<Page<EdgeType>>,
+  gqlPage: Maybe<Page<EdgeType>>,
   fetch: Fetch<EdgeType, NextPageCursor> // = () => Promise.resolve()
-): MngPage<EdgeType> =>
-  useMemo<MngPage<EdgeType>>(() => mngPage(page, fetch), [page, fetch]);
+): MngPage<EdgeType> & { formiks: FormikPaging } => {
+  const page = useMemo<MngPage<EdgeType>>(() => mngPage(gqlPage, fetch), [
+    gqlPage,
+    fetch
+  ]);
+  const formiks = useFormikPaging(page);
+  return useMemo(
+    () => ({
+      ...page,
+      formiks
+    }),
+    [formiks, page]
+  );
+};
 
 export const mngPage = <EdgeType>(
   page: Maybe<Page<EdgeType>>,
