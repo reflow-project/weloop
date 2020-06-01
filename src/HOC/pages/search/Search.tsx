@@ -50,15 +50,17 @@ const _SearchPageHOC: React.FC<{ hits: Hit[] }> = ({ hits }) => {
   );
 
   const props: Props = {
-    previews
+    previews,
+    pagination: <Pagination showNext />,
+    filter: <RefinementList attribute="index_type" />
   };
 
   return (
     <>
       <Configure hitsPerPage={8} />
-      <RefinementList attribute="index_type" />
+      {/* <RefinementList attribute="index_type" /> */}
       <Search {...props} />
-      <Pagination showNext />
+      {/* <Pagination showNext /> */}
     </>
   );
 };

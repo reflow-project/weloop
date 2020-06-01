@@ -117,6 +117,10 @@ const Title = styled(Heading)`
 const CollectionWrapper = styled(Box)`
   max-width: 300px;
   position: relative;
+  box-shadow: 0px 2px 4px 0px #0000001f;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ececec;
 `;
 const Previews = styled(Box)`
   display: grid;
@@ -148,7 +152,9 @@ const Big = styled(Box)<{ src?: string }>`
 //   background: ${props => props.theme.colors.medium};
 //   border-radius: 4px;
 //   `
-const Info = styled(Box)``;
+const Info = styled(Box)`
+  margin: 8px;
+`;
 const TotResources = styled(Text)`
   font-size: 13px;
   flex: 1;
