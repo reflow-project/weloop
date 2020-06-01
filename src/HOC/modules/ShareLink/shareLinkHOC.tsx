@@ -6,7 +6,6 @@ import React, { FC } from 'react';
 import { ShareLink } from 'ui/modules/ShareLink';
 import { ShareResource } from 'ui/modules/ShareLink/fetched';
 import * as Yup from 'yup';
-import { URL_WITH_OR_WITHOUT_PROTOCOL } from 'mn-constants';
 
 export const validationSchema = Yup.object<ShareResource>({
   name: Yup.string()
@@ -16,9 +15,7 @@ export const validationSchema = Yup.object<ShareResource>({
   icon: Yup.mixed<File | string>().test(...TestUrlOrFile)
 });
 export const urlValidationSchema = Yup.object<{ fetchUrl: string }>({
-  fetchUrl: Yup.string()
-    .matches(URL_WITH_OR_WITHOUT_PROTOCOL, 'Please enter a valid url')
-    .required('url is required')
+  fetchUrl: Yup.string().required('url is required')
 });
 
 export const shareResourceInitialValues: ShareResource = {
