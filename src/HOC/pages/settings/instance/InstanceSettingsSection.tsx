@@ -3,7 +3,6 @@ import Instance, { Props } from 'ui/pages/settings/instance';
 import { useInstanceRegistrationAllowLists } from 'fe/settings/instance/registration/allowlist/instanceRegistrationAllowLists';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useFormikPage } from 'fe/lib/helpers/usePage';
 import { DOMAIN_REGEX } from 'mn-constants';
 
 export const withEmailDomainValidation = Yup.object().shape({
@@ -18,7 +17,7 @@ export const InstanceSettingsSection: FC<InstanceSettingsSection> = () => {
     addEmailDomain,
     listEmailDomainsPage
   } = useInstanceRegistrationAllowLists();
-  const [loadMoreDomains] = useFormikPage(listEmailDomainsPage);
+  const [loadMoreDomains] = listEmailDomainsPage.formiks;
   const formikAddDomain = useFormik<{ domain: string }>({
     initialValues: { domain: '' },
     validationSchema: withEmailDomainValidation,

@@ -6,7 +6,6 @@ import { UserFollowedCommunityFragment } from 'fe/community/user/useUserFollowed
 import { getActivityActor } from 'fe/lib/activity/getActivityActor';
 import { getEventStringByContext } from 'fe/lib/activity/getActivityEventString';
 import { getCommunityInfoStrings } from 'fe/lib/activity/getContextCommunityInfo';
-import { useFormikPage } from 'fe/lib/helpers/usePage';
 import { useUserLikes } from 'fe/likes/user/useUserLikes';
 import { useUserFollowedUsers } from 'fe/user/followed/user/useUserFollowedUsers';
 import { UserFollowedUserFragment } from 'fe/user/followed/user/useUserFollowedUsers.generated';
@@ -43,19 +42,19 @@ export const UserPage: FC<UserPage> = ({ userId, basePath }) => {
   const user = useUser(userId);
 
   const { likesPage } = useUserLikes(userId);
-  const [loadMoreLikes] = useFormikPage(likesPage);
+  const [loadMoreLikes] = likesPage.formiks;
 
   const { activitiesPage } = useUserOutboxActivities(userId);
-  const [loadMoreActivities] = useFormikPage(activitiesPage);
+  const [loadMoreActivities] = activitiesPage.formiks;
 
   const { followedCollectionsPage } = useUserFollowedCollections(userId);
-  const [loadMoreCollections] = useFormikPage(followedCollectionsPage);
+  const [loadMoreCollections] = followedCollectionsPage.formiks;
 
   const { followedCommunitiesPage } = useUserFollowedCommunities(userId);
-  const [loadMoreCommunities] = useFormikPage(followedCommunitiesPage);
+  const [loadMoreCommunities] = followedCommunitiesPage.formiks;
 
   const { followedUsersPage } = useUserFollowedUsers(userId);
-  const [loadMoreFollowing] = useFormikPage(followedUsersPage);
+  const [loadMoreFollowing] = followedUsersPage.formiks;
 
   const userPageProps = useMemo<Props>(() => {
     const {

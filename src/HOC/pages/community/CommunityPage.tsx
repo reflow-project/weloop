@@ -15,7 +15,6 @@ import { Box } from 'rebass/styled-components';
 import { useHistory } from 'react-router-dom';
 import { useCommunityFollowers } from 'fe/user/followers/community/useCommunityFollowers';
 import { UserPreviewHOC } from 'HOC/modules/previews/user/UserPreview';
-import { useFormikPage } from 'fe/lib/helpers/usePage';
 
 export enum CommunityPageTab {
   Activities,
@@ -33,11 +32,11 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath }) => {
   const { community, createThread } = useCommunity(communityId);
   const { communityFollowersPage } = useCommunityFollowers(communityId);
   const { threadsPage } = useCommunityThreads(communityId);
-  const [loadMoreThreads] = useFormikPage(threadsPage);
+  const [loadMoreThreads] = threadsPage.formiks;
   const { collectionsPage } = useCommunityCollections(communityId);
-  const [loadMoreCollections] = useFormikPage(collectionsPage);
+  const [loadMoreCollections] = collectionsPage.formiks;
   const { activitiesPage } = useCommunityOutboxActivities(communityId);
-  const [loadMoreActivities] = useFormikPage(activitiesPage);
+  const [loadMoreActivities] = activitiesPage.formiks;
 
   const history = useHistory();
   const newThreadFormik = useFormik<{ text: string }>({

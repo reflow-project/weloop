@@ -1,7 +1,6 @@
 import { useMyInboxActivities } from 'fe/activities/inbox/my/useMyInboxActivities';
 // import { useMyFollowedCollections } from 'fe/collection/myFollowed/myFollowedCollections';
 // import { useMyFollowedCommunities } from 'fe/community/myFollowed/myFollowedCommunities';
-import { useFormikPage } from 'fe/lib/helpers/usePage';
 import { ActivityPreviewHOC } from 'HOC/modules/previews/activity/ActivityPreview';
 // import { CollectionPreviewHOC } from 'HOC/modules/previews/collection/CollectionPreview';
 // import { CommunityPreviewHOC } from 'HOC/modules/previews/community/CommunityPreview';
@@ -65,7 +64,7 @@ export const HomePageHOC: FC<HomePageHOC> = ({ basePath }) => {
   // }, [myFollowedCollectionsPage]);
 
   const { activitiesPage } = useMyInboxActivities();
-  const [nextInboxFormik] = useFormikPage(activitiesPage);
+  const [nextInboxFormik] = activitiesPage.formiks;
   const InboxElements = useMemo<Props['InboxElements']>(() => {
     return (
       <>

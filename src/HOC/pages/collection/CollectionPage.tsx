@@ -1,6 +1,5 @@
 import { useCollectionOutboxActivities } from 'fe/activities/outbox/collection/useCollectionOutboxActivities';
 import { useCollection } from 'fe/collection/useCollection';
-import { useFormikPage } from 'fe/lib/helpers/usePage';
 import { useCollectionResources } from 'fe/resource/collection/useCollectionResources';
 import { useCollectionFollowers } from 'fe/user/followers/collection/useCollectionFollowers';
 import { Collection } from 'graphql/types.generated';
@@ -34,13 +33,13 @@ export const CollectionPage: FC<CollectionPage> = props => {
   const { collectionFollowersPage } = useCollectionFollowers(
     props.collectionId
   );
-  const [loadMoreFollowers] = useFormikPage(collectionFollowersPage);
+  const [loadMoreFollowers] = collectionFollowersPage.formiks;
 
   const { resourcesPage } = useCollectionResources(props.collectionId);
-  const [loadMoreResources] = useFormikPage(resourcesPage);
+  const [loadMoreResources] = resourcesPage.formiks;
 
   const { activitiesPage } = useCollectionOutboxActivities(props.collectionId);
-  const [loadMoreActivities] = useFormikPage(activitiesPage);
+  const [loadMoreActivities] = activitiesPage.formiks;
 
   const collectionPageProps = useMemo<CollectionPageProps | null>(() => {
     if (!collection) {

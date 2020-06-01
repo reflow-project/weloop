@@ -12,7 +12,6 @@ import {
 import { getActivityActor } from 'fe/lib/activity/getActivityActor';
 import { useThreadComments } from 'fe/comment/thread/useThreadComments';
 import { PreviewIndex } from 'HOC/modules/previews';
-import { useFormikPage } from 'fe/lib/helpers/usePage';
 import { useFormik } from 'formik';
 import { Box } from 'rebass';
 
@@ -21,7 +20,7 @@ export interface ThreadPage {
 }
 export const ThreadPage: FC<ThreadPage> = ({ threadId }) => {
   const { commentPage } = useThreadComments(threadId);
-  const [loadMoreComments] = useFormikPage(commentPage);
+  const [loadMoreComments] = commentPage.formiks;
   const thread = useThreadPreview(threadId);
 
   const replyFormik = useFormik<{ replyMessage: string }>({

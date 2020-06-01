@@ -8,7 +8,6 @@ import { useAllCommunities } from 'fe/community/all/useAllCommunities';
 import { CommunityPreviewHOC } from 'HOC/modules/previews/community/CommunityPreview';
 import { CollectionPreviewHOC } from 'HOC/modules/previews/collection/CollectionPreview';
 import { useAllCollections } from 'fe/collection/all/useAllCollections';
-import { useFormikPage } from 'fe/lib/helpers/usePage';
 import { Box } from 'rebass';
 
 export enum DiscoverPageTabs {
@@ -23,19 +22,19 @@ export interface DiscoverPage {
 }
 export const DiscoverPage: FC<DiscoverPage> = ({ basePath, tab }) => {
   const { activitiesPage } = useInstanceOutboxActivities();
-  const [activitiesPageNext /* , activitiesPagePrevious */] = useFormikPage(
-    activitiesPage
-  );
+  const [
+    activitiesPageNext /* , activitiesPagePrevious */
+  ] = activitiesPage.formiks;
 
   const { allCommunitiesPage } = useAllCommunities();
   const [
     allCommunitiesPageNext /* , allCommunitiesPagePrevious */
-  ] = useFormikPage(allCommunitiesPage);
+  ] = allCommunitiesPage.formiks;
 
   const { allCollectionsPage } = useAllCollections();
   const [
     allCollectionsPageNext /* , allCollectionsPagePrevious */
-  ] = useFormikPage(allCollectionsPage);
+  ] = allCollectionsPage.formiks;
 
   const propsUI = useMemo<Props>(() => {
     const FeaturedCollectionsBox = <FeaturedCollections />;
