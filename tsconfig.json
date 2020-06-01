@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "resolveJsonModule": true,
     "outDir": "build/dist",
     "module": "esnext",
     "target": "es5",

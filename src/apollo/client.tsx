@@ -32,13 +32,12 @@ import {
 import { getOpType } from '../util/apollo/operation';
 import { KVStore } from '../util/keyvaluestore/types';
 import { createUploadLink } from './uploadLink.js';
-const introspectionQueryResultData = require('../fragmentTypes.json');
+import introspectionQueryResultData from 'graphql/types.generated';
 
 export type MutationName = keyof RootMutationType;
 export type QueryName = keyof RootQueryType;
 export type OperationName = QueryName | MutationName;
 
-// const { meQuery } = require('../../../graphql/me.graphql');
 interface Cfg {
   localKVStore: KVStore;
   appLinks: ApolloLink[];
