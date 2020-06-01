@@ -53,4 +53,5 @@ export const Search: SFC<Props> = ({ previews, pagination, filter }) => {
 
 const SearchWrapper = styled(Box)`
   background: ${props => props.theme.colors.appInverse};
+  width: 600px;
 `;
