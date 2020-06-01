@@ -48,9 +48,9 @@ const DropzoneArea: React.FC<Props> = ({
   const {
     getRootProps,
     getInputProps,
-    isDragActive,
-    rejectedFiles,
-    acceptedFiles
+    isDragActive
+    // rejectedFiles,
+    // acceptedFiles
   } = useDropzone({
     accept: filePattern,
     // maxSize: uploadMaxBytes,
@@ -66,7 +66,7 @@ const DropzoneArea: React.FC<Props> = ({
     }
   });
   // const rejectedFile = rejectedFiles[0];
-  console.log({ rejectedFiles, acceptedFiles });
+  // console.log({ rejectedFiles, acceptedFiles });
   return (
     <>
       <Box sx={{ height: '100%' }} {...getRootProps({ className: 'dropzone' })}>
