@@ -6,10 +6,11 @@ import {
   Wrapper,
   WrapperCont
 } from 'ui/elements/Layout';
-import { WrapperPanel } from 'ui/elements/Panel';
+import { WrapperPanel, Panel, PanelTitle, Nav } from 'ui/elements/Panel';
 import { ComponentBag } from 'ui/lib/componentBag';
 import { Header } from 'ui/modules/Header';
 import styled from 'ui/themes/styled';
+import { Trans } from '@lingui/react';
 
 export interface Props {
   previews: ComponentBag[];
@@ -39,17 +40,38 @@ export const Search: SFC<Props> = ({ previews, pagination, filter }) => {
                   ))}
                 </Box>
               </Wrapper>
-              <pagination.Comp {...pagination.props} />
+              <Box m={2}>
+                <pagination.Comp {...pagination.props} />
+              </Box>
             </WrapperCont>
           </SearchWrapper>
         </HomeBox>
         <WrapperPanel>
-          <filter.Comp {...filter.props} />
+          <Panel>
+            <PanelTitle fontSize={0} fontWeight={'bold'}>
+              <Trans>Filters</Trans>
+            </PanelTitle>
+            <Nav>
+              <NavWrapper>
+                <filter.Comp {...filter.props} />
+              </NavWrapper>
+            </Nav>
+          </Panel>
         </WrapperPanel>
       </MainContainer>
     </>
   );
 };
+
+const NavWrapper = styled(Box)`
+  li {
+    height: 40px;
+    line-height: 40px;
+    input {
+      margin-right: 8px;
+    }
+  }
+`;
 
 const SearchWrapper = styled(Box)`
   background: ${props => props.theme.colors.appInverse};
