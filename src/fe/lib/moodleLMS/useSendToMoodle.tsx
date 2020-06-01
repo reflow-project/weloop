@@ -1,4 +1,3 @@
-import { useProfile } from 'fe/user/profile/useProfile';
 import { LMSPrefsPanel } from './LMSPrefsPanel';
 import React, { useMemo, useCallback, useState, useEffect } from 'react';
 import { LMSPrefs, sendToMoodle } from './LMSintegration';
@@ -76,10 +75,8 @@ export const useLMS = (resource: Maybe<ResourceLMS>) => {
 };
 
 export const useLMSPrefs = () => {
-  const { loading: loadingMe } = useMe();
-  const { profile, updateProfile, loading: loadingProfile } = useProfile();
-  const loading = loadingMe || loadingProfile;
-
+  const { loading, me, updateProfile } = useMe();
+  const profile = me?.user;
   const [currentLMSPrefs, setCurrentLMSPrefs] = useState(
     storage.get(LMS_PREFS_KEY) as LMSPrefs | null
   );
