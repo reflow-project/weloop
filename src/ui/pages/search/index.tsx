@@ -13,8 +13,8 @@ import styled from 'ui/themes/styled';
 
 export interface Props {
   previews: ComponentBag[];
-  pagination: JSX.Element;
-  filter: JSX.Element;
+  pagination: ComponentBag;
+  filter: ComponentBag;
 }
 
 export const Search: SFC<Props> = ({ previews, pagination, filter }) => {
@@ -39,11 +39,13 @@ export const Search: SFC<Props> = ({ previews, pagination, filter }) => {
                   ))}
                 </Box>
               </Wrapper>
-              {pagination}
+              <pagination.Comp {...pagination.props} />
             </WrapperCont>
           </SearchWrapper>
         </HomeBox>
-        <WrapperPanel>{filter}</WrapperPanel>
+        <WrapperPanel>
+          <filter.Comp {...filter.props} />
+        </WrapperPanel>
       </MainContainer>
     </>
   );
