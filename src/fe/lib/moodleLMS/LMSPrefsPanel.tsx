@@ -6,6 +6,7 @@ import {
 } from 'ui/modules/MoodlePanel';
 import * as Yup from 'yup';
 import Maybe from 'graphql/tsutils/Maybe';
+import { DOMAIN_REGEX } from 'mn-constants';
 
 export interface LMSPrefsPanel {
   done(): unknown;
@@ -17,7 +18,7 @@ export interface LMSPrefsPanel {
 }
 const validationSchema = Yup.object<BasicMoodleLMSConfigFormValues>({
   site: Yup.string()
-    .url()
+    .matches(DOMAIN_REGEX)
     .required()
 });
 export const LMSPrefsPanel: FC<LMSPrefsPanel> = ({

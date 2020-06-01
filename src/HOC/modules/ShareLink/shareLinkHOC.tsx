@@ -7,6 +7,7 @@ import { ShareLink } from 'ui/modules/ShareLink';
 import { ShareResource } from 'ui/modules/ShareLink/fetched';
 import * as Yup from 'yup';
 import { i18n } from 'context/global/localizationCtx';
+import { DOMAIN_REGEX } from 'mn-constants';
 
 export const validationSchema = Yup.object<ShareResource>({
   name: Yup.string()
@@ -39,7 +40,9 @@ export const ShareLinkHOC: FC<ShareLinkHOC> = ({
 
   const { current: urlValidationSchema } = useRef(
     Yup.object<{ fetchUrl: string }>({
-      fetchUrl: Yup.string().required(i18n._('url is required'))
+      fetchUrl: Yup.string()
+        .matches(DOMAIN_REGEX)
+        .required(i18n._('url is required'))
     })
   );
 

@@ -4,11 +4,10 @@ import { useInstanceRegistrationAllowLists } from 'fe/settings/instance/registra
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useFormikPage } from 'fe/lib/helpers/usePage';
+import { DOMAIN_REGEX } from 'mn-constants';
 
 export const withEmailDomainValidation = Yup.object().shape({
-  domain: Yup.string().matches(
-    /^(?!:\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-_]+\.[a-zA-Z]{2,11}?$/gim
-  )
+  domain: Yup.string().matches(DOMAIN_REGEX)
 });
 
 export interface InstanceSettingsSection {}

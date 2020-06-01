@@ -87,10 +87,8 @@ export const mothershipCreds =
 export const searchDisabled = !mothershipCreds;
 
 export const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9-]{2,}$/;
-export const max_file_size = '10MB';
-
-export const accepted_file_types =
-  '.pdf, .rtf, .docx, .doc, .odt, .ott, .xls, .xlsx, .ods, .ots, .csv, .ppt, .pps, .pptx, .odp, .otp, .odg, .otg, .odc, .ogg, .mp3, .flac, .m4a, .wav, .mp4, .mkv, .flv, .avi, .gif, .jpg, .jpeg, .png, .svg, .webm, .eps, .tex, .mbz';
+export const EMAIL_REGEX = /^.+@.+\..+$/;
+export const DOMAIN_REGEX = /^.+\..+$/;
 
 // these licenses must match the icons (in the same order) configured in the UploadResource UI module
 // please use standard identifiers from https://spdx.org/licenses/preview/ in order to preserve interoperability
