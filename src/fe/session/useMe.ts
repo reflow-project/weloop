@@ -1,16 +1,15 @@
-import { mnCtx } from 'fe/lib/graphql/ctx';
-import { useCallback, useMemo } from 'react';
-import { useHistory } from 'react-router-dom';
-import * as GQL from './me.generated';
-import { useCallOrNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
-import { getMaybeUploadInput } from 'fe/mutation/upload/getUploadInput';
-import Maybe from 'graphql/tsutils/Maybe';
-import { UpdateProfileInput } from 'graphql/types.generated';
-import { LMSPrefs } from 'fe/lib/moodleLMS/LMSintegration';
 import {
   withEncodedExtraInfo,
   WithExtraInfo
 } from 'fe/lib/extraInfo/extraInfo';
+import { mnCtx } from 'fe/lib/graphql/ctx';
+import { LMSPrefs } from 'fe/lib/moodleLMS/LMSintegration';
+import { getMaybeUploadInput } from 'fe/mutation/upload/getUploadInput';
+import Maybe from 'graphql/tsutils/Maybe';
+import { UpdateProfileInput } from 'graphql/types.generated';
+import { useCallback, useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
+import * as GQL from './me.generated';
 
 type UserProfileExtraInfo = {
   LMS?: LMSPrefs;
@@ -55,7 +54,7 @@ export const useMe = () => {
     }).finally(() => push('/login'));
   }, [me, logoutStatus.loading]);
 
-  const updateProfile = useCallOrNotifyMustLogin(
+  const updateProfile = useCallback(
     async ({ icon, image, profile }: UpdateProfile) => {
       if (updateProfileMutationStatus.loading || !me?.user) {
         return;
@@ -71,7 +70,13 @@ export const useMe = () => {
     },
     [updateProfileMutation, me, updateProfileMutationStatus]
   );
-
+  console.table({
+    me,
+    isAdmin,
+    logout,
+    loading,
+    updateProfile
+  });
   return useMemo(() => {
     return {
       me,
