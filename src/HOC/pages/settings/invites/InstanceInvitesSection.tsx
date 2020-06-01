@@ -4,11 +4,12 @@ import { useInstanceRegistrationAllowLists } from 'fe/settings/instance/registra
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useFormikPage } from 'fe/lib/helpers/usePage';
+import { EMAIL_REGEX } from 'mn-constants';
 
 export interface InstanceInvitesSection {}
 
 export const withEmailValidation = Yup.object().shape({
-  email: Yup.string().email()
+  email: Yup.string().matches(EMAIL_REGEX)
 });
 
 export const InstanceInvitesSection: FC<InstanceInvitesSection> = () => {
