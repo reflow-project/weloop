@@ -4,11 +4,10 @@ import { Archive } from 'react-feather';
 import { Box, Flex, Heading, Text } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
 // import Avatar from 'ui/elements/Avatar';
-// import { SimpleLink } from 'ui/helpers/SimpleLink';
+import { SimpleLink } from 'ui/helpers/SimpleLink';
 import styled from 'ui/themes/styled';
 import { typography } from 'mn-constants';
 import { darken, ellipsis } from 'polished';
-import { NavLink } from 'react-router-dom';
 
 export interface Props {
   link: {
@@ -45,44 +44,45 @@ export const Collection: React.FC<Props> = ({
           <Trans>Collection</Trans>
         </Search>
       )}
-      <WrapperLink to={link.url} />
-      <Previews>
-        <Big src={icon} />
-        {/* <Smalls>
+      <WrapperLink link={link}>
+        <Previews>
+          <Big src={icon} />
+          {/* <Smalls>
         <Small>a</Small>
         <Small>b</Small>
         <Small>c</Small>
       </Smalls> */}
-      </Previews>
-      <Info>
-        <Title>{name}</Title>
-        <Meta>
-          <TotResources variant="text">
-            {totalResources || 0} <Trans>Resources</Trans>
-          </TotResources>
-          <Action>
-            {hideActions ? null : (
-              <ActionItem
-                bordered
-                isFollowing={isFollowing ? true : false}
-                onClick={toggleFollowFormik.submitForm}
-              >
-                <ActionText
-                  ml={1}
-                  variant={'suptitle'}
-                  sx={{ textTransform: 'capitalize' }}
+        </Previews>
+        <Info>
+          <Title>{name}</Title>
+          <Meta>
+            <TotResources variant="text">
+              {totalResources || 0} <Trans>Resources</Trans>
+            </TotResources>
+            <Action>
+              {hideActions ? null : (
+                <ActionItem
+                  bordered
+                  isFollowing={isFollowing ? true : false}
+                  onClick={toggleFollowFormik.submitForm}
                 >
-                  {isFollowing ? (
-                    <Trans>Following </Trans>
-                  ) : (
-                    <Trans>follow</Trans>
-                  )}
-                </ActionText>
-              </ActionItem>
-            )}
-          </Action>
-        </Meta>
-      </Info>
+                  <ActionText
+                    ml={1}
+                    variant={'suptitle'}
+                    sx={{ textTransform: 'capitalize' }}
+                  >
+                    {isFollowing ? (
+                      <Trans>Following </Trans>
+                    ) : (
+                      <Trans>follow</Trans>
+                    )}
+                  </ActionText>
+                </ActionItem>
+              )}
+            </Action>
+          </Meta>
+        </Info>
+      </WrapperLink>
     </CollectionWrapper>
   );
 };
@@ -180,52 +180,60 @@ export const tempCollection: React.FC<Props> = ({
 }) => {
   return (
     <Bordered mb={1}>
-      <WrapperLink to={link.url} />
-      <AvatarCollection src={icon} />
-      <Infos ml={3}>
-        <Flex>
-          <Box flex={1}>
-            <Title>{name}</Title>
-            {/* <C>+{displayUsername}</Username> */}
-          </Box>
-        </Flex>
-        <Summary variant="text" mt={1} mb={2}>
-          {summary && summary.length > 140
-            ? summary.replace(/^([\s\S]{140}[^\s]*)[\s\S]*/, '$1...')
-            : summary}
-        </Summary>
-        <MetaWrapper mt={2} alignItems="center">
-          <Archive size={18} />
-          <Text ml={2} variant="suptitle">
-            {totalResources || 0} <Trans>Resources</Trans>
-          </Text>
-        </MetaWrapper>
+      <WrapperLink link={link}>
+        <AvatarCollection src={icon} />
+        <Infos ml={3}>
+          <Flex>
+            <Box flex={1}>
+              <Title>{name}</Title>
+              {/* <C>+{displayUsername}</Username> */}
+            </Box>
+          </Flex>
+          <Summary variant="text" mt={1} mb={2}>
+            {summary && summary.length > 140
+              ? summary.replace(/^([\s\S]{140}[^\s]*)[\s\S]*/, '$1...')
+              : summary}
+          </Summary>
+          <MetaWrapper mt={2} alignItems="center">
+            <Archive size={18} />
+            <Text ml={2} variant="suptitle">
+              {totalResources || 0} <Trans>Resources</Trans>
+            </Text>
+          </MetaWrapper>
 
-        <Meta mt={2}>
-          {hideActions ? null : (
-            <ActionItem
-              bordered
-              isFollowing={isFollowing ? true : false}
-              onClick={toggleFollowFormik.submitForm}
-            >
-              <Text variant={'suptitle'} sx={{ textTransform: 'capitalize' }}>
-                {isFollowing ? <Trans>Unfollow </Trans> : <Trans>follow</Trans>}
-              </Text>
-            </ActionItem>
-          )}
-        </Meta>
-      </Infos>
+          <Meta mt={2}>
+            {hideActions ? null : (
+              <ActionItem
+                bordered
+                isFollowing={isFollowing ? true : false}
+                onClick={toggleFollowFormik.submitForm}
+              >
+                <Text variant={'suptitle'} sx={{ textTransform: 'capitalize' }}>
+                  {isFollowing ? (
+                    <Trans>Unfollow </Trans>
+                  ) : (
+                    <Trans>follow</Trans>
+                  )}
+                </Text>
+              </ActionItem>
+            )}
+          </Meta>
+        </Infos>
+      </WrapperLink>
     </Bordered>
   );
 };
 
-const WrapperLink = styled(NavLink)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
+const WrapperLink = styled(SimpleLink)`
+  // color: red;
+  // a {
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   right: 0;
+  //   bottom: 0;
+  //   z-index: 1;
+  // }
 `;
 
 const MetaWrapper = styled(Flex)`
