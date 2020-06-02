@@ -12,7 +12,7 @@ import Avatar from 'ui/elements/Avatar';
 import { my_timeline, logo_small_url } from '../../../mn-constants';
 // const MnetLogo = require('static/img/logo-icon.png');
 import { FormikHook } from 'ui/@types/types';
-import { LoadMore } from 'ui/modules/Loadmore';
+// import { LoadMore } from 'ui/modules/Loadmore';
 
 export enum Status {
   Loading,
@@ -225,9 +225,9 @@ export const Sidebar: React.FC<Props> = props => {
                           </CommunityLink>
                         )
                       )}
-                      {props.LoadMoreFormik && (
+                      {/* {props.LoadMoreFormik && (
                         <LoadMore LoadMoreFormik={props.LoadMoreFormik} />
-                      )}
+                      )} */}
                     </Nav>
                   </>
                 </SidebarOverflow>
