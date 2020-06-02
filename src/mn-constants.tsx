@@ -9,7 +9,8 @@ export const DEFAULT_PAGE_SIZE =
 
 export const APP_NAME = 'MoodleNet';
 export const INSTANCE_DESCRIPTION =
-  process.env.INSTANCE_DESCRIPTION || 'An instance of MoodleNet.';
+  process.env.INSTANCE_DESCRIPTION ||
+  'This general-purpose instance of MoodleNet is run by Moodle HQ and is part of the wider network.';
 export const INVITE_ONLY_TEXT =
   process.env.REACT_APP_INVITE_ONLY_TEXT ||
   'Please note, signups on this instance are currently invite-only.';
