@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro';
 import { i18nMark } from '@lingui/react';
 import { Input, Textarea } from '@rebass/forms';
 import * as React from 'react';
-import { Box } from 'rebass/styled-components';
+import { Box, Text } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
 import Alert from 'ui/elements/Alert';
 import Button from 'ui/elements/Button';
@@ -85,6 +85,9 @@ export const UploadResource: React.FC<Props> = ({
             onFileSelect={onResourceFileSelect}
             uploadType="resource"
           />
+          <Adv>
+            <Trans>Max filesize: 20MB</Trans>
+          </Adv>
         </ContainerForm>
       </Row>
       <Row>
@@ -224,6 +227,10 @@ export const UploadResource: React.FC<Props> = ({
 };
 
 export default UploadResource;
+
+const Adv = styled(Text)`
+  font-size: 12px;
+`;
 
 const Wrapper = styled(Box)`
   background: ${props => props.theme.colors.appInverse};
