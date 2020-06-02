@@ -19,7 +19,7 @@ export const INSTANCE_PROMPT =
 export const prompt_signin = 'Sign in';
 export const my_timeline = 'My MoodleNet';
 export const instance_bg_img =
-  'https://gitlab.com/moodlenet/frontend/-/raw/develop/src/static/img/login.jpg';
+  'https://gitlab.com/moodlenet/frontend/-/raw/develop/src/static/img/background.jpg';
 export const logo_large_url =
   'https://moodle.net/images/logos/moodlenet-logo.png';
 export const logo_small_url =
