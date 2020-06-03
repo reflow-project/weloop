@@ -25,7 +25,6 @@ export const Search: SFC<Props> = ({ previews, pagination, filter }) => {
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/instantsearch.css@7.1.1/themes/reset-min.css"
       />
-
       <MainContainer>
         <HomeBox>
           <SearchWrapper>
@@ -34,8 +33,8 @@ export const Search: SFC<Props> = ({ previews, pagination, filter }) => {
                 <Header name="Search results" />
                 <Box>
                   {previews.map(bag => (
-                    <Box m={2}>
-                      <bag.Comp {...bag.props} key={bag.key} />
+                    <Box m={2} key={bag.key}>
+                      <bag.Comp {...bag.props} />
                     </Box>
                   ))}
                 </Box>
