@@ -64,7 +64,10 @@ export const Collection: React.FC<Props> = ({
                 <ActionItem
                   bordered
                   isFollowing={isFollowing ? true : false}
-                  onClick={toggleFollowFormik.submitForm}
+                  onClick={e => {
+                    e.preventDefault();
+                    toggleFollowFormik.submitForm();
+                  }}
                 >
                   <ActionText
                     ml={1}

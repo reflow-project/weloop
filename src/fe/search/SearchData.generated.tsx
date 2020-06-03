@@ -27,7 +27,7 @@ export type SearchMeFragment = (
   { __typename: 'Me' }
   & { searchFollows: Array<(
     { __typename: 'SearchFollow' }
-    & Pick<Types.SearchFollow, 'canonicalUrl' | 'collectionId' | 'communityId'>
+    & Pick<Types.SearchFollow, 'canonicalUrl' | 'collectionId' | 'communityId' | 'followId' | 'isCreator'>
   )> }
 );
 
@@ -65,6 +65,8 @@ export const SearchMeFragmentDoc = gql`
     canonicalUrl
     collectionId
     communityId
+    followId
+    isCreator
   }
 }
     `;
