@@ -19,7 +19,7 @@ export const useThreadPreview = (threadId: Thread['id']) => {
   const { reply } = useReplyComment(
     thread?.comments?.edges[0],
     community?.id,
-    thread?.comments?.edges[0].creator?.userName
+    thread?.comments?.edges[0]?.creator?.userName
   );
 
   return useMemo(() => {
