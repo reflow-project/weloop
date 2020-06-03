@@ -18,7 +18,6 @@ export const FeaturedCollections: FC<FeaturedCollections> = () => {
       featuredCollectionsPage.edges
         .map(feature => feature.context)
         .filter(
-          //FIXME: remove when fixed nullable context
           (maybeCtx): maybeCtx is DiscoverPageFeaturedCollectionInfoFragment =>
             !!maybeCtx && maybeCtx.__typename === 'Collection'
         )
@@ -33,7 +32,7 @@ export const FeaturedCollections: FC<FeaturedCollections> = () => {
     () => ({ collection, done }) => {
       const collectionFeature = featuredCollectionsPage.edges.find(
         feature =>
-          feature.context?.__typename === 'Collection' && //FIXME: remove ? when fixed
+          feature.context?.__typename === 'Collection' &&
           feature.context.id === collection.id
       );
       const featureId = collectionFeature?.id;

@@ -18,7 +18,6 @@ export const FeaturedCommunities: FC<FeaturedCommunities> = () => {
       featuredCommunitiesPage.edges
         .map(feature => feature.context)
         .filter(
-          //FIXME: remove when fixed nullable context
           (maybeCtx): maybeCtx is DiscoverPageFeaturedCommunityInfoFragment =>
             !!maybeCtx && maybeCtx.__typename === 'Community'
         )
@@ -33,7 +32,7 @@ export const FeaturedCommunities: FC<FeaturedCommunities> = () => {
     () => ({ community, done }) => {
       const communityFeature = featuredCommunitiesPage.edges.find(
         feature =>
-          feature.context?.__typename === 'Community' && //FIXME: remove ? when fixed
+          feature.context?.__typename === 'Community' &&
           feature.context.id === community.id
       );
       const featureId = communityFeature?.id;
