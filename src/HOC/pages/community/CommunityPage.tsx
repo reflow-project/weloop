@@ -75,11 +75,19 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath }) => {
 
     const ThreadsBox = (
       <>
-        {threadsPage.edges.map(thread => (
-          <Box key={thread.id}>
-            <ThreadPreviewHOC threadId={thread.id} />
-          </Box>
-        ))}
+        {threadsPage.edges.map(thread =>
+          thread.comments?.edges[0] ? (
+            <Box key={thread.id}>
+              <ThreadPreviewHOC threadId={thread.id} />
+            </Box>
+          ) : (
+            (console.warn(
+              `Found a thread [id:${thread.id}] with an empty comments edges .. skipping`,
+              thread
+            ),
+            null)
+          )
+        )}
       </>
     );
 
