@@ -10,7 +10,7 @@ export interface Props {
 
 export const useUserFollowedCommunities = (userId: User['id']) => {
   const userQ = GQL.useUserFollowedCommunitiesQuery({
-    variables: { userId }
+    variables: { userId, limit: DEFAULT_PAGE_SIZE }
   });
 
   const followedCommunitiesPage = usePage(
