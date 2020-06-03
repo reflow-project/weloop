@@ -3,7 +3,7 @@ import * as GQL from './myFollowedCommunities.generated';
 import { usePage } from 'fe/lib/helpers/usePage';
 // import { DEFAULT_PAGE_SIZE } from 'mn-constants';
 
-const MY_JOINMED_LIST_LIMIT = 15; // TODO CONFIGURE
+const MY_JOINMED_LIST_LIMIT = 10; // TODO CONFIGURE
 
 export const useMyFollowedCommunities = () => {
   const myFlwCommunitiesQ = GQL.useMyCommunityFollowsQuery({
