@@ -5,9 +5,9 @@ import {Box} from 'rebass'
 import {getEditProfilePropsAdmin} from 'ui/mock/settings'
 import {MainHeader} from 'ui/modules/MainHeader'
 import {getMainHeaderProps} from 'ui/mock/mainHeader'
-
+import {ComponentBag} from 'ui/lib/componentBag'
 import {WithoutSidebar} from 'ui/templates/withoutSidebar'
-const Head = () => <MainHeader {...getMainHeaderProps() } />
+const Head = ComponentBag(MainHeader,getMainHeaderProps())
 
 <Meta title="Pages|Settings - Admin" component={Settings}/>
 

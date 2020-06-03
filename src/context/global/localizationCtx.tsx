@@ -1,55 +1,82 @@
-import { setupI18n, I18n, Catalog, Catalogs } from '@lingui/core';
+import { Settings } from 'luxon';
+import { Catalog, Catalogs, I18n, setupI18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
 import React, {
   createContext,
-  useContext,
-  useMemo,
   useEffect,
-  useState
+  useMemo,
+  useState,
+  useCallback
 } from 'react';
-import { StateContext } from './stateCtx';
-import { IS_DEV, locales, LocaleKey } from '../../mn-constants';
-
+import { IS_DEV, LocaleDef, locales as available } from '../../mn-constants';
+import {
+  createLocalSessionKVStorage,
+  LOCAL
+} from 'util/keyvaluestore/localSessionStorage';
+const LOCALIZATION_STORE = 'LOCALIZATION';
+const LOCALE_KEY = '#locale';
+const kvstore = createLocalSessionKVStorage(LOCAL)(LOCALIZATION_STORE);
 export type LocaleContextT = {
-  locale: LocaleKey;
+  current: LocaleDef;
   i18n: I18n;
-  RTL: boolean;
+  available: LocaleDef[];
+  set(locale: LocaleDef): void;
 };
+const getStoredLocaleCode = (): string | null => kvstore.get(LOCALE_KEY);
+const setStoredLocaleCode = (localeCode: string): void =>
+  kvstore.set(LOCALE_KEY, localeCode);
 
-export const i18n = setupI18n({ locales: locales });
+const savedLangCode = getStoredLocaleCode();
+const defaultLocale =
+  (savedLangCode && available.find(locale => locale.code === savedLangCode)) ||
+  available[0];
+
+export const i18n = setupI18n({
+  locales: available.map(locale => locale.code)
+});
 export const LocaleContext = createContext<LocaleContextT>({
-  locale: locales[0],
+  current: defaultLocale,
   i18n,
-  RTL: false
+  available,
+  set: () => void 0
 });
 export const ProvideLocalizationCtx: React.FC = ({ children }) => {
-  const {
-    localization: { locale }
-  } = useContext(StateContext);
-
+  const [current, setCurrent] = useState(defaultLocale);
   const [catalogs, setCatalogs] = useState<Catalogs>({});
-  const RTL = isLocaleRTL(locale);
   useEffect(() => {
-    setHTMLDirection(RTL);
-    if (!locales.includes(locale) || catalogs[locale]) {
+    setHTMLDirection(current.rtl);
+    if (catalogs[current.code]) {
       return;
     }
-    loadCatalog(locale)
-      .then(cat => setCatalogs({ ...catalogs, [locale]: cat }))
-      .catch(err => console.error(`Error loading Locale: ${locale}`, err));
-  }, [locale, RTL]);
+    loadCatalog(current.code)
+      .then(cat => setCatalogs({ ...catalogs, [current.code]: cat }))
+      .catch(err =>
+        console.error(`Error loading Locale: ${current.code}`, err)
+      );
+  }, [current]);
+
+  const set = useCallback(
+    (locale: LocaleDef) => {
+      setCurrent(locale);
+      const { code } = locale;
+      Settings.defaultLocale = code.split('_')[0];
+      setStoredLocaleCode(code);
+    },
+    [setCurrent]
+  );
 
   const localeContextValue = useMemo<LocaleContextT>(
     () => ({
-      locale,
+      current,
+      available,
       i18n,
-      RTL
+      set
     }),
-    [locale, i18n]
+    [current, i18n, set]
   );
 
   return (
-    <I18nProvider i18n={i18n} language={locale} catalogs={catalogs}>
+    <I18nProvider i18n={i18n} language={current.code} catalogs={catalogs}>
       <LocaleContext.Provider value={localeContextValue}>
         {children}
       </LocaleContext.Provider>
@@ -57,22 +84,18 @@ export const ProvideLocalizationCtx: React.FC = ({ children }) => {
   );
 };
 
-const loadCatalog = async (locale: LocaleKey): Promise<Catalog> => {
+const loadCatalog = async (localeCode: string): Promise<Catalog> => {
   if (IS_DEV) {
     return import(
       /* webpackMode: "lazy", webpackChunkName: "i18n-[index]" */
-      `@lingui/loader!../../locales/${locale}/messages.po`
+      `@lingui/loader!../../locales/${localeCode}/messages.po`
     );
   } else {
     return import(
       /* webpackMode: "lazy", webpackChunkName: "i18n-[index]" */
-      `../../locales/${locale}/messages.js`
+      `../../locales/${localeCode}/messages.js`
     );
   }
-};
-
-const isLocaleRTL = (locale: LocaleKey) => {
-  return locale === 'ar_SA';
 };
 
 const setHTMLDirection = (RTL: boolean) => {
