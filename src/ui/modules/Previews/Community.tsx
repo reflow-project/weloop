@@ -100,7 +100,10 @@ export const Community: React.FC<Props> = ({
                 variant="outline"
                 isDisabled={isCreator ? true : false}
                 isSubmitting={toggleJoinFormik.isSubmitting}
-                onClick={toggleJoinFormik.submitForm}
+                onClick={e => {
+                  e.preventDefault();
+                  toggleJoinFormik.submitForm();
+                }}
               >
                 <Text variant={'suptitle'}>
                   {joined ? <Trans>Leave</Trans> : <Trans>Join</Trans>}

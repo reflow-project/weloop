@@ -68,13 +68,13 @@ export const SearchPageHOC = connectInfiniteHits(_SearchPageHOC);
 const CollectionPreviewHit: React.FC<{ hit: CollectionHit }> = ({ hit }) => {
   const isLocal = useIsLocal(hit);
   const previewFragment = collectionHit2gql(hit, isLocal);
-  const toggleFollowFormik = useToggleFollowHitFormik(hit);
+  const { toggleFollowFormik } = useFollowHitHelper(hit);
   const props =
     previewFragment &&
     collectionFragment2UIProps({
       collection: previewFragment,
       hideActions: false,
-      toggleFollowFormik: toggleFollowFormik
+      toggleFollowFormik
     });
   !props && console.warn(`Could not preview searchHit:`, hit);
   // console.log(`Collection:`, props)
@@ -84,14 +84,17 @@ const CollectionPreviewHit: React.FC<{ hit: CollectionHit }> = ({ hit }) => {
 const CommunityPreviewHit: React.FC<{ hit: CommunityHit }> = ({ hit }) => {
   const isLocal = useIsLocal(hit);
   const previewFragment = communityHit2gql(hit, isLocal);
-  const toggleFollowFormik = useToggleFollowHitFormik(hit);
+  const {
+    toggleFollowFormik: toggleJoinFormik,
+    hitSearchFollow
+  } = useFollowHitHelper(hit);
   const props =
     previewFragment &&
     communityFragment2UIProps({
       community: previewFragment,
       hideActions: false,
-      toggleJoinFormik: toggleFollowFormik,
-      isCreator: false //FIXME
+      toggleJoinFormik,
+      isCreator: !!hitSearchFollow?.isCreator
     });
   !props && console.warn(`Could not preview searchHit:`, hit);
   // console.log(`Community:`, props)
@@ -136,13 +139,13 @@ const useIsLocal = (hit: Hit) => {
   // console.log(`---`)
   return isLocal;
 };
-const useToggleFollowHitFormik = (hit: Hit) => {
+const useFollowHitHelper = (hit: Hit) => {
   const { data } = useSearchHostIndexAndMyFollowsQuery({
     context: mnCtx({ noShowError: true })
   });
   const [follow, followResult] = useSearchFollowMutation();
   const [unfollow, unfollowResult] = useSearchUnfollowMutation();
-  const myFollow = React.useMemo(
+  const hitSearchFollow = React.useMemo(
     () =>
       (data?.me?.searchFollows || []).find(
         searchFollow => searchFollow.canonicalUrl === hit.canonicalUrl
@@ -150,20 +153,34 @@ const useToggleFollowHitFormik = (hit: Hit) => {
     [data, hit]
   );
 
+  const canFollow = !hitSearchFollow?.followId;
+  const canUnfollow =
+    hitSearchFollow?.followId &&
+    !(hitSearchFollow.communityId && hitSearchFollow.isCreator);
+
   const toggleFollowFormik = useFormik({
     initialValues: {},
     onSubmit: async () => {
       if (!hit.canonicalUrl || followResult.loading || unfollowResult.loading) {
         return;
       }
-      return myFollow
-        ? unfollow({
-            variables: {
-              contextId: myFollow.canonicalUrl /*FIXME with myFollow.followId */
-            }
-          })
-        : follow({ variables: { url: hit.canonicalUrl } });
+      if (hitSearchFollow && canUnfollow) {
+        return unfollow({
+          variables: {
+            contextId: hitSearchFollow.followId
+          }
+        });
+      } else if (canFollow) {
+        return follow({ variables: { url: hit.canonicalUrl } });
+      }
+      return;
     }
   });
-  return toggleFollowFormik;
+  return React.useMemo(
+    () => ({
+      toggleFollowFormik,
+      hitSearchFollow
+    }),
+    [toggleFollowFormik, hitSearchFollow]
+  );
 };
