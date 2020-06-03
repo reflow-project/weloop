@@ -3,18 +3,18 @@ import * as GQL from './myFollowedCommunities.generated';
 import { usePage } from 'fe/lib/helpers/usePage';
 // import { DEFAULT_PAGE_SIZE } from 'mn-constants';
 
-const MY_JOINMED_LIST_LIMIT = 10; // TODO CONFIGURE
+const SIDEBAR_MY_JOINED_LIST_LIMIT = 10;
 
 export const useMyFollowedCommunities = () => {
   const myFlwCommunitiesQ = GQL.useMyCommunityFollowsQuery({
-    variables: { limit: MY_JOINMED_LIST_LIMIT }
+    variables: { limit: SIDEBAR_MY_JOINED_LIST_LIMIT }
   });
 
   const myCommunityFollowsPage = usePage(
     myFlwCommunitiesQ.data?.me?.user.communityFollows,
     ({ cursor, update }) => {
       return myFlwCommunitiesQ.fetchMore({
-        variables: { ...cursor, limit: MY_JOINMED_LIST_LIMIT },
+        variables: { ...cursor, limit: SIDEBAR_MY_JOINED_LIST_LIMIT },
         updateQuery: (prev, { fetchMoreResult }) => {
           return fetchMoreResult?.me?.user?.communityFollows &&
             prev.me?.user?.communityFollows
