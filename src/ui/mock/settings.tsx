@@ -49,7 +49,17 @@ export const getEditProfileProps = (): EditProfileProps => {
     basePath: '/',
     displayUsername: '@estrella@home.moodle.net',
     isAdmin: false,
-    Preferences: <Preferences formik={preferencesFormik} />,
+    Preferences: (
+      <Preferences
+        formik={preferencesFormik}
+        current={{ label: 'English', value: 'en_GB' }}
+        locales={[
+          { label: 'English', value: 'en_GB' },
+          { label: 'Espanol', value: 'es_ES' }
+        ]}
+        setLocale={action('setLocale')}
+      />
+    ),
     Flags: <div>Flags section </div>, //FIXME
     Instance: <div>Instance section </div>, //FIXME
     Invites: <div>Invites section </div>, //FIXME,
@@ -410,7 +420,17 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
     formik,
     basePath: '/',
     displayUsername: '@ammaarah@home.moodle.net',
-    Preferences: <Preferences formik={preferencesFormik} />,
+    Preferences: (
+      <Preferences
+        formik={preferencesFormik}
+        current={{ label: 'English', value: 'en_GB' }}
+        locales={[
+          { label: 'English', value: 'en_GB' },
+          { label: 'Espanol', value: 'es_ES' }
+        ]}
+        setLocale={action('setLocale')}
+      />
+    ),
     Invites: (
       <Emails
         emailsList={[

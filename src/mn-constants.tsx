@@ -61,17 +61,17 @@ export const related_urls = {
 
 export const IS_DEV = NODE_ENV === 'development';
 
-export const languages = {
-  en_GB: 'English, British',
-  en_US: 'English, USA',
-  es_MX: 'Español, Méjico',
-  es_ES: 'Español, España',
-  fr_FR: 'Français, France',
-  eu: 'Euskara',
-  ar_SA: 'العربية, المملكة العربية السعودية'
-};
-export type LocaleKey = keyof typeof languages;
-export const locales = Object.keys(languages) as LocaleKey[];
+export type LocaleDef = { code: string; desc: string; rtl: boolean };
+
+export const locales: LocaleDef[] = [
+  { code: 'en_GB', desc: 'English, British', rtl: false },
+  { code: 'en_US', desc: 'English, USA', rtl: false },
+  { code: 'es_MX', desc: 'Español, Méjico', rtl: false },
+  { code: 'es_ES', desc: 'Español, España', rtl: false },
+  { code: 'fr_FR', desc: 'Français, France', rtl: false },
+  { code: 'eu', desc: 'Euskara', rtl: false },
+  { code: 'ar_SA', desc: 'العربية, المملكة العربية السعودية', rtl: true }
+];
 
 const mothershipAppId = process.env.REACT_APP_MOTHERSHIP_API_ID;
 const mothershipApiKey = process.env.REACT_APP_MOTHERSHIP_API_KEY;
