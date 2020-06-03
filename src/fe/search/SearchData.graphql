@@ -16,6 +16,8 @@ fragment SearchMe on Me {
     canonicalUrl
     collectionId
     communityId
+    followId
+    isCreator
   }
 }
 
