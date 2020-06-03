@@ -13,7 +13,11 @@ import * as ApolloReactHooks from '@apollo/react-hooks';
 
 
 
-export type MyCommunityFollowsQueryVariables = {};
+export type MyCommunityFollowsQueryVariables = {
+  limit?: Types.Maybe<Types.Scalars['Int']>,
+  before?: Types.Maybe<Array<Types.Scalars['Cursor']>>,
+  after?: Types.Maybe<Array<Types.Scalars['Cursor']>>
+};
 
 
 export type MyCommunityFollowsQuery = (
@@ -64,7 +68,7 @@ export const MyCommunityFollowsDataFragmentDoc = gql`
     fragment MyCommunityFollowsData on Me {
   user {
     id
-    communityFollows {
+    communityFollows(limit: $limit, before: $before, after: $after) {
       totalCount
       pageInfo {
         ...FullPageInfo
@@ -83,7 +87,7 @@ export const MyCommunityFollowsDataFragmentDoc = gql`
     ${FullPageInfoFragmentDoc}
 ${MyFollowedCommunityDataFragmentDoc}`;
 export const MyCommunityFollowsDocument = gql`
-    query myCommunityFollows {
+    query myCommunityFollows($limit: Int, $before: [Cursor!], $after: [Cursor!]) {
   me @connection(key: "myCommunityFollows") {
     ...MyCommunityFollowsData
   }
@@ -102,6 +106,9 @@ export const MyCommunityFollowsDocument = gql`
  * @example
  * const { data, loading, error } = useMyCommunityFollowsQuery({
  *   variables: {
+ *      limit: // value for 'limit'
+ *      before: // value for 'before'
+ *      after: // value for 'after'
  *   },
  * });
  */

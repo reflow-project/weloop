@@ -1,5 +1,5 @@
 
-query myCommunityFollows {
+query myCommunityFollows($limit:Int, $before:[Cursor!], $after:[Cursor!]){
   me @connection(key: "myCommunityFollows"){
     ...MyCommunityFollowsData
   }
@@ -8,7 +8,7 @@ query myCommunityFollows {
 fragment MyCommunityFollowsData on Me {
   user{
     id
-    communityFollows{
+    communityFollows(limit:$limit, before:$before, after:$after) {
       totalCount,
       pageInfo{ ...FullPageInfo }
       edges{
