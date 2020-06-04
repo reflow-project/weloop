@@ -10,7 +10,7 @@ export interface Props {
 }
 export const SimpleLink: FC<Props> = ({ link, children }) => {
   return link.external ? (
-    <a href={link.url} target="_blank">
+    <a href={link.url} rel="noopener noreferrer" target="_blank">
       {children}
     </a>
   ) : (

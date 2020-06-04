@@ -3,7 +3,7 @@ import styled from 'ui/themes/styled';
 import { Box, Text, Flex } from 'rebass/styled-components';
 // import SocialText from 'ui/modules/SocialText';
 // import { i18nMark, Trans } from '@lingui/react';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 // import { LocaleContext } from '../../../context/global/localizationCtx';
 import { FormikHook } from 'ui/@types/types';
 import { Star, MoreHorizontal, Flag } from 'react-feather';

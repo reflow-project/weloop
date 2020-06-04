@@ -1,10 +1,11 @@
+import React from 'react';
 import {
   Props as HeroCollectionProps,
   Status as HeroCollectionStatus
 } from 'ui/modules/HeroCollection';
-import { ToggleFormik } from './formik';
+import { useToggleFormik } from './formik';
 
-export const getHeroCollectionProps = (
+export const useGetHeroCollectionProps = (
   isAdmin = false,
   following = true,
   icon = 'https://i0.wp.com/japanese-journey.com/wp-content/uploads/2016/03/spaced-repetition.png',
@@ -31,7 +32,7 @@ export const getHeroCollectionProps = (
       summary,
       followerCount: 10,
       // contributorCount: 2,
-      toggleJoinFormik: ToggleFormik(),
+      toggleJoinFormik: useToggleFormik(),
       EditCollectionPanel: ({ done }) => <></>,
       FlagModal: ({ done }) => <></>,
       FeaturedModal: () => <></>

@@ -1,11 +1,12 @@
+import React from 'react';
 import {
   LoadedMe as HeroUserProps,
   Status,
   LoadedOther
 } from 'ui/modules/HeroUser';
-import { ToggleFormik } from './formik';
+import { useToggleFormik } from './formik';
 
-export const getHeroUserProps = (
+export const useGetHeroUserProps = (
   me = false,
   name = 'Estrella',
   displayUsername = 'estrella@home.moodle.net',
@@ -14,6 +15,8 @@ export const getHeroUserProps = (
   location = 'Madrid',
   summary = 'Spanish educator teaching at a local ESO (secondary) school, and leading a busy life!'
 ) => {
+  const toggleFollowFormik = useToggleFormik();
+
   if (me) {
     const props: HeroUserProps = {
       name,
@@ -47,7 +50,7 @@ export const getHeroUserProps = (
       },
       isOpenDropdown: false,
       setOpenDropdown: () => console.log('test'),
-      toggleFollowFormik: ToggleFormik(),
+      toggleFollowFormik,
       location,
       summary
     };

@@ -42,8 +42,8 @@ export interface EditCommunityFormValues {
 
 export const EditCommunityPanel: React.FC<Props> = ({ cancel, formik }) => {
   const onIconFileSelected = React.useCallback(
-    (file: File) => formik.setFieldValue('icon', file, true),
-    []
+    (file: File) => formik.setValues({ ...formik.values, icon: file }),
+    [formik]
   );
   const initialIconUrl =
     'string' === typeof formik.values.icon ? formik.values.icon : '';

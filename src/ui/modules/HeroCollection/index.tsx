@@ -13,7 +13,7 @@ import Button from 'ui/elements/Button';
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
 import { Settings, MoreVertical, Flag as FlagIcon, Star } from 'react-feather';
 import { FormikHook } from 'ui/@types/types';
-import { MD_Comment } from 'ui/elements/Layout/comment';
+import { MDComment } from 'ui/elements/Layout/comment';
 
 export enum Status {
   Loading,
@@ -79,7 +79,7 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
             +{c.fullName}
           </Username>
           <Box mt={2}>
-            <MD_Comment content={c.summary} />
+            <MDComment content={c.summary} />
           </Box>
 
           <Info mt={2}>
@@ -157,7 +157,7 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
           <c.FlagModal done={() => setOpenFlag(false)} />
         </Modal>
       )}
-      {isOpenFeatured && c.FeaturedModal != null && (
+      {isOpenFeatured && c.FeaturedModal !== null && (
         <Modal closeModal={() => setOpenFeatured(false)}>
           <c.FeaturedModal done={() => setOpenFeatured(false)} />
         </Modal>

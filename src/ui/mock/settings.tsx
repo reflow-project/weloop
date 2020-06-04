@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { action } from '@storybook/addon-actions';
 import Preferences, { EditPreferences } from 'ui/pages/settings/preferences';
 import { getActor } from './actor';
-import { getActions } from './activityPreview';
+import { useGetActions } from './activityPreview';
 import { Collection } from 'ui/modules/Previews/Collection';
 import { Comment } from 'ui/modules/Previews/Comment';
 import { FlaggedItem } from 'ui/modules/Previews/FlaggedItem';
@@ -12,7 +12,7 @@ import { Resource } from 'ui/modules/Previews/Resource';
 import Flags from 'ui/pages/settings/flags';
 import Instance from 'ui/pages/settings/instance';
 import Emails from 'ui/pages/settings/invites';
-import { ToggleFormik } from './formik';
+import { useToggleFormik } from './formik';
 import ModerationLog from 'ui/pages/settings/logs';
 import { User } from 'ui/modules/Previews/User';
 import {
@@ -21,7 +21,7 @@ import {
   Status as ActivityStatus
 } from 'ui/modules/ActivityPreview';
 
-export const getEditProfileProps = (): EditProfileProps => {
+export const useGetEditProfileProps = (): EditProfileProps => {
   const formik = useFormik<EditProfile>({
     initialValues: {
       image:
@@ -67,7 +67,7 @@ export const getEditProfileProps = (): EditProfileProps => {
   };
 };
 
-export const getEditProfilePropsAdmin = (): EditProfileProps => {
+export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
   const activityPreviewProps: ActivityLoaded = {
     communityLink: 'communityLink',
     communityName: 'communityName',
@@ -76,7 +76,7 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
       <FlaggedItem
         FlaggedItemContextElement={
           <Comment
-            {...getActions()}
+            {...useGetActions()}
             url="/"
             content={
               'lol we should dox Estrella here is her address: 40 Camiño Bruno, Madrid but I have not got her postal code'
@@ -442,16 +442,16 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
         formikAddEmail={formikAddEmail}
         formikRemoveEmail={formikRemoveEmail}
         formikSendInvite={formikSendInvite}
-        loadMoreEmails={ToggleFormik()}
+        loadMoreEmails={useToggleFormik()}
       />
     ),
-    Flags: <Flags FlagsBox={ActivitiesBox} loadMoreFlags={ToggleFormik()} />,
+    Flags: <Flags FlagsBox={ActivitiesBox} loadMoreFlags={useToggleFormik()} />,
     Instance: (
       <Instance
         formikAddDomain={formikAddDomain}
         formikRemoveDomain={formikRemoveDomain}
         domainsList={['moodle.com']}
-        loadMoreDomains={ToggleFormik()}
+        loadMoreDomains={useToggleFormik()}
       />
     ),
     ModerationLog: <ModerationLog />,

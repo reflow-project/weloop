@@ -87,14 +87,14 @@ export const Settings: React.FC<Props> = ({
   isAdmin
 }) => {
   const onIconFileSelected = React.useCallback(
-    (file: File) => formik.setFieldValue('icon', file, true),
-    []
+    (file: File) => formik.setValues({ ...formik.values, icon: file }),
+    [formik]
   );
   const initialIconUrl =
     'string' === typeof formik.values.icon ? formik.values.icon : '';
   const onImageFileSelected = React.useCallback(
-    (file: File) => formik.setFieldValue('image', file, true),
-    []
+    (file: File) => formik.setValues({ ...formik.values, image: file }),
+    [formik]
   );
   const initialImageUrl =
     'string' === typeof formik.values.image ? formik.values.image : '';

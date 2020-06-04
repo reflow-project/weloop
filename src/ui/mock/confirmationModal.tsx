@@ -2,9 +2,9 @@ import { useFormik } from 'formik';
 import { Props as ConfirmationModalProps } from 'ui/modules/ConfirmationModal';
 import { action } from '@storybook/addon-actions';
 
-export const getConfirmationModalProps = (): ConfirmationModalProps => {
-  const formik = useFormik<{}>({
-    initialValues: [],
+export const useGetConfirmationModalProps = (): ConfirmationModalProps => {
+  const formik = useFormik({
+    initialValues: {},
     onSubmit: () => {
       action('submit')();
       return new Promise((resolve, reject) => {

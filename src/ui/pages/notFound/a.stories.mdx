@@ -1,25 +1,22 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
-import { PropsTable } from '@storybook/components';
-import { NotFound } from '.';
-import {Guest} from 'ui/templates/guest'
-import {Sidebar} from 'ui/modules/Sidebar'
-import {getSidebarProps} from 'ui/mock/sidebar'
-import {getMainHeaderProps} from 'ui/mock/mainHeader'
-import {MainHeader} from 'ui/modules/MainHeader'
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { NotFound } from '.'
+import { Guest } from 'ui/templates/guest'
+import { Sidebar } from 'ui/modules/Sidebar'
+import { useGetSidebarProps } from 'ui/mock/sidebar'
+import { getMainHeaderProps } from 'ui/mock/mainHeader'
+import { MainHeader } from 'ui/modules/MainHeader'
 
-
-<Meta title="Pages|NotFound" component={NotFound}/>
-
+<Meta title="Pages|NotFound" component={NotFound} />
 
 # NotFound
+
 Let's define a story for the `NotFound` page
 
 <Preview>
   <Story name="NotFound page">
     <Guest>
-        <NotFound  />
+      <NotFound />
     </Guest>
   </Story>
 </Preview>
-
-

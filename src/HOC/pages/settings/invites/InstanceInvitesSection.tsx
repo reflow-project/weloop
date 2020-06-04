@@ -57,6 +57,12 @@ export const InstanceInvitesSection: FC<InstanceInvitesSection> = () => {
       emailsList,
       loadMoreEmails
     };
-  }, [formikAddEmail, formikRemoveEmail, emailsList]);
+  }, [
+    formikAddEmail,
+    formikRemoveEmail,
+    formikSendInvite,
+    emailsList,
+    loadMoreEmails
+  ]);
   return <Invites {...props} />;
 };

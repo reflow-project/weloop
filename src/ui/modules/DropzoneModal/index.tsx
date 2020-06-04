@@ -6,7 +6,7 @@ import { Box, Flex } from 'rebass/styled-components';
 // import { Trans } from '@lingui/macro';
 import styled from 'ui/themes/styled';
 // import { useInstanceInfoQuery } from 'fe/instance/info/useInstanceInfo.generated';
-// import { Trans } from '@lingui/react';
+// import { Trans } from '@lingui/macro';
 // import Alert from 'ui/elements/Alert';
 // import { AlertWrapper } from '../Modal';
 
@@ -71,7 +71,7 @@ const DropzoneArea: React.FC<Props> = ({
     <>
       <Box sx={{ height: '100%' }} {...getRootProps({ className: 'dropzone' })}>
         <InfoContainer className={isDragActive ? 'active' : 'none'}>
-          {!currentFile && uploadType == 'resource' ? (
+          {!currentFile && uploadType === 'resource' ? (
             <Thumb className="thumb">
               <WrapperIcon>
                 <File
@@ -101,7 +101,7 @@ const DropzoneArea: React.FC<Props> = ({
             </Thumb>
           ) : null}
           {!currentFile ? null : uploadType === 'resource' ? (
-            currentFile.file.type.indexOf('image') == -1 ? (
+            currentFile.file.type.indexOf('image') === -1 ? (
               // <WrapperFile>
               <FileThumb>
                 <File size={20} />

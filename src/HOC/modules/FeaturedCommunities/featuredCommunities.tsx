@@ -25,7 +25,7 @@ export const FeaturedCommunities: FC<FeaturedCommunities> = () => {
           ...community,
           icon: community.icon?.url || ''
         })),
-    [featuredCommunitiesPage]
+    [featuredCommunitiesPage.edges]
   );
 
   const FeaturedModal = useMemo<FeaturedCommunitiesData['FeaturedModal']>(
@@ -40,7 +40,7 @@ export const FeaturedCommunities: FC<FeaturedCommunities> = () => {
         <FeatureModalHOC ctx={community} done={done} featureId={featureId} />
       );
     },
-    [featuredCommunities]
+    [featuredCommunitiesPage.edges]
   );
 
   const propsUI = useMemo<FeaturedCommunitiesData>(() => {

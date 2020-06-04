@@ -5,7 +5,7 @@ import {
 import { useFormik } from 'formik';
 import { action } from '@storybook/addon-actions';
 
-export const getEditCommunityModalProps = (): EditCommunityProps => {
+export const useGetEditCommunityModalProps = (): EditCommunityProps => {
   const formik = useFormik<EditCommunityFormValues>({
     initialValues: {
       icon:

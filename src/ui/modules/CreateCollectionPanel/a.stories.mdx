@@ -1,20 +1,20 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
-import { PropsTable } from '@storybook/components';
-import {getCreateCollectionModalProps} from 'ui/mock/createCollectionModal'
-import { CreateCollectionPanel } from 'ui/modules/CreateCollectionPanel';
-import { action } from '@storybook/addon-actions';
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { useGetCreateCollectionModalProps } from 'ui/mock/createCollectionModal'
+import { CreateCollectionPanel } from 'ui/modules/CreateCollectionPanel'
+import { action } from '@storybook/addon-actions'
 import Modal from 'ui/modules/Modal'
 
-<Meta title="Modules|Create a collection" component={CreateCollectionPanel}/>
+<Meta title="Modules|Create a collection" component={CreateCollectionPanel} />
 
 # CreateCollectionPanel
+
 Let's define a story for the `Create Collection Panel preview` module
 
 <Preview>
   <Story name="Create a Collection">
     <Modal closeModal={action('close modal')}>
-      <CreateCollectionPanel {...getCreateCollectionModalProps()} />
+      <CreateCollectionPanel {...useGetCreateCollectionModalProps()} />
     </Modal>
-  </Story>  
+  </Story>
 </Preview>
-

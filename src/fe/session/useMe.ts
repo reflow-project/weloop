@@ -52,7 +52,7 @@ export const useMe = () => {
         });
       }
     }).finally(() => push('/login'));
-  }, [me, logoutStatus.loading]);
+  }, [logoutStatus.loading, me, logoutMut, push]);
 
   const updateProfile = useCallback(
     async ({ icon, image, profile }: UpdateProfile) => {
@@ -79,5 +79,5 @@ export const useMe = () => {
       loading,
       updateProfile
     };
-  }, [me, loading, isAdmin, logout, updateProfile]);
+  }, [me, isAdmin, logout, loading, updateProfile]);
 };

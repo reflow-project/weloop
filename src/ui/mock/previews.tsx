@@ -1,3 +1,4 @@
+import React from 'react';
 import { Props as CollectionProps } from 'ui/modules/Previews/Collection';
 import { CommentProps } from 'ui/modules/Previews/Comment';
 import { Props as CommunityProps } from 'ui/modules/Previews/Community';
@@ -8,8 +9,8 @@ import { CommentProps as MainCommentProps } from 'ui/modules/Previews/MainCommen
 import { Props as ResourceProps } from 'ui/modules/Previews/Resource';
 import { CommentProps as ThreadProps } from 'ui/modules/Previews/Thread';
 import { Props as UserProps } from 'ui/modules/Previews/User';
-import { getActions } from './activityPreview';
-import { ToggleFormik } from './formik';
+import { useGetActions } from './activityPreview';
+import { useToggleFormik } from './formik';
 
 export function CollectionPreviewProps(
   username = 'Collection',
@@ -26,7 +27,7 @@ export function CollectionPreviewProps(
     name: username,
     summary,
     totalResources: 12,
-    toggleFollowFormik: ToggleFormik()
+    toggleFollowFormik: useToggleFormik()
   };
 }
 
@@ -48,7 +49,7 @@ export function CommunityPreviewProps(
     followersCount: 172,
     collectionsCount: 16,
     joined: true,
-    toggleJoinFormik: ToggleFormik(),
+    toggleJoinFormik: useToggleFormik(),
     threadsCount: 3
   };
 }
@@ -69,7 +70,7 @@ export function ResourcePreviewProps(
     name,
     isSearch: true,
     like: {
-      toggleLikeFormik: ToggleFormik(),
+      toggleLikeFormik: useToggleFormik(),
       iLikeIt: true,
       totalLikes: 5
     },
@@ -102,7 +103,7 @@ export function ResourcePreviewUploadedProps(
     acceptedLicenses: ['CC0-1.0', 'CC-BY-4.0', 'CC-BY-SA-4.0'],
     name,
     like: {
-      toggleLikeFormik: ToggleFormik(),
+      toggleLikeFormik: useToggleFormik(),
       iLikeIt: true,
       totalLikes: 5
     },
@@ -135,7 +136,7 @@ export function UserPreviewProps(
     profileUrl,
     name,
     isFollowing,
-    toggleFollowFormik: ToggleFormik()
+    toggleFollowFormik: useToggleFormik()
   };
 }
 
@@ -145,7 +146,7 @@ export function CommentPreviewProps(
   isFlagged = false
 ): CommentProps {
   return {
-    ...getActions(),
+    ...useGetActions(),
     url,
     content,
     isFlagged
@@ -159,7 +160,7 @@ export function LikedCommentPreviewProps(
   content = 'After longtime I made a design for Uplabs Music player design challenge. i hope you all like this. if you like my design dont forgot to Vote in Uplabs ( 25 June ). Vote Here '
 ): LikedCommentProps {
   return {
-    ...getActions(),
+    ...useGetActions(),
     actor: {
       icon:
         'https://pbs.twimg.com/profile_images/1161428802091802627/O49Ggs-7_400x400.jpg',
@@ -178,7 +179,7 @@ export function MainCommentPreviewProps(
   content = 'Hey everyone, new here and just wondering where the best place would be to go and find more information about how to deploy MoodleNet? Thanks in advance!'
 ): MainCommentProps {
   return {
-    ...getActions(),
+    ...useGetActions(),
     content
   };
 }
@@ -209,9 +210,9 @@ export function FlaggedItemPreviewProps(
 ): FlaggedProps {
   return {
     FlaggedItemContextElement: flag,
-    blockUserFormik: ToggleFormik(),
-    deleteContentFormik: ToggleFormik(),
-    ignoreFlagFormik: ToggleFormik(),
+    blockUserFormik: useToggleFormik(),
+    deleteContentFormik: useToggleFormik(),
+    ignoreFlagFormik: useToggleFormik(),
     type,
     reason
   };

@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import { clearFix, darken } from 'polished';
 import React, { ComponentType, FC } from 'react';
 import { Settings, MoreVertical, Flag, Star } from 'react-feather';
@@ -10,7 +10,7 @@ import Button from 'ui/elements/Button';
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
 import { FormikHook } from 'ui/@types/types';
 import { NavLink } from 'react-router-dom';
-import { MD_Comment } from 'ui/elements/Layout/comment';
+import { MDComment } from 'ui/elements/Layout/comment';
 
 export enum Status {
   Loading,
@@ -69,7 +69,7 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
           <Username fontSize={0}>@{c.fullName}</Username>
           {c.summary && (
             <Box mt={2}>
-              <MD_Comment content={c.summary} />
+              <MDComment content={c.summary} />
             </Box>
           )}
           <Info mt={3}>

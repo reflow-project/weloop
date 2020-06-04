@@ -1,7 +1,7 @@
-import TermsAndConditionsPage from 'ui/pages/termsAndConditions';
 import React, { FC } from 'react';
 import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { GuestTemplate } from 'HOC/templates/Guest/Guest';
+import { TermsAndConditionsPageHOC } from 'HOC/pages/termsAndConditions/TermsAndConditionsPage';
 
 interface TermsAndConditionsPageRouter {}
 const TermsAndConditionsPageRouter: FC<RouteComponentProps<
@@ -9,7 +9,7 @@ const TermsAndConditionsPageRouter: FC<RouteComponentProps<
 >> = () => {
   return (
     <GuestTemplate withoutHeader>
-      <TermsAndConditionsPage />
+      <TermsAndConditionsPageHOC />
     </GuestTemplate>
   );
 };

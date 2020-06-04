@@ -91,7 +91,16 @@ export const DiscoverPage: FC<DiscoverPage> = ({ basePath, tab }) => {
     };
 
     return props;
-  }, [activitiesPage, allCommunitiesPage, basePath, tab]);
+  }, [
+    activitiesPage.edges,
+    activitiesPageNext,
+    allCollectionsPage.edges,
+    allCollectionsPageNext,
+    allCommunitiesPage.edges,
+    allCommunitiesPageNext,
+    basePath,
+    tab
+  ]);
 
   return <Discover {...propsUI} />;
 };

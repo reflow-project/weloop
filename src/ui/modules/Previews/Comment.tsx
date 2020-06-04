@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'ui/themes/styled';
 import { Box, Text, Flex } from 'rebass/styled-components';
 // import SocialText from 'ui/modules/SocialText';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 // import { LocaleContext } from '../../../context/global/localizationCtx';
 import { FormikHook } from 'ui/@types/types';
 import { Star, MoreHorizontal, Flag, CornerDownLeft } from 'react-feather';
@@ -13,7 +13,7 @@ import Modal from 'ui/modules/Modal';
 import { NavLink } from 'react-router-dom';
 import { typography } from 'mn-constants';
 import { darken } from 'polished';
-import { MD_Comment } from 'ui/elements/Layout/comment';
+import { MDComment } from 'ui/elements/Layout/comment';
 
 export interface LikeActions {
   toggleLikeFormik: FormikHook<{}>;
@@ -59,7 +59,7 @@ export const Comment: React.SFC<CommentProps> = ({
   return (
     <Wrapper>
       {/* <Link to={url}> */}
-      <MD_Comment content={content} />
+      <MDComment content={content} />
       {/* <Summary
         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
         sx={{ textDecoration: 'none' }}

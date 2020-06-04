@@ -1,34 +1,31 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
-import { PropsTable } from '@storybook/components';
-import { Settings } from '.';
-import {Box} from 'rebass'
-import {getEditProfileProps} from 'ui/mock/settings'
-import {MainHeader} from 'ui/modules/MainHeader'
-import {getMainHeaderProps} from 'ui/mock/mainHeader'
-import {ComponentBag} from 'ui/lib/componentBag'
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { Settings } from '.'
+import { Box } from 'rebass'
+import { useGetEditProfileProps } from 'ui/mock/settings'
+import { MainHeader } from 'ui/modules/MainHeader'
+import { getMainHeaderProps } from 'ui/mock/mainHeader'
+import { ComponentBag } from 'ui/lib/componentBag'
 
-import {WithoutSidebar} from 'ui/templates/withoutSidebar'
-const Head = ComponentBag(MainHeader,getMainHeaderProps() )
+import { WithoutSidebar } from 'ui/templates/withoutSidebar'
+const Head = ComponentBag(MainHeader, getMainHeaderProps())
 
-
-<Meta title="Pages|Settings - User" component={Settings}/>
-
+<Meta title="Pages|Settings - User" component={Settings} />
 
 # Settings
+
 Let's define a story for the `Settings` page
+
 - **[Story](#story)**
 - **[Building blocks](#modules)**
 - **[Props](#props)**
-
 
 <div id="story">Story</div>
 
 <Preview>
   <Story name="Settings page">
-    <WithoutSidebar
-     HeaderBox={Head}
-    >
-      <Settings {...getEditProfileProps()} />
+    <WithoutSidebar HeaderBox={Head}>
+      <Settings {...useGetEditProfileProps()} />
     </WithoutSidebar>
   </Story>
 </Preview>

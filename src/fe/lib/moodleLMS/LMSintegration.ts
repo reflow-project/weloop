@@ -5,7 +5,7 @@ export interface LMSPrefs {
 }
 
 export const getUrlParamsFromEntryPointForMoodleLMS = (): LMSPrefs | null => {
-  const q = new URLSearchParams(location.search);
+  const q = new URLSearchParams(window.location.search);
   const site = q.get('site');
   if (!site) {
     return null;

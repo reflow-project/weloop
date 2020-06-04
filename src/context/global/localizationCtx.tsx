@@ -53,7 +53,7 @@ export const ProvideLocalizationCtx: React.FC = ({ children }) => {
       .catch(err =>
         console.error(`Error loading Locale: ${current.code}`, err)
       );
-  }, [current]);
+  }, [catalogs, current]);
 
   const set = useCallback(
     (locale: LocaleDef) => {
@@ -72,7 +72,7 @@ export const ProvideLocalizationCtx: React.FC = ({ children }) => {
       i18n,
       set
     }),
-    [current, i18n, set]
+    [current, set]
   );
 
   return (

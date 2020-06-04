@@ -5,7 +5,7 @@ import {
 import { useFormik } from 'formik';
 import { action } from '@storybook/addon-actions';
 
-export const getResetPasswordProps = (): NewPasswordProps => {
+export const useGetResetPasswordProps = (): NewPasswordProps => {
   const formik = useFormik<ResetPasswordFormValues>({
     initialValues: {
       email: ''

@@ -4,8 +4,13 @@
     "outDir": "build/dist",
     "module": "esnext",
     "target": "es5",
-    "types": ["react"],
-    "lib": ["es7", "dom"],
+    "types": [
+      "react"
+    ],
+    "lib": [
+      "es7",
+      "dom"
+    ],
     "sourceMap": true,
     "allowJs": true,
     "jsx": "preserve",
@@ -22,7 +27,19 @@
     "downlevelIteration": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "strict": true
   },
-  "exclude": ["node_modules", "build", "scripts", "config"]
+  "exclude": [
+    "node_modules",
+    "build",
+    "scripts",
+    "config"
+  ],
+  "include": [
+    "src"
+  ]
 }

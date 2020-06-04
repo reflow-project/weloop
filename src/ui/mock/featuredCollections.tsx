@@ -1,6 +1,7 @@
+import React from 'react';
 import { FeaturedCollectionsData as FeaturedCollectionsProps } from 'ui/modules/FeaturedCollections';
 
-export const getFeaturedCollectionsProps = (
+export const useGetFeaturedCollectionsProps = (
   isAdmin = false
 ): FeaturedCollectionsProps => {
   return {

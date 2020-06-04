@@ -33,5 +33,5 @@ export const useInstanceFeaturedCollections = () => {
     return {
       featuredCollectionsPage
     };
-  }, [featuredCollectionsQ]);
+  }, [featuredCollectionsPage]);
 };

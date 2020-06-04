@@ -73,7 +73,7 @@ export const AddResourceHOC: FC<AddResourceHOC> = ({
 
   useEffect(() => {
     hideIconField && formik.setValues({ ...formik.values, icon: null });
-  }, [hideIconField]);
+  }, [formik, hideIconField]);
 
   return (
     <UploadResource

@@ -48,6 +48,6 @@ export const InstanceSettingsSection: FC<InstanceSettingsSection> = () => {
       domainsList,
       loadMoreDomains
     };
-  }, [formikAddDomain, formikRemoveDomain, domainsList]);
+  }, [formikAddDomain, formikRemoveDomain, domainsList, loadMoreDomains]);
   return <Instance {...props} />;
 };

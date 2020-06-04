@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import { Flex, Box, Text } from 'rebass/styled-components';
 import SocialText from 'ui/modules/SocialText';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import Button from 'ui/elements/Button';
 
 import styled from 'ui/themes/styled';

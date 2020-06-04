@@ -14,8 +14,8 @@ const WrapperButton = styled(Button)<{
   width: ${props => (props.isIcon === true ? '40px' : 'auto')};
   border-radius: ${props => (props.isIcon === true ? '100%' : '4px')};
   padding: ${props => (props.isIcon === true ? '0px' : 'auto')};
-  opacity: ${props => (props.disabled == true ? '0.7' : '1')};
-  cursor: ${props => (props.disabled == true ? 'default' : 'pointer')};
+  opacity: ${props => (props.disabled === true ? '0.7' : '1')};
+  cursor: ${props => (props.disabled === true ? 'default' : 'pointer')};
   &:hover && not:['disabled']  {
     background: ${props =>
       props.variant === 'primary' || props.variant === 'danger'

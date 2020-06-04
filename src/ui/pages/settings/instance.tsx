@@ -41,7 +41,10 @@ const Instance: React.FC<Props> = ({
   return (
     <Box>
       <Text px={3} mt={2} variant="heading">
-        <span style={{ marginRight: '8px' }}>🎨</span>Customize your instance
+        <span style={{ marginRight: '8px' }} aria-label="icon" role="img">
+          🎨
+        </span>
+        Customize your instance
       </Text>
       {/* <Row>
       <ContainerForm>

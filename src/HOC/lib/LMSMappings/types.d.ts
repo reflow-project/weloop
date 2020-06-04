@@ -45,7 +45,7 @@ export type ResourceGqlMin = Pick<
 
 export type CollectionGqlMin = Pick<
   Collection,
-  'preferredUsername' | 'canonicalUrl' | 'icon' | 'summary'
+  'preferredUsername' | 'canonicalUrl' | 'icon' | 'summary' | 'name'
 > & {
   community?: Maybe<CommunityGqlMin>;
 };
@@ -62,7 +62,7 @@ export type CommunityHitMin = Pick<
 
 export type CollectionHitMin = Pick<
   CollectionHit,
-  'preferredUsername' | 'canonicalUrl' | 'icon' | 'summary'
+  'preferredUsername' | 'canonicalUrl' | 'icon' | 'summary' | 'name'
 > & { community?: CommunityHitMin };
 
 export type ResourceHitMin = Pick<

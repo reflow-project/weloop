@@ -45,7 +45,7 @@ export const collection2lms = (
     return null;
   }
 
-  const { preferredUsername, canonicalUrl, icon, summary } = collection;
+  const { preferredUsername, canonicalUrl, icon, summary, name } = collection;
   return {
     canonicalUrl: canonicalUrl || '',
     icon,

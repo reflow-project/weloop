@@ -1,19 +1,19 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
-import { PropsTable } from '@storybook/components';
-import { Sidebar, Status } from '.';
-import {Box} from 'rebass'
-import {getSidebarProps} from 'ui/mock/sidebar'
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { Sidebar, Status } from '.'
+import { Box } from 'rebass'
+import { useGetSidebarProps } from 'ui/mock/sidebar'
 
-<Meta title="Modules|Sidebar" component={Sidebar}/>
+<Meta title="Modules|Sidebar" component={Sidebar} />
 
 # Sidebar
+
 Let's define a story for the `Sidebar` module
 
 <Preview>
   <Story name="Sidebar">
-    <Box sx={{width: '600px', margin: '0 auto', background: "white", borderRadius: '6px'}}>
-      <Sidebar {...getSidebarProps()} />
+    <Box sx={{ width: '600px', margin: '0 auto', background: 'white', borderRadius: '6px' }}>
+      <Sidebar {...useGetSidebarProps()} />
     </Box>
   </Story>
 </Preview>
-

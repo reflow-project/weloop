@@ -111,7 +111,6 @@ export const CollectionPage: FC<CollectionPage> = props => {
     };
     return uiProps;
   }, [
-    props,
     activitiesPage,
     resourcesPage,
     collectionFollowersPage,
@@ -119,7 +118,9 @@ export const CollectionPage: FC<CollectionPage> = props => {
     loadMoreResources,
     loadMoreActivities,
     isCommunityMember,
-    collection
+    collection,
+    basePath,
+    collectionId
   ]);
   return collectionPageProps && <CollectionPageUI {...collectionPageProps} />;
 };

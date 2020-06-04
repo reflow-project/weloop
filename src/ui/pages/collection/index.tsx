@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import { Flex, Box } from 'rebass/styled-components';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import styled from 'ui/themes/styled';
 import { FormikHook } from 'ui/@types/types';
 import Modal from 'ui/modules/Modal';

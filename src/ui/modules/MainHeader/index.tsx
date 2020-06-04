@@ -11,7 +11,7 @@ import { DropdownSidebar } from './dropdown';
 import media from 'styled-media-query';
 import { ellipsis, darken } from 'polished';
 import { Link } from 'react-router-dom';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 // const MnetLogo = require('static/img/logo-icon.png');
 import { prompt_signin, logo_small_url } from 'mn-constants';
 

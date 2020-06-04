@@ -10,7 +10,7 @@ import { WrapperPanel, Panel, PanelTitle, Nav } from 'ui/elements/Panel';
 import { ComponentBag } from 'ui/lib/componentBag';
 import { Header } from 'ui/modules/Header';
 import styled from 'ui/themes/styled';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 export interface Props {
   previews: ComponentBag[];

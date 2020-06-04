@@ -40,7 +40,7 @@ export const UserPreviewHOC: FC<Props> = ({ userId, flagged }) => {
       hideActions: hideActions
     };
     return props;
-  }, [user, toggleFollowFormik]);
+  }, [user, toggleFollowFormik, flagged]);
 
   return (
     userPreviewProps && (

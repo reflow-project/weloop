@@ -1,23 +1,21 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
-import { PropsTable } from '@storybook/components';
-import {getEditResourceModalProps} from 'ui/mock/editResourceModal'
-import { EditResourcePanel } from '.';
-import { action } from '@storybook/addon-actions';
-import {Box} from 'rebass'
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { useGetEditResourceModalProps } from 'ui/mock/editResourceModal'
+import { EditResourcePanel } from '.'
+import { action } from '@storybook/addon-actions'
+import { Box } from 'rebass'
 import Modal from 'ui/modules/Modal'
 
-<Meta title="Modules|EditResourcePanel" component={EditResourcePanel}/>
+<Meta title="Modules|EditResourcePanel" component={EditResourcePanel} />
 
 # EditResourcePanel
+
 Let's define a story for the `Activity preview` module
 
 <Preview>
   <Story name="edit resource module">
     <Modal closeModal={action('close modal')}>
-      <EditResourcePanel {...getEditResourceModalProps()}/>
+      <EditResourcePanel {...useGetEditResourceModalProps()} />
     </Modal>
   </Story>
 </Preview>
-
-
-

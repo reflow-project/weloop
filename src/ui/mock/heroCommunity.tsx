@@ -1,10 +1,11 @@
+import React from 'react';
 import {
   Props as HeroCommunityProps,
   Status as HeroCommunityStatus
 } from 'ui/modules/HeroCommunity';
-import { ToggleFormik } from './formik';
+import { useToggleFormik } from './formik';
 
-export const getHeroCommunityProps = (
+export const useGetHeroCommunityProps = (
   isCreator = false,
   isAdmin = false,
   following = true,
@@ -28,7 +29,7 @@ export const getHeroCommunityProps = (
       fullName,
       summary,
       totalMembers: 193,
-      toggleJoinFormik: ToggleFormik(),
+      toggleJoinFormik: useToggleFormik(),
       EditCommunityPanel: ({ done }) => <></>,
       FlagModal: ({ done }) => <></>,
       FeaturedModal: () => <></>

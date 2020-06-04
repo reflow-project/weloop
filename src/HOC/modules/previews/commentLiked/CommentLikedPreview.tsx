@@ -53,7 +53,7 @@ export const LikedCommentPreviewHOC: FC<LikedCommentPreviewHOC> = ({
       FlagModal: ({ done }) => <FlagModalHOC done={done} ctx={comment} />
     };
     return props;
-  }, [comment, toggleLikeFormik]);
+  }, [comment, replyFormik, toggleLikeFormik]);
 
   return (
     likkedCommentPreviewProps && (

@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import * as React from 'react';
 import { Archive } from 'react-feather';
 import { Box, Flex, Heading, Text } from 'rebass/styled-components';

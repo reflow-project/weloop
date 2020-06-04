@@ -3,7 +3,7 @@ import styled from 'ui/themes/styled';
 import { XCircle, Slash, Flag } from 'react-feather';
 
 import { Box, Text, Flex } from 'rebass/styled-components';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import Modal from 'ui/modules/Modal';
 import { FormikHook } from 'ui/@types/types';
 import ConfirmationModal from '../ConfirmationModal';

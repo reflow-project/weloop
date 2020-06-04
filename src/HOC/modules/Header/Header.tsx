@@ -35,6 +35,6 @@ export const MainHeaderHOC: FC<MainHeaderHOC> = () => {
       CreateCommunityModal
     };
     return props;
-  }, [user, toggleSideBar]);
+  }, [user, meQ.isAdmin, meQ.logout, toggleSideBar, CreateCommunityModal]);
   return <MainHeader {...headerProps} />;
 };
