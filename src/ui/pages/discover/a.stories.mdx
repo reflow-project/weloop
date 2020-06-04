@@ -54,8 +54,14 @@ The `Discover` page displays featured communities, featured collections, and the
       <Discover
         basePath={'/'}
         LoadMoreFormik={useGetLoadMoreProps()}
-        FeaturedCommunitiesBox={<FeaturedCommunities {...getFeaturedCommunitiesProps(true)} />}
-        FeaturedCollectionsBox={<FeaturedCollections {...useGetFeaturedCollectionsProps(true)} />}
+        FeaturedCommunitiesBox={ComponentBag(
+          FeaturedCommunities,
+          getFeaturedCommunitiesProps(true)
+        )}
+        FeaturedCollectionsBox={ComponentBag(
+          FeaturedCollections,
+          useGetFeaturedCollectionsProps(true)
+        )}
         ActivitiesBox={
           <React.Fragment>
             <ActivityPreview

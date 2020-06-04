@@ -9,6 +9,7 @@ import { CommunityPreviewHOC } from 'HOC/modules/previews/community/CommunityPre
 import { CollectionPreviewHOC } from 'HOC/modules/previews/collection/CollectionPreview';
 import { useAllCollections } from 'fe/collection/all/useAllCollections';
 import { Box } from 'rebass';
+import { ComponentBag } from 'ui/lib/componentBag';
 
 export enum DiscoverPageTabs {
   Activities,
@@ -37,8 +38,8 @@ export const DiscoverPage: FC<DiscoverPage> = ({ basePath, tab }) => {
   ] = allCollectionsPage.formiks;
 
   const propsUI = useMemo<Props>(() => {
-    const FeaturedCollectionsBox = <FeaturedCollections />;
-    const FeaturedCommunitiesBox = <FeaturedCommunities />;
+    const FeaturedCollectionsBox = ComponentBag(FeaturedCollections, {});
+    const FeaturedCommunitiesBox = ComponentBag(FeaturedCommunities, {});
     const ActivitiesBox = (
       <>
         {activitiesPage.edges.map(activity => (

@@ -17,11 +17,12 @@ import { FormikHook } from 'ui/@types/types';
 
 import { LoadMore } from 'ui/modules/Loadmore';
 import { SidePanel } from 'ui/modules/SidePanel';
+import { ComponentBag } from 'ui/lib/componentBag';
 
 export interface Props {
   basePath: string;
-  FeaturedCommunitiesBox: JSX.Element;
-  FeaturedCollectionsBox: JSX.Element;
+  FeaturedCommunitiesBox: ComponentBag;
+  FeaturedCollectionsBox: ComponentBag;
   ActivitiesBox: JSX.Element;
   CommunitiesBoxes: JSX.Element;
   CollectionsBoxes: JSX.Element;
@@ -40,8 +41,12 @@ export const Discover: React.FC<Props> = ({
     <MainContainer>
       <HomeBox>
         <WrapperCont>
-          <WrapperFeatured>{FeaturedCommunitiesBox}</WrapperFeatured>
-          <WrapperFeatured mt={2}>{FeaturedCollectionsBox}</WrapperFeatured>
+          <WrapperFeatured>
+            <FeaturedCommunitiesBox.Comp {...FeaturedCommunitiesBox.props} />
+          </WrapperFeatured>
+          <WrapperFeatured mt={2}>
+            <FeaturedCollectionsBox.Comp {...FeaturedCollectionsBox.props} />
+          </WrapperFeatured>
           <Wrapper>
             <Menu basePath={basePath} />
             <Switch>
