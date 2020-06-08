@@ -69,16 +69,8 @@ export const Collection: React.FC<Props> = ({
                     toggleFollowFormik.submitForm();
                   }}
                 >
-                  <ActionText
-                    ml={1}
-                    variant={'suptitle'}
-                    sx={{ textTransform: 'capitalize' }}
-                  >
-                    {isFollowing ? (
-                      <Trans>Following </Trans>
-                    ) : (
-                      <Trans>follow</Trans>
-                    )}
+                  <ActionText ml={1} variant={'suptitle'} sx={{ textTransform: 'capitalize' }}>
+                    {isFollowing ? <Trans>Following </Trans> : <Trans>follow</Trans>}
                   </ActionText>
                 </ActionItem>
               )}
@@ -212,11 +204,7 @@ export const tempCollection: React.FC<Props> = ({
                 onClick={toggleFollowFormik.submitForm}
               >
                 <Text variant={'suptitle'} sx={{ textTransform: 'capitalize' }}>
-                  {isFollowing ? (
-                    <Trans>Unfollow </Trans>
-                  ) : (
-                    <Trans>follow</Trans>
-                  )}
+                  {isFollowing ? <Trans>Unfollow </Trans> : <Trans>follow</Trans>}
                 </Text>
               </ActionItem>
             )}
@@ -241,7 +229,7 @@ const WrapperLink = styled(SimpleLink)`
 
 const MetaWrapper = styled(Flex)`
   color: ${props => props.theme.colors.dark};
-  svg  {
+  svg {
     margin: 0;
   }
 `;
@@ -266,22 +254,14 @@ const ActionItem = styled(Flex)<{ isFollowing?: boolean; bordered?: boolean }>`
   align-items: center;
 
   color: ${props =>
-    props.isFollowing
-      ? props.theme.colors.lighter
-      : props.theme.colors.mediumdark};
+    props.isFollowing ? props.theme.colors.lighter : props.theme.colors.mediumdark};
   div {
-    color: ${props =>
-      props.isFollowing
-        ? props.theme.colors.lighter
-        : props.theme.colors.darker};
+    color: ${props => (props.isFollowing ? props.theme.colors.lighter : props.theme.colors.darker)};
   }
   cursor: pointer;
-  background: ${props =>
-    props.isFollowing ? props.theme.colors.primary : 'transparent'};
-  border: 1px solid
-    ${props => (props.isFollowing ? props.theme.colors.primary : 'transparent')};
-  border: 1px solid
-    ${props => (props.bordered ? props.theme.colors.primary : 'transparent')};
+  background: ${props => (props.isFollowing ? props.theme.colors.primary : 'transparent')};
+  border: 1px solid ${props => (props.isFollowing ? props.theme.colors.primary : 'transparent')};
+  border: 1px solid ${props => (props.bordered ? props.theme.colors.primary : 'transparent')};
   border-radius: 4px;
   padding: 2px 8px;
   text-align: center;
@@ -295,13 +275,9 @@ const ActionItem = styled(Flex)<{ isFollowing?: boolean; bordered?: boolean }>`
   }
   &:hover {
     background: ${props =>
-      props.isFollowing
-        ? props.theme.colors.mediumdark
-        : props.theme.colors.primary};
+      props.isFollowing ? props.theme.colors.mediumdark : props.theme.colors.primary};
     border-color: ${props =>
-      props.isFollowing
-        ? props.theme.colors.mediumdark
-        : props.theme.colors.primary};
+      props.isFollowing ? props.theme.colors.mediumdark : props.theme.colors.primary};
   }
 `;
 

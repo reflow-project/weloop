@@ -71,10 +71,7 @@ export const useReplyComment = (
             ) {
               return;
             }
-            const edges = [
-              ...threadCommentsQueryRes.thread.comments.edges,
-              comment
-            ];
+            const edges = [...threadCommentsQueryRes.thread.comments.edges, comment];
 
             const data: ThreadCommentsQuery = {
               ...threadCommentsQueryRes,
@@ -86,14 +83,14 @@ export const useReplyComment = (
                 }
               }
             };
-            proxy.writeQuery<ThreadCommentsQuery, ThreadCommentsQueryVariables>(
-              {
-                data,
-                query: ThreadCommentsDocument,
-                variables: { threadId, limit: DEFAULT_PAGE_SIZE }
-              }
-            );
-          } catch (err) {}
+            proxy.writeQuery<ThreadCommentsQuery, ThreadCommentsQueryVariables>({
+              data,
+              query: ThreadCommentsDocument,
+              variables: { threadId, limit: DEFAULT_PAGE_SIZE }
+            });
+          } catch (err) {
+            console.warn(err);
+          }
         }
       });
     },

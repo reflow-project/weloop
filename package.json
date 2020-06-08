@@ -39,12 +39,13 @@
     ]
   },
   "eslintConfig": {
-    "extends": "react-app",
+    "extends": [
+      "react-app",
+      "eslint:recommended"
+    ],
     "rules": {
       "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "error",
-      "strict": "error",
-      "no-unused-vars": "error"
+      "react-hooks/exhaustive-deps": "error"
     }
   },
   "dependencies": {
