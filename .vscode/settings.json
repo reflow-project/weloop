@@ -1,0 +1,6 @@
+{
+  "tslint.alwaysShowStatus": true,
+  "tslint.alwaysShowRuleFailuresAsWarnings": true,
+  "tslint.autoFixOnSave": true,
+  "editor.formatOnSave": true
+}

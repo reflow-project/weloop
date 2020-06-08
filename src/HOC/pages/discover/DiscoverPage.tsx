@@ -93,8 +93,6 @@ export const DiscoverPage: FC<DiscoverPage> = ({ basePath, tab }) => {
 
     return props;
   }, [
-    activitiesPage.edges,
-    activitiesPageNext,
     allCollectionsPage.edges,
     allCollectionsPageNext,
     allCommunitiesPage.edges,
