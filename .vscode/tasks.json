@@ -8,6 +8,14 @@
       "group": "build",
       "label": "npm: lint-watch",
       "detail": "esw --clear -w \"src/**/!(*.generated).{ts,tsx}\" --ext .tsx --ext .ts --changed"
+    },
+    {
+      "type": "typescript",
+      "tsconfig": "tsconfig.json",
+      "option": "watch",
+      "problemMatcher": ["$tsc-watch"],
+      "group": "build",
+      "label": "tsc: watch - tsconfig.json"
     }
   ]
 }
