@@ -82,7 +82,7 @@ export const HomePageHOC: FC<HomePageHOC> = ({ basePath }) => {
   }, [activitiesPage]);
 
   const homeProps = useMemo<Props>(() => {
-    const props: Props = {
+    const props = {
       InboxElements,
       // FollowedCollectionsElements,
       // FollowedCommunitiesElements,
@@ -103,3 +103,7 @@ export const HomePageHOC: FC<HomePageHOC> = ({ basePath }) => {
   ]);
   return <Home {...homeProps} />;
 };
+
+export function cip(x) {
+  return x.cca;
+}

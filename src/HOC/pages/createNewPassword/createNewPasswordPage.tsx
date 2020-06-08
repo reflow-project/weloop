@@ -16,7 +16,7 @@ export const validationSchema: Yup.ObjectSchema<NewPasswordFormValues> = Yup.obj
     .required()
 });
 export interface Props {}
-export const CreateNewPasswordPageHOC: FC<Props> = ({}: Props) => {
+export const CreateNewPasswordPageHOC: FC<Props> = () => {
   const formik = useFormik<NewPasswordFormValues>({
     initialValues: {
       password: '',

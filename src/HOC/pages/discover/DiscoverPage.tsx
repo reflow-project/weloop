@@ -106,3 +106,5 @@ export const DiscoverPage: FC<DiscoverPage> = ({ basePath, tab }) => {
 
   return <Discover {...propsUI} />;
 };
+
+const x = c => c.d;
