@@ -24,19 +24,13 @@ export interface DiscoverPage {
 }
 export const DiscoverPage: FC<DiscoverPage> = ({ basePath, tab }) => {
   const { activitiesPage } = useInstanceOutboxActivities();
-  const [
-    activitiesPageNext /* , activitiesPagePrevious */
-  ] = activitiesPage.formiks;
+  const [activitiesPageNext /* , activitiesPagePrevious */] = activitiesPage.formiks;
 
   const { allCommunitiesPage } = useAllCommunities();
-  const [
-    allCommunitiesPageNext /* , allCommunitiesPagePrevious */
-  ] = allCommunitiesPage.formiks;
+  const [allCommunitiesPageNext /* , allCommunitiesPagePrevious */] = allCommunitiesPage.formiks;
 
   const { allCollectionsPage } = useAllCollections();
-  const [
-    allCollectionsPageNext /* , allCollectionsPagePrevious */
-  ] = allCollectionsPage.formiks;
+  const [allCollectionsPageNext /* , allCollectionsPagePrevious */] = allCollectionsPage.formiks;
 
   const propsUI = useMemo<Props>(() => {
     const FeaturedCollectionsBox = ComponentBag(FeaturedCollections, {});
@@ -53,10 +47,7 @@ export const DiscoverPage: FC<DiscoverPage> = ({ basePath, tab }) => {
       <>
         {allCollectionsPage.edges.map(collection => (
           <Box m={2}>
-            <CollectionPreviewHOC
-              collectionId={collection.id}
-              key={collection.id}
-            />
+            <CollectionPreviewHOC collectionId={collection.id} key={collection.id} />
           </Box>
         ))}
       </>
@@ -65,10 +56,7 @@ export const DiscoverPage: FC<DiscoverPage> = ({ basePath, tab }) => {
       <>
         {allCommunitiesPage.edges.map(community => (
           <Box m={2}>
-            <CommunityPreviewHOC
-              communityId={community.id}
-              key={community.id}
-            />
+            <CommunityPreviewHOC communityId={community.id} key={community.id} />
           </Box>
         ))}
       </>
@@ -106,5 +94,3 @@ export const DiscoverPage: FC<DiscoverPage> = ({ basePath, tab }) => {
 
   return <Discover {...propsUI} />;
 };
-
-const x = c => c.d;

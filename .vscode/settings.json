@@ -1,9 +1,1 @@
-{
-  "prettier.arrowParens": "always",
-  "prettier.singleQuote": true,
-  "prettier.eslintIntegration": true,
-  "prettier.tslintIntegration": true,
-  "prettier.printWidth": 100,
-  "prettier.trailingComma": "none",
-  "prettier.semi": true
-}
+{}
