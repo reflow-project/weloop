@@ -19,7 +19,7 @@
     "build-deploy-storybook": "./storybook_deploy.sh",
     "gqlcode": "node ./codegen",
     "gql:fetch-schema": "graphql get-schema --project",
-    "dev": "esw -w \"src/**/!(*.generated).{ts,tsx}\" --ext .tsx --ext .ts --changed"
+    "lint-watch": "esw --clear -w \"src/**/!(*.generated).{ts,tsx}\" --ext .tsx --ext .ts --changed"
   },
   "lint-staged": {
     "src/**/!(*.generated).{js,jsx,ts,tsx,json,css,md}": [

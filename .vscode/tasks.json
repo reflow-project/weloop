@@ -3,9 +3,11 @@
   "tasks": [
     {
       "type": "npm",
-      "script": "dev",
-      "problemMatcher": ["$eslint-stylish"],
-      "label": "npm: dev"
+      "script": "lint-watch",
+      "problemMatcher": ["$eslint-compact", "$eslint-stylish"],
+      "group": "build",
+      "label": "npm: lint-watch",
+      "detail": "esw --clear -w \"src/**/!(*.generated).{ts,tsx}\" --ext .tsx --ext .ts --changed"
     }
   ]
 }
