@@ -14,6 +14,7 @@ import { ComponentBag } from 'ui/lib/componentBag';
 export enum DiscoverPageTabs {
   Activities,
   Communities,
+
   Collections
 }
 
