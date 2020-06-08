@@ -22,6 +22,7 @@
   },
   "lint-staged": {
     "src/**/!(*.generated).{js,jsx,ts,tsx,json,css,md}": [
+      "eslint",
       "prettier --single-quote --write",
       "git add"
     ]
