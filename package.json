@@ -43,7 +43,8 @@
     "rules": {
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "error",
-      "strict": "error"
+      "strict": "error",
+      "no-unused-vars": "error"
     }
   },
   "dependencies": {
