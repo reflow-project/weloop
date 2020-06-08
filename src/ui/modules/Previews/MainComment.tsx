@@ -1,10 +1,7 @@
 import React from 'react';
 import styled from 'ui/themes/styled';
 import { Box, Text, Flex } from 'rebass/styled-components';
-// import SocialText from 'ui/modules/SocialText';
-// import { i18nMark, Trans } from '@lingui/react';
 import { Trans } from '@lingui/macro';
-// import { LocaleContext } from '../../../context/global/localizationCtx';
 import { FormikHook } from 'ui/@types/types';
 import { Star, MoreHorizontal, Flag } from 'react-feather';
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
@@ -68,26 +65,15 @@ export const MainComment: React.SFC<CommentProps> = ({
                   <ActionIcon>
                     <Star strokeWidth="1" size="18" />
                   </ActionIcon>
-                  <ActionText
-                    variant={'text'}
-                    sx={{ textTransform: 'capitalize' }}
-                    ml={1}
-                  >
+                  <ActionText variant={'text'} sx={{ textTransform: 'capitalize' }} ml={1}>
                     {like.totalLikes + ' '} <Trans>Star</Trans>
                   </ActionText>
                 </ActionItem>
-                <ActionItem
-                  onClick={() => onOpen(true)}
-                  sx={{ position: 'relative' }}
-                >
+                <ActionItem onClick={() => onOpen(true)} sx={{ position: 'relative' }}>
                   <ActionIcon>
                     <MoreHorizontal className="hover" size={18} />
                   </ActionIcon>
-                  <ActionText
-                    variant={'text'}
-                    sx={{ textTransform: 'capitalize' }}
-                    ml={1}
-                  >
+                  <ActionText variant={'text'} sx={{ textTransform: 'capitalize' }} ml={1}>
                     <Trans>More</Trans>
                   </ActionText>
                   {isOpen && (
@@ -160,11 +146,9 @@ const Actions = styled(Box)`
 
 const ActionItem = styled(Flex)<{ liked?: boolean }>`
   align-items: center;
-  color: ${props =>
-    props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+  color: ${props => (props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark)};
   div {
-    color: ${props =>
-      props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+    color: ${props => (props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark)};
   }
   &:hover {
     background: ${props =>
@@ -174,17 +158,14 @@ const ActionItem = styled(Flex)<{ liked?: boolean }>`
   }
   cursor: pointer;
   background: ${props =>
-    props.liked
-      ? props.theme.colors.secondary
-      : props.theme.colors.mediumlight};
+    props.liked ? props.theme.colors.secondary : props.theme.colors.mediumlight};
   border-radius: 4px;
   padding: 0 8px;
   margin-right: 8px;
   text-align: center;
   font-size: ${typography.size.s1};
   svg {
-    stroke: ${props =>
-      props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+    stroke: ${props => (props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark)};
   }
   a {
     display: flex;

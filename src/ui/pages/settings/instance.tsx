@@ -1,4 +1,5 @@
-import { i18nMark, Trans } from '@lingui/react';
+import { i18nMark } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import { /* Textarea,*/ /* Checkbox, */ Input, Label } from '@rebass/forms';
 import React from 'react';
 import { XCircle } from 'react-feather';

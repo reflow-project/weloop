@@ -1,4 +1,5 @@
-import { i18nMark, Trans } from '@lingui/react';
+import { i18nMark } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import { Input, Label } from '@rebass/forms';
 import React from 'react';
 import { Box, Text } from 'rebass/styled-components';
@@ -14,9 +15,7 @@ import { LocaleContext } from 'context/global/localizationCtx';
 
 const tt = {
   placeholders: {
-    email: i18nMark(
-      'Add email addresses (comma-separated) to invite to instance'
-    )
+    email: i18nMark('Add email addresses (comma-separated) to invite to instance')
   }
 };
 export interface Props {

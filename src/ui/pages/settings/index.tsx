@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Flex, Box, Text } from 'rebass/styled-components';
 import media from 'styled-media-query';
-import { i18nMark, Trans } from '@lingui/react';
+import { i18nMark } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import styled from 'ui/themes/styled';
 import { FormikHook } from 'ui/@types/types';
 import {
@@ -21,12 +22,7 @@ import DropzoneArea from 'ui/modules/DropzoneModal';
 import { ContainerForm, Actions } from 'ui/modules/Modal';
 import Button from 'ui/elements/Button';
 // import { useHistory } from 'react-router';
-import {
-  Wrapper,
-  WrapperCont,
-  MainContainer,
-  HomeBox
-} from 'ui/elements/Layout';
+import { Wrapper, WrapperCont, MainContainer, HomeBox } from 'ui/elements/Layout';
 
 const tt = {
   placeholders: {
@@ -90,14 +86,12 @@ export const Settings: React.FC<Props> = ({
     (file: File) => formik.setValues({ ...formik.values, icon: file }),
     [formik]
   );
-  const initialIconUrl =
-    'string' === typeof formik.values.icon ? formik.values.icon : '';
+  const initialIconUrl = 'string' === typeof formik.values.icon ? formik.values.icon : '';
   const onImageFileSelected = React.useCallback(
     (file: File) => formik.setValues({ ...formik.values, image: file }),
     [formik]
   );
-  const initialImageUrl =
-    'string' === typeof formik.values.image ? formik.values.image : '';
+  const initialImageUrl = 'string' === typeof formik.values.image ? formik.values.image : '';
 
   return (
     <MainContainer>
@@ -243,10 +237,7 @@ const Sidebar = ({ basePath, isAdmin }) => {
         <Nav>
           <NavItem p={3} fontSize={1}>
             <NavLink exact to={`${basePath}/`}>
-              <Flex
-                alignItems="center"
-                sx={{ textTransform: 'capitalize', fontSize: '14px' }}
-              >
+              <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                 <Icon className="icon" mr={1}>
                   <Sett size={20} />
                 </Icon>
@@ -256,10 +247,7 @@ const Sidebar = ({ basePath, isAdmin }) => {
           </NavItem>
           <NavItem p={3} fontSize={1}>
             <NavLink to={`${basePath}/preferences`}>
-              <Flex
-                alignItems="center"
-                sx={{ textTransform: 'capitalize', fontSize: '14px' }}
-              >
+              <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                 <Icon className="icon" mr={1}>
                   <Sliders size={20} />
                 </Icon>
@@ -283,10 +271,7 @@ const Sidebar = ({ basePath, isAdmin }) => {
               </SectionTitle>
               <NavItem p={3} fontSize={1}>
                 <NavLink to={`${basePath}/instance`}>
-                  <Flex
-                    alignItems="center"
-                    sx={{ textTransform: 'capitalize', fontSize: '14px' }}
-                  >
+                  <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                     <Icon className="icon" mr={1}>
                       <Droplet size={20} />
                     </Icon>
@@ -296,10 +281,7 @@ const Sidebar = ({ basePath, isAdmin }) => {
               </NavItem>
               <NavItem p={3} fontSize={1}>
                 <NavLink to={`${basePath}/invites`}>
-                  <Flex
-                    alignItems="center"
-                    sx={{ textTransform: 'capitalize', fontSize: '14px' }}
-                  >
+                  <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                     <Icon className="icon" mr={1}>
                       <Mail size={20} />
                     </Icon>
@@ -310,10 +292,7 @@ const Sidebar = ({ basePath, isAdmin }) => {
               <NavItem p={3} fontSize={1}>
                 {/* <NavLink to={`${basePath}/reports`}> */}
                 <NavLink to={`${basePath}/flags`}>
-                  <Flex
-                    alignItems="center"
-                    sx={{ textTransform: 'capitalize', fontSize: '14px' }}
-                  >
+                  <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                     <Icon className="icon" mr={1}>
                       <Flag size={20} />
                     </Icon>
@@ -323,10 +302,7 @@ const Sidebar = ({ basePath, isAdmin }) => {
               </NavItem>
               <NavItem p={3} fontSize={1}>
                 <NavLink to={`${basePath}/logs`}>
-                  <Flex
-                    alignItems="center"
-                    sx={{ textTransform: 'capitalize', fontSize: '14px' }}
-                  >
+                  <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                     <Icon className="icon" mr={1}>
                       <Monitor size={20} />
                     </Icon>
