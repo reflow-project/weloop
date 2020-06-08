@@ -1,11 +1,15 @@
-import { FormikErrors, FormikTouched, FormikState, FieldInputProps, FieldMetaProps } from 'formik';
+import {
+  FormikErrors,
+  FormikTouched
+  // FormikState, FieldInputProps, FieldMetaProps
+} from 'formik';
 
 export interface FormikHook<Values = {}> {
   initialValues: Values;
+  handleBlur: (eventOrString: any) => void | ((e: any) => void);
   // initialErrors: FormikErrors<unknown>;
   // initialTouched: FormikTouched<unknown>;
   // initialStatus: any;
-  handleBlur: (eventOrString: any) => void | ((e: any) => void);
   handleChange: (
     eventOrPath: string | React.ChangeEvent<any>
   ) => void | ((eventOrTextValue: string | React.ChangeEvent<any>) => void);
