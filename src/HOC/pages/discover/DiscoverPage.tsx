@@ -46,8 +46,8 @@ export const DiscoverPage: FC<DiscoverPage> = ({ basePath, tab }) => {
     const CollectionsBoxes = (
       <>
         {allCollectionsPage.edges.map(collection => (
-          <Box m={2}>
-            <CollectionPreviewHOC collectionId={collection.id} key={collection.id} />
+          <Box m={2} key={collection.id}>
+            <CollectionPreviewHOC collectionId={collection.id} />
           </Box>
         ))}
       </>
@@ -55,8 +55,8 @@ export const DiscoverPage: FC<DiscoverPage> = ({ basePath, tab }) => {
     const CommunitiesBoxes = (
       <>
         {allCommunitiesPage.edges.map(community => (
-          <Box m={2}>
-            <CommunityPreviewHOC communityId={community.id} key={community.id} />
+          <Box m={2} key={community.id}>
+            <CommunityPreviewHOC communityId={community.id} />
           </Box>
         ))}
       </>
