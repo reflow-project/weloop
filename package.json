@@ -18,11 +18,13 @@
     "build-storybook": "build-storybook --docs -c .storybook",
     "build-deploy-storybook": "./storybook_deploy.sh",
     "gqlcode": "node ./codegen",
-    "gql:fetch-schema": "graphql get-schema --project"
+    "gql:fetch-schema": "graphql get-schema --project",
+    "dev": "esw -w \"src/**/!(*.generated).{ts,tsx}\" --ext .tsx --ext .ts --changed"
   },
   "lint-staged": {
     "src/**/!(*.generated).{js,jsx,ts,tsx,json,css,md}": [
-      "prettier --single-quote --write",
+      "eslint",
+      "prettier --write",
       "git add"
     ]
   },
@@ -37,7 +39,12 @@
     ]
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "error",
+      "strict": "error"
+    }
   },
   "dependencies": {
     "@absinthe/socket": "0.1.10",
@@ -196,6 +203,7 @@
     "babel-loader": "8.1.0",
     "core-js": "2.6.10",
     "emotion-theming": "^10.0.14",
+    "eslint-watch": "7.0.0",
     "glob": "7.1.6",
     "graphql-cli": "3.0.14",
     "react-docgen-typescript-loader": "3.6.0",
