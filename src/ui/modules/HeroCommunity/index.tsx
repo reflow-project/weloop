@@ -59,7 +59,7 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
         <Background
           id="header"
           style={{
-            backgroundImage: `url(${c.icon})`
+            backgroundImage: `url("${c.icon}")`
           }}
         />
         <HeroInfo>
