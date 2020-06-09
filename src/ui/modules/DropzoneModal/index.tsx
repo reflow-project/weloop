@@ -93,9 +93,9 @@ const DropzoneArea: React.FC<Props> = ({
               </WrapperIcon>
               <Img
                 style={{
-                  backgroundImage: `url(${
+                  backgroundImage: `url("${
                     currentFile ? currentFile.localUrl : fileUrl
-                  })`
+                  }")`
                 }}
               />
             </Thumb>
@@ -119,7 +119,9 @@ const DropzoneArea: React.FC<Props> = ({
                     />
                   </WrapperIcon>
                   <Img
-                    style={{ backgroundImage: `url(${currentFile.localUrl})` }}
+                    style={{
+                      backgroundImage: `url("${currentFile.localUrl}")`
+                    }}
                   />
                 </Thumb>
                 <FileName>{currentFile && currentFile.file.name}</FileName>

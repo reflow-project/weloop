@@ -260,15 +260,15 @@ const Label = styled.label`
 `;
 
 const LicenseLabel0 = styled(Label)`
-  background-image: url(${LicenseIcon0});
+  background-image: url("${LicenseIcon0}");
 `;
 
 const LicenseLabel1 = styled(Label)`
-  background-image: url(${LicenseIcon1});
+  background-image: url("${LicenseIcon1}");
 `;
 
 const LicenseLabel2 = styled(Label)`
-  background-image: url(${LicenseIcon2});
+  background-image: url("${LicenseIcon2}");
 `;
 
 const RadioButton = styled.input`

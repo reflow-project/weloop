@@ -35,7 +35,7 @@ const CollectionSmall: React.FC<CollectionProps> = ({
       <Link to={`/collections/${collection.id}`}>
         <Img
           style={{
-            backgroundImage: `url(${collection.icon || PlaceholderImg})`
+            backgroundImage: `url("${collection.icon || PlaceholderImg}")`
           }}
         />
         <Infos>

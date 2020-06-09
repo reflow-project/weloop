@@ -28,7 +28,7 @@ const Header = styled.div`
 `;
 
 const Logo = styled.div`
-  background: url(${logo_large_url});
+  background: url("${logo_large_url}");
   width: 300px;
   display: inline-block;
   height: 100px;

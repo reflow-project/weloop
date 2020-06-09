@@ -78,7 +78,7 @@ const Member = styled(Box)<{ src: string }>`
   max-width: 28px !important;
   max-height: 28px !important;
   border-radius: 28px !important;
-  background: url(${props => props.src});
+  background: url("${props => props.src}");
   background-repeat: no-repeat;
   background-position: cover;
   width: 28px;

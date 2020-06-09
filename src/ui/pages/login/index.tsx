@@ -133,7 +133,7 @@ export const Login: React.FC<Props> = ({ formik }) => {
 export default Login;
 
 const Background = styled(Box)`
-  background: url(${instance_bg_img});
+  background: url("${instance_bg_img}");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -142,7 +142,6 @@ const Background = styled(Box)`
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
 `;
-// FIX ME add background: url(${instance_bg_img}); after add image to constants
 
 const Infos = styled(Box)``;
 

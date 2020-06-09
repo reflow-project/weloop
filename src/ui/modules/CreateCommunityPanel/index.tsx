@@ -63,7 +63,7 @@ export const CreateCommunityPanel: React.FC<Props> = ({ cancel, formik }) => {
               filePattern="image/*"
             />
           </Box>
-          {/* <Background style={{ backgroundImage: `url(${c.icon})` }} /> */}
+          {/* <Background style={{ backgroundImage: `url("${c.icon}")` }} /> */}
           <HeroInfo>
             <Title fontSize={5} fontWeight={'bold'}>
               <CollectionContainerForm>

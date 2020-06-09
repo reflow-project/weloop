@@ -61,7 +61,7 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
     <HeroCont>
       <Hero>
         <Box sx={{ position: 'relative' }}>
-          <Background style={{ backgroundImage: `url(${c.icon})` }} />
+          <Background style={{ backgroundImage: `url("${c.icon}")` }} />
           <Right>
             <Link to={`/communities/${c.communityId}`}>
               <LinkImg>
