@@ -58,7 +58,7 @@ export const HeroUser: FC<Props> = props => {
           <WrapperHero>
             <Img
               style={{
-                backgroundImage: `url(${props.icon})`
+                backgroundImage: `url("${props.icon}")`
               }}
             />
           </WrapperHero>
@@ -220,8 +220,8 @@ const HeroBg = styled.div<{ src: string }>`
   height: 250px;
   margin: -4px;
   background: ${props => props.theme.colors.light};
-  background-image: url(${props =>
-    props.src ? props.src : props.theme.colors.light});
+  background-image: url("${props =>
+    props.src ? props.src : props.theme.colors.light}");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;

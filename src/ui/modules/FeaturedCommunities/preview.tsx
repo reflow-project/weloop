@@ -35,7 +35,7 @@ const CommunitySmall: React.FC<CommunityProps> = ({
       <Link to={`/communities/${community.id}`}>
         <Img
           style={{
-            backgroundImage: `url(${community.icon || PlaceholderImg})`
+            backgroundImage: `url("${community.icon || PlaceholderImg}")`
           }}
         />
         <Infos>
