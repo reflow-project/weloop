@@ -186,7 +186,7 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername, regist
                   type="submit"
                   // onClick={formik.submitForm}
                 >
-                  <Trans>Signup</Trans>
+                  <Trans>Sign up</Trans>
                 </Button>
               </Box>
             </FormWrapper>
