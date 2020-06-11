@@ -41,11 +41,7 @@ export interface Props {
   userId: string;
 }
 
-export const DropdownSidebar: React.FC<Props> = ({
-  logout,
-  userId,
-  setOpenDropdown
-}) => {
+export const DropdownSidebar: React.FC<Props> = ({ logout, userId, setOpenDropdown }) => {
   const { push } = useHistory();
   return (
     <Dropdown orientation={'top'} cb={setOpenDropdown}>

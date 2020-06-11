@@ -2,12 +2,14 @@ import React, { FC, useMemo, useEffect } from 'react';
 import TermsAndConditionsPage, { Props } from 'ui/pages/termsAndConditions';
 import useAxios from 'axios-hooks';
 import { terms_markdown_text, terms_markdown_urls, terms_privacy } from 'mn-constants';
+import { LocaleContext } from 'context/global/localizationCtx';
 
 export const TermsAndConditionsPageHOC: FC = () => {
-  const terms_users_text = { data: terms_markdown_text.terms_users };
-  const terms_privacy_text = { data: terms_privacy.text_markdown };
-  const terms_cookies_text = { data: terms_markdown_text.terms_cookies };
-  const terms_indexing_text = { data: terms_markdown_text.terms_indexing };
+  const { i18n } = React.useContext(LocaleContext);
+  const terms_users_text = { data: i18n._(terms_markdown_text.terms_users) };
+  const terms_privacy_text = { data: i18n._(terms_privacy.text_markdown) };
+  const terms_cookies_text = { data: i18n._(terms_markdown_text.terms_cookies) };
+  const terms_indexing_text = { data: i18n._(terms_markdown_text.terms_indexing) };
 
   const [terms_users, exec_terms_users] = useAxios(terms_markdown_urls.terms_users, {
     useCache: true,

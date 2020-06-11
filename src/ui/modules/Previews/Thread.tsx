@@ -35,8 +35,7 @@ export const Thread: React.SFC<CommentProps> = ({
         <Flex mt={2} alignItems="center">
           <Flex flex={1}>
             <Date>
-              <Trans>Last activity</Trans>{' '}
-              {DateTime.fromSQL(lastActivity).toRelative()}
+              <Trans>Last activity</Trans> {DateTime.fromSQL(lastActivity).toRelative()}
             </Date>
             <Meta>
               <Flex alignItems="center">

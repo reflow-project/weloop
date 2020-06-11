@@ -124,9 +124,7 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
                         </Text>
                       </DropdownItem>
                       {c.isAdmin ? (
-                        <AdminDropdownItem
-                          onClick={() => setOpenFeatured(true)}
-                        >
+                        <AdminDropdownItem onClick={() => setOpenFeatured(true)}>
                           <Star size={20} color={'rgb(211, 103, 5)'} />
                           <Text sx={{ flex: 1 }} ml={2}>
                             {

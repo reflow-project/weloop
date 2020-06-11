@@ -27,9 +27,7 @@ const tt = {
   placeholders: {
     url: i18nMark('The url of the resource'),
     name: i18nMark('Choose a name for the community'),
-    summary: i18nMark(
-      'Please describe who might be interested in this resource...'
-    ),
+    summary: i18nMark('Please describe who might be interested in this resource...'),
     image: i18nMark('Enter the URL of an image to represent the resource')
   }
 };

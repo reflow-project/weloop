@@ -115,12 +115,7 @@ export const FeaturedCommunities: SFC<FeaturedCommunitiesData> = props => {
             </ActionContainer>
           ) : null}
           <span onClick={sliderRef.current && sliderRef.current.slickPrev}>
-            <ChevronLeft
-              width={26}
-              height={26}
-              strokeWidth={1}
-              color={'#333'}
-            />
+            <ChevronLeft width={26} height={26} strokeWidth={1} color={'#333'} />
           </span>
           <span onClick={sliderRef.current && sliderRef.current.slickNext}>
             <Right width={26} height={26} strokeWidth={1} color={'#333'} />

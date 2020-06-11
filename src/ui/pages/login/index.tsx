@@ -14,6 +14,7 @@ import { Helmet } from 'react-helmet';
 // import {Form} from 'formik'
 // const MnetLogin = require('static/img/login.jpg');
 import { INSTANCE_DESCRIPTION, INSTANCE_PROMPT, instance_bg_img } from 'mn-constants'; // + instance_bg_img
+import { LocaleContext } from 'context/global/localizationCtx';
 
 let tt = {
   login: i18nMark('Sign in'),
@@ -33,6 +34,8 @@ export interface LoginFormValues {
 }
 
 export const Login: React.FC<Props> = ({ formik }) => {
+  const { i18n } = React.useContext(LocaleContext);
+
   return (
     <>
       <Helmet>
@@ -89,7 +92,7 @@ export const Login: React.FC<Props> = ({ formik }) => {
                 <Trans>Browse this instance</Trans>
               </Text>
               <Text variant="text" mt={2}>
-                {INSTANCE_PROMPT}
+                {i18n._(INSTANCE_PROMPT)}
               </Text>
               <Link to={'/discover'}>
                 <Button mt={3} variant="outline">

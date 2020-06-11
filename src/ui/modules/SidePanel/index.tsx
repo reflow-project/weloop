@@ -1,11 +1,5 @@
 import * as React from 'react';
-import {
-  Nav,
-  NavItem,
-  Panel,
-  PanelTitle,
-  WrapperPanel
-} from 'ui/elements/Panel';
+import { Nav, NavItem, Panel, PanelTitle, WrapperPanel } from 'ui/elements/Panel';
 import { Trans } from '@lingui/macro';
 import { Text } from 'rebass/styled-components';
 import styled from 'ui/themes/styled';
