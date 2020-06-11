@@ -1,8 +1,5 @@
 import React, { FC, useMemo } from 'react';
-import {
-  CommunityPageTab,
-  CommunityPage
-} from 'HOC/pages/community/CommunityPage';
+import { CommunityPageTab, CommunityPage } from 'HOC/pages/community/CommunityPage';
 import { NotFound } from 'ui/pages/notFound';
 import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { WithSidebarTemplate } from 'HOC/templates/WithSidebar/WithSidebar';
@@ -11,20 +8,18 @@ interface CommunityPageRouter {
   communityId: string;
   tab?: string;
 }
-const CommunityPageRouter: FC<RouteComponentProps<CommunityPageRouter>> = ({
-  match
-}) => {
+const CommunityPageRouter: FC<RouteComponentProps<CommunityPageRouter>> = ({ match }) => {
   const communityId = match.params.communityId;
   const maybeTabStr = match.params.tab;
   const tab =
-    maybeTabStr === 'collections'
-      ? CommunityPageTab.Collections
+    maybeTabStr === 'timeline'
+      ? CommunityPageTab.Activities
       : maybeTabStr === 'members'
       ? CommunityPageTab.Members
       : maybeTabStr === 'discussions'
       ? CommunityPageTab.Discussions
       : !maybeTabStr
-      ? CommunityPageTab.Activities
+      ? CommunityPageTab.Collections
       : null;
 
   const props = useMemo<CommunityPage | null>(() => {

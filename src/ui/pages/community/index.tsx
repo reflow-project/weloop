@@ -71,7 +71,7 @@ export const Community: React.FC<Props> = ({
           <Wrapper>
             {/* <Header name={communityName} /> */}
             <Switch>
-              <Route exact path={`${basePath}`}>
+              <Route exact path={`${basePath}/timeline`}>
                 <>
                   {HeroCommunityBox}
                   <Menu basePath={basePath} />
@@ -79,7 +79,7 @@ export const Community: React.FC<Props> = ({
                   {loadMoreActivities && <LoadMore LoadMoreFormik={loadMoreActivities} />}
                 </>
               </Route>
-              <Route path={`${basePath}/collections`}>
+              <Route path={`${basePath}`}>
                 <>
                   {HeroCommunityBox}
                   <Menu basePath={basePath} />
@@ -155,10 +155,10 @@ const FollowersMenu = ({ basePath }: { basePath: string }) => (
 
 const Menu = ({ basePath }: { basePath: string }) => (
   <MenuList p={3} pt={0}>
+    <NavLink to={`${basePath}/timeline`}>Recent activity</NavLink>
     <NavLink exact to={`${basePath}`}>
-      Recent activity
+      Collections
     </NavLink>
-    <NavLink to={`${basePath}/collections`}>Collections</NavLink>
     <NavLink to={`${basePath}/discussions`}>Discussions</NavLink>
   </MenuList>
 );
