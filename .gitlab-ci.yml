@@ -72,7 +72,7 @@ deploy-prod: # build and deploy master branch to app.moodle.net
   script:
     - make dev-l8n-extract # extract latest localisable strings
     - if [ ! -z "$TX_TOKEN" ]; then tx push --source --no-interactive ; else echo "Skipping..."; fi # then push latest English PO file to transifex for translators (only need to run this once per new commit)
-    - REACT_APP_GRAPHQL_ENDPOINT=https://home.moodle.net/api/graphql REACT_APP_MOTHERSHIP_API_ID=KVG4RFL0JJ REACT_APP_MOTHERSHIP_API_KEY=${PROD_MOTHERSHIP_API_KEY} REACT_APP_MOTHERSHIP_ENV=moodlenet_mothership CI=false yarn build --prod # Build for prod, need to specify URL of backend API, and CI=false to avoid failing on warnings
+    - REACT_APP_GRAPHQL_ENDPOINT=https://moodle.net/api/graphql REACT_APP_MOTHERSHIP_API_ID=KVG4RFL0JJ REACT_APP_MOTHERSHIP_API_KEY=${PROD_MOTHERSHIP_API_KEY} REACT_APP_MOTHERSHIP_ENV=moodlenet_mothership CI=false yarn build --prod # Build for prod, need to specify URL of backend API, and CI=false to avoid failing on warnings
     - rm -rf public # CRA and gitlab pages both use the public folder. Only do this in a build pipeline.
     - mv build public # Move build files to public dir for Gitlab Pages
     - cp public/index.html public/404.html # Not necessary, but helps with https://medium.com/@pshrmn/demystifying-single-page-applications-3068d0555d46
