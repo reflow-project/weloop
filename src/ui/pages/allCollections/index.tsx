@@ -17,24 +17,23 @@ export interface Props {
   LoadMoreFormik: FormikHook;
 }
 
-export const AllCollections: React.FC<Props> = ({
-  CollectionsBoxes,
-  LoadMoreFormik
-}) => {
+export const AllCollections: React.FC<Props> = ({ CollectionsBoxes, LoadMoreFormik }) => {
   return (
-    <MainContainer>
-      <HomeBox>
-        <WrapperCont>
-          <Wrapper>
-            <Header name="All Collections" />
-            <ObjectsList>
-              <CollectionsWrapper>{CollectionsBoxes}</CollectionsWrapper>
-            </ObjectsList>
-            {LoadMoreFormik && <LoadMore LoadMoreFormik={LoadMoreFormik} />}
-          </Wrapper>
-        </WrapperCont>
-      </HomeBox>
-      <WrapperPanel />
-    </MainContainer>
+    <>
+      <MainContainer>
+        <HomeBox>
+          <WrapperCont>
+            <Wrapper>
+              <Header name="All Collections" />
+              <ObjectsList>
+                <CollectionsWrapper>{CollectionsBoxes}</CollectionsWrapper>
+              </ObjectsList>
+              {LoadMoreFormik && <LoadMore LoadMoreFormik={LoadMoreFormik} />}
+            </Wrapper>
+          </WrapperCont>
+        </HomeBox>
+        <WrapperPanel />
+      </MainContainer>
+    </>
   );
 };

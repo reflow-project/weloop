@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro';
 import * as React from 'react';
-import { NavLink, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { LoadMore } from 'ui/modules/Loadmore';
 import { SidePanel } from 'ui/modules/SidePanel';
 import { FormikHook } from 'ui/@types/types';
@@ -10,9 +10,12 @@ import {
   List,
   // ObjectsList,
   MainContainer,
-  HomeBox,
-  MenuList
+  HomeBox
+  // MenuList
 } from 'ui/elements/Layout';
+import { Helmet } from 'react-helmet';
+import styled from 'ui/themes/styled';
+import { Box, Text } from 'rebass/styled-components';
 
 export enum HomePageTab {
   Activities,
@@ -42,10 +45,19 @@ export const Home: React.FC<Props> = ({
 Props) => {
   return (
     <MainContainer>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>MoodleNet - Home</title>
+      </Helmet>
       <HomeBox>
         <WrapperCont>
           <Wrapper>
-            <Menu basePath={basePath} />
+            <Title px={2} mt={2}>
+              <Text variant="suptitle">
+                <Trans>My timeline</Trans>
+              </Text>
+            </Title>
+            {/* <Menu basePath={basePath} /> */}
             <Switch>
               {/* <Route path={`${basePath}/mycommunities`}>
                 <ObjectsList>{FollowedCommunitiesElements}</ObjectsList>
@@ -61,9 +73,7 @@ Props) => {
               </Route> */}
               <Route path={`${basePath}`}>
                 <List>{InboxElements}</List>
-                {nextInboxFormik && (
-                  <LoadMore LoadMoreFormik={nextInboxFormik} />
-                )}
+                {nextInboxFormik && <LoadMore LoadMoreFormik={nextInboxFormik} />}
               </Route>
             </Switch>
           </Wrapper>
@@ -76,20 +86,27 @@ Props) => {
 
 export default Home;
 
-const Menu = ({ basePath }: { basePath: string }) => {
-  return (
-    <MenuList>
-      <NavLink exact to={`${basePath}`}>
-        <Trans>My Timeline</Trans>
-      </NavLink>
-      <>
-        {/* <NavLink to={`${basePath}/mycommunities`}>
-          <Trans>Joined communities</Trans>
-        </NavLink>
-        <NavLink to={`${basePath}/mycollections`}>
-          <Trans>Followed collections</Trans>
-        </NavLink> */}
-      </>
-    </MenuList>
-  );
-};
+const Title = styled(Box)`
+  background: ${props => props.theme.colors.appInverse};
+  height: 40px;
+  line-height: 40px;
+  border-bottom: ${props => props.theme.colors.border};
+`;
+
+// const Menu = ({ basePath }: { basePath: string }) => {
+//   return (
+//     <MenuList>
+//       <NavLink exact to={`${basePath}`}>
+//         <Trans>My Timeline</Trans>
+//       </NavLink>
+//       <>
+//         {/* <NavLink to={`${basePath}/mycommunities`}>
+//           <Trans>Joined communities</Trans>
+//         </NavLink>
+//         <NavLink to={`${basePath}/mycollections`}>
+//           <Trans>Followed collections</Trans>
+//         </NavLink> */}
+//       </>
+//     </MenuList>
+//   );
+// };
