@@ -131,7 +131,7 @@
     "lint-staged": "7.3.0",
     "lodash": "4.17.15",
     "luxon": "1.17.2",
-    "markdown-to-jsx": "6.10.3",
+    "markdown-to-jsx": "6.11.4",
     "mini-css-extract-plugin": "0.4.3",
     "object-assign": "4.1.1",
     "phoenix": "1.4.0",
