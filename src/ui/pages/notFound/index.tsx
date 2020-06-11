@@ -4,6 +4,7 @@ import { Heading, Box } from 'rebass/styled-components';
 import styled from 'ui/themes/styled';
 // import { WrapperPanel } from 'ui/elements/Panel';
 import LogoContainer from 'ui/elements/Logo';
+import { Helmet } from 'react-helmet';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -24,6 +25,10 @@ const Container = styled.div`
 export const NotFound = () => {
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>MoodleNet - Not found</title>
+      </Helmet>
       <Container>
         <Box sx={{ textAlign: 'center' }}>
           <LogoContainer />

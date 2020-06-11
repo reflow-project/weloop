@@ -18,6 +18,7 @@ import {
   ObjectsList
 } from 'ui/elements/Layout';
 import { SidePanel } from 'ui/modules/SidePanel';
+import { Helmet } from 'react-helmet';
 
 export interface Props {
   ActivitiesBox: JSX.Element;
@@ -55,6 +56,10 @@ export const Collection: React.FC<Props> = ({
   const [isUploadOpen, setUploadOpen] = React.useState(false);
   return (
     <MainContainer>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>MoodleNet - Collection</title>
+      </Helmet>
       {isOpenEditCollection && (
         <Modal closeModal={() => setOpenShareLink(false)}>
           <EditCollectionPanel done={() => setOpenEditCollection(false)} />

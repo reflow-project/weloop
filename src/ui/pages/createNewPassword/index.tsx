@@ -8,6 +8,7 @@ import Alert from 'ui/elements/Alert';
 import { AlertWrapper } from 'ui/modules/Modal';
 import { i18nMark } from '@lingui/react';
 import LogoContainer from 'ui/elements/Logo';
+import { Helmet } from 'react-helmet';
 
 export interface NewPasswordFormValues {
   password: string;
@@ -28,6 +29,10 @@ let tt = {
 export const CreateNewPassword: React.FC<Props> = ({ formik }) => {
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>MoodleNet - Create a new password</title>
+      </Helmet>
       <Container>
         <LoginWrapper>
           <FormWrapper>
@@ -54,9 +59,7 @@ export const CreateNewPassword: React.FC<Props> = ({ formik }) => {
             />
             {formik.errors.passwordConfirm && (
               <AlertWrapper>
-                <Alert variant="negative">
-                  {formik.errors.passwordConfirm}
-                </Alert>
+                <Alert variant="negative">{formik.errors.passwordConfirm}</Alert>
               </AlertWrapper>
             )}
             <Button

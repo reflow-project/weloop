@@ -16,14 +16,9 @@ import {
   MenuList,
   CollectionsWrapper
 } from 'ui/elements/Layout';
-import {
-  Nav,
-  NavItem,
-  Panel,
-  PanelTitle,
-  WrapperPanel
-} from 'ui/elements/Panel';
+import { Nav, NavItem, Panel, PanelTitle, WrapperPanel } from 'ui/elements/Panel';
 import { Link } from 'react-feather';
+import { Helmet } from 'react-helmet';
 
 export interface Props {
   ActivityBoxes: JSX.Element;
@@ -67,6 +62,10 @@ export const User: React.FC<Props> = ({
 }) => {
   return (
     <MainContainer>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>MoodleNet - User</title>
+      </Helmet>
       <HomeBox>
         <WrapperCont>
           <Wrapper>
@@ -83,9 +82,7 @@ export const User: React.FC<Props> = ({
             <Switch>
               <Route exact path={`${basePath}/`}>
                 <List>{ActivityBoxes}</List>
-                {loadMoreActivities && (
-                  <LoadMore LoadMoreFormik={loadMoreActivities} />
-                )}
+                {loadMoreActivities && <LoadMore LoadMoreFormik={loadMoreActivities} />}
               </Route>
               <Route exact path={`${basePath}/starred`}>
                 <List>{LikesBoxes}</List>
@@ -93,17 +90,13 @@ export const User: React.FC<Props> = ({
               </Route>
               <Route path={`${basePath}/communities`}>
                 <ObjectsList>{CommunityBoxes}</ObjectsList>
-                {loadMoreCommunities && (
-                  <LoadMore LoadMoreFormik={loadMoreCommunities} />
-                )}
+                {loadMoreCommunities && <LoadMore LoadMoreFormik={loadMoreCommunities} />}
               </Route>
               <Route path={`${basePath}/collections`}>
                 <ObjectsList>
                   <CollectionsWrapper>{CollectionsBoxes}</CollectionsWrapper>
                 </ObjectsList>
-                {loadMoreCollections && (
-                  <LoadMore LoadMoreFormik={loadMoreCollections} />
-                )}
+                {loadMoreCollections && <LoadMore LoadMoreFormik={loadMoreCollections} />}
               </Route>
               {/* <Route path={`${basePath}/following`}>
                 {UserBoxes}

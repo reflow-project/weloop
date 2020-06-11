@@ -10,7 +10,8 @@ import Button from 'ui/elements/Button';
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
 import { FormikHook } from 'ui/@types/types';
 import { NavLink } from 'react-router-dom';
-import { MDComment } from 'ui/elements/Layout/comment';
+// import { MDComment } from 'ui/elements/Layout/comment';
+import Markdown from 'markdown-to-jsx';
 
 export enum Status {
   Loading,
@@ -69,7 +70,8 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
           <Username fontSize={0}>@{c.fullName}</Username>
           {c.summary && (
             <Box mt={2}>
-              <MDComment content={c.summary} />
+              <Markdown>{c.summary}</Markdown>
+              {/* <MDComment content={c.summary} /> */}
             </Box>
           )}
           <Info mt={3}>
@@ -115,9 +117,7 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
                         </Text>
                       </DropdownItem>
                       {c.isAdmin ? (
-                        <AdminDropdownItem
-                          onClick={() => setOpenFeatured(true)}
-                        >
+                        <AdminDropdownItem onClick={() => setOpenFeatured(true)}>
                           <Star size={20} color={'rgb(211, 103, 5)'} />
                           <Text sx={{ flex: 1 }} ml={2}>
                             {

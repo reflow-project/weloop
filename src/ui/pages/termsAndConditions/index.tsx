@@ -6,6 +6,7 @@ import media from 'styled-media-query';
 import { Panel } from 'ui/elements/Panel';
 import styled from '../../themes/styled';
 import LogoContainer from 'ui/elements/Logo';
+import { Helmet } from 'react-helmet';
 
 export interface Props {
   terms_users_data: string;
@@ -32,6 +33,10 @@ const TermsAndConditionsPage: React.FC<Props> = ({
 }) => {
   return (
     <Container>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>MoodleNet - Terms and conditions</title>
+      </Helmet>
       <LoginWrapper>
         <LogoContainer />
         <Flex mt={2}>
@@ -42,8 +47,8 @@ const TermsAndConditionsPage: React.FC<Props> = ({
               </Box>
               <Text variant="suptitle">
                 {' '}
-                Please read the following. By using this instance of MoodleNet
-                you are consenting to these agreements.
+                Please read the following. By using this instance of MoodleNet you are consenting to
+                these agreements.
               </Text>
             </Aware>
             <Panel className="extra">
@@ -52,20 +57,14 @@ const TermsAndConditionsPage: React.FC<Props> = ({
               </Box>
               <Box p={3}>
                 {terms_privacy_enabled ? (
-                  <Markdown>
-                    {privacy_url_text_data || terms_privacy_text_data}
-                  </Markdown>
+                  <Markdown>{privacy_url_text_data || terms_privacy_text_data}</Markdown>
                 ) : null}
               </Box>
               <Box p={3}>
-                <Markdown>
-                  {terms_cookies_data || terms_cookies_text_data}
-                </Markdown>
+                <Markdown>{terms_cookies_data || terms_cookies_text_data}</Markdown>
               </Box>
               <Box p={3}>
-                <Markdown>
-                  {terms_indexing_data || terms_indexing_text_data}
-                </Markdown>
+                <Markdown>{terms_indexing_data || terms_indexing_text_data}</Markdown>
               </Box>
             </Panel>
           </Right>
@@ -128,8 +127,7 @@ const Right = styled(Box)`
 // `;
 
 const Aware = styled(Flex)<{ green: boolean }>`
-  background: ${props =>
-    props.green ? '#546d4f' : props.theme.colors.primary};
+  background: ${props => (props.green ? '#546d4f' : props.theme.colors.primary)};
   border-radius: 4px;
   align-items: center;
   div {
