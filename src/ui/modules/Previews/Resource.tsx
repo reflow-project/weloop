@@ -1,12 +1,5 @@
 import * as React from 'react';
-import {
-  Star,
-  ExternalLink,
-  Paperclip,
-  MoreHorizontal,
-  Flag,
-  Share
-} from 'react-feather';
+import { Star, ExternalLink, Paperclip, MoreHorizontal, Flag, Share } from 'react-feather';
 // import { FileText, ExternalLink, Star } from 'react-feather';
 import { Box, Flex, Heading, Text } from 'rebass/styled-components';
 import Avatar from 'ui/elements/Avatar';
@@ -135,19 +128,12 @@ export const Resource: React.FC<Props> = ({
                 <ActionIcon>
                   <Star strokeWidth="1" size="18" />
                 </ActionIcon>
-                <ActionText
-                  variant={'text'}
-                  sx={{ textTransform: 'capitalize' }}
-                  ml={1}
-                >
+                <ActionText variant={'text'} sx={{ textTransform: 'capitalize' }} ml={1}>
                   {like.totalLikes}
                 </ActionText>
               </ActionItem>
             )}
-            <MoreItem
-              onClick={() => onOpen(true)}
-              sx={{ position: 'relative' }}
-            >
+            <MoreItem onClick={() => onOpen(true)} sx={{ position: 'relative' }}>
               <ActionIcon>
                 <MoreHorizontal className="hover" size={18} />
               </ActionIcon>
@@ -168,9 +154,7 @@ export const Resource: React.FC<Props> = ({
                     )}
                     <DropdownItem
                       onClick={() => {
-                        /* sendToMoodle?sendToMoodle(): */ setOpenMoodleModal(
-                          true
-                        );
+                        /* sendToMoodle?sendToMoodle(): */ setOpenMoodleModal(true);
                       }}
                     >
                       <Share size={18} />
@@ -269,19 +253,14 @@ const MoreItem = styled(Flex)`
 
 const ActionItem = styled(Flex)<{ liked?: boolean; bordered?: boolean }>`
   align-items: center;
-  color: ${props =>
-    props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+  color: ${props => (props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark)};
   div {
-    color: ${props =>
-      props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+    color: ${props => (props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark)};
   }
   cursor: pointer;
-  background: ${props =>
-    props.liked ? props.theme.colors.primary : 'transparent'};
-  border: 1px solid
-    ${props => (props.liked ? props.theme.colors.primary : 'transparent')};
-  border: 1px solid
-    ${props => (props.bordered ? props.theme.colors.primary : 'transparent')};
+  background: ${props => (props.liked ? props.theme.colors.primary : 'transparent')};
+  border: 1px solid ${props => (props.liked ? props.theme.colors.primary : 'transparent')};
+  border: 1px solid ${props => (props.bordered ? props.theme.colors.primary : 'transparent')};
   border-radius: 4px;
   padding: 0 8px;
   margin-right: 8px;
@@ -289,8 +268,7 @@ const ActionItem = styled(Flex)<{ liked?: boolean; bordered?: boolean }>`
   font-size: ${typography.size.s1};
   svg {
     stroke: none;
-    fill: ${props =>
-      props.liked ? props.theme.colors.lightest : props.theme.colors.primary};
+    fill: ${props => (props.liked ? props.theme.colors.lightest : props.theme.colors.primary)};
   }
   a {
     display: flex;
@@ -300,19 +278,12 @@ const ActionItem = styled(Flex)<{ liked?: boolean; bordered?: boolean }>`
   }
   &:hover {
     svg {
-      fill: ${props =>
-        props.liked
-          ? props.theme.colors.lightest
-          : props.theme.colors.lightest};
+      fill: ${props => (props.liked ? props.theme.colors.lightest : props.theme.colors.lightest)};
     }
     div {
-      color: ${props =>
-        props.liked
-          ? props.theme.colors.lightest
-          : props.theme.colors.lightest};
+      color: ${props => (props.liked ? props.theme.colors.lightest : props.theme.colors.lightest)};
     }
-    color: ${props =>
-      props.liked ? props.theme.colors.lightest : props.theme.colors.lightest};
+    color: ${props => (props.liked ? props.theme.colors.lightest : props.theme.colors.lightest)};
     background: ${props =>
       props.liked ? props.theme.colors.mediumdark : props.theme.colors.primary};
     border-color: ${props =>

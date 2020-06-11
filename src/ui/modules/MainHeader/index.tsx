@@ -11,9 +11,8 @@ import { DropdownSidebar } from './dropdown';
 import media from 'styled-media-query';
 import { ellipsis, darken } from 'polished';
 import { Link } from 'react-router-dom';
-import { Trans } from '@lingui/macro';
-// const MnetLogo = require('static/img/logo-icon.png');
 import { prompt_signin, logo_small_url } from 'mn-constants';
+import { LocaleContext } from 'context/global/localizationCtx';
 
 export interface Props {
   user: null | {
@@ -30,17 +29,12 @@ export interface Props {
 
 export const MainHeader: React.FC<Props> = props => {
   const history = useHistory();
+  const { i18n } = React.useContext(LocaleContext);
   const [isOpenDropdown, setOpenDropdown] = React.useState(false);
   const [isOpenCreateCommunity, setOpenCreateCommunity] = React.useState(false);
   const openMenu = React.useCallback(() => setOpenDropdown(true), []);
-  const openCreateCommunity = React.useCallback(
-    () => setOpenCreateCommunity(true),
-    []
-  );
-  const closeCreateCommunity = React.useCallback(
-    () => setOpenCreateCommunity(false),
-    []
-  );
+  const openCreateCommunity = React.useCallback(() => setOpenCreateCommunity(true), []);
+  const closeCreateCommunity = React.useCallback(() => setOpenCreateCommunity(false), []);
   return (
     <HeaderWrapper>
       <Container>
@@ -61,11 +55,7 @@ export const MainHeader: React.FC<Props> = props => {
         </Left>
         <Header alignItems={'center'}>
           {props.user ? (
-            <NavItem
-              sx={{ position: 'relative' }}
-              alignItems="center"
-              onClick={openMenu}
-            >
+            <NavItem sx={{ position: 'relative' }} alignItems="center" onClick={openMenu}>
               <Avatar
                 size="s"
                 initials={props.user.name.substring(0, 2)}
@@ -92,17 +82,13 @@ export const MainHeader: React.FC<Props> = props => {
             <Box>
               <Signin>
                 <Link to="/">
-                  <Text variant="link">
-                    <Trans>{prompt_signin}</Trans>
-                  </Text>
+                  <Text variant="link">{i18n._(prompt_signin)}</Text>
                 </Link>
               </Signin>
             </Box>
           )}
         </Header>
-        {isOpenCreateCommunity && (
-          <props.CreateCommunityModal done={closeCreateCommunity} />
-        )}
+        {isOpenCreateCommunity && <props.CreateCommunityModal done={closeCreateCommunity} />}
       </Container>
     </HeaderWrapper>
   );

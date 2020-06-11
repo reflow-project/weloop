@@ -13,6 +13,7 @@ import { my_timeline, logo_small_url } from '../../../mn-constants';
 // const MnetLogo = require('static/img/logo-icon.png');
 import { FormikHook } from 'ui/@types/types';
 import { LoadMore } from '../Loadmore';
+import { LocaleContext } from 'context/global/localizationCtx';
 // import { LoadMore } from 'ui/modules/Loadmore';
 
 export enum Status {
@@ -99,8 +100,7 @@ const SidebarLink = styled(NavLink)`
     }
   }
   div {
-    color: ${props =>
-      props.isActive ? props.theme.colors.primary : props.theme.colors.darker};
+    color: ${props => (props.isActive ? props.theme.colors.primary : props.theme.colors.darker)};
   }
 `;
 
@@ -174,6 +174,8 @@ export interface SidebarLoading {
 export type Props = SidebarLoaded | SidebarLoading;
 
 export const Sidebar: React.FC<Props> = props => {
+  const { i18n } = React.useContext(LocaleContext);
+
   //  console.log('isSidebarOpen ' + props.isSidebarOpen );
   return (
     <>
@@ -200,35 +202,24 @@ export const Sidebar: React.FC<Props> = props => {
                       <SidebarLink exact to={'/'}>
                         <NavItem alignItems={'center'}>
                           <Avatar size="s" src={logo_small_url} />
-                          <ItemTitleDir variant="link">
-                            {my_timeline}
-                          </ItemTitleDir>
+                          <ItemTitleDir variant="link">{i18n._(my_timeline)}</ItemTitleDir>
                         </NavItem>
                       </SidebarLink>
                     </Nav>
                     <Nav>
-                      {props.communities.map(
-                        (community: CommunityPreview, i) => (
-                          <CommunityLink
-                            key={community.link.url}
-                            to={community.link.url}
-                          >
-                            <NavItem alignItems={'center'} mb={2}>
-                              <Avatar
-                                size="s"
-                                initials={community.name.substr(0, 2)}
-                                src={community.icon}
-                              />
-                              <ItemTitleDir variant="link">
-                                {community.name}
-                              </ItemTitleDir>
-                            </NavItem>
-                          </CommunityLink>
-                        )
-                      )}
-                      {props.LoadMoreFormik && (
-                        <LoadMore LoadMoreFormik={props.LoadMoreFormik} />
-                      )}
+                      {props.communities.map((community: CommunityPreview, i) => (
+                        <CommunityLink key={community.link.url} to={community.link.url}>
+                          <NavItem alignItems={'center'} mb={2}>
+                            <Avatar
+                              size="s"
+                              initials={community.name.substr(0, 2)}
+                              src={community.icon}
+                            />
+                            <ItemTitleDir variant="link">{community.name}</ItemTitleDir>
+                          </NavItem>
+                        </CommunityLink>
+                      ))}
+                      {props.LoadMoreFormik && <LoadMore LoadMoreFormik={props.LoadMoreFormik} />}
                     </Nav>
                   </>
                 </SidebarOverflow>

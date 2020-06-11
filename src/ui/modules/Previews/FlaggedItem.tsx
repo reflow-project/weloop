@@ -47,11 +47,7 @@ export const FlaggedItem: React.SFC<FlaggedProps> = ({
                 <ActionIcon>
                   <Slash strokeWidth="1" size="18" />
                 </ActionIcon>
-                <Text
-                  variant={'suptitle'}
-                  sx={{ textTransform: 'capitalize' }}
-                  ml={1}
-                >
+                <Text variant={'suptitle'} sx={{ textTransform: 'capitalize' }} ml={1}>
                   <Trans>Block</Trans>
                 </Text>
               </ActionItem>
@@ -60,11 +56,7 @@ export const FlaggedItem: React.SFC<FlaggedProps> = ({
                 <ActionIcon>
                   <XCircle strokeWidth="1" size="18" />
                 </ActionIcon>
-                <Text
-                  variant={'suptitle'}
-                  sx={{ textTransform: 'capitalize' }}
-                  ml={1}
-                >
+                <Text variant={'suptitle'} sx={{ textTransform: 'capitalize' }} ml={1}>
                   <Trans>Delete</Trans>
                 </Text>
               </ActionItem>
@@ -73,11 +65,7 @@ export const FlaggedItem: React.SFC<FlaggedProps> = ({
               <ActionIcon className="unflag">
                 <Flag className="hover" strokeWidth="1" size="16" />
               </ActionIcon>
-              <Text
-                variant={'suptitle'}
-                sx={{ textTransform: 'capitalize' }}
-                ml={1}
-              >
+              <Text variant={'suptitle'} sx={{ textTransform: 'capitalize' }} ml={1}>
                 <Trans>Ignore</Trans>
               </Text>
             </ActionItem>
@@ -101,9 +89,7 @@ export const FlaggedItem: React.SFC<FlaggedProps> = ({
                 done={() => setOpenBlock(false)}
                 formik={blockUserFormik}
                 modalAction={i18n._(`Delete user`)}
-                modalDescription={i18n._(
-                  `Are you sure you want to permanently delete this user?`
-                )}
+                modalDescription={i18n._(`Are you sure you want to permanently delete this user?`)}
                 modalTitle={i18n._(`Delete`)}
               />
             </Modal>
@@ -114,9 +100,7 @@ export const FlaggedItem: React.SFC<FlaggedProps> = ({
                 done={() => setOpenIgnore(false)}
                 formik={ignoreFlagFormik}
                 modalAction={i18n._(`Ignore flag`)}
-                modalDescription={i18n._(
-                  `Are you sure you want to ignore and delete this flag?`
-                )}
+                modalDescription={i18n._(`Are you sure you want to ignore and delete this flag?`)}
                 modalTitle={i18n._(`Ignore`)}
               />
             </Modal>
@@ -146,11 +130,9 @@ const Actions = styled(Box)`
 
 const ActionItem = styled(Flex)<{ liked?: boolean }>`
   align-items: center;
-  color: ${props =>
-    props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+  color: ${props => (props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark)};
   div {
-    color: ${props =>
-      props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+    color: ${props => (props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark)};
   }
   &:hover {
     background: ${props =>
@@ -160,17 +142,14 @@ const ActionItem = styled(Flex)<{ liked?: boolean }>`
   }
   cursor: pointer;
   background: ${props =>
-    props.liked
-      ? props.theme.colors.secondary
-      : props.theme.colors.mediumlight};
+    props.liked ? props.theme.colors.secondary : props.theme.colors.mediumlight};
   border-radius: 4px;
   padding: 0 8px;
   margin-right: 8px;
   text-align: center;
   font-size: ${typography.size.s1};
   svg {
-    stroke: ${props =>
-      props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+    stroke: ${props => (props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark)};
   }
   a {
     display: flex;

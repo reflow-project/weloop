@@ -40,12 +40,7 @@ export interface BasicCreateFlagFormValues {
   reason: string;
 }
 
-export const FlagModal: React.FC<Props> = ({
-  cancel,
-  flagFormik,
-  isFlagged,
-  unflagFormik
-}) => {
+export const FlagModal: React.FC<Props> = ({ cancel, flagFormik, isFlagged, unflagFormik }) => {
   const { i18n } = React.useContext(LocaleContext);
 
   return !isFlagged ? (

@@ -39,10 +39,7 @@ export interface BasicMoodleLMSConfigFormValues {
   site: string;
 }
 
-export const MoodlePanel: React.FC<Props> = ({
-  cancel,
-  sendToMoodleFormik
-}) => {
+export const MoodlePanel: React.FC<Props> = ({ cancel, sendToMoodleFormik }) => {
   const { i18n } = React.useContext(LocaleContext);
 
   return (
@@ -60,9 +57,7 @@ export const MoodlePanel: React.FC<Props> = ({
             value={sendToMoodleFormik.values.site}
             onChange={sendToMoodleFormik.handleChange}
           />
-          <CounterChars>
-            {200 - sendToMoodleFormik.values.site.length}
-          </CounterChars>
+          <CounterChars>{200 - sendToMoodleFormik.values.site.length}</CounterChars>
           {sendToMoodleFormik.errors.site && (
             <AlertWrapper>
               <Alert variant="negative">{sendToMoodleFormik.errors.site}</Alert>

@@ -1,11 +1,11 @@
-export const PHOENIX_SOCKET_ENDPOINT =
-  process.env.REACT_APP_PHOENIX_SOCKET_ENDPOINT;
+import { i18nMark } from '@lingui/react';
+
+export const PHOENIX_SOCKET_ENDPOINT = process.env.REACT_APP_PHOENIX_SOCKET_ENDPOINT;
 export const GRAPHQL_ENDPOINT = process.env.REACT_APP_GRAPHQL_ENDPOINT;
 export const NODE_ENV = process.env.NODE_ENV;
 export const PUBLIC_URL = process.env.PUBLIC_URL;
 export const SENTRY_KEY = process.env.REACT_APP_SENTRY_API_KEY;
-export const DEFAULT_PAGE_SIZE =
-  parseInt(`${process.env.REACT_APP_DEFAULT_PAGE_SIZE}`) || 15;
+export const DEFAULT_PAGE_SIZE = parseInt(`${process.env.REACT_APP_DEFAULT_PAGE_SIZE}`) || 15;
 
 export const APP_NAME = 'MoodleNet';
 export const INSTANCE_DESCRIPTION =
@@ -14,24 +14,25 @@ export const INSTANCE_DESCRIPTION =
 export const INVITE_ONLY_TEXT =
   process.env.REACT_APP_INVITE_ONLY_TEXT ||
   'Please note, signups on this instance are currently invite-only.';
-export const INSTANCE_TAGLINE = 'Share. Curate. Discuss.';
-export const INSTANCE_PROMPT =
-  "You don't need to sign up to preview what people are sharing and discussing publicly.";
-export const prompt_signin = 'Sign in';
-export const my_timeline = 'My MoodleNet';
+export const INSTANCE_TAGLINE = i18nMark('Share. Curate. Discuss.');
+export const INSTANCE_PROMPT = i18nMark(
+  "You don't need to sign up to preview what people are sharing and discussing publicly."
+);
+export const prompt_signin = i18nMark('Sign in');
+export const my_timeline = i18nMark('My MoodleNet');
 export const instance_bg_img =
   'https://gitlab.com/moodlenet/frontend/-/raw/develop/src/static/img/background.jpg';
-export const logo_large_url =
-  'https://moodle.net/images/logos/moodlenet-logo.png';
+export const logo_large_url = 'https://moodle.net/images/logos/moodlenet-logo.png';
 export const logo_small_url =
   'https://gitlab.com/moodlenet/frontend/-/raw/develop/src/static/img/logo.jpg';
 
 export const terms_markdown_text = {
   // replace the text as needed
-  terms_users: 'This is a test instance. Your data is not secure or private.',
-  terms_cookies: 'This site uses cookies.',
-  terms_indexing:
+  terms_users: i18nMark('This is a test instance. Your data is not secure or private.'),
+  terms_cookies: i18nMark('This site uses cookies.'),
+  terms_indexing: i18nMark(
     'Information you post on this site may be publicly available and will be copied onto other servers in the federated network.'
+  )
 };
 
 export const terms_markdown_urls = {
@@ -48,8 +49,9 @@ export const terms_privacy = {
   // replace the URL with that of your instance's privacy policy (in markdown format)
   url_markdown: 'https://moodle.net/terms/privacy.md',
   // replace the text as needed (in markdown format as well)
-  text_markdown:
+  text_markdown: i18nMark(
     'This site uses cookies and follows GDPR rules. Contact the instance operators if you want your data exported or deleted.'
+  )
 };
 
 export const related_urls = {

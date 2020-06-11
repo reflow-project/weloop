@@ -21,9 +21,7 @@ const Flags: React.FC<Props> = ({ FlagsBox, loadMoreFlags }) => {
         {FlagsBox ? (
           <Box mt={2} sx={{ width: '600px' }}>
             {FlagsBox}
-            {loadMoreFlags ? (
-              <LoadMore LoadMoreFormik={loadMoreFlags} />
-            ) : null}{' '}
+            {loadMoreFlags ? <LoadMore LoadMoreFormik={loadMoreFlags} /> : null}{' '}
           </Box>
         ) : (
           <Text pt={3}>

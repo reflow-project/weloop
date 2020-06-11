@@ -11,13 +11,7 @@ import { clearFix } from 'polished';
 import media from 'styled-media-query';
 import styled from 'ui/themes/styled';
 
-import {
-  Actions,
-  AlertWrapper,
-  Container,
-  ContainerForm,
-  CounterChars
-} from 'ui/modules/Modal';
+import { Actions, AlertWrapper, Container, ContainerForm, CounterChars } from 'ui/modules/Modal';
 
 const tt = {
   placeholders: {
@@ -45,8 +39,7 @@ export const EditCollectionPanel: React.FC<Props> = ({ cancel, formik }) => {
     (file: File) => formik.setValues({ ...formik.values, icon: file }),
     [formik]
   );
-  const initialIconUrl =
-    'string' === typeof formik.values.icon ? formik.values.icon : '';
+  const initialIconUrl = 'string' === typeof formik.values.icon ? formik.values.icon : '';
   return (
     <Container>
       <form onSubmit={formik.handleSubmit}>
@@ -87,9 +80,7 @@ export const EditCollectionPanel: React.FC<Props> = ({ cancel, formik }) => {
                   value={formik.values.summary}
                   onChange={formik.handleChange}
                 />
-                <CounterChars>
-                  {500 - formik.values.summary.length}
-                </CounterChars>
+                <CounterChars>{500 - formik.values.summary.length}</CounterChars>
                 {formik.errors.summary && (
                   <AlertWrapper>
                     <Alert variant="negative">{formik.errors.summary}</Alert>

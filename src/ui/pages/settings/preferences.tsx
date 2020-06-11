@@ -48,9 +48,7 @@ export const LanguageSelect: React.FC<LanguageSelectProps> = props => {
       options={props.locales as any}
       defaultValue={props.current}
       onChange={selectedCode => {
-        const selection = Array.isArray(selectedCode)
-          ? selectedCode[0]
-          : selectedCode;
+        const selection = Array.isArray(selectedCode) ? selectedCode[0] : selectedCode;
         if (!selection) {
           return;
         }

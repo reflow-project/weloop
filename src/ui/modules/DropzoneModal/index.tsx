@@ -19,12 +19,7 @@ interface Props {
 
 type FilePattern = 'image/*' | '*';
 
-const DropzoneArea: React.FC<Props> = ({
-  initialUrl,
-  uploadType,
-  onFileSelect,
-  filePattern
-}) => {
+const DropzoneArea: React.FC<Props> = ({ initialUrl, uploadType, onFileSelect, filePattern }) => {
   const [fileUrl, setFileUrl] = useState<undefined | null | string>();
   // const { data: instanceInfoData } = useInstanceInfoQuery();
   // const uploadMaxBytes = instanceInfoData?.instance?.uploadMaxBytes || 0;
@@ -74,28 +69,18 @@ const DropzoneArea: React.FC<Props> = ({
           {!currentFile && uploadType === 'resource' ? (
             <Thumb className="thumb">
               <WrapperIcon>
-                <File
-                  size={30}
-                  strokeWidth={1}
-                  color={'rgba(250,250,250, .5)'}
-                />
+                <File size={30} strokeWidth={1} color={'rgba(250,250,250, .5)'} />
               </WrapperIcon>
             </Thumb>
           ) : null}
           {uploadType !== 'resource' ? (
             <Thumb className="thumb">
               <WrapperIcon>
-                <Image
-                  size={30}
-                  strokeWidth={1}
-                  color={'rgba(250,250,250, .5)'}
-                />
+                <Image size={30} strokeWidth={1} color={'rgba(250,250,250, .5)'} />
               </WrapperIcon>
               <Img
                 style={{
-                  backgroundImage: `url("${
-                    currentFile ? currentFile.localUrl : fileUrl
-                  }")`
+                  backgroundImage: `url("${currentFile ? currentFile.localUrl : fileUrl}")`
                 }}
               />
             </Thumb>
@@ -112,11 +97,7 @@ const DropzoneArea: React.FC<Props> = ({
               <WrapperFile>
                 <Thumb>
                   <WrapperIcon>
-                    <Image
-                      size={30}
-                      strokeWidth={1}
-                      color={'rgba(250,250,250, .5)'}
-                    />
+                    <Image size={30} strokeWidth={1} color={'rgba(250,250,250, .5)'} />
                   </WrapperIcon>
                   <Img
                     style={{

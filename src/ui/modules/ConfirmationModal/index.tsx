@@ -4,13 +4,7 @@ import { Heading, Text } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
 import styled from 'ui/themes/styled';
 import { FormikHook } from 'ui/@types/types';
-import {
-  Actions,
-  Container,
-  ContainerForm,
-  Header,
-  Row
-} from 'ui/modules/Modal';
+import { Actions, Container, ContainerForm, Header, Row } from 'ui/modules/Modal';
 
 export interface Props {
   done(confirmed: boolean): unknown;

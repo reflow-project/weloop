@@ -6,13 +6,7 @@ import { Box, Text } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
 import Alert from 'ui/elements/Alert';
 import Button from 'ui/elements/Button';
-import {
-  Actions,
-  AlertWrapper,
-  ContainerForm,
-  CounterChars,
-  Row
-} from 'ui/modules/Modal';
+import { Actions, AlertWrapper, ContainerForm, CounterChars, Row } from 'ui/modules/Modal';
 import styled from 'ui/themes/styled';
 // import { clearFix } from 'polished';
 import DropzoneArea from 'ui/modules/DropzoneModal';
@@ -27,9 +21,7 @@ const tt = {
   placeholders: {
     // url: i18nMark('Enter the URL of the resource'),
     name: i18nMark('A title for the resource'),
-    summary: i18nMark(
-      'Please type or copy/paste a summary about the resource...'
-    ),
+    summary: i18nMark('Please type or copy/paste a summary about the resource...'),
     //author: i18nMark('A name for the resource author'),
     submit: i18nMark('Uploading the resource')
     // image: i18nMark('Enter the URL of an image to represent the resource')
@@ -71,8 +63,7 @@ export const UploadResource: React.FC<Props> = ({
     (file: File) => formik.setValues({ ...formik.values, icon: file }),
     [formik]
   );
-  const initialIconUrl =
-    'string' === typeof formik.values.icon ? formik.values.icon : '';
+  const initialIconUrl = 'string' === typeof formik.values.icon ? formik.values.icon : '';
   return (
     <Wrapper>
       <Row>
@@ -170,10 +161,7 @@ export const UploadResource: React.FC<Props> = ({
           <label>
             <Trans>CC License</Trans>
           </label>
-          <Link
-            href="https://blog.moodle.net/2019/free-cultural-works/"
-            target="blank"
-          >
+          <Link href="https://blog.moodle.net/2019/free-cultural-works/" target="blank">
             <Trans>Confused? Read this!</Trans>
           </Link>
         </LabelWrapper>
