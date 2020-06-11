@@ -10,6 +10,7 @@ import { AlertWrapper } from 'ui/modules/Modal';
 import { i18nMark } from '@lingui/react';
 import LogoContainer from 'ui/elements/Logo';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 export interface ResetPasswordFormValues {
   email: string;
@@ -29,6 +30,10 @@ let tt = {
 export const ResetPassword: React.FC<Props> = ({ formik, isSubmitted }) => {
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>MoodleNet - Reset password</title>
+      </Helmet>
       <Container>
         <LoginWrapper>
           <LogoContainer />
@@ -36,10 +41,9 @@ export const ResetPassword: React.FC<Props> = ({ formik, isSubmitted }) => {
             <Wrapper>
               <VerifiedBox variant="text">
                 <Trans>
-                  If your email is linked to an account in our database, we have
-                  sent you an email with which you can reset your password. It
-                  may take a few minutes to arrive depending on your mail
-                  provider.
+                  If your email is linked to an account in our database, we have sent you an email
+                  with which you can reset your password. It may take a few minutes to arrive
+                  depending on your mail provider.
                 </Trans>
               </VerifiedBox>
               <ButtonLink to="/login">

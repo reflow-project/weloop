@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Button from 'ui/elements/Button';
 import { Trans } from '@lingui/macro';
 import LogoContainer from 'ui/elements/Logo';
+import { Helmet } from 'react-helmet';
 
 const LoginWrapper = styled.div`
   display: grid;
@@ -44,6 +45,10 @@ export interface Props {
 export const ConfirmEmail: React.FC<Props> = ({ result }) => {
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>MoodleNet - Confirm Email</title>
+      </Helmet>
       <Container>
         <LoginWrapper>
           <FormWrapper>
@@ -55,17 +60,12 @@ export const ConfirmEmail: React.FC<Props> = ({ result }) => {
                 ) : result.error === null ? (
                   <>
                     <Text variant="text">Email confirmed</Text>
-                    <Text
-                      variant="text"
-                      sx={{ fontWeight: 'bold', marginTop: '5px' }}
-                    >
+                    <Text variant="text" sx={{ fontWeight: 'bold', marginTop: '5px' }}>
                       Welcome {result.username}!
                     </Text>
                   </>
                 ) : (
-                  <Text variant="text">
-                    Error in email confirmation: {result.error}
-                  </Text>
+                  <Text variant="text">Error in email confirmation: {result.error}</Text>
                 )}
               </Box>
               <Browse>

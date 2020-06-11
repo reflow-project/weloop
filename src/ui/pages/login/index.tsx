@@ -10,13 +10,10 @@ import Button from 'ui/elements/Button';
 import { Input } from '@rebass/forms';
 import { Panel, WrapperPanel } from 'ui/elements/Panel';
 import LogoContainer from 'ui/elements/Logo';
+import { Helmet } from 'react-helmet';
 // import {Form} from 'formik'
 // const MnetLogin = require('static/img/login.jpg');
-import {
-  INSTANCE_DESCRIPTION,
-  INSTANCE_PROMPT,
-  instance_bg_img
-} from 'mn-constants'; // + instance_bg_img
+import { INSTANCE_DESCRIPTION, INSTANCE_PROMPT, instance_bg_img } from 'mn-constants'; // + instance_bg_img
 
 let tt = {
   login: i18nMark('Sign in'),
@@ -38,6 +35,10 @@ export interface LoginFormValues {
 export const Login: React.FC<Props> = ({ formik }) => {
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>MoodleNet - Log in</title>
+      </Helmet>
       <Container>
         <LoginWrapper>
           <LogoContainer isHome={true} />

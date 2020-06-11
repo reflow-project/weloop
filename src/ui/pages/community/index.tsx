@@ -20,6 +20,7 @@ import {
   ObjectsList
 } from 'ui/elements/Layout';
 import { SidePanel } from 'ui/modules/SidePanel';
+import { Helmet } from 'react-helmet';
 
 export interface Props {
   isJoined: boolean;
@@ -52,12 +53,14 @@ export const Community: React.FC<Props> = ({
   loadMoreCollections,
   loadMoreThreads
 }) => {
-  const [isOpenCreateCollection, setOpenCreateCollection] = React.useState(
-    false
-  );
+  const [isOpenCreateCollection, setOpenCreateCollection] = React.useState(false);
 
   return (
     <MainContainer>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>MoodleNet - Community</title>
+      </Helmet>
       {isOpenCreateCollection && (
         <Modal closeModal={() => setOpenCreateCollection(false)}>
           <CreateCollectionPanel done={() => setOpenCreateCollection(false)} />
@@ -73,9 +76,7 @@ export const Community: React.FC<Props> = ({
                   {HeroCommunityBox}
                   <Menu basePath={basePath} />
                   <List mt={2}>{ActivitiesBox}</List>
-                  {loadMoreActivities && (
-                    <LoadMore LoadMoreFormik={loadMoreActivities} />
-                  )}
+                  {loadMoreActivities && <LoadMore LoadMoreFormik={loadMoreActivities} />}
                 </>
               </Route>
               <Route path={`${basePath}/collections`}>
@@ -87,10 +88,7 @@ export const Community: React.FC<Props> = ({
                       <Trans>All collections</Trans>
                     </Text>
                     {isJoined && (
-                      <Button
-                        variant="outline"
-                        onClick={() => setOpenCreateCollection(true)}
-                      >
+                      <Button variant="outline" onClick={() => setOpenCreateCollection(true)}>
                         <Trans>Create a new collection</Trans>
                       </Button>
                     )}
@@ -98,9 +96,7 @@ export const Community: React.FC<Props> = ({
                   <ObjectsList>
                     <CollectionsBoxes>{CollectionsBox}</CollectionsBoxes>
                   </ObjectsList>
-                  {loadMoreCollections && (
-                    <LoadMore LoadMoreFormik={loadMoreCollections} />
-                  )}
+                  {loadMoreCollections && <LoadMore LoadMoreFormik={loadMoreCollections} />}
                 </>
               </Route>
               <Route path={`${basePath}/discussions`}>
@@ -122,9 +118,7 @@ export const Community: React.FC<Props> = ({
                     <Text variant="suptitle">All discussions</Text>
                   </Title>
                   <ObjectsList>{ThreadsBox}</ObjectsList>
-                  {loadMoreThreads && (
-                    <LoadMore LoadMoreFormik={loadMoreThreads} />
-                  )}
+                  {loadMoreThreads && <LoadMore LoadMoreFormik={loadMoreThreads} />}
                 </>
               </Route>
               <Route path={`${basePath}/members`}>

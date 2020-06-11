@@ -13,6 +13,7 @@ import {
   HomeBox,
   MenuList
 } from 'ui/elements/Layout';
+import { Helmet } from 'react-helmet';
 
 export enum HomePageTab {
   Activities,
@@ -42,6 +43,10 @@ export const Home: React.FC<Props> = ({
 Props) => {
   return (
     <MainContainer>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>MoodleNet - Home</title>
+      </Helmet>
       <HomeBox>
         <WrapperCont>
           <Wrapper>
@@ -61,9 +66,7 @@ Props) => {
               </Route> */}
               <Route path={`${basePath}`}>
                 <List>{InboxElements}</List>
-                {nextInboxFormik && (
-                  <LoadMore LoadMoreFormik={nextInboxFormik} />
-                )}
+                {nextInboxFormik && <LoadMore LoadMoreFormik={nextInboxFormik} />}
               </Route>
             </Switch>
           </Wrapper>

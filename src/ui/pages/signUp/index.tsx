@@ -13,6 +13,7 @@ import { INVITE_ONLY_TEXT } from 'mn-constants';
 import media from 'styled-media-query';
 import { NavLink } from 'react-router-dom';
 import LogoContainer from 'ui/elements/Logo';
+import { Helmet } from 'react-helmet';
 
 let tt = {
   login: i18nMark('Sign in'),
@@ -40,17 +41,14 @@ export interface SignUpFormValues {
   terms: boolean;
 }
 
-export const SignUpPage: React.FC<Props> = ({
-  formik,
-  registeredUsername,
-  registeredEmail
-}) => {
+export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername, registeredEmail }) => {
   return (
     <Container>
-      {!formik.isSubmitting &&
-      formik.submitCount &&
-      registeredUsername &&
-      registeredEmail ? (
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>MoodleNet - Sign up</title>
+      </Helmet>
+      {!formik.isSubmitting && formik.submitCount && registeredUsername && registeredEmail ? (
         <Box mt={3}>
           <LogoContainer />
           <Text variant="suptitle">
@@ -60,8 +58,7 @@ export const SignUpPage: React.FC<Props> = ({
             <Trans>Please confirm your email address</Trans>
             <b>{registeredEmail}</b>
             <Trans>
-              by clicking on the link we emailed you (check your spam folder if
-              necessary).
+              by clicking on the link we emailed you (check your spam folder if necessary).
             </Trans>
           </Text>
 
@@ -158,9 +155,7 @@ export const SignUpPage: React.FC<Props> = ({
                 />
                 {formik.errors.passwordConfirm && (
                   <AlertWrapper>
-                    <Alert variant="negative">
-                      {formik.errors.passwordConfirm}
-                    </Alert>
+                    <Alert variant="negative">{formik.errors.passwordConfirm}</Alert>
                   </AlertWrapper>
                 )}
               </Box>
@@ -278,8 +273,7 @@ const FormWrapper = styled.form`
 // `;
 
 const Aware = styled(Flex)<{ green: boolean }>`
-  background: ${props =>
-    props.green ? '#546d4f' : props.theme.colors.secondary};
+  background: ${props => (props.green ? '#546d4f' : props.theme.colors.secondary)};
   border-radius: 4px;
   align-items: center;
   div {

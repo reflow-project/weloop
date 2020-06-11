@@ -23,6 +23,7 @@ import { ContainerForm, Actions } from 'ui/modules/Modal';
 import Button from 'ui/elements/Button';
 // import { useHistory } from 'react-router';
 import { Wrapper, WrapperCont, MainContainer, HomeBox } from 'ui/elements/Layout';
+import { Helmet } from 'react-helmet';
 
 const tt = {
   placeholders: {
@@ -95,6 +96,10 @@ export const Settings: React.FC<Props> = ({
 
   return (
     <MainContainer>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>MoodleNet - Settings</title>
+      </Helmet>
       <Sidebar basePath={basePath} isAdmin={isAdmin} />
       <HomeBox>
         <WrapperCont>
