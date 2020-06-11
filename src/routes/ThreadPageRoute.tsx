@@ -15,7 +15,7 @@ const ThreadPageRouter: FC<RouteComponentProps<ThreadPageRouter>> = ({
     () => ({
       threadId
     }),
-    []
+    [threadId]
   );
 
   return (

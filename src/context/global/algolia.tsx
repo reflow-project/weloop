@@ -48,7 +48,14 @@ export const ProvideAlgoliaContext: React.FC = ({ children }) => {
     return () => {
       clearTimeout(setUrlTO);
     };
-  }, [searchState, location.pathname, location.hash, location.search]);
+  }, [
+    searchState,
+    location.pathname,
+    location.hash,
+    location.search,
+    location,
+    push
+  ]);
   const handleSetSearchState = React.useCallback(newSearchState => {
     if ('query' in newSearchState) {
       setSearchState(newSearchState);

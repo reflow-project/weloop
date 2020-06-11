@@ -113,6 +113,6 @@ export const ThreadPage: FC<ThreadPage> = ({ threadId }) => {
     };
 
     return props;
-  }, [thread, commentPage, loadMoreComments]);
+  }, [thread, commentPage, loadMoreComments, replyFormik]);
   return uiProps && <ThreadPageUI {...uiProps} />;
 };

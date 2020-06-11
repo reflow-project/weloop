@@ -6,7 +6,7 @@ import { Flex } from 'rebass/styled-components';
 // import OutsideClickHandler from 'react-outside-click-handler';
 import Button from 'ui/elements/Button';
 import styled from 'ui/themes/styled';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 // const PickerWrap = styled.div`
 //   position: absolute;
 //   right: 10px;
@@ -98,7 +98,7 @@ export const SocialText: React.FC<Props> = ({
     if (!keepTextOnSubmit) {
       setText('');
     }
-  }, [text]);
+  }, [text, keepTextOnSubmit, submit]);
   useEffect(() => {
     if (!ref.current) {
       return;
@@ -111,7 +111,7 @@ export const SocialText: React.FC<Props> = ({
     }
     const txt = ref.current.value;
     setText(txt);
-  }, [ref.current, setText]);
+  }, [setText]);
   return (
     <Wrapper>
       <SocialTextDiv>

@@ -1265,6 +1265,8 @@ export type User = {
   name?: Maybe<Scalars['String']>,
   /** Subscriptions users have to the collection */
   followers?: Maybe<FollowsPage>,
+  /** Free text */
+  location?: Maybe<Scalars['String']>,
   /** A url for the user, may be to a remote instance */
   canonicalUrl?: Maybe<Scalars['String']>,
   /** The current user's like of this user, if any */
@@ -1285,8 +1287,6 @@ export type User = {
   summary?: Maybe<Scalars['String']>,
   /** Total number of followers, including private follows */
   followerCount?: Maybe<Scalars['Int']>,
-  /** Free text */
-  location?: Maybe<Scalars['String']>,
   /** 
  * Activities of others the user is following, most recently created
    * first. Only available to the current user under `me`
@@ -2234,6 +2234,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   collectionFollows?: Resolver<Maybe<ResolversTypes['FollowsPage']>, ParentType, ContextType, UserCollectionFollowsArgs>,
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   followers?: Resolver<Maybe<ResolversTypes['FollowsPage']>, ParentType, ContextType, UserFollowersArgs>,
+  location?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   canonicalUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   myLike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType>,
   outbox?: Resolver<Maybe<ResolversTypes['ActivitiesPage']>, ParentType, ContextType, UserOutboxArgs>,
@@ -2244,7 +2245,6 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   isLocal?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
   summary?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   followerCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
-  location?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   inbox?: Resolver<Maybe<ResolversTypes['ActivitiesPage']>, ParentType, ContextType, UserInboxArgs>,
   updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
 };

@@ -117,7 +117,7 @@ export const getEditCollectionProps = (): EditCollectionPanelProps => {
   return { formik, cancel: action('cancel') };
 };
 
-export const getHeroCommunityProps = (): HeroCommunityProps => {
+export const useGetHeroCommunityProps = (): HeroCommunityProps => {
   return {
     community: {
       isAdmin: false,
@@ -192,20 +192,20 @@ export const getHeroCommunityPropsAdmin = (): HeroCommunityProps => {
             });
           }
         });
-        const getFeaturedModalProps = {
+        const useGetFeaturedModalProps = {
           formik,
           isFeatured: false,
           itemType: 'community',
           itemName: 'Community nino',
           cancel: action('cancel')
         };
-        return <FeaturedModal {...getFeaturedModalProps} />;
+        return <FeaturedModal {...useGetFeaturedModalProps} />;
       }
     }
   };
 };
 
-export const getEditProfileProps = (): EditProfileProps => {
+export const useGetEditProfileProps = (): EditProfileProps => {
   const formik = useFormik<EditProfile>({
     initialValues: {
       image:
@@ -237,13 +237,13 @@ export const getEditProfileProps = (): EditProfileProps => {
   };
 };
 
-export const getEditProfilePropsAdmin = (): EditProfileProps => {
+export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
   const getActor = () => ({
     icon: 'https://picsum.photos/80/80',
     link: '1',
     name: 'Ivan'
   });
-  const getActions = () => ({
+  const useGetActions = () => ({
     FlagModal: ({ done }) => {
       return <></>;
     },
@@ -286,7 +286,7 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
       <FlaggedItem
         FlaggedItemContextElement={
           <Comment
-            {...getActions()}
+            {...useGetActions()}
             url="/"
             content={
               'lol we should dox Estrella here is her address: 40 Camiño Bruno, Madrid but I have not got her postal code'
@@ -655,7 +655,7 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
   };
 };
 
-// export const getLoadMoreProps = (): LoadMoreProps => {
+// export const useGetLoadMoreProps = (): LoadMoreProps => {
 //   return {
 //     LoadMoreFormik: useFormik<{}>({
 //       initialValues: {},
@@ -669,7 +669,7 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
 //   };
 // };
 
-export const getHeroCollectionProps = (): HeroCollectionProps => {
+export const useGetHeroCollectionProps = (): HeroCollectionProps => {
   return {
     collection: {
       status: HeroCollectionStatus.Loaded,
@@ -755,19 +755,19 @@ export const getHeroCollectionPropsAdmin = (): HeroCollectionProps => {
             });
           }
         });
-        const getFeaturedModalProps = {
+        const useGetFeaturedModalProps = {
           formik,
           isFeatured: false,
           itemType: 'collection',
           itemName: 'Favourite books',
           cancel: action('cancel')
         };
-        return <FeaturedModal {...getFeaturedModalProps} />;
+        return <FeaturedModal {...useGetFeaturedModalProps} />;
       }
     }
   };
 };
-export const getHeroUserProps = (): HeroUserProps => {
+export const useGetHeroUserProps = (): HeroUserProps => {
   return {
     status: HeroUserStatus.Loaded,
     me: false,
@@ -830,7 +830,7 @@ export const getResourcePreviewProps = (): ResourcePreviewProps => {
   };
 };
 
-export const getFlagModalProps = (): FlagModalProps => {
+export const useGetFlagModalProps = (): FlagModalProps => {
   const flagFormik = useFormik<BasicCreateFlagFormValues>({
     initialValues: {
       reason: ''
@@ -859,7 +859,7 @@ export const getFlagModalProps = (): FlagModalProps => {
   };
 };
 
-export const getFeaturedModalProps = (): FeaturedModalProps => {
+export const useGetFeaturedModalProps = (): FeaturedModalProps => {
   const formik = useFormik({
     initialValues: { makeFeatured: true },
     onSubmit: () => {
@@ -878,7 +878,7 @@ export const getFeaturedModalProps = (): FeaturedModalProps => {
   };
 };
 
-export const getConfirmationModalProps = (): ConfirmationModalProps => {
+export const useGetConfirmationModalProps = (): ConfirmationModalProps => {
   const formik = useFormik<{}>({
     initialValues: [],
     onSubmit: () => {
@@ -961,19 +961,19 @@ export const getFeaturedCommunitiesPropsAdmin = (): FeaturedCommunitiesProps => 
           });
         }
       });
-      const getFeaturedModalProps = {
+      const useGetFeaturedModalProps = {
         formik,
         isFeatured: true,
         itemType: 'community',
         itemName: 'Community nino',
         cancel: action('cancel')
       };
-      return <FeaturedModal {...getFeaturedModalProps} />;
+      return <FeaturedModal {...useGetFeaturedModalProps} />;
     }
   };
 };
 
-export const getFeaturedCollectionsProps = (): FeaturedCollectionsProps => {
+export const useGetFeaturedCollectionsProps = (): FeaturedCollectionsProps => {
   return {
     isAdmin: false,
     FeaturedModal: () => <div>FeaturedModal</div>,
@@ -1037,19 +1037,19 @@ export const getFeaturedCollectionsPropsAdmin = (): FeaturedCollectionsProps => 
           });
         }
       });
-      const getFeaturedModalProps = {
+      const useGetFeaturedModalProps = {
         formik,
         isFeatured: true,
         itemType: 'community',
         itemName: 'Community nino',
         cancel: action('cancel')
       };
-      return <FeaturedModal {...getFeaturedModalProps} />;
+      return <FeaturedModal {...useGetFeaturedModalProps} />;
     }
   };
 };
 
-export const getSignUpProps = (): SignUpProps => {
+export const useGetSignUpProps = (): SignUpProps => {
   const formik = useFormik<SignUpFormValues>({
     initialValues: {
       email: 'mary@moodlers.org',
@@ -1069,7 +1069,7 @@ export const getSignUpProps = (): SignUpProps => {
   return { formik };
 };
 
-export const getLoginProps = (): LoginProps => {
+export const useGetLoginProps = (): LoginProps => {
   const formik = useFormik<LoginFormValues>({
     initialValues: {
       email: '',
@@ -1085,7 +1085,7 @@ export const getLoginProps = (): LoginProps => {
   return { formik };
 };
 
-export const getResetPasswordProps = (): ResetPasswordProps => {
+export const useGetResetPasswordProps = (): ResetPasswordProps => {
   const formik = useFormik<ResetPasswordFormValues>({
     initialValues: {
       email: ''
@@ -1100,7 +1100,7 @@ export const getResetPasswordProps = (): ResetPasswordProps => {
   return { formik };
 };
 
-export const getNewPasswordProps = (): NewPasswordProps => {
+export const useGetNewPasswordProps = (): NewPasswordProps => {
   const formik = useFormik<NewPasswordFormValues>({
     initialValues: {
       password: '',

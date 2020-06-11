@@ -36,5 +36,5 @@ export const useThreadPreview = (threadId: Thread['id']) => {
       totalReplies: commentCount && commentCount - 1,
       totalComments: thread?.comments ? thread.comments.totalCount - 1 : 0
     };
-  }, [thread]);
+  }, [canReply, reply, thread]);
 };

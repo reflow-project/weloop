@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'ui/themes/styled';
 import { Box, Text, Flex } from 'rebass/styled-components';
 import SocialText from 'ui/modules/SocialText';
-import { i18nMark, Trans } from '@lingui/react';
 import { LocaleContext } from '../../../context/global/localizationCtx';
+import { i18nMark } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import { FormikHook } from 'ui/@types/types';
 import { Star, CornerDownLeft } from 'react-feather';
 import DOMPurify from 'dompurify';
@@ -116,11 +117,7 @@ export const LikedComment: React.SFC<CommentProps> = ({
                 <ActionIcon>
                   <Star strokeWidth="1" size="18" />
                 </ActionIcon>
-                <ActionText
-                  variant={'text'}
-                  sx={{ textTransform: 'capitalize' }}
-                  ml={1}
-                >
+                <ActionText variant={'text'} sx={{ textTransform: 'capitalize' }} ml={1}>
                   {like.totalLikes + ' '} <Trans>Star</Trans>
                 </ActionText>
               </ActionItem>
@@ -148,25 +145,20 @@ const Actions = styled(Box)`
 
 const ActionItem = styled(Flex)<{ liked?: boolean }>`
   align-items: center;
-  color: ${props =>
-    props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+  color: ${props => (props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark)};
   div {
-    color: ${props =>
-      props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+    color: ${props => (props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark)};
   }
   cursor: pointer;
   background: ${props =>
-    props.liked
-      ? props.theme.colors.secondary
-      : props.theme.colors.mediumlight};
+    props.liked ? props.theme.colors.secondary : props.theme.colors.mediumlight};
   border-radius: 4px;
   padding: 0 8px;
   margin-right: 8px;
   text-align: center;
   font-size: ${typography.size.s1};
   svg {
-    stroke: ${props =>
-      props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+    stroke: ${props => (props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark)};
   }
   a {
     display: flex;

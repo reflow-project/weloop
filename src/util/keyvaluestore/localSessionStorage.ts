@@ -6,7 +6,7 @@ export const LOCAL: Type = 'local';
 export const createLocalSessionKVStorage = (type: Type): CreateKVStore => (
   prefix = ''
 ): KVStore => {
-  const storage = type == 'local' ? localStorage : sessionStorage;
+  const storage = type === 'local' ? localStorage : sessionStorage;
   const pkey = key => `${prefix}${key}`;
   const get: KVStore['get'] = key =>
     parse(storage.getItem(pkey(key)), type, pkey(key));

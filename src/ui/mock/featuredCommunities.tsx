@@ -5,6 +5,7 @@ export const getFeaturedCommunitiesProps = (
 ): FeaturedCommunitiesProps => {
   return {
     isAdmin,
+    FeaturedModal: null,
     featuredCommunities: [
       {
         id: '1',

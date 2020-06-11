@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'ui/themes/styled';
 import { Box, Text, Flex } from 'rebass/styled-components';
 import { DateTime } from 'luxon';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import { NavLink } from 'react-router-dom';
 import { MessageSquare, Star } from 'react-feather';
 

@@ -59,6 +59,6 @@ export const HeroCollection: FC<HeroCollection> = ({
       }
     };
     return props;
-  }, [collection, canModify, toggleJoin, isAdmin, toggleJoinFormik]);
+  }, [collection, basePath, isAdmin, canModify, toggleJoinFormik]);
   return <HeroCollectionUI {...heroProps} />;
 };

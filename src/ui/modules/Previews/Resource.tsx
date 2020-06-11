@@ -13,13 +13,8 @@ import Avatar from 'ui/elements/Avatar';
 import styled from 'ui/themes/styled';
 import { ellipsis } from 'polished';
 import { FormikHook } from 'ui/@types/types';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 // import { ellipsis } from 'polished';
-export interface LikeActions {
-  toggleLikeFormik: FormikHook<{}>;
-  totalLikes: number;
-  iLikeIt: boolean;
-}
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
 import Modal from 'ui/modules/Modal';
 import { typography } from 'mn-constants';
@@ -29,6 +24,11 @@ import { Search } from './Collection';
 // const LicenseIcon0 = require('./cc-zero.png');
 // const LicenseIcon1 = require('./by.png');
 // const LicenseIcon2 = require('./by-sa.png');
+export interface LikeActions {
+  toggleLikeFormik: FormikHook<{}>;
+  totalLikes: number;
+  iLikeIt: boolean;
+}
 
 export interface Props {
   icon: string;
@@ -77,7 +77,7 @@ export const Resource: React.FC<Props> = ({
         </Search>
       )}
       <Wrapper p={2}>
-        {icon != '' ? (
+        {icon !== '' ? (
           <Avatar size="m" src={icon} />
         ) : isFile ? (
           <ResourceThumb>
@@ -111,7 +111,7 @@ export const Resource: React.FC<Props> = ({
           ) : (
             <>
               <LinkResource>
-                <a href={link} target="_blank">
+                <a href={link} target="_blank" rel="noopener noreferrer">
                   <TextLink flex={1}>{link}</TextLink>
                 </a>
               </LinkResource>

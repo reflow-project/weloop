@@ -4,12 +4,12 @@ import { MapPin, MoreVertical, Flag } from 'react-feather';
 import styled from 'ui/themes/styled';
 import media from 'styled-media-query';
 import Button from 'ui/elements/Button';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
 import { FormikHook } from 'ui/@types/types';
 import Modal from 'ui/modules/Modal';
 import { NavLink } from 'react-router-dom';
-import { MD_Comment } from 'ui/elements/Layout/comment';
+import { MDComment } from 'ui/elements/Layout/comment';
 
 export enum Status {
   Loading,
@@ -124,7 +124,7 @@ export const HeroUser: FC<Props> = props => {
           </Username>
 
           <Box mt={2}>
-            <MD_Comment content={props.summary} />
+            <MDComment content={props.summary} />
           </Box>
           {props.location ? (
             <Location mt={2}>

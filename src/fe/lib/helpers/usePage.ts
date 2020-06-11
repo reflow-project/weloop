@@ -20,7 +20,7 @@ interface PreviousPageCursor {
 type PageUpdater<EdgeType> = (_: {
   prev: Page<EdgeType>;
   fetched: Page<EdgeType>;
-}) => Page<EdgeType>;
+}) => any; //Page<EdgeType>;
 
 type Fetch<EdgeType, Cursor extends FellowPageCursor> = (
   _: (

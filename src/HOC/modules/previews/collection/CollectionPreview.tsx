@@ -32,7 +32,7 @@ export const CollectionPreviewHOC: FC<Props> = ({ collectionId, flagged }) => {
       toggleFollowFormik,
       hideActions
     });
-  }, [collection, toggleFollowFormik]);
+  }, [collection, toggleFollowFormik, flagged]);
 
   return (
     collectionPreviewProps && (

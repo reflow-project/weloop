@@ -93,7 +93,11 @@ const Preferences: React.FC<Props> = props => (
       </ContainerForm>
     </Row>
     <TransifexLink variant="text" my={3} mt={2}>
-      <a href="https://www.transifex.com/moodlenet/moodlenet/" target="_blank">
+      <a
+        href="https://www.transifex.com/moodlenet/moodlenet/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <Trans>Want to contibute to MoodleNet translation?</Trans>
       </a>
     </TransifexLink>

@@ -17,7 +17,7 @@ const initialValues: ResetPasswordFormValues = {
   email: ''
 };
 export interface Props {}
-export const ResetPasswordPageHOC: FC<Props> = ({}: Props) => {
+export const ResetPasswordPageHOC: FC<Props> = () => {
   const { resetPwdReq } = useAnon();
   const formik = useFormik<ResetPasswordFormValues>({
     onSubmit: ({ email }) => resetPwdReq(email),

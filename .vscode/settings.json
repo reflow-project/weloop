@@ -1,5 +1,1 @@
-{
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "editor.formatOnSave": false,
-  "prettier.semi": true
-}
+{}

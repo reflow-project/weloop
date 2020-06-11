@@ -17,7 +17,7 @@ export interface Props {
   modalTitle: string;
   modalDescription: string;
   modalAction: string;
-  formik: FormikHook;
+  formik: FormikHook<any>;
 }
 
 export const ConfirmationModal: React.FC<Props> = ({

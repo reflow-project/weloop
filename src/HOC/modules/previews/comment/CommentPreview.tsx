@@ -53,7 +53,7 @@ export const CommentPreviewHOC: FC<CommentPreviewHOC> = ({
       hideActions: hideActions
     };
     return props;
-  }, [comment, toggleLikeFormik]);
+  }, [canReply, comment, hideActions, replyFormik, toggleLikeFormik]);
 
   return (
     commentPreviewProps &&

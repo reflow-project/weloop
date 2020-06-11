@@ -1,4 +1,5 @@
-import { i18nMark, Trans } from '@lingui/react';
+import { i18nMark } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import { /* Textarea,*/ /* Checkbox, */ Input, Label } from '@rebass/forms';
 import React from 'react';
 import { XCircle } from 'react-feather';
@@ -41,7 +42,10 @@ const Instance: React.FC<Props> = ({
   return (
     <Box>
       <Text px={3} mt={2} variant="heading">
-        <span style={{ marginRight: '8px' }}>🎨</span>Customize your instance
+        <span style={{ marginRight: '8px' }} aria-label="icon" role="img">
+          🎨
+        </span>
+        Customize your instance
       </Text>
       {/* <Row>
       <ContainerForm>

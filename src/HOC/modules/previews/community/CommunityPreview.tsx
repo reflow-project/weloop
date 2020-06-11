@@ -32,7 +32,7 @@ export const CommunityPreviewHOC: FC<Props> = ({ communityId, flagged }) => {
       isCreator,
       toggleJoinFormik
     });
-  }, [community, toggleJoinFormik]);
+  }, [community, flagged, isCreator, toggleJoinFormik]);
 
   return (
     communityPreviewProps && <CommunityPreviewUI {...communityPreviewProps} />

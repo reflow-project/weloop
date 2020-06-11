@@ -16,6 +16,7 @@ fragment ResourcePreview on Resource {
     likers { totalCount }
     collection {
       id
+      name
       preferredUsername
       canonicalUrl
       icon{ id, url }

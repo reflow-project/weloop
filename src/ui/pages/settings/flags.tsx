@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Box, Text } from 'rebass/styled-components';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import { Row } from 'ui/modules/Modal';
 // import DropzoneArea from 'ui/modules/DropzoneModal';
 import { FormikHook } from 'ui/@types/types';

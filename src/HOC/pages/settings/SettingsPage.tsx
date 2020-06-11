@@ -61,7 +61,7 @@ export const SettingsPage: FC<SettingsPage> = ({ basePath }) => {
       ModerationLog: <InstanceModerationLogSection />
     };
     return props;
-  }, [profile, updateProfileFormik]);
+  }, [basePath, me, profile, updateProfileFormik]);
 
   return settingsPageProps && <SettingsPageUI {...settingsPageProps} />;
 };

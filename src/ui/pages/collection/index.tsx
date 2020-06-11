@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import { Flex, Box } from 'rebass/styled-components';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import styled from 'ui/themes/styled';
 import { FormikHook } from 'ui/@types/types';
 import Modal from 'ui/modules/Modal';
@@ -53,7 +53,6 @@ export const Collection: React.FC<Props> = ({
   const [isOpenEditCollection, setOpenEditCollection] = React.useState(false);
   const [isShareLinkOpen, setOpenShareLink] = React.useState(false);
   const [isUploadOpen, setUploadOpen] = React.useState(false);
-
   return (
     <MainContainer>
       {isOpenEditCollection && (
@@ -70,9 +69,7 @@ export const Collection: React.FC<Props> = ({
                 <White>
                   <FollowersMenu basePath={`${basePath}/followers`} />
                   <ObjectsList>{FollowersBoxes}</ObjectsList>
-                  {loadMoreFollowers && (
-                    <LoadMore LoadMoreFormik={loadMoreFollowers} />
-                  )}
+                  {loadMoreFollowers && <LoadMore LoadMoreFormik={loadMoreFollowers} />}
                 </White>
               </Route>
               <Route exact path={`${basePath}/`}>
@@ -106,13 +103,9 @@ export const Collection: React.FC<Props> = ({
                     // <h1>jhhhh</h1>
                     <ShareLinkBox done={() => setOpenShareLink(false)} />
                   )}
-                  {isUploadOpen && (
-                    <UploadResourcePanel done={() => setUploadOpen(false)} />
-                  )}
+                  {isUploadOpen && <UploadResourcePanel done={() => setUploadOpen(false)} />}
                   <ObjectsList>{ResourcesBox}</ObjectsList>
-                  {loadMoreResources && (
-                    <LoadMore LoadMoreFormik={loadMoreResources} />
-                  )}
+                  {loadMoreResources && <LoadMore LoadMoreFormik={loadMoreResources} />}
                 </>
               </Route>
               {/* <Route exact path={`${basePath}/`}>

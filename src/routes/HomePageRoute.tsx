@@ -4,6 +4,7 @@ import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { WithSidebarTemplate } from 'HOC/templates/WithSidebar/WithSidebar';
 import { NotFound } from 'ui/pages/notFound';
 import { RedirectAnonymousToLogin } from './wrappers/RedirectBySession';
+import { useApolloClient } from '@apollo/react-hooks';
 
 interface HomePageRouter {
   tab?: string;
@@ -29,11 +30,14 @@ const HomePageRouter: FC<RouteComponentProps<HomePageRouter>> = ({ match }) => {
           },
     [tab]
   );
+  console.log(111);
+  const cl = useApolloClient();
+  console.log(222);
+  console.log(cl);
 
   if (!homeProps) {
     return <NotFound />;
   }
-
   return (
     <RedirectAnonymousToLogin>
       <WithSidebarTemplate>

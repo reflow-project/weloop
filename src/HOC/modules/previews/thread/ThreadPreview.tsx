@@ -29,7 +29,7 @@ export const ThreadPreviewHOC: FC<Props> = ({ threadId }) => {
     };
 
     return props;
-  }, [mainComment, totalReplies]);
+  }, [mainComment, totalReplies, threadId]);
 
   return threadPreviewProps && <ThreadPreviewUI {...threadPreviewProps} />;
 };

@@ -45,13 +45,16 @@ export const PreferencesSettingsSection: FC = () => {
     () =>
       localesOptions.find(option => option.value === current.code) ||
       localesOptions[0],
-    [localesOptions]
+    [current.code, localesOptions]
   );
 
-  const setLocale = useCallback((code: string) => {
-    const locale = available.find(locale => locale.code === code);
-    locale && set(locale);
-  }, []);
+  const setLocale = useCallback(
+    (code: string) => {
+      const locale = available.find(locale => locale.code === code);
+      locale && set(locale);
+    },
+    [available, set]
+  );
   return (
     <Preferences
       formik={formik}

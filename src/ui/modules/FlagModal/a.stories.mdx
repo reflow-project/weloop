@@ -1,20 +1,21 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
-import { PropsTable } from '@storybook/components';
-import {getFlagModalProps} from 'ui/mock/flagModal'
-import { FlagModal } from '.';
-import { action } from '@storybook/addon-actions';
-import {Box} from 'rebass'
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { useGetFlagModalProps } from 'ui/mock/flagModal'
+import { FlagModal } from '.'
+import { action } from '@storybook/addon-actions'
+import { Box } from 'rebass'
 import Modal from 'ui/modules/Modal'
 
-<Meta title="Modules|Flag Modal" component={FlagModal}/>
+<Meta title="Modules|Flag Modal" component={FlagModal} />
 
 # FlagModal
+
 Let's define a story for the `Flag Modal preview` module
 
 <Preview>
   <Story name="Flag Modal module">
     <Modal closeModal={action('close modal')}>
-      <FlagModal {...getFlagModalProps()}/>
+      <FlagModal {...useGetFlagModalProps()} />
     </Modal>
   </Story>
 </Preview>

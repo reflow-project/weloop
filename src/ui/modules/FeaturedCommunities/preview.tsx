@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { Box, Text } from 'rebass/styled-components';
 import media from 'styled-media-query';
 import styled from 'ui/themes/styled';
-const PlaceholderImg = require('ui/Icons/collectionPlaceholder.png');
 import { ellipsis } from 'polished';
 import { X } from 'react-feather';
+const PlaceholderImg = require('ui/Icons/collectionPlaceholder.png');
 
 export interface CommunityBase {
   id: string;

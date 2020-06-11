@@ -70,7 +70,7 @@ export const useLMS = (resource: Maybe<ResourceLMS>) => {
         />
       )
     }),
-    [sendToLMS, updateLMSPrefs, sendToMoodle, currentLMSPrefs]
+    [sendToLMS, updateLMSPrefs, currentLMSPrefs]
   );
 };
 
@@ -85,7 +85,7 @@ export const useLMSPrefs = () => {
     profile?.extraInfo?.LMS
       ? setCurrentLMSPrefs(profile.extraInfo.LMS)
       : setCurrentLMSPrefs(storage.get(LMS_PREFS_KEY) as LMSPrefs | null);
-  }, [profile?.extraInfo?.LMS]);
+  }, [profile]);
 
   const updateLMSPrefs = useCallback(
     async (LMS: LMSPrefs) => {

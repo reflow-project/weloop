@@ -1,25 +1,23 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
-import { PropsTable } from '@storybook/components';
-import { Thread } from '.';
-import {ActivityPreview} from 'ui/modules/ActivityPreview'
-import {MainComment} from 'ui/modules/Previews/MainComment'
-import { Comment } from 'ui/modules/Previews/Comment';
-import { WithSidebar } from 'ui/templates/withSidebar';
-import {Sidebar} from 'ui/modules/Sidebar'
-import {MainHeader} from 'ui/modules/MainHeader'
-import {getMainHeaderProps} from 'ui/mock/mainHeader'
-import {getSidebarProps} from 'ui/mock/sidebar'
-import {activityPreviewProps} from 'ui/mock/activityPreview'
-import {CommentPreviewProps, MainCommentPreviewProps} from 'ui/mock/previews'
-import {getLoadMoreProps} from 'ui/mock/loadmore'
-const Head = () => <MainHeader {...getMainHeaderProps() } />
-const Side = () => <Sidebar {...getSidebarProps()}/>
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { Thread } from '.'
+import { ActivityPreview } from 'ui/modules/ActivityPreview'
+import { MainComment } from 'ui/modules/Previews/MainComment'
+import { Comment } from 'ui/modules/Previews/Comment'
+import { WithSidebar } from 'ui/templates/withSidebar'
+import { Sidebar } from 'ui/modules/Sidebar'
+import { MainHeader } from 'ui/modules/MainHeader'
+import { getMainHeaderProps } from 'ui/mock/mainHeader'
+import { useGetSidebarProps } from 'ui/mock/sidebar'
+import { activityPreviewProps } from 'ui/mock/activityPreview'
+import { CommentPreviewProps, MainCommentPreviewProps } from 'ui/mock/previews'
+import { useGetLoadMoreProps } from 'ui/mock/loadmore'
+import { ComponentBag } from 'ui/lib/componentBag'
 
-
-<Meta title="Pages|Thread" component={Thread}/>
-
+<Meta title="Pages|Thread" component={Thread} />
 
 # Thread
+
 Let's define a story for the `Thread` page
 
 - **[Story](#story)**
@@ -30,23 +28,30 @@ Let's define a story for the `Thread` page
 
 <Preview>
   <Story name="Thread page">
-    <WithSidebar 
-      HeaderBox={Head}
-      SidebarBox={Side}>
-        <Thread 
+    <WithSidebar
+      HeaderBox={ComponentBag(MainHeader, { ...getMainHeaderProps() })}
+      SidebarBox={ComponentBag(Sidebar, { ...useGetSidebarProps() })}
+    >
+      <Thread
         isCommunityContext={true}
         communityId="/"
         communityIcon="https://pbs.twimg.com/profile_images/458816335900733440/lQx_HLvS.png"
-        communityName="MoodleNet devs" 
-        MainThread={ <MainComment {...MainCommentPreviewProps()} />}
+        communityName="MoodleNet devs"
+        MainThread={<MainComment {...MainCommentPreviewProps()} />}
         Comments={[
-            <ActivityPreview {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps() }/>)} />,
-            <ActivityPreview {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps() }/>)} />,
-            <ActivityPreview {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps() }/>)} />
+          <ActivityPreview
+            {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps()} />)}
+          />,
+          <ActivityPreview
+            {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps()} />)}
+          />,
+          <ActivityPreview
+            {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps()} />)}
+          />,
         ]}
-        loadMoreComments={getLoadMoreProps()}
+        loadMoreComments={useGetLoadMoreProps()}
         basePath="/"
-        />
+      />
     </WithSidebar>
   </Story>
 </Preview>

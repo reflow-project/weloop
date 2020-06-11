@@ -7,15 +7,10 @@ import { WrapperPanel } from 'ui/elements/Panel';
 import { LoadMore } from 'ui/modules/Loadmore';
 import { FormikHook } from 'ui/@types/types';
 
-import {
-  Wrapper,
-  WrapperCont,
-  ObjectsList,
-  MainContainer,
-  HomeBox
-} from 'ui/elements/Layout';
+import { Wrapper, WrapperCont, ObjectsList, MainContainer, HomeBox } from 'ui/elements/Layout';
 import SocialText from 'ui/modules/SocialText';
-import { i18nMark, Trans } from '@lingui/react';
+import { i18nMark } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import { LocaleContext } from '../../../context/global/localizationCtx';
 
 const tt = {
@@ -82,11 +77,7 @@ export const Thread: React.FC<Props> = ({
         <TitleSection mb={2} variant="suptitle">
           <Trans>Community</Trans>
         </TitleSection>
-        <HeaderWrapper
-          id={communityId}
-          name={communityName}
-          icon={communityIcon}
-        />
+        <HeaderWrapper id={communityId} name={communityName} icon={communityIcon} />
       </WrapperPanel>
     </MainContainer>
   );

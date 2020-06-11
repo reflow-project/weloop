@@ -60,9 +60,7 @@ export const Community: React.FC<Props> = ({
           <Flex>
             <Box flex={1}>
               <Title variant="heading" fontSize={3}>
-                {name.length > 60
-                  ? name.replace(/^(.{56}[^\s]*).*/, '$1...')
-                  : name}
+                {name.length > 60 ? name.replace(/^(.{56}[^\s]*).*/, '$1...') : name}
               </Title>
               <Username>{displayUsername}</Username>
             </Box>
@@ -129,7 +127,7 @@ const Actions = styled(Box)`
 `;
 
 const MetaWrapper = styled(Flex)`
-  svg  {
+  svg {
     margin: 0;
   }
 `;

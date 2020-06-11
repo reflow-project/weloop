@@ -126,7 +126,7 @@ export const User: React.FC<Props> = ({
               <NavItem fontSize={1}>
                 <Flex>
                   <Link size={20} />{' '}
-                  <a href={userLink} target="_blank">
+                  <a href={userLink} target="_blank" rel="noopener noreferrer">
                     <TextLink ml={2} flex={1}>
                       {userLink}
                     </TextLink>

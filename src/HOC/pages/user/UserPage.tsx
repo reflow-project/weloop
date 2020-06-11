@@ -76,7 +76,7 @@ export const UserPage: FC<UserPage> = ({ userId, basePath }) => {
             ActivityVerb.Created
           );
           const preview =
-            like.context.__typename == 'Comment' ? (
+            like.context.__typename === 'Comment' ? (
               <LikedCommentPreviewHOC
                 key={like.id}
                 commentId={like.context.id}
@@ -181,13 +181,19 @@ export const UserPage: FC<UserPage> = ({ userId, basePath }) => {
     };
     return props;
   }, [
-    activitiesPage,
-    basePath,
     user,
-    followedCollectionsPage,
-    followedCommunitiesPage,
-    followedUsersPage,
-    likesPage
+    likesPage,
+    activitiesPage.edges,
+    followedCollectionsPage.edges,
+    followedCommunitiesPage.edges,
+    followedUsersPage.edges,
+    userId,
+    basePath,
+    loadMoreActivities,
+    loadMoreCollections,
+    loadMoreCommunities,
+    loadMoreFollowing,
+    loadMoreLikes
   ]);
   return <UserPageUI {...userPageProps} />;
 };

@@ -62,14 +62,14 @@ export const UploadResource: React.FC<Props> = ({
   // console.log(formik.values.resourceFiles);
   // {formik.values.resourceFiles![0] !== undefined ? console.log('re %',formik.values.resourceFiles![0].type) : null}
   const onResourceFileSelect = React.useCallback(
-    (file: File) => formik.setFieldValue('resource', file, true),
-    []
+    (file: File) => formik.setValues({ ...formik.values, resource: file }),
+    [formik]
   );
   const initialResourceUrl =
     'string' === typeof formik.values.resource ? formik.values.resource : '';
   const onIconFileSelect = React.useCallback(
-    (file: File) => formik.setFieldValue('icon', file, true),
-    []
+    (file: File) => formik.setValues({ ...formik.values, icon: file }),
+    [formik]
   );
   const initialIconUrl =
     'string' === typeof formik.values.icon ? formik.values.icon : '';

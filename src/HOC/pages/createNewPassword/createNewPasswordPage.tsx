@@ -1,8 +1,6 @@
 import { useFormik } from 'formik';
 import React, { FC } from 'react';
-import CreateNewPassword, {
-  NewPasswordFormValues
-} from 'ui/pages/createNewPassword';
+import CreateNewPassword, { NewPasswordFormValues } from 'ui/pages/createNewPassword';
 import * as Yup from 'yup';
 
 export const validationSchema: Yup.ObjectSchema<NewPasswordFormValues> = Yup.object<
@@ -16,7 +14,7 @@ export const validationSchema: Yup.ObjectSchema<NewPasswordFormValues> = Yup.obj
     .required()
 });
 export interface Props {}
-export const CreateNewPasswordPageHOC: FC<Props> = ({}: Props) => {
+export const CreateNewPasswordPageHOC: FC<Props> = () => {
   const formik = useFormik<NewPasswordFormValues>({
     initialValues: {
       password: '',

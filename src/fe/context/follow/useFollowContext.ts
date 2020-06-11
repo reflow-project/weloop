@@ -9,6 +9,7 @@ import Maybe from 'graphql/tsutils/Maybe';
 import { Collection, Community, User } from 'graphql/types.generated';
 import { useCallOrNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
 import { useMemo } from 'react';
+import { SIDEBAR_MY_JOINED_LIST_LIMIT } from 'fe/community/myFollowed/myFollowedCommunities';
 
 type Context = Collection | Community | User; //| Thread;
 
@@ -49,12 +50,16 @@ export const useFollowContext = (ctx: UseFollowContext) => {
         refetchQueries:
           __typename === 'Community'
             ? [
-                MyCommunityFollowsQueryRefetch({}),
+                MyCommunityFollowsQueryRefetch({
+                  limit: SIDEBAR_MY_JOINED_LIST_LIMIT
+                }),
                 CommunityFollowersQueryRefetch({ communityId: id })
               ]
             : __typename === 'Collection'
             ? [
-                MyCollectionFollowsQueryRefetch({}),
+                MyCollectionFollowsQueryRefetch({
+                  limit: SIDEBAR_MY_JOINED_LIST_LIMIT
+                }),
                 CollectionFollowersQueryRefetch({ collectionId: id })
               ]
             : []

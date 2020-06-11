@@ -1,9 +1,9 @@
 import React from 'react';
 import { Box, Text } from 'rebass/styled-components';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 export interface Props {}
-const ModerationLog: React.FC<Props> = ({}) => {
+const ModerationLog: React.FC<Props> = () => {
   return (
     <Box>
       <Text px={3} mt={2} variant="heading">

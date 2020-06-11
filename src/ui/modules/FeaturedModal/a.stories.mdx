@@ -1,20 +1,21 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
-import { PropsTable } from '@storybook/components';
-import {getFeaturedModalProps} from 'ui/mock/featureModal'
-import { FeaturedModal } from '.';
-import { action } from '@storybook/addon-actions';
-import {Box} from 'rebass'
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { useGetFeaturedModalProps } from 'ui/mock/featureModal'
+import { FeaturedModal } from '.'
+import { action } from '@storybook/addon-actions'
+import { Box } from 'rebass'
 import Modal from 'ui/modules/Modal'
 
-<Meta title="Modules|Featured Modal" component={FeaturedModal}/>
+<Meta title="Modules|Featured Modal" component={FeaturedModal} />
 
 # FeaturedModal
+
 Let's define a story for the `Featured Modal preview` module
 
 <Preview>
   <Story name="Featured Modal module">
     <Modal closeModal={action('close modal')}>
-      <FeaturedModal {...getFeaturedModalProps()}/>
+      <FeaturedModal {...useGetFeaturedModalProps()} />
     </Modal>
   </Story>
 </Preview>

@@ -5,7 +5,7 @@ import {
 import { useFormik } from 'formik';
 import { action } from '@storybook/addon-actions';
 
-export const getNewPasswordProps = (): NewPasswordProps => {
+export const useGetNewPasswordProps = (): NewPasswordProps => {
   const formik = useFormik<NewPasswordFormValues>({
     initialValues: {
       password: '',

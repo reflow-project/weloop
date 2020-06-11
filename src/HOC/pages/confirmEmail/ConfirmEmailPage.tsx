@@ -14,10 +14,12 @@ export const ConfirmEmailPage: FC<ConfirmEmailPage> = ({ token }) => {
     if (welcomeUsername) {
       setTimeout(() => push('/'), 2000);
     }
-  }, [welcomeUsername]);
+  }, [welcomeUsername, push]);
+
   useEffect(() => {
     confirmEmail(token);
-  }, [token]);
+  }, [token, confirmEmail]);
+
   const props = useMemo<Props>(
     () =>
       confirmEmailStatus.loading

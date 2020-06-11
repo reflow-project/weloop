@@ -1,10 +1,4 @@
-import useAxios from 'axios-hooks';
 import Markdown from 'markdown-to-jsx';
-import {
-  terms_markdown_text,
-  terms_markdown_urls,
-  terms_privacy
-} from 'mn-constants';
 import * as React from 'react';
 import { Eye } from 'react-feather';
 import { Box, Flex, Text } from 'rebass/styled-components';
@@ -13,33 +7,29 @@ import { Panel } from 'ui/elements/Panel';
 import styled from '../../themes/styled';
 import LogoContainer from 'ui/elements/Logo';
 
-export interface Props {}
+export interface Props {
+  terms_users_data: string;
+  terms_users_text_data: string;
+  terms_privacy_enabled: boolean;
+  privacy_url_text_data: string;
+  terms_privacy_text_data: string;
+  terms_cookies_data: string;
+  terms_cookies_text_data: string;
+  terms_indexing_data: string;
+  terms_indexing_text_data: string;
+}
 
-const TermsAndConditionsPage: React.FC<Props> = ({}) => {
-  var terms_users_text = { data: terms_markdown_text.terms_users };
-  var terms_privacy_text = { data: terms_privacy.text_markdown };
-  var terms_cookies_text = { data: terms_markdown_text.terms_cookies };
-  var terms_indexing_text = { data: terms_markdown_text.terms_indexing };
-
-  if (terms_markdown_urls.enabled) {
-    var [terms_users] = useAxios(terms_markdown_urls.terms_users, {
-      useCache: true
-    });
-
-    var [terms_cookies] = useAxios(terms_markdown_urls.terms_cookies, {
-      useCache: true
-    });
-    var [terms_indexing] = useAxios(terms_markdown_urls.terms_indexing, {
-      useCache: true
-    });
-  }
-
-  if (terms_privacy.enabled) {
-    var [privacy_url_text] = useAxios(terms_privacy.url_markdown, {
-      useCache: true
-    });
-  }
-
+const TermsAndConditionsPage: React.FC<Props> = ({
+  terms_users_text_data,
+  terms_cookies_text_data,
+  terms_indexing_text_data,
+  terms_users_data,
+  terms_privacy_enabled,
+  privacy_url_text_data,
+  terms_privacy_text_data,
+  terms_cookies_data,
+  terms_indexing_data
+}) => {
   return (
     <Container>
       <LoginWrapper>
@@ -58,23 +48,23 @@ const TermsAndConditionsPage: React.FC<Props> = ({}) => {
             </Aware>
             <Panel className="extra">
               <Box p={3}>
-                <Markdown>{terms_users.data || terms_users_text.data}</Markdown>
+                <Markdown>{terms_users_data || terms_users_text_data}</Markdown>
               </Box>
               <Box p={3}>
-                {terms_privacy.enabled ? (
+                {terms_privacy_enabled ? (
                   <Markdown>
-                    {privacy_url_text.data || terms_privacy_text.data}
+                    {privacy_url_text_data || terms_privacy_text_data}
                   </Markdown>
                 ) : null}
               </Box>
               <Box p={3}>
                 <Markdown>
-                  {terms_cookies.data || terms_cookies_text.data}
+                  {terms_cookies_data || terms_cookies_text_data}
                 </Markdown>
               </Box>
               <Box p={3}>
                 <Markdown>
-                  {terms_indexing.data || terms_indexing_text.data}
+                  {terms_indexing_data || terms_indexing_text_data}
                 </Markdown>
               </Box>
             </Panel>

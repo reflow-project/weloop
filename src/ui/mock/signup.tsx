@@ -2,7 +2,7 @@ import { Props as SignUpProps, SignUpFormValues } from 'ui/pages/signUp';
 import { useFormik } from 'formik';
 import { action } from '@storybook/addon-actions';
 
-export const getSignUpProps = (): SignUpProps => {
+export const useGetSignUpProps = (): SignUpProps => {
   const formik = useFormik<SignUpFormValues>({
     initialValues: {
       email: 'mary@moodlers.org',

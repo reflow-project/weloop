@@ -1,65 +1,100 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
-import { PropsTable } from '@storybook/components';
-import { Discover } from '.';
-import {WithSidebar} from 'ui/templates/withSidebar'
-import {MainHeader} from 'ui/modules/MainHeader'
-import {Sidebar} from 'ui/modules/Sidebar'
-import { ToggleFormik } from 'ui/mock/formik';
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { Discover } from '.'
+import { WithSidebar } from 'ui/templates/withSidebar'
+import { MainHeader } from 'ui/modules/MainHeader'
+import { Sidebar } from 'ui/modules/Sidebar'
+import { useToggleFormik } from 'ui/mock/formik'
 
-import {CommunityPreviewProps} from 'ui/mock/previews'
-import {ActivityPreview} from 'ui/modules/ActivityPreview'
-import {activityPreviewProps} from 'ui/mock/activityPreview'
-import {ResourcePreviewProps, CollectionPreviewProps, ThreadPreviewProps, CommentPreviewProps, LikedCommentPreviewProps } from 'ui/mock/previews'
-import {getSidebarProps} from 'ui/mock/sidebar'
+import { CommunityPreviewProps } from 'ui/mock/previews'
+import { ActivityPreview } from 'ui/modules/ActivityPreview'
+import { activityPreviewProps } from 'ui/mock/activityPreview'
+import {
+  ResourcePreviewProps,
+  CollectionPreviewProps,
+  ThreadPreviewProps,
+  CommentPreviewProps,
+  LikedCommentPreviewProps,
+} from 'ui/mock/previews'
+import { useGetSidebarProps } from 'ui/mock/sidebar'
 
-import {getMainHeaderProps} from 'ui/mock/mainHeader'
-import {Resource} from 'ui/modules/Previews/Resource'
-import {Collection} from 'ui/modules/Previews/Collection'
-import {Community} from 'ui/modules/Previews/Community';
-import {Comment} from 'ui/modules/Previews/Comment'
-import {Thread} from 'ui/modules/Previews/Thread'
-import {LikedComment} from 'ui/modules/Previews/LikedComment'
-import {getLoadMoreProps} from 'ui/mock/loadmore'
+import { getMainHeaderProps } from 'ui/mock/mainHeader'
+import { Resource } from 'ui/modules/Previews/Resource'
+import { Collection } from 'ui/modules/Previews/Collection'
+import { Community } from 'ui/modules/Previews/Community'
+import { Comment } from 'ui/modules/Previews/Comment'
+import { Thread } from 'ui/modules/Previews/Thread'
+import { LikedComment } from 'ui/modules/Previews/LikedComment'
+import { useGetLoadMoreProps } from 'ui/mock/loadmore'
 
-import {FeaturedCommunities} from 'ui/modules/FeaturedCommunities'
-import {FeaturedCollections} from 'ui/modules/FeaturedCollections'
-import {getFeaturedCommunitiesProps} from 'ui/mock/featuredCommunities'
-import {getFeaturedCollectionsProps} from 'ui/mock/featuredCollections'
-const Head = () => <MainHeader {...getMainHeaderProps() } />
-const Side = () => <Sidebar {...getSidebarProps()}/>
+import { FeaturedCommunities } from 'ui/modules/FeaturedCommunities'
+import { FeaturedCollections } from 'ui/modules/FeaturedCollections'
+import { getFeaturedCommunitiesProps } from 'ui/mock/featuredCommunities'
+import { useGetFeaturedCollectionsProps } from 'ui/mock/featuredCollections'
+import { ComponentBag } from 'ui/lib/componentBag'
 
-<Meta title="Pages|Discover" component={Discover}/>
-
+<Meta title="Pages|Discover" component={Discover} />
 
 # Discover
+
 The `Discover` page displays featured communities, featured collections, and the timeline of the local instance. It is made up of the following:
+
 - **[Story](#story)**
 - **[Building blocks](#modules)**
 - **[Props](#props)**
-
 
 <div id="story">Story</div>
 
 <Preview>
   <Story name="Discover page">
-    <WithSidebar 
-      HeaderBox={Head}
-      SidebarBox={Side}>
-        <Discover 
-        basePath={"/"}
-        LoadMoreFormik={getLoadMoreProps()}
-        FeaturedCommunitiesBox={<FeaturedCommunities {...getFeaturedCommunitiesProps(true)} />}
-        FeaturedCollectionsBox={<FeaturedCollections {...getFeaturedCollectionsProps(true)} />}
-        ActivitiesBox={<React.Fragment>
-          <ActivityPreview {...activityPreviewProps('Added a link', <Resource {...ResourcePreviewProps() }/>)} />
-          <ActivityPreview {...activityPreviewProps('Uploaded a resource', <Resource {...ResourcePreviewProps('license', 'pdf' ) }/>)} />
-          <ActivityPreview {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps() }/>)} />
-          <ActivityPreview {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps() }/>)} />
-          <ActivityPreview {...activityPreviewProps('Like a comment', <LikedComment {...LikedCommentPreviewProps() }/>)} />
-          <ActivityPreview {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps() }/>)} />
-          <ActivityPreview {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps() }/>)} />
-        </React.Fragment>}
-        CommunitiesBoxes={<React.Fragment>
+    <WithSidebar
+      HeaderBox={ComponentBag(MainHeader, { ...getMainHeaderProps() })}
+      SidebarBox={ComponentBag(Sidebar, { ...useGetSidebarProps() })}
+    >
+      <Discover
+        basePath={'/'}
+        LoadMoreFormik={useGetLoadMoreProps()}
+        FeaturedCommunitiesBox={ComponentBag(
+          FeaturedCommunities,
+          getFeaturedCommunitiesProps(true)
+        )}
+        FeaturedCollectionsBox={ComponentBag(
+          FeaturedCollections,
+          useGetFeaturedCollectionsProps(true)
+        )}
+        ActivitiesBox={
+          <React.Fragment>
+            <ActivityPreview
+              {...activityPreviewProps('Added a link', <Resource {...ResourcePreviewProps()} />)}
+            />
+            <ActivityPreview
+              {...activityPreviewProps(
+                'Uploaded a resource',
+                <Resource {...ResourcePreviewProps('license', 'pdf')} />
+              )}
+            />
+            <ActivityPreview
+              {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps()} />)}
+            />
+            <ActivityPreview
+              {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps()} />)}
+            />
+            <ActivityPreview
+              {...activityPreviewProps(
+                'Like a comment',
+                <LikedComment {...LikedCommentPreviewProps()} />
+              )}
+            />
+            <ActivityPreview
+              {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps()} />)}
+            />
+            <ActivityPreview
+              {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps()} />)}
+            />
+          </React.Fragment>
+        }
+        CommunitiesBoxes={
+          <React.Fragment>
             <Community {...CommunityPreviewProps()} />
             <Community {...CommunityPreviewProps()} />
             <Community {...CommunityPreviewProps()} />
@@ -67,13 +102,14 @@ The `Discover` page displays featured communities, featured collections, and the
             <Community {...CommunityPreviewProps()} />
             <Community {...CommunityPreviewProps()} />
             <Community {...CommunityPreviewProps()} />
-        </React.Fragment>}
+          </React.Fragment>
+        }
         CollectionsBoxes={[
-            (<Collection {...CollectionPreviewProps()} />),
-            (<Collection {...CollectionPreviewProps()} />),
-            (<Collection {...CollectionPreviewProps()} />),
-          ]}
-        />
+          <Collection {...CollectionPreviewProps()} />,
+          <Collection {...CollectionPreviewProps()} />,
+          <Collection {...CollectionPreviewProps()} />,
+        ]}
+      />
     </WithSidebar>
   </Story>
 </Preview>

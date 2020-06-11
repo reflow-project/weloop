@@ -5,7 +5,7 @@ import {
 import { useFormik } from 'formik';
 import { action } from '@storybook/addon-actions';
 
-export const getEditResourceModalProps = (): EditResourceProps => {
+export const useGetEditResourceModalProps = (): EditResourceProps => {
   const formik = useFormik<EditResourceFormValues>({
     initialValues: {
       image:

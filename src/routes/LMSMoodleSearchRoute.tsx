@@ -11,10 +11,11 @@ const LMSMoodleSearchRouter: FC<RouteComponentProps<LMSMoodleSearchRouter>> = ({
   match
 }) => {
   const { updateLMSPrefs, loading } = useLMSPrefs();
-  const { current: params } = useRef(getUrlParamsFromEntryPointForMoodleLMS());
+  const paramsRef = useRef(getUrlParamsFromEntryPointForMoodleLMS());
   const done = useRef(false);
   const [props, setProps] = useState<LMSMoodleSearch>();
   useEffect(() => {
+    const { current: params } = paramsRef;
     if (done.current || loading) {
       return;
     } else if (!params) {

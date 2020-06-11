@@ -16,7 +16,7 @@ export const useUser = (userId: User['id']) => {
     const totalCommunities = user?.communityFollows?.totalCount;
     const totalUsers = user?.userFollows?.totalCount;
     const totalActivities = user?.outbox?.totalCount;
-    const isMe = !!(me && user && me.user.id == user.id);
+    const isMe = !!(me && user && me.user.id === user.id);
 
     return {
       isMe,
@@ -28,5 +28,5 @@ export const useUser = (userId: User['id']) => {
       totalUsers,
       totalActivities
     };
-  }, [me, userQ, toggleFollow]);
+  }, [me, userQ, toggleFollow, isAdmin]);
 };

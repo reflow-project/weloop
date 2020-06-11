@@ -43,7 +43,7 @@ export const collectionHit2lms = (
   if (!(collection && community)) {
     return null;
   }
-  const { preferredUsername, canonicalUrl, icon, summary } = collection;
+  const { preferredUsername, canonicalUrl, icon, summary, name } = collection;
   return {
     canonicalUrl: canonicalUrl || '',
     icon,

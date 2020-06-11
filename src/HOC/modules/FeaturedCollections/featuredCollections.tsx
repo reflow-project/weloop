@@ -40,7 +40,7 @@ export const FeaturedCollections: FC<FeaturedCollections> = () => {
         <FeatureModalHOC ctx={collection} done={done} featureId={featureId} />
       );
     },
-    [featuredCollections]
+    [featuredCollectionsPage.edges]
   );
 
   const propsUI = useMemo<FeaturedCollectionsData>(() => {

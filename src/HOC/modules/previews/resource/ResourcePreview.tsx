@@ -40,7 +40,7 @@ export const ResourcePreviewHOC: FC<Props> = ({ resourceId, flagged }) => {
       MoodlePanel: LMSPrefsPanel,
       hideActions
     });
-  }, [resource, toggleLikeFormik, /* sendToMoodle, */ LMSPrefsPanel]);
+  }, [resource, toggleLikeFormik, flagged, LMSPrefsPanel]);
 
   return (
     resourcePreviewProps && <ResourcePreviewUI {...resourcePreviewProps} />

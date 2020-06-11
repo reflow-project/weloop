@@ -74,7 +74,10 @@ const ActionItem = styled(Flex)`
 export interface FeaturedCommunitiesData {
   isAdmin: boolean;
   featuredCommunities: CommunityBase[];
-  FeaturedModal?: ComponentType<{ community: CommunityBase; done(): any }>;
+  FeaturedModal: ComponentType<{
+    community: CommunityBase;
+    done(): any;
+  }> | null;
 }
 
 export const FeaturedCommunities: SFC<FeaturedCommunitiesData> = props => {
@@ -141,7 +144,7 @@ export const FeaturedCommunities: SFC<FeaturedCommunitiesData> = props => {
           ))}
         </Slider>
       </Box>
-      {selectedCommunityForModal && props.FeaturedModal != null && (
+      {selectedCommunityForModal && props.FeaturedModal !== null && (
         <Modal closeModal={() => setSelectedCommunityForModal(null)}>
           <props.FeaturedModal
             community={selectedCommunityForModal}

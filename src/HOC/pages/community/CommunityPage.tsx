@@ -127,7 +127,19 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath }) => {
       loadMoreThreads
     };
     return props;
-  }, [community, newThreadFormik, basePath, communityFollowersPage]);
+  }, [
+    community,
+    newThreadFormik,
+    basePath,
+    communityFollowersPage,
+    activitiesPage.edges,
+    collectionsPage.edges,
+    communityId,
+    loadMoreActivities,
+    loadMoreCollections,
+    loadMoreThreads,
+    threadsPage.edges
+  ]);
 
   return communityPageProps && <CommunityPageUI {...communityPageProps} />;
 };

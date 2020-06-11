@@ -1,20 +1,20 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
-import { PropsTable } from '@storybook/components';
-import {getCreateCommunityModalProps} from 'ui/mock/createCommunityModal'
-import { CreateCommunityPanel } from 'ui/modules/CreateCommunityPanel';
-import { action } from '@storybook/addon-actions';
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { useGetCreateCommunityModalProps } from 'ui/mock/createCommunityModal'
+import { CreateCommunityPanel } from 'ui/modules/CreateCommunityPanel'
+import { action } from '@storybook/addon-actions'
 import Modal from 'ui/modules/Modal'
 
-<Meta title="Modules|Create a community" component={CreateCommunityPanel}/>
+<Meta title="Modules|Create a community" component={CreateCommunityPanel} />
 
 # CreateCommunityPanel
+
 Let's define a story for the `CreateCommunityPanel preview` module
 
 <Preview>
   <Story name="Create a Community">
     <Modal closeModal={action('close modal')}>
-      <CreateCommunityPanel {...getCreateCommunityModalProps()} />
+      <CreateCommunityPanel {...useGetCreateCommunityModalProps()} />
     </Modal>
-  </Story>  
+  </Story>
 </Preview>
-

@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import { DateTime } from 'luxon';
 import { clearFix } from 'polished';
 import React, { FC } from 'react';

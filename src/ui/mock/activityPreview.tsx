@@ -1,12 +1,13 @@
+import React from 'react';
 import { useFormik } from 'formik';
 import { action } from '@storybook/addon-actions';
 import { FlagModal } from 'ui/modules/FlagModal';
 import { Props, Status } from 'ui/modules/ActivityPreview';
 import { getActor } from './actor';
 
-export const getActions = () => ({
+export const useGetActions = () => ({
   FlagModal: () => {
-    const flagFormik = useFormik<{ reason: '' }>({
+    const flagFormik = useFormik<{ reason: string }>({
       initialValues: {
         reason: ''
       },
