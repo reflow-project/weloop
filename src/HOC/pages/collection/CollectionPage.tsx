@@ -13,9 +13,11 @@ import { ShareLinkHOC } from 'HOC/modules/ShareLink/shareLinkHOC';
 import React, { FC, useMemo } from 'react';
 import { Box } from 'rebass';
 import CollectionPageUI, { Props as CollectionPageProps } from 'ui/pages/collection';
+import { usePageTitle } from 'context/global/pageCtx';
+import { t } from '@lingui/macro';
 
 export enum CollectionPageTab {
-  Activities,
+  // Activities,
   Resources,
   Followers
 }
@@ -24,10 +26,21 @@ export interface CollectionPage {
   tab: CollectionPageTab;
   basePath: string;
 }
+const collectionPageFollowersTitle = t`Collection {name} - Followers`;
+const collectionPageResourcesTitle = t`Collection {name} - Resources`;
 
 export const CollectionPage: FC<CollectionPage> = props => {
-  const { collectionId, basePath /*,tab */ } = props;
+  const { collectionId, basePath, tab } = props;
   const { collection, isCommunityMember } = useCollection(props.collectionId);
+  const collectionPageTitle =
+    tab === CollectionPageTab.Followers
+      ? collectionPageFollowersTitle
+      : CollectionPageTab.Resources
+      ? collectionPageResourcesTitle
+      : collectionPageResourcesTitle; //never;
+
+  usePageTitle(!!collection?.name && collectionPageTitle, collection);
+
   const { collectionFollowersPage } = useCollectionFollowers(props.collectionId);
   const [loadMoreFollowers] = collectionFollowersPage.formiks;
 

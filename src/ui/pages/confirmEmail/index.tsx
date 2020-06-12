@@ -1,11 +1,10 @@
-import * as React from 'react';
-import { Box, Text } from 'rebass/styled-components';
-import styled from 'ui/themes/styled';
-import { Link } from 'react-router-dom';
-import Button from 'ui/elements/Button';
 import { Trans } from '@lingui/macro';
+import * as React from 'react';
+import { Link } from 'react-router-dom';
+import { Box, Text } from 'rebass/styled-components';
+import Button from 'ui/elements/Button';
 import LogoContainer from 'ui/elements/Logo';
-import { Helmet } from 'react-helmet';
+import styled from 'ui/themes/styled';
 
 const LoginWrapper = styled.div`
   display: grid;
@@ -45,10 +44,6 @@ export interface Props {
 export const ConfirmEmail: React.FC<Props> = ({ result }) => {
   return (
     <>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>MoodleNet - Confirm Email</title>
-      </Helmet>
       <Container>
         <LoginWrapper>
           <FormWrapper>

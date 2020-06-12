@@ -1,14 +1,13 @@
-import * as React from 'react';
 import { Trans } from '@lingui/macro';
-import styled from 'ui/themes/styled';
-import { Input } from '@rebass/forms';
-import { FormikHook } from 'ui/@types/types';
-import Button from 'ui/elements/Button';
-import Alert from 'ui/elements/Alert';
-import { AlertWrapper } from 'ui/modules/Modal';
 import { i18nMark } from '@lingui/react';
+import { Input } from '@rebass/forms';
+import * as React from 'react';
+import { FormikHook } from 'ui/@types/types';
+import Alert from 'ui/elements/Alert';
+import Button from 'ui/elements/Button';
 import LogoContainer from 'ui/elements/Logo';
-import { Helmet } from 'react-helmet';
+import { AlertWrapper } from 'ui/modules/Modal';
+import styled from 'ui/themes/styled';
 
 export interface NewPasswordFormValues {
   password: string;
@@ -29,10 +28,6 @@ let tt = {
 export const CreateNewPassword: React.FC<Props> = ({ formik }) => {
   return (
     <>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>MoodleNet - Create a new password</title>
-      </Helmet>
       <Container>
         <LoginWrapper>
           <FormWrapper>

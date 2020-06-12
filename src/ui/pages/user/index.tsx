@@ -1,24 +1,23 @@
+import { ellipsis } from 'polished';
 import * as React from 'react';
+import { Link } from 'react-feather';
 import { NavLink, Route, Switch } from 'react-router-dom';
-import { Flex, Text, Box } from 'rebass/styled-components';
+import { Box, Flex, Text } from 'rebass/styled-components';
 // import { Header } from 'ui/modules/Header';
 import { FormikHook } from 'ui/@types/types';
-import { LoadMore } from 'ui/modules/Loadmore';
-import styled from 'ui/themes/styled';
-import { ellipsis } from 'polished';
 import {
-  Wrapper,
-  WrapperCont,
-  List,
-  ObjectsList,
-  MainContainer,
+  CollectionsWrapper,
   HomeBox,
+  List,
+  MainContainer,
   MenuList,
-  CollectionsWrapper
+  ObjectsList,
+  Wrapper,
+  WrapperCont
 } from 'ui/elements/Layout';
 import { Nav, NavItem, Panel, PanelTitle, WrapperPanel } from 'ui/elements/Panel';
-import { Link } from 'react-feather';
-import { Helmet } from 'react-helmet';
+import { LoadMore } from 'ui/modules/Loadmore';
+import styled from 'ui/themes/styled';
 
 export interface Props {
   ActivityBoxes: JSX.Element;
@@ -62,10 +61,6 @@ export const User: React.FC<Props> = ({
 }) => {
   return (
     <MainContainer>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>MoodleNet - User</title>
-      </Helmet>
       <HomeBox>
         <WrapperCont>
           <Wrapper>

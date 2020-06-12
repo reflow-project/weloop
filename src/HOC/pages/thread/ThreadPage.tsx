@@ -14,32 +14,36 @@ import { useThreadComments } from 'fe/comment/thread/useThreadComments';
 import { PreviewIndex } from 'HOC/modules/previews';
 import { useFormik } from 'formik';
 import { Box } from 'rebass';
+import { usePageTitle } from 'context/global/pageCtx';
+import { t } from '@lingui/macro';
+import { getActivityMainContext } from 'fe/lib/activity/getActivityMainContext';
 
 export interface ThreadPage {
   threadId: Thread['id'];
 }
+const threadPageTitle = t`Discussion: {excerpt}`;
+
 export const ThreadPage: FC<ThreadPage> = ({ threadId }) => {
   const { commentPage } = useThreadComments(threadId);
   const [loadMoreComments] = commentPage.formiks;
   const thread = useThreadPreview(threadId);
-
+  const titleValues = thread.mainComment && {
+    excerpt: `${thread.mainComment.content.substring(0, 30)} ...`
+  };
+  usePageTitle(!!titleValues && threadPageTitle, titleValues);
   const replyFormik = useFormik<{ replyMessage: string }>({
     initialValues: { replyMessage: '' },
     onSubmit: ({ replyMessage }) => thread.reply(replyMessage)
   });
 
   const uiProps = useMemo<null | Props>(() => {
-    const { context, mainComment } = thread;
+    const { context: threadContext, mainComment } = thread;
+    const context = getActivityMainContext(threadContext);
     if (!(mainComment && context)) {
       return null;
     }
-    const actorContext = context.__typename === 'Flag' ? null : context;
 
-    const {
-      communityName,
-      communityId,
-      communityIcon
-    } = getCommunityInfoStrings(actorContext);
+    const { communityName, communityId, communityIcon } = getCommunityInfoStrings(context);
 
     const activityProps: Pick<
       ActivityPreviewProps,
@@ -55,12 +59,8 @@ export const ThreadPage: FC<ThreadPage> = ({ threadId }) => {
       <ActivityPreview
         {...{
           ...activityProps,
-          actor: mainComment.creator
-            ? getActivityActor(mainComment.creator)
-            : null,
-          preview: (
-            <CommentPreviewHOC commentId={mainComment.id} mainComment={true} />
-          ),
+          actor: mainComment.creator ? getActivityActor(mainComment.creator) : null,
+          preview: <CommentPreviewHOC commentId={mainComment.id} mainComment={true} />,
           createdAt: mainComment.createdAt
         }}
       />
@@ -95,7 +95,11 @@ export const ThreadPage: FC<ThreadPage> = ({ threadId }) => {
       </>
     );
 
-    const Context = <PreviewIndex ctx={thread.context} />;
+    const Context = (
+      <PreviewIndex
+        ctx={context.__typename === 'User' ? { ...context, id: context.userId } : context}
+      />
+    );
     const props: Props = {
       Comments,
       Context,

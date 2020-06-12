@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
 import { LMSPrefs } from 'fe/lib/moodleLMS/LMSintegration';
+import { t } from '@lingui/macro';
+import { usePageTitle } from 'context/global/pageCtx';
 
 export type LMSMoodleSearch =
   | {
@@ -10,7 +12,11 @@ export type LMSMoodleSearch =
       badParams: true;
     };
 
+const moodleLMSEntryPageTitle = t`Moodle LMS`;
+
 export const LMSMoodleSearch: FC<LMSMoodleSearch> = props => {
+  usePageTitle(moodleLMSEntryPageTitle);
+
   if (props.badParams) {
     return (
       <div>

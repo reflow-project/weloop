@@ -6,11 +6,7 @@ import {
   useSearchUnfollowMutation
 } from 'fe/search/SearchData.generated';
 import { useFormik } from 'formik';
-import {
-  collectionHit2gql,
-  communityHit2gql,
-  resourceHit2gql
-} from 'HOC/lib/LMSMappings/hit2GQL';
+import { collectionHit2gql, communityHit2gql, resourceHit2gql } from 'HOC/lib/LMSMappings/hit2GQL';
 import { collectionFragment2UIProps } from 'HOC/modules/previews/collection/CollectionPreview';
 import { communityFragment2UIProps } from 'HOC/modules/previews/community/CommunityPreview';
 import { resourceFragment2UIProps } from 'HOC/modules/previews/resource/ResourcePreview';
@@ -30,6 +26,7 @@ import { useLMSGQL } from 'fe/lib/moodleLMS/useSendToMoodle';
 import { useInstanceInfoQuery } from 'fe/instance/info/useInstanceInfo.generated';
 
 const _SearchPageHOC: React.FC<{ hits: Hit[] }> = ({ hits }) => {
+  // console.log(hits);
   const previews = React.useMemo(
     () =>
       hits
@@ -84,10 +81,7 @@ const CollectionPreviewHit: React.FC<{ hit: CollectionHit }> = ({ hit }) => {
 const CommunityPreviewHit: React.FC<{ hit: CommunityHit }> = ({ hit }) => {
   const isLocal = useIsLocal(hit);
   const previewFragment = communityHit2gql(hit, isLocal);
-  const {
-    toggleFollowFormik: toggleJoinFormik,
-    hitSearchFollow
-  } = useFollowHitHelper(hit);
+  const { toggleFollowFormik: toggleJoinFormik, hitSearchFollow } = useFollowHitHelper(hit);
   const props =
     previewFragment &&
     communityFragment2UIProps({
@@ -155,8 +149,7 @@ const useFollowHitHelper = (hit: Hit) => {
 
   const canFollow = !hitSearchFollow?.followId;
   const canUnfollow =
-    hitSearchFollow?.followId &&
-    !(hitSearchFollow.communityId && hitSearchFollow.isCreator);
+    hitSearchFollow?.followId && !(hitSearchFollow.communityId && hitSearchFollow.isCreator);
 
   const toggleFollowFormik = useFormik({
     initialValues: {},

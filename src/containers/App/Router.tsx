@@ -15,9 +15,9 @@ import { SettingsPageRoute } from 'routes/SettingsPageRoute';
 import { SignupPageRoute } from 'routes/SignupPageRoute';
 import { ThreadPageRoute } from 'routes/ThreadPageRoute';
 import { UserPageRoute } from 'routes/UserPageRoute';
-import { NotFound } from 'ui/pages/notFound';
 import { LMSMoodleSearchRoute } from 'routes/LMSMoodleSearchRoute';
 import { TermsAndConditionsPageRoute } from 'routes/TermsAndConditionsPage';
+import { NotFoundHOC } from 'HOC/pages/not-found/NotFound';
 export const Router: React.FC = () => {
   return (
     <Switch>
@@ -38,7 +38,7 @@ export const Router: React.FC = () => {
       <Route {...TermsAndConditionsPageRoute} />
       <Route {...LMSMoodleSearchRoute} />
       <Route {...HomePageRoute} />
-      <Route component={NotFound} />
+      <Route component={NotFoundHOC} />
     </Switch>
   );
 };

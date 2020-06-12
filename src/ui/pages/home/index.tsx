@@ -1,30 +1,22 @@
 import { Trans } from '@lingui/macro';
 import * as React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import { LoadMore } from 'ui/modules/Loadmore';
-import { SidePanel } from 'ui/modules/SidePanel';
+import { Route, Switch } from 'react-router-dom';
+import { Box, Text } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
 import {
-  Wrapper,
-  WrapperCont,
+  HomeBox,
+  // MenuList
   List,
   // ObjectsList,
   MainContainer,
-  HomeBox
-  // MenuList
+  Wrapper,
+  WrapperCont
 } from 'ui/elements/Layout';
-import { Helmet } from 'react-helmet';
+import { LoadMore } from 'ui/modules/Loadmore';
+import { SidePanel } from 'ui/modules/SidePanel';
 import styled from 'ui/themes/styled';
-import { Box, Text } from 'rebass/styled-components';
-
-export enum HomePageTab {
-  Activities,
-  MyCommunities,
-  MyCollections
-}
 
 export interface Props {
-  // tab: HomePageTab;
   // nextCommunitiesFormik?: FormikHook;
   // nextCollectionsFormik?: FormikHook;
   nextInboxFormik: FormikHook | null;
@@ -45,10 +37,6 @@ export const Home: React.FC<Props> = ({
 Props) => {
   return (
     <MainContainer>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>MoodleNet - Home</title>
-      </Helmet>
       <HomeBox>
         <WrapperCont>
           <Wrapper>

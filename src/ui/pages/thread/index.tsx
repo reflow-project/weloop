@@ -10,9 +10,8 @@ import { FormikHook } from 'ui/@types/types';
 import { Wrapper, WrapperCont, ObjectsList, MainContainer, HomeBox } from 'ui/elements/Layout';
 import SocialText from 'ui/modules/SocialText';
 import { i18nMark } from '@lingui/react';
-import { Trans } from '@lingui/macro';
+import { Trans } from '@lingui/react';
 import { LocaleContext } from '../../../context/global/localizationCtx';
-import { Helmet } from 'react-helmet';
 
 const tt = {
   placeholders: {
@@ -50,10 +49,6 @@ export const Thread: React.FC<Props> = ({
   const { i18n } = React.useContext(LocaleContext);
   return (
     <MainContainer>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>MoodleNet - Discussion</title>
-      </Helmet>
       <HomeBox mb={3}>
         <WrapperCont>
           <Wrapper>

@@ -10,11 +10,12 @@ import { CollectionPreviewHOC } from 'HOC/modules/previews/collection/Collection
 import { useAllCollections } from 'fe/collection/all/useAllCollections';
 import { Box } from 'rebass';
 import { ComponentBag } from 'ui/lib/componentBag';
+import { t } from '@lingui/macro';
+import { usePageTitle } from 'context/global/pageCtx';
 
 export enum DiscoverPageTabs {
   Activities,
   Communities,
-
   Collections
 }
 
@@ -22,7 +23,22 @@ export interface DiscoverPage {
   tab: DiscoverPageTabs;
   basePath: string;
 }
+
+const discoverActivitiesPageTitle = t`Discover Activities`;
+const discoverCollectionsPageTitle = t`Discover Collections`;
+const discoverCommunitiesPageTitle = t`Discover Communities`;
+
 export const DiscoverPage: FC<DiscoverPage> = ({ basePath, tab }) => {
+  const discovberPageTitle =
+    tab === DiscoverPageTabs.Collections
+      ? discoverCollectionsPageTitle
+      : tab === DiscoverPageTabs.Communities
+      ? discoverCommunitiesPageTitle
+      : tab === DiscoverPageTabs.Activities
+      ? discoverActivitiesPageTitle
+      : discoverActivitiesPageTitle; //never
+  usePageTitle(discovberPageTitle);
+
   const { activitiesPage } = useInstanceOutboxActivities();
   const [activitiesPageNext /* , activitiesPagePrevious */] = activitiesPage.formiks;
 

@@ -15,6 +15,8 @@ import { Box } from 'rebass/styled-components';
 import { useHistory } from 'react-router-dom';
 import { useCommunityFollowers } from 'fe/user/followers/community/useCommunityFollowers';
 import { UserPreviewHOC } from 'HOC/modules/previews/user/UserPreview';
+import { t } from '@lingui/macro';
+import { usePageTitle } from 'context/global/pageCtx';
 
 export enum CommunityPageTab {
   Activities,
@@ -28,8 +30,26 @@ export interface CommunityPage {
   basePath: string;
 }
 
-export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath }) => {
+const communityActivitiesPageTitle = t`Community {name} - Activities`;
+const communityCollectionsPageTitle = t`Community {name} - Collections`;
+const communityDiscussionsPageTitle = t`Community {name} - Discussions`;
+const communityMembersPageTitle = t`Community {name} - Members`;
+
+export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab }) => {
   const { community, createThread } = useCommunity(communityId);
+
+  const communityPageTitle =
+    tab === CommunityPageTab.Members
+      ? communityMembersPageTitle
+      : tab === CommunityPageTab.Activities
+      ? communityActivitiesPageTitle
+      : tab === CommunityPageTab.Discussions
+      ? communityDiscussionsPageTitle
+      : tab === CommunityPageTab.Collections
+      ? communityCollectionsPageTitle
+      : communityCollectionsPageTitle; //never
+  usePageTitle(!!community?.name && communityPageTitle, community);
+
   const { communityFollowersPage } = useCommunityFollowers(communityId);
   const { threadsPage } = useCommunityThreads(communityId);
   const [loadMoreThreads] = threadsPage.formiks;
@@ -64,10 +84,7 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath }) => {
       <>
         {collectionsPage.edges.map(collection => (
           <Box key={collection.id}>
-            <CollectionPreviewHOC
-              collectionId={collection.id}
-              key={collection.id}
-            />
+            <CollectionPreviewHOC collectionId={collection.id} key={collection.id} />
           </Box>
         ))}
       </>
@@ -95,19 +112,15 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath }) => {
       <>
         {communityFollowersPage.edges.map(
           follow =>
-            follow.creator && (
-              <UserPreviewHOC key={follow.id} userId={follow.creator?.userId} />
-            )
+            follow.creator && <UserPreviewHOC key={follow.id} userId={follow.creator?.userId} />
         )}
       </>
     );
-    const HeroCommunityBox = (
-      <HeroCommunity communityId={communityId} basePath={basePath} />
-    );
+    const HeroCommunityBox = <HeroCommunity communityId={communityId} basePath={basePath} />;
 
-    const CreateCollectionPanel: CommunityProps['CreateCollectionPanel'] = ({
-      done
-    }) => <CreateCollectionPanelHOC done={done} communityId={communityId} />;
+    const CreateCollectionPanel: CommunityProps['CreateCollectionPanel'] = ({ done }) => (
+      <CreateCollectionPanelHOC done={done} communityId={communityId} />
+    );
 
     const myFollow = community.myFollow;
 
