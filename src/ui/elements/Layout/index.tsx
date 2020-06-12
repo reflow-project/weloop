@@ -28,8 +28,8 @@ export const HomeBox = styled(Flex)`
   padding: 0px;
   position: relative;
   z-index: 0;
-  ${media.lessThan('1005px')`
-  max-width: 100%;
+  ${media.lessThan('large')`
+    width: 100%;
   `};
 `;
 

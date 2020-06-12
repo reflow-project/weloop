@@ -19,12 +19,7 @@ interface CommunityProps {
   isEditing: boolean;
   remove(): unknown;
 }
-const CommunitySmall: React.FC<CommunityProps> = ({
-  community,
-  isAdmin,
-  isEditing,
-  remove
-}) => {
+const CommunitySmall: React.FC<CommunityProps> = ({ community, isAdmin, isEditing, remove }) => {
   return (
     <Wrapper py={1} mb={2} mr={3}>
       {isAdmin && isEditing ? (
@@ -37,14 +32,15 @@ const CommunitySmall: React.FC<CommunityProps> = ({
           style={{
             backgroundImage: `url("${community.icon || PlaceholderImg}")`
           }}
-        />
-        <Infos>
-          <Title fontSize={1} my={2} fontWeight={600}>
-            {community.name.length > 80
-              ? community.name.replace(/^(.{76}[^\s]*).*/, '$1...')
-              : community.name}
-          </Title>
-        </Infos>
+        >
+          <Infos>
+            <Title fontSize={1} my={2} fontWeight={600}>
+              {community.name.length > 80
+                ? community.name.replace(/^(.{76}[^\s]*).*/, '$1...')
+                : community.name}
+            </Title>
+          </Infos>
+        </Img>
       </Link>
     </Wrapper>
   );
@@ -65,6 +61,7 @@ const Wrapper = styled(Box)`
     width: 100%;
   }
 `;
+
 const Img = styled.div`
   //   width: 100%;
   height: auto;
@@ -72,13 +69,26 @@ const Img = styled.div`
   border-radius: 4px;
   background-size: cover;
   background-repeat: no-repeat;
+  position: relative;
 `;
-const Infos = styled.div``;
+const Infos = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  padding: 0 8px;
+  background: rgba(0, 0, 0, 0.8);
+`;
+
 const Title = styled(Text)`
-  color: ${props => props.theme.colors.dark};
+  color: rgba(250, 250, 250);
   ${ellipsis('170px')};
   font-size: 14px;
+  margin: 0;
+  line-height: 40px;
 `;
+
 const Remove = styled(Box)`
   position: absolute;
   right: -9px;

@@ -1,6 +1,6 @@
 import React, { FC, useMemo } from 'react';
 import { CommunityPageTab, CommunityPage } from 'HOC/pages/community/CommunityPage';
-import { NotFound } from 'ui/pages/notFound';
+import { NotFoundHOC } from 'HOC/pages/not-found/NotFound';
 import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { WithSidebarTemplate } from 'HOC/templates/WithSidebar/WithSidebar';
 
@@ -33,7 +33,7 @@ const CommunityPageRouter: FC<RouteComponentProps<CommunityPageRouter>> = ({ mat
   }, [tab, communityId]);
 
   if (props === null) {
-    return <NotFound />;
+    return <NotFoundHOC />;
   }
 
   return (

@@ -1,11 +1,10 @@
 import React, { FC, useMemo } from 'react';
-import CreateNewPassword, {
-  Props,
-  NewPasswordFormValues
-} from 'ui/pages/createNewPassword';
+import CreateNewPassword, { Props, NewPasswordFormValues } from 'ui/pages/createNewPassword';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useAnon } from 'fe/session/useAnon';
+import { t } from '@lingui/macro';
+import { usePageTitle } from 'context/global/pageCtx';
 
 const validationSchema = Yup.object().shape({
   password: Yup.string()
@@ -22,9 +21,10 @@ export interface CreateNewPasswordPageHOC {
   token: string;
 }
 
-export const CreateNewPasswordPageHOC: FC<CreateNewPasswordPageHOC> = ({
-  token
-}) => {
+const createNewPasswordPageTitle = t`reate new Password`;
+
+export const CreateNewPasswordPageHOC: FC<CreateNewPasswordPageHOC> = ({ token }) => {
+  usePageTitle(createNewPasswordPageTitle);
   const { resetPwd } = useAnon();
   const formik = useFormik<NewPasswordFormValues>({
     onSubmit: ({ password }) => resetPwd({ password, token }),

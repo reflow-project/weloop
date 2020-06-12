@@ -1,18 +1,13 @@
-import {
-  DiscoverPage,
-  DiscoverPageTabs
-} from 'HOC/pages/discover/DiscoverPage';
+import { DiscoverPage, DiscoverPageTabs } from 'HOC/pages/discover/DiscoverPage';
 import React, { FC, useMemo } from 'react';
 import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { WithSidebarTemplate } from 'HOC/templates/WithSidebar/WithSidebar';
-import { NotFound } from 'ui/pages/notFound';
+import { NotFoundHOC } from 'HOC/pages/not-found/NotFound';
 
 interface DiscoverPageRouter {
   tab?: string;
 }
-const DiscoverPageRouter: FC<RouteComponentProps<DiscoverPageRouter>> = ({
-  match
-}) => {
+const DiscoverPageRouter: FC<RouteComponentProps<DiscoverPageRouter>> = ({ match }) => {
   const maybeTabStr = match.params.tab;
   const tab =
     maybeTabStr === 'collections'
@@ -31,7 +26,7 @@ const DiscoverPageRouter: FC<RouteComponentProps<DiscoverPageRouter>> = ({
         };
   }, [tab]);
   if (!props) {
-    return <NotFound />;
+    return <NotFoundHOC />;
   }
 
   return (

@@ -1,20 +1,19 @@
 import { Trans } from '@lingui/macro';
 import { i18nMark } from '@lingui/react';
-import * as React from 'react';
-import media from 'styled-media-query';
-import { FormikHook } from 'ui/@types/types';
-import { Link } from 'react-router-dom';
-import styled from 'ui/themes/styled';
-import { Box, Text } from 'rebass/styled-components';
-import Button from 'ui/elements/Button';
 import { Input } from '@rebass/forms';
-import { Panel, WrapperPanel } from 'ui/elements/Panel';
-import LogoContainer from 'ui/elements/Logo';
-import { Helmet } from 'react-helmet';
+import { LocaleContext } from 'context/global/localizationCtx';
 // import {Form} from 'formik'
 // const MnetLogin = require('static/img/login.jpg');
-import { INSTANCE_DESCRIPTION, INSTANCE_PROMPT, instance_bg_img } from 'mn-constants'; // + instance_bg_img
-import { LocaleContext } from 'context/global/localizationCtx';
+import { instance_bg_img, INSTANCE_DESCRIPTION, INSTANCE_PROMPT } from 'mn-constants'; // + instance_bg_img
+import * as React from 'react';
+import { Link } from 'react-router-dom';
+import { Box, Text } from 'rebass/styled-components';
+import media from 'styled-media-query';
+import { FormikHook } from 'ui/@types/types';
+import Button from 'ui/elements/Button';
+import LogoContainer from 'ui/elements/Logo';
+import { Panel, WrapperPanel } from 'ui/elements/Panel';
+import styled from 'ui/themes/styled';
 
 let tt = {
   login: i18nMark('Sign in'),
@@ -38,10 +37,6 @@ export const Login: React.FC<Props> = ({ formik }) => {
 
   return (
     <>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>MoodleNet - Log in</title>
-      </Helmet>
       <Container>
         <LoginWrapper>
           <LogoContainer isHome={true} />

@@ -4,6 +4,8 @@ import SignUpPage, { SignUpFormValues, Props } from 'ui/pages/signUp';
 import * as Yup from 'yup';
 import { useAnon } from 'fe/session/useAnon';
 import { USERNAME_REGEX } from 'mn-constants';
+import { t } from '@lingui/macro';
+import { usePageTitle } from 'context/global/pageCtx';
 
 const initialValues: SignUpFormValues = {
   name: '',
@@ -14,12 +16,12 @@ const initialValues: SignUpFormValues = {
   terms: false
 };
 export interface SignUpPageHOC {}
+const signUpPageTitle = t`Sign Up`;
 
 export const SignUpPageHOC: FC<SignUpPageHOC> = () => {
+  usePageTitle(signUpPageTitle);
   const { signUp, signUpStatus, usernameAvailable } = useAnon();
-  const validationSchema: Yup.ObjectSchema<SignUpFormValues> = Yup.object<
-    SignUpFormValues
-  >({
+  const validationSchema: Yup.ObjectSchema<SignUpFormValues> = Yup.object<SignUpFormValues>({
     username: Yup.string()
       .min(3)
       .max(16)

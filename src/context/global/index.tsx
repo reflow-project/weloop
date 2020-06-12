@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { ProvideAlgoliaContext } from './algolia';
 import { ProvideLocalizationCtx } from './localizationCtx';
+import { ProvidePageCtx } from './pageCtx';
 
 interface Props {
   children: React.ReactNode;
@@ -9,9 +10,11 @@ interface Props {
 export const ProvideContexts: React.FC<Props> = ({ children }) => {
   return (
     <ProvideLocalizationCtx>
-      <BrowserRouter>
-        <ProvideAlgoliaContext>{children}</ProvideAlgoliaContext>
-      </BrowserRouter>
+      <ProvidePageCtx>
+        <BrowserRouter>
+          <ProvideAlgoliaContext>{children}</ProvideAlgoliaContext>
+        </BrowserRouter>
+      </ProvidePageCtx>
     </ProvideLocalizationCtx>
   );
 };

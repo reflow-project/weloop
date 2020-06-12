@@ -23,6 +23,9 @@ export enum Status {
 
 const SidebarComponent = styled(Flex)`
   width: 240px;
+  // ${media.lessThan('medium')`
+  //   width: 50px;
+  // `}
 `;
 
 const InternalWrapper = styled(Box)<{ isOpen: boolean }>`
@@ -107,7 +110,6 @@ const SidebarLink = styled(NavLink)`
 const NavItem = styled(Flex)`
   border-radius: 4px;
   padding: 8px;
-  margin-bottom: 8px;
   &:hover {
     background: ${props => props.theme.colors.medium};
   }
@@ -119,6 +121,8 @@ img {
 `;
 
 const ItemTitle = styled(Text)`
+  height: 50px;
+  line-height: 50px;
   font-size: 14px;
   font-weight: 600;
   color: ${props => props.theme.colors.darker};
@@ -180,7 +184,7 @@ export const Sidebar: React.FC<Props> = props => {
   return (
     <>
       {props.isSidebarOpen ? (
-        <SidebarComponent>
+        <SidebarComponent className="sidebar">
           <InternalWrapper>
             <SidebarFixed>
               {props.status === Status.Loading ? (
@@ -191,7 +195,7 @@ export const Sidebar: React.FC<Props> = props => {
                     <Nav>
                       <SidebarLink exact to={'/discover'}>
                         <NavItem alignItems={'center'}>
-                          <Box>
+                          <Box height="50px">
                             <Globe size={36} strokeWidth="1" />
                           </Box>
                           <ItemTitleDir variant="link">

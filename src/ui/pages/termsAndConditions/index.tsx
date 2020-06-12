@@ -6,7 +6,6 @@ import media from 'styled-media-query';
 import { Panel } from 'ui/elements/Panel';
 import styled from '../../themes/styled';
 import LogoContainer from 'ui/elements/Logo';
-import { Helmet } from 'react-helmet';
 
 export interface Props {
   terms_users_data: string;
@@ -33,10 +32,6 @@ const TermsAndConditionsPage: React.FC<Props> = ({
 }) => {
   return (
     <Container>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>MoodleNet - Terms and conditions</title>
-      </Helmet>
       <LoginWrapper>
         <LogoContainer />
         <Flex mt={2}>

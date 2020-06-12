@@ -1,24 +1,23 @@
+import { Trans } from '@lingui/macro';
 import * as React from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
-import { Flex, Box } from 'rebass/styled-components';
-import { Trans } from '@lingui/macro';
-import styled from 'ui/themes/styled';
+import { Box, Flex } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
-import Modal from 'ui/modules/Modal';
 import Button from 'ui/elements/Button';
-import { Header } from 'ui/modules/Header';
-import { LoadMore } from 'ui/modules/Loadmore';
 import {
-  Wrapper,
-  WrapperCont,
+  HomeBox,
   // List,
   MainContainer,
-  HomeBox,
   MenuList,
-  ObjectsList
+  ObjectsList,
+  Wrapper,
+  WrapperCont
 } from 'ui/elements/Layout';
+import { Header } from 'ui/modules/Header';
+import { LoadMore } from 'ui/modules/Loadmore';
+import Modal from 'ui/modules/Modal';
 import { SidePanel } from 'ui/modules/SidePanel';
-import { Helmet } from 'react-helmet';
+import styled from 'ui/themes/styled';
 
 export interface Props {
   ActivitiesBox: JSX.Element;
@@ -56,10 +55,6 @@ export const Collection: React.FC<Props> = ({
   const [isUploadOpen, setUploadOpen] = React.useState(false);
   return (
     <MainContainer>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>MoodleNet - Collection</title>
-      </Helmet>
       {isOpenEditCollection && (
         <Modal closeModal={() => setOpenShareLink(false)}>
           <EditCollectionPanel done={() => setOpenEditCollection(false)} />
