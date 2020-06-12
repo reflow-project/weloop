@@ -52,7 +52,7 @@ Props) => {
       <HomeBox>
         <WrapperCont>
           <Wrapper>
-            <Title px={2} mt={2}>
+            <Title px={2}>
               <Text variant="suptitle">
                 <Trans>My timeline</Trans>
               </Text>
