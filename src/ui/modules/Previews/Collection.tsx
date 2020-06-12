@@ -106,7 +106,7 @@ const Title = styled(Heading)`
   text-decoration: none;
   word-break: break-all;
   margin-top: 4px;
-  ${ellipsis('280px')};
+  ${ellipsis('250px')};
 `;
 
 const CollectionWrapper = styled(Box)`
