@@ -58,8 +58,15 @@ export const ProvideAlgoliaContext: React.FC = ({ children }) => {
   const handleSetSearchState = React.useCallback(
     newSearchState => {
       // console.table({ newSearchState, searchState });
-      // eslint-disable-next-line eqeqeq
-      if ('query' in newSearchState && newSearchState.query != searchState.query) {
+      if (
+        'query' in newSearchState &&
+        // eslint-disable-next-line eqeqeq
+        (newSearchState?.query != searchState?.query ||
+          // eslint-disable-next-line eqeqeq
+          newSearchState?.refinementList?.index_type != searchState?.refinementList?.index_type ||
+          // eslint-disable-next-line eqeqeq
+          newSearchState?.page != searchState?.page)
+      ) {
         setSearchState(newSearchState);
       }
     },
