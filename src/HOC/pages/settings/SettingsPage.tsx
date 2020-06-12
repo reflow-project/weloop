@@ -11,21 +11,46 @@ import { InstanceSettingsSection } from './instance/InstanceSettingsSection';
 import { InstanceInvitesSection } from './invites/InstanceInvitesSection';
 import { InstanceModerationLogSection } from './moderationLog/InstanceModerationLogSection';
 import { PreferencesSettingsSection } from './preferences/PreferencesSettingsSection';
+import { t } from '@lingui/macro';
+import { usePageTitle } from 'context/global/pageCtx';
 
 export enum SettingsPageTab {
-  General,
   Preferences,
   Invites,
   Instance,
   Flags,
-  ModerationLogs
+  ModerationLogs,
+  General
 }
 export interface SettingsPage {
   tab: SettingsPageTab;
   basePath: string;
 }
 
-export const SettingsPage: FC<SettingsPage> = ({ basePath }) => {
+const settingsPreferencesPageTitle = t`Settings - Preferences`;
+const settingsInvitesPageTitle = t`Settings - Invites`;
+const settingsInstancePageTitle = t`Settings - Instance`;
+const settingsFlagsPageTitle = t`Settings - Flags`;
+const settingsModerationLogsPageTitle = t`Settings - Moderation`;
+const settingsGeneralPageTitle = t`Settings - General`;
+
+export const SettingsPage: FC<SettingsPage> = ({ basePath, tab }) => {
+  const settingsPageTitle =
+    tab === SettingsPageTab.Preferences
+      ? settingsPreferencesPageTitle
+      : tab === SettingsPageTab.Invites
+      ? settingsInvitesPageTitle
+      : tab === SettingsPageTab.Instance
+      ? settingsInstancePageTitle
+      : tab === SettingsPageTab.Flags
+      ? settingsFlagsPageTitle
+      : tab === SettingsPageTab.ModerationLogs
+      ? settingsModerationLogsPageTitle
+      : tab === SettingsPageTab.General
+      ? settingsGeneralPageTitle
+      : settingsGeneralPageTitle; //never
+  usePageTitle(settingsPageTitle);
+
   const { me, updateProfile } = useMe();
   const profile = me?.user;
 
@@ -44,8 +69,7 @@ export const SettingsPage: FC<SettingsPage> = ({ basePath }) => {
   const updateProfileFormik = useFormik<EditProfile>({
     initialValues,
     enableReinitialize: true,
-    onSubmit: ({ icon, image, ...profile }) =>
-      updateProfile({ profile, icon, image })
+    onSubmit: ({ icon, image, ...profile }) => updateProfile({ profile, icon, image })
   });
 
   const settingsPageProps = useMemo<SettingsUIProps | null>(() => {

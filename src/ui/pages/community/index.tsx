@@ -1,26 +1,24 @@
+import { Trans } from '@lingui/macro';
 import * as React from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
-import { Flex, Box, Text } from 'rebass/styled-components';
-import SocialText from 'ui/modules/SocialText';
-import { Trans } from '@lingui/macro';
-import Button from 'ui/elements/Button';
-
-import styled from 'ui/themes/styled';
+import { Box, Flex, Text } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
-import Modal from 'ui/modules/Modal';
-// import { Header } from 'ui/modules/Header';
-import { LoadMore } from 'ui/modules/Loadmore';
+import Button from 'ui/elements/Button';
 import {
-  Wrapper,
-  WrapperCont,
+  HomeBox,
   List,
   MainContainer,
-  HomeBox,
   MenuList,
-  ObjectsList
+  ObjectsList,
+  Wrapper,
+  WrapperCont
 } from 'ui/elements/Layout';
+// import { Header } from 'ui/modules/Header';
+import { LoadMore } from 'ui/modules/Loadmore';
+import Modal from 'ui/modules/Modal';
 import { SidePanel } from 'ui/modules/SidePanel';
-import { Helmet } from 'react-helmet';
+import SocialText from 'ui/modules/SocialText';
+import styled from 'ui/themes/styled';
 
 export interface Props {
   isJoined: boolean;
@@ -57,10 +55,6 @@ export const Community: React.FC<Props> = ({
 
   return (
     <MainContainer>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>MoodleNet - Community</title>
-      </Helmet>
       {isOpenCreateCollection && (
         <Modal closeModal={() => setOpenCreateCollection(false)}>
           <CreateCollectionPanel done={() => setOpenCreateCollection(false)} />
@@ -79,7 +73,7 @@ export const Community: React.FC<Props> = ({
                   {loadMoreActivities && <LoadMore LoadMoreFormik={loadMoreActivities} />}
                 </>
               </Route>
-              <Route path={`${basePath}`}>
+              <Route exact path={`${basePath}`}>
                 <>
                   {HeroCommunityBox}
                   <Menu basePath={basePath} />
@@ -99,7 +93,7 @@ export const Community: React.FC<Props> = ({
                   {loadMoreCollections && <LoadMore LoadMoreFormik={loadMoreCollections} />}
                 </>
               </Route>
-              <Route path={`${basePath}/discussions`}>
+              <Route exact path={`${basePath}/discussions`}>
                 <>
                   {HeroCommunityBox}
                   <Menu basePath={basePath} />

@@ -12,31 +12,36 @@ const searchStateToUrl = searchState => `/search/${createURL(searchState)}`;
 const urlToSearchState = (search: string) => qs.parse(search.slice(1));
 const DEBOUNCE_TIME = 500;
 const searchClient =
-  mothershipCreds &&
-  algoliasearch(mothershipCreds.appId, mothershipCreds.apiKey);
+  mothershipCreds && algoliasearch(mothershipCreds.appId, mothershipCreds.apiKey);
 
 export const ProvideAlgoliaContext: React.FC = ({ children }) => {
   const { push } = useHistory();
   const location = useLocation();
   const backLoc = React.useRef<LocationDescriptorObject | undefined>();
-  const searching = React.useRef(isSearchLocation(location));
-  const [searchState, setSearchState] = React.useState(
-    urlToSearchState(location.search)
-  );
+  const searching = React.useRef(isSearchLocation(location.pathname));
+  const [searchState, setSearchState] = React.useState(urlToSearchState(location.search));
   React.useEffect(() => {
-    // console.log('\nsearchState', searchState, '\nlocation:', location, '\nbackLoc:', backLoc.current, '\nisInSearch:', searching.current)
+    // console.log(
+    //   '\nsearchState',
+    //   searchState,
+    //   '\nlocation:',
+    //   location,
+    //   '\nbackLoc:',
+    //   backLoc.current,
+    //   '\nisInSearch:',
+    //   searching.current
+    // );
     const setUrlTO = setTimeout(() => {
-      if (searching.current && !isSearchLocation(location)) {
+      if (searching.current && !isSearchLocation(location.pathname)) {
         backLoc.current = undefined;
         searching.current = false;
         setSearchState(EMPTY_QUERY);
       } else if (searchState.query) {
         backLoc.current =
-          backLoc.current ||
-          (isSearchLocation(location) ? undefined : location);
+          backLoc.current || (isSearchLocation(location.pathname) ? undefined : location);
         searching.current = true;
         push(searchStateToUrl(searchState));
-      } else if (isSearchLocation(location)) {
+      } else if (isSearchLocation(location.pathname)) {
         if (backLoc.current) {
           push(backLoc.current);
         } else {
@@ -48,19 +53,18 @@ export const ProvideAlgoliaContext: React.FC = ({ children }) => {
     return () => {
       clearTimeout(setUrlTO);
     };
-  }, [
-    searchState,
-    location.pathname,
-    location.hash,
-    location.search,
-    location,
-    push
-  ]);
-  const handleSetSearchState = React.useCallback(newSearchState => {
-    if ('query' in newSearchState) {
-      setSearchState(newSearchState);
-    }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchState, location.pathname, location.hash, location.search, push]);
+  const handleSetSearchState = React.useCallback(
+    newSearchState => {
+      // console.table({ newSearchState, searchState });
+      // eslint-disable-next-line eqeqeq
+      if ('query' in newSearchState && newSearchState.query != searchState.query) {
+        setSearchState(newSearchState);
+      }
+    },
+    [searchState]
+  );
   return searchClient && mothershipCreds ? (
     <InstantSearch
       searchState={searchState}
@@ -76,6 +80,5 @@ export const ProvideAlgoliaContext: React.FC = ({ children }) => {
     <>{children}</>
   );
 };
-const isSearchLocation = (location: LocationDescriptorObject) =>
-  location.pathname === '/search/';
+const isSearchLocation = (locationPathname: string) => locationPathname === '/search/';
 const EMPTY_QUERY = { query: '' };

@@ -1,29 +1,29 @@
-import * as React from 'react';
-import { Flex, Box, Text } from 'rebass/styled-components';
-import media from 'styled-media-query';
-import { i18nMark } from '@lingui/react';
 import { Trans } from '@lingui/macro';
-import styled from 'ui/themes/styled';
-import { FormikHook } from 'ui/@types/types';
+import { i18nMark } from '@lingui/react';
+import { Input, Textarea } from '@rebass/forms';
+import * as React from 'react';
 import {
-  Sliders,
-  Settings as Sett,
-  MapPin,
-  Link,
   Droplet,
-  Mail,
+
   // Zap,
   Flag,
-  Monitor
+  Link,
+  Mail,
+  MapPin,
+  Monitor,
+  Settings as Sett,
+  Sliders
 } from 'react-feather';
-import { Switch, Route, NavLink } from 'react-router-dom';
-import { Input, Textarea } from '@rebass/forms';
-import DropzoneArea from 'ui/modules/DropzoneModal';
-import { ContainerForm, Actions } from 'ui/modules/Modal';
+import { NavLink, Route, Switch } from 'react-router-dom';
+import { Box, Flex, Text } from 'rebass/styled-components';
+import media from 'styled-media-query';
+import { FormikHook } from 'ui/@types/types';
 import Button from 'ui/elements/Button';
 // import { useHistory } from 'react-router';
-import { Wrapper, WrapperCont, MainContainer, HomeBox } from 'ui/elements/Layout';
-import { Helmet } from 'react-helmet';
+import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
+import DropzoneArea from 'ui/modules/DropzoneModal';
+import { Actions, ContainerForm } from 'ui/modules/Modal';
+import styled from 'ui/themes/styled';
 
 const tt = {
   placeholders: {
@@ -96,10 +96,6 @@ export const Settings: React.FC<Props> = ({
 
   return (
     <MainContainer>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>MoodleNet - Settings</title>
-      </Helmet>
       <Sidebar basePath={basePath} isAdmin={isAdmin} />
       <HomeBox>
         <WrapperCont>

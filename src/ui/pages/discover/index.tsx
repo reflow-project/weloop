@@ -18,7 +18,6 @@ import { FormikHook } from 'ui/@types/types';
 import { LoadMore } from 'ui/modules/Loadmore';
 import { SidePanel } from 'ui/modules/SidePanel';
 import { ComponentBag } from 'ui/lib/componentBag';
-import { Helmet } from 'react-helmet';
 
 export interface Props {
   basePath: string;
@@ -40,10 +39,6 @@ export const Discover: React.FC<Props> = ({
 }) => {
   return (
     <MainContainer>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>MoodleNet - Discover</title>
-      </Helmet>
       <HomeBox>
         <WrapperCont>
           <WrapperFeatured>

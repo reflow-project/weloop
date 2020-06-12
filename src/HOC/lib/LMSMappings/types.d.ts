@@ -1,6 +1,9 @@
-import { Resource, Collection, Community } from 'graphql/types.generated';
-import { CommunityHit, ResourceHit, CollectionHit } from 'fe/search/Hits';
+import { CollectionHit, CommunityHit, ResourceHit } from 'fe/search/Hits';
 import Maybe from 'graphql/tsutils/Maybe';
+import { Resource } from 'graphql/types.generated';
+import { CollectionPreviewFragment } from 'HOC/modules/previews/collection/CollectionPreview.generated';
+import { CommunityPreviewFragment } from 'HOC/modules/previews/community/CommunityPreview.generated';
+import { ResourcePreviewFragment } from 'HOC/modules/previews/resource/ResourcePreview.generated';
 
 export interface CommunityLMS {
   canonicalUrl: string;
@@ -31,27 +34,23 @@ export interface ResourceLMS {
 }
 
 export type ResourceGqlMin = Pick<
-  Resource,
+  ResourcePreviewFragment,
   'name' | 'canonicalUrl' | 'icon' | 'license' | 'summary'
 > & {
-  content?: Maybe<
-    Pick<Exclude<Resource['content'], null | undefined>, 'url' | 'mediaType'>
-  >;
-  payload?: Maybe<
-    Pick<Exclude<Resource['content'], null | undefined>, 'url' | 'mediaType'>
-  >;
+  content?: Maybe<Pick<Exclude<Resource['content'], null | undefined>, 'url' | 'mediaType'>>;
+  payload?: Maybe<Pick<Exclude<Resource['content'], null | undefined>, 'url' | 'mediaType'>>;
   collection?: Maybe<CollectionGqlMin>;
 };
 
 export type CollectionGqlMin = Pick<
-  Collection,
+  CollectionPreviewFragment,
   'preferredUsername' | 'canonicalUrl' | 'icon' | 'summary' | 'name'
 > & {
   community?: Maybe<CommunityGqlMin>;
 };
 
 export type CommunityGqlMin = Pick<
-  Community,
+  CommunityPreviewFragment,
   'name' | 'preferredUsername' | 'icon' | 'summary' | 'canonicalUrl'
 >;
 

@@ -1,12 +1,11 @@
+import { Trans } from '@lingui/macro';
 import React, { SFC } from 'react';
 import { Box } from 'rebass/styled-components';
 import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
-import { WrapperPanel, Panel, PanelTitle, Nav } from 'ui/elements/Panel';
+import { Nav, Panel, PanelTitle, WrapperPanel } from 'ui/elements/Panel';
 import { ComponentBag } from 'ui/lib/componentBag';
 import { Header } from 'ui/modules/Header';
 import styled from 'ui/themes/styled';
-import { Trans } from '@lingui/macro';
-import { Helmet } from 'react-helmet';
 
 export interface Props {
   previews: ComponentBag[];
@@ -17,10 +16,6 @@ export interface Props {
 export const Search: SFC<Props> = ({ previews, pagination, filter }) => {
   return (
     <>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>MoodleNet - Search</title>
-      </Helmet>
       <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/instantsearch.css@7.1.1/themes/reset-min.css"

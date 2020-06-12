@@ -3,8 +3,12 @@ import TermsAndConditionsPage, { Props } from 'ui/pages/termsAndConditions';
 import useAxios from 'axios-hooks';
 import { terms_markdown_text, terms_markdown_urls, terms_privacy } from 'mn-constants';
 import { LocaleContext } from 'context/global/localizationCtx';
+import { t } from '@lingui/macro';
+import { usePageTitle } from 'context/global/pageCtx';
+const termsAndConditionsPageTitle = t`Terms and Conditions`;
 
 export const TermsAndConditionsPageHOC: FC = () => {
+  usePageTitle(termsAndConditionsPageTitle);
   const { i18n } = React.useContext(LocaleContext);
   const terms_users_text = { data: i18n._(terms_markdown_text.terms_users) };
   const terms_privacy_text = { data: i18n._(terms_privacy.text_markdown) };

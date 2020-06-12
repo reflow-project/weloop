@@ -13,7 +13,6 @@ import { INVITE_ONLY_TEXT } from 'mn-constants';
 import media from 'styled-media-query';
 import { NavLink } from 'react-router-dom';
 import LogoContainer from 'ui/elements/Logo';
-import { Helmet } from 'react-helmet';
 
 let tt = {
   login: i18nMark('Sign in'),
@@ -44,10 +43,6 @@ export interface SignUpFormValues {
 export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername, registeredEmail }) => {
   return (
     <Container>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>MoodleNet - Sign up</title>
-      </Helmet>
       {!formik.isSubmitting && formik.submitCount && registeredUsername && registeredEmail ? (
         <Box mt={3}>
           <LogoContainer />

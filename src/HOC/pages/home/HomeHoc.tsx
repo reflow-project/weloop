@@ -6,13 +6,16 @@ import { ActivityPreviewHOC } from 'HOC/modules/previews/activity/ActivityPrevie
 // import { CommunityPreviewHOC } from 'HOC/modules/previews/community/CommunityPreview';
 import React, { FC, useMemo } from 'react';
 import { Home, Props } from 'ui/pages/home';
+import { t } from '@lingui/macro';
+import { usePageTitle } from 'context/global/pageCtx';
 // import { MyFollowedCommunityDataFragment } from 'fe/community/myFollowed/myFollowedCommunities.generated';
 // import { MyFollowedCollectionDataFragment } from 'fe/collection/myFollowed/myFollowedCollections.generated';
-export { HomePageTab } from 'ui/pages/home';
 
 export interface HomePageHOC {
   basePath: string;
 }
+
+const homeMyTimelinePageTitle = t`My Activities`;
 
 export const HomePageHOC: FC<HomePageHOC> = ({ basePath }) => {
   // const { myCommunityFollowsPage } = useMyFollowedCommunities();
@@ -62,6 +65,7 @@ export const HomePageHOC: FC<HomePageHOC> = ({ basePath }) => {
   //     </>
   //   );
   // }, [myFollowedCollectionsPage]);
+  usePageTitle(homeMyTimelinePageTitle);
 
   const { activitiesPage } = useMyInboxActivities();
   const [nextInboxFormik] = activitiesPage.formiks;
@@ -71,10 +75,7 @@ export const HomePageHOC: FC<HomePageHOC> = ({ basePath }) => {
         {activitiesPage.edges!.map(
           userActivityEdge =>
             userActivityEdge && (
-              <ActivityPreviewHOC
-                activityId={userActivityEdge.id}
-                key={userActivityEdge.id}
-              />
+              <ActivityPreviewHOC activityId={userActivityEdge.id} key={userActivityEdge.id} />
             )
         )}
       </>
