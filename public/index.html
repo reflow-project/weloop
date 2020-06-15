@@ -34,6 +34,8 @@
     <div id="root"></div>
     <div id="modal"></div>
     <script type="text/javascript">
+      const locale = localStorage.getItem('LOCALIZATION#locale') || 'en_GB'
+      const [language] = locale.split('_')
       window.doorbellOptions = {
         id: '10690',
         appKey: 'ObfmzIS8cairiG2UI0CnQEPDhYMWme7cHvbo8TJgBWTiducnxAtaKfFmN6lwOWN2',
