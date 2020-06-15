@@ -1,5 +1,13 @@
 import { i18nMark } from '@lingui/react';
 
+import _instance_bg_img from 'static/img/background.jpg';
+import _logo_large_url from 'static/img/moodlenet-logo.png';
+import _logo_small_url from 'static/img/logo.jpg';
+
+export const instance_bg_img = _instance_bg_img;
+export const logo_large_url = _logo_large_url;
+export const logo_small_url = _logo_small_url;
+
 export const PHOENIX_SOCKET_ENDPOINT = process.env.REACT_APP_PHOENIX_SOCKET_ENDPOINT;
 export const GRAPHQL_ENDPOINT = process.env.REACT_APP_GRAPHQL_ENDPOINT;
 export const NODE_ENV = process.env.NODE_ENV;
@@ -20,11 +28,6 @@ export const INSTANCE_PROMPT = i18nMark(
 );
 export const prompt_signin = i18nMark('Sign in');
 export const my_timeline = i18nMark('My MoodleNet');
-export const instance_bg_img =
-  'https://gitlab.com/moodlenet/frontend/-/raw/develop/src/static/img/background.jpg';
-export const logo_large_url = 'https://moodle.net/images/logos/moodlenet-logo.png';
-export const logo_small_url =
-  'https://gitlab.com/moodlenet/frontend/-/raw/develop/src/static/img/logo.jpg';
 
 export const terms_markdown_text = {
   // replace the text as needed

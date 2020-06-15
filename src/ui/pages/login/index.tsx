@@ -2,8 +2,6 @@ import { Trans } from '@lingui/macro';
 import { i18nMark } from '@lingui/react';
 import { Input } from '@rebass/forms';
 import { LocaleContext } from 'context/global/localizationCtx';
-// import {Form} from 'formik'
-// const MnetLogin = require('static/img/login.jpg');
 import { instance_bg_img, INSTANCE_DESCRIPTION, INSTANCE_PROMPT } from 'mn-constants'; // + instance_bg_img
 import * as React from 'react';
 import { Link } from 'react-router-dom';
