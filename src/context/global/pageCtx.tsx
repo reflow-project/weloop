@@ -1,5 +1,5 @@
 import { APP_NAME } from 'mn-constants';
-import React, { createContext, useContext, useMemo, useState, useCallback } from 'react';
+import React, { createContext, useContext, useMemo, useState, useCallback, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { LocaleContext } from './localizationCtx';
 import { MessageDescriptor } from '@lingui/core';
@@ -14,10 +14,14 @@ export const ProvidePageCtx: React.FC = ({ children }) => {
   const { i18n } = useContext(LocaleContext);
   const [subTitle, setSubTitle] = useState<SubTitle>();
   const setTitle = useCallback<PageCtx['setTitle']>(
-    (subTitle, values) => {
-      setSubTitle(subTitle === false ? void 0 : i18n._({ ...subTitle, values }));
+    (subTitleToSet, values) => {
+      const nextSubTitle = subTitleToSet === false ? void 0 : i18n._({ ...subTitleToSet, values });
+      if (nextSubTitle === subTitle) {
+        return;
+      }
+      setSubTitle(nextSubTitle);
     },
-    [i18n]
+    [i18n, subTitle]
   );
 
   const ctx = useMemo<PageCtx>(
@@ -38,5 +42,10 @@ export const ProvidePageCtx: React.FC = ({ children }) => {
   );
 };
 
-export const usePageTitle = (subTitle: SubTitleDescOrFalse, values?: any) =>
-  useContext(PageCtx).setTitle(subTitle, values);
+export const usePageTitle = (subTitle: SubTitleDescOrFalse, values?: any) => {
+  const { setTitle } = useContext(PageCtx);
+  // https://reactjs.org/blog/2020/02/26/react-v16.13.0.html#warnings-for-some-updates-during-render
+  useEffect(() => {
+    setTitle(subTitle, values);
+  }, [setTitle, subTitle, values]);
+};
