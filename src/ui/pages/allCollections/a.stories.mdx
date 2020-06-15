@@ -10,7 +10,6 @@ import { MainHeader } from 'ui/modules/MainHeader'
 import { Sidebar } from 'ui/modules/Sidebar'
 import { useGetSidebarProps } from 'ui/mock/sidebar'
 import { getMainHeaderProps } from 'ui/mock/mainHeader'
-import { ComponentBag } from 'ui/lib/componentBag'
 
 <Meta title="Pages|AllCollections" component={AllCollections} />
 
@@ -25,8 +24,8 @@ The `AllCollections` page displays all of the collections on the current MoodleN
 <Preview>
   <Story name="AllCollections page">
     <WithSidebar
-      HeaderBox={ComponentBag(MainHeader, { ...getMainHeaderProps() })}
-      SidebarBox={ComponentBag(Sidebar, { ...useGetSidebarProps() })}
+      HeaderBox={<MainHeader {...getMainHeaderProps()} />}
+      SidebarBox={<Sidebar {...useGetSidebarProps()} />}
     >
       <AllCollections
         basePath="/"

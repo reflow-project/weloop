@@ -1,15 +1,14 @@
 import React from 'react';
 import { Flex } from 'rebass/styled-components';
-import { ComponentBag } from 'ui/lib/componentBag';
 import styled from 'ui/themes/styled';
 
 export interface Props {
-  HeaderBox: ComponentBag;
+  HeaderBox: JSX.Element;
 }
 export const WithoutSidebar: React.FC<Props> = ({ children, HeaderBox }) => {
   return (
     <Wrapper>
-      <HeaderBox.Comp {...HeaderBox.props} />
+      {HeaderBox}
       <CenteredWrapper>
         <Flex ml={2}>{children}</Flex>
       </CenteredWrapper>

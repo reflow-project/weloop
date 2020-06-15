@@ -1,33 +1,31 @@
 import React from 'react';
 import { Box } from 'rebass/styled-components';
-import { ComponentBag } from 'ui/lib/componentBag';
 import styled from 'ui/themes/styled';
 import media from 'styled-media-query';
 import { User, Home } from 'react-feather';
 import { NavLink } from 'react-router-dom';
 import { Burger, Menu } from 'ui/modules/Burger';
-import { SearchBox } from 'HOC/modules/SearchBox/SearchBox';
 
 export interface SidebarProps {
-  SidebarBox: ComponentBag;
-  HeaderBox: ComponentBag;
+  SidebarBox: JSX.Element;
+  HeaderBox: JSX.Element;
+  SearchBox: JSX.Element;
 }
 
-export const WithSidebar: React.FC<SidebarProps> = ({ SidebarBox, HeaderBox, children }) => {
+export const WithSidebar: React.FC<SidebarProps> = ({
+  SidebarBox,
+  HeaderBox,
+  SearchBox,
+  children
+}) => {
   const [open, setOpen] = React.useState(false);
   return (
     <Page>
-      <SearchBar>
-        <SearchBox key="search" />
-      </SearchBar>
-      <Header>
-        <HeaderBox.Comp {...HeaderBox.props} />
-      </Header>
+      <SearchBar>{SearchBox}</SearchBar>
+      <Header>{HeaderBox}</Header>
       <Wrapper>
         <Panel className="panel_sidebar">
-          <Sidebar>
-            <SidebarBox.Comp {...SidebarBox.props} />
-          </Sidebar>
+          <Sidebar>{SidebarBox}</Sidebar>
         </Panel>
         <Panel>
           <Content>{children}</Content>
@@ -36,7 +34,7 @@ export const WithSidebar: React.FC<SidebarProps> = ({ SidebarBox, HeaderBox, chi
       <Footer>
         <FootWrapper>
           <Burger open={open} setOpen={setOpen} />
-          <Menu open={open} setOpen={setOpen} side={SidebarBox} />
+          <Menu open={open} setOpen={setOpen} Side={SidebarBox} />
         </FootWrapper>
         <FootWrapper>
           <NavLink to="/">

@@ -1,16 +1,15 @@
 import React from 'react';
 import { Box } from 'rebass/styled-components';
-import { ComponentBag } from 'ui/lib/componentBag';
 import styled from 'ui/themes/styled';
 // import Footer from 'ui/modules/Footer';
 
 export interface Props {
-  HeaderBox?: ComponentBag;
+  HeaderBox?: JSX.Element;
 }
 export const Guest: React.FC<Props> = ({ children, HeaderBox }) => {
   return (
     <Page>
-      {HeaderBox && <HeaderBox.Comp {...HeaderBox.props} />}
+      {HeaderBox}
       <Wrapper>{children}</Wrapper>
       {/* <Footer /> */}
     </Page>

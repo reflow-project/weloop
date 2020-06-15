@@ -26,7 +26,6 @@ import { Collection } from 'ui/modules/Previews/Collection'
 import { Comment } from 'ui/modules/Previews/Comment'
 import { Thread } from 'ui/modules/Previews/Thread'
 import { LikedComment } from 'ui/modules/Previews/LikedComment'
-import { ComponentBag } from 'ui/lib/componentBag'
 
 <Meta title="Pages|Community" component={Community} />
 
@@ -43,8 +42,8 @@ The `Community` page displays a single MoodleNet community. It is made up of the
 <Preview>
   <Story name="community page">
     <WithSidebar
-      HeaderBox={ComponentBag(MainHeader, { ...getMainHeaderProps() })}
-      SidebarBox={ComponentBag(Sidebar, { ...useGetSidebarProps() })}
+      HeaderBox={<MainHeader {...getMainHeaderProps()} />}
+      SidebarBox={<Sidebar {...useGetSidebarProps()} />}
     >
       <Community
         {...{

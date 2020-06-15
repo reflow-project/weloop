@@ -17,7 +17,6 @@ import {
   Configure,
   RefinementList
 } from 'react-instantsearch-dom';
-import { ComponentBag } from 'ui/lib/componentBag';
 import { Collection } from 'ui/modules/Previews/Collection';
 import { Community } from 'ui/modules/Previews/Community';
 import { Resource } from 'ui/modules/Previews/Resource';
@@ -32,24 +31,24 @@ const _SearchPageHOC: React.FC<{ hits: Hit[] }> = ({ hits }) => {
       hits
         .map(hit => {
           if (hit.index_type === 'Collection') {
-            return ComponentBag(CollectionPreviewHit, { hit }, hit.objectID);
+            return <CollectionPreviewHit hit={hit} key={hit.objectID} />;
           } else if (hit.index_type === 'Resource') {
-            return ComponentBag(ResourcePreviewHit, { hit }, hit.objectID);
+            return <ResourcePreviewHit hit={hit} key={hit.objectID} />;
           } else if (hit.index_type === 'Community') {
-            return ComponentBag(CommunityPreviewHit, { hit }, hit.objectID);
+            return <CommunityPreviewHit hit={hit} key={hit.objectID} />;
           } else {
             console.warn(`Could not preview searchHit:`, hit);
             return null;
           }
         })
-        .filter((_): _ is ComponentBag => !!_),
+        .filter((_): _ is JSX.Element => !!_),
     [hits]
   );
 
   const props: Props = {
     previews,
-    pagination: ComponentBag(Pagination, { showNext: true }),
-    filter: ComponentBag(RefinementList, { attribute: 'index_type' })
+    Pagination: <Pagination showNext />,
+    Filter: <RefinementList attribute="index_type" />
   };
 
   return (

@@ -28,7 +28,6 @@ import { LikedComment } from 'ui/modules/Previews/LikedComment'
 import { WithSidebar } from 'ui/templates/withSidebar'
 import { MainHeader } from 'ui/modules/MainHeader'
 import { Sidebar } from 'ui/modules/Sidebar'
-import { ComponentBag } from 'ui/lib/componentBag'
 
 <Meta title="Pages|User" component={User} />
 
@@ -45,8 +44,8 @@ The `User` page shows the profile of another MoodleNet user. The page is made up
 <Preview>
   <Story name="User page">
     <WithSidebar
-      HeaderBox={ComponentBag(MainHeader, { ...getMainHeaderProps() })}
-      SidebarBox={ComponentBag(Sidebar, { ...useGetSidebarProps() })}
+      HeaderBox={<MainHeader {...getMainHeaderProps()} />}
+      SidebarBox={<Sidebar {...useGetSidebarProps()} />}
     >
       <User
         totalCommunities={'23'}
