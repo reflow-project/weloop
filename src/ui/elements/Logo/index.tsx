@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import styled from 'ui/themes/styled';
-import { INSTANCE_TAGLINE, logo_large_url } from 'mn-constants'; // + instance_bg_img
+import { INSTANCE_TAGLINE } from 'mn-constants'; // + instance_bg_img
 import { Link } from 'react-router-dom';
 import { LocaleContext } from 'context/global/localizationCtx';
-
+import { logo_large_url } from 'mn-constants';
 export interface Props {
   isHome?: boolean;
 }
