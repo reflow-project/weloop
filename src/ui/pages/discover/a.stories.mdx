@@ -31,7 +31,6 @@ import { FeaturedCommunities } from 'ui/modules/FeaturedCommunities'
 import { FeaturedCollections } from 'ui/modules/FeaturedCollections'
 import { getFeaturedCommunitiesProps } from 'ui/mock/featuredCommunities'
 import { useGetFeaturedCollectionsProps } from 'ui/mock/featuredCollections'
-import { ComponentBag } from 'ui/lib/componentBag'
 
 <Meta title="Pages|Discover" component={Discover} />
 
@@ -48,20 +47,14 @@ The `Discover` page displays featured communities, featured collections, and the
 <Preview>
   <Story name="Discover page">
     <WithSidebar
-      HeaderBox={ComponentBag(MainHeader, { ...getMainHeaderProps() })}
-      SidebarBox={ComponentBag(Sidebar, { ...useGetSidebarProps() })}
+      HeaderBox={<MainHeader {...getMainHeaderProps()} />}
+      SidebarBox={<Sidebar {...useGetSidebarProps()} />}
     >
       <Discover
         basePath={'/'}
         LoadMoreFormik={useGetLoadMoreProps()}
-        FeaturedCommunitiesBox={ComponentBag(
-          FeaturedCommunities,
-          getFeaturedCommunitiesProps(true)
-        )}
-        FeaturedCollectionsBox={ComponentBag(
-          FeaturedCollections,
-          useGetFeaturedCollectionsProps(true)
-        )}
+        FeaturedCommunitiesBox={<FeaturedCommunities {...getFeaturedCommunitiesProps(true)} />}
+        FeaturedCollectionsBox={<FeaturedCollections {...useGetFeaturedCollectionsProps(true)} />}
         ActivitiesBox={
           <React.Fragment>
             <ActivityPreview

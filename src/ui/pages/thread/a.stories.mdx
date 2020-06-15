@@ -12,7 +12,6 @@ import { useGetSidebarProps } from 'ui/mock/sidebar'
 import { activityPreviewProps } from 'ui/mock/activityPreview'
 import { CommentPreviewProps, MainCommentPreviewProps } from 'ui/mock/previews'
 import { useGetLoadMoreProps } from 'ui/mock/loadmore'
-import { ComponentBag } from 'ui/lib/componentBag'
 
 <Meta title="Pages|Thread" component={Thread} />
 
@@ -29,8 +28,8 @@ Let's define a story for the `Thread` page
 <Preview>
   <Story name="Thread page">
     <WithSidebar
-      HeaderBox={ComponentBag(MainHeader, { ...getMainHeaderProps() })}
-      SidebarBox={ComponentBag(Sidebar, { ...useGetSidebarProps() })}
+      HeaderBox={<MainHeader {...getMainHeaderProps()} />}
+      SidebarBox={<Sidebar {...useGetSidebarProps()} />}
     >
       <Thread
         isCommunityContext={true}

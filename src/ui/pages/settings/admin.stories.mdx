@@ -5,9 +5,7 @@ import { Box } from 'rebass'
 import { useGetEditProfilePropsAdmin } from 'ui/mock/settings'
 import { MainHeader } from 'ui/modules/MainHeader'
 import { getMainHeaderProps } from 'ui/mock/mainHeader'
-import { ComponentBag } from 'ui/lib/componentBag'
 import { WithoutSidebar } from 'ui/templates/withoutSidebar'
-const Head = ComponentBag(MainHeader, getMainHeaderProps())
 
 <Meta title="Pages|Settings - Admin" component={Settings} />
 
@@ -23,13 +21,14 @@ Let's define a story for the `Settings` page - Admin user
 
 <Preview>
   <Story name="Settings page - Admin user">
-    <WithoutSidebar HeaderBox={Head}>
+    <WithoutSidebar HeaderBox={<MainHeader {...getMainHeaderProps()} />}>
       <Settings {...useGetEditProfilePropsAdmin()} />
     </WithoutSidebar>
   </Story>
 </Preview>
 
-<div id="modules">Building blocks</div>- **[Guest](#)** - **[ContainerForm, Actions](#)** - **[Button](#)**
+<div id="modules">Building blocks</div>- **[Guest](#)** - **[ContainerForm, Actions](#)** -
+**[Button](#)**
 
 <div id="props">Props</div>
 

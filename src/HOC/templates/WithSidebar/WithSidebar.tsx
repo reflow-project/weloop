@@ -4,23 +4,25 @@ import { SidebarHOC } from 'HOC/modules/Sidebar/Sidebar';
 import React, { FC, useMemo } from 'react';
 import { SidebarProps, WithSidebar } from 'ui/templates/withSidebar';
 import { GuestTemplate } from '../Guest/Guest';
-import { ComponentBag } from 'ui/lib/componentBag';
 import { ProvideSideBarContext } from 'HOC/context/SideBar';
+import { SearchBox } from 'HOC/modules/SearchBox/SearchBox';
 
 export interface WithSidebarTemplate {}
 export const WithSidebarTemplate: FC<WithSidebarTemplate> = ({ children }) => {
-  const meQ = useMe();
+  const { loading, me } = useMe();
+
   const withSidebarProps = useMemo<null | SidebarProps>(() => {
-    const user = meQ.me?.user;
-    if (!user) {
+    const user = me?.user;
+    if (!user || loading) {
       return null;
     }
     const props: SidebarProps = {
-      SidebarBox: ComponentBag(SidebarHOC, {}),
-      HeaderBox: ComponentBag(MainHeaderHOC, {})
+      SidebarBox: <SidebarHOC />,
+      HeaderBox: <MainHeaderHOC />,
+      SearchBox: <SearchBox />
     };
     return props;
-  }, [meQ]);
+  }, [loading, me]);
   // console.log('withSidebarProps', withSidebarProps);
   return withSidebarProps ? (
     <ProvideSideBarContext>

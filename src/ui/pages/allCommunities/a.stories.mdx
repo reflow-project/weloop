@@ -13,7 +13,6 @@ import { MainHeader } from 'ui/modules/MainHeader'
 import { Sidebar } from 'ui/modules/Sidebar'
 import { useGetSidebarProps } from 'ui/mock/sidebar'
 import { getMainHeaderProps } from 'ui/mock/mainHeader'
-import { ComponentBag } from 'ui/lib/componentBag'
 
 <Meta title="Pages|AllCommunities" component={AllCommunities} />
 
@@ -28,8 +27,8 @@ The `AllCommunities` page displays all of the communities on the current MoodleN
 <Preview>
   <Story name="AllCommunities page">
     <WithSidebar
-      HeaderBox={ComponentBag(MainHeader, { ...getMainHeaderProps() })}
-      SidebarBox={ComponentBag(Sidebar, { ...useGetSidebarProps() })}
+      HeaderBox={<MainHeader {...getMainHeaderProps()} />}
+      SidebarBox={<Sidebar {...useGetSidebarProps()} />}
     >
       <AllCommunities
         Header={<Header name="All Communities" />}

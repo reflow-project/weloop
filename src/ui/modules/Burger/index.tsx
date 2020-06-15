@@ -12,13 +12,11 @@ export const Burger = ({ open, setOpen }) => {
   );
 };
 
-export const Menu = ({ open, side, setOpen }) => {
+export const Menu = ({ open, Side, setOpen }) => {
   return (
     <>
       {open && <Background onClick={() => setOpen(false)} />}
-      <StyledMenu open={open}>
-        <side.Comp {...side.props} />
-      </StyledMenu>
+      <StyledMenu open={open}>{Side}</StyledMenu>
     </>
   );
 };

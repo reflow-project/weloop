@@ -22,7 +22,6 @@ import { LikedComment } from 'ui/modules/Previews/LikedComment'
 import { MainHeader } from 'ui/modules/MainHeader'
 import { ShareLink } from 'ui/modules/ShareLink'
 import { useGetShareLinkProps } from 'ui/mock/shareLink'
-import { ComponentBag } from 'ui/lib/componentBag'
 
 <Meta title="Pages|Collection" component={Collection} />
 
@@ -37,8 +36,8 @@ The `Collection` page displays a single MoodleNet collection. It is made up of t
 <Preview>
   <Story name="Collection page">
     <WithSidebar
-      HeaderBox={ComponentBag(MainHeader, { ...getMainHeaderProps() })}
-      SidebarBox={ComponentBag(Sidebar, { ...useGetSidebarProps() })}
+      HeaderBox={<MainHeader {...getMainHeaderProps()} />}
+      SidebarBox={<Sidebar {...useGetSidebarProps()} />}
     >
       <Collection
         ShareLinkBox={() => <ShareLink {...useGetShareLinkProps()} />}

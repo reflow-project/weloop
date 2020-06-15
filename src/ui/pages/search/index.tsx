@@ -3,17 +3,16 @@ import React, { SFC } from 'react';
 import { Box } from 'rebass/styled-components';
 import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
 import { Nav, Panel, PanelTitle, WrapperPanel } from 'ui/elements/Panel';
-import { ComponentBag } from 'ui/lib/componentBag';
 import { Header } from 'ui/modules/Header';
 import styled from 'ui/themes/styled';
 
 export interface Props {
-  previews: ComponentBag[];
-  pagination: ComponentBag;
-  filter: ComponentBag;
+  previews: JSX.Element[];
+  Pagination: JSX.Element;
+  Filter: JSX.Element;
 }
 
-export const Search: SFC<Props> = ({ previews, pagination, filter }) => {
+export const Search: SFC<Props> = ({ previews, Pagination, Filter }) => {
   return (
     <>
       <link
@@ -27,16 +26,14 @@ export const Search: SFC<Props> = ({ previews, pagination, filter }) => {
               <Wrapper>
                 <Header name="Search results" />
                 <Box>
-                  {previews.map(bag => (
-                    <Box m={2} key={bag.key}>
-                      <bag.Comp {...bag.props} />
+                  {previews.map(El => (
+                    <Box m={2} key={El.key}>
+                      {El}
                     </Box>
                   ))}
                 </Box>
               </Wrapper>
-              <Box m={2}>
-                <pagination.Comp {...pagination.props} />
-              </Box>
+              <Box m={2}>{Pagination}</Box>
             </WrapperCont>
           </SearchWrapper>
         </HomeBox>
@@ -46,9 +43,7 @@ export const Search: SFC<Props> = ({ previews, pagination, filter }) => {
               <Trans>Filters</Trans>
             </PanelTitle>
             <Nav>
-              <NavWrapper>
-                <filter.Comp {...filter.props} />
-              </NavWrapper>
+              <NavWrapper>{Filter}</NavWrapper>
             </Nav>
           </Panel>
         </WrapperPanel>
