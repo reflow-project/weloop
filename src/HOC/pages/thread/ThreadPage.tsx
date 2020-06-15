@@ -71,9 +71,8 @@ export const ThreadPage: FC<ThreadPage> = ({ threadId }) => {
         {commentPage.edges
           .filter(comment => comment.id !== thread.mainComment?.id)
           .map(comment => (
-            <Box mb={1}>
+            <Box mb={1} key={comment.id}>
               <ActivityPreview
-                key={comment.id}
                 {...{
                   ...activityProps,
                   event: 'replied',
