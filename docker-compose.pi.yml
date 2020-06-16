@@ -5,6 +5,7 @@ services:
     #image: "commonspub/commonspub:stable" # use stable/production/master release of backend
     image: "commonspub/commonspub:latest" # uncomment to use unstable/staging/develop backend branch
     # On a Raspbery Pi, you must first build your own backend Docker image from the source
+    restart: always
     ports:
       - "4000:4000"
       - "81:80"
@@ -21,6 +22,7 @@ services:
     build:
       context: .
       dockerfile: "Dockerfile.pi"
+    restart: always
     ports:
      - "80:80"
      - "443:443"
