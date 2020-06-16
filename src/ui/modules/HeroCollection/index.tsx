@@ -1,19 +1,18 @@
-import { clearFix, darken } from 'polished';
-import React, { ComponentType, FC } from 'react';
-import { Box, Flex, Text } from 'rebass/styled-components';
-import media from 'styled-media-query';
-import Modal from 'ui/modules/Modal';
-import styled from 'ui/themes/styled';
 // import { ChevronLeft } from 'react-feather';
 import { Trans } from '@lingui/macro';
+import { clearFix, darken } from 'polished';
+import React, { FC } from 'react';
+import { Flag as FlagIcon, MoreVertical, Settings, Star } from 'react-feather';
 import { Link, NavLink } from 'react-router-dom';
+import { Box, Flex, Text } from 'rebass/styled-components';
+import media from 'styled-media-query';
+import { FormikHook } from 'ui/@types/types';
 // import { useHistory } from 'react-router';
 import Avatar from 'ui/elements/Avatar';
 import Button from 'ui/elements/Button';
-import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
-import { Settings, MoreVertical, Flag as FlagIcon, Star } from 'react-feather';
-import { FormikHook } from 'ui/@types/types';
 import { MDComment } from 'ui/elements/Layout/comment';
+import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
+import styled from 'ui/themes/styled';
 
 export enum Status {
   Loading,
@@ -41,19 +40,22 @@ export interface CollectionLoaded {
   followerCount: number; //FIX ME add followerCount
   // contributorCount?: number; //FIX ME add contributorCount
   following: boolean;
-  EditCollectionPanel: ComponentType<{ done(): any }>;
-  FlagModal: ComponentType<{ done(): any }>;
-  FeaturedModal: ComponentType<{ done(): any }>;
+
+  showEdit(): any;
+  EditModal: JSX.Element | null;
+
+  showFlag(): any;
+  FlagModal: JSX.Element | null;
+
+  showAddToFeatured(): any;
+  AddToFeaturedModal: JSX.Element | null;
 }
 export interface Props {
   collection: CollectionLoaded | CollectionLoading;
 }
 
 export const HeroCollection: FC<Props> = ({ collection: c }) => {
-  const [isOpenSettings, setOpenSettings] = React.useState(false);
-  const [isOpenDropdown, setOpenDropdown] = React.useState(false);
-  const [isOpenFlag, setOpenFlag] = React.useState(false);
-  const [isOpenFeatured, setOpenFeatured] = React.useState(false);
+  const [isOpenDropdown, toggleDropdown] = React.useReducer(is => !is, false);
 
   return c.status === Status.Loading ? (
     <Text>Loading...</Text>
@@ -100,20 +102,20 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
               >
                 {c.following ? 'Unfollow' : 'Follow'}
               </Button>
-              <More ml={2} onClick={() => setOpenDropdown(true)}>
+              <More ml={2} onClick={toggleDropdown}>
                 <MoreVertical size={20} />
                 {isOpenDropdown && (
                   <RightDd>
-                    <Dropdown orientation={'bottom'} cb={setOpenDropdown}>
+                    <Dropdown orientation={'bottom'} cb={toggleDropdown}>
                       {c.canModify && (
-                        <DropdownItem onClick={() => setOpenSettings(true)}>
+                        <DropdownItem onClick={c.showEdit}>
                           <Settings size={20} color={'rgb(101, 119, 134)'} />
                           <Text sx={{ flex: 1 }} ml={2}>
                             <Trans>Edit the collection</Trans>
                           </Text>
                         </DropdownItem>
                       )}
-                      <DropdownItem onClick={() => setOpenFlag(true)}>
+                      <DropdownItem onClick={c.showFlag}>
                         <FlagIcon size={20} color={'rgb(101, 119, 134)'} />
                         <Text sx={{ flex: 1 }} ml={2}>
                           {!c.isFlagged ? (
@@ -124,7 +126,7 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
                         </Text>
                       </DropdownItem>
                       {c.isAdmin ? (
-                        <AdminDropdownItem onClick={() => setOpenFeatured(true)}>
+                        <AdminDropdownItem onClick={c.showAddToFeatured}>
                           <Star size={20} color={'rgb(211, 103, 5)'} />
                           <Text sx={{ flex: 1 }} ml={2}>
                             {
@@ -145,21 +147,9 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
           </Info>
         </HeroInfo>
       </Hero>
-      {isOpenSettings && (
-        <Modal closeModal={() => setOpenSettings(false)}>
-          <c.EditCollectionPanel done={() => setOpenSettings(false)} />
-        </Modal>
-      )}
-      {isOpenFlag && (
-        <Modal closeModal={() => setOpenFlag(false)}>
-          <c.FlagModal done={() => setOpenFlag(false)} />
-        </Modal>
-      )}
-      {isOpenFeatured && c.FeaturedModal !== null && (
-        <Modal closeModal={() => setOpenFeatured(false)}>
-          <c.FeaturedModal done={() => setOpenFeatured(false)} />
-        </Modal>
-      )}
+      {c.EditModal}
+      {c.AddToFeaturedModal}
+      {c.FlagModal}
     </HeroCont>
   );
 };

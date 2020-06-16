@@ -3,26 +3,49 @@ import { useMe } from 'fe/session/useMe';
 import { useFormik } from 'formik';
 import { Collection } from 'graphql/types.generated';
 import { EditCollectionPanelHOC } from 'HOC/modules/EditCollectionPanel/editCollectionPanelHOC';
-import { FlagModalHOC } from 'HOC/modules/FlagModal/flagModalHOC';
-import React, { FC, useMemo } from 'react';
-import HeroCollectionUI, { Props, Status } from 'ui/modules/HeroCollection';
 import { FeatureModalHOC } from 'HOC/modules/FeatureModal/FeatureModal';
+import { FlagModalHOC } from 'HOC/modules/FlagModal/flagModalHOC';
+import React, { FC, useMemo, useReducer } from 'react';
+import HeroCollectionUI, { Props, Status } from 'ui/modules/HeroCollection';
+import Modal from 'ui/modules/Modal';
 
 export interface HeroCollection {
   collectionId: Collection['id'];
   basePath: string;
 }
 
-export const HeroCollection: FC<HeroCollection> = ({
-  collectionId,
-  basePath
-}) => {
+export const HeroCollection: FC<HeroCollection> = ({ collectionId, basePath }) => {
   const { collection, canModify, toggleJoin } = useCollection(collectionId);
   const { isAdmin } = useMe();
   const toggleJoinFormik = useFormik<{}>({
     initialValues: {},
     onSubmit: toggleJoin
   });
+
+  const [isEditing, toggleEditing] = useReducer(is => !is, false);
+  const EditModal =
+    collection && isEditing ? (
+      <Modal closeModal={toggleEditing}>
+        <EditCollectionPanelHOC collectionId={collection.id} done={toggleEditing} />
+      </Modal>
+    ) : null;
+
+  const [isFlagging, toggleFlagging] = useReducer(is => !is, false);
+  const FlagModal =
+    collection && isFlagging ? (
+      <Modal closeModal={toggleFlagging}>
+        <FlagModalHOC done={toggleFlagging} ctx={collection} />
+      </Modal>
+    ) : null;
+
+  const [isAddingToFeatured, toggleAddToFeatured] = useReducer(is => isAdmin && !is, false);
+  const AddToFeaturedModal =
+    collection && isAddingToFeatured ? (
+      <Modal closeModal={toggleAddToFeatured}>
+        <FeatureModalHOC done={toggleAddToFeatured} ctx={collection} featureId={null} />
+      </Modal>
+    ) : null;
+
   const heroProps = useMemo<Props>(() => {
     if (!collection) {
       return {
@@ -49,16 +72,27 @@ export const HeroCollection: FC<HeroCollection> = ({
         communityId: collection.community?.id || '',
         communityIcon: collection.community?.icon?.url || '',
         toggleJoinFormik,
-        EditCollectionPanel: ({ done }) => (
-          <EditCollectionPanelHOC done={done} collectionId={collection.id} />
-        ),
-        FlagModal: ({ done }) => <FlagModalHOC done={done} ctx={collection} />,
-        FeaturedModal: ({ done }: { done(): unknown }) => (
-          <FeatureModalHOC done={done} ctx={collection} featureId={null} />
-        )
+
+        showEdit: toggleEditing,
+        EditModal,
+
+        showAddToFeatured: toggleAddToFeatured,
+        AddToFeaturedModal,
+
+        showFlag: toggleFlagging,
+        FlagModal
       }
     };
     return props;
-  }, [collection, basePath, isAdmin, canModify, toggleJoinFormik]);
+  }, [
+    collection,
+    basePath,
+    isAdmin,
+    canModify,
+    toggleJoinFormik,
+    EditModal,
+    AddToFeaturedModal,
+    FlagModal
+  ]);
   return <HeroCollectionUI {...heroProps} />;
 };

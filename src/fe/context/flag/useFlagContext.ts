@@ -2,19 +2,15 @@ import { AllFlagsQueryRefetch } from 'fe/flags/all/useAllFlags.generated';
 import { isOptimisticId, OPTIMISTIC_ID_STRING } from 'fe/lib/helpers/mutations';
 import * as GQL from 'fe/mutation/flag/useMutateFlag.generated';
 import Maybe from 'graphql/tsutils/Maybe';
-import {
-  Collection,
-  Comment,
-  Community,
-  Resource,
-  User
-} from 'graphql/types.generated';
+import { Collection, Comment, Community, Resource, User, Flag } from 'graphql/types.generated';
 import { useCallOrNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
 import { useMemo } from 'react';
 
 type Context = Collection | Comment | Community | User | Resource;
 
-export type FollowContext = Pick<Context, 'id' | 'myFlag' | '__typename'>;
+export type FollowContext = Pick<Context, 'id' | '__typename'> & {
+  myFlag: Maybe<Pick<Flag, 'id'>>;
+};
 
 export type UseFollowContext = Maybe<FollowContext>;
 

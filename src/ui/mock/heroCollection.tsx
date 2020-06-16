@@ -1,4 +1,4 @@
-import React from 'react';
+import { action } from '@storybook/addon-actions';
 import {
   Props as HeroCollectionProps,
   Status as HeroCollectionStatus
@@ -33,9 +33,12 @@ export const useGetHeroCollectionProps = (
       followerCount: 10,
       // contributorCount: 2,
       toggleJoinFormik: useToggleFormik(),
-      EditCollectionPanel: ({ done }) => <></>,
-      FlagModal: ({ done }) => <></>,
-      FeaturedModal: () => <></>
+      showEdit: action('editCollection'),
+      EditModal: null,
+      AddToFeaturedModal: null,
+      FlagModal: null,
+      showAddToFeatured: action('showAddToFeatured'),
+      showFlag: action('showFlag')
     }
   };
 };
