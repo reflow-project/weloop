@@ -38,7 +38,11 @@ export const HeroCollection: FC<HeroCollection> = ({ collectionId, basePath }) =
     return notifiedMustLogin() ? false : !is;
   }, false);
   const FlagModal =
-    collection && isFlagging ? <FlagModalHOC done={toggleFlagModal} ctx={collection} /> : null;
+    collection && isFlagging ? (
+      <Modal closeModal={toggleFlagModal}>
+        <FlagModalHOC done={toggleFlagModal} ctx={collection} />
+      </Modal>
+    ) : null;
 
   const [isAddingToFeatured, toggleAddToFeatured] = useReducer(is => {
     return !isAdmin || notifiedMustLogin() ? false : !is;
@@ -49,6 +53,7 @@ export const HeroCollection: FC<HeroCollection> = ({ collectionId, basePath }) =
         <FeatureModalHOC done={toggleAddToFeatured} ctx={collection} featureId={null} />
       </Modal>
     ) : null;
+  const [isOpenDropdown, toggleDropdown] = React.useReducer(is => !is, false);
 
   const heroProps = useMemo<Props>(() => {
     if (!collection) {
@@ -61,6 +66,8 @@ export const HeroCollection: FC<HeroCollection> = ({ collectionId, basePath }) =
 
     const props: Props = {
       collection: {
+        isOpenDropdown,
+        toggleDropdown,
         basePath,
         isAdmin,
         status: Status.Loaded,
@@ -83,13 +90,14 @@ export const HeroCollection: FC<HeroCollection> = ({ collectionId, basePath }) =
         showAddToFeatured: toggleAddToFeatured,
         AddToFeaturedModal,
 
-        toggleFlagModal,
+        showFlagModal: toggleFlagModal,
         FlagModal
       }
     };
     return props;
   }, [
     collection,
+    isOpenDropdown,
     basePath,
     isAdmin,
     canModify,
