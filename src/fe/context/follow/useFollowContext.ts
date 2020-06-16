@@ -6,7 +6,7 @@ import * as GQL from 'fe/mutation/follow/useMutateFollow.generated';
 import { CollectionFollowersQueryRefetch } from 'fe/user/followers/collection/useCollectionFollowers.generated';
 import { CommunityFollowersQueryRefetch } from 'fe/user/followers/community/useCommunityFollowers.generated';
 import Maybe from 'graphql/tsutils/Maybe';
-import { Collection, Community, User } from 'graphql/types.generated';
+import { Collection, Community, User, Follow } from 'graphql/types.generated';
 import { useCallOrNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
 import { useMemo } from 'react';
 import { SIDEBAR_MY_JOINED_LIST_LIMIT } from 'fe/community/myFollowed/myFollowedCommunities';
@@ -14,7 +14,9 @@ import { SIDEBAR_MY_JOINED_LIST_LIMIT } from 'fe/community/myFollowed/myFollowed
 type Context = Collection | Community | User; //| Thread;
 
 export type UseFollowContext = Maybe<
-  Pick<Context, 'id' | 'myFollow' | 'followerCount' | '__typename' | 'name'>
+  Pick<Context, 'id' | 'followerCount' | '__typename' | 'name'> & {
+    myFollow: Maybe<Pick<Follow, 'id'>>;
+  }
 >;
 
 export const useFollowContext = (ctx: UseFollowContext) => {
@@ -42,11 +44,7 @@ export const useFollowContext = (ctx: UseFollowContext) => {
           contextId: id
         },
         context,
-        optimisticResponse: optimisticFollow(
-          __typename,
-          id,
-          followerCount || 0
-        ),
+        optimisticResponse: optimisticFollow(__typename, id, followerCount || 0),
         refetchQueries:
           __typename === 'Community'
             ? [
@@ -83,11 +81,7 @@ export const useFollowContext = (ctx: UseFollowContext) => {
               contextId: myFollow.id
             },
             context,
-            optimisticResponse: optimisticUnfollow(
-              __typename,
-              id,
-              followerCount || 1
-            ),
+            optimisticResponse: optimisticUnfollow(__typename, id, followerCount || 1),
             refetchQueries:
               __typename === 'Community'
                 ? [

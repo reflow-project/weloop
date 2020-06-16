@@ -13,7 +13,6 @@ import Button from 'ui/elements/Button';
 import { MDComment } from 'ui/elements/Layout/comment';
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
 import styled from 'ui/themes/styled';
-import Modal from '../Modal';
 
 export enum Status {
   Loading,
@@ -23,6 +22,7 @@ export enum Status {
 export interface CollectionLoading {
   status: Status.Loading;
 }
+
 export interface CollectionLoaded {
   status: Status.Loaded;
   isAdmin: boolean;
@@ -45,19 +45,20 @@ export interface CollectionLoaded {
   showEdit(): any;
   EditModal: JSX.Element | null;
 
-  toggleFlagModal(): any;
+  showFlagModal(): any;
   FlagModal: JSX.Element | null;
 
   showAddToFeatured(): any;
   AddToFeaturedModal: JSX.Element | null;
+
+  isOpenDropdown: boolean;
+  toggleDropdown(): any;
 }
 export interface Props {
   collection: CollectionLoaded | CollectionLoading;
 }
 
 export const HeroCollection: FC<Props> = ({ collection: c }) => {
-  const [isOpenDropdown, toggleDropdown] = React.useReducer(is => !is, false);
-
   return c.status === Status.Loading ? (
     <Text>Loading...</Text>
   ) : (
@@ -101,11 +102,11 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
               >
                 {c.following ? 'Unfollow' : 'Follow'}
               </Button>
-              <More ml={2} onClick={toggleDropdown}>
+              <More ml={2} onClick={c.toggleDropdown}>
                 <MoreVertical size={20} />
-                {isOpenDropdown && (
+                {c.isOpenDropdown && (
                   <RightDd>
-                    <Dropdown orientation={'bottom'} cb={toggleDropdown}>
+                    <Dropdown orientation={'bottom'} cb={c.toggleDropdown}>
                       {c.canModify && (
                         <DropdownItem onClick={c.showEdit}>
                           <Settings size={20} color={'rgb(101, 119, 134)'} />
@@ -114,7 +115,7 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
                           </Text>
                         </DropdownItem>
                       )}
-                      <DropdownItem onClick={c.toggleFlagModal}>
+                      <DropdownItem onClick={c.showFlagModal}>
                         <FlagIcon size={20} color={'rgb(101, 119, 134)'} />
                         <Text sx={{ flex: 1 }} ml={2}>
                           {!c.isFlagged ? (
@@ -148,7 +149,7 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
       </Hero>
       {c.EditModal}
       {c.AddToFeaturedModal}
-      {c.FlagModal && <Modal closeModal={c.toggleFlagModal}>{c.FlagModal}</Modal>}
+      {c.FlagModal}
     </HeroCont>
   );
 };

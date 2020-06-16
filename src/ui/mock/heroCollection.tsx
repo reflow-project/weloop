@@ -28,6 +28,8 @@ export const useGetHeroCollectionProps = (
       fullName,
       communityIcon,
       communityId: '2',
+      isOpenDropdown: false,
+      toggleDropdown: action('toggleDropdown'),
       communityName,
       summary,
       followerCount: 10,
@@ -38,7 +40,7 @@ export const useGetHeroCollectionProps = (
       AddToFeaturedModal: null,
       FlagModal: null,
       showAddToFeatured: action('showAddToFeatured'),
-      toggleFlagModal: action('showFlag')
+      showFlagModal: action('showFlag')
     }
   };
 };
