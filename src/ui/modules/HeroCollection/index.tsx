@@ -13,6 +13,7 @@ import Button from 'ui/elements/Button';
 import { MDComment } from 'ui/elements/Layout/comment';
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
 import styled from 'ui/themes/styled';
+import Modal from '../Modal';
 
 export enum Status {
   Loading,
@@ -44,7 +45,7 @@ export interface CollectionLoaded {
   showEdit(): any;
   EditModal: JSX.Element | null;
 
-  showFlag(): any;
+  toggleFlagModal(): any;
   FlagModal: JSX.Element | null;
 
   showAddToFeatured(): any;
@@ -115,7 +116,7 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
                           </Text>
                         </DropdownItem>
                       )}
-                      <DropdownItem onClick={c.showFlag}>
+                      <DropdownItem onClick={c.toggleFlagModal}>
                         <FlagIcon size={20} color={'rgb(101, 119, 134)'} />
                         <Text sx={{ flex: 1 }} ml={2}>
                           {!c.isFlagged ? (
@@ -149,7 +150,7 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
       </Hero>
       {c.EditModal}
       {c.AddToFeaturedModal}
-      {c.FlagModal}
+      {c.FlagModal && <Modal closeModal={c.toggleFlagModal}>{c.FlagModal}</Modal>}
     </HeroCont>
   );
 };

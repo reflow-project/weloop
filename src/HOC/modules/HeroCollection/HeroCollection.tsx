@@ -30,13 +30,9 @@ export const HeroCollection: FC<HeroCollection> = ({ collectionId, basePath }) =
       </Modal>
     ) : null;
 
-  const [isFlagging, toggleFlagging] = useReducer(is => !is, false);
+  const [isFlagging, toggleFlagModal] = useReducer(is => !is, false);
   const FlagModal =
-    collection && isFlagging ? (
-      <Modal closeModal={toggleFlagging}>
-        <FlagModalHOC done={toggleFlagging} ctx={collection} />
-      </Modal>
-    ) : null;
+    collection && isFlagging ? <FlagModalHOC done={toggleFlagModal} ctx={collection} /> : null;
 
   const [isAddingToFeatured, toggleAddToFeatured] = useReducer(is => isAdmin && !is, false);
   const AddToFeaturedModal =
@@ -79,7 +75,7 @@ export const HeroCollection: FC<HeroCollection> = ({ collectionId, basePath }) =
         showAddToFeatured: toggleAddToFeatured,
         AddToFeaturedModal,
 
-        showFlag: toggleFlagging,
+        toggleFlagModal,
         FlagModal
       }
     };
