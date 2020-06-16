@@ -8,6 +8,7 @@ import { FlagModalHOC } from 'HOC/modules/FlagModal/flagModalHOC';
 import React, { FC, useMemo, useReducer } from 'react';
 import HeroCollectionUI, { Props, Status } from 'ui/modules/HeroCollection';
 import Modal from 'ui/modules/Modal';
+import { useNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
 
 export interface HeroCollection {
   collectionId: Collection['id'];
@@ -22,7 +23,10 @@ export const HeroCollection: FC<HeroCollection> = ({ collectionId, basePath }) =
     onSubmit: toggleJoin
   });
 
-  const [isEditing, toggleEditing] = useReducer(is => !is, false);
+  const notifiedMustLogin = useNotifyMustLogin();
+  const [isEditing, toggleEditing] = useReducer(is => {
+    return !canModify || notifiedMustLogin() ? false : !is;
+  }, false);
   const EditModal =
     collection && isEditing ? (
       <Modal closeModal={toggleEditing}>
@@ -30,11 +34,15 @@ export const HeroCollection: FC<HeroCollection> = ({ collectionId, basePath }) =
       </Modal>
     ) : null;
 
-  const [isFlagging, toggleFlagModal] = useReducer(is => !is, false);
+  const [isFlagging, toggleFlagModal] = useReducer(is => {
+    return notifiedMustLogin() ? false : !is;
+  }, false);
   const FlagModal =
     collection && isFlagging ? <FlagModalHOC done={toggleFlagModal} ctx={collection} /> : null;
 
-  const [isAddingToFeatured, toggleAddToFeatured] = useReducer(is => isAdmin && !is, false);
+  const [isAddingToFeatured, toggleAddToFeatured] = useReducer(is => {
+    return !isAdmin || notifiedMustLogin() ? false : !is;
+  }, false);
   const AddToFeaturedModal =
     collection && isAddingToFeatured ? (
       <Modal closeModal={toggleAddToFeatured}>

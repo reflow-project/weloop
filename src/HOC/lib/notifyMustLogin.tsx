@@ -1,7 +1,8 @@
-import React, { useCallback, useMemo } from 'react';
-import { toast, ToastContent, ToastOptions } from 'react-toastify';
 import { useMe } from 'fe/session/useMe';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { toast, ToastContent, ToastOptions } from 'react-toastify';
+import { Trans } from '@lingui/macro';
 
 export interface Opts {
   content?: ToastContent | (() => ToastContent);
@@ -9,26 +10,35 @@ export interface Opts {
 }
 const defaultOpts: Opts = {
   content: () => (
-    <span>
+    <Trans>
       You need to <Link to="/login">login</Link> for that
-    </span>
+    </Trans>
   ),
   opts: { type: 'warning' }
 };
+
 export function useCallOrNotifyMustLogin<T, Args extends any[]>(
   _fn: (...args: Args) => Promise<T>,
   deps: any[],
   opts?: Opts
 ): (...args: Args) => Promise<T | null> {
-  const { me } = useMe();
-  const loggedIn = !!me?.user?.id;
   const fn = useCallback(_fn, deps);
-  const _opts = useMemo(() => ({ ...defaultOpts, ...opts }), [opts]);
-
+  const notify = useNotifyMustLogin(opts);
   return useCallback<(...args: Args) => Promise<T | null>>(
     async (...args: Args) => {
-      return loggedIn ? fn(...args) : (toast(_opts.content, _opts.opts), null);
+      return notify() ? null : fn(...args);
     },
-    [loggedIn, _opts, fn]
+    [fn, notify]
   );
 }
+
+export const useNotifyMustLogin = (options?: Opts) => {
+  const { me } = useMe();
+  const loggedIn = !!me?.user?.id;
+
+  return useCallback(() => {
+    const { content, opts } = { ...defaultOpts, ...options };
+    !loggedIn && toast(content, opts);
+    return !loggedIn;
+  }, [loggedIn, options]);
+};
