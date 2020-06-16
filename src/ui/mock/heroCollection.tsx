@@ -38,7 +38,7 @@ export const useGetHeroCollectionProps = (
       AddToFeaturedModal: null,
       FlagModal: null,
       showAddToFeatured: action('showAddToFeatured'),
-      showFlag: action('showFlag')
+      toggleFlagModal: action('showFlag')
     }
   };
 };
