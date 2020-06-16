@@ -3,12 +3,12 @@ import { Trans } from '@lingui/macro';
 import { clearFix, darken } from 'polished';
 import React, { FC } from 'react';
 import { Flag as FlagIcon, MoreVertical, Settings, Star } from 'react-feather';
-import { Link, NavLink } from 'react-router-dom';
+// import {  NavLink } from 'react-router-dom';
 import { Box, Flex, Text } from 'rebass/styled-components';
 import media from 'styled-media-query';
 import { FormikHook } from 'ui/@types/types';
 // import { useHistory } from 'react-router';
-import Avatar from 'ui/elements/Avatar';
+// import Avatar from 'ui/elements/Avatar';
 import Button from 'ui/elements/Button';
 import { MDComment } from 'ui/elements/Layout/comment';
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
@@ -63,21 +63,19 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
   ) : (
     <HeroCont>
       <Hero>
-        <Box sx={{ position: 'relative' }}>
-          <Background style={{ backgroundImage: `url("${c.icon}")` }} />
-          <Right>
+        {/* <Box sx={{ position: 'relative' }}> */}
+        {/* <Background style={{ backgroundImage: `url("${c.icon}")` }} /> */}
+        {/* <Right>
             <Link to={`/communities/${c.communityId}`}>
               <LinkImg>
                 <Avatar size="s" src={c.communityIcon} />
               </LinkImg>
               {/* <CommTitle variant="link">{c.communityName}</CommTitle> */}
-            </Link>
-          </Right>
-        </Box>
+        {/* </Link> */}
+        {/* </Right> */}
+        {/* </Box> */}
         <HeroInfo>
-          <Title fontSize={5} fontWeight={'bold'}>
-            {c.name}
-          </Title>
+          <Title fontWeight={'bold'}>{c.name}</Title>
           <Username mt={1} fontSize={2}>
             +{c.fullName}
           </Username>
@@ -86,14 +84,14 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
           </Box>
 
           <Info mt={2}>
-            <CountWrapper>
+            {/* <CountWrapper>
               <CountTot to={`${c.basePath}/followers`}>
                 <Text variant="suptitle">
                   <Total mr={2}>{c.followerCount}</Total>
                   <Trans>Followers</Trans>
                 </Text>
               </CountTot>
-            </CountWrapper>
+            </CountWrapper> */}
             <ActionsHero mt={3} alignItems={'center'}>
               <Button
                 variant={c.following ? 'danger' : 'primary'}
@@ -187,34 +185,35 @@ const AdminDropdownItem = styled(DropdownItem)`
   border-top: 1px solid ${props => darken('0.1', props.theme.colors.light)};
 `;
 
-const LinkImg = styled(Box)`
-  margin-right: 8px;
-  .--rtl & {
-    margin-right: 0px;
-    margin-left: 8px;
-  }
-  div {
-    border: 2px solid white;
-    min-width: 42px;
-    min-height: 42px;
-  }
-`;
-const Right = styled(Flex)`
-  align-items: center;
-  display: inline-block;
-  position: absolute;
-  left: 8px;
-  bottom: -18px
-  top: 106px;
-  a {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-  }
-`;
+// const LinkImg = styled(Box)`
+//   margin-right: 8px;
+//   .--rtl & {
+//     margin-right: 0px;
+//     margin-left: 8px;
+//   }
+//   div {
+//     border: 2px solid white;
+//     min-width: 42px;
+//     min-height: 42px;
+//   }
+// `;
+// const Right = styled(Flex)`
+//   align-items: center;
+//   display: inline-block;
+//   position: absolute;
+//   left: 8px;
+//   bottom: -18px
+//   top: 106px;
+//   a {
+//     text-decoration: none;
+//     display: flex;
+//     align-items: center;
+//   }
+// `;
 
 const Title = styled(Text)`
   color: ${props => props.theme.colors.darker};
+  font-size: 24px;
 `;
 
 const Username = styled(Text)`
@@ -228,7 +227,6 @@ const ActionsHero = styled(Flex)``;
 
 const HeroInfo = styled.div`
   flex: 1;
-  margin-left: 16px;
   position: relative;
   ${clearFix()};
   & h2 {
@@ -269,48 +267,48 @@ const Hero = styled(Flex)`
 `};
 `;
 
-const Background = styled.div`
-  height: 120px;
-  width: 120px;
-  border-radius: 4px;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-color: ${props => props.theme.colors.light};
-  position: relative;
-  margin: 0 auto;
-`;
+// const Background = styled.div`
+//   height: 120px;
+//   width: 120px;
+//   border-radius: 4px;
+//   background-size: cover;
+//   background-repeat: no-repeat;
+//   background-color: ${props => props.theme.colors.light};
+//   position: relative;
+//   margin: 0 auto;
+// `;
 
-const CountWrapper = styled(Flex)`
-  margin-top: 10px;
-  flex: 1;
-  > div {
-    display: flex;
-  }
-`;
+// const CountWrapper = styled(Flex)`
+//   margin-top: 10px;
+//   flex: 1;
+//   > div {
+//     display: flex;
+//   }
+// `;
 
-const CountTot = styled(NavLink)`
-  margin-top: 0px;
-  cursor: pointer;
-  cursor: pointer;
-  margin-right: 20px;
-  text-decoration: none;
-  ${clearFix()} & span {
-    margin-right: 4px;
-    float: left;
-    height: 32px;
-    line-height: 32px;
-    & svg {
-      vertical-align: middle;
-    }
-    .--rtl & {
-      float: right;
-      margin-right: 0px;
-      margin-left: 8px;
-    }
-  }
-`;
+// const CountTot = styled(NavLink)`
+//   margin-top: 0px;
+//   cursor: pointer;
+//   cursor: pointer;
+//   margin-right: 20px;
+//   text-decoration: none;
+//   ${clearFix()} & span {
+//     margin-right: 4px;
+//     float: left;
+//     height: 32px;
+//     line-height: 32px;
+//     & svg {
+//       vertical-align: middle;
+//     }
+//     .--rtl & {
+//       float: right;
+//       margin-right: 0px;
+//       margin-left: 8px;
+//     }
+//   }
+// `;
 
-const Total = styled(Text)`
-  display: inline-flex;
-  color: ${props => props.theme.colors.primary};
-`;
+// const Total = styled(Text)`
+//   display: inline-flex;
+//   color: ${props => props.theme.colors.primary};
+// `;

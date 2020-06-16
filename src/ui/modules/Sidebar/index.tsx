@@ -72,7 +72,7 @@ const Nav = styled(Box)`
 `;
 
 const CommunityLink = styled(NavLink)`
-  margin-bottom: 8px;
+  margin-bottom: 0px;
   img {
     width: 36px;
     height: 36px;
@@ -108,7 +108,7 @@ const SidebarLink = styled(NavLink)`
 
 const NavItem = styled(Flex)`
   border-radius: 4px;
-  padding: 8px;
+  padding: 0px 4px;
   &:hover {
     background: ${props => props.theme.colors.medium};
   }

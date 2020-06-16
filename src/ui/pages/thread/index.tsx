@@ -83,7 +83,7 @@ export const Thread: React.FC<Props> = ({
   );
 };
 
-const HeaderWrapper: React.FC<{ id: string; name: string; icon: string }> = ({
+export const HeaderWrapper: React.FC<{ id: string; name: string; icon: string }> = ({
   id,
   name,
   icon

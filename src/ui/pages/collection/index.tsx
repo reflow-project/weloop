@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro';
 import * as React from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
-import { Box, Flex } from 'rebass/styled-components';
+import { Flex, Text } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
 import Button from 'ui/elements/Button';
 import {
@@ -13,11 +13,13 @@ import {
   Wrapper,
   WrapperCont
 } from 'ui/elements/Layout';
-import { Header } from 'ui/modules/Header';
+// import { Header } from 'ui/modules/Header';
 import { LoadMore } from 'ui/modules/Loadmore';
 import Modal from 'ui/modules/Modal';
-import { SidePanel } from 'ui/modules/SidePanel';
+// import { SidePanel } from 'ui/modules/SidePanel';
 import styled from 'ui/themes/styled';
+import { WrapperPanel } from 'ui/elements/Panel';
+import { HeaderWrapper } from '../thread';
 
 export interface Props {
   ActivitiesBox: JSX.Element;
@@ -33,6 +35,9 @@ export interface Props {
   loadMoreResources: FormikHook | null;
   loadMoreFollowers: FormikHook | null;
   isCommunityMember: boolean;
+  communityId: string;
+  communityName: string;
+  communityIcon: string;
 }
 
 export const Collection: React.FC<Props> = ({
@@ -48,7 +53,10 @@ export const Collection: React.FC<Props> = ({
   loadMoreActivities,
   loadMoreResources,
   loadMoreFollowers,
-  isCommunityMember
+  isCommunityMember,
+  communityId,
+  communityName,
+  communityIcon
 }) => {
   const [isOpenEditCollection, setOpenEditCollection] = React.useState(false);
   const [isShareLinkOpen, setOpenShareLink] = React.useState(false);
@@ -63,14 +71,15 @@ export const Collection: React.FC<Props> = ({
       <HomeBox>
         <WrapperCont>
           <Wrapper>
-            <Header name={collectionName} />
+            {/* <Header name={collectionName} /> */}
             <Switch>
               <Route path={`${basePath}/followers`}>
-                <White>
-                  <FollowersMenu basePath={`${basePath}/followers`} />
+                <>
+                  {HeroCollectionBox}
+                  <Menu basePath={basePath} />
                   <ObjectsList>{FollowersBoxes}</ObjectsList>
                   {loadMoreFollowers && <LoadMore LoadMoreFormik={loadMoreFollowers} />}
-                </White>
+                </>
               </Route>
               <Route exact path={`${basePath}/`}>
                 <>
@@ -122,23 +131,33 @@ export const Collection: React.FC<Props> = ({
           </Wrapper>
         </WrapperCont>
       </HomeBox>
-      <SidePanel />
+      <WrapperPanel>
+        <TitleSection mb={2} variant="suptitle">
+          <Trans>Community</Trans>
+        </TitleSection>
+        <HeaderWrapper id={communityId} name={communityName} icon={communityIcon} />
+        {/* <SidePanel /> */}
+      </WrapperPanel>
     </MainContainer>
   );
 };
 export default Collection;
 
-const White = styled(Box)`
-  background: ${props => props.theme.colors.appInverse};
+const TitleSection = styled(Text)`
+  text-transform: capitalize;
 `;
 
-const FollowersMenu = ({ basePath }: { basePath: string }) => (
-  <MenuList m={2} p={2} pt={0}>
-    <NavLink exact to={`${basePath}`}>
-      Followers
-    </NavLink>
-  </MenuList>
-);
+// const White = styled(Box)`
+//   background: ${props => props.theme.colors.appInverse};
+// `;
+
+// const FollowersMenu = ({ basePath }: { basePath: string }) => (
+//   <MenuList m={2} p={2} pt={0}>
+//     <NavLink exact to={`${basePath}`}>
+//       Followers
+//     </NavLink>
+//   </MenuList>
+// );
 
 const Menu = ({ basePath }: { basePath: string }) => (
   <MenuList p={3} pt={3}>
@@ -147,6 +166,9 @@ const Menu = ({ basePath }: { basePath: string }) => (
     </NavLink> */}
     <NavLink exact to={`${basePath}/`}>
       <Trans>Resources</Trans>
+    </NavLink>
+    <NavLink exact to={`${basePath}/followers`}>
+      <Trans>Followers</Trans>
     </NavLink>
   </MenuList>
 );
