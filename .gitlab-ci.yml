@@ -25,8 +25,7 @@ default:
     - pip --cache-dir=.pip install awscli # for AWS api
     - if [ ! -z "$TX_TOKEN" ]; then pip --cache-dir=.pip install transifex-client ; else echo "Skipping..."; fi # install transifex cli
     #- rm -rf node_modules
-    - env
-    - which git
+    - export GIT_PYTHON_REFRESH=quiet
     - yarn # Install all JS dependencies
     # - make dev-l8n-extract # extract latest strings from source into English PO file for localisation
     - make dev-l8n-download #  pull all the latest localised PO files from transifex to be used by frontend
