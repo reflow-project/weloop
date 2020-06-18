@@ -136,9 +136,7 @@ export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
               'https://images.unsplash.com/photo-1562240020-ce31ccb0fa7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80'
             }
             name={'Interesting resources ;)'}
-            summary={
-              'A collection of copyrighted resources for your viewing pleasure!'
-            }
+            summary={'A collection of copyrighted resources for your viewing pleasure!'}
             totalResources={12}
             isFollowing={true}
             toggleFollowFormik={useFormik<{}>({
@@ -216,10 +214,10 @@ export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
               }),
               iLikeIt: true
             }}
+            collectionLink=""
+            collectionName="Collection name"
             isFlagged={true}
-            icon={
-              'http://cutcompcosts.com/wp-content/uploads/2014/06/Student-Teacher-Violence.jpg'
-            }
+            icon={'http://cutcompcosts.com/wp-content/uploads/2014/06/Student-Teacher-Violence.jpg'}
             name={'my teacher iz a loser'}
             summary={'mr james is rubbish and i dont lik him'}
             link={'anime.pdf'}
@@ -281,9 +279,7 @@ export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
         FlaggedItemContextElement={
           <User
             hideActions={true}
-            image={
-              'https://pbs.twimg.com/profile_images/1161428802091802627/O49Ggs-7_400x400.jpg'
-            }
+            image={'https://pbs.twimg.com/profile_images/1161428802091802627/O49Ggs-7_400x400.jpg'}
             bio={`I'm a cool user`}
             username={'@favbooks@abc.com'}
             name={'˗ˏˋ Doug Belshaw ˎˊ˗ '}

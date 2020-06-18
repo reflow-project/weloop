@@ -74,6 +74,8 @@ export function ResourcePreviewProps(
       iLikeIt: true,
       totalLikes: 5
     },
+    collectionLink: '',
+    collectionName: 'collectionName',
     summary,
     link: 'https://www.pinterest.it/topics/spacedrepetition/',
     type,
@@ -107,6 +109,8 @@ export function ResourcePreviewUploadedProps(
       iLikeIt: true,
       totalLikes: 5
     },
+    collectionLink: '',
+    collectionName: 'collectionName',
     summary,
     link: 'https://www.pinterest.it/topics/spacedrepetition/',
     type,
@@ -162,8 +166,7 @@ export function LikedCommentPreviewProps(
   return {
     ...useGetActions(),
     actor: {
-      icon:
-        'https://pbs.twimg.com/profile_images/1161428802091802627/O49Ggs-7_400x400.jpg',
+      icon: 'https://pbs.twimg.com/profile_images/1161428802091802627/O49Ggs-7_400x400.jpg',
       link: '1',
       name: '˗ˏˋ Doug Belshaw ˎˊ˗ '
     },
@@ -203,11 +206,7 @@ export function ThreadPreviewProps(
   };
 }
 
-export function FlaggedItemPreviewProps(
-  flag,
-  type = '',
-  reason = 'Abusive speech'
-): FlaggedProps {
+export function FlaggedItemPreviewProps(flag, type = '', reason = 'Abusive speech'): FlaggedProps {
   return {
     FlaggedItemContextElement: flag,
     blockUserFormik: useToggleFormik(),

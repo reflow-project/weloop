@@ -3,6 +3,7 @@ import { CollectionPageTab, CollectionPage } from 'HOC/pages/collection/Collecti
 import { NotFoundHOC } from 'HOC/pages/not-found/NotFound';
 import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { WithSidebarTemplate } from 'HOC/templates/WithSidebar/WithSidebar';
+import { locationHelper } from './lib/helper';
 
 interface CollectionPageRouter {
   collectionId: string;
@@ -43,6 +44,14 @@ const CollectionPageRouter: FC<RouteComponentProps<CollectionPageRouter>> = ({ m
 
 export const CollectionPageRoute: RouteProps = {
   exact: true,
-  path: '/collections/:collectionId/:tab?',
+  path: '/collections/:collectionId/:tab(followers)?',
   component: CollectionPageRouter
 };
+
+type Tab = undefined | 'followers';
+type Params = {
+  collectionId: string;
+  tab: Tab;
+};
+
+export const collectionLocation = locationHelper<Params, undefined>(CollectionPageRoute);

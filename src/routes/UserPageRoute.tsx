@@ -11,7 +11,7 @@ interface UserPageRouter {
 }
 const UserPageRouter: FC<RouteComponentProps<UserPageRouter>> = ({ match }) => {
   const userId = match.params.userId;
-  const maybeTabStr = match.params.tab;
+  const maybeTabStr = match.params.tab as Tab;
   const tab =
     maybeTabStr === 'starred'
       ? UserPageTab.Starred

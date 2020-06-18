@@ -10,6 +10,7 @@ import {
   Resource as ResourcePreviewUI
 } from 'ui/modules/Previews/Resource';
 import { ResourcePreviewFragment } from './ResourcePreview.generated';
+import { collectionLocation } from 'routes/CollectionPageRoute';
 
 export interface Props {
   resourceId: Resource['id'];
@@ -42,9 +43,7 @@ export const ResourcePreviewHOC: FC<Props> = ({ resourceId, flagged }) => {
     });
   }, [resource, toggleLikeFormik, flagged, LMSPrefsPanel]);
 
-  return (
-    resourcePreviewProps && <ResourcePreviewUI {...resourcePreviewProps} />
-  );
+  return resourcePreviewProps && <ResourcePreviewUI {...resourcePreviewProps} />;
 };
 
 export const resourceFragment2UIProps = (args: {
@@ -69,7 +68,12 @@ export const resourceFragment2UIProps = (args: {
     // sendToMoodle,
     MoodlePanel,
     type: resource.payload?.mediaType,
-    hideActions: hideActions
+    hideActions: hideActions,
+    collectionName: resource.collection?.name || '',
+    collectionLink: collectionLocation.getPath(
+      { collectionId: resource.collection?.id || '', tab: undefined },
+      undefined
+    )
   };
   return props;
 };
