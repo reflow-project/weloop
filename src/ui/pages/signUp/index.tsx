@@ -11,7 +11,7 @@ import { AlertCircle } from 'react-feather';
 import { AlertWrapper } from 'ui/modules/Modal';
 import { INVITE_ONLY_TEXT } from 'mn-constants';
 import media from 'styled-media-query';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import LogoContainer from 'ui/elements/Logo';
 
 let tt = {
@@ -46,18 +46,28 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername, regist
       {!formik.isSubmitting && formik.submitCount && registeredUsername && registeredEmail ? (
         <Box mt={3}>
           <LogoContainer />
-          <Text variant="suptitle">
-            <Trans>Welcome</Trans> <b>{registeredUsername}</b>
-          </Text>
-          <Text mt={2} variant="text">
-            <Trans>Please confirm your email address</Trans>
-            <b>{registeredEmail}</b>
-            <Trans>
-              by clicking on the link we emailed you (check your spam folder if necessary).
-            </Trans>
-          </Text>
-
-          <Alert variant="negative">{formik.errors.email}</Alert>
+          <Wrapper>
+            <Box>
+              <Text variant="suptitle">
+                <Trans>Welcome</Trans> <b>{registeredUsername}</b>
+              </Text>
+              <Text mt={2} variant="text">
+                <Trans>Please confirm your email address</Trans>
+                <b>{' ' + registeredEmail + ' '}</b>
+                <Trans>
+                  by clicking on the link we emailed you (check your spam folder if necessary).
+                </Trans>
+              </Text>
+            </Box>
+            <Browse>
+              <Link to={'/'}>
+                <Button mt={3} variant="primary">
+                  <Trans>Sign in</Trans>
+                </Button>
+              </Link>
+            </Browse>
+          </Wrapper>
+          >{/* <Alert variant="negative">{formik.errors.email}</Alert> */}
         </Box>
       ) : (
         <LoginWrapper>
@@ -192,6 +202,20 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername, regist
   );
 };
 export default SignUpPage;
+
+const Browse = styled(Box)`
+  text-align: center;
+  margin-top: 10px;
+`;
+
+const Wrapper = styled.div`
+  background: #fff;
+  border-radius: 4px;
+  height: inherit;
+  padding: 30px 20px;
+  text-align: center;
+  height: fit-content;
+`;
 
 const LoginWrapper = styled(Box)`
   ${media.lessThan('medium')`
