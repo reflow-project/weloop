@@ -15,16 +15,16 @@ export const Burger = ({ open, setOpen }) => {
   );
 };
 
-export const Menu = ({ open, Side, setOpen }) => {
+export const Menu = ({ open, Side, setOpen, image, name, username, signout }) => {
   return (
     <>
       {open && <Background onClick={() => setOpen(false)} />}
       <StyledMenu open={open}>
         <Profile>
           <User>
-            <Avatar size="s" initials="db" />
-            <Title>dougbelsh</Title>
-            <Username>@dougbelsh</Username>
+            <Avatar size="s" src={image} />
+            <Title>{name}</Title>
+            <Username>{username}</Username>
             <Span>
               <Settings size="24" strokeWidth={1} color={'#333'} />
             </Span>
@@ -35,7 +35,7 @@ export const Menu = ({ open, Side, setOpen }) => {
 
         <Bottom>
           <List>
-            <Item>
+            <Item onClick={signout}>
               <Power size={24} strokeWidth={1} color={'#333'} />
               <Box ml={2}>Sign out</Box>
             </Item>
