@@ -18,7 +18,7 @@ export const WithSidebarTemplate: FC<WithSidebarTemplate> = ({ children }) => {
       return null;
     }
     const userImage = user.icon?.url || '';
-    const userLink = userLocation.getUrl({ tab: undefined, userId: user.id }, undefined);
+    const userLink = userLocation.getPath({ tab: undefined, userId: user.id }, undefined);
     const props: SidebarProps = {
       SidebarBox: <SidebarHOC />,
       HeaderBox: <MainHeaderHOC />,
