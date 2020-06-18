@@ -83,15 +83,20 @@ export const HeroUser: FC<Props> = props => {
                 <More>
                   <MoreVertical size={20} onClick={() => props.setOpenDropdown(true)} />
                   {props.isOpenDropdown && (
-                    <Dropdown orientation={'bottom'} cb={props.setOpenDropdown}>
-                      <DropdownItem onClick={() => setOpenFlag(true)}>
-                        <Flag size={20} color={'rgb(101, 119, 134)'} />
-                        <Text sx={{ flex: 1 }} ml={2}>
-                          {!props.isFlagged ? <Trans>Flag</Trans> : <Trans>Unflag</Trans>}{' '}
-                          {props.displayUsername}
-                        </Text>
-                      </DropdownItem>
-                    </Dropdown>
+                    <RightDd>
+                      <Dropdown orientation={'bottom'} cb={props.setOpenDropdown}>
+                        <DropdownItem onClick={() => setOpenFlag(true)}>
+                          <Flag size={20} color={'rgb(101, 119, 134)'} />
+                          <Text sx={{ flex: 1 }} ml={2}>
+                            {!props.isFlagged ? (
+                              <Trans>Flag this user</Trans>
+                            ) : (
+                              <Trans>Unflag this user</Trans>
+                            )}{' '}
+                          </Text>
+                        </DropdownItem>
+                      </Dropdown>
+                    </RightDd>
                   )}
                 </More>
               </>
@@ -128,6 +133,13 @@ export const HeroUser: FC<Props> = props => {
     </ProfileBox>
   );
 };
+
+const RightDd = styled(Box)`
+  .dropdown {
+    right: 0;
+    left: auto;
+  }
+`;
 
 const AdminBadge = styled(Box)`
   padding: 1px 8px;

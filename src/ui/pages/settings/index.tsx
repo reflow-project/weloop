@@ -233,7 +233,7 @@ const SettingsWrapper = styled(Box)`
 
 const Sidebar = ({ basePath, isAdmin }) => {
   return (
-    <WrapperPanel ml={0} mr={2}>
+    <WrapperPanel mr={2}>
       <Panel>
         <Nav>
           <NavItem p={3} fontSize={1}>
@@ -242,7 +242,7 @@ const Sidebar = ({ basePath, isAdmin }) => {
                 <Icon className="icon" mr={1}>
                   <Sett size={20} />
                 </Icon>
-                General information
+                <Name>General information</Name>
               </Flex>
             </NavLink>
           </NavItem>
@@ -252,7 +252,7 @@ const Sidebar = ({ basePath, isAdmin }) => {
                 <Icon className="icon" mr={1}>
                   <Sliders size={20} />
                 </Icon>
-                Preferences
+                <Name>Preferences</Name>
               </Flex>
             </NavLink>
           </NavItem>
@@ -276,7 +276,7 @@ const Sidebar = ({ basePath, isAdmin }) => {
                     <Icon className="icon" mr={1}>
                       <Droplet size={20} />
                     </Icon>
-                    Instance
+                    <Name>Instance</Name>
                   </Flex>
                 </NavLink>
               </NavItem>
@@ -286,7 +286,7 @@ const Sidebar = ({ basePath, isAdmin }) => {
                     <Icon className="icon" mr={1}>
                       <Mail size={20} />
                     </Icon>
-                    Invites
+                    <Name>Invites</Name>
                   </Flex>
                 </NavLink>
               </NavItem>
@@ -297,7 +297,7 @@ const Sidebar = ({ basePath, isAdmin }) => {
                     <Icon className="icon" mr={1}>
                       <Flag size={20} />
                     </Icon>
-                    Flags
+                    <Name>Flags</Name>
                   </Flex>
                 </NavLink>
               </NavItem>
@@ -307,7 +307,7 @@ const Sidebar = ({ basePath, isAdmin }) => {
                     <Icon className="icon" mr={1}>
                       <Monitor size={20} />
                     </Icon>
-                    Moderation log
+                    <Name>Moderation log</Name>
                   </Flex>
                 </NavLink>
               </NavItem>
@@ -340,6 +340,12 @@ const Sidebar = ({ basePath, isAdmin }) => {
     </WrapperPanel>
   );
 };
+
+const Name = styled(Text)`
+  ${media.lessThan('medium')`
+display: none;
+`};
+`;
 
 const SectionTitle = styled(Flex)`
   border-top: 4px solid ${props => props.theme.colors.lighter};
@@ -416,10 +422,6 @@ const Location = styled(Flex)`
       stroke: ${props => props.theme.colors.medium};
       vertical-align: text-bottom;
     }
-    .--rtl & {
-      margin-left: 8px;
-      margin-right: 0px;
-    }
   }
 `;
 
@@ -435,10 +437,6 @@ const RelevantLink = styled(Flex)`
     & svg {
       stroke: ${props => props.theme.colors.medium};
       vertical-align: text-bottom;
-    }
-    .--rtl & {
-      margin-left: 8px;
-      margin-right: 0px;
     }
   }
 `;
@@ -513,9 +511,9 @@ export const WrapperPanel = styled(Flex)`
   ${media.lessThan('1095px')`
   width: 290px;
 `};
-  ${media.lessThan('1005px')`
-   display: none;
-  `};
+  ${media.lessThan('medium')`
+  width: 80px;
+`};
 `;
 
 export const Panel = styled(Box)`

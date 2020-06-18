@@ -28,9 +28,9 @@ export const HomeBox = styled(Flex)`
   padding: 0px;
   position: relative;
   z-index: 0;
-  ${media.lessThan('large')`
-    width: 100%;
-  `};
+  // ${media.lessThan('large')`
+  //   width: 100%;
+  // `};
 `;
 
 export const WrapperCont = styled(Flex)`
