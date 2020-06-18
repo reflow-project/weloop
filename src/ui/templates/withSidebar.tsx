@@ -2,26 +2,43 @@ import React from 'react';
 import { Box } from 'rebass/styled-components';
 import styled from 'ui/themes/styled';
 import media from 'styled-media-query';
-import { User, Home } from 'react-feather';
-import { NavLink } from 'react-router-dom';
+import { Home, ChevronLeft } from 'react-feather';
+import { NavLink, useHistory } from 'react-router-dom';
 import { Burger, Menu } from 'ui/modules/Burger';
+import Avatar from 'ui/elements/Avatar';
 
 export interface SidebarProps {
   SidebarBox: JSX.Element;
   HeaderBox: JSX.Element;
   SearchBox: JSX.Element;
+  userImage: string;
+  userLink: string;
+  username: string;
+  name: string;
+  signout(): any;
 }
 
 export const WithSidebar: React.FC<SidebarProps> = ({
   SidebarBox,
   HeaderBox,
   SearchBox,
-  children
+  children,
+  userImage,
+  userLink,
+  username,
+  name,
+  signout
 }) => {
   const [open, setOpen] = React.useState(false);
+  const history = useHistory();
   return (
     <Page>
-      <SearchBar>{SearchBox}</SearchBar>
+      <SearchBar>
+        <Icon onClick={() => history.goBack()}>
+          <ChevronLeft size="20" />
+        </Icon>
+        {SearchBox}
+      </SearchBar>
       <Header>{HeaderBox}</Header>
       <Wrapper>
         <Panel className="panel_sidebar">
@@ -34,7 +51,15 @@ export const WithSidebar: React.FC<SidebarProps> = ({
       <Footer>
         <FootWrapper>
           <Burger open={open} setOpen={setOpen} />
-          <Menu open={open} setOpen={setOpen} Side={SidebarBox} />
+          <Menu
+            username={username}
+            name={name}
+            userImage={userImage}
+            signout={signout}
+            open={open}
+            setOpen={setOpen}
+            Side={SidebarBox}
+          />
         </FootWrapper>
         <FootWrapper>
           <NavLink to="/">
@@ -42,12 +67,48 @@ export const WithSidebar: React.FC<SidebarProps> = ({
           </NavLink>
         </FootWrapper>
         <FootWrapper>
-          <User size="18" />
+          <Bavatar>
+            <NavLink to={userLink}>
+              <Avatar src={userImage} size="m" />
+            </NavLink>
+          </Bavatar>
         </FootWrapper>
       </Footer>
     </Page>
   );
 };
+
+const Bavatar = styled(Box)`
+  div {
+    max-width: 36px;
+    height: 36px;
+    min-width: 36px;
+    margin: 0 auto;
+    border-radius: 36px;
+    margin-top: 15px;
+  }
+`;
+
+const Icon = styled(Box)`
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  min-width: 40px;
+  border-radius: 40px;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  &:hover {
+    background: ${props => props.theme.colors.lighter};
+    svg {
+      stroke: ${props => props.theme.colors.primary};
+    }
+  }
+  svg {
+    stroke: ${props => props.theme.colors.mediumdark};
+    margin: 0 auto;
+  }
+`;
 
 const SearchBar = styled(Box)`
 height: 75px;
@@ -55,6 +116,8 @@ line-height: 75px;
 text-align: center;
 background: ${props => props.theme.colors.appInverse}
 border-bottom: ${props => props.theme.colors.border};
+display: flex;
+align-items: center;
 input {
   width: 100%;
   font-size: 13px;
@@ -70,7 +133,9 @@ input {
   height: auto;
   margin: 0;
   width: auto;
-  margin: 0 32px;
+  margin: 0;
+  margin-right: 24px;
+  flex:1;
 }
 ${media.greaterThan('medium')`
     display: none;

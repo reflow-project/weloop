@@ -1,6 +1,10 @@
 import styled from 'ui/themes/styled';
-import React from 'react';
-import { Box } from 'rebass/styled-components';
+import React, { FC } from 'react';
+import { Box, Flex } from 'rebass/styled-components';
+import { Power, Settings } from 'react-feather';
+import Avatar from 'ui/elements/Avatar';
+import { NavLink } from 'react-router-dom';
+// import  Button  from 'ui/elements/Button';
 
 export const Burger = ({ open, setOpen }) => {
   return (
@@ -11,15 +15,110 @@ export const Burger = ({ open, setOpen }) => {
     </StyledBurger>
   );
 };
-
-export const Menu = ({ open, Side, setOpen }) => {
+export interface MenuProps {
+  open: boolean;
+  Side: JSX.Element;
+  setOpen(_: boolean): any;
+  userImage: string;
+  name: string;
+  username: string;
+  signout(): any;
+}
+export const Menu: FC<MenuProps> = ({
+  open,
+  Side,
+  setOpen,
+  userImage,
+  name,
+  username,
+  signout
+}) => {
   return (
     <>
       {open && <Background onClick={() => setOpen(false)} />}
-      <StyledMenu open={open}>{Side}</StyledMenu>
+      <StyledMenu open={open}>
+        <Profile>
+          <User>
+            <Avatar size="s" src={userImage} />
+            <Title>{name}</Title>
+            <Username>{username}</Username>
+            <Span to={'/settings'}>
+              <Settings size="24" strokeWidth={1} color={'#333'} />
+            </Span>
+          </User>
+          {/* <Button variant="primary">Create a new community</Button> */}
+        </Profile>
+        <Communities>{Side}</Communities>
+
+        <Bottom>
+          <List>
+            <Item onClick={signout}>
+              <Power size={24} strokeWidth={1} color={'#333'} />
+              <Box ml={2}>Sign out</Box>
+            </Item>
+          </List>
+        </Bottom>
+      </StyledMenu>
     </>
   );
 };
+
+const Bottom = styled(Box)``;
+const Profile = styled(Box)`
+  padding: 16px;
+  border-bottom: ${props => props.theme.colors.border};
+`;
+const User = styled(Box)`
+  position: relative;
+  > div:first-of-type {
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+  }
+`;
+
+const Span = styled(NavLink)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  line-height: initial;
+`;
+const Title = styled(Box)`
+  line-height: initial;
+  margin-top: 8px;
+  font-size: 22px;
+  font-weight: 700;
+  color: ${props => props.theme.colors.dark};
+`;
+const Username = styled(Box)`
+  line-height: initial;
+  margin-top: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: ${props => props.theme.colors.mediumdark};
+`;
+const Communities = styled(Box)``;
+
+const List = styled.div<{ lined?: boolean }>`
+  border-top: ${props => props.theme.colors.border};
+`;
+const Item = styled(Flex)`
+  line-height: 50px;
+  height: 50px;
+  cursor: pointer;
+  align-items: center;
+  & span {
+    display: inline-block;
+    margin-right: 8px;
+  }
+  & a {
+    color: inherit !important;
+    text-decoration: none;
+  }
+  &:hover {
+    color: ${props => props.theme.colors.primary};
+  }
+`;
 
 const Background = styled(Box)<{ open: boolean }>`
   z-index: 99998;
@@ -81,7 +180,7 @@ export const StyledMenu = styled.nav<{ open: boolean }>`
   background: ${({ theme }) => theme.colors.appInverse};
   height: calc(100vh - 75px);
   text-align: left;
-  padding: 2rem;
+  // padding: 2rem;
   position: absolute;
   z-index: 999999999999;
   top: 0;

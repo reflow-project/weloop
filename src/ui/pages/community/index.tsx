@@ -4,6 +4,8 @@ import { NavLink, Route, Switch } from 'react-router-dom';
 import { Box, Flex, Text } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
 import Button from 'ui/elements/Button';
+import media from 'styled-media-query';
+
 import {
   HomeBox,
   List,
@@ -116,10 +118,11 @@ export const Community: React.FC<Props> = ({
                 </>
               </Route>
               <Route path={`${basePath}/members`}>
-                <Container>
-                  <FollowersMenu basePath={`${basePath}/members`} />
+                <>
+                  {HeroCommunityBox}
+                  <Menu basePath={basePath} />
                   <ObjectsList>{FollowersBoxes}</ObjectsList>
-                </Container>
+                </>
               </Route>
             </Switch>
           </Wrapper>
@@ -137,15 +140,22 @@ const CollectionsBoxes = styled(Box)`
   row-gap: 16px;
   margin: 16px;
   margin-bottom: 24px !important;
+  ${media.lessThan('medium')`
+  grid-template-columns: 1fr;
+  > div {
+    margin: 0 auto;
+    width: 300px;
+  }
+  `}
 `;
 
-const FollowersMenu = ({ basePath }: { basePath: string }) => (
-  <MenuList m={2}>
-    <NavLink exact to={`${basePath}`}>
-      Members
-    </NavLink>
-  </MenuList>
-);
+// const FollowersMenu = ({ basePath }: { basePath: string }) => (
+//   <MenuList m={2}>
+//     <NavLink exact to={`${basePath}`}>
+//       Members
+//     </NavLink>
+//   </MenuList>
+// );
 
 const Menu = ({ basePath }: { basePath: string }) => (
   <MenuList p={3} pt={0}>
@@ -154,6 +164,7 @@ const Menu = ({ basePath }: { basePath: string }) => (
       Collections
     </NavLink>
     <NavLink to={`${basePath}/discussions`}>Discussions</NavLink>
+    <NavLink to={`${basePath}/members`}>Members</NavLink>
   </MenuList>
 );
 
@@ -177,9 +188,9 @@ const Title = styled(Flex)`
   }
 `;
 
-const Container = styled(Box)`
-  background: ${props => props.theme.colors.appInverse};
-`;
+// const Container = styled(Box)`
+//   background: ${props => props.theme.colors.appInverse};
+// `;
 
 const WrapSocialText = styled(Box)`
   background: ${props => props.theme.colors.appInverse};
