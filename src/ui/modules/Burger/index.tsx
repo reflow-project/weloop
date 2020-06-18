@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import { Box, Flex } from 'rebass/styled-components';
 import { Power, Settings } from 'react-feather';
 import Avatar from 'ui/elements/Avatar';
+import { NavLink } from 'react-router-dom';
 // import  Button  from 'ui/elements/Button';
 
 export const Burger = ({ open, setOpen }) => {
@@ -41,7 +42,7 @@ export const Menu: FC<MenuProps> = ({
             <Avatar size="s" src={userImage} />
             <Title>{name}</Title>
             <Username>{username}</Username>
-            <Span>
+            <Span to={'/settings'}>
               <Settings size="24" strokeWidth={1} color={'#333'} />
             </Span>
           </User>
@@ -76,7 +77,7 @@ const User = styled(Box)`
   }
 `;
 
-const Span = styled(Box)`
+const Span = styled(NavLink)`
   position: absolute;
   top: 0;
   right: 0;
