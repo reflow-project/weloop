@@ -9,20 +9,27 @@ import { SearchBox } from 'HOC/modules/SearchBox/SearchBox';
 
 export interface WithSidebarTemplate {}
 export const WithSidebarTemplate: FC<WithSidebarTemplate> = ({ children }) => {
-  const { loading, me } = useMe();
+  const { loading, me, logout } = useMe();
 
   const withSidebarProps = useMemo<null | SidebarProps>(() => {
     const user = me?.user;
     if (!user || loading) {
       return null;
     }
+    const userImage = user.icon?.url || '';
+    const userLink = `/user/${user.id}`;
     const props: SidebarProps = {
       SidebarBox: <SidebarHOC />,
       HeaderBox: <MainHeaderHOC />,
-      SearchBox: <SearchBox />
+      SearchBox: <SearchBox />,
+      userImage,
+      userLink,
+      signout: logout,
+      username: user.displayUsername || '',
+      name: user.preferredUsername || ''
     };
     return props;
-  }, [loading, me]);
+  }, [loading, logout, me]);
   // console.log('withSidebarProps', withSidebarProps);
   return withSidebarProps ? (
     <ProvideSideBarContext>

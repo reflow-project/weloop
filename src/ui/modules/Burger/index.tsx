@@ -1,5 +1,5 @@
 import styled from 'ui/themes/styled';
-import React from 'react';
+import React, { FC } from 'react';
 import { Box, Flex } from 'rebass/styled-components';
 import { Power, Settings } from 'react-feather';
 import Avatar from 'ui/elements/Avatar';
@@ -14,15 +14,31 @@ export const Burger = ({ open, setOpen }) => {
     </StyledBurger>
   );
 };
-
-export const Menu = ({ open, Side, setOpen, image, name, username, signout }) => {
+export interface MenuProps {
+  open: boolean;
+  Side: JSX.Element;
+  setOpen(_: boolean): any;
+  userImage: string;
+  name: string;
+  username: string;
+  signout(): any;
+}
+export const Menu: FC<MenuProps> = ({
+  open,
+  Side,
+  setOpen,
+  userImage,
+  name,
+  username,
+  signout
+}) => {
   return (
     <>
       {open && <Background onClick={() => setOpen(false)} />}
       <StyledMenu open={open}>
         <Profile>
           <User>
-            <Avatar size="s" src={image} />
+            <Avatar size="s" src={userImage} />
             <Title>{name}</Title>
             <Username>{username}</Username>
             <Span>

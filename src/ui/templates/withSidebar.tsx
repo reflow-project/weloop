@@ -12,6 +12,10 @@ export interface SidebarProps {
   HeaderBox: JSX.Element;
   SearchBox: JSX.Element;
   userImage: string;
+  userLink: string;
+  username: string;
+  name: string;
+  signout(): any;
 }
 
 export const WithSidebar: React.FC<SidebarProps> = ({
@@ -19,7 +23,11 @@ export const WithSidebar: React.FC<SidebarProps> = ({
   HeaderBox,
   SearchBox,
   children,
-  userImage
+  userImage,
+  userLink,
+  username,
+  name,
+  signout
 }) => {
   const [open, setOpen] = React.useState(false);
   const history = useHistory();
@@ -43,7 +51,15 @@ export const WithSidebar: React.FC<SidebarProps> = ({
       <Footer>
         <FootWrapper>
           <Burger open={open} setOpen={setOpen} />
-          <Menu open={open} setOpen={setOpen} Side={SidebarBox} />
+          <Menu
+            username={username}
+            name={name}
+            userImage={userImage}
+            signout={signout}
+            open={open}
+            setOpen={setOpen}
+            Side={SidebarBox}
+          />
         </FootWrapper>
         <FootWrapper>
           <NavLink to="/">
@@ -52,7 +68,9 @@ export const WithSidebar: React.FC<SidebarProps> = ({
         </FootWrapper>
         <FootWrapper>
           <Bavatar>
-            <Avatar src={userImage} size="m" />
+            <NavLink to={userLink}>
+              <Avatar src={userImage} size="m" />
+            </NavLink>
           </Bavatar>
         </FootWrapper>
       </Footer>
