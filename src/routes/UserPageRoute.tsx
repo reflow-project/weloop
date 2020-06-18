@@ -3,6 +3,7 @@ import { UserPage, UserPageTab } from 'HOC/pages/user/UserPage';
 import { NotFoundHOC } from 'HOC/pages/not-found/NotFound';
 import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { WithSidebarTemplate } from 'HOC/templates/WithSidebar/WithSidebar';
+import { locationHelp } from './lib/helper';
 
 interface UserPageRouter {
   userId: string;
@@ -48,6 +49,14 @@ const UserPageRouter: FC<RouteComponentProps<UserPageRouter>> = ({ match }) => {
 
 export const UserPageRoute: RouteProps = {
   exact: true,
-  path: '/user/:userId/:tab?',
+  path: '/user/:userId/:tab(starred|communities|collections|following)?',
   component: UserPageRouter
 };
+
+type Tab = undefined | 'starred' | 'communities' | 'collections' | 'following';
+type Params = {
+  userId: string;
+  tab: Tab;
+};
+
+export const userLocation = locationHelp<Params, undefined>(UserPageRoute);

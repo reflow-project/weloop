@@ -5,9 +5,7 @@ import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { RedirectAuthenticatedToHome } from './wrappers/RedirectBySession';
 
 interface LoginPageRouter {}
-const LoginPageRouter: FC<RouteComponentProps<LoginPageRouter>> = ({
-  match
-}) => {
+const LoginPageRouter: FC<RouteComponentProps<LoginPageRouter>> = ({ match }) => {
   return (
     <RedirectAuthenticatedToHome>
       <GuestTemplate withoutHeader>

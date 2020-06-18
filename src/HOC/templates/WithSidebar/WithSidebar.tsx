@@ -6,6 +6,7 @@ import { SidebarProps, WithSidebar } from 'ui/templates/withSidebar';
 import { GuestTemplate } from '../Guest/Guest';
 import { ProvideSideBarContext } from 'HOC/context/SideBar';
 import { SearchBox } from 'HOC/modules/SearchBox/SearchBox';
+import { userLocation } from 'routes/UserPageRoute';
 
 export interface WithSidebarTemplate {}
 export const WithSidebarTemplate: FC<WithSidebarTemplate> = ({ children }) => {
@@ -17,7 +18,7 @@ export const WithSidebarTemplate: FC<WithSidebarTemplate> = ({ children }) => {
       return null;
     }
     const userImage = user.icon?.url || '';
-    const userLink = `/user/${user.id}`;
+    const userLink = userLocation.getUrl({ tab: undefined, userId: user.id }, undefined);
     const props: SidebarProps = {
       SidebarBox: <SidebarHOC />,
       HeaderBox: <MainHeaderHOC />,
