@@ -4,8 +4,10 @@ import styled from 'ui/themes/styled';
 import media from 'styled-media-query';
 import { Burger, Menu } from 'ui/modules/Burger';
 import { NavLink, useHistory } from 'react-router-dom';
-import { Home, ChevronLeft } from 'react-feather';
+import { ChevronLeft } from 'react-feather';
 import Avatar from 'ui/elements/Avatar';
+import { Image } from 'rebass';
+import { logo_small_url } from 'mn-constants';
 
 export interface Props {
   SidebarBox: JSX.Element;
@@ -58,7 +60,9 @@ export const WithoutSidebar: React.FC<Props> = ({
         </FootWrapper>
         <FootWrapper>
           <NavLink to="/">
-            <Home size="18" />
+            <Logo>
+              <Image src={logo_small_url} />
+            </Logo>
           </NavLink>
         </FootWrapper>
         <FootWrapper>
@@ -72,6 +76,15 @@ export const WithoutSidebar: React.FC<Props> = ({
     </Page>
   );
 };
+
+const Logo = styled(Box)`
+  img {
+    width: 36px;
+    height: 36px;
+    border-radius: 36px;
+    margin-top: 15px;
+  }
+`;
 
 const Icon = styled(Box)`
   cursor: pointer;

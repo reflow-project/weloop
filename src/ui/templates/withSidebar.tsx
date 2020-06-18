@@ -2,10 +2,12 @@ import React from 'react';
 import { Box } from 'rebass/styled-components';
 import styled from 'ui/themes/styled';
 import media from 'styled-media-query';
-import { Home, ChevronLeft } from 'react-feather';
+import { ChevronLeft } from 'react-feather';
 import { NavLink, useHistory } from 'react-router-dom';
 import { Burger, Menu } from 'ui/modules/Burger';
 import Avatar from 'ui/elements/Avatar';
+import { Image } from 'rebass';
+import { logo_small_url } from 'mn-constants';
 
 export interface SidebarProps {
   SidebarBox: JSX.Element;
@@ -63,7 +65,10 @@ export const WithSidebar: React.FC<SidebarProps> = ({
         </FootWrapper>
         <FootWrapper>
           <NavLink to="/">
-            <Home size="18" />
+            <Logo>
+              <Image src={logo_small_url} />
+            </Logo>
+            {/* <Home size="18" /> */}
           </NavLink>
         </FootWrapper>
         <FootWrapper>
@@ -77,6 +82,15 @@ export const WithSidebar: React.FC<SidebarProps> = ({
     </Page>
   );
 };
+
+const Logo = styled(Box)`
+  img {
+    width: 36px;
+    height: 36px;
+    border-radius: 36px;
+    margin-top: 15px;
+  }
+`;
 
 const Bavatar = styled(Box)`
   div {
