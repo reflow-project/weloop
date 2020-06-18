@@ -64,5 +64,5 @@ const NavWrapper = styled(Box)`
 
 const SearchWrapper = styled(Box)`
   background: ${props => props.theme.colors.appInverse};
-  width: 600px;
+  max-width: 600px;
 `;

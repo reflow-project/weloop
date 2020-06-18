@@ -3,6 +3,7 @@ import Alert from 'ui/elements/Alert/index';
 import { X } from 'react-feather';
 import styled from 'ui/themes/styled';
 import { Box } from 'rebass';
+import media from 'styled-media-query';
 
 export const TopMessage: React.FC = () => {
   const [show, setShow] = React.useState(true);
@@ -39,4 +40,13 @@ export const TopMessage: React.FC = () => {
 const AlertWrap = styled(Box)`
   position: absolute;
   z-index: 9;
+  left: 50%;
+  width: 250px;
+  margin-left: -125px !important;
+  ${media.greaterThan('medium')`
+    top 10px;
+  `}
+  ${media.lessThan('medium')`
+    top 50%;
+  `}
 `;

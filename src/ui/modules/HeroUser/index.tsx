@@ -8,7 +8,7 @@ import { Trans } from '@lingui/macro';
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
 import { FormikHook } from 'ui/@types/types';
 import Modal from 'ui/modules/Modal';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 import { MDComment } from 'ui/elements/Layout/comment';
 
 export enum Status {
@@ -64,11 +64,7 @@ export const HeroUser: FC<Props> = props => {
           </WrapperHero>
           <HeroAction mr={2}>
             {props.me ? (
-              <NavLink exact to={'/settings/'}>
-                <Button mr={2} variant={'outline'}>
-                  <Trans>Edit Profile</Trans>
-                </Button>
-              </NavLink>
+              <></>
             ) : (
               <>
                 <Button

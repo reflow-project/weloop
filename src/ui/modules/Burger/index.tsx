@@ -1,7 +1,7 @@
 import styled from 'ui/themes/styled';
 import React, { FC } from 'react';
 import { Box, Flex } from 'rebass/styled-components';
-import { Power, Settings } from 'react-feather';
+import { Settings, LogOut } from 'react-feather';
 import Avatar from 'ui/elements/Avatar';
 import { NavLink } from 'react-router-dom';
 // import  Button  from 'ui/elements/Button';
@@ -48,12 +48,13 @@ export const Menu: FC<MenuProps> = ({
           </User>
           {/* <Button variant="primary">Create a new community</Button> */}
         </Profile>
+
         <Communities>{Side}</Communities>
 
         <Bottom>
           <List>
             <Item onClick={signout}>
-              <Power size={24} strokeWidth={1} color={'#333'} />
+              <LogOut size={18} />
               <Box ml={2}>Sign out</Box>
             </Item>
           </List>
@@ -64,6 +65,7 @@ export const Menu: FC<MenuProps> = ({
 };
 
 const Bottom = styled(Box)``;
+
 const Profile = styled(Box)`
   padding: 16px;
   border-bottom: ${props => props.theme.colors.border};
@@ -97,16 +99,29 @@ const Username = styled(Box)`
   font-weight: 500;
   color: ${props => props.theme.colors.mediumdark};
 `;
-const Communities = styled(Box)``;
+const Communities = styled(Box)`
+  overflow: scroll;
+  padding: 16px;
+`;
 
 const List = styled.div<{ lined?: boolean }>`
-  border-top: ${props => props.theme.colors.border};
+  border-top: 1px solid ${props => props.theme.colors.medium};
 `;
 const Item = styled(Flex)`
-  line-height: 50px;
-  height: 50px;
+  line-height: 60px;
+  height: 60px;
   cursor: pointer;
   align-items: center;
+  margin: 0 auto;
+  text-align: center;
+  width: 100px;
+  svg {
+    stroke: ${props => props.theme.colors.dark};
+  }
+  div {
+    font-weight: 600;
+    color: ${props => props.theme.colors.dark};
+  }
   & span {
     display: inline-block;
     margin-right: 8px;
@@ -180,7 +195,6 @@ export const StyledMenu = styled.nav<{ open: boolean }>`
   background: ${({ theme }) => theme.colors.appInverse};
   height: calc(100vh - 75px);
   text-align: left;
-  // padding: 2rem;
   position: absolute;
   z-index: 999999999999;
   top: 0;
@@ -189,8 +203,9 @@ export const StyledMenu = styled.nav<{ open: boolean }>`
   right: 16px;
   transition: transform 0.3s ease-in-out;
   transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
-  overflow: scroll;
-
+  // overflow: scroll;
+  display: grid;
+  grid-template-rows: 160px 1fr 60px;
   @media (max-width: ${({ theme }) => theme.mobile}) {
     width: 100%;
   }

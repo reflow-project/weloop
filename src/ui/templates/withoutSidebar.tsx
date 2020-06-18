@@ -3,18 +3,42 @@ import { Box } from 'rebass/styled-components';
 import styled from 'ui/themes/styled';
 import media from 'styled-media-query';
 import { Burger, Menu } from 'ui/modules/Burger';
-import { NavLink } from 'react-router-dom';
-import { Home, User } from 'react-feather';
+import { NavLink, useHistory } from 'react-router-dom';
+import { Home, ChevronLeft } from 'react-feather';
+import Avatar from 'ui/elements/Avatar';
 
 export interface Props {
+  SidebarBox: JSX.Element;
   HeaderBox: JSX.Element;
+  SearchBox: JSX.Element;
+  userImage: string;
+  userLink: string;
+  username: string;
+  name: string;
+  signout(): any;
 }
-export const WithoutSidebar: React.FC<Props> = ({ children, HeaderBox }) => {
+export const WithoutSidebar: React.FC<Props> = ({
+  SidebarBox,
+  HeaderBox,
+  SearchBox,
+  children,
+  userImage,
+  userLink,
+  username,
+  name,
+  signout
+}) => {
   const [open, setOpen] = React.useState(false);
+  const history = useHistory();
 
   return (
     <Page>
-      <SearchBar></SearchBar>
+      <SearchBar>
+        <Icon onClick={() => history.goBack()}>
+          <ChevronLeft size="20" />
+        </Icon>
+        {SearchBox}
+      </SearchBar>
       <Header>{HeaderBox}</Header>
       <Wrapper>
         <CenteredWrapper>{children}</CenteredWrapper>
@@ -22,7 +46,15 @@ export const WithoutSidebar: React.FC<Props> = ({ children, HeaderBox }) => {
       <Footer>
         <FootWrapper>
           <Burger open={open} setOpen={setOpen} />
-          <Menu open={open} setOpen={setOpen} Side={<></>} />
+          <Menu
+            username={username}
+            name={name}
+            userImage={userImage}
+            signout={signout}
+            open={open}
+            setOpen={setOpen}
+            Side={SidebarBox}
+          />
         </FootWrapper>
         <FootWrapper>
           <NavLink to="/">
@@ -30,12 +62,48 @@ export const WithoutSidebar: React.FC<Props> = ({ children, HeaderBox }) => {
           </NavLink>
         </FootWrapper>
         <FootWrapper>
-          <User size="18" />
+          <Bavatar>
+            <NavLink to={userLink}>
+              <Avatar src={userImage} size="m" />
+            </NavLink>
+          </Bavatar>
         </FootWrapper>
       </Footer>
     </Page>
   );
 };
+
+const Icon = styled(Box)`
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  min-width: 40px;
+  border-radius: 40px;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  &:hover {
+    background: ${props => props.theme.colors.lighter};
+    svg {
+      stroke: ${props => props.theme.colors.primary};
+    }
+  }
+  svg {
+    stroke: ${props => props.theme.colors.mediumdark};
+    margin: 0 auto;
+  }
+`;
+
+const Bavatar = styled(Box)`
+  div {
+    max-width: 36px;
+    height: 36px;
+    min-width: 36px;
+    margin: 0 auto;
+    border-radius: 36px;
+    margin-top: 15px;
+  }
+`;
 
 const Header = styled(Box)`
   ${media.lessThan('medium')`
@@ -49,6 +117,8 @@ line-height: 75px;
 text-align: center;
 background: ${props => props.theme.colors.appInverse}
 border-bottom: ${props => props.theme.colors.border};
+display: flex;
+align-items: center;
 input {
   width: 100%;
   font-size: 13px;
@@ -64,7 +134,9 @@ input {
   height: auto;
   margin: 0;
   width: auto;
-  margin: 0 32px;
+  margin: 0;
+  margin-right: 24px;
+  flex:1;
 }
 ${media.greaterThan('medium')`
     display: none;

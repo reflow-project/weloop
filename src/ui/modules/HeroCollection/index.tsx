@@ -262,10 +262,6 @@ const Hero = styled(Flex)`
   width: 100%;
   position: relative;
   padding: 16px;
-  ${media.lessThan('medium')`
-  text-align: center;
-  display: block;
-`};
 `;
 
 // const Background = styled.div`
