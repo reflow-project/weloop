@@ -12,6 +12,7 @@ import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
 import Modal from 'ui/modules/Modal';
 import { typography } from 'mn-constants';
 import { Search } from './Collection';
+import { NavLink } from 'react-router-dom';
 // import {Link} from 'react-router-dom'
 
 // const LicenseIcon0 = require('./cc-zero.png');
@@ -38,6 +39,8 @@ export interface Props {
   MoodlePanel: null | React.ComponentType<{ done(): unknown }>;
   hideActions?: boolean;
   isSearch?: boolean;
+  collectionLink: string;
+  collectionName: string;
   // sendToMoodle:null|(()=>unknown)
 }
 
@@ -46,6 +49,8 @@ export const Resource: React.FC<Props> = ({
   name,
   summary,
   link,
+  collectionLink,
+  collectionName,
   like,
   isFile,
   license,
@@ -116,7 +121,9 @@ export const Resource: React.FC<Props> = ({
         </Infos>
       </Wrapper>
       <Meta>
-        <Collection ml={2}></Collection>
+        <Collection ml={2}>
+          Added in <NavLink to={collectionLink}> +{collectionName}</NavLink>
+        </Collection>
         {hideActions ? null : (
           <Actions>
             {like && (
@@ -197,6 +204,12 @@ const Meta = styled(Flex)`
 
 const Collection = styled(Flex)`
   flex: 1;
+  font-size: 13px;
+  a {
+    text-decoration: underline;
+    font-weight: 600;
+    color: ${props => props.theme.colors.dark};
+  }
 `;
 
 const Summary = styled(Text)`
