@@ -82,7 +82,7 @@ export const MenuList = styled(Flex)`
   border-bottom: ${props => props.theme.colors.border};
   border-top: ${props => props.theme.colors.border};
   height: 60px;
-  // margin-top: 16px;
+  overflow: overlay;
   padding: 12px 8px;
   background: ${props => props.theme.colors.appInverse};
   a {

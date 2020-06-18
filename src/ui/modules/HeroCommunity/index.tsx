@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro';
-import { clearFix, darken } from 'polished';
+import { darken } from 'polished';
 import React, { ComponentType, FC } from 'react';
 import { Settings, MoreVertical, Flag, Star } from 'react-feather';
 import { Box, Flex, Text } from 'rebass/styled-components';
@@ -9,7 +9,7 @@ import Modal from 'ui/modules/Modal';
 import Button from 'ui/elements/Button';
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
 import { FormikHook } from 'ui/@types/types';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 // import { MDComment } from 'ui/elements/Layout/comment';
 import Markdown from 'markdown-to-jsx';
 
@@ -75,14 +75,6 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
             </Box>
           )}
           <Info mt={3}>
-            <InfoCommunity>
-              {/* <Badge mr={2}>Featured</Badge> */}
-              <MembersTot to={`${c.basePath}/members`}>
-                <Text variant="suptitle">
-                  <Total mr={2}>{c.totalMembers}</Total> <Trans>Members</Trans>
-                </Text>
-              </MembersTot>
-            </InfoCommunity>
             <Actions>
               <Button
                 mr={2}
@@ -157,9 +149,9 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
   );
 };
 
-const InfoCommunity = styled(Flex)`
-  align-items: center;
-`;
+// const InfoCommunity = styled(Flex)`
+//   align-items: center;
+// `;
 
 const RightDd = styled(Box)`
   .dropdown {
@@ -202,9 +194,9 @@ const Info = styled(Flex)`
   align-items: center;
   justify-content: space-between;
 `;
-const Total = styled(Text)`
-  color: ${props => props.theme.colors.primary};
-`;
+// const Total = styled(Text)`
+//   color: ${props => props.theme.colors.primary};
+// `;
 
 const Title = styled(Text)`
   color: ${props => props.theme.colors.darker};
@@ -224,33 +216,33 @@ const Username = styled(Text)`
   font-size: 14px;
 `;
 
-const MembersTot = styled(NavLink)`
-  margin-top: 0px;
-  cursor: pointer;
-  cursor: pointer;
-  text-decoration: none;
-  * {
-    text-decoration: none;
-  }
-  flex: 1;
-  > div {
-    display: flex;
-  }
-  ${clearFix()} & span {
-    margin-right: 4px;
-    float: left;
-    height: 32px;
-    line-height: 32px;
-    & svg {
-      vertical-align: middle;
-    }
-    .--rtl & {
-      float: right;
-      margin-right: 0px;
-      margin-left: 8px;
-    }
-  }
-`;
+// const MembersTot = styled(NavLink)`
+//   margin-top: 0px;
+//   cursor: pointer;
+//   cursor: pointer;
+//   text-decoration: none;
+//   * {
+//     text-decoration: none;
+//   }
+//   flex: 1;
+//   > div {
+//     display: flex;
+//   }
+//   ${clearFix()} & span {
+//     margin-right: 4px;
+//     float: left;
+//     height: 32px;
+//     line-height: 32px;
+//     & svg {
+//       vertical-align: middle;
+//     }
+//     .--rtl & {
+//       float: right;
+//       margin-right: 0px;
+//       margin-left: 8px;
+//     }
+//   }
+// `;
 
 const Hero = styled(Box)`
   width: 100%;
@@ -270,9 +262,9 @@ const Background = styled.div`
   margin: 0 auto;
   border-radius: 4px;
   background-position: center center;
-  ${media.lessThan('medium')`
-    display: none;
-`};
+//   ${media.lessThan('medium')`
+//     display: none;
+// `};
 `;
 
 const HeroInfo = styled.div`
