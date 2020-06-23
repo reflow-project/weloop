@@ -11,9 +11,10 @@ import {
   ObjectsList,
   CollectionsWrapper
 } from 'ui/elements/Layout';
+import { ReactElement } from 'react';
 
 export interface Props {
-  CollectionsBoxes: JSX.Element;
+  CollectionsBoxes: ReactElement;
   LoadMoreFormik: FormikHook;
 }
 

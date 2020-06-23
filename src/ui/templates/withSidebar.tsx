@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Box } from 'rebass/styled-components';
 import styled from 'ui/themes/styled';
 import media from 'styled-media-query';
@@ -10,9 +10,9 @@ import { Image } from 'rebass';
 import { logo_small_url } from 'mn-constants';
 
 export interface SidebarProps {
-  SidebarBox: JSX.Element;
-  HeaderBox: JSX.Element;
-  SearchBox: JSX.Element;
+  SidebarBox: ReactElement;
+  HeaderBox: ReactElement;
+  SearchBox: ReactElement;
   userImage: string;
   userLink: string;
   username: string;

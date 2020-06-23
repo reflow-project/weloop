@@ -20,12 +20,13 @@ import Modal from 'ui/modules/Modal';
 import styled from 'ui/themes/styled';
 import { WrapperPanel } from 'ui/elements/Panel';
 import { HeaderWrapper } from '../thread';
+import { ReactElement } from 'react';
 
 export interface Props {
-  ActivitiesBox: JSX.Element;
-  ResourcesBox: JSX.Element;
-  HeroCollectionBox: JSX.Element;
-  FollowersBoxes: JSX.Element;
+  ActivitiesBox: ReactElement;
+  ResourcesBox: ReactElement;
+  HeroCollectionBox: ReactElement;
+  FollowersBoxes: ReactElement;
   ShareLinkBox: React.ComponentType<{ done(): any }>;
   EditCollectionPanel: React.ComponentType<{ done(): any }>;
   UploadResourcePanel: React.ComponentType<{ done(): any }>;

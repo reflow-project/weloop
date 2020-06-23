@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'ui/themes/styled';
 import { XCircle, Slash, Flag } from 'react-feather';
 
@@ -12,7 +12,7 @@ import { darken } from 'polished';
 import { typography } from 'mn-constants';
 
 export interface FlaggedProps {
-  FlaggedItemContextElement: JSX.Element;
+  FlaggedItemContextElement: ReactElement;
   blockUserFormik: FormikHook;
   deleteContentFormik: FormikHook;
   ignoreFlagFormik: FormikHook;

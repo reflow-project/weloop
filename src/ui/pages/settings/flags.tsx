@@ -5,9 +5,10 @@ import { Row } from 'ui/modules/Modal';
 // import DropzoneArea from 'ui/modules/DropzoneModal';
 import { FormikHook } from 'ui/@types/types';
 import { LoadMore } from 'ui/modules/Loadmore';
+import { ReactElement } from 'react';
 
 export interface Props {
-  FlagsBox: JSX.Element;
+  FlagsBox: ReactElement;
   loadMoreFlags: FormikHook | null;
 }
 

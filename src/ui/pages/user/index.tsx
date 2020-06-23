@@ -18,14 +18,15 @@ import {
 import { Nav, NavItem, Panel, PanelTitle, WrapperPanel } from 'ui/elements/Panel';
 import { LoadMore } from 'ui/modules/Loadmore';
 import styled from 'ui/themes/styled';
+import { ReactElement } from 'react';
 
 export interface Props {
-  ActivityBoxes: JSX.Element;
-  LikesBoxes: JSX.Element; // FIX ME remove ? after add LikesBoxes at HOC
-  HeroUserBox: JSX.Element;
-  CommunityBoxes: JSX.Element;
-  CollectionsBoxes: JSX.Element;
-  UserBoxes: JSX.Element;
+  ActivityBoxes: ReactElement;
+  LikesBoxes: ReactElement; // FIX ME remove ? after add LikesBoxes at HOC
+  HeroUserBox: ReactElement;
+  CommunityBoxes: ReactElement;
+  CollectionsBoxes: ReactElement;
+  UserBoxes: ReactElement;
   basePath: string;
   totalCommunities: string;
   totalActivities: string;

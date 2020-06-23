@@ -1,7 +1,7 @@
 import { LocaleContext } from 'context/global/localizationCtx';
 import { logo_small_url, prompt_signin } from 'mn-constants';
 import { darken, ellipsis } from 'polished';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { ChevronDown, ChevronLeft } from 'react-feather';
 // import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
@@ -22,7 +22,7 @@ export interface Props {
     isAdmin: boolean;
     logout(): unknown;
   };
-  Search: JSX.Element;
+  Search: ReactElement;
   toggleSideBar(): unknown;
   createCommunity(): unknown;
   isOpenDropdown: boolean;

@@ -17,14 +17,15 @@ import { FormikHook } from 'ui/@types/types';
 
 import { LoadMore } from 'ui/modules/Loadmore';
 import { SidePanel } from 'ui/modules/SidePanel';
+import { ReactElement } from 'react';
 
 export interface Props {
   basePath: string;
-  FeaturedCommunitiesBox: JSX.Element;
-  FeaturedCollectionsBox: JSX.Element;
-  ActivitiesBox: JSX.Element;
-  CommunitiesBoxes: JSX.Element;
-  CollectionsBoxes: JSX.Element;
+  FeaturedCommunitiesBox: ReactElement;
+  FeaturedCollectionsBox: ReactElement;
+  ActivitiesBox: ReactElement;
+  CommunitiesBoxes: ReactElement;
+  CollectionsBoxes: ReactElement;
   LoadMoreFormik: FormikHook | null;
 }
 export const Discover: React.FC<Props> = ({

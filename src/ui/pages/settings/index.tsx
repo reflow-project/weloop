@@ -24,6 +24,7 @@ import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout
 import DropzoneArea from 'ui/modules/DropzoneModal';
 import { Actions, ContainerForm } from 'ui/modules/Modal';
 import styled from 'ui/themes/styled';
+import { ReactElement } from 'react';
 
 const tt = {
   placeholders: {
@@ -48,11 +49,11 @@ export interface Props {
   basePath: string;
   displayUsername: string;
   isAdmin: boolean;
-  Preferences: JSX.Element;
-  Instance: JSX.Element;
-  Invites: JSX.Element;
-  Flags: JSX.Element;
-  ModerationLog: JSX.Element;
+  Preferences: ReactElement;
+  Instance: ReactElement;
+  Invites: ReactElement;
+  Flags: ReactElement;
+  ModerationLog: ReactElement;
 }
 
 export interface EditProfile {
