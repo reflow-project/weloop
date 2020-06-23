@@ -13,16 +13,16 @@ export interface CollectionBase {
   icon: string;
 }
 
-interface CollectionProps {
+export interface CollectionProps {
   collection: CollectionBase;
-  isAdmin: boolean;
+  canEdit: boolean;
   isEditing: boolean;
   remove(): unknown;
 }
-const CollectionSmall: React.FC<CollectionProps> = ({ collection, isAdmin, isEditing, remove }) => {
+const CollectionSmall: React.FC<CollectionProps> = ({ collection, canEdit, isEditing, remove }) => {
   return (
     <Wrapper py={1} mb={2} mr={3}>
-      {isAdmin && isEditing ? (
+      {canEdit && isEditing ? (
         <Remove onClick={remove}>
           <X color="#fff" size={16} />
         </Remove>
