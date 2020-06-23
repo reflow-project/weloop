@@ -50,7 +50,7 @@ const ItemButton = styled(Item)`
 
 export interface Props {
   logout(): void;
-  setOpenDropdown: any;
+  toggleDropdown: any;
   userLink: string;
   createCommunity: any;
   isAdmin: boolean;
@@ -59,13 +59,13 @@ export interface Props {
 export const DropdownSidebar: React.FC<Props> = ({
   logout,
   userLink,
-  setOpenDropdown,
+  toggleDropdown,
   isAdmin,
   createCommunity
 }) => {
   const { push } = useHistory();
   return (
-    <Dropdown orientation={'top'} cb={setOpenDropdown}>
+    <Dropdown orientation={'top'} cb={toggleDropdown}>
       <List lined>
         <Item variant="link" onClick={() => push(userLink)}>
           <span>

@@ -1,10 +1,6 @@
-import React from 'react';
-import {
-  LoadedMe as HeroUserProps,
-  Status,
-  LoadedOther
-} from 'ui/modules/HeroUser';
+import { LoadedMe as HeroUserProps, Status, LoadedOther } from 'ui/modules/HeroUser';
 import { useToggleFormik } from './formik';
+import { action } from '@storybook/addon-actions';
 
 export const useGetHeroUserProps = (
   me = false,
@@ -26,9 +22,6 @@ export const useGetHeroUserProps = (
       icon,
       me: true,
       isFlagged: false,
-      FlagModal: ({ done }) => {
-        return <></>;
-      },
       isAdmin: false,
       location,
       summary
@@ -45,11 +38,9 @@ export const useGetHeroUserProps = (
       image,
       icon,
       isFlagged: false,
-      FlagModal: ({ done }) => {
-        return <></>;
-      },
+      flag: action('flag user'),
       isOpenDropdown: false,
-      setOpenDropdown: () => console.log('test'),
+      toggleDropdown: action('toggle Dropdown'),
       toggleFollowFormik,
       location,
       summary

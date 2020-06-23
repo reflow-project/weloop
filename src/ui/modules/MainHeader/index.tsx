@@ -1,18 +1,18 @@
-import React, { ComponentType } from 'react';
-import styled from 'ui/themes/styled';
+import { LocaleContext } from 'context/global/localizationCtx';
+import { logo_small_url, prompt_signin } from 'mn-constants';
+import { darken, ellipsis } from 'polished';
+import React from 'react';
+import { ChevronDown, ChevronLeft } from 'react-feather';
 // import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
-import { ChevronLeft, ChevronDown } from 'react-feather';
-import { Flex, Text, Box } from 'rebass/styled-components';
+import { Link } from 'react-router-dom';
+import { Box, Flex, Text } from 'rebass/styled-components';
+import media from 'styled-media-query';
 // import {Input} from '@rebass/forms'
 import Avatar from 'ui/elements/Avatar';
+import styled from 'ui/themes/styled';
 // import Avatar from 'ui/elements/Avatar';
 import { DropdownSidebar } from './dropdown';
-import media from 'styled-media-query';
-import { ellipsis, darken } from 'polished';
-import { Link } from 'react-router-dom';
-import { prompt_signin, logo_small_url } from 'mn-constants';
-import { LocaleContext } from 'context/global/localizationCtx';
 
 export interface Props {
   user: null | {
@@ -24,17 +24,14 @@ export interface Props {
   };
   Search: JSX.Element;
   toggleSideBar(): unknown;
-  CreateCommunityModal: ComponentType<{ done(): unknown }>;
+  createCommunity(): unknown;
+  isOpenDropdown: boolean;
+  toggleDropdown(): unknown;
 }
 
 export const MainHeader: React.FC<Props> = props => {
   const history = useHistory();
   const { i18n } = React.useContext(LocaleContext);
-  const [isOpenDropdown, setOpenDropdown] = React.useState(false);
-  const [isOpenCreateCommunity, setOpenCreateCommunity] = React.useState(false);
-  const openMenu = React.useCallback(() => setOpenDropdown(true), []);
-  const openCreateCommunity = React.useCallback(() => setOpenCreateCommunity(true), []);
-  const closeCreateCommunity = React.useCallback(() => setOpenCreateCommunity(false), []);
   return (
     <HeaderWrapper>
       <Container>
@@ -55,7 +52,11 @@ export const MainHeader: React.FC<Props> = props => {
         </Left>
         <Header alignItems={'center'}>
           {props.user ? (
-            <NavItem sx={{ position: 'relative' }} alignItems="center" onClick={openMenu}>
+            <NavItem
+              sx={{ position: 'relative' }}
+              alignItems="center"
+              onClick={props.toggleDropdown}
+            >
               <Avatar
                 size="s"
                 initials={props.user.name.substring(0, 2)}
@@ -68,13 +69,13 @@ export const MainHeader: React.FC<Props> = props => {
               <Right ml={2}>
                 <ChevronDown size="20" />
               </Right>
-              {isOpenDropdown && (
+              {props.isOpenDropdown && (
                 <DropdownSidebar
                   isAdmin={props.user.isAdmin}
-                  createCommunity={openCreateCommunity}
+                  createCommunity={props.createCommunity}
                   logout={props.user.logout}
                   userLink={props.user.link}
-                  setOpenDropdown={setOpenDropdown}
+                  toggleDropdown={props.toggleDropdown}
                 />
               )}
             </NavItem>
@@ -88,7 +89,6 @@ export const MainHeader: React.FC<Props> = props => {
             </Box>
           )}
         </Header>
-        {isOpenCreateCommunity && <props.CreateCommunityModal done={closeCreateCommunity} />}
       </Container>
     </HeaderWrapper>
   );

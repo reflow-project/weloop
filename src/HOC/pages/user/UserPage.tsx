@@ -100,7 +100,7 @@ export const UserPage: FC<UserPage> = ({ userId, basePath, tab }) => {
             preview
           };
           // console.log(activityProps, likesPage);
-          return <ActivityPreview {...activityProps} />;
+          return <ActivityPreview {...activityProps} key={activityContext.id} />;
         })}
       </>
     );
