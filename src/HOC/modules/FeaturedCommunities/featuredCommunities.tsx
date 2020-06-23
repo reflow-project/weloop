@@ -1,6 +1,6 @@
 import { useInstanceFeaturedCommunities } from 'fe/instance/featuredCommunities/useInstanceFeaturedCommunities';
 import { useMe } from 'fe/session/useMe';
-import React, { FC, useMemo, useReducer, useState } from 'react';
+import React, { FC, useMemo, useReducer, useState, ReactElement } from 'react';
 import {
   FeaturedCommunities as FeaturedCommunitiesUI,
   FeaturedCommunitiesData
@@ -21,7 +21,7 @@ export const FeaturedCommunities: FC<FeaturedCommunities> = () => {
     setSelectedFeatureToRemove
   ] = useState<CommunityFeatureFragment | null>(null);
 
-  const featuredCommunities = useMemo<JSX.Element[]>(
+  const featuredCommunities = useMemo<ReactElement[]>(
     () =>
       featuredCommunitiesPage.edges
         .map(feature => {
@@ -41,7 +41,7 @@ export const FeaturedCommunities: FC<FeaturedCommunities> = () => {
           };
           return <CommunitySmall key={communityFragment.id} {...props} />;
         })
-        .filter((_): _ is JSX.Element => !!_),
+        .filter((_): _ is ReactElement => !!_),
     [featuredCommunitiesPage.edges, isAdmin, isEditing]
   );
 

@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro';
-import React, { SFC, useRef } from 'react';
+import React, { SFC, useRef, ReactElement } from 'react';
 import Slider from 'react-slick';
 import { Box, Flex } from 'rebass';
 import 'slick-carousel/slick/slick-theme.css';
@@ -71,7 +71,7 @@ const ActionItem = styled(Flex)`
 
 export interface FeaturedCollectionsData {
   canEdit: boolean;
-  featuredCollections: JSX.Element[];
+  featuredCollections: ReactElement[];
   toggleEdit(): any;
   isEditing: boolean;
 }

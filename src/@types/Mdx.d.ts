@@ -1,5 +1,5 @@
 declare module '*.mdx' {
-  let MDXComponent: (props: any) => JSX.Element;
+  let MDXComponent: (props: any) => ReactElement;
   export default MDXComponent;
 }
 declare module '@mdx-js/react' {
@@ -30,7 +30,7 @@ declare module '@mdx-js/react' {
     | 'a'
     | 'img';
   export type Components = {
-    [key in ComponentType]?: React.ComponentType<{ children: React.ReactNode }>
+    [key in ComponentType]?: React.ComponentType<{ children: React.ReactNode }>;
   };
   export interface MDXProviderProps {
     children: React.ReactNode;

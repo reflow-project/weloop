@@ -1,6 +1,6 @@
 import { useInstanceFeaturedCollections } from 'fe/instance/featuredCollections/useInstanceFeaturedCollections';
 import { useMe } from 'fe/session/useMe';
-import React, { FC, useMemo, useReducer, useState } from 'react';
+import React, { FC, useMemo, useReducer, useState, ReactElement } from 'react';
 import {
   FeaturedCollections as FeaturedCollectionsUI,
   FeaturedCollectionsData
@@ -21,7 +21,7 @@ export const FeaturedCollections: FC<FeaturedCollections> = () => {
     setSelectedFeatureToRemove
   ] = useState<CollectionFeatureFragment | null>(null);
 
-  const featuredCollections = useMemo<JSX.Element[]>(
+  const featuredCollections = useMemo<ReactElement[]>(
     () =>
       featuredCollectionsPage.edges
         .map(feature => {
@@ -42,7 +42,7 @@ export const FeaturedCollections: FC<FeaturedCollections> = () => {
           };
           return <CollectionSmall key={collectionFragment.id} {...props} />;
         })
-        .filter((_): _ is JSX.Element => !!_),
+        .filter((_): _ is ReactElement => !!_),
     [featuredCollectionsPage.edges, isAdmin, isEditing]
   );
 

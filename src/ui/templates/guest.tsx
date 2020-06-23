@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Box } from 'rebass/styled-components';
 import styled from 'ui/themes/styled';
 import { useHistory } from 'react-router';
@@ -8,8 +8,8 @@ import media from 'styled-media-query';
 import { Link } from 'react-router-dom';
 
 export interface Props {
-  HeaderBox?: JSX.Element;
-  SearchBox: JSX.Element;
+  HeaderBox?: ReactElement;
+  SearchBox: ReactElement;
 }
 export const Guest: React.FC<Props> = ({ children, HeaderBox, SearchBox }) => {
   const history = useHistory();

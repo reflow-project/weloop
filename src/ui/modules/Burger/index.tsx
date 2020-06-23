@@ -1,5 +1,5 @@
 import styled from 'ui/themes/styled';
-import React, { FC } from 'react';
+import React, { FC, ReactElement } from 'react';
 import { Box, Flex } from 'rebass/styled-components';
 import { Settings, LogOut } from 'react-feather';
 import Avatar from 'ui/elements/Avatar';
@@ -17,7 +17,7 @@ export const Burger = ({ open, setOpen }) => {
 };
 export interface MenuProps {
   open: boolean;
-  Side: JSX.Element;
+  Side: ReactElement;
   setOpen(_: boolean): any;
   userImage: string;
   name: string;

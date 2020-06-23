@@ -23,6 +23,7 @@ import { Resource } from 'ui/modules/Previews/Resource';
 import { Props, Search } from 'ui/pages/search';
 import { useLMSGQL } from 'fe/lib/moodleLMS/useSendToMoodle';
 import { useInstanceInfoQuery } from 'fe/instance/info/useInstanceInfo.generated';
+import { ReactElement } from 'react';
 
 const _SearchPageHOC: React.FC<{ hits: Hit[] }> = ({ hits }) => {
   // console.log(hits);
@@ -41,7 +42,7 @@ const _SearchPageHOC: React.FC<{ hits: Hit[] }> = ({ hits }) => {
             return null;
           }
         })
-        .filter((_): _ is JSX.Element => !!_),
+        .filter((_): _ is ReactElement => !!_),
     [hits]
   );
 

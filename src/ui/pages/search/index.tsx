@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro';
-import React, { SFC } from 'react';
+import React, { SFC, ReactElement } from 'react';
 import { Box } from 'rebass/styled-components';
 import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
 import { Nav, Panel, PanelTitle, WrapperPanel } from 'ui/elements/Panel';
@@ -7,9 +7,9 @@ import { Header } from 'ui/modules/Header';
 import styled from 'ui/themes/styled';
 
 export interface Props {
-  previews: JSX.Element[];
-  Pagination: JSX.Element;
-  Filter: JSX.Element;
+  previews: ReactElement[];
+  Pagination: ReactElement;
+  Filter: ReactElement;
 }
 
 export const Search: SFC<Props> = ({ previews, Pagination, Filter }) => {

@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro';
 import { DateTime } from 'luxon';
 import { clearFix } from 'polished';
-import React, { FC } from 'react';
+import React, { FC, ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Flex, Text } from 'rebass/styled-components';
 import Avatar from 'ui/elements/Avatar';
@@ -26,7 +26,7 @@ export interface Activity {
   commentActor?: Actor;
   event: string;
   threadUrl?: string;
-  preview: JSX.Element;
+  preview: ReactElement;
   communityLink: string;
   communityName: string;
 }

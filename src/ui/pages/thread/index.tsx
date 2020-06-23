@@ -12,6 +12,7 @@ import SocialText from 'ui/modules/SocialText';
 import { i18nMark } from '@lingui/react';
 import { Trans } from '@lingui/react';
 import { LocaleContext } from '../../../context/global/localizationCtx';
+import { ReactElement } from 'react';
 
 const tt = {
   placeholders: {
@@ -23,9 +24,9 @@ export interface ReplyActions {
   replyFormik: FormikHook<{ replyMessage: string }>;
 }
 export interface Props {
-  MainThread: JSX.Element;
-  Comments: JSX.Element;
-  Context: JSX.Element;
+  MainThread: ReactElement;
+  Comments: ReactElement;
+  Context: ReactElement;
   communityId: string;
   communityName: string;
   communityIcon: string;

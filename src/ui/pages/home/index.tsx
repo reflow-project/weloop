@@ -15,14 +15,15 @@ import {
 import { LoadMore } from 'ui/modules/Loadmore';
 import { SidePanel } from 'ui/modules/SidePanel';
 import styled from 'ui/themes/styled';
+import { ReactElement } from 'react';
 
 export interface Props {
   // nextCommunitiesFormik?: FormikHook;
   // nextCollectionsFormik?: FormikHook;
   nextInboxFormik: FormikHook | null;
-  // FollowedCommunitiesElements: JSX.Element;
-  // FollowedCollectionsElements: JSX.Element;
-  InboxElements: JSX.Element;
+  // FollowedCommunitiesElements: ReactElement;
+  // FollowedCollectionsElements: ReactElement;
+  InboxElements: ReactElement;
   basePath: string;
 }
 

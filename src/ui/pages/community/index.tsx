@@ -21,14 +21,15 @@ import Modal from 'ui/modules/Modal';
 import { SidePanel } from 'ui/modules/SidePanel';
 import SocialText from 'ui/modules/SocialText';
 import styled from 'ui/themes/styled';
+import { ReactElement } from 'react';
 
 export interface Props {
   isJoined: boolean;
-  ActivitiesBox: JSX.Element;
-  FollowersBoxes: JSX.Element;
-  CollectionsBox: JSX.Element;
-  HeroCommunityBox: JSX.Element;
-  ThreadsBox: JSX.Element;
+  ActivitiesBox: ReactElement;
+  FollowersBoxes: ReactElement;
+  CollectionsBox: ReactElement;
+  HeroCommunityBox: ReactElement;
+  ThreadsBox: ReactElement;
   communityName: string;
   basePath: string;
   newThreadFormik: null | FormikHook<{ text: string }>;
