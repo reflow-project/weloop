@@ -1,17 +1,16 @@
 import { Trans } from '@lingui/macro';
-import { darken } from 'polished';
-import React, { ComponentType, FC } from 'react';
-import { Settings, MoreVertical, Flag, Star } from 'react-feather';
-import { Box, Flex, Text } from 'rebass/styled-components';
-import media from 'styled-media-query';
-import styled from 'ui/themes/styled';
-import Modal from 'ui/modules/Modal';
-import Button from 'ui/elements/Button';
-import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
-import { FormikHook } from 'ui/@types/types';
 // import { NavLink } from 'react-router-dom';
 // import { MDComment } from 'ui/elements/Layout/comment';
 import Markdown from 'markdown-to-jsx';
+import { darken } from 'polished';
+import React, { FC } from 'react';
+import { Flag, MoreVertical, Settings, Star } from 'react-feather';
+import { Box, Flex, Text } from 'rebass/styled-components';
+import media from 'styled-media-query';
+import { FormikHook } from 'ui/@types/types';
+import Button from 'ui/elements/Button';
+import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
+import styled from 'ui/themes/styled';
 
 export enum Status {
   Loading,
@@ -33,9 +32,15 @@ export interface CommunityLoaded {
   isFlagged: boolean;
   canModify: boolean;
   toggleJoinFormik: FormikHook;
-  EditCommunityPanel: ComponentType<{ done(): any }>;
-  FlagModal: ComponentType<{ done(): any }>;
-  FeaturedModal: ComponentType<{ done(): any }>;
+
+  edit(): any;
+
+  flag(): any;
+
+  addToFeatured(): any;
+
+  isOpenDropdown: boolean;
+  toggleDropdown(): any;
 }
 
 export interface CommunityLoading {
@@ -47,11 +52,6 @@ export interface Props {
 }
 
 export const HeroCommunity: FC<Props> = ({ community: c }) => {
-  const [isOpenSettings, setOpenSettings] = React.useState(false);
-  const [isOpenDropdown, setOpenDropdown] = React.useState(false);
-  const [isOpenFlag, setOpenFlag] = React.useState(false);
-  const [isOpenFeatured, setOpenFeatured] = React.useState(false);
-
   return c.status === Status.Loading ? (
     <Text>Loading...</Text>
   ) : (
@@ -85,20 +85,20 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
               >
                 {c.following ? <Trans>Leave</Trans> : <Trans>Join</Trans>}
               </Button>
-              <More onClick={() => setOpenDropdown(true)}>
+              <More onClick={c.toggleDropdown}>
                 <MoreVertical size={20} />
-                {isOpenDropdown && (
+                {c.isOpenDropdown && (
                   <RightDd>
-                    <Dropdown orientation={'bottom'} cb={setOpenDropdown}>
+                    <Dropdown orientation={'bottom'} cb={c.toggleDropdown}>
                       {c.canModify && (
-                        <DropdownItem onClick={() => setOpenSettings(true)}>
+                        <DropdownItem onClick={c.edit}>
                           <Settings size={20} color={'rgb(101, 119, 134)'} />
                           <Text sx={{ flex: 1 }} ml={2}>
                             <Trans>Edit the community</Trans>
                           </Text>
                         </DropdownItem>
                       )}
-                      <DropdownItem onClick={() => setOpenFlag(true)}>
+                      <DropdownItem onClick={c.flag}>
                         <Flag size={20} color={'rgb(101, 119, 134)'} />
                         <Text sx={{ flex: 1 }} ml={2}>
                           {!c.isFlagged ? (
@@ -109,7 +109,7 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
                         </Text>
                       </DropdownItem>
                       {c.isAdmin ? (
-                        <AdminDropdownItem onClick={() => setOpenFeatured(true)}>
+                        <AdminDropdownItem onClick={c.addToFeatured}>
                           <Star size={20} color={'rgb(211, 103, 5)'} />
                           <Text sx={{ flex: 1 }} ml={2}>
                             {
@@ -130,21 +130,6 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
           </Info>
         </HeroInfo>
       </Hero>
-      {isOpenSettings && (
-        <Modal closeModal={() => setOpenSettings(false)}>
-          <c.EditCommunityPanel done={() => setOpenSettings(false)} />
-        </Modal>
-      )}
-      {isOpenFlag && (
-        <Modal closeModal={() => setOpenFlag(false)}>
-          <c.FlagModal done={() => setOpenFlag(false)} />
-        </Modal>
-      )}
-      {isOpenFeatured && c.FeaturedModal && c.isAdmin && (
-        <Modal closeModal={() => setOpenFeatured(false)}>
-          <c.FeaturedModal done={() => setOpenFeatured(false)} />
-        </Modal>
-      )}
     </>
   );
 };

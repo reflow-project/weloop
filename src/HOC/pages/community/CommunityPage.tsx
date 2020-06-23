@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import { Community } from 'graphql/types.generated';
 import { ActivityPreviewHOC } from 'HOC/modules/previews/activity/ActivityPreview';
 import { CreateCollectionPanelHOC } from 'HOC/modules/CreateCollectionPanel/createCollectionPanelHOC';
-import { HeroCommunity } from 'HOC/modules/HeroCommunity/HeroCommuity';
+import { HeroCommunity } from 'HOC/modules/HeroCommunity/HeroCommunity';
 import { CollectionPreviewHOC } from 'HOC/modules/previews/collection/CollectionPreview';
 import { ThreadPreviewHOC } from 'HOC/modules/previews/thread/ThreadPreview';
 import React, { FC, useMemo } from 'react';

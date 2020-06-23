@@ -1,9 +1,9 @@
-import React from 'react';
 import {
   Props as HeroCommunityProps,
   Status as HeroCommunityStatus
 } from 'ui/modules/HeroCommunity';
 import { useToggleFormik } from './formik';
+import { action } from '@storybook/addon-actions';
 
 export const useGetHeroCommunityProps = (
   isCreator = false,
@@ -30,9 +30,11 @@ export const useGetHeroCommunityProps = (
       summary,
       totalMembers: 193,
       toggleJoinFormik: useToggleFormik(),
-      EditCommunityPanel: ({ done }) => <></>,
-      FlagModal: ({ done }) => <></>,
-      FeaturedModal: () => <></>
+      isOpenDropdown: false,
+      toggleDropdown: action('toggleDropdown'),
+      edit: action('editCollection'),
+      addToFeatured: action('showAddToFeatured'),
+      flag: action('showFlag')
     }
   };
 };

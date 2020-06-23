@@ -1,15 +1,14 @@
-import React, { ComponentType, FC } from 'react';
-import { Box, Text, Flex } from 'rebass/styled-components';
-import { MapPin, MoreVertical, Flag } from 'react-feather';
-import styled from 'ui/themes/styled';
-import media from 'styled-media-query';
-import Button from 'ui/elements/Button';
 import { Trans } from '@lingui/macro';
-import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
+import React, { FC } from 'react';
+import { Flag, MapPin, MoreVertical } from 'react-feather';
+import { Box, Flex, Text } from 'rebass/styled-components';
+import media from 'styled-media-query';
 import { FormikHook } from 'ui/@types/types';
-import Modal from 'ui/modules/Modal';
+import Button from 'ui/elements/Button';
 // import { NavLink } from 'react-router-dom';
 import { MDComment } from 'ui/elements/Layout/comment';
+import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
+import styled from 'ui/themes/styled';
 
 export enum Status {
   Loading,
@@ -29,7 +28,6 @@ export interface Loaded {
   displayUsername: string;
   location: string;
   summary: string;
-  FlagModal: ComponentType<{ done(): any }>;
 }
 export interface LoadedMe extends Loaded {
   me: true;
@@ -40,12 +38,12 @@ export interface LoadedOther extends Loaded {
   following: boolean;
   toggleFollowFormik: FormikHook<{}>;
   isOpenDropdown: boolean;
-  setOpenDropdown(open: boolean): unknown;
+  toggleDropdown(): unknown;
+  flag(): any;
 }
 export type Props = LoadedMe | LoadedOther | Loading;
 
 export const HeroUser: FC<Props> = props => {
-  const [isOpenFlag, setOpenFlag] = React.useState(false);
   if (props.status === Status.Loading) {
     return null;
   }
@@ -77,11 +75,11 @@ export const HeroUser: FC<Props> = props => {
                   {props.following ? <Trans>Unfollow</Trans> : <Trans>Follow</Trans>}
                 </Button>
                 <More>
-                  <MoreVertical size={20} onClick={() => props.setOpenDropdown(true)} />
+                  <MoreVertical size={20} onClick={props.toggleDropdown} />
                   {props.isOpenDropdown && (
                     <RightDd>
-                      <Dropdown orientation={'bottom'} cb={props.setOpenDropdown}>
-                        <DropdownItem onClick={() => setOpenFlag(true)}>
+                      <Dropdown orientation={'bottom'} cb={props.toggleDropdown}>
+                        <DropdownItem onClick={props.flag}>
                           <Flag size={20} color={'rgb(101, 119, 134)'} />
                           <Text sx={{ flex: 1 }} ml={2}>
                             {!props.isFlagged ? (
@@ -121,11 +119,6 @@ export const HeroUser: FC<Props> = props => {
           ) : null}
         </HeroInfo>
       </Hero>
-      {isOpenFlag && (
-        <Modal closeModal={() => setOpenFlag(false)}>
-          <props.FlagModal done={() => setOpenFlag(false)} />
-        </Modal>
-      )}
     </ProfileBox>
   );
 };
