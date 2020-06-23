@@ -84,27 +84,21 @@ export const HeroCollection: FC<HeroCollection> = ({ collectionId, basePath }) =
         communityIcon: collection.community?.icon?.url || '',
         toggleJoinFormik,
 
-        showEdit: toggleEditing,
-        EditModal,
+        edit: toggleEditing,
 
-        showAddToFeatured: toggleAddToFeatured,
-        AddToFeaturedModal,
+        addToFeatured: toggleAddToFeatured,
 
-        showFlagModal: toggleFlagModal,
-        FlagModal
+        flag: toggleFlagModal
       }
     };
     return props;
-  }, [
-    collection,
-    isOpenDropdown,
-    basePath,
-    isAdmin,
-    canModify,
-    toggleJoinFormik,
-    EditModal,
-    AddToFeaturedModal,
-    FlagModal
-  ]);
-  return <HeroCollectionUI {...heroProps} />;
+  }, [collection, isOpenDropdown, basePath, isAdmin, canModify, toggleJoinFormik]);
+  return (
+    <>
+      {EditModal}
+      {AddToFeaturedModal}
+      {FlagModal}
+      <HeroCollectionUI {...heroProps} />
+    </>
+  );
 };

@@ -42,14 +42,11 @@ export interface CollectionLoaded {
   // contributorCount?: number; //FIX ME add contributorCount
   following: boolean;
 
-  showEdit(): any;
-  EditModal: JSX.Element | null;
+  edit(): any;
 
-  showFlagModal(): any;
-  FlagModal: JSX.Element | null;
+  flag(): any;
 
-  showAddToFeatured(): any;
-  AddToFeaturedModal: JSX.Element | null;
+  addToFeatured(): any;
 
   isOpenDropdown: boolean;
   toggleDropdown(): any;
@@ -108,14 +105,14 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
                   <RightDd>
                     <Dropdown orientation={'bottom'} cb={c.toggleDropdown}>
                       {c.canModify && (
-                        <DropdownItem onClick={c.showEdit}>
+                        <DropdownItem onClick={c.edit}>
                           <Settings size={20} color={'rgb(101, 119, 134)'} />
                           <Text sx={{ flex: 1 }} ml={2}>
                             <Trans>Edit the collection</Trans>
                           </Text>
                         </DropdownItem>
                       )}
-                      <DropdownItem onClick={c.showFlagModal}>
+                      <DropdownItem onClick={c.flag}>
                         <FlagIcon size={20} color={'rgb(101, 119, 134)'} />
                         <Text sx={{ flex: 1 }} ml={2}>
                           {!c.isFlagged ? (
@@ -126,7 +123,7 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
                         </Text>
                       </DropdownItem>
                       {c.isAdmin ? (
-                        <AdminDropdownItem onClick={c.showAddToFeatured}>
+                        <AdminDropdownItem onClick={c.addToFeatured}>
                           <Star size={20} color={'rgb(211, 103, 5)'} />
                           <Text sx={{ flex: 1 }} ml={2}>
                             {
@@ -147,9 +144,6 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
           </Info>
         </HeroInfo>
       </Hero>
-      {c.EditModal}
-      {c.AddToFeaturedModal}
-      {c.FlagModal}
     </HeroCont>
   );
 };
