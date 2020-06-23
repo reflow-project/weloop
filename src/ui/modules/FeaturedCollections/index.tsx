@@ -1,14 +1,12 @@
 import { Trans } from '@lingui/macro';
-import React, { useRef, SFC, ComponentType } from 'react';
+import React, { SFC, useRef } from 'react';
 import Slider from 'react-slick';
+import { Box, Flex } from 'rebass';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
-import styled from 'ui/themes/styled';
-import CollectionSmall, { CollectionBase } from './preview';
-import { ChevronLeft, Right } from 'ui/Icons';
-import { Box, Flex } from 'rebass';
 import Button from 'ui/elements/Button';
-import Modal from 'ui/modules/Modal';
+import { ChevronLeft, Right } from 'ui/Icons';
+import styled from 'ui/themes/styled';
 
 export const Title = styled(Flex)`
   font-size: 15px;
@@ -72,22 +70,15 @@ const ActionItem = styled(Flex)`
 `;
 
 export interface FeaturedCollectionsData {
-  isAdmin: boolean;
-  featuredCollections: CollectionBase[];
-  FeaturedModal: ComponentType<{ collection: CollectionBase; done(): any }>;
+  canEdit: boolean;
+  featuredCollections: JSX.Element[];
+  toggleEdit(): any;
+  isEditing: boolean;
 }
 
 export const FeaturedCollections: SFC<FeaturedCollectionsData> = props => {
   const sliderRef = useRef<Slider>();
-  const [isEditing, setEditing] = React.useState(false);
-  const [
-    selectedCollectionForModal,
-    setSelectedCollectionForModal
-  ] = React.useState<null | CollectionBase>(null);
-  // const { RTL } = useContext(LocaleContext);
-  //   if (props.status === Status.Loading) {
-  //     return <Trans>loading...</Trans>;
-  //   }
+
   return (
     <>
       <Title>
@@ -96,10 +87,10 @@ export const FeaturedCollections: SFC<FeaturedCollectionsData> = props => {
         </h5>
 
         <RightContext>
-          {props.isAdmin ? (
+          {props.canEdit ? (
             <ActionContainer>
-              <ActionItem onClick={() => setEditing(!isEditing)}>
-                {!isEditing ? (
+              <ActionItem onClick={props.toggleEdit}>
+                {!props.isEditing ? (
                   <Button variant={'outline'}>
                     <Trans>Edit</Trans>
                   </Button>
@@ -124,26 +115,9 @@ export const FeaturedCollections: SFC<FeaturedCollectionsData> = props => {
           ref={c => (sliderRef.current = c || undefined)}
           {...sliderSettings(props.featuredCollections.length)}
         >
-          {props.featuredCollections.map(collection => (
-            <div key={collection.id}>
-              <CollectionSmall
-                collection={collection}
-                isAdmin={props.isAdmin}
-                isEditing={isEditing}
-                remove={() => setSelectedCollectionForModal(collection)}
-              />
-            </div>
-          ))}
+          {props.featuredCollections}
         </Slider>
       </Box>
-      {selectedCollectionForModal && props.isAdmin && (
-        <Modal closeModal={() => setSelectedCollectionForModal(null)}>
-          <props.FeaturedModal
-            collection={selectedCollectionForModal}
-            done={() => setSelectedCollectionForModal(null)}
-          />
-        </Modal>
-      )}
     </>
   );
 };

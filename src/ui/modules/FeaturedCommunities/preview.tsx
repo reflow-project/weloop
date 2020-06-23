@@ -13,16 +13,16 @@ export interface CommunityBase {
   icon: string;
 }
 
-interface CommunityProps {
+export interface CommunityProps {
   community: CommunityBase;
-  isAdmin: boolean;
+  canEdit: boolean;
   isEditing: boolean;
   remove(): unknown;
 }
-const CommunitySmall: React.FC<CommunityProps> = ({ community, isAdmin, isEditing, remove }) => {
+const CommunitySmall: React.FC<CommunityProps> = ({ community, canEdit, isEditing, remove }) => {
   return (
     <Wrapper py={1} mb={2} mr={3}>
-      {isAdmin && isEditing ? (
+      {canEdit && isEditing ? (
         <Remove onClick={remove}>
           <X color="#fff" size={16} />
         </Remove>

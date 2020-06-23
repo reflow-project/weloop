@@ -2,14 +2,13 @@
 query instanceFeaturedCommunities {
   instance {
     # featuredCommunities (limit:$limit, before:$before, after:$after) @connection(key: "instanceFeaturedCommunities"){
-    featuredCommunities @connection(key: "instanceFeaturedCommunities"){
-      totalCount,
-      pageInfo{ ...FullPageInfo }
-      edges{
-        id
-        context{
-          ...DiscoverPageFeaturedCommunityInfo
-        }
+    featuredCommunities @connection(key: "instanceFeaturedCommunities") {
+      totalCount
+      pageInfo {
+        ...FullPageInfo
+      }
+      edges {
+        ...CommunityFeature
       }
     }
   }
