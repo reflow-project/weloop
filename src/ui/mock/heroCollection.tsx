@@ -33,14 +33,10 @@ export const useGetHeroCollectionProps = (
       communityName,
       summary,
       followerCount: 10,
-      // contributorCount: 2,
       toggleJoinFormik: useToggleFormik(),
-      showEdit: action('editCollection'),
-      EditModal: null,
-      AddToFeaturedModal: null,
-      FlagModal: null,
-      showAddToFeatured: action('showAddToFeatured'),
-      showFlagModal: action('showFlag')
+      edit: action('editCollection'),
+      addToFeatured: action('showAddToFeatured'),
+      flag: action('showFlag')
     }
   };
 };
