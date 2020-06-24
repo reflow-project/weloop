@@ -53,6 +53,53 @@ export const ConfirmationModal: React.FC<Props> = ({
   );
 };
 
+export interface ConfirmationPanel {
+  confirm(): unknown;
+  cancel(): unknown;
+  title: string;
+  description: string;
+  action: string;
+  waiting: boolean;
+}
+
+export const ConfirmationPanel: React.FC<ConfirmationPanel> = ({
+  title,
+  description,
+  action,
+  cancel,
+  confirm,
+  waiting
+}) => {
+  // const { i18n } = React.useContext(LocaleContext);
+  return (
+    <Container>
+      <Header>
+        <Heading m={2}>{title}</Heading>
+      </Header>
+      <Row>
+        <ContainerForm>
+          <Text>{description}</Text>
+        </ContainerForm>
+      </Row>
+      <Actions>
+        <SubmitButton
+          variant="primary"
+          isSubmitting={waiting}
+          isDisabled={waiting}
+          type="submit"
+          style={{ marginLeft: '10px' }}
+          onClick={confirm}
+        >
+          {action}
+        </SubmitButton>
+        <Button variant="outline" onClick={cancel}>
+          <Trans>Cancel</Trans>
+        </Button>
+      </Actions>
+    </Container>
+  );
+};
+
 export default ConfirmationModal;
 
 const SubmitButton = styled(Button)`

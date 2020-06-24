@@ -1,9 +1,9 @@
-import React, { FC, useMemo } from 'react';
-import Invites, { Props } from 'ui/pages/settings/invites';
 import { useInstanceRegistrationAllowLists } from 'fe/settings/instance/registration/allowlist/instanceRegistrationAllowLists';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import { EMAIL_REGEX } from 'mn-constants';
+import React, { FC, useMemo } from 'react';
+import Invites, { Props } from 'ui/pages/settings/invites';
+import * as Yup from 'yup';
 
 export interface InstanceInvitesSection {}
 
@@ -12,57 +12,27 @@ export const withEmailValidation = Yup.object().shape({
 });
 
 export const InstanceInvitesSection: FC<InstanceInvitesSection> = () => {
-  const {
-    removeEmail,
-    addEmail,
-    listEmailsPage,
-    sendInviteEmail
-  } = useInstanceRegistrationAllowLists();
+  const { addEmail, listEmailsPage, sendInviteEmail } = useInstanceRegistrationAllowLists();
   const [loadMoreEmails] = listEmailsPage.formiks;
   const formikAddEmail = useFormik<{ email: string }>({
     initialValues: { email: '' },
     validationSchema: withEmailValidation,
     onSubmit: ({ email }) => {
-      return email ? addEmail(email) : undefined;
+      return email ? addEmail(email).then(formikAddEmail.resetForm) : undefined;
     }
   });
 
-  const formikRemoveEmail = useFormik<{ email: string }>({
-    initialValues: { email: '' },
-    validationSchema: withEmailValidation,
-    onSubmit: ({ email }) => {
-      const emailId = listEmailsPage.edges.find(_ => email === _.email)?.id;
-      return emailId ? removeEmail(emailId) : undefined;
-    }
-  });
-
-  const formikSendInvite = useFormik<{ email: string }>({
-    initialValues: { email: '' },
-    validationSchema: withEmailValidation,
-    onSubmit: ({ email }) => {
-      return sendInviteEmail(email);
-    }
-  });
-
-  const emailsList: Props['emailsList'] = useMemo(
-    () => listEmailsPage.edges.map(_ => _.email),
-    [listEmailsPage]
-  );
+  const emailsList: Props['emailsList'] = useMemo(() => listEmailsPage.edges.map(_ => _.email), [
+    listEmailsPage
+  ]);
 
   const props = useMemo<Props>(() => {
     return {
       formikAddEmail,
-      formikRemoveEmail,
-      formikSendInvite,
+      sendInvite: sendInviteEmail,
       emailsList,
       loadMoreEmails
     };
-  }, [
-    formikAddEmail,
-    formikRemoveEmail,
-    formikSendInvite,
-    emailsList,
-    loadMoreEmails
-  ]);
+  }, [formikAddEmail, sendInviteEmail, emailsList, loadMoreEmails]);
   return <Invites {...props} />;
 };
