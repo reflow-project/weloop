@@ -3,7 +3,7 @@ import { useInstanceRegistrationAllowLists } from 'fe/settings/instance/registra
 import { useFormik } from 'formik';
 import { DOMAIN_REGEX } from 'mn-constants';
 import React, { FC, useCallback, useMemo, useState } from 'react';
-import { ConfirmationPanel } from 'ui/modules/ConfirmationModal';
+import { ConfirmationPanel } from 'ui/modules/ConfirmationPanel';
 import Modal from 'ui/modules/Modal';
 import Instance, { Props } from 'ui/pages/settings/instance';
 import * as Yup from 'yup';
