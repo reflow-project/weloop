@@ -6,22 +6,25 @@ import { Row } from 'ui/modules/Modal';
 import { FormikHook } from 'ui/@types/types';
 import { LoadMore } from 'ui/modules/Loadmore';
 import { ReactElement } from 'react';
+import { BottomBordered } from 'ui/elements/Layout';
 
 export interface Props {
-  FlagsBox: ReactElement;
+  FlagPreviews: ReactElement[];
   loadMoreFlags: FormikHook | null;
 }
 
-const Flags: React.FC<Props> = ({ FlagsBox, loadMoreFlags }) => {
+const Flags: React.FC<Props> = ({ FlagPreviews, loadMoreFlags }) => {
   return (
     <Box>
       <Text px={3} mt={2} variant="heading">
         <Trans>Flags</Trans>
       </Text>
       <Row>
-        {FlagsBox ? (
+        {FlagPreviews ? (
           <Box mt={2} sx={{ width: '600px' }}>
-            {FlagsBox}
+            {FlagPreviews.map(FlagPreview => (
+              <BottomBordered key={FlagPreview.key || ''}>{FlagPreview}</BottomBordered>
+            ))}
             {loadMoreFlags ? <LoadMore LoadMoreFormik={loadMoreFlags} /> : null}{' '}
           </Box>
         ) : (

@@ -4,42 +4,38 @@ import { FlagPreviewHOC } from 'HOC/modules/previews/flag/FlagPreview';
 import React, { FC, useMemo } from 'react';
 import { ActivityPreview, Status } from 'ui/modules/ActivityPreview';
 import Flags, { Props } from 'ui/pages/settings/flags';
-import { BottomBordered } from 'ui/elements/Layout';
 
 export interface InstanceFlagsSection {}
 
 export const InstanceFlagsSection: FC<InstanceFlagsSection> = () => {
   const { flagsPage } = useAllFlags();
   const [loadMoreFlags] = flagsPage.formiks;
-  const FlagsBox = useMemo<Props['FlagsBox']>(() => {
-    return (
-      <>
-        {flagsPage.edges.map(flag => {
-          const context = <FlagPreviewHOC flagId={flag.id} />;
-          const actor = flag.creator && getActivityActor(flag.creator);
+  const FlagPreviews = useMemo<Props['FlagPreviews']>(
+    () =>
+      flagsPage.edges.map(flag => {
+        const actor = flag.creator && getActivityActor(flag.creator);
 
-          return (
-            <BottomBordered>
-              <ActivityPreview
-                actor={actor}
-                communityLink=""
-                communityName=""
-                createdAt={flag.createdAt}
-                event="flagged"
-                preview={context}
-                status={Status.Loaded}
-              />
-            </BottomBordered>
-          );
-        })}
-      </>
-    );
-  }, [flagsPage.edges]);
+        return (
+          <ActivityPreview
+            key={flag.id}
+            actor={actor}
+            communityLink=""
+            communityName=""
+            createdAt={flag.createdAt}
+            event="flagged"
+            preview={<FlagPreviewHOC flagId={flag.id} />}
+            status={Status.Loaded}
+          />
+        );
+      }),
+
+    [flagsPage.edges]
+  );
   const props = useMemo<Props>(() => {
     return {
-      FlagsBox,
+      FlagPreviews,
       loadMoreFlags
     };
-  }, [FlagsBox, loadMoreFlags]);
+  }, [FlagPreviews, loadMoreFlags]);
   return <Flags {...props} />;
 };

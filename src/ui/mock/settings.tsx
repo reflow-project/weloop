@@ -85,33 +85,9 @@ export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
             hideActions={true}
           />
         }
-        ignoreFlagFormik={useFormik({
-          initialValues: {},
-          onSubmit: () => {
-            action('ignoreFlagFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
-        deleteContentFormik={useFormik<{}>({
-          initialValues: {},
-          onSubmit: () => {
-            action('deleteContentFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
-        blockUserFormik={useFormik<{}>({
-          initialValues: {},
-          onSubmit: () => {
-            action('blockUserFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
+        ignoreFlag={action('ignoreFlagFormik')}
+        deleteContent={action('deleteContentFormik')}
+        blockUser={action('blockUserFormik')}
         type="Comment"
         reason="Abusive speech"
       />
@@ -153,33 +129,9 @@ export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
             })}
           />
         }
-        ignoreFlagFormik={useFormik({
-          initialValues: {},
-          onSubmit: () => {
-            action('ignoreFlagFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
-        deleteContentFormik={useFormik<{}>({
-          initialValues: {},
-          onSubmit: () => {
-            action('deleteContentFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
-        blockUserFormik={useFormik<{}>({
-          initialValues: {},
-          onSubmit: () => {
-            action('blockUserFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
+        ignoreFlag={action('ignoreFlagFormik')}
+        deleteContent={action('deleteContentFormik')}
+        blockUser={action('blockUserFormik')}
         type="Collection"
         reason="Inappropriate Content"
       />
@@ -234,33 +186,9 @@ export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
             }}
           />
         }
-        ignoreFlagFormik={useFormik({
-          initialValues: {},
-          onSubmit: () => {
-            action('ignoreFlagFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
-        deleteContentFormik={useFormik<{}>({
-          initialValues: {},
-          onSubmit: () => {
-            action('deleteContentFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
-        blockUserFormik={useFormik<{}>({
-          initialValues: {},
-          onSubmit: () => {
-            action('blockUserFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
+        ignoreFlag={action('ignoreFlagFormik')}
+        deleteContent={action('deleteContentFormik')}
+        blockUser={action('blockUserFormik')}
         type="Resource"
         reason="Inappropriate content"
       />
@@ -299,33 +227,9 @@ export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
             })}
           />
         }
-        blockUserFormik={useFormik<{}>({
-          initialValues: {},
-          onSubmit: () => {
-            action('blockUserFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
-        deleteContentFormik={useFormik<{}>({
-          initialValues: {},
-          onSubmit: () => {
-            action('deleteContentFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
-        ignoreFlagFormik={useFormik<{}>({
-          initialValues: {},
-          onSubmit: () => {
-            action('ignoreFlagFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
+        ignoreFlag={action('ignoreFlagFormik')}
+        deleteContent={action('deleteContentFormik')}
+        blockUser={action('blockUserFormik')}
         type="User"
         reason="Inappropriate language"
       />
@@ -335,14 +239,12 @@ export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
     createdAt: '2018-11-11'
   };
 
-  const ActivitiesBox = (
-    <React.Fragment>
-      <ActivityPreview {...activityPreviewProps} />
-      <ActivityPreview {...activityCollectionPreviewProps} />
-      <ActivityPreview {...activityResourcePreviewProps} />
-      <ActivityPreview {...activityUserPreviewProps} />
-    </React.Fragment>
-  );
+  const Activities = [
+    <ActivityPreview {...activityPreviewProps} />,
+    <ActivityPreview {...activityCollectionPreviewProps} />,
+    <ActivityPreview {...activityResourcePreviewProps} />,
+    <ActivityPreview {...activityUserPreviewProps} />
+  ];
 
   const formik = useFormik<EditProfile>({
     initialValues: {
@@ -441,7 +343,7 @@ export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
         loadMoreEmails={useToggleFormik()}
       />
     ),
-    Flags: <Flags FlagsBox={ActivitiesBox} loadMoreFlags={useToggleFormik()} />,
+    Flags: <Flags FlagPreviews={Activities} loadMoreFlags={useToggleFormik()} />,
     Instance: (
       <Instance
         formikAddDomain={formikAddDomain}

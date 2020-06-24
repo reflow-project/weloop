@@ -1,38 +1,28 @@
-import React, { ReactElement } from 'react';
-import styled from 'ui/themes/styled';
-import { XCircle, Slash, Flag } from 'react-feather';
-
-import { Box, Text, Flex } from 'rebass/styled-components';
 import { Trans } from '@lingui/macro';
-import Modal from 'ui/modules/Modal';
-import { FormikHook } from 'ui/@types/types';
-import ConfirmationModal from '../ConfirmationModal';
-import { LocaleContext } from 'context/global/localizationCtx';
-import { darken } from 'polished';
 import { typography } from 'mn-constants';
+import { darken } from 'polished';
+import React, { ReactElement } from 'react';
+import { Flag, Slash, XCircle } from 'react-feather';
+import { Box, Flex, Text } from 'rebass/styled-components';
+import styled from 'ui/themes/styled';
 
 export interface FlaggedProps {
   FlaggedItemContextElement: ReactElement;
-  blockUserFormik: FormikHook;
-  deleteContentFormik: FormikHook;
-  ignoreFlagFormik: FormikHook;
   type: string;
   reason: string;
+  blockUser(): unknown;
+  ignoreFlag(): unknown;
+  deleteContent(): unknown;
 }
 
 export const FlaggedItem: React.SFC<FlaggedProps> = ({
   FlaggedItemContextElement,
-  blockUserFormik,
-  deleteContentFormik,
-  ignoreFlagFormik,
   type,
-  reason
+  reason,
+  blockUser,
+  ignoreFlag,
+  deleteContent
 }) => {
-  const [isOpenDelete, setOpenDelete] = React.useState(false);
-  const [isOpenBlock, setOpenBlock] = React.useState(false);
-  const [isOpenIgnore, setOpenIgnore] = React.useState(false);
-  const { i18n } = React.useContext(LocaleContext);
-
   return (
     <Wrapper>
       <Reason>{FlaggedItemContextElement}</Reason>
@@ -43,7 +33,7 @@ export const FlaggedItem: React.SFC<FlaggedProps> = ({
         <Box>
           <Items>
             {type === 'User' ? (
-              <ActionItem onClick={() => setOpenBlock(true)}>
+              <ActionItem onClick={blockUser}>
                 <ActionIcon>
                   <Slash strokeWidth="1" size="18" />
                 </ActionIcon>
@@ -52,7 +42,7 @@ export const FlaggedItem: React.SFC<FlaggedProps> = ({
                 </Text>
               </ActionItem>
             ) : (
-              <ActionItem onClick={() => setOpenDelete(true)}>
+              <ActionItem onClick={deleteContent}>
                 <ActionIcon>
                   <XCircle strokeWidth="1" size="18" />
                 </ActionIcon>
@@ -61,7 +51,7 @@ export const FlaggedItem: React.SFC<FlaggedProps> = ({
                 </Text>
               </ActionItem>
             )}
-            <ActionItem ml={2} onClick={() => setOpenIgnore(true)}>
+            <ActionItem ml={2} onClick={ignoreFlag}>
               <ActionIcon className="unflag">
                 <Flag className="hover" strokeWidth="1" size="16" />
               </ActionIcon>
@@ -70,41 +60,6 @@ export const FlaggedItem: React.SFC<FlaggedProps> = ({
               </Text>
             </ActionItem>
           </Items>
-          {isOpenDelete && (
-            <Modal closeModal={() => setOpenDelete(false)}>
-              <ConfirmationModal
-                done={() => setOpenDelete(false)}
-                formik={deleteContentFormik}
-                modalAction={i18n._(`Delete flagged content`)}
-                modalDescription={i18n._(
-                  `Are you sure you want to permanently delete this ${type} content?`
-                )}
-                modalTitle={i18n._(`Delete`)}
-              />
-            </Modal>
-          )}
-          {isOpenBlock && (
-            <Modal closeModal={() => setOpenBlock(false)}>
-              <ConfirmationModal
-                done={() => setOpenBlock(false)}
-                formik={blockUserFormik}
-                modalAction={i18n._(`Delete user`)}
-                modalDescription={i18n._(`Are you sure you want to permanently delete this user?`)}
-                modalTitle={i18n._(`Delete`)}
-              />
-            </Modal>
-          )}
-          {isOpenIgnore && (
-            <Modal closeModal={() => setOpenIgnore(false)}>
-              <ConfirmationModal
-                done={() => setOpenIgnore(false)}
-                formik={ignoreFlagFormik}
-                modalAction={i18n._(`Ignore flag`)}
-                modalDescription={i18n._(`Are you sure you want to ignore and delete this flag?`)}
-                modalTitle={i18n._(`Ignore`)}
-              />
-            </Modal>
-          )}
         </Box>
       </Actions>
     </Wrapper>

@@ -3,22 +3,73 @@ import { getActivityActor } from 'fe/lib/activity/getActivityActor';
 import { getCommunityInfoStrings } from 'fe/lib/activity/getContextCommunityInfo';
 import { useFormik } from 'formik';
 import { Flag } from 'graphql/types.generated';
-import React, { FC, useMemo } from 'react';
+import React, { FC, useMemo, useState, useCallback } from 'react';
 import { ActivityPreview, Status } from 'ui/modules/ActivityPreview';
 import { FlaggedItem, FlaggedProps } from 'ui/modules/Previews/FlaggedItem';
 import { PreviewComponent } from '../activity/PreviewComponent';
 import { CommentPreviewHOC } from '../comment/CommentPreview';
+import Modal from 'ui/modules/Modal';
+import ConfirmationModal from 'ui/modules/ConfirmationModal';
+import { i18n } from 'context/global/localizationCtx';
 
 interface FlagPreviewHOC {
   flagId: Flag['id'];
 }
+
+type ConfirmType = 'delete' | 'block' | 'ignore';
+
 export const FlagPreviewHOC: FC<FlagPreviewHOC> = ({ flagId }) => {
-  const {
-    deactivateFlaggedUser,
-    deleteFlagContext,
-    flag,
-    ignoreFlag
-  } = useFlagPreview(flagId);
+  const { deactivateFlaggedUser, deleteFlagContext, flag, ignoreFlag } = useFlagPreview(flagId);
+
+  const blockUserFormik = useFormik({
+    initialValues: {},
+    onSubmit: deactivateFlaggedUser
+  });
+
+  const deleteContentFormik = useFormik({
+    initialValues: {},
+    onSubmit: deleteFlagContext
+  });
+
+  const ignoreFlagFormik = useFormik({
+    initialValues: {},
+    onSubmit: ignoreFlag
+  });
+
+  const [confirmType, setConfirmType] = useState<ConfirmType>();
+  const closeConfirm = useCallback(() => setConfirmType(undefined), []);
+  const ConfirmActionModal = !(flag && confirmType) ? null : (
+    <Modal closeModal={closeConfirm}>
+      {confirmType === 'delete' ? (
+        <ConfirmationModal
+          done={closeConfirm}
+          formik={deleteContentFormik}
+          modalAction={i18n._(`Delete flagged content`)}
+          modalDescription={i18n._(
+            `Are you sure you want to permanently delete this ${flag.context.__typename} content?`
+          )}
+          modalTitle={i18n._(`Delete`)}
+        />
+      ) : confirmType === 'block' ? (
+        <ConfirmationModal
+          done={closeConfirm}
+          formik={blockUserFormik}
+          modalAction={i18n._(`Delete user`)}
+          modalDescription={i18n._(`Are you sure you want to permanently delete this user?`)}
+          modalTitle={i18n._(`Delete`)}
+        />
+      ) : confirmType === 'ignore' ? (
+        <ConfirmationModal
+          done={closeConfirm}
+          formik={ignoreFlagFormik}
+          modalAction={i18n._(`Ignore flag`)}
+          modalDescription={i18n._(`Are you sure you want to ignore and delete this flag?`)}
+          modalTitle={i18n._(`Ignore`)}
+        />
+      ) : null // never
+      }
+    </Modal>
+  );
 
   const FlaggedItemContextElement: FlaggedProps['FlaggedItemContextElement'] = useMemo(() => {
     if (!flag) {
@@ -27,19 +78,13 @@ export const FlagPreviewHOC: FC<FlagPreviewHOC> = ({ flagId }) => {
       const comment = flag.context;
       const { communityLink, communityName } = getCommunityInfoStrings(comment);
       const CommentPreview = (
-        <CommentPreviewHOC
-          commentId={comment.id}
-          mainComment={false}
-          hideActions={true}
-        />
+        <CommentPreviewHOC commentId={comment.id} mainComment={false} hideActions={true} />
       );
       const actor = flag.creator && getActivityActor(flag.creator);
       return (
         <ActivityPreview
           actor={actor}
-          commentActor={
-            comment.creator ? getActivityActor(comment.creator) : undefined
-          }
+          commentActor={comment.creator ? getActivityActor(comment.creator) : undefined}
           createdAt={comment.createdAt}
           event={'commented'}
           communityLink={communityLink}
@@ -50,46 +95,28 @@ export const FlagPreviewHOC: FC<FlagPreviewHOC> = ({ flagId }) => {
         />
       );
     } else {
-      return flag ? (
-        <PreviewComponent context={flag.context} flagged={true} />
-      ) : (
-        <></>
-      );
+      return flag ? <PreviewComponent context={flag.context} flagged={true} /> : <></>;
     }
   }, [flag]);
-
-  const blockUserFormik: FlaggedProps['blockUserFormik'] = useFormik({
-    initialValues: {},
-    onSubmit: deactivateFlaggedUser
-  });
-
-  const deleteContentFormik: FlaggedProps['deleteContentFormik'] = useFormik({
-    initialValues: {},
-    onSubmit: deleteFlagContext
-  });
-
-  const ignoreFlagFormik: FlaggedProps['blockUserFormik'] = useFormik({
-    initialValues: {},
-    onSubmit: ignoreFlag
-  });
 
   const props = useMemo<FlaggedProps | null>(() => {
     return flag
       ? {
           FlaggedItemContextElement,
-          blockUserFormik,
-          deleteContentFormik,
-          ignoreFlagFormik,
           reason: flag.message,
-          type: flag.context.__typename
+          type: flag.context.__typename,
+          blockUser: () => setConfirmType('block'),
+          deleteContent: () => setConfirmType('delete'),
+          ignoreFlag: () => setConfirmType('ignore')
         }
       : null;
-  }, [
-    FlaggedItemContextElement,
-    blockUserFormik,
-    deleteContentFormik,
-    ignoreFlagFormik,
-    flag
-  ]);
-  return props && <FlaggedItem {...props} />;
+  }, [FlaggedItemContextElement, flag]);
+  return (
+    props && (
+      <>
+        {ConfirmActionModal}
+        <FlaggedItem {...props} />
+      </>
+    )
+  );
 };
