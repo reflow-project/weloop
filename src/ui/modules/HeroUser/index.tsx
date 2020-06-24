@@ -78,7 +78,7 @@ export const HeroUser: FC<Props> = props => {
                   <MoreVertical size={20} onClick={props.toggleDropdown} />
                   {props.isOpenDropdown && (
                     <RightDd>
-                      <Dropdown orientation={'bottom'} cb={props.toggleDropdown}>
+                      <Dropdown orientation={'bottom'} close={props.toggleDropdown}>
                         <DropdownItem onClick={props.flag}>
                           <Flag size={20} color={'rgb(101, 119, 134)'} />
                           <Text sx={{ flex: 1 }} ml={2}>

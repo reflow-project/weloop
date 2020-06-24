@@ -1,17 +1,15 @@
-import React from 'react';
+import { action } from '@storybook/addon-actions';
 import { Props as CollectionProps } from 'ui/modules/Previews/Collection';
 import { CommentProps } from 'ui/modules/Previews/Comment';
 import { Props as CommunityProps } from 'ui/modules/Previews/Community';
-import { CommentProps as LikedCommentProps } from 'ui/modules/Previews/LikedComment';
-
 import { FlaggedProps } from 'ui/modules/Previews/FlaggedItem';
+import { CommentProps as LikedCommentProps } from 'ui/modules/Previews/LikedComment';
 import { CommentProps as MainCommentProps } from 'ui/modules/Previews/MainComment';
 import { Props as ResourceProps } from 'ui/modules/Previews/Resource';
 import { CommentProps as ThreadProps } from 'ui/modules/Previews/Thread';
 import { Props as UserProps } from 'ui/modules/Previews/User';
 import { useGetActions } from './activityPreview';
 import { useToggleFormik } from './formik';
-import { action } from '@storybook/addon-actions';
 
 export function CollectionPreviewProps(
   username = 'Collection',
@@ -67,7 +65,6 @@ export function ResourcePreviewProps(
     icon,
     isFile,
     license,
-    acceptedLicenses: ['license 1', 'license 2', 'license 3'],
     name,
     isSearch: true,
     like: {
@@ -75,19 +72,16 @@ export function ResourcePreviewProps(
       iLikeIt: true,
       totalLikes: 5
     },
+    // acceptedLicenses: ['CC0-1.0', 'CC-BY-4.0', 'CC-BY-SA-4.0'],
     collectionLink: '',
     collectionName: 'collectionName',
     summary,
     link: 'https://www.pinterest.it/topics/spacedrepetition/',
-    type,
     isFlagged: false,
-    FlagModal: ({ done }) => {
-      return <></>;
-    },
-    // sendToMoodle:null,
-    MoodlePanel: ({ done }) => {
-      return <></>;
-    }
+    isOpenDropdown: false,
+    sendToMoodle: action('sendToMoodle'),
+    toggleDropdown: action('toggleDropdown'),
+    toggleFlag: action('toggleFlag')
   };
 }
 
@@ -103,7 +97,7 @@ export function ResourcePreviewUploadedProps(
     icon,
     isFile,
     license,
-    acceptedLicenses: ['CC0-1.0', 'CC-BY-4.0', 'CC-BY-SA-4.0'],
+    // acceptedLicenses: ['CC0-1.0', 'CC-BY-4.0', 'CC-BY-SA-4.0'],
     name,
     like: {
       toggleLikeFormik: useToggleFormik(),
@@ -114,15 +108,11 @@ export function ResourcePreviewUploadedProps(
     collectionName: 'collectionName',
     summary,
     link: 'https://www.pinterest.it/topics/spacedrepetition/',
-    type,
     isFlagged: false,
-    FlagModal: ({ done }) => {
-      return <></>;
-    },
-    // sendToMoodle:null,
-    MoodlePanel: ({ done }) => {
-      return <></>;
-    }
+    isOpenDropdown: false,
+    sendToMoodle: action('sendToMoodle'),
+    toggleDropdown: action('toggleDropdown'),
+    toggleFlag: action('toggleFlag')
   };
 }
 

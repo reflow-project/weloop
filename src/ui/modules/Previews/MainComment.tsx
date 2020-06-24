@@ -66,7 +66,7 @@ export const MainComment: React.SFC<CommentProps> = ({
                     <Trans>More</Trans>
                   </ActionText>
                   {isDropdownOpen && (
-                    <Dropdown orientation="bottom" cb={toggleDropdown}>
+                    <Dropdown orientation="bottom" close={toggleDropdown}>
                       <DropdownItem onClick={flag}>
                         <Flag size={20} color={'rgb(101, 119, 134)'} />
                         <Text sx={{ flex: 1 }} ml={2}>

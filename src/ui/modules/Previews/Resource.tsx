@@ -1,18 +1,17 @@
+import { Trans } from '@lingui/macro';
+import { typography } from 'mn-constants';
+import { ellipsis } from 'polished';
 import * as React from 'react';
-import { Star, ExternalLink, Paperclip, MoreHorizontal, Flag, Share } from 'react-feather';
+import { ExternalLink, Flag, MoreHorizontal, Paperclip, Share, Star } from 'react-feather';
+import { NavLink } from 'react-router-dom';
 // import { FileText, ExternalLink, Star } from 'react-feather';
 import { Box, Flex, Heading, Text } from 'rebass/styled-components';
-import Avatar from 'ui/elements/Avatar';
-import styled from 'ui/themes/styled';
-import { ellipsis } from 'polished';
 import { FormikHook } from 'ui/@types/types';
-import { Trans } from '@lingui/macro';
+import Avatar from 'ui/elements/Avatar';
 // import { ellipsis } from 'polished';
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
-import Modal from 'ui/modules/Modal';
-import { typography } from 'mn-constants';
+import styled from 'ui/themes/styled';
 import { Search } from './Collection';
-import { NavLink } from 'react-router-dom';
 // import {Link} from 'react-router-dom'
 
 // const LicenseIcon0 = require('./cc-zero.png');
@@ -31,16 +30,18 @@ export interface Props {
   link: string;
   like: null | LikeActions;
   license: string | null;
-  acceptedLicenses?: string[];
+  // acceptedLicenses?: string[];
   isFile: boolean;
-  type?: string;
+  // type?: string;
   isFlagged: boolean;
-  FlagModal: null | React.ComponentType<{ done(): unknown }>;
-  MoodlePanel: null | React.ComponentType<{ done(): unknown }>;
   hideActions?: boolean;
   isSearch?: boolean;
   collectionLink: string;
   collectionName: string;
+  isOpenDropdown: boolean;
+  toggleDropdown(): unknown;
+  sendToMoodle(): unknown;
+  toggleFlag: null | (() => unknown);
   // sendToMoodle:null|(()=>unknown)
 }
 
@@ -54,19 +55,17 @@ export const Resource: React.FC<Props> = ({
   like,
   isFile,
   license,
-  acceptedLicenses,
-  type,
+  // acceptedLicenses,
+  // type,
   isFlagged,
-  FlagModal,
-  MoodlePanel,
   isSearch,
   // sendToMoodle,
-  hideActions
+  hideActions,
+  isOpenDropdown,
+  toggleDropdown,
+  toggleFlag,
+  sendToMoodle
 }) => {
-  const [isOpen, onOpen] = React.useState(false);
-  const [isOpenFlagModal, setOpenFlagModal] = React.useState(false);
-  const [isOpenMoodleModal, setOpenMoodleModal] = React.useState(false);
-
   return (
     <Bordered>
       {isSearch && (
@@ -140,15 +139,15 @@ export const Resource: React.FC<Props> = ({
                 </ActionText>
               </ActionItem>
             )}
-            <MoreItem onClick={() => onOpen(true)} sx={{ position: 'relative' }}>
+            <MoreItem onClick={toggleDropdown} sx={{ position: 'relative' }}>
               <ActionIcon>
                 <MoreHorizontal className="hover" size={18} />
               </ActionIcon>
-              {isOpen && (
+              {isOpenDropdown && (
                 <Right>
-                  <Dropdown orientation="bottom" cb={onOpen}>
-                    {FlagModal && (
-                      <DropdownItem onClick={() => setOpenFlagModal(true)}>
+                  <Dropdown orientation="bottom" close={toggleDropdown}>
+                    {toggleFlag && (
+                      <DropdownItem onClick={toggleFlag}>
                         <Flag size={18} />
                         <Text sx={{ flex: 1 }} ml={2}>
                           {!isFlagged ? (
@@ -159,11 +158,7 @@ export const Resource: React.FC<Props> = ({
                         </Text>
                       </DropdownItem>
                     )}
-                    <DropdownItem
-                      onClick={() => {
-                        /* sendToMoodle?sendToMoodle(): */ setOpenMoodleModal(true);
-                      }}
-                    >
+                    <DropdownItem onClick={sendToMoodle}>
                       <Share size={18} />
                       <Text sx={{ flex: 1 }} ml={2}>
                         <Trans>Send to Moodle</Trans>
@@ -176,17 +171,6 @@ export const Resource: React.FC<Props> = ({
           </Actions>
         )}
       </Meta>
-
-      {FlagModal && isOpenFlagModal && (
-        <Modal closeModal={() => setOpenFlagModal(false)}>
-          <FlagModal done={() => setOpenFlagModal(false)} />
-        </Modal>
-      )}
-      {MoodlePanel && isOpenMoodleModal && (
-        <Modal closeModal={() => setOpenMoodleModal(false)}>
-          <MoodlePanel done={() => setOpenMoodleModal(false)} />
-        </Modal>
-      )}
     </Bordered>
   );
 };
