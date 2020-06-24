@@ -1,43 +1,12 @@
-import React from 'react';
-import { useFormik } from 'formik';
 import { action } from '@storybook/addon-actions';
-import { FlagModal } from 'ui/modules/FlagModal';
+import { useFormik } from 'formik';
 import { Props, Status } from 'ui/modules/ActivityPreview';
 import { getActor } from './actor';
 
 export const useGetActions = () => ({
-  FlagModal: () => {
-    const flagFormik = useFormik<{ reason: string }>({
-      initialValues: {
-        reason: ''
-      },
-      onSubmit: () => {
-        action('submit')();
-        return new Promise((resolve, reject) => {
-          setTimeout(resolve, 3000);
-        });
-      }
-    });
-    const unflagFormik = useFormik({
-      initialValues: {},
-      onSubmit: () => {
-        action('submit')();
-        return new Promise((resolve, reject) => {
-          setTimeout(resolve, 3000);
-        });
-      }
-    });
-    return (
-      <FlagModal
-        {...{
-          cancel: action('cancel'),
-          flagFormik,
-          isFlagged: false,
-          unflagFormik
-        }}
-      />
-    );
-  },
+  flag: action('flag item'),
+  isDropdownOpen: false,
+  toggleDropdown: action('toggleDropdown'),
   like: {
     totalLikes: 3,
     toggleLikeFormik: useFormik<{}>({
