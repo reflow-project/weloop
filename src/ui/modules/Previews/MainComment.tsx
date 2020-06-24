@@ -1,50 +1,39 @@
-import React from 'react';
-import styled from 'ui/themes/styled';
-import { Box, Text, Flex } from 'rebass/styled-components';
 import { Trans } from '@lingui/macro';
-import { FormikHook } from 'ui/@types/types';
-import { Star, MoreHorizontal, Flag } from 'react-feather';
-import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
-import Modal from 'ui/modules/Modal';
 import DOMPurify from 'dompurify';
 import { typography } from 'mn-constants';
 import { darken } from 'polished';
+import React from 'react';
+import { Flag, MoreHorizontal, Star } from 'react-feather';
+import { Box, Flex, Text } from 'rebass/styled-components';
+import { FormikHook } from 'ui/@types/types';
+import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
+import styled from 'ui/themes/styled';
 
 export interface LikeActions {
   toggleLikeFormik: FormikHook<{}>;
   totalLikes: number;
   iLikeIt: boolean;
 }
-export interface ReplyActions {
-  replyFormik: FormikHook<{ replyMessage: string }>;
-}
+
 export interface CommentProps {
-  FlagModal: null | React.ComponentType<{ done(): unknown }>;
+  flag(): unknown;
   like: LikeActions;
-  reply: ReplyActions | null;
   content: string;
   isFlagged?: boolean;
   hideActions?: boolean;
+  isDropdownOpen: boolean;
+  toggleDropdown(): unknown;
 }
 
-// const tt = {
-//   placeholders: {
-//     name: i18nMark('Post a reply')
-//   }
-// };
-
 export const MainComment: React.SFC<CommentProps> = ({
+  isDropdownOpen,
+  toggleDropdown,
+  flag,
   content,
-  reply,
   like,
-  FlagModal,
   isFlagged,
   hideActions
 }) => {
-  // const { i18n } = React.useContext(LocaleContext);
-  const [isOpenFlagModal, setOpenFlagModal] = React.useState(false);
-  const [isOpen, onOpen] = React.useState(false);
-
   return (
     <Box>
       <Wrapper>
@@ -69,36 +58,29 @@ export const MainComment: React.SFC<CommentProps> = ({
                     {like.totalLikes + ' '} <Trans>Star</Trans>
                   </ActionText>
                 </ActionItem>
-                <ActionItem onClick={() => onOpen(true)} sx={{ position: 'relative' }}>
+                <ActionItem onClick={toggleDropdown} sx={{ position: 'relative' }}>
                   <ActionIcon>
                     <MoreHorizontal className="hover" size={18} />
                   </ActionIcon>
                   <ActionText variant={'text'} sx={{ textTransform: 'capitalize' }} ml={1}>
                     <Trans>More</Trans>
                   </ActionText>
-                  {isOpen && (
-                    <Dropdown orientation="bottom" cb={onOpen}>
-                      {FlagModal && (
-                        <DropdownItem onClick={() => setOpenFlagModal(true)}>
-                          <Flag size={20} color={'rgb(101, 119, 134)'} />
-                          <Text sx={{ flex: 1 }} ml={2}>
-                            {!isFlagged ? (
-                              <Trans>Flag this comment</Trans>
-                            ) : (
-                              <Trans>Unflag this comment</Trans>
-                            )}
-                          </Text>
-                        </DropdownItem>
-                      )}
+                  {isDropdownOpen && (
+                    <Dropdown orientation="bottom" cb={toggleDropdown}>
+                      <DropdownItem onClick={flag}>
+                        <Flag size={20} color={'rgb(101, 119, 134)'} />
+                        <Text sx={{ flex: 1 }} ml={2}>
+                          {!isFlagged ? (
+                            <Trans>Flag this comment</Trans>
+                          ) : (
+                            <Trans>Unflag this comment</Trans>
+                          )}
+                        </Text>
+                      </DropdownItem>
                     </Dropdown>
                   )}
                 </ActionItem>
               </Items>
-              {FlagModal && isOpenFlagModal && (
-                <Modal closeModal={() => setOpenFlagModal(false)}>
-                  <FlagModal done={() => setOpenFlagModal(false)} />
-                </Modal>
-              )}
             </Box>
           )}
         </Actions>

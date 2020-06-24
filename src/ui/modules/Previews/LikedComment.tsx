@@ -1,17 +1,14 @@
-import React from 'react';
-import styled from 'ui/themes/styled';
-import { Box, Text, Flex } from 'rebass/styled-components';
-import SocialText from 'ui/modules/SocialText';
-import { LocaleContext } from '../../../context/global/localizationCtx';
-import { i18nMark } from '@lingui/react';
 import { Trans } from '@lingui/macro';
-import { FormikHook } from 'ui/@types/types';
-import { Star, CornerDownLeft } from 'react-feather';
 import DOMPurify from 'dompurify';
+import { typography } from 'mn-constants';
+import React from 'react';
+import { CornerDownLeft, Star } from 'react-feather';
+import { NavLink } from 'react-router-dom';
+import { Box, Flex, Text } from 'rebass/styled-components';
+import { FormikHook } from 'ui/@types/types';
+import styled from 'ui/themes/styled';
 import { ActorComp } from '../ActivityPreview';
 import { Actor } from '../ActivityPreview/types';
-import { typography } from 'mn-constants';
-import { NavLink } from 'react-router-dom';
 
 export interface LikeActions {
   toggleLikeFormik: FormikHook<{}>;
@@ -22,9 +19,7 @@ export interface ReplyActions {
   replyFormik: FormikHook<{ replyMessage: string }>;
 }
 export interface CommentProps {
-  FlagModal: null | React.ComponentType<{ done(): unknown }>;
   like: LikeActions;
-  reply: ReplyActions;
   content: string;
   actor: Actor;
   createdAt: string;
@@ -34,21 +29,9 @@ export interface CommentProps {
   url: string;
 }
 
-const tt = {
-  placeholders: {
-    name: i18nMark('Post a reply'),
-    summary: i18nMark(
-      'Please describe what the collection is for and what kind of resources it is likely to contain...'
-    ),
-    image: i18nMark('Enter the URL of an image to represent the collection')
-  }
-};
-
 export const LikedComment: React.SFC<CommentProps> = ({
   content,
-  reply,
   like,
-  FlagModal,
   actor,
   createdAt,
   communityName,
@@ -56,9 +39,6 @@ export const LikedComment: React.SFC<CommentProps> = ({
   hideActions,
   url
 }) => {
-  const [talkModalVisible, showTalkModal] = React.useState(false);
-  const { i18n } = React.useContext(LocaleContext);
-  // const [isOpenFlagModal, setOpenFlagModal] = React.useState(false);
   return (
     <Wrapper pl={2}>
       <ActorComp
@@ -75,19 +55,6 @@ export const LikedComment: React.SFC<CommentProps> = ({
         mb={2}
       />
       <Actions mt={2}>
-        {talkModalVisible && (
-          <Box mb={2}>
-            <SocialText
-              placeholder={i18n._(tt.placeholders.name)}
-              defaultValue={''}
-              submit={msg => {
-                showTalkModal(false);
-                reply.replyFormik.setValues({ replyMessage: msg });
-                reply.replyFormik.submitForm();
-              }}
-            />
-          </Box>
-        )}
         {hideActions ? null : (
           <Box>
             <Items>
