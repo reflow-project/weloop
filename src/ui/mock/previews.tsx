@@ -11,6 +11,7 @@ import { CommentProps as ThreadProps } from 'ui/modules/Previews/Thread';
 import { Props as UserProps } from 'ui/modules/Previews/User';
 import { useGetActions } from './activityPreview';
 import { useToggleFormik } from './formik';
+import { action } from '@storybook/addon-actions';
 
 export function CollectionPreviewProps(
   username = 'Collection',
@@ -209,10 +210,10 @@ export function ThreadPreviewProps(
 export function FlaggedItemPreviewProps(flag, type = '', reason = 'Abusive speech'): FlaggedProps {
   return {
     FlaggedItemContextElement: flag,
-    blockUserFormik: useToggleFormik(),
-    deleteContentFormik: useToggleFormik(),
-    ignoreFlagFormik: useToggleFormik(),
     type,
-    reason
+    reason,
+    blockUser: action('blockUser'),
+    deleteContent: action('deleteContent'),
+    ignoreFlag: action('ignoreFlag')
   };
 }
