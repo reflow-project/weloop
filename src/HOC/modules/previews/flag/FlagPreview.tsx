@@ -1,7 +1,6 @@
 import { useFlagPreview } from 'fe/flags/preview/useFlagPreview';
 import { getActivityActor } from 'fe/lib/activity/getActivityActor';
 import { getCommunityInfoStrings } from 'fe/lib/activity/getContextCommunityInfo';
-import { useFormik } from 'formik';
 import { Flag } from 'graphql/types.generated';
 import React, { FC, useMemo, useState, useCallback } from 'react';
 import { ActivityPreview, Status } from 'ui/modules/ActivityPreview';
@@ -9,7 +8,7 @@ import { FlaggedItem, FlaggedProps } from 'ui/modules/Previews/FlaggedItem';
 import { PreviewComponent } from '../activity/PreviewComponent';
 import { CommentPreviewHOC } from '../comment/CommentPreview';
 import Modal from 'ui/modules/Modal';
-import ConfirmationModal from 'ui/modules/ConfirmationModal';
+import { ConfirmationPanel } from 'ui/modules/ConfirmationPanel';
 import { i18n } from 'context/global/localizationCtx';
 
 interface FlagPreviewHOC {
@@ -19,52 +18,48 @@ interface FlagPreviewHOC {
 type ConfirmType = 'delete' | 'block' | 'ignore';
 
 export const FlagPreviewHOC: FC<FlagPreviewHOC> = ({ flagId }) => {
-  const { deactivateFlaggedUser, deleteFlagContext, flag, ignoreFlag } = useFlagPreview(flagId);
-
-  const blockUserFormik = useFormik({
-    initialValues: {},
-    onSubmit: deactivateFlaggedUser
-  });
-
-  const deleteContentFormik = useFormik({
-    initialValues: {},
-    onSubmit: deleteFlagContext
-  });
-
-  const ignoreFlagFormik = useFormik({
-    initialValues: {},
-    onSubmit: ignoreFlag
-  });
+  const {
+    deactivateFlaggedUser,
+    deleteFlagContext,
+    flag,
+    ignoreFlag,
+    deleteFlagContextStatus,
+    deactivateFlaggedUserStatus,
+    ignoreFlagStatus
+  } = useFlagPreview(flagId);
 
   const [confirmType, setConfirmType] = useState<ConfirmType>();
   const closeConfirm = useCallback(() => setConfirmType(undefined), []);
   const ConfirmActionModal = !(flag && confirmType) ? null : (
     <Modal closeModal={closeConfirm}>
       {confirmType === 'delete' ? (
-        <ConfirmationModal
-          done={closeConfirm}
-          formik={deleteContentFormik}
-          modalAction={i18n._(`Delete flagged content`)}
-          modalDescription={i18n._(
+        <ConfirmationPanel
+          cancel={closeConfirm}
+          confirm={() => deleteFlagContext().then(closeConfirm)}
+          waiting={deleteFlagContextStatus.loading || ignoreFlagStatus.loading}
+          action={i18n._(`Delete flagged content`)}
+          description={i18n._(
             `Are you sure you want to permanently delete this ${flag.context.__typename} content?`
           )}
-          modalTitle={i18n._(`Delete`)}
+          title={i18n._(`Delete`)}
         />
       ) : confirmType === 'block' ? (
-        <ConfirmationModal
-          done={closeConfirm}
-          formik={blockUserFormik}
-          modalAction={i18n._(`Delete user`)}
-          modalDescription={i18n._(`Are you sure you want to permanently delete this user?`)}
-          modalTitle={i18n._(`Delete`)}
+        <ConfirmationPanel
+          cancel={closeConfirm}
+          confirm={() => deactivateFlaggedUser().then(closeConfirm)}
+          waiting={deactivateFlaggedUserStatus.loading}
+          action={i18n._(`Delete user`)}
+          description={i18n._(`Are you sure you want to permanently delete this user?`)}
+          title={i18n._(`Delete`)}
         />
       ) : confirmType === 'ignore' ? (
-        <ConfirmationModal
-          done={closeConfirm}
-          formik={ignoreFlagFormik}
-          modalAction={i18n._(`Ignore flag`)}
-          modalDescription={i18n._(`Are you sure you want to ignore and delete this flag?`)}
-          modalTitle={i18n._(`Ignore`)}
+        <ConfirmationPanel
+          cancel={closeConfirm}
+          confirm={() => ignoreFlag().then(closeConfirm)}
+          waiting={deleteFlagContextStatus.loading}
+          action={i18n._(`Ignore flag`)}
+          description={i18n._(`Are you sure you want to ignore and delete this flag?`)}
+          title={i18n._(`Ignore`)}
         />
       ) : null // never
       }

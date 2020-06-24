@@ -60,7 +60,7 @@ import Instance from 'ui/pages/settings/instance';
 import Emails from 'ui/pages/settings/invites';
 import Preferences from 'ui/pages/settings/preferences';
 import { Props as SignUpProps, SignUpFormValues } from 'ui/pages/signUp';
-import { Props as ConfirmationModalProps } from '../modules/ConfirmationModal';
+import { Props as ConfirmationPanelProps } from '../modules/ConfirmationPanel';
 import { FeaturedModal } from '../modules/FeaturedModal';
 import ModerationLog from 'ui/pages/settings/logs';
 import { User } from 'ui/modules/Previews/User';
@@ -878,7 +878,7 @@ export const useGetFeaturedModalProps = (): FeaturedModalProps => {
   };
 };
 
-export const useGetConfirmationModalProps = (): ConfirmationModalProps => {
+export const useGetConfirmationPanelProps = (): ConfirmationPanelProps => {
   const formik = useFormik<{}>({
     initialValues: [],
     onSubmit: () => {
