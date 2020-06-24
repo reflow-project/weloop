@@ -19,11 +19,12 @@ import {
 } from 'react-instantsearch-dom';
 import { Collection } from 'ui/modules/Previews/Collection';
 import { Community } from 'ui/modules/Previews/Community';
-import { Resource } from 'ui/modules/Previews/Resource';
+import { Resource, Props as ResourceProps } from 'ui/modules/Previews/Resource';
 import { Props, Search } from 'ui/pages/search';
 import { useLMSGQL } from 'fe/lib/moodleLMS/useSendToMoodle';
 import { useInstanceInfoQuery } from 'fe/instance/info/useInstanceInfo.generated';
 import { ReactElement } from 'react';
+import Modal from 'ui/modules/Modal';
 
 const _SearchPageHOC: React.FC<{ hits: Hit[] }> = ({ hits }) => {
   // console.log(hits);
@@ -98,6 +99,7 @@ const CommunityPreviewHit: React.FC<{ hit: CommunityHit }> = ({ hit }) => {
 const ResourcePreviewHit: React.FC<{ hit: ResourceHit }> = ({ hit }) => {
   const isLocal = useIsLocal(hit);
   const { data } = useInstanceInfoQuery();
+
   const isFile = !!(data?.instance?.uploadResourceTypes || []).find(
     uploadResType =>
       uploadResType.toLowerCase() !== 'text/html' &&
@@ -107,18 +109,37 @@ const ResourcePreviewHit: React.FC<{ hit: ResourceHit }> = ({ hit }) => {
   // console.log(hit, data?.instance?.uploadResourceTypes)
   const previewFragment = resourceHit2gql({ resource: hit, isLocal, isFile });
   const { LMSPrefsPanel } = useLMSGQL(previewFragment);
-  const props =
-    previewFragment &&
-    resourceFragment2UIProps({
+
+  const [isOpenSendToMoodle, toggleSendToMoodleModal] = React.useReducer(is => !is, false);
+  const [isOpenDropdown, toggleDropdown] = React.useReducer(is => !is, false);
+
+  const props: ResourceProps | null = previewFragment && {
+    ...resourceFragment2UIProps({
       resource: previewFragment,
-      FlagModal: null,
-      MoodlePanel: LMSPrefsPanel,
       hideActions: false,
       like: null
-    });
+    }),
+    isOpenDropdown,
+    toggleDropdown,
+    toggleFlag: null,
+    sendToMoodle: toggleSendToMoodleModal
+  };
   !props && console.warn(`Could not preview searchHit:`, hit);
+
+  const MoodleModal = isOpenSendToMoodle ? (
+    <Modal closeModal={toggleSendToMoodleModal}>
+      <LMSPrefsPanel done={toggleSendToMoodleModal} />
+    </Modal>
+  ) : null;
   // console.log(`Resource:`, props)
-  return props && <Resource isSearch {...props} />;
+  return (
+    props && (
+      <>
+        {MoodleModal}
+        <Resource isSearch {...props} />
+      </>
+    )
+  );
 };
 
 const useIsLocal = (hit: Hit) => {

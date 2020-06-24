@@ -5,11 +5,11 @@ import styled from 'ui/themes/styled';
 // import {  Flag, Upload, Copy } from 'react-feather';
 
 interface Props {
-  cb(open: boolean): unknown;
+  close(): unknown;
   orientation: string;
 }
-export const Dropdown: FC<Props> = ({ orientation, cb, children }) => (
-  <OutsideClickHandler onOutsideClick={() => cb(false)}>
+export const Dropdown: FC<Props> = ({ orientation, close, children }) => (
+  <OutsideClickHandler onOutsideClick={close}>
     <Wrapper className="dropdown" orientation={orientation}>
       {children}
     </Wrapper>
@@ -22,8 +22,7 @@ const Wrapper = styled(Box)<{ orientation: string }>`
   min-width: 200px;
   display: block;
   border-radius: 6px;
-  box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 15px,
-    rgba(101, 119, 134, 0.15) 0px 0px 3px 1px;
+  box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 15px, rgba(101, 119, 134, 0.15) 0px 0px 3px 1px;
   position: absolute;
   top: ${props => (props.orientation === 'top' ? '8px' : 'auto')};
   bottom: ${props => (props.orientation === 'bottom' ? '4px' : 'auto')};

@@ -174,16 +174,11 @@ export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
             summary={'mr james is rubbish and i dont lik him'}
             link={'anime.pdf'}
             license={'CC-BY-4.0'}
-            acceptedLicenses={['CC0-1.0', 'CC-BY-4.0', 'CC-BY-SA-4.0']}
             isFile={true}
-            type={'pdf'}
-            FlagModal={({ done }) => {
-              return <></>;
-            }}
-            // sendToMoodle={null}
-            MoodlePanel={({ done }) => {
-              return <></>;
-            }}
+            isOpenDropdown={false}
+            sendToMoodle={action('sendToMoodle')}
+            toggleDropdown={action('toggleDropdown')}
+            toggleFlag={action('toggleFlag')}
           />
         }
         ignoreFlag={action('ignoreFlagFormik')}
