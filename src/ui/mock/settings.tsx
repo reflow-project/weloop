@@ -273,15 +273,6 @@ export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
       });
     }
   });
-  const formikRemoveDomain = useFormik<{ domain: string }>({
-    initialValues: { domain: '' },
-    onSubmit: ({ domain }) => {
-      action(`formikRemoveDomain ${domain}`)();
-      return new Promise((resolve, reject) => {
-        setTimeout(resolve, 3000);
-      });
-    }
-  });
   const formikAddEmail = useFormik<{ email: string }>({
     initialValues: { email: '' },
     onSubmit: ({ email }) => {
@@ -291,24 +282,7 @@ export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
       });
     }
   });
-  const formikRemoveEmail = useFormik<{ email: string }>({
-    initialValues: { email: '' },
-    onSubmit: ({ email }) => {
-      action(`formikRemoveEmail ${email}`)();
-      return new Promise((resolve, reject) => {
-        setTimeout(resolve, 3000);
-      });
-    }
-  });
-  const formikSendInvite = useFormik<{ email: string }>({
-    initialValues: { email: '' },
-    onSubmit: ({ email }) => {
-      action(`formikSendInvite ${email}`)();
-      return new Promise((resolve, reject) => {
-        setTimeout(resolve, 3000);
-      });
-    }
-  });
+
   const preferencesFormik = useFormik<EditPreferences>({
     initialValues: { moodleWebsite: '' },
     onSubmit: () => {}
@@ -338,8 +312,7 @@ export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
           'test@moodle.com'
         ]}
         formikAddEmail={formikAddEmail}
-        formikRemoveEmail={formikRemoveEmail}
-        formikSendInvite={formikSendInvite}
+        sendInvite={action('sendInvite')}
         loadMoreEmails={useToggleFormik()}
       />
     ),
@@ -347,9 +320,9 @@ export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
     Instance: (
       <Instance
         formikAddDomain={formikAddDomain}
-        formikRemoveDomain={formikRemoveDomain}
         domainsList={['moodle.com']}
         loadMoreDomains={useToggleFormik()}
+        removeDomain={action('removeDomain')}
       />
     ),
     ModerationLog: <ModerationLog />,

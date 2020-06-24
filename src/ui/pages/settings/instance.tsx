@@ -1,17 +1,15 @@
-import { i18nMark } from '@lingui/react';
 import { Trans } from '@lingui/macro';
+import { i18nMark } from '@lingui/react';
 import { /* Textarea,*/ /* Checkbox, */ Input, Label } from '@rebass/forms';
 import React from 'react';
 import { XCircle } from 'react-feather';
 import { Box, /* Flex, */ Text } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
 import Button from 'ui/elements/Button';
-import ConfirmationModal from 'ui/modules/ConfirmationModal';
-import Modal, { Actions, ContainerForm, Row } from 'ui/modules/Modal';
+import { LoadMore } from 'ui/modules/Loadmore';
+import { Actions, ContainerForm, Row } from 'ui/modules/Modal';
 // import DropzoneArea from 'ui/modules/DropzoneModal';
 import styled from 'ui/themes/styled';
-import { LocaleContext } from 'context/global/localizationCtx';
-import { LoadMore } from 'ui/modules/Loadmore';
 
 const tt = {
   placeholders: {
@@ -21,7 +19,7 @@ const tt = {
 
 export interface Props {
   formikAddDomain: FormikHook<WithDomain>;
-  formikRemoveDomain: FormikHook<WithDomain>;
+  removeDomain(domain: string): unknown;
   domainsList: string[];
   loadMoreDomains: FormikHook | null;
 }
@@ -33,12 +31,10 @@ export interface WithDomain {
 // export const Instance = props => (
 const Instance: React.FC<Props> = ({
   formikAddDomain,
-  formikRemoveDomain,
+  removeDomain,
   domainsList,
   loadMoreDomains
 }) => {
-  const { i18n } = React.useContext(LocaleContext);
-
   return (
     <Box>
       <Text px={3} mt={2} variant="heading">
@@ -116,10 +112,10 @@ const Instance: React.FC<Props> = ({
         <Text p={3} variant="suptitle">
           <Trans>Allowed Domains</Trans>
         </Text>
-        {domainsList.map((domain, i) => (
-          <ListRow key={i}>
+        {domainsList.map(domain => (
+          <ListRow key={domain}>
             <DomainText>{domain}</DomainText>
-            <Delete onClick={() => formikRemoveDomain.setValues({ domain })}>
+            <Delete onClick={() => removeDomain(domain)}>
               <XCircle size={21} />
             </Delete>
           </ListRow>
@@ -127,19 +123,6 @@ const Instance: React.FC<Props> = ({
         {loadMoreDomains ? <LoadMore LoadMoreFormik={loadMoreDomains} /> : null}{' '}
         {/* FIX ME after add LoadMoreFormik */}
       </Box>
-      {formikRemoveDomain.values.domain && (
-        <Modal closeModal={() => formikRemoveDomain.setValues({ domain: '' })}>
-          <ConfirmationModal
-            done={() => formikRemoveDomain.setValues({ domain: '' })}
-            formik={formikRemoveDomain}
-            modalAction={i18n._(`Delete domain from allowlist`)}
-            modalDescription={i18n._(
-              `Are you sure you want to delete ${formikRemoveDomain.values.domain} from allowlist?`
-            )}
-            modalTitle={i18n._(`Delete`)}
-          />
-        </Modal>
-      )}
 
       <Text variant="suptitle" p={3}>
         <Trans>More options will be available soon</Trans>
