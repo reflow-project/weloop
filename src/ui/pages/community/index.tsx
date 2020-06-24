@@ -1,11 +1,11 @@
 import { Trans } from '@lingui/macro';
 import * as React from 'react';
+import { ReactElement } from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import { Box, Flex, Text } from 'rebass/styled-components';
+import media from 'styled-media-query';
 import { FormikHook } from 'ui/@types/types';
 import Button from 'ui/elements/Button';
-import media from 'styled-media-query';
-
 import {
   HomeBox,
   List,
@@ -17,52 +17,41 @@ import {
 } from 'ui/elements/Layout';
 // import { Header } from 'ui/modules/Header';
 import { LoadMore } from 'ui/modules/Loadmore';
-import Modal from 'ui/modules/Modal';
 import { SidePanel } from 'ui/modules/SidePanel';
 import SocialText from 'ui/modules/SocialText';
 import styled from 'ui/themes/styled';
-import { ReactElement } from 'react';
 
 export interface Props {
   isJoined: boolean;
-  ActivitiesBox: ReactElement;
-  FollowersBoxes: ReactElement;
-  CollectionsBox: ReactElement;
-  HeroCommunityBox: ReactElement;
-  ThreadsBox: ReactElement;
-  communityName: string;
+  Activities: ReactElement[];
+  Followers: ReactElement[];
+  Collections: ReactElement[];
+  HeroCommunity: ReactElement;
+  Threads: ReactElement[];
   basePath: string;
   newThreadFormik: null | FormikHook<{ text: string }>;
-  CreateCollectionPanel: React.ComponentType<{ done(): any }>;
+  createCollection: () => unknown;
   loadMoreActivities: FormikHook | null;
   loadMoreCollections: FormikHook | null;
   loadMoreThreads: FormikHook | null;
 }
 
 export const Community: React.FC<Props> = ({
-  ActivitiesBox,
-  HeroCommunityBox,
-  CollectionsBox,
-  FollowersBoxes,
+  Activities,
+  HeroCommunity,
+  Collections,
+  Followers,
   basePath,
   newThreadFormik,
-  isJoined,
-  communityName,
-  ThreadsBox,
-  CreateCollectionPanel,
+  // isJoined,
+  Threads,
   loadMoreActivities,
   loadMoreCollections,
-  loadMoreThreads
+  loadMoreThreads,
+  createCollection
 }) => {
-  const [isOpenCreateCollection, setOpenCreateCollection] = React.useState(false);
-
   return (
     <MainContainer>
-      {isOpenCreateCollection && (
-        <Modal closeModal={() => setOpenCreateCollection(false)}>
-          <CreateCollectionPanel done={() => setOpenCreateCollection(false)} />
-        </Modal>
-      )}
       <HomeBox>
         <WrapperCont>
           <Wrapper>
@@ -70,35 +59,33 @@ export const Community: React.FC<Props> = ({
             <Switch>
               <Route exact path={`${basePath}/timeline`}>
                 <>
-                  {HeroCommunityBox}
+                  {HeroCommunity}
                   <Menu basePath={basePath} />
-                  <List mt={2}>{ActivitiesBox}</List>
+                  <List mt={2}>{Activities}</List>
                   {loadMoreActivities && <LoadMore LoadMoreFormik={loadMoreActivities} />}
                 </>
               </Route>
               <Route exact path={`${basePath}`}>
                 <>
-                  {HeroCommunityBox}
+                  {HeroCommunity}
                   <Menu basePath={basePath} />
                   <Title px={3} mt={2}>
                     <Text sx={{ flex: 1 }} variant="suptitle">
                       <Trans>All collections</Trans>
                     </Text>
-                    {isJoined && (
-                      <Button variant="outline" onClick={() => setOpenCreateCollection(true)}>
-                        <Trans>Create a new collection</Trans>
-                      </Button>
-                    )}
+                    <Button variant="outline" onClick={createCollection}>
+                      <Trans>Create a new collection</Trans>
+                    </Button>
                   </Title>
                   <ObjectsList>
-                    <CollectionsBoxes>{CollectionsBox}</CollectionsBoxes>
+                    <CollectionsBoxes>{Collections}</CollectionsBoxes>
                   </ObjectsList>
                   {loadMoreCollections && <LoadMore LoadMoreFormik={loadMoreCollections} />}
                 </>
               </Route>
               <Route exact path={`${basePath}/discussions`}>
                 <>
-                  {HeroCommunityBox}
+                  {HeroCommunity}
                   <Menu basePath={basePath} />
                   <WrapSocialText p={3} mb={2}>
                     {newThreadFormik && (
@@ -114,15 +101,15 @@ export const Community: React.FC<Props> = ({
                   <Title px={3} mt={2}>
                     <Text variant="suptitle">All discussions</Text>
                   </Title>
-                  <ObjectsList>{ThreadsBox}</ObjectsList>
+                  <ObjectsList>{Threads}</ObjectsList>
                   {loadMoreThreads && <LoadMore LoadMoreFormik={loadMoreThreads} />}
                 </>
               </Route>
               <Route path={`${basePath}/members`}>
                 <>
-                  {HeroCommunityBox}
+                  {HeroCommunity}
                   <Menu basePath={basePath} />
-                  <ObjectsList>{FollowersBoxes}</ObjectsList>
+                  <ObjectsList>{Followers}</ObjectsList>
                 </>
               </Route>
             </Switch>
@@ -173,7 +160,10 @@ const Title = styled(Flex)`
   background: ${props => props.theme.colors.appInverse};
   height: 50px;
   line-height: 50px;
-  align-items: center;
+  align-items: center;}
+  </>
+);
+
   border-bottom: ${props => props.theme.colors.border};
   button {
     width: 190px;
