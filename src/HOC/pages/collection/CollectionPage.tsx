@@ -1,20 +1,17 @@
-import { useCollectionOutboxActivities } from 'fe/activities/outbox/collection/useCollectionOutboxActivities';
+import { t } from '@lingui/macro';
+import { usePageTitle } from 'context/global/pageCtx';
 import { useCollection } from 'fe/collection/useCollection';
 import { useCollectionResources } from 'fe/resource/collection/useCollectionResources';
 import { useCollectionFollowers } from 'fe/user/followers/collection/useCollectionFollowers';
 import { Collection } from 'graphql/types.generated';
+import { useNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
 import { AddResourceHOC } from 'HOC/modules/AddResource/addResourceHOC';
-import { EditCollectionPanelHOC } from 'HOC/modules/EditCollectionPanel/editCollectionPanelHOC';
-import { HeroCollection } from 'HOC/modules/HeroCollection/HeroCollection';
-import { ActivityPreviewHOC } from 'HOC/modules/previews/activity/ActivityPreview';
+import { HeroCollectionHOC } from 'HOC/modules/HeroCollection/HeroCollection';
 import { ResourcePreviewHOC } from 'HOC/modules/previews/resource/ResourcePreview';
 import { UserPreviewHOC } from 'HOC/modules/previews/user/UserPreview';
 import { ShareLinkHOC } from 'HOC/modules/ShareLink/shareLinkHOC';
-import React, { FC, useMemo } from 'react';
-import { Box } from 'rebass';
+import React, { FC, ReactElement, useCallback, useMemo, useState } from 'react';
 import CollectionPageUI, { Props as CollectionPageProps } from 'ui/pages/collection';
-import { usePageTitle } from 'context/global/pageCtx';
-import { t } from '@lingui/macro';
 
 export enum CollectionPageTab {
   // Activities,
@@ -29,7 +26,11 @@ export interface CollectionPage {
 const collectionPageFollowersTitle = t`Collection {name} - Followers`;
 const collectionPageResourcesTitle = t`Collection {name} - Resources`;
 
+type OpenPanel = 'share' | 'upload';
+
 export const CollectionPage: FC<CollectionPage> = props => {
+  const [openPanel, setOpenPanel] = useState<OpenPanel>();
+  const closePanel = useCallback(() => setOpenPanel(undefined), []);
   const { collectionId, basePath, tab } = props;
   const { collection, isCommunityMember } = useCollection(props.collectionId);
   const collectionPageTitle =
@@ -47,86 +48,67 @@ export const CollectionPage: FC<CollectionPage> = props => {
   const { resourcesPage } = useCollectionResources(props.collectionId);
   const [loadMoreResources] = resourcesPage.formiks;
 
-  const { activitiesPage } = useCollectionOutboxActivities(props.collectionId);
-  const [loadMoreActivities] = activitiesPage.formiks;
+  const notifyNotLogged = useNotifyMustLogin();
+
+  const HeroCollection = <HeroCollectionHOC basePath={basePath} collectionId={collectionId} />;
+
+  const Resources = resourcesPage.edges
+    .map(resource => <ResourcePreviewHOC resourceId={resource.id} key={resource.id} />)
+    .filter((_): _ is ReactElement => !!_);
+
+  const Followers: CollectionPageProps['Followers'] = collectionFollowersPage.edges
+    .map(
+      follow =>
+        follow.creator && (
+          <UserPreviewHOC userId={follow.creator.userId} key={follow.creator.userId} />
+        )
+    )
+    .filter((_): _ is ReactElement => !!_);
+
+  const UploadResourcePanel =
+    openPanel === 'upload' ? (
+      <AddResourceHOC done={closePanel} collectionId={collectionId} />
+    ) : null;
+
+  const ShareLink =
+    openPanel === 'share' ? <ShareLinkHOC collectionId={collectionId} done={closePanel} /> : null;
 
   const collectionPageProps = useMemo<CollectionPageProps | null>(() => {
     if (!collection) {
       return null;
     }
 
-    const HeroCollectionBox = <HeroCollection basePath={basePath} collectionId={collectionId} />;
-
-    const ActivitiesBox = (
-      <>
-        {activitiesPage.edges.map(activity => (
-          <ActivityPreviewHOC activityId={activity.id} key={activity.id} />
-        ))}
-      </>
-    );
-
-    const ResourcesBox = (
-      <>
-        {resourcesPage.edges.map(resource => (
-          <Box mx={3} my={2} mb={3} key={resource.id}>
-            <ResourcePreviewHOC resourceId={resource.id} />
-          </Box>
-        ))}
-      </>
-    );
-    const EditCollectionPanel: CollectionPageProps['EditCollectionPanel'] = ({ done }) => (
-      <EditCollectionPanelHOC done={done} collectionId={collectionId} />
-    );
-
-    const UploadResourcePanel: CollectionPageProps['UploadResourcePanel'] = ({ done }) => (
-      <AddResourceHOC done={done} collectionId={collectionId} />
-    );
-
-    const FollowersBoxes: CollectionPageProps['FollowersBoxes'] = (
-      <>
-        {collectionFollowersPage.edges.map(
-          follow =>
-            follow.creator && (
-              <UserPreviewHOC userId={follow.creator.userId} key={follow.creator.userId} />
-            )
-        )}
-      </>
-    );
-
-    const ShareLinkBox: CollectionPageProps['ShareLinkBox'] = ({ done }) => (
-      <ShareLinkHOC collectionId={collectionId} done={done} />
-    );
-
     const uiProps: CollectionPageProps = {
-      ActivitiesBox,
-      ShareLinkBox,
-      HeroCollectionBox,
-      ResourcesBox,
-      EditCollectionPanel,
+      ShareLink,
+      HeroCollection,
+      Resources,
       UploadResourcePanel,
       basePath,
-      FollowersBoxes,
-      collectionName: collection.name,
+      Followers,
       communityIcon: collection.community?.icon?.url || '',
       communityId: collection.community ? collection.community.id : '',
       communityName: collection.community ? collection.community.name : '',
       loadMoreFollowers,
       loadMoreResources,
-      loadMoreActivities,
-      isCommunityMember
+      isCommunityMember,
+      shareLink: () =>
+        setOpenPanel(openPanel === 'share' || notifyNotLogged() ? undefined : 'share'),
+      upload: () => setOpenPanel(openPanel === 'upload' || notifyNotLogged() ? undefined : 'upload')
     };
     return uiProps;
   }, [
-    activitiesPage,
-    resourcesPage,
-    collectionFollowersPage,
+    collection,
+    ShareLink,
+    HeroCollection,
+    Resources,
+    UploadResourcePanel,
+    basePath,
+    Followers,
     loadMoreFollowers,
     loadMoreResources,
-    loadMoreActivities,
     isCommunityMember,
-    collection,
-    basePath,
-    collectionId
+    openPanel,
+    notifyNotLogged
   ]);
   return collectionPageProps && <CollectionPageUI {...collectionPageProps} />;
 };

@@ -31,10 +31,7 @@ export interface ShareLinkHOC {
   done(): any;
 }
 
-export const ShareLinkHOC: FC<ShareLinkHOC> = ({
-  done,
-  collectionId
-}: ShareLinkHOC) => {
+export const ShareLinkHOC: FC<ShareLinkHOC> = ({ done, collectionId }: ShareLinkHOC) => {
   const { create: createResource } = useAddResource();
   const [fetchWebMeta, webMetaDataResult] = useShareLinkFetchWebMetaMutation();
 
@@ -77,7 +74,7 @@ export const ShareLinkHOC: FC<ShareLinkHOC> = ({
           name: name,
           summary: summary
         }
-      });
+      }).then(done);
     }
   });
 

@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro';
 import * as React from 'react';
+import { ReactElement } from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import { Flex, Text } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
@@ -13,26 +14,23 @@ import {
   Wrapper,
   WrapperCont
 } from 'ui/elements/Layout';
+import { WrapperPanel } from 'ui/elements/Panel';
 // import { Header } from 'ui/modules/Header';
 import { LoadMore } from 'ui/modules/Loadmore';
-import Modal from 'ui/modules/Modal';
 // import { SidePanel } from 'ui/modules/SidePanel';
 import styled from 'ui/themes/styled';
-import { WrapperPanel } from 'ui/elements/Panel';
 import { HeaderWrapper } from '../thread';
-import { ReactElement } from 'react';
+import { Box } from 'rebass';
 
 export interface Props {
-  ActivitiesBox: ReactElement;
-  ResourcesBox: ReactElement;
-  HeroCollectionBox: ReactElement;
-  FollowersBoxes: ReactElement;
-  ShareLinkBox: React.ComponentType<{ done(): any }>;
-  EditCollectionPanel: React.ComponentType<{ done(): any }>;
-  UploadResourcePanel: React.ComponentType<{ done(): any }>;
+  Resources: ReactElement[];
+  HeroCollection: ReactElement;
+  Followers: ReactElement[];
+  ShareLink: null | ReactElement;
+  UploadResourcePanel: null | ReactElement;
+  shareLink(): unknown;
+  upload(): unknown;
   basePath: string;
-  collectionName: string;
-  loadMoreActivities: FormikHook | null;
   loadMoreResources: FormikHook | null;
   loadMoreFollowers: FormikHook | null;
   isCommunityMember: boolean;
@@ -42,33 +40,23 @@ export interface Props {
 }
 
 export const Collection: React.FC<Props> = ({
-  HeroCollectionBox,
-  ShareLinkBox,
-  EditCollectionPanel,
+  HeroCollection,
+  ShareLink,
   UploadResourcePanel,
-  ActivitiesBox,
-  FollowersBoxes,
-  ResourcesBox,
+  Followers,
+  Resources,
   basePath,
-  collectionName,
-  loadMoreActivities,
   loadMoreResources,
   loadMoreFollowers,
   isCommunityMember,
   communityId,
   communityName,
-  communityIcon
+  communityIcon,
+  shareLink,
+  upload
 }) => {
-  const [isOpenEditCollection, setOpenEditCollection] = React.useState(false);
-  const [isShareLinkOpen, setOpenShareLink] = React.useState(false);
-  const [isUploadOpen, setUploadOpen] = React.useState(false);
   return (
     <MainContainer>
-      {isOpenEditCollection && (
-        <Modal closeModal={() => setOpenShareLink(false)}>
-          <EditCollectionPanel done={() => setOpenEditCollection(false)} />
-        </Modal>
-      )}
       <HomeBox>
         <WrapperCont>
           <Wrapper>
@@ -76,58 +64,38 @@ export const Collection: React.FC<Props> = ({
             <Switch>
               <Route path={`${basePath}/followers`}>
                 <>
-                  {HeroCollectionBox}
+                  {HeroCollection}
                   <Menu basePath={basePath} />
-                  <ObjectsList>{FollowersBoxes}</ObjectsList>
+                  <ObjectsList>{Followers}</ObjectsList>
                   {loadMoreFollowers && <LoadMore LoadMoreFormik={loadMoreFollowers} />}
                 </>
               </Route>
               <Route exact path={`${basePath}/`}>
                 <>
-                  {HeroCollectionBox}
+                  {HeroCollection}
                   <Menu basePath={basePath} />
                   {isCommunityMember ? (
                     <WrapButton p={3}>
-                      <Button
-                        mr={2}
-                        onClick={() => {
-                          setOpenShareLink(true);
-                          setUploadOpen(false);
-                        }}
-                        variant="outline"
-                      >
+                      <Button mr={2} onClick={shareLink} variant="outline">
                         <Trans>Share link</Trans>
                       </Button>
-                      <Button
-                        onClick={() => {
-                          setUploadOpen(true);
-                          setOpenShareLink(false);
-                        }}
-                        variant="outline"
-                      >
+                      <Button onClick={upload} variant="outline">
                         <Trans>Add new resource</Trans>
                       </Button>
                     </WrapButton>
                   ) : null}
-                  {isShareLinkOpen && (
-                    // <h1>jhhhh</h1>
-                    <ShareLinkBox done={() => setOpenShareLink(false)} />
-                  )}
-                  {isUploadOpen && <UploadResourcePanel done={() => setUploadOpen(false)} />}
-                  <ObjectsList>{ResourcesBox}</ObjectsList>
+                  {ShareLink}
+                  {UploadResourcePanel}
+                  <ObjectsList>
+                    {Resources.map(Resource => (
+                      <Box mx={3} my={2} mb={3} key={Resource.key || ''}>
+                        {Resource}
+                      </Box>
+                    ))}
+                  </ObjectsList>
                   {loadMoreResources && <LoadMore LoadMoreFormik={loadMoreResources} />}
                 </>
               </Route>
-              {/* <Route exact path={`${basePath}/`}>
-                <>
-                  {HeroCollectionBox}
-                  <Menu basePath={basePath} />
-                  <List>{ActivitiesBox}</List>
-                  {loadMoreActivities && (
-                    <LoadMore LoadMoreFormik={loadMoreActivities} />
-                  )}
-                </>
-              </Route> */}
             </Switch>
           </Wrapper>
         </WrapperCont>
