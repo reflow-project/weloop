@@ -10,12 +10,12 @@ import HeroCollectionUI, { Props, Status } from 'ui/modules/HeroCollection';
 import Modal from 'ui/modules/Modal';
 import { useNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
 
-export interface HeroCollection {
+export interface HeroCollectionHOC {
   collectionId: Collection['id'];
   basePath: string;
 }
 
-export const HeroCollection: FC<HeroCollection> = ({ collectionId, basePath }) => {
+export const HeroCollectionHOC: FC<HeroCollectionHOC> = ({ collectionId, basePath }) => {
   const { collection, canModify, toggleJoin } = useCollection(collectionId);
   const { isAdmin } = useMe();
   const toggleJoinFormik = useFormik<{}>({
