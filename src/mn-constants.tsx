@@ -82,10 +82,9 @@ export const mothershipCreds =
         apiKey: mothershipApiKey
       }
     : {
-      indexName: '',
-    };
+        indexName: ''
+      };
 export const searchDisabled = !mothershipAppId || !mothershipApiKey;
-
 
 export const max_file_size = '10MB';
 
@@ -126,7 +125,7 @@ export const colors = {
   // Main
   app: 'rgb(245, 246, 247)',
   appInverse: '#fff',
-  primary: '#f98012',
+  primary: '#0d2451',
   secondary: '#1EA7FD',
   tertiary: '#DDDDDD',
 
