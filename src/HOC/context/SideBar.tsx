@@ -1,25 +1,15 @@
-import React, {
-  createContext,
-  useState,
-  useCallback,
-  FC,
-  useMemo
-} from 'react';
+import React, { createContext, FC, useMemo, useReducer } from 'react';
 
 export interface SideBarContext {
-  isOpen;
-  toggleOpen(): boolean;
+  isOpen: boolean;
+  toggleOpen(): unknown;
 }
 export const SideBarContext = createContext<SideBarContext>({
   isOpen: true,
   toggleOpen: () => true
 });
 export const ProvideSideBarContext: FC = ({ children }) => {
-  const [isOpen, setOpen] = useState(true);
-  const toggleOpen = useCallback(() => {
-    setOpen(!isOpen);
-    return !isOpen;
-  }, [isOpen]);
+  const [isOpen, toggleOpen] = useReducer(is => !is, true);
   const ctx = useMemo<SideBarContext>(
     () => ({
       isOpen,
@@ -27,7 +17,5 @@ export const ProvideSideBarContext: FC = ({ children }) => {
     }),
     [isOpen, toggleOpen]
   );
-  return (
-    <SideBarContext.Provider value={ctx}>{children}</SideBarContext.Provider>
-  );
+  return <SideBarContext.Provider value={ctx}>{children}</SideBarContext.Provider>;
 };

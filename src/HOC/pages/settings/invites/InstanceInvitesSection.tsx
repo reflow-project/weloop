@@ -17,8 +17,8 @@ export const InstanceInvitesSection: FC<InstanceInvitesSection> = () => {
   const formikAddEmail = useFormik<{ email: string }>({
     initialValues: { email: '' },
     validationSchema: withEmailValidation,
-    onSubmit: ({ email }) => {
-      return email ? addEmail(email).then(formikAddEmail.resetForm) : undefined;
+    onSubmit: ({ email }, { resetForm }) => {
+      return email ? addEmail(email).then(() => resetForm()) : undefined;
     }
   });
 

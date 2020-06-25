@@ -5,9 +5,9 @@ import { InstantSearch } from 'react-instantsearch-dom';
 import { useHistory, useLocation } from 'react-router-dom';
 import { LocationDescriptorObject } from 'history';
 import { mothershipCreds } from '../../mn-constants';
-const createURL = searchState => `?${qs.stringify(searchState)}`;
+const createURL = (searchState: any) => `?${qs.stringify(searchState)}`;
 
-const searchStateToUrl = searchState => `/search/${createURL(searchState)}`;
+const searchStateToUrl = (searchState: any) => `/search/${createURL(searchState)}`;
 
 const urlToSearchState = (search: string) => qs.parse(search.slice(1));
 const DEBOUNCE_TIME = 500;

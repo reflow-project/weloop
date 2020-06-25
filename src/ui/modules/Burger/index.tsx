@@ -6,7 +6,10 @@ import Avatar from 'ui/elements/Avatar';
 import { NavLink } from 'react-router-dom';
 // import  Button  from 'ui/elements/Button';
 
-export const Burger = ({ open, setOpen }) => {
+export const Burger: FC<{ open: boolean; setOpen: (_: boolean) => unknown }> = ({
+  open,
+  setOpen
+}) => {
   return (
     <StyledBurger open={open} onClick={() => setOpen(!open)}>
       <div />

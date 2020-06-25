@@ -124,7 +124,7 @@ export const FeaturedCollections: SFC<FeaturedCollectionsData> = props => {
 
 export default FeaturedCollections;
 
-const sliderSettings = slidesToShow => ({
+const sliderSettings = (slidesToShow: number) => ({
   dots: false,
   arrows: false,
   infinite: true,

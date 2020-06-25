@@ -64,7 +64,7 @@ export const Collection: React.FC<Props> = ({
                 <ActionItem
                   bordered
                   isFollowing={isFollowing ? true : false}
-                  onClick={e => {
+                  onClick={(e: React.MouseEvent) => {
                     e.preventDefault();
                     toggleFollowFormik.submitForm();
                   }}

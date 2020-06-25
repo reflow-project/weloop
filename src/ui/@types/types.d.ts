@@ -37,7 +37,7 @@ export interface FormikHook<Values = {}> {
   // setSubmitting: (isSubmitting: boolean) => void;
   // setTouched: (touched: FormikTouched<Values>) => any;
   setValues: (values: Values) => any;
-  submitForm: () => Promise<void | undefined>;
+  submitForm: () => unknown;
   // validateForm: (values?: Values) => Promise<FormikErrors<Values>>;
   // validateField: (name: string) => Promise<void> | Promise<string | undefined>;
   isValid: boolean;

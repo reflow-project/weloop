@@ -1,17 +1,10 @@
 import { LMSPrefsPanel } from './LMSPrefsPanel';
 import React, { useMemo, useCallback, useState, useEffect } from 'react';
 import { LMSPrefs, sendToMoodle } from './LMSintegration';
-import {
-  SESSION,
-  createLocalSessionKVStorage
-} from 'util/keyvaluestore/localSessionStorage';
+import { SESSION, createLocalSessionKVStorage } from 'util/keyvaluestore/localSessionStorage';
 import { useInstanceInfoQuery } from 'fe/instance/info/useInstanceInfo.generated';
 import Maybe from 'graphql/tsutils/Maybe';
-import {
-  ResourceLMS,
-  ResourceGqlMin,
-  ResourceHitMin
-} from 'HOC/lib/LMSMappings/types';
+import { ResourceLMS, ResourceGqlMin, ResourceHitMin } from 'HOC/lib/LMSMappings/types';
 import { resourceGql2lms } from 'HOC/lib/LMSMappings/gql2LMS';
 import { resourceHit2lms } from 'HOC/lib/LMSMappings/hit2LMS';
 import { useMe } from 'fe/session/useMe';
@@ -36,9 +29,7 @@ export const useLMS = (resource: Maybe<ResourceLMS>) => {
         return false;
       }
       const resource_info_stringified = JSON.stringify(resource);
-      const type = instanceInfo.instance.uploadResourceTypes.includes(
-        resource.mediaType
-      )
+      const type = instanceInfo.instance.uploadResourceTypes.includes(resource.mediaType)
         ? 'file'
         : 'link';
       sendToMoodle(resource.url, resource_info_stringified, type, LMS);
@@ -52,7 +43,7 @@ export const useLMS = (resource: Maybe<ResourceLMS>) => {
       updateLMSPrefs,
       sendToLMS,
       sendToMoodle,
-      LMSPrefsPanel: ({ done }) => (
+      LMSPrefsPanel: ({ done }: { done: () => unknown }) => (
         <LMSPrefsPanel
           done={done}
           lmsParams={currentLMSPrefs}

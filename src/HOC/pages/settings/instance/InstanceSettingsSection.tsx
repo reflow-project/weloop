@@ -27,8 +27,8 @@ export const InstanceSettingsSection: FC<InstanceSettingsSection> = () => {
   const formikAddDomain = useFormik<{ domain: string }>({
     initialValues: { domain: '' },
     validationSchema: withEmailDomainValidation,
-    onSubmit: ({ domain }) => {
-      return domain ? addEmailDomain(domain).then(formikAddDomain.resetForm) : undefined;
+    onSubmit: ({ domain }, { resetForm }) => {
+      return domain ? addEmailDomain(domain).then(() => resetForm()) : undefined;
     }
   });
 
