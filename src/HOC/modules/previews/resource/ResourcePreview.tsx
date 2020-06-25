@@ -1,18 +1,19 @@
-import { useLMSGQL } from 'fe/lib/moodleLMS/useSendToMoodle';
+import { MoodlePanelHOC } from 'HOC/modules/MoodlePanel/MoodlePanel';
 import { useResourcePreview } from 'fe/resource/preview/useResourcePreview';
 import { useFormik } from 'formik';
 import { Resource } from 'graphql/types.generated';
+import { resourceGql2lms } from 'fe/lib/moodleLMS/mappings/gql2LMS';
+import { useNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
 import { FlagModalHOC } from 'HOC/modules/FlagModal/flagModalHOC';
 // import { accepted_license_types } from 'mn-constants';
 import React, { FC, useMemo, useReducer } from 'react';
+import { collectionLocation } from 'routes/CollectionPageRoute';
+import Modal from 'ui/modules/Modal';
 import {
   Props as ResourcePreviewProps,
   Resource as ResourcePreviewUI
 } from 'ui/modules/Previews/Resource';
 import { ResourcePreviewFragment } from './ResourcePreview.generated';
-import { collectionLocation } from 'routes/CollectionPageRoute';
-import Modal from 'ui/modules/Modal';
-import { useNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
 
 export interface Props {
   resourceId: Resource['id'];
@@ -26,7 +27,6 @@ export const ResourcePreviewHOC: FC<Props> = ({ resourceId, flagged }) => {
     initialValues: {},
     onSubmit: toggleLike
   });
-  const { LMSPrefsPanel } = useLMSGQL(resource);
   const notifyMustLogin = useNotifyMustLogin();
   const [isOpenDropdown, toggleDropdown] = useReducer(is => !is, false);
   const [isOpenSendToMoodle, toggleSendToMoodleModal] = useReducer(is => !is, false);
@@ -59,11 +59,14 @@ export const ResourcePreviewHOC: FC<Props> = ({ resourceId, flagged }) => {
         <FlagModalHOC done={toggleFlagModal} ctx={resource} />
       </Modal>
     ) : null;
-  const MoodleModal = isOpenSendToMoodle ? (
-    <Modal closeModal={toggleSendToMoodleModal}>
-      <LMSPrefsPanel done={toggleSendToMoodleModal} />
-    </Modal>
-  ) : null;
+
+  const resourceLMS = useMemo(() => resourceGql2lms(resource), [resource]);
+  const MoodleModal =
+    resourceLMS && isOpenSendToMoodle ? (
+      <Modal closeModal={toggleSendToMoodleModal}>
+        <MoodlePanelHOC done={toggleSendToMoodleModal} resource={resourceLMS} />
+      </Modal>
+    ) : null;
   return (
     resourcePreviewProps && (
       <>

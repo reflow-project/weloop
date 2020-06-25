@@ -1,30 +1,35 @@
+import { useInstanceInfoQuery } from 'fe/instance/info/useInstanceInfo.generated';
 import { mnCtx } from 'fe/lib/graphql/ctx';
-import { Hit, ResourceHit, CommunityHit, CollectionHit } from 'fe/search/Hits';
+import { MoodlePanelHOC } from 'HOC/modules/MoodlePanel/MoodlePanel';
+import { CollectionHit, CommunityHit, Hit, ResourceHit } from 'fe/search/Hits';
 import {
-  useSearchHostIndexAndMyFollowsQuery,
   useSearchFollowMutation,
+  useSearchHostIndexAndMyFollowsQuery,
   useSearchUnfollowMutation
 } from 'fe/search/SearchData.generated';
 import { useFormik } from 'formik';
-import { collectionHit2gql, communityHit2gql, resourceHit2gql } from 'HOC/lib/LMSMappings/hit2GQL';
+import {
+  collectionHit2gql,
+  communityHit2gql,
+  resourceHit2gql
+} from 'fe/lib/moodleLMS/mappings/hit2GQL';
+import { resourceHit2lms } from 'fe/lib/moodleLMS/mappings/hit2LMS';
 import { collectionFragment2UIProps } from 'HOC/modules/previews/collection/CollectionPreview';
 import { communityFragment2UIProps } from 'HOC/modules/previews/community/CommunityPreview';
 import { resourceFragment2UIProps } from 'HOC/modules/previews/resource/ResourcePreview';
 import * as React from 'react';
+import { ReactElement } from 'react';
 import {
+  Configure,
   connectInfiniteHits,
   Pagination,
-  Configure,
   RefinementList
 } from 'react-instantsearch-dom';
+import Modal from 'ui/modules/Modal';
 import { Collection } from 'ui/modules/Previews/Collection';
 import { Community } from 'ui/modules/Previews/Community';
-import { Resource, Props as ResourceProps } from 'ui/modules/Previews/Resource';
+import { Props as ResourceProps, Resource } from 'ui/modules/Previews/Resource';
 import { Props, Search } from 'ui/pages/search';
-import { useLMSGQL } from 'fe/lib/moodleLMS/useSendToMoodle';
-import { useInstanceInfoQuery } from 'fe/instance/info/useInstanceInfo.generated';
-import { ReactElement } from 'react';
-import Modal from 'ui/modules/Modal';
 
 const _SearchPageHOC: React.FC<{ hits: Hit[] }> = ({ hits }) => {
   // console.log(hits);
@@ -108,7 +113,6 @@ const ResourcePreviewHit: React.FC<{ hit: ResourceHit }> = ({ hit }) => {
   // console.table({ name:hit.name, isLocal, isFile })
   // console.log(hit, data?.instance?.uploadResourceTypes)
   const previewFragment = resourceHit2gql({ resource: hit, isLocal, isFile });
-  const { LMSPrefsPanel } = useLMSGQL(previewFragment);
 
   const [isOpenSendToMoodle, toggleSendToMoodleModal] = React.useReducer(is => !is, false);
   const [isOpenDropdown, toggleDropdown] = React.useReducer(is => !is, false);
@@ -126,11 +130,13 @@ const ResourcePreviewHit: React.FC<{ hit: ResourceHit }> = ({ hit }) => {
   };
   !props && console.warn(`Could not preview searchHit:`, hit);
 
-  const MoodleModal = isOpenSendToMoodle ? (
-    <Modal closeModal={toggleSendToMoodleModal}>
-      <LMSPrefsPanel done={toggleSendToMoodleModal} />
-    </Modal>
-  ) : null;
+  const resourceLMS = React.useMemo(() => resourceHit2lms(hit), [hit]);
+  const MoodleModal =
+    resourceLMS && isOpenSendToMoodle ? (
+      <Modal closeModal={toggleSendToMoodleModal}>
+        <MoodlePanelHOC done={toggleSendToMoodleModal} resource={resourceLMS} />
+      </Modal>
+    ) : null;
   // console.log(`Resource:`, props)
   return (
     props && (
