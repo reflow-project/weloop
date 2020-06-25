@@ -123,7 +123,7 @@ export const FeaturedCommunities: SFC<FeaturedCommunitiesData> = props => {
 
 export default FeaturedCommunities;
 
-const sliderSettings = slidesToShow => ({
+const sliderSettings = (slidesToShow: number) => ({
   dots: false,
   arrows: false,
   infinite: true,

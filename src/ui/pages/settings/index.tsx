@@ -232,7 +232,7 @@ const SettingsWrapper = styled(Box)`
 //   }
 // `;
 
-const Sidebar = ({ basePath, isAdmin }) => {
+const Sidebar: React.FC<{ basePath: string; isAdmin: boolean }> = ({ basePath, isAdmin }) => {
   return (
     <WrapperPanel mr={2}>
       <Panel>

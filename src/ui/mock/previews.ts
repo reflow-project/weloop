@@ -10,6 +10,7 @@ import { CommentProps as ThreadProps } from 'ui/modules/Previews/Thread';
 import { Props as UserProps } from 'ui/modules/Previews/User';
 import { useGetActions } from './activityPreview';
 import { useToggleFormik } from './formik';
+import { ReactElement } from 'react';
 
 export function CollectionPreviewProps(
   username = 'Collection',
@@ -197,7 +198,11 @@ export function ThreadPreviewProps(
   };
 }
 
-export function FlaggedItemPreviewProps(flag, type = '', reason = 'Abusive speech'): FlaggedProps {
+export function FlaggedItemPreviewProps(
+  flag: ReactElement,
+  type = '',
+  reason = 'Abusive speech'
+): FlaggedProps {
   return {
     FlaggedItemContextElement: flag,
     type,
