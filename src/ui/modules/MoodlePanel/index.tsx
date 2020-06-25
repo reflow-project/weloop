@@ -5,8 +5,8 @@ import { LocaleContext } from '../../../context/global/localizationCtx';
 import { Input } from '@rebass/forms';
 import { Heading } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
-import styled from '../../../themes/styled';
-import Alert from '../../elements/Alert';
+import styled from 'ui/themes/styled';
+import Alert from 'ui/elements/Alert';
 import { FormikHook } from 'ui/@types/types';
 import {
   Actions,
