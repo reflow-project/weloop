@@ -1,227 +1,211 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
-import { PropsTable } from '@storybook/components'
-import { User } from './User'
-import { Resource } from './Resource'
-import { Community } from './Community'
-import { Collection } from './Collection'
-import { Comment } from './Comment'
-import { MainComment } from './MainComment'
-import { LikedComment } from './LikedComment'
-import { FlaggedItem } from './FlaggedItem'
-import { Thread } from './Thread'
-import { Box } from 'rebass'
-import {
-  UserPreviewProps,
-  ResourcePreviewProps,
-  ResourcePreviewUploadedProps,
-  CommunityPreviewProps,
-  CollectionPreviewProps,
-  CommentPreviewProps,
-  MainCommentPreviewProps,
-  LikedCommentPreviewProps,
-  FlaggedItemPreviewProps,
-  ThreadPreviewProps,
-} from 'ui/mock/previews'
-import { activityPreviewProps } from 'ui/mock/activityPreview'
-import { ActivityPreview } from 'ui/modules/ActivityPreview'
 
-<Meta title="Modules|Main Previews" />
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
+import { PropsTable } from '@storybook/components';
+import { User } from './User';
+import { Resource } from './Resource';
+import {Community} from './Community';
+import {Collection} from './Collection';
+import {Comment} from './Comment';
+import {MainComment} from './MainComment';
+import {LikedComment} from './LikedComment';
+import {FlaggedItem} from './FlaggedItem';
+import {Thread} from './Thread';
+import {Box} from 'rebass'
+import {UserPreviewProps,
+ResourcePreviewProps, 
+ResourcePreviewUploadedProps,
+CommunityPreviewProps, 
+CollectionPreviewProps,
+CommentPreviewProps,
+MainCommentPreviewProps,
+LikedCommentPreviewProps,
+FlaggedItemPreviewProps,
+ThreadPreviewProps
+ } from 'ui/mock/previews'
+import { activityPreviewProps } from 'ui/mock/activityPreview';
+import { ActivityPreview } from 'ui/modules/ActivityPreview';
+
+<Meta title="Modules|Main Previews"/>
 
 # User
-
 Let's define a story for the `User preview` module
 
 <Preview>
   <Story name="User preview module">
-    <Box
-      sx={{
-        borderRadius: '6px',
-        width: '600px',
-        margin: '0 auto',
-      }}
-      p={2}
-    >
-      <User {...UserPreviewProps()} />
+     <Box
+        sx={{
+          borderRadius: '6px',
+          width: '600px',
+          margin: '0 auto'
+        }}
+        p={2}
+      >
+    <User {...UserPreviewProps() }/>
     </Box>
   </Story>
 </Preview>
 
-# Resource via URL
 
+# Resource via URL
 Let's define a story for the `Resource via url preview` module
 
 <Preview>
   <Story name="Resource via url preview module">
-    <Box
-      sx={{
-        borderRadius: '6px',
-        width: '600px',
-        margin: '0 auto',
-      }}
-      p={2}
-    >
-      <Resource {...ResourcePreviewProps()} />
+     <Box
+        sx={{
+          borderRadius: '6px',
+          width: '600px',
+          margin: '0 auto'
+        }}
+        p={2}
+      >
+    <Resource {...ResourcePreviewProps() } />
     </Box>
   </Story>
 </Preview>
 
 # Uploaded Resource
-
 Let's define a story for the `Uploaded Resource preview` module
-
 <Preview>
   <Story name="Uploaded Resource preview module">
-    <Box
-      sx={{
-        borderRadius: '6px',
-        width: '600px',
-        margin: '0 auto',
-      }}
-      p={2}
-    >
-      <Resource {...ResourcePreviewUploadedProps()} />
+     <Box
+        sx={{
+          borderRadius: '6px',
+          width: '600px',
+          margin: '0 auto'
+        }}
+        p={2}
+      >
+    <Resource {...ResourcePreviewUploadedProps() } />
     </Box>
   </Story>
 </Preview>
 
 # Community
-
 Let's define a story for the `Community preview` module
 
 <Preview>
   <Story name="Community preview module">
-    <Box
-      sx={{
-        borderRadius: '6px',
-        width: '600px',
-        margin: '0 auto',
-      }}
-      p={2}
-    >
-      <Community {...CommunityPreviewProps()} />
+     <Box
+        sx={{
+          borderRadius: '6px',
+          width: '600px',
+          margin: '0 auto'
+        }}
+        p={2}
+      >
+    <Community {...CommunityPreviewProps() } />
     </Box>
   </Story>
 </Preview>
 
 # Collection
-
 Let's define a story for the `Collection preview` module
 
 <Preview>
   <Story name="Collection preview module">
-    <Box
-      sx={{
-        borderRadius: '6px',
-        width: '600px',
-        margin: '0 auto',
-      }}
-      p={2}
-    >
-      <Collection {...CollectionPreviewProps()} />
+     <Box
+        sx={{
+          borderRadius: '6px',
+          width: '600px',
+          margin: '0 auto'
+        }}
+        p={2}
+      >
+    <Collection {...CollectionPreviewProps() } />
     </Box>
   </Story>
 </Preview>
 
 # Comment
-
 Let's define a story for the `Comment preview` module
 
 <Preview>
   <Story name="Comment preview module">
-    <Box
-      sx={{
-        borderRadius: '6px',
-        width: '600px',
-        margin: '0 auto',
-      }}
-      p={2}
-    >
-      <Comment {...CommentPreviewProps()} />
+     <Box
+        sx={{
+          borderRadius: '6px',
+          width: '600px',
+          margin: '0 auto'
+        }}
+        p={2}
+      >
+    <Comment {...CommentPreviewProps() } />
     </Box>
   </Story>
 </Preview>
 
 # Thread
-
 Let's define a story for the `Thread preview` module
 
 <Preview>
   <Story name="Thread preview module">
-    <Box
-      sx={{
-        borderRadius: '6px',
-        width: '600px',
-        margin: '0 auto',
-      }}
-      p={2}
-    >
-      <Thread {...ThreadPreviewProps()} />
+     <Box
+        sx={{
+          borderRadius: '6px',
+          width: '600px',
+          margin: '0 auto'
+        }}
+        p={2}
+      >
+    <Thread {...ThreadPreviewProps()} />
     </Box>
   </Story>
 </Preview>
 
-# Main Comment
 
+# Main Comment
 Let's define a story for the `Main Comment preview` module
 
 <Preview>
   <Story name="Main Comment preview module">
-    <Box
-      sx={{
-        borderRadius: '6px',
-        width: '600px',
-        margin: '0 auto',
-      }}
-      p={2}
-    >
-      <MainComment {...MainCommentPreviewProps()} />
+     <Box
+        sx={{
+          borderRadius: '6px',
+          width: '600px',
+          margin: '0 auto'
+        }}
+        p={2}
+      >
+    <MainComment {...MainCommentPreviewProps()}/>
     </Box>
   </Story>
 </Preview>
 
 # Liked Comment
-
 Let's define a story for the `Liked Comment preview` module
 
 <Preview>
   <Story name="Liked Comment preview module">
-    <Box
-      sx={{
-        borderRadius: '6px',
-        width: '600px',
-        margin: '0 auto',
-      }}
-      p={2}
-    >
-      <LikedComment {...LikedCommentPreviewProps()} />
+     <Box
+        sx={{
+          borderRadius: '6px',
+          width: '600px',
+          margin: '0 auto'
+        }}
+        p={2}
+      >
+    <LikedComment {...LikedCommentPreviewProps()} />
     </Box>
   </Story>
-</Preview>{' '}
+</Preview> 
 
 # Flagged Item
-
 Let's define a story for the `Liked Comment preview` module
 
 <Preview>
   <Story name="Flagged item preview module">
-    <Box
-      sx={{
-        borderRadius: '6px',
-        width: '600px',
-        margin: '0 auto',
-      }}
-      p={2}
-    >
-      <FlaggedItem
-        {...FlaggedItemPreviewProps(
-          <ActivityPreview
-            {...activityPreviewProps(
-              'Created a comment',
-              <Comment hideActions={true} {...CommentPreviewProps()} />
-            )}
-          />
-        )}
-      />
+     <Box
+        sx={{
+          borderRadius: '6px',
+          width: '600px',
+          margin: '0 auto'
+        }}
+        p={2}
+      >
+    <FlaggedItem {...FlaggedItemPreviewProps(
+       <ActivityPreview {...activityPreviewProps('Created a comment', <Comment hideActions={true} {...CommentPreviewProps() }/>)} />
+    )} />
     </Box>
   </Story>
-</Preview>{' '}
+</Preview> 
