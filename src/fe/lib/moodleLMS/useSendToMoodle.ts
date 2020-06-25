@@ -1,22 +1,16 @@
-import { LMSPrefsPanel } from './LMSPrefsPanel';
-import React, { useMemo, useCallback, useState, useEffect } from 'react';
+// import { LMSPrefsPanel } from './LMSPrefsPanel';
+import { useMemo, useCallback, useState, useEffect } from 'react';
 import { LMSPrefs, sendToMoodle } from './LMSintegration';
 import { SESSION, createLocalSessionKVStorage } from 'util/keyvaluestore/localSessionStorage';
 import { useInstanceInfoQuery } from 'fe/instance/info/useInstanceInfo.generated';
 import Maybe from 'graphql/tsutils/Maybe';
-import { ResourceLMS, ResourceGqlMin, ResourceHitMin } from 'HOC/lib/LMSMappings/types';
-import { resourceGql2lms } from 'HOC/lib/LMSMappings/gql2LMS';
-import { resourceHit2lms } from 'HOC/lib/LMSMappings/hit2LMS';
+import { ResourceLMS /* ResourceGqlMin, ResourceHitMin  */ } from 'fe/lib/moodleLMS/mappings/types';
+// import { resourceGql2lms } from 'HOC/lib/LMSMappings/gql2LMS';
+// import { resourceHit2lms } from 'HOC/lib/LMSMappings/hit2LMS';
 import { useMe } from 'fe/session/useMe';
 const storage = createLocalSessionKVStorage(SESSION)('LMS_');
 const LMS_PREFS_KEY = 'Prefs';
 
-export const useLMSGQL = (resource: Maybe<ResourceGqlMin>) => {
-  return useLMS(resourceGql2lms(resource));
-};
-export const useLMSHit = (resource: Maybe<ResourceHitMin>) => {
-  return useLMS(resourceHit2lms(resource));
-};
 export const useLMS = (resource: Maybe<ResourceLMS>) => {
   const { data: instanceInfo } = useInstanceInfoQuery();
 
@@ -42,26 +36,9 @@ export const useLMS = (resource: Maybe<ResourceLMS>) => {
     () => ({
       updateLMSPrefs,
       sendToLMS,
-      sendToMoodle,
-      LMSPrefsPanel: ({ done }: { done: () => unknown }) => (
-        <LMSPrefsPanel
-          done={done}
-          lmsParams={currentLMSPrefs}
-          sendToLMS={async (BasicLMS, update) => {
-            await done();
-            const useThisLMSPrefs: LMSPrefs | null = update
-              ? { ...BasicLMS, course: undefined, section: undefined }
-              : currentLMSPrefs;
-            if (!useThisLMSPrefs) {
-              return;
-            }
-            update && updateLMSPrefs(useThisLMSPrefs);
-            return sendToLMS(useThisLMSPrefs);
-          }}
-        />
-      )
+      currentLMSPrefs
     }),
-    [sendToLMS, updateLMSPrefs, currentLMSPrefs]
+    [updateLMSPrefs, sendToLMS, currentLMSPrefs]
   );
 };
 
