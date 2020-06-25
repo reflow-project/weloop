@@ -60,10 +60,11 @@ export const useGetEditProfileProps = (): EditProfileProps => {
         setLocale={action('setLocale')}
       />
     ),
-    Flags: <div>Flags section </div>, //FIXME
-    Instance: <div>Instance section </div>, //FIXME
-    Invites: <div>Invites section </div>, //FIXME,
-    ModerationLog: <div>ModerationLog section </div> //FIXME,
+    // FIXME mock with real components
+    Flags: <div>Flags section </div>,
+    Instance: <div>Instance section </div>,
+    Invites: <div>Invites section </div>,
+    ModerationLog: <div>ModerationLog section </div>
   };
 };
 
