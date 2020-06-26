@@ -30,4 +30,4 @@ jobs:
           publish_dir: ./build
         env:
           REACT_APP_GRAPHQL_ENDPOINT: ${{ secrets.REACT_APP_GRAPHQL_ENDPOINT }}
-          CI: false
+          CI: 'false'
