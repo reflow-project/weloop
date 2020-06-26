@@ -23,6 +23,7 @@ jobs:
       - name: Build page
         run: npm run build
         env:
+          REACT_APP_GRAPHQL_ENDPOINT: ${{ secrets.REACT_APP_GRAPHQL_ENDPOINT }}
           CI: false
 
       - name: Deploy to gh-pages
