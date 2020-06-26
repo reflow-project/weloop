@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'ui/themes/styled';
 import { INSTANCE_TAGLINE, logo_large_url } from 'mn-constants'; // + instance_bg_img
+import { GRAPHQL_ENDPOINT } from 'mn-constants'; // + instance_bg_img
 import { Link } from 'react-router-dom';
 
 export interface Props {
@@ -17,6 +18,7 @@ const LogoContainer: FC<Props> = props => (
       </Link>
     )}
     <Tagline>{INSTANCE_TAGLINE}</Tagline>
+    <Tagline>Debug Endpoint: {GRAPHQL_ENDPOINT} (This will be removed)</Tagline>
   </Header>
 );
 
