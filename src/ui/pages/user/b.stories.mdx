@@ -44,8 +44,14 @@ The `Profile` shows the profile page of a MoodleNet user. This is made up of the
 <Preview>
   <Story name="Profile page">
     <WithSidebar
+      SearchBox={<h1>test</h1>}
       HeaderBox={<MainHeader {...getMainHeaderProps()} />}
       SidebarBox={<Sidebar {...useGetSidebarProps()} />}
+      userImage={"string"}
+      userLink={"/"}
+      username={"test"}
+      name={"test"}
+      signout={() => console.log("test")}
     >
       <User
         totalCommunities={'23'}

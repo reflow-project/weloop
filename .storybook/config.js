@@ -59,7 +59,6 @@ const loaderFn = () => {
     require('../src/ui/pages/user/a.stories.mdx'),
     require('../src/ui/pages/user/b.stories.mdx'),
     require('../src/ui/pages/settings/admin.stories.mdx'),
-    require('../src/ui/pages/settings/user.stories.mdx'),
     require('../src/ui/pages/notFound/a.stories.mdx'),
     // Modules
     require('../src/ui/modules/ActivityPreview/a.stories.mdx'),

@@ -36,8 +36,14 @@ The `Collection` page displays a single MoodleNet collection. It is made up of t
 <Preview>
   <Story name="Collection page">
     <WithSidebar
+      SearchBox={<h1>test</h1>}
       HeaderBox={<MainHeader {...getMainHeaderProps()} />}
       SidebarBox={<Sidebar {...useGetSidebarProps()} />}
+      userImage={"string"}
+      userLink={"/"}
+      username={"test"}
+      name={"test"}
+      signout={() => console.log("test")}
     >
       <Collection
         ShareLinkBox={() => <ShareLink {...useGetShareLinkProps()} />}
@@ -77,17 +83,17 @@ The `Collection` page displays a single MoodleNet collection. It is made up of t
             />
           </React.Fragment>
         }
-        ResourcesBox={
-          <React.Fragment>
-            <Resource {...ResourcePreviewProps()} />
-            <Resource {...ResourcePreviewUploadedProps()} />
-            <Resource {...ResourcePreviewProps()} />
-            <Resource {...ResourcePreviewUploadedProps()} />
-            <Resource {...ResourcePreviewProps()} />
-            <Resource {...ResourcePreviewUploadedProps()} />
-            <Resource {...ResourcePreviewProps()} />
-            <Resource {...ResourcePreviewProps()} />
-          </React.Fragment>
+        Resources={
+         [
+            <Resource {...ResourcePreviewProps()} />,
+            <Resource {...ResourcePreviewUploadedProps()} />,
+            <Resource {...ResourcePreviewProps()} />,
+            <Resource {...ResourcePreviewUploadedProps()} />,
+            <Resource {...ResourcePreviewProps()} />,
+            <Resource {...ResourcePreviewUploadedProps()} />,
+            <Resource {...ResourcePreviewProps()} />,
+            <Resource {...ResourcePreviewProps()} />,
+         ]
         }
         basePath="/"
       />

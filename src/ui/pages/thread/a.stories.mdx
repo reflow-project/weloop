@@ -28,8 +28,14 @@ Let's define a story for the `Thread` page
 <Preview>
   <Story name="Thread page">
     <WithSidebar
+      SearchBox={<h1>test</h1>}
       HeaderBox={<MainHeader {...getMainHeaderProps()} />}
       SidebarBox={<Sidebar {...useGetSidebarProps()} />}
+      userImage={"string"}
+      userLink={"/"}
+      username={"test"}
+      name={"test"}
+      signout={() => console.log("test")}
     >
       <Thread
         isCommunityContext={true}

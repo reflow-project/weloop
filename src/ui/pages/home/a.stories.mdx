@@ -41,8 +41,14 @@ The `Home` (or '**My MoodleNet**') page shows the user timeline, with links to a
 <Preview>
   <Story name="Home page">
     <WithSidebar
+      SearchBox={<h1>test</h1>}
       HeaderBox={<MainHeader {...getMainHeaderProps()} />}
       SidebarBox={<Sidebar {...useGetSidebarProps()} />}
+      userImage={"string"}
+      userLink={"/"}
+      username={"test"}
+      name={"test"}
+      signout={() => console.log("test")}
     >
       <Home
         InboxElements={
@@ -83,28 +89,7 @@ The `Home` (or '**My MoodleNet**') page shows the user timeline, with links to a
             />
           </React.Fragment>
         }
-        FollowedCollectionsElements={[
-          <Collection key={1} {...CollectionPreviewProps()} />,
-          <Collection key={2} {...CollectionPreviewProps()} />,
-          <Collection key={3} {...CollectionPreviewProps()} />,
-          <Collection key={4} {...CollectionPreviewProps()} />,
-          <Collection key={5} {...CollectionPreviewProps()} />,
-          <Collection key={6} {...CollectionPreviewProps()} />,
-          <Collection key={7} {...CollectionPreviewProps()} />,
-          <Collection key={8} {...CollectionPreviewProps()} />,
-          <Collection key={9} {...CollectionPreviewProps()} />,
-        ]}
-        FollowedCommunitiesElements={
-          <React.Fragment>
-            <Community key={1} {...CommunityPreviewProps()} />
-            <Community key={2} {...CommunityPreviewProps()} />
-            <Community key={3} {...CommunityPreviewProps()} />
-            <Community key={4} {...CommunityPreviewProps()} />
-            <Community key={5} {...CommunityPreviewProps()} />
-            <Community key={6} {...CommunityPreviewProps()} />
-            <Community key={7} {...CommunityPreviewProps()} />
-          </React.Fragment>
-        }
+        
         basePath={'/'}
         nextCommunitiesFormik={useToggleFormik()}
         nextCollectionsFormik={useToggleFormik()}

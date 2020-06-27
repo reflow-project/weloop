@@ -24,8 +24,14 @@ The `AllCollections` page displays all of the collections on the current MoodleN
 <Preview>
   <Story name="AllCollections page">
     <WithSidebar
+      SearchBox={<h1>test</h1>}
       HeaderBox={<MainHeader {...getMainHeaderProps()} />}
       SidebarBox={<Sidebar {...useGetSidebarProps()} />}
+      userImage={"string"}
+      userLink={"/"}
+      username={"test"}
+      name={"test"}
+      signout={() => console.log("test")}
     >
       <AllCollections
         basePath="/"

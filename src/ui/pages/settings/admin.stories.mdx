@@ -6,6 +6,7 @@ import { useGetEditProfilePropsAdmin } from 'ui/mock/settings'
 import { MainHeader } from 'ui/modules/MainHeader'
 import { getMainHeaderProps } from 'ui/mock/mainHeader'
 import { WithoutSidebar } from 'ui/templates/withoutSidebar'
+import { useGetSidebarProps } from 'ui/mock/sidebar'
 
 <Meta title="Pages|Settings - Admin" component={Settings} />
 
@@ -21,7 +22,16 @@ Let's define a story for the `Settings` page - Admin user
 
 <Preview>
   <Story name="Settings page - Admin user">
-    <WithoutSidebar HeaderBox={<MainHeader {...getMainHeaderProps()} />}>
+    <WithoutSidebar 
+      SearchBox={<h1>test</h1>}
+      HeaderBox={<MainHeader {...getMainHeaderProps()} />}
+      SidebarBox={<Sidebar {...useGetSidebarProps()} />}
+      userImage={"string"}
+      userLink={"/"}
+      username={"test"}
+      name={"test"}
+      signout={() => console.log("test")}
+     >
       <Settings {...useGetEditProfilePropsAdmin()} />
     </WithoutSidebar>
   </Story>

@@ -47,8 +47,14 @@ The `Discover` page displays featured communities, featured collections, and the
 <Preview>
   <Story name="Discover page">
     <WithSidebar
+      SearchBox={<h1>test</h1>}
       HeaderBox={<MainHeader {...getMainHeaderProps()} />}
       SidebarBox={<Sidebar {...useGetSidebarProps()} />}
+      userImage={"string"}
+      userLink={"/"}
+      username={"test"}
+      name={"test"}
+      signout={() => console.log("test")}
     >
       <Discover
         basePath={'/'}

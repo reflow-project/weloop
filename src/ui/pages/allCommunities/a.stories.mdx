@@ -27,8 +27,14 @@ The `AllCommunities` page displays all of the communities on the current MoodleN
 <Preview>
   <Story name="AllCommunities page">
     <WithSidebar
+      SearchBox={<h1>test</h1>}
       HeaderBox={<MainHeader {...getMainHeaderProps()} />}
       SidebarBox={<Sidebar {...useGetSidebarProps()} />}
+      userImage={"string"}
+      userLink={"/"}
+      username={"test"}
+      name={"test"}
+      signout={() => console.log("test")}
     >
       <AllCommunities
         Header={<Header name="All Communities" />}
