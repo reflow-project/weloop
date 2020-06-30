@@ -3,6 +3,7 @@ import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { toast, ToastContent, ToastOptions } from 'react-toastify';
 import { Trans } from '@lingui/macro';
+import { loginLocation } from 'routes/LoginPageRoute';
 
 export interface Opts {
   content?: ToastContent | (() => ToastContent);
@@ -11,7 +12,7 @@ export interface Opts {
 const defaultOpts: Opts = {
   content: () => (
     <Trans>
-      You need to <Link to="/login">login</Link> for that
+      You need to <Link to={loginLocation.getPath(undefined, undefined)}>login</Link> for that
     </Trans>
   ),
   opts: { type: 'warning' }

@@ -9,6 +9,7 @@ import CollectionSmall, { CollectionProps } from 'ui/modules/FeaturedCollections
 import Modal from 'ui/modules/Modal';
 import { FeatureModalHOC } from '../FeatureModal/FeatureModal';
 import { CollectionFeatureFragment } from './featuredCollection.generated';
+import { collectionLocation } from 'routes/CollectionPageRoute';
 
 export interface FeaturedCollections {}
 export const FeaturedCollections: FC<FeaturedCollections> = () => {
@@ -29,9 +30,13 @@ export const FeaturedCollections: FC<FeaturedCollections> = () => {
           if (!collectionFragment || collectionFragment.__typename !== 'Collection') {
             return null;
           }
-          const collection = {
-            ...collectionFragment,
-            icon: collectionFragment.icon?.url || ''
+          const collection: CollectionProps['collection'] = {
+            icon: collectionFragment.icon?.url || '',
+            name: collectionFragment.name,
+            link: collectionLocation.getPath(
+              { collectionId: collectionFragment.id, tab: undefined },
+              undefined
+            )
           };
 
           const props: CollectionProps = {
