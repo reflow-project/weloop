@@ -10,10 +10,7 @@ import { typography } from 'mn-constants';
 import { darken, ellipsis } from 'polished';
 
 export interface Props {
-  link: {
-    url: string;
-    external: boolean;
-  };
+  link: SimpleLink;
   icon: string;
   name: string;
   summary: string;

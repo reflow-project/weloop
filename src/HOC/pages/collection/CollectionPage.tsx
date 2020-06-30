@@ -12,6 +12,7 @@ import { UserPreviewHOC } from 'HOC/modules/previews/user/UserPreview';
 import { ShareLinkHOC } from 'HOC/modules/ShareLink/shareLinkHOC';
 import React, { FC, ReactElement, useCallback, useMemo, useState } from 'react';
 import CollectionPageUI, { Props as CollectionPageProps } from 'ui/pages/collection';
+import { collectionLocation } from 'routes/CollectionPageRoute';
 
 export enum CollectionPageTab {
   // Activities,
@@ -77,13 +78,16 @@ export const CollectionPage: FC<CollectionPage> = props => {
     if (!collection) {
       return null;
     }
-
+    const tabPaths: CollectionPageProps['tabPaths'] = {
+      followers: collectionLocation.getPath({ collectionId, tab: 'followers' }, undefined),
+      resources: collectionLocation.getPath({ collectionId, tab: undefined }, undefined)
+    };
     const uiProps: CollectionPageProps = {
       ShareLink,
       HeroCollection,
       Resources,
       UploadResourcePanel,
-      basePath,
+      tabPaths,
       Followers,
       communityIcon: collection.community?.icon?.url || '',
       communityId: collection.community ? collection.community.id : '',
@@ -98,11 +102,11 @@ export const CollectionPage: FC<CollectionPage> = props => {
     return uiProps;
   }, [
     collection,
+    collectionId,
     ShareLink,
     HeroCollection,
     Resources,
     UploadResourcePanel,
-    basePath,
     Followers,
     loadMoreFollowers,
     loadMoreResources,

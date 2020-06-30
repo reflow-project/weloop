@@ -20,7 +20,11 @@ import { SidePanel } from 'ui/modules/SidePanel';
 import { ReactElement } from 'react';
 
 export interface Props {
-  basePath: string;
+  tabPaths: {
+    timeline: string;
+    communities: string;
+    collections: string;
+  };
   FeaturedCommunitiesBox: ReactElement;
   FeaturedCollectionsBox: ReactElement;
   ActivitiesBox: ReactElement;
@@ -29,13 +33,13 @@ export interface Props {
   LoadMoreFormik: FormikHook | null;
 }
 export const Discover: React.FC<Props> = ({
-  basePath,
   ActivitiesBox,
   FeaturedCommunitiesBox,
   FeaturedCollectionsBox,
   CollectionsBoxes,
   CommunitiesBoxes,
-  LoadMoreFormik
+  LoadMoreFormik,
+  tabPaths
 }) => {
   return (
     <MainContainer>
@@ -44,19 +48,19 @@ export const Discover: React.FC<Props> = ({
           <WrapperFeatured>{FeaturedCommunitiesBox}</WrapperFeatured>
           <WrapperFeatured mt={2}>{FeaturedCollectionsBox}</WrapperFeatured>
           <Wrapper>
-            <Menu basePath={basePath} />
+            <Menu tabPaths={tabPaths} />
             <Switch>
-              <Route path={`${basePath}/communities`}>
+              <Route exact path={tabPaths.communities}>
                 <ObjectsList>{CommunitiesBoxes}</ObjectsList>
                 {LoadMoreFormik && <LoadMore LoadMoreFormik={LoadMoreFormik} />}
               </Route>
-              <Route path={`${basePath}/collections`}>
+              <Route exact path={tabPaths.collections}>
                 <ObjectsList>
                   <CollectionsWrapper>{CollectionsBoxes}</CollectionsWrapper>
                 </ObjectsList>
                 {LoadMoreFormik && <LoadMore LoadMoreFormik={LoadMoreFormik} />}
               </Route>
-              <Route path={`${basePath}`}>
+              <Route exact path={tabPaths.timeline}>
                 <List>{ActivitiesBox}</List>
                 {LoadMoreFormik && <LoadMore LoadMoreFormik={LoadMoreFormik} />}
               </Route>
@@ -69,19 +73,19 @@ export const Discover: React.FC<Props> = ({
   );
 };
 
-const Menu = ({ basePath }: { basePath: string }) => (
+const Menu: React.FC<{ tabPaths: Props['tabPaths'] }> = ({ tabPaths }) => (
   <>
     <Title px={2} mt={2}>
       <Text variant="suptitle">Browse Home instance</Text>
     </Title>
     <MenuList>
-      <NavLink exact to={`${basePath}`}>
+      <NavLink exact to={tabPaths.timeline}>
         <Trans>Timeline</Trans>
       </NavLink>
-      <NavLink exact to={`${basePath}/communities`}>
+      <NavLink exact to={tabPaths.communities}>
         <Trans>All communities</Trans>
       </NavLink>
-      <NavLink exact to={`${basePath}/collections`}>
+      <NavLink exact to={tabPaths.collections}>
         <Trans>All collections</Trans>
       </NavLink>
     </MenuList>

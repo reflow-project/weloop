@@ -30,7 +30,10 @@ export interface Props {
   UploadResourcePanel: null | ReactElement;
   shareLink(): unknown;
   upload(): unknown;
-  basePath: string;
+  tabPaths: {
+    resources: string;
+    followers: string;
+  };
   loadMoreResources: FormikHook | null;
   loadMoreFollowers: FormikHook | null;
   isCommunityMember: boolean;
@@ -45,7 +48,7 @@ export const Collection: React.FC<Props> = ({
   UploadResourcePanel,
   Followers,
   Resources,
-  basePath,
+  tabPaths,
   loadMoreResources,
   loadMoreFollowers,
   isCommunityMember,
@@ -61,19 +64,17 @@ export const Collection: React.FC<Props> = ({
         <WrapperCont>
           <Wrapper>
             {/* <Header name={collectionName} /> */}
+            {HeroCollection}
+            <Menu tabPaths={tabPaths} />
             <Switch>
-              <Route path={`${basePath}/followers`}>
+              <Route path={tabPaths.followers}>
                 <>
-                  {HeroCollection}
-                  <Menu basePath={basePath} />
                   <ObjectsList>{Followers}</ObjectsList>
                   {loadMoreFollowers && <LoadMore LoadMoreFormik={loadMoreFollowers} />}
                 </>
               </Route>
-              <Route exact path={`${basePath}/`}>
+              <Route exact path={tabPaths.resources}>
                 <>
-                  {HeroCollection}
-                  <Menu basePath={basePath} />
                   {isCommunityMember ? (
                     <WrapButton p={3}>
                       <Button mr={2} onClick={shareLink} variant="outline">
@@ -128,15 +129,15 @@ const TitleSection = styled(Text)`
 //   </MenuList>
 // );
 
-const Menu = ({ basePath }: { basePath: string }) => (
+const Menu: React.FC<{ tabPaths: Props['tabPaths'] }> = ({ tabPaths }) => (
   <MenuList p={3} pt={3}>
     {/* <NavLink exact to={`${basePath}`}>
       Recent activity
     </NavLink> */}
-    <NavLink exact to={`${basePath}/`}>
+    <NavLink exact to={tabPaths.resources}>
       <Trans>Resources</Trans>
     </NavLink>
-    <NavLink exact to={`${basePath}/followers`}>
+    <NavLink exact to={tabPaths.followers}>
       <Trans>Followers</Trans>
     </NavLink>
   </MenuList>

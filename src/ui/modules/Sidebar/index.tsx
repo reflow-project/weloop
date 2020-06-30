@@ -1,19 +1,18 @@
 import { Trans } from '@lingui/macro';
+import { LocaleContext } from 'context/global/localizationCtx';
+import { logo_small_url, my_timeline } from 'mn-constants';
 import { ellipsis } from 'polished';
 import * as React from 'react';
 import { Globe } from 'react-feather';
 import { NavLink } from 'react-router-dom';
 import { Box, Flex, Text } from 'rebass/styled-components';
 import media from 'styled-media-query';
-// import Loader from "../../components/elements/Loader/Loader";
-import styled from '../../themes/styled';
+import { FormikHook } from 'ui/@types/types';
 // import Dropdown from "./dropdown";
 import Avatar from 'ui/elements/Avatar';
-import { my_timeline, logo_small_url } from 'mn-constants';
-import { FormikHook } from 'ui/@types/types';
+// import Loader from "../../components/elements/Loader/Loader";
+import styled from '../../themes/styled';
 import { LoadMore } from '../Loadmore';
-import { LocaleContext } from 'context/global/localizationCtx';
-// import { LoadMore } from 'ui/modules/Loadmore';
 
 export enum Status {
   Loading,
@@ -58,7 +57,7 @@ const SidebarOverflow = styled(Box)`
 //   }
 //   input {
 //     margin: 0 8px !important;
-//     border-radius: 100px;
+//     border-radius: 100px;/1
 //     border-width: 1px;
 //     ${media.lessThan('1280px')`
 // display: none;
@@ -154,16 +153,15 @@ const ItemTitleDir = styled(ItemTitle)`
 // `;
 
 export interface CommunityPreview {
-  link: {
-    url: string;
-    external: boolean;
-  };
+  link: string;
   name: string;
   icon: string;
 }
 
 interface SidebarLoaded {
   status: Status.Loaded;
+  discoverPath: string;
+  homePath: string;
   isSidebarOpen: boolean;
   communities: CommunityPreview[];
   LoadMoreFormik: FormikHook | null;
@@ -192,7 +190,7 @@ export const Sidebar: React.FC<Props> = props => {
                 <SidebarOverflow>
                   <>
                     <Nav>
-                      <SidebarLink exact to={'/discover'}>
+                      <SidebarLink exact to={props.discoverPath}>
                         <NavItem alignItems={'center'}>
                           <Box height="50px">
                             <Globe size={36} strokeWidth="1" />
@@ -202,7 +200,7 @@ export const Sidebar: React.FC<Props> = props => {
                           </ItemTitleDir>
                         </NavItem>
                       </SidebarLink>
-                      <SidebarLink exact to={'/'}>
+                      <SidebarLink exact to={props.homePath}>
                         <NavItem alignItems={'center'}>
                           <Avatar size="s" src={logo_small_url} />
                           <ItemTitleDir variant="link">{i18n._(my_timeline)}</ItemTitleDir>
@@ -211,7 +209,7 @@ export const Sidebar: React.FC<Props> = props => {
                     </Nav>
                     <Nav>
                       {props.communities.map((community: CommunityPreview, i) => (
-                        <CommunityLink key={community.link.url} to={community.link.url}>
+                        <CommunityLink exact key={community.link} to={community.link}>
                           <NavItem alignItems={'center'} mb={2}>
                             <Avatar
                               size="s"

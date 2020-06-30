@@ -24,24 +24,29 @@ import styled from 'ui/themes/styled';
 export interface Props {
   isJoined: boolean;
   Activities: ReactElement[];
-  Followers: ReactElement[];
+  Members: ReactElement[];
   Collections: ReactElement[];
   HeroCommunity: ReactElement;
   Threads: ReactElement[];
-  basePath: string;
   newThreadFormik: null | FormikHook<{ text: string }>;
   createCollection: () => unknown;
   loadMoreActivities: FormikHook | null;
   loadMoreCollections: FormikHook | null;
   loadMoreThreads: FormikHook | null;
+  tabPaths: {
+    timeline: string;
+    members: string;
+    discussions: string;
+    collections: string;
+  };
 }
 
 export const Community: React.FC<Props> = ({
   Activities,
   HeroCommunity,
   Collections,
-  Followers,
-  basePath,
+  Members,
+  tabPaths,
   newThreadFormik,
   // isJoined,
   Threads,
@@ -56,19 +61,17 @@ export const Community: React.FC<Props> = ({
         <WrapperCont>
           <Wrapper>
             {/* <Header name={communityName} /> */}
+            {HeroCommunity}
+            <Menu tabPaths={tabPaths} />
             <Switch>
-              <Route exact path={`${basePath}/timeline`}>
+              <Route exact path={tabPaths.timeline}>
                 <>
-                  {HeroCommunity}
-                  <Menu basePath={basePath} />
                   <List mt={2}>{Activities}</List>
                   {loadMoreActivities && <LoadMore LoadMoreFormik={loadMoreActivities} />}
                 </>
               </Route>
-              <Route exact path={`${basePath}`}>
+              <Route exact path={tabPaths.collections}>
                 <>
-                  {HeroCommunity}
-                  <Menu basePath={basePath} />
                   <Title px={3} mt={2}>
                     <Text sx={{ flex: 1 }} variant="suptitle">
                       <Trans>All collections</Trans>
@@ -83,10 +86,8 @@ export const Community: React.FC<Props> = ({
                   {loadMoreCollections && <LoadMore LoadMoreFormik={loadMoreCollections} />}
                 </>
               </Route>
-              <Route exact path={`${basePath}/discussions`}>
+              <Route exact path={tabPaths.discussions}>
                 <>
-                  {HeroCommunity}
-                  <Menu basePath={basePath} />
                   <WrapSocialText p={3} mb={2}>
                     {newThreadFormik && (
                       <SocialText
@@ -105,11 +106,9 @@ export const Community: React.FC<Props> = ({
                   {loadMoreThreads && <LoadMore LoadMoreFormik={loadMoreThreads} />}
                 </>
               </Route>
-              <Route path={`${basePath}/members`}>
+              <Route path={tabPaths.members}>
                 <>
-                  {HeroCommunity}
-                  <Menu basePath={basePath} />
-                  <ObjectsList>{Followers}</ObjectsList>
+                  <ObjectsList>{Members}</ObjectsList>
                 </>
               </Route>
             </Switch>
@@ -145,14 +144,20 @@ const CollectionsBoxes = styled(Box)`
 //   </MenuList>
 // );
 
-const Menu = ({ basePath }: { basePath: string }) => (
+const Menu: React.FC<{ tabPaths: Props['tabPaths'] }> = ({ tabPaths }) => (
   <MenuList p={3} pt={0}>
-    <NavLink to={`${basePath}/timeline`}>Recent activity</NavLink>
-    <NavLink exact to={`${basePath}`}>
-      Collections
+    <NavLink to={tabPaths.timeline}>
+      <Trans>Recent activity</Trans>
     </NavLink>
-    <NavLink to={`${basePath}/discussions`}>Discussions</NavLink>
-    <NavLink to={`${basePath}/members`}>Members</NavLink>
+    <NavLink exact to={tabPaths.collections}>
+      <Trans>Collections</Trans>
+    </NavLink>
+    <NavLink to={tabPaths.discussions}>
+      <Trans>Discussions</Trans>
+    </NavLink>
+    <NavLink to={tabPaths.members}>
+      <Trans>Members</Trans>
+    </NavLink>
   </MenuList>
 );
 
