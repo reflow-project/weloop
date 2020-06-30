@@ -46,7 +46,14 @@ export interface SettingsLoading {
 export interface Props {
   status?: Status.Loaded;
   formik: FormikHook<EditProfile>;
-  basePath: string;
+  sectionPaths: {
+    preferences: string;
+    instance: string;
+    invites: string;
+    flags: string;
+    logs: string;
+    general: string;
+  };
   displayUsername: string;
   isAdmin: boolean;
   Preferences: ReactElement;
@@ -74,7 +81,6 @@ export interface EditInstance {
 }
 
 export const Settings: React.FC<Props> = ({
-  basePath,
   formik,
   Preferences,
   Instance,
@@ -82,7 +88,8 @@ export const Settings: React.FC<Props> = ({
   Flags,
   ModerationLog,
   displayUsername,
-  isAdmin
+  isAdmin,
+  sectionPaths
 }) => {
   const onIconFileSelected = React.useCallback(
     (file: File) => formik.setValues({ ...formik.values, icon: file }),
@@ -97,21 +104,18 @@ export const Settings: React.FC<Props> = ({
 
   return (
     <MainContainer>
-      <Sidebar basePath={basePath} isAdmin={isAdmin} />
+      <Sidebar sectionPaths={sectionPaths} isAdmin={isAdmin} />
       <HomeBox>
         <WrapperCont>
           <Wrapper>
             <SettingsWrapper>
               <Switch>
-                <Route path={`${basePath}/preferences`}>{Preferences}</Route>
-                <Route path={`${basePath}/instance`}>{Instance}</Route>
-                <Route path={`${basePath}/invites`}>{Invites}</Route>
-                <Route path={`${basePath}/flags`}>{Flags}</Route>
-                <Route path={`${basePath}/logs`}>{ModerationLog}</Route>
-                {/* <Route path={`${basePath}/accounts`}>acc</Route>
-              <Route path={`${basePath}/notifications`}>notif</Route>
-              <Route path={`${basePath}/admin`}>admin</Route> */}
-                <Route path={`${basePath}`}>
+                <Route path={sectionPaths.preferences}>{Preferences}</Route>
+                <Route path={sectionPaths.instance}>{Instance}</Route>
+                <Route path={sectionPaths.invites}>{Invites}</Route>
+                <Route path={sectionPaths.flags}>{Flags}</Route>
+                <Route path={sectionPaths.logs}>{ModerationLog}</Route>
+                <Route path={sectionPaths.general}>
                   <ProfileBox p={1} pb={2}>
                     <Hero>
                       <Flex>
@@ -232,28 +236,35 @@ const SettingsWrapper = styled(Box)`
 //   }
 // `;
 
-const Sidebar: React.FC<{ basePath: string; isAdmin: boolean }> = ({ basePath, isAdmin }) => {
+const Sidebar: React.FC<{ sectionPaths: Props['sectionPaths']; isAdmin: boolean }> = ({
+  sectionPaths,
+  isAdmin
+}) => {
   return (
     <WrapperPanel mr={2}>
       <Panel>
         <Nav>
           <NavItem p={3} fontSize={1}>
-            <NavLink exact to={`${basePath}/`}>
+            <NavLink exact to={sectionPaths.general}>
               <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                 <Icon className="icon" mr={1}>
                   <Sett size={20} />
                 </Icon>
-                <Name>General information</Name>
+                <Name>
+                  <Trans>General information</Trans>
+                </Name>
               </Flex>
             </NavLink>
           </NavItem>
           <NavItem p={3} fontSize={1}>
-            <NavLink to={`${basePath}/preferences`}>
+            <NavLink to={sectionPaths.preferences}>
               <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                 <Icon className="icon" mr={1}>
                   <Sliders size={20} />
                 </Icon>
-                <Name>Preferences</Name>
+                <Name>
+                  <Trans>Preferences</Trans>
+                </Name>
               </Flex>
             </NavLink>
           </NavItem>
@@ -272,43 +283,51 @@ const Sidebar: React.FC<{ basePath: string; isAdmin: boolean }> = ({ basePath, i
                 </Flex>
               </SectionTitle>
               <NavItem p={3} fontSize={1}>
-                <NavLink to={`${basePath}/instance`}>
+                <NavLink to={sectionPaths.instance}>
                   <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                     <Icon className="icon" mr={1}>
                       <Droplet size={20} />
                     </Icon>
-                    <Name>Instance</Name>
+                    <Name>
+                      <Trans>Instance</Trans>
+                    </Name>
                   </Flex>
                 </NavLink>
               </NavItem>
               <NavItem p={3} fontSize={1}>
-                <NavLink to={`${basePath}/invites`}>
+                <NavLink to={sectionPaths.invites}>
                   <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                     <Icon className="icon" mr={1}>
                       <Mail size={20} />
                     </Icon>
-                    <Name>Invites</Name>
+                    <Name>
+                      <Trans>Invites</Trans>
+                    </Name>
                   </Flex>
                 </NavLink>
               </NavItem>
               <NavItem p={3} fontSize={1}>
                 {/* <NavLink to={`${basePath}/reports`}> */}
-                <NavLink to={`${basePath}/flags`}>
+                <NavLink to={sectionPaths.flags}>
                   <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                     <Icon className="icon" mr={1}>
                       <Flag size={20} />
                     </Icon>
-                    <Name>Flags</Name>
+                    <Name>
+                      <Trans>Flags</Trans>
+                    </Name>
                   </Flex>
                 </NavLink>
               </NavItem>
               <NavItem p={3} fontSize={1}>
-                <NavLink to={`${basePath}/logs`}>
+                <NavLink to={sectionPaths.logs}>
                   <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                     <Icon className="icon" mr={1}>
                       <Monitor size={20} />
                     </Icon>
-                    <Name>Moderation log</Name>
+                    <Name>
+                      <Trans>Moderation log</Trans>
+                    </Name>
                   </Flex>
                 </NavLink>
               </NavItem>

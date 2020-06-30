@@ -46,7 +46,14 @@ export const useGetEditProfileProps = (): EditProfileProps => {
   });
   return {
     formik,
-    basePath: '/',
+    sectionPaths: {
+      preferences: '/preferences',
+      instance: '/instance',
+      invites: '/invites',
+      flags: '/flags',
+      logs: '/logs',
+      general: '/'
+    },
     displayUsername: '@estrella@home.moodle.net',
     isAdmin: false,
     Preferences: (
@@ -286,7 +293,14 @@ export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
 
   return {
     formik,
-    basePath: '/',
+    sectionPaths: {
+      preferences: '/preferences',
+      instance: '/instance',
+      invites: '/invites',
+      flags: '/flags',
+      logs: '/logs',
+      general: '/'
+    },
     displayUsername: '@ammaarah@home.moodle.net',
     Preferences: (
       <Preferences

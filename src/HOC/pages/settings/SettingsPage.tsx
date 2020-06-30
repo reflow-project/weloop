@@ -13,6 +13,7 @@ import { InstanceModerationLogSection } from './moderationLog/InstanceModeration
 import { PreferencesSettingsSection } from './preferences/PreferencesSettingsSection';
 import { t } from '@lingui/macro';
 import { usePageTitle } from 'context/global/pageCtx';
+import { settingsLocation } from 'routes/SettingsPageRoute';
 
 export enum SettingsPageTab {
   Preferences,
@@ -71,10 +72,20 @@ export const SettingsPage: FC<SettingsPage> = ({ basePath, tab }) => {
     enableReinitialize: true,
     onSubmit: ({ icon, image, ...profile }) => updateProfile({ profile, icon, image })
   });
-
+  const sectionPaths: SettingsUIProps['sectionPaths'] = useMemo(
+    () => ({
+      preferences: settingsLocation.getPath({ tab: 'preferences' }, undefined),
+      instance: settingsLocation.getPath({ tab: 'instance' }, undefined),
+      invites: settingsLocation.getPath({ tab: 'invites' }, undefined),
+      flags: settingsLocation.getPath({ tab: 'flags' }, undefined),
+      logs: settingsLocation.getPath({ tab: 'logs' }, undefined),
+      general: settingsLocation.getPath({ tab: undefined }, undefined)
+    }),
+    []
+  );
   const settingsPageProps = useMemo<SettingsUIProps | null>(() => {
     const props: SettingsUIProps = {
-      basePath,
+      sectionPaths,
       displayUsername: profile?.displayUsername || '',
       isAdmin: !!me?.isInstanceAdmin,
       formik: updateProfileFormik,
@@ -85,7 +96,7 @@ export const SettingsPage: FC<SettingsPage> = ({ basePath, tab }) => {
       ModerationLog: <InstanceModerationLogSection />
     };
     return props;
-  }, [basePath, me, profile, updateProfileFormik]);
+  }, [me, profile, sectionPaths, updateProfileFormik]);
 
   return settingsPageProps && <SettingsPageUI {...settingsPageProps} />;
 };
