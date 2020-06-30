@@ -108,7 +108,7 @@ export const ActorComp: FC<ActorProps> = ({
                   <Link to={actor.link}>{actor.name}</Link>
                 </Name>
                 <TextEvent sx={{ textTransform: 'lowercase' }} variant="text" ml={1}>
-                  {threadUrl ? <Link to={`/thread/${threadUrl}`}>{event}</Link> : event}
+                  {threadUrl ? <Link to={threadUrl}>{event}</Link> : event}
                 </TextEvent>
               </Flex>
             </Flex>
@@ -149,7 +149,7 @@ export const SmallActorComp: FC<SmallActorProps> = ({ actor, commentActor, event
               </Link>
             </Name>
             <TextEvent sx={{ textTransform: 'lowercase' }} variant="text" ml={1}>
-              {threadUrl ? <Link to={`/thread/${threadUrl}`}>{event}</Link> : event}
+              {threadUrl ? <Link to={threadUrl}>{event}</Link> : event}
             </TextEvent>
           </Flex>
         </Flex>

@@ -8,6 +8,7 @@ import {
 import { useFormik } from 'formik';
 import { getCommunityInfoStrings } from 'fe/lib/activity/getContextCommunityInfo';
 import { getActivityActor } from 'fe/lib/activity/getActivityActor';
+import { threadLocation } from 'routes/ThreadPageRoute';
 
 export interface LikedCommentPreviewHOC {
   commentId: Comment['id'];
@@ -31,7 +32,7 @@ export const LikedCommentPreviewHOC: FC<LikedCommentPreviewHOC> = ({ commentId }
     }
     const { communityLink, communityName } = getCommunityInfoStrings(comment);
     const props: LikedCommentProps = {
-      url: comment.thread ? `/thread/${comment.thread.id}` : '',
+      url: comment.thread ? threadLocation.getPath({ threadId: comment.thread.id }, undefined) : '',
       communityLink,
       communityName,
       actor: comment.creator ? getActivityActor(comment.creator) : { icon: '', link: '', name: '' },

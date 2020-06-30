@@ -10,6 +10,7 @@ import { CommentPreviewHOC } from '../comment/CommentPreview';
 import Modal from 'ui/modules/Modal';
 import { ConfirmationPanel } from 'ui/modules/ConfirmationPanel';
 import { i18n } from 'context/global/localizationCtx';
+import { threadLocation } from 'routes/ThreadPageRoute';
 
 interface FlagPreviewHOC {
   flagId: Flag['id'];
@@ -85,7 +86,9 @@ export const FlagPreviewHOC: FC<FlagPreviewHOC> = ({ flagId }) => {
           communityLink={communityLink}
           communityName={communityName}
           status={Status.Loaded}
-          threadUrl={comment.thread?.id}
+          threadUrl={
+            comment.thread?.id && threadLocation.getPath({ threadId: comment.thread.id }, undefined)
+          }
           preview={CommentPreview}
         />
       );
