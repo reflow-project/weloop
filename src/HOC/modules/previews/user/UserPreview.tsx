@@ -1,13 +1,10 @@
 import { useUserPreview } from 'fe/user/preview/useUserPreview';
+import { useFormik } from 'formik';
 import { User } from 'graphql/types.generated';
 import React, { FC, useMemo } from 'react';
-import {
-  User as UserPreviewUI,
-  Props as UserPreviewProps
-} from 'ui/modules/Previews/User';
-import { useFormik } from 'formik';
 import { Box } from 'rebass';
-import { getActivitySimpleLink } from 'fe/lib/activity/getActivitySimpleLink';
+import { userLocation } from 'routes/UserPageRoute';
+import { Props as UserPreviewProps, User as UserPreviewUI } from 'ui/modules/Previews/User';
 export interface Props {
   userId: User['id'];
   flagged?: boolean;
@@ -36,7 +33,7 @@ export const UserPreviewHOC: FC<Props> = ({ userId, flagged }) => {
       bio: summary || '',
       isFollowing: !!myFollow,
       toggleFollowFormik,
-      profileUrl: getActivitySimpleLink(user),
+      profileUrl: userLocation.getPath({ userId: user.id, tab: undefined }, undefined),
       hideActions: hideActions
     };
     return props;
