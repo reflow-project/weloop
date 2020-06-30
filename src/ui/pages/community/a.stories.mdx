@@ -45,11 +45,11 @@ The `Community` page displays a single MoodleNet community. It is made up of the
       SearchBox={<h1>test</h1>}
       HeaderBox={<MainHeader {...getMainHeaderProps()} />}
       SidebarBox={<Sidebar {...useGetSidebarProps()} />}
-      userImage={"string"}
-      userLink={"/"}
-      username={"test"}
-      name={"test"}
-      signout={() => console.log("test")}
+      userImage={'string'}
+      userLink={'/'}
+      username={'test'}
+      name={'test'}
+      signout={() => console.log('test')}
     >
       <Community
         {...{
@@ -139,7 +139,12 @@ The `Community` page displays a single MoodleNet community. It is made up of the
             </React.Fragment>
           ),
           HeroCommunity: <HeroCommunity {...useGetHeroCommunityProps(true)} />,
-          basePath: '/',
+          tabPaths: {
+            timeline: '/timeline',
+            members: '/members',
+            discussions: '/discussions',
+            collections: '/',
+          },
           ThreadsBox: (
             <React.Fragment>
               <Box mx={2} mb={2}>

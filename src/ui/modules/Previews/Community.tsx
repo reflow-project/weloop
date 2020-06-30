@@ -19,10 +19,7 @@ export interface Props {
   threadsCount: number;
   toggleJoinFormik: FormikHook<{}>;
   joined: boolean;
-  link: {
-    url: string;
-    external: boolean;
-  };
+  link: SimpleLink;
   displayUsername: string;
   hideActions: boolean;
   isCreator: boolean;

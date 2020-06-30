@@ -1,39 +1,22 @@
-import React, { ComponentType, useCallback } from 'react';
-import { matchPath, generatePath, useHistory } from 'react-router';
-import {
-  RouteProps,
-  Link as RRLink,
-  NavLink as RRNavLink,
-  LinkProps,
-  NavLinkProps
-} from 'react-router-dom';
-
+import { generatePath, matchPath } from 'react-router';
+import { RouteProps } from 'react-router-dom';
+import { SimpleLink } from 'ui/helpers/SimpleLink';
+interface MinimalActor {
+  isLocal: boolean;
+  canonicalUrl?: string;
+}
 type LocationParams = { [paramName: string]: string | number | boolean | undefined } | undefined;
 type QueryParams = LocationParams;
 
 interface LocationHelp<Params extends LocationParams, Query extends QueryParams, State = any> {
   getPath(params: Params, query: Query, pathIndex?: number): string;
-  getSimpleLinkInfo(
+  is(path: string): boolean;
+  getSimpleLink(
     params: Params,
     query: Query,
+    actor?: MinimalActor | null,
     pathIndex?: number
-  ): {
-    external: boolean;
-    url: string;
-  };
-  is(path: string): boolean;
-  Link: ComponentType<{
-    params: Params;
-    query: Query;
-    index?: number;
-    props?: Partial<LinkProps<State>>;
-  }>;
-  NavLink: ComponentType<{
-    params: Params;
-    query: Query;
-    index?: number;
-    props?: Partial<NavLinkProps<State>>;
-  }>;
+  ): SimpleLink;
 }
 
 export const locationHelper = <
@@ -50,13 +33,9 @@ export const locationHelper = <
       : !routeProps.path?.length
       ? []
       : routeProps.path;
-  const Link: ThisLocation['Link'] = ({ params, query, index = 0, props, children }) => (
-    <RRLink {...{ to: getPath(params, query, index), ...props }}>{children}</RRLink>
-  );
-  const NavLink: ThisLocation['NavLink'] = ({ params, query, index = 0, props, children }) => (
-    <RRNavLink {...{ to: getPath(params, query, index), ...props }}>{children}</RRNavLink>
-  );
+
   const is: ThisLocation['is'] = path => !!matchPath(path, routeProps);
+
   const getPath: ThisLocation['getPath'] = (params, query, index = 0) => {
     const usePath = routePaths[index];
     //@ts-ignore
@@ -64,33 +43,69 @@ export const locationHelper = <
     const url = generatePath(usePath, params);
     return searchParams ? `${url}?${searchParams}` : url;
   };
-  const getSimpleLinkInfo: ThisLocation['getSimpleLinkInfo'] = (params, query, index = 0) => ({
-    external: false,
-    url: getPath(params, query, index)
-  });
+
+  const getSimpleLink: ThisLocation['getSimpleLink'] = (params, query, actor = null, index = 0) => {
+    const internal = actor ? actor.isLocal : true;
+    const internalPath = getPath(params, query, index);
+    const url = internal ? internalPath : actor?.canonicalUrl || '#?#';
+    const simpleLink: SimpleLink = {
+      external: !internal,
+      url
+    };
+    return simpleLink;
+  };
+
   return {
     is,
-    getPath,
-    Link,
-    NavLink,
-    getSimpleLinkInfo
+    getSimpleLink,
+    getPath
   };
 };
 
-export const useLocationHelp = <
-  Params extends LocationParams,
-  Query extends QueryParams,
-  State = any
->(
-  helper: LocationHelp<Params, Query, State>
-): LocationHelp<Params, Query, State> & { is(): boolean } => {
-  const history = useHistory();
-  const is = useCallback(() => !!helper.is(history.location.pathname), [
-    helper,
-    history.location.pathname
-  ]);
-  return {
-    ...helper,
-    is
-  };
-};
+// interface LocationHelpHook<Params extends LocationParams, Query extends QueryParams, State = any> {
+//   is(): boolean;
+//   getSimpleLink(
+//     params: Params,
+//     query: Query,
+//     actor?: MinimalActor | null,
+//     pathIndex?: number
+//   ): SimpleLink;
+// }
+
+// export const useLocationHelp = <
+//   Params extends LocationParams,
+//   Query extends QueryParams,
+//   State = any
+// >(
+//   helper: LocationHelp<Params, Query, State>
+// ): LocationHelpHook<Params, Query, State> => {
+//   const history = useHistory();
+//   type ThisLocationHook = LocationHelpHook<Params, Query, State>;
+
+//   const is = useCallback(() => !!helper.is(history.location.pathname), [
+//     helper,
+//     history.location.pathname
+//   ]);
+
+//   const getSimpleLink: ThisLocationHook['getSimpleLink'] = useCallback(
+//     (params, query, actor = null, index = 0) => {
+//       const internal = actor ? actor.isLocal : true;
+//       const internalPath = helper.getPath(params, query, index);
+//       const url = internal ? internalPath : actor?.canonicalUrl || '#?#';
+//       const simpleLink: SimpleLink = {
+//         external: !internal,
+//         url
+//       };
+//       return simpleLink;
+//     },
+//     [helper]
+//   );
+
+//   return useMemo(
+//     () => ({
+//       getSimpleLink,
+//       is
+//     }),
+//     [getSimpleLink, is]
+//   );
+// };

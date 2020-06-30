@@ -21,6 +21,7 @@ import { toast } from 'react-toastify';
 import { Box } from 'rebass/styled-components';
 import Modal from 'ui/modules/Modal';
 import CommunityPageUI, { Props as CommunityProps } from 'ui/pages/community';
+import { communityLocation } from 'routes/CommunityPageRoute';
 
 export enum CommunityPageTab {
   Activities,
@@ -109,7 +110,7 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
     )
     .filter((_): _ is ReactElement => !!_);
 
-  const Followers = communityFollowersPage.edges
+  const Members = communityFollowersPage.edges
     .map(
       follow => follow.creator && <UserPreviewHOC key={follow.id} userId={follow.creator?.userId} />
     )
@@ -136,14 +137,19 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
     if (!community) {
       return null;
     }
-
+    const tabPaths: CommunityProps['tabPaths'] = {
+      collections: communityLocation.getPath({ communityId, tab: undefined }, undefined),
+      discussions: communityLocation.getPath({ communityId, tab: 'discussions' }, undefined),
+      members: communityLocation.getPath({ communityId, tab: 'members' }, undefined),
+      timeline: communityLocation.getPath({ communityId, tab: 'timeline' }, undefined)
+    };
     const props: CommunityProps = {
-      Followers,
+      Members,
       Activities,
       Collections,
       HeroCommunity: HeroCommunityBox,
       Threads,
-      basePath,
+      tabPaths,
       isJoined,
       newThreadFormik: isJoined ? newThreadFormik : null,
       loadMoreActivities,
@@ -154,12 +160,12 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
     return props;
   }, [
     community,
-    Followers,
+    communityId,
+    Members,
     Activities,
     Collections,
     HeroCommunityBox,
     Threads,
-    basePath,
     isJoined,
     newThreadFormik,
     loadMoreActivities,

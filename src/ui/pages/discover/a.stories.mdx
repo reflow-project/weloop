@@ -50,14 +50,18 @@ The `Discover` page displays featured communities, featured collections, and the
       SearchBox={<h1>test</h1>}
       HeaderBox={<MainHeader {...getMainHeaderProps()} />}
       SidebarBox={<Sidebar {...useGetSidebarProps()} />}
-      userImage={"string"}
-      userLink={"/"}
-      username={"test"}
-      name={"test"}
-      signout={() => console.log("test")}
+      userImage={'string'}
+      userLink={'/'}
+      username={'test'}
+      name={'test'}
+      signout={() => console.log('test')}
     >
       <Discover
-        basePath={'/'}
+        tabPaths={{
+          timeline: '/',
+          collections: '/collections',
+          communities: '/communities',
+        }}
         LoadMoreFormik={useGetLoadMoreProps()}
         FeaturedCommunitiesBox={<FeaturedCommunities {...getFeaturedCommunitiesProps(true)} />}
         FeaturedCollectionsBox={<FeaturedCollections {...useGetFeaturedCollectionsProps(true)} />}

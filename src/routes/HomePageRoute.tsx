@@ -4,6 +4,7 @@ import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { WithSidebarTemplate } from 'HOC/templates/WithSidebar/WithSidebar';
 import { NotFoundHOC } from 'HOC/pages/not-found/NotFound';
 import { RedirectAnonymousToLogin } from './wrappers/RedirectBySession';
+import { locationHelper } from './lib/helper';
 
 interface HomePageRouter {
   tab?: string;
@@ -33,3 +34,5 @@ export const HomePageRoute: RouteProps = {
   path: '/',
   component: HomePageRouter
 };
+
+export const homeLocation = locationHelper<undefined, undefined>(HomePageRoute);

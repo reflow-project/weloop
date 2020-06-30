@@ -8,6 +8,9 @@ import {
 } from 'ui/modules/Sidebar/index';
 import { MyFollowedCommunityDataFragment } from 'fe/community/myFollowed/myFollowedCommunities.generated';
 import { SideBarContext } from 'HOC/context/SideBar';
+import { discoverLocation } from 'routes/DiscoverPageRoute';
+import { homeLocation } from 'routes/HomePageRoute';
+import { communityLocation } from 'routes/CommunityPageRoute';
 
 export interface SidebarHOC {}
 export const SidebarHOC: FC<SidebarHOC> = () => {
@@ -25,10 +28,10 @@ export const SidebarHOC: FC<SidebarHOC> = () => {
         .map<CommunityPreview>(community => {
           return {
             icon: community.icon?.url || '',
-            link: {
-              url: `/communities/${community.id}`,
-              external: !community.isLocal
-            },
+            link: communityLocation.getPath(
+              { communityId: community.id, tab: undefined },
+              undefined
+            ),
             name: community.name
           };
         }),
@@ -40,7 +43,9 @@ export const SidebarHOC: FC<SidebarHOC> = () => {
       isSidebarOpen,
       status: StatusUI.Loaded,
       communities,
-      LoadMoreFormik
+      LoadMoreFormik,
+      discoverPath: discoverLocation.getPath({ tab: undefined }, undefined),
+      homePath: homeLocation.getPath(undefined, undefined)
     };
     return props;
   }, [communities, isSidebarOpen, LoadMoreFormik]);

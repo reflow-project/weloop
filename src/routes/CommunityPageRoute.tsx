@@ -3,6 +3,7 @@ import { CommunityPageTab, CommunityPage } from 'HOC/pages/community/CommunityPa
 import { NotFoundHOC } from 'HOC/pages/not-found/NotFound';
 import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { WithSidebarTemplate } from 'HOC/templates/WithSidebar/WithSidebar';
+import { locationHelper } from './lib/helper';
 
 interface CommunityPageRouter {
   communityId: string;
@@ -45,6 +46,13 @@ const CommunityPageRouter: FC<RouteComponentProps<CommunityPageRouter>> = ({ mat
 
 export const CommunityPageRoute: RouteProps = {
   exact: true,
-  path: '/communities/:communityId/:tab?',
+  path: '/communities/:communityId/:tab(timeline|members|discussions)?',
   component: CommunityPageRouter
 };
+type Tab = undefined | 'timeline' | 'members' | 'discussions';
+type Params = {
+  communityId: string;
+  tab: Tab;
+};
+
+export const communityLocation = locationHelper<Params, undefined>(CommunityPageRoute);

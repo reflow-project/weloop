@@ -11,6 +11,7 @@ import { useAllCollections } from 'fe/collection/all/useAllCollections';
 import { Box } from 'rebass';
 import { t } from '@lingui/macro';
 import { usePageTitle } from 'context/global/pageCtx';
+import { discoverLocation } from 'routes/DiscoverPageRoute';
 
 export enum DiscoverPageTabs {
   Activities,
@@ -85,8 +86,14 @@ export const DiscoverPage: FC<DiscoverPage> = ({ basePath, tab }) => {
         ? allCommunitiesPageNext
         : null;
 
+    const tabPaths: Props['tabPaths'] = {
+      collections: discoverLocation.getPath({ tab: 'collections' }, undefined),
+      communities: discoverLocation.getPath({ tab: 'communities' }, undefined),
+      timeline: discoverLocation.getPath({ tab: undefined }, undefined)
+    };
+
     const props: Props = {
-      basePath,
+      tabPaths,
       ActivitiesBox,
       FeaturedCollectionsBox,
       FeaturedCommunitiesBox,
@@ -103,7 +110,6 @@ export const DiscoverPage: FC<DiscoverPage> = ({ basePath, tab }) => {
     allCollectionsPageNext,
     allCommunitiesPage.edges,
     allCommunitiesPageNext,
-    basePath,
     tab
   ]);
 
