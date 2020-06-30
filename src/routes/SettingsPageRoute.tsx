@@ -4,6 +4,7 @@ import React, { FC, useMemo } from 'react';
 import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { WithoutSidebarTemplate } from 'HOC/templates/WithoutSidebar/WithoutSidebar';
 import { RedirectAnonymousToLogin } from './wrappers/RedirectBySession';
+import { locationHelper } from './lib/helper';
 
 interface SettingsPageRouter {
   tab?: string;
@@ -51,6 +52,12 @@ const SettingsPageRouter: FC<RouteComponentProps<SettingsPageRouter>> = ({ match
 
 export const SettingsPageRoute: RouteProps = {
   exact: true,
-  path: '/settings/:tab?',
+  path: '/settings/:tab(preferences|logs|invites|instance|flags)?',
   component: SettingsPageRouter
 };
+
+type Tab = undefined | 'preferences' | 'logs' | 'invites' | 'instance' | 'flags';
+type Params = {
+  tab: Tab;
+};
+export const settingsLocation = locationHelper<Params, undefined>(SettingsPageRoute);

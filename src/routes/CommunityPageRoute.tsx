@@ -49,6 +49,7 @@ export const CommunityPageRoute: RouteProps = {
   path: '/communities/:communityId/:tab(timeline|members|discussions)?',
   component: CommunityPageRouter
 };
+
 type Tab = undefined | 'timeline' | 'members' | 'discussions';
 type Params = {
   communityId: string;
