@@ -48,7 +48,6 @@ async function run() {
         border: ${colors.border}
         height: 34px;
         width: 380px;
-        margin-top: 8px;
         background: ${colors.app}
         input {
           border: none;
@@ -96,12 +95,7 @@ async function run() {
     <ApolloProvider client={apolloClient.client}>
       <ProvideContexts>
         <Global />
-        <ToastContainer
-          hideProgressBar
-          transition={Slide}
-          autoClose={3000}
-          newestOnTop
-        />
+        <ToastContainer hideProgressBar transition={Slide} autoClose={3000} newestOnTop />
         <App />
       </ProvideContexts>
     </ApolloProvider>

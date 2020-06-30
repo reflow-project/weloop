@@ -73,9 +73,9 @@ export const Community: React.FC<Props> = ({
                     <Text sx={{ flex: 1 }} variant="suptitle">
                       <Trans>All collections</Trans>
                     </Text>
-                    <Button variant="outline" onClick={createCollection}>
+                    <CreateCollectionButton variant="outline" onClick={createCollection}>
                       <Trans>Create a new collection</Trans>
-                    </Button>
+                    </CreateCollectionButton>
                   </Title>
                   <ObjectsList>
                     <CollectionsBoxes>{Collections}</CollectionsBoxes>
@@ -120,6 +120,14 @@ export const Community: React.FC<Props> = ({
     </MainContainer>
   );
 };
+
+const CreateCollectionButton = styled(Button)`
+  padding: 0;
+  text-transform: capitalize;
+  height: 34px;
+  line-height: 34px;
+  padding: 0 16px;
+`;
 
 const CollectionsBoxes = styled(Box)`
   display: grid;

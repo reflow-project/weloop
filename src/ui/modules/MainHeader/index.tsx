@@ -101,12 +101,14 @@ const Container = styled(Box)`
   grid-template-columns: 1fr 200px;
 `;
 const Search = styled(Box)`
+  display: flex;
+  margin-top: 7px;
   input {
     width: 100%;
     font-size: 13px;
     border-radius: 4px;
     max-width: 500px;
-    height: 32px;
+    height: 36px;
     margin: 0;
     border: 0;
     background: ${props => props.theme.colors.app};
