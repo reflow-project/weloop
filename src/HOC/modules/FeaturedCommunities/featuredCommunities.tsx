@@ -9,6 +9,7 @@ import CommunitySmall, { CommunityProps } from 'ui/modules/FeaturedCommunities/p
 import Modal from 'ui/modules/Modal';
 import { FeatureModalHOC } from '../FeatureModal/FeatureModal';
 import { CommunityFeatureFragment } from './featuredCommunity.generated';
+import { communityLocation } from 'routes/CommunityPageRoute';
 
 export interface FeaturedCommunities {}
 export const FeaturedCommunities: FC<FeaturedCommunities> = () => {
@@ -29,9 +30,13 @@ export const FeaturedCommunities: FC<FeaturedCommunities> = () => {
           if (!communityFragment || communityFragment.__typename !== 'Community') {
             return null;
           }
-          const community = {
-            ...communityFragment,
-            icon: communityFragment.icon?.url || ''
+          const community: CommunityProps['community'] = {
+            icon: communityFragment.icon?.url || '',
+            name: communityFragment.name,
+            link: communityLocation.getPath(
+              { tab: undefined, communityId: communityFragment.id },
+              undefined
+            )
           };
           const props: CommunityProps = {
             community,

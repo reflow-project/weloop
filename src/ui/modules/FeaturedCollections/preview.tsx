@@ -8,7 +8,7 @@ import { X } from 'react-feather';
 const PlaceholderImg = require('ui/Icons/collectionPlaceholder.png');
 
 export interface CollectionBase {
-  id: string;
+  link: string;
   name: string;
   icon: string;
 }
@@ -27,7 +27,7 @@ const CollectionSmall: React.FC<CollectionProps> = ({ collection, canEdit, isEdi
           <X color="#fff" size={16} />
         </Remove>
       ) : null}
-      <Link to={`/collections/${collection.id}`}>
+      <Link to={collection.link}>
         <Img
           style={{
             backgroundImage: `url("${collection.icon || PlaceholderImg}")`

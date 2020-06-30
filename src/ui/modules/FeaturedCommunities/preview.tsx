@@ -8,7 +8,7 @@ import { X } from 'react-feather';
 const PlaceholderImg = require('ui/Icons/collectionPlaceholder.png');
 
 export interface CommunityBase {
-  id: string;
+  link: string;
   name: string;
   icon: string;
 }
@@ -27,7 +27,7 @@ const CommunitySmall: React.FC<CommunityProps> = ({ community, canEdit, isEditin
           <X color="#fff" size={16} />
         </Remove>
       ) : null}
-      <Link to={`/communities/${community.id}`}>
+      <Link to={community.link}>
         <Img
           style={{
             backgroundImage: `url("${community.icon || PlaceholderImg}")`
