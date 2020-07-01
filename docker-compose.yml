@@ -5,6 +5,7 @@ services:
     #image: "commonspub/commonspub:stable" # use stable/production/master release of backend
     image: "commonspub/commonspub:latest" # uncomment to use unstable/staging/develop backend branch
     # You can also build your own backend image from the source or deploy in other ways
+    restart: always
     ports:
       - "4000:4000"
       - "81:80"
@@ -21,6 +22,7 @@ services:
     build:
       context: .
 #      dockerfile: "Dockerfile"
+    restart: always
     ports:
      - "80:80"
      - "443:443"
@@ -28,8 +30,8 @@ services:
       - .env
     volumes:
       - type: bind
-        source: ./Caddyfile
-        target: /etc/Caddyfile
+        source: ./Caddyfile2
+        target: /etc/caddy/Caddyfile
         read_only: true
       - type: bind
         source: ./uploads

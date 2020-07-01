@@ -17,7 +17,7 @@ echo "Merge MoodleNet to CommonsPub, without commiting yet"
 git merge --no-ff --no-commit --strategy-option theirs flavour/moodlenet
 
 echo "Restore files which we don't want overwritten (add any core files that should be different in CommonsPub to the below line in the script)"
-for file in README.md env.example .env.secrets.example docker-compose.yml docker-compose.pi.yml .gitlab-ci.yml public/index.html src/mn-constants.tsx
+for file in README.md .env.example .env.secrets.example docker-compose.yml docker-compose.pi.yml .gitlab-ci.yml public/index.html src/mn-constants.tsx
 do
     git reset HEAD ${file}
     git checkout -- ${file}

@@ -22,7 +22,7 @@ echo "Merging, without commiting yet"
 git merge --no-ff --no-commit ${FROM_BRANCH}
 
 echo "Restoring files which we don't want overwritten (add any core files that should be different in each flavour to the below line in the script)"
-for file in README.md env.example .env.secrets.example docker-compose.yml docker-compose.pi.yml .gitlab-ci.yml public/index.html src/mn-constants.tsx
+for file in README.md .env.example .env.secrets.example docker-compose.yml docker-compose.pi.yml .gitlab-ci.yml public/index.html src/mn-constants.tsx
 do
     git reset HEAD ${file}
     git checkout -- ${file}

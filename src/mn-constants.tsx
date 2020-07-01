@@ -1,15 +1,12 @@
-export const PHOENIX_SOCKET_ENDPOINT =
-  process.env.REACT_APP_PHOENIX_SOCKET_ENDPOINT;
+export const PHOENIX_SOCKET_ENDPOINT = process.env.REACT_APP_PHOENIX_SOCKET_ENDPOINT;
 export const GRAPHQL_ENDPOINT = process.env.REACT_APP_GRAPHQL_ENDPOINT;
 export const NODE_ENV = process.env.NODE_ENV;
 export const PUBLIC_URL = process.env.PUBLIC_URL;
 export const SENTRY_KEY = process.env.REACT_APP_SENTRY_API_KEY;
-export const DEFAULT_PAGE_SIZE =
-  parseInt(`${process.env.REACT_APP_DEFAULT_PAGE_SIZE}`) || 15;
+export const DEFAULT_PAGE_SIZE = parseInt(`${process.env.REACT_APP_DEFAULT_PAGE_SIZE}`) || 15;
 
 export const APP_NAME = 'CommonsPub';
-export const INSTANCE_DESCRIPTION =
-  'Federated app for open and cooperative networks.';
+export const INSTANCE_DESCRIPTION = 'Federated app for open and cooperative networks.';
 export const INVITE_ONLY_TEXT =
   process.env.REACT_APP_INVITE_ONLY_TEXT ||
   'Please note, signups on this instance are currently invite-only.';
@@ -18,8 +15,7 @@ export const INSTANCE_PROMPT =
   "You don't need to sign up to preview what people are sharing and discussing publicly.";
 export const prompt_signin = 'Sign in';
 export const my_timeline = 'My Timeline';
-export const instance_bg_img =
-  'http://nycicarus.org/images/mad-solidarity-fists.png';
+export const instance_bg_img = 'http://nycicarus.org/images/mad-solidarity-fists.png';
 export const logo_large_url = 'https://commonspub.org/logo-small.png';
 export const logo_small_url = 'https://commonspub.org/logo-small.png';
 
@@ -58,6 +54,18 @@ export const related_urls = {
 
 export const IS_DEV = NODE_ENV === 'development';
 
+export type LocaleDef = { code: string; desc: string; rtl: boolean };
+
+export const locales: LocaleDef[] = [
+  { code: 'en_GB', desc: 'English, British', rtl: false },
+  { code: 'en_US', desc: 'English, USA', rtl: false },
+  { code: 'es_MX', desc: 'Español, Méjico', rtl: false },
+  { code: 'es_ES', desc: 'Español, España', rtl: false },
+  { code: 'fr_FR', desc: 'Français, France', rtl: false },
+  { code: 'eu', desc: 'Euskara', rtl: false },
+  { code: 'ar_SA', desc: 'العربية, المملكة العربية السعودية', rtl: true }
+];
+
 export const languages = {
   en_GB: 'English, British',
   en_US: 'English, USA',
@@ -67,19 +75,28 @@ export const languages = {
   eu: 'Euskara',
   ar_SA: 'العربية, المملكة العربية السعودية'
 };
-export type LocaleKey = keyof typeof languages;
-export const locales = Object.keys(languages) as LocaleKey[];
+
+// export type LocaleKey = keyof typeof languages;
+// export const locales = Object.keys(languages) as LocaleKey[];
 
 const mothershipAppId = process.env.REACT_APP_MOTHERSHIP_API_ID;
 const mothershipApiKey = process.env.REACT_APP_MOTHERSHIP_API_KEY;
+const mothershipEnv = process.env.REACT_APP_MOTHERSHIP_ENV;
+
 export const mothershipCreds =
   mothershipAppId && mothershipApiKey
     ? {
         appId: mothershipAppId,
-        apiKey: mothershipApiKey
+        apiKey: mothershipApiKey,
+        indexName: mothershipEnv
       }
     : null;
-export const searchDisabled = !mothershipCreds;
+
+export const searchDisabled = !mothershipAppId || !mothershipApiKey;
+
+export const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9-]{2,}$/;
+export const EMAIL_REGEX = /^.+@.+\..+$/;
+export const DOMAIN_REGEX = /^.+\..+$/;
 
 export const max_file_size = '10MB';
 
