@@ -1,45 +1,37 @@
-import React, { ComponentType } from 'react';
-import styled from 'ui/themes/styled';
+import { LocaleContext } from 'context/global/localizationCtx';
+import { logo_small_url, prompt_signin } from 'mn-constants';
+import { darken, ellipsis } from 'polished';
+import React, { ReactElement } from 'react';
+import { ChevronDown, ChevronLeft } from 'react-feather';
 // import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
-import { ChevronLeft, ChevronDown } from 'react-feather';
-import { Flex, Text, Box } from 'rebass/styled-components';
+import { Link } from 'react-router-dom';
+import { Box, Flex, Text } from 'rebass/styled-components';
+import media from 'styled-media-query';
 // import {Input} from '@rebass/forms'
 import Avatar from 'ui/elements/Avatar';
+import styled from 'ui/themes/styled';
 // import Avatar from 'ui/elements/Avatar';
 import { DropdownSidebar } from './dropdown';
-import media from 'styled-media-query';
-import { ellipsis, darken } from 'polished';
-import { Link } from 'react-router-dom';
-import { Trans } from '@lingui/react';
-// const MnetLogo = require('static/img/logo-icon.png');
-import { prompt_signin, logo_small_url } from 'mn-constants';
 
 export interface Props {
   user: null | {
     icon: string;
     name: string;
     link: string;
+    isAdmin: boolean;
     logout(): unknown;
   };
-  Search: JSX.Element;
+  Search: ReactElement;
   toggleSideBar(): unknown;
-  CreateCommunityModal: ComponentType<{ done(): unknown }>;
+  createCommunity(): unknown;
+  isOpenDropdown: boolean;
+  toggleDropdown(): unknown;
 }
 
 export const MainHeader: React.FC<Props> = props => {
   const history = useHistory();
-  const [isOpenDropdown, setOpenDropdown] = React.useState(false);
-  const [isOpenCreateCommunity, setOpenCreateCommunity] = React.useState(false);
-  const openMenu = React.useCallback(() => setOpenDropdown(true), []);
-  const openCreateCommunity = React.useCallback(
-    () => setOpenCreateCommunity(true),
-    []
-  );
-  const closeCreateCommunity = React.useCallback(
-    () => setOpenCreateCommunity(false),
-    []
-  );
+  const { i18n } = React.useContext(LocaleContext);
   return (
     <HeaderWrapper>
       <Container>
@@ -63,7 +55,7 @@ export const MainHeader: React.FC<Props> = props => {
             <NavItem
               sx={{ position: 'relative' }}
               alignItems="center"
-              onClick={openMenu}
+              onClick={props.toggleDropdown}
             >
               <Avatar
                 size="s"
@@ -77,12 +69,13 @@ export const MainHeader: React.FC<Props> = props => {
               <Right ml={2}>
                 <ChevronDown size="20" />
               </Right>
-              {isOpenDropdown && (
+              {props.isOpenDropdown && (
                 <DropdownSidebar
-                  createCommunity={openCreateCommunity}
+                  isAdmin={props.user.isAdmin}
+                  createCommunity={props.createCommunity}
                   logout={props.user.logout}
                   userLink={props.user.link}
-                  setOpenDropdown={setOpenDropdown}
+                  toggleDropdown={props.toggleDropdown}
                 />
               )}
             </NavItem>
@@ -90,17 +83,12 @@ export const MainHeader: React.FC<Props> = props => {
             <Box>
               <Signin>
                 <Link to="/">
-                  <Text variant="link">
-                    <Trans>{prompt_signin}</Trans>
-                  </Text>
+                  <Text variant="link">{i18n._(prompt_signin)}</Text>
                 </Link>
               </Signin>
             </Box>
           )}
         </Header>
-        {isOpenCreateCommunity && (
-          <props.CreateCommunityModal done={closeCreateCommunity} />
-        )}
       </Container>
     </HeaderWrapper>
   );
@@ -113,12 +101,14 @@ const Container = styled(Box)`
   grid-template-columns: 1fr 200px;
 `;
 const Search = styled(Box)`
+  display: flex;
+  margin-top: 7px;
   input {
     width: 100%;
     font-size: 13px;
     border-radius: 4px;
     max-width: 500px;
-    height: 32px;
+    height: 36px;
     margin: 0;
     border: 0;
     background: ${props => props.theme.colors.app};

@@ -43,7 +43,7 @@ export const FeatureModalHOC: FC<FeatureModal> = ({ ctx, featureId, done }) => {
     };
 
     return props;
-  }, [ctx, done, toggleFeaturedFormik]);
+  }, [ctx.__typename, ctx.name, done, featureId, toggleFeaturedFormik]);
 
   return props && <FeaturedModalUI {...props} />;
 };

@@ -5,8 +5,8 @@ import { LocaleContext } from '../../../context/global/localizationCtx';
 import { Input } from '@rebass/forms';
 import { Heading } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
-import styled from '../../../themes/styled';
-import Alert from '../../elements/Alert';
+import styled from 'ui/themes/styled';
+import Alert from 'ui/elements/Alert';
 import { FormikHook } from 'ui/@types/types';
 import {
   Actions,
@@ -39,10 +39,7 @@ export interface BasicMoodleLMSConfigFormValues {
   site: string;
 }
 
-export const MoodlePanel: React.FC<Props> = ({
-  cancel,
-  sendToMoodleFormik
-}) => {
+export const MoodlePanel: React.FC<Props> = ({ cancel, sendToMoodleFormik }) => {
   const { i18n } = React.useContext(LocaleContext);
 
   return (
@@ -60,12 +57,10 @@ export const MoodlePanel: React.FC<Props> = ({
             value={sendToMoodleFormik.values.site}
             onChange={sendToMoodleFormik.handleChange}
           />
-          <CounterChars>
-            {200 - sendToMoodleFormik.values.site.length}
-          </CounterChars>
+          <CounterChars>{200 - sendToMoodleFormik.values.site.length}</CounterChars>
           {sendToMoodleFormik.errors.site && (
             <AlertWrapper>
-              <Alert variant="bad">{sendToMoodleFormik.errors.site}</Alert>
+              <Alert variant="negative">{sendToMoodleFormik.errors.site}</Alert>
             </AlertWrapper>
           )}
         </ContainerForm>

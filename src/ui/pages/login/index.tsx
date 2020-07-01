@@ -1,21 +1,17 @@
 import { Trans } from '@lingui/macro';
 import { i18nMark } from '@lingui/react';
+import { Input } from '@rebass/forms';
+import { LocaleContext } from 'context/global/localizationCtx';
+import { instance_bg_img, INSTANCE_DESCRIPTION, INSTANCE_PROMPT } from 'mn-constants'; // + instance_bg_img
 import * as React from 'react';
+import { Link } from 'react-router-dom';
+import { Box, Text } from 'rebass/styled-components';
 import media from 'styled-media-query';
 import { FormikHook } from 'ui/@types/types';
-import { Link } from 'react-router-dom';
-import styled from 'ui/themes/styled';
-import { Box, Text } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
-import { Input } from '@rebass/forms';
-import { Panel, WrapperPanel } from 'ui/elements/Panel';
 import LogoContainer from 'ui/elements/Logo';
-// const MnetLogin = require('static/img/login.jpg');
-import {
-  INSTANCE_DESCRIPTION,
-  INSTANCE_PROMPT,
-  instance_bg_img
-} from 'mn-constants'; // + instance_bg_img
+import { Panel, WrapperPanel } from 'ui/elements/Panel';
+import styled from 'ui/themes/styled';
 
 let tt = {
   login: i18nMark('Sign in'),
@@ -35,40 +31,44 @@ export interface LoginFormValues {
 }
 
 export const Login: React.FC<Props> = ({ formik }) => {
+  const { i18n } = React.useContext(LocaleContext);
+
   return (
     <>
       <Container>
         <LoginWrapper>
           <LogoContainer isHome={true} />
           <FormWrapper>
-            <Form>
+            <FormLogin>
               <LoginForm>
                 <Box p={3}>
-                  <Input
-                    placeholder={tt.placeholders.email}
-                    name="email"
-                    value={formik.values.email}
-                    onChange={formik.handleChange}
-                  />
-                  <Spacer />
-                  <Input
-                    type="password"
-                    placeholder={tt.placeholders.password}
-                    name="password"
-                    value={formik.values.password}
-                    onChange={formik.handleChange}
-                  />
-                  <Button
-                    mt={3}
-                    variant="primary"
-                    isSubmitting={formik.isSubmitting}
-                    isDisabled={formik.isSubmitting}
-                    type="submit"
-                    style={{ width: '100%' }}
-                    onClick={formik.submitForm}
-                  >
-                    <Trans>Sign in</Trans>
-                  </Button>
+                  <form onSubmit={formik.handleSubmit}>
+                    <Input
+                      placeholder={tt.placeholders.email}
+                      name="email"
+                      value={formik.values.email}
+                      onChange={formik.handleChange}
+                    />
+                    <Spacer />
+                    <Input
+                      type="password"
+                      placeholder={tt.placeholders.password}
+                      name="password"
+                      value={formik.values.password}
+                      onChange={formik.handleChange}
+                    />
+                    <Button
+                      mt={3}
+                      variant="primary"
+                      isSubmitting={formik.isSubmitting}
+                      isDisabled={formik.isSubmitting}
+                      type="submit"
+                      style={{ width: '100%' }}
+                      // onClick={formik.submitForm}
+                    >
+                      <Trans>Sign in</Trans>
+                    </Button>
+                  </form>
                 </Box>
               </LoginForm>
               <ResetPass variant="text" my={3} mt={2}>
@@ -76,7 +76,7 @@ export const Login: React.FC<Props> = ({ formik }) => {
                   <Trans>Trouble logging in?</Trans>
                 </Link>
               </ResetPass>
-            </Form>
+            </FormLogin>
             <Or>
               <Trans>Or</Trans>
             </Or>
@@ -85,7 +85,7 @@ export const Login: React.FC<Props> = ({ formik }) => {
                 <Trans>Browse this instance</Trans>
               </Text>
               <Text variant="text" mt={2}>
-                {INSTANCE_PROMPT}
+                {i18n._(INSTANCE_PROMPT)}
               </Text>
               <Link to={'/discover'}>
                 <Button mt={3} variant="outline">
@@ -130,7 +130,7 @@ export const Login: React.FC<Props> = ({ formik }) => {
 export default Login;
 
 const Background = styled(Box)`
-  background: url(${instance_bg_img});
+  background: url("${instance_bg_img}");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -139,7 +139,6 @@ const Background = styled(Box)`
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
 `;
-// FIX ME add background: url(${instance_bg_img}); after add image to constants
 
 const Infos = styled(Box)``;
 
@@ -168,7 +167,7 @@ const FormWrapper = styled.div`
   grid-area: form;
 `;
 
-const Form = styled.div`
+const FormLogin = styled.div`
   background: ${props => props.theme.colors.appInverse};
   border-radius: 4px;
   height: inherit;

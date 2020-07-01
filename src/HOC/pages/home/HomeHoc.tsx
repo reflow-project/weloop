@@ -1,19 +1,21 @@
 import { useMyInboxActivities } from 'fe/activities/inbox/my/useMyInboxActivities';
 // import { useMyFollowedCollections } from 'fe/collection/myFollowed/myFollowedCollections';
 // import { useMyFollowedCommunities } from 'fe/community/myFollowed/myFollowedCommunities';
-import { useFormikPage } from 'fe/lib/helpers/usePage';
 import { ActivityPreviewHOC } from 'HOC/modules/previews/activity/ActivityPreview';
 // import { CollectionPreviewHOC } from 'HOC/modules/previews/collection/CollectionPreview';
 // import { CommunityPreviewHOC } from 'HOC/modules/previews/community/CommunityPreview';
 import React, { FC, useMemo } from 'react';
 import { Home, Props } from 'ui/pages/home';
+import { t } from '@lingui/macro';
+import { usePageTitle } from 'context/global/pageCtx';
 // import { MyFollowedCommunityDataFragment } from 'fe/community/myFollowed/myFollowedCommunities.generated';
 // import { MyFollowedCollectionDataFragment } from 'fe/collection/myFollowed/myFollowedCollections.generated';
-export { HomePageTab } from 'ui/pages/home';
 
 export interface HomePageHOC {
   basePath: string;
 }
+
+const homeMyTimelinePageTitle = t`My Activities`;
 
 export const HomePageHOC: FC<HomePageHOC> = ({ basePath }) => {
   // const { myCommunityFollowsPage } = useMyFollowedCommunities();
@@ -63,19 +65,17 @@ export const HomePageHOC: FC<HomePageHOC> = ({ basePath }) => {
   //     </>
   //   );
   // }, [myFollowedCollectionsPage]);
+  usePageTitle(homeMyTimelinePageTitle);
 
   const { activitiesPage } = useMyInboxActivities();
-  const [nextInboxFormik] = useFormikPage(activitiesPage);
+  const [nextInboxFormik] = activitiesPage.formiks;
   const InboxElements = useMemo<Props['InboxElements']>(() => {
     return (
       <>
         {activitiesPage.edges!.map(
           userActivityEdge =>
             userActivityEdge && (
-              <ActivityPreviewHOC
-                activityId={userActivityEdge.id}
-                key={userActivityEdge.id}
-              />
+              <ActivityPreviewHOC activityId={userActivityEdge.id} key={userActivityEdge.id} />
             )
         )}
       </>

@@ -5,7 +5,7 @@ export interface LMSPrefs {
 }
 
 export const getUrlParamsFromEntryPointForMoodleLMS = (): LMSPrefs | null => {
-  const q = new URLSearchParams(location.search);
+  const q = new URLSearchParams(window.location.search);
   const site = q.get('site');
   if (!site) {
     return null;
@@ -22,7 +22,7 @@ export const getUrlParamsFromEntryPointForMoodleLMS = (): LMSPrefs | null => {
 export const sendToMoodle = (
   resourceurl: string,
   resource_info: string,
-  type: string,
+  type: 'file' | 'link',
   { site, course, section }: LMSPrefs
 ) => {
   const form = document.createElement('form');
@@ -37,6 +37,7 @@ export const sendToMoodle = (
     type,
     resource_info
   };
+  // console.table({site,...params})
   Object.entries(params).forEach(([name, val]) => {
     const hiddenField = document.createElement('input');
     hiddenField.type = 'hidden';

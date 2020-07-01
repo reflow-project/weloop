@@ -5,7 +5,7 @@ import { LocaleContext } from '../../../context/global/localizationCtx';
 import { Textarea } from '@rebass/forms';
 import { Heading } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
-import styled from '../../../themes/styled';
+import styled from 'ui/themes/styled';
 import Alert from '../../elements/Alert';
 import { FormikHook } from 'ui/@types/types';
 import {
@@ -40,12 +40,7 @@ export interface BasicCreateFlagFormValues {
   reason: string;
 }
 
-export const FlagModal: React.FC<Props> = ({
-  cancel,
-  flagFormik,
-  isFlagged,
-  unflagFormik
-}) => {
+export const FlagModal: React.FC<Props> = ({ cancel, flagFormik, isFlagged, unflagFormik }) => {
   const { i18n } = React.useContext(LocaleContext);
 
   return !isFlagged ? (
@@ -66,7 +61,7 @@ export const FlagModal: React.FC<Props> = ({
           <CounterChars>{200 - flagFormik.values.reason.length}</CounterChars>
           {flagFormik.errors.reason && (
             <AlertWrapper>
-              <Alert variant="bad">{flagFormik.errors.reason}</Alert>
+              <Alert variant="negative">{flagFormik.errors.reason}</Alert>
             </AlertWrapper>
           )}
         </ContainerForm>

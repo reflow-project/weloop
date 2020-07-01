@@ -2,15 +2,16 @@ import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'ui/themes/styled';
 
+export interface SimpleLink {
+  external: boolean;
+  url: string;
+}
 export interface Props {
-  link: {
-    external: boolean;
-    url: string;
-  };
+  link: SimpleLink;
 }
 export const SimpleLink: FC<Props> = ({ link, children }) => {
   return link.external ? (
-    <a href={link.url} target="_blank">
+    <a href={link.url} rel="noopener noreferrer" target="_blank">
       {children}
     </a>
   ) : (

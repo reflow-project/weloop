@@ -3,48 +3,44 @@ import { Link } from 'react-router-dom';
 import { Box, Text } from 'rebass/styled-components';
 import media from 'styled-media-query';
 import styled from 'ui/themes/styled';
-const PlaceholderImg = require('ui/Icons/collectionPlaceholder.png');
 import { ellipsis } from 'polished';
 import { X } from 'react-feather';
+const PlaceholderImg = require('ui/Icons/collectionPlaceholder.png');
 
 export interface CommunityBase {
-  id: string;
+  link: string;
   name: string;
   icon: string;
 }
 
-interface CommunityProps {
+export interface CommunityProps {
   community: CommunityBase;
-  isAdmin: boolean;
+  canEdit: boolean;
   isEditing: boolean;
   remove(): unknown;
 }
-const CommunitySmall: React.FC<CommunityProps> = ({
-  community,
-  isAdmin,
-  isEditing,
-  remove
-}) => {
+const CommunitySmall: React.FC<CommunityProps> = ({ community, canEdit, isEditing, remove }) => {
   return (
     <Wrapper py={1} mb={2} mr={3}>
-      {isAdmin && isEditing ? (
+      {canEdit && isEditing ? (
         <Remove onClick={remove}>
           <X color="#fff" size={16} />
         </Remove>
       ) : null}
-      <Link to={`/communities/${community.id}`}>
+      <Link to={community.link}>
         <Img
           style={{
-            backgroundImage: `url(${community.icon || PlaceholderImg})`
+            backgroundImage: `url("${community.icon || PlaceholderImg}")`
           }}
-        />
-        <Infos>
-          <Title fontSize={1} my={2} fontWeight={600}>
-            {community.name.length > 80
-              ? community.name.replace(/^(.{76}[^\s]*).*/, '$1...')
-              : community.name}
-          </Title>
-        </Infos>
+        >
+          <Infos>
+            <Title fontSize={1} my={2} fontWeight={600}>
+              {community.name.length > 80
+                ? community.name.replace(/^(.{76}[^\s]*).*/, '$1...')
+                : community.name}
+            </Title>
+          </Infos>
+        </Img>
       </Link>
     </Wrapper>
   );
@@ -65,6 +61,7 @@ const Wrapper = styled(Box)`
     width: 100%;
   }
 `;
+
 const Img = styled.div`
   //   width: 100%;
   height: auto;
@@ -72,12 +69,26 @@ const Img = styled.div`
   border-radius: 4px;
   background-size: cover;
   background-repeat: no-repeat;
+  position: relative;
 `;
-const Infos = styled.div``;
+const Infos = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  padding: 0 8px;
+  background: rgba(0, 0, 0, 0.8);
+`;
+
 const Title = styled(Text)`
-  color: ${props => props.theme.colors.mediumdark};
-  ${ellipsis('200px')};
+  color: rgba(250, 250, 250);
+  ${ellipsis('170px')};
+  font-size: 14px;
+  margin: 0;
+  line-height: 40px;
 `;
+
 const Remove = styled(Box)`
   position: absolute;
   right: -9px;

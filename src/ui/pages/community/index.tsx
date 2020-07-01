@@ -1,107 +1,93 @@
+import { Trans } from '@lingui/macro';
 import * as React from 'react';
+import { ReactElement } from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
-import { Flex, Box } from 'rebass/styled-components';
-import SocialText from 'ui/modules/SocialText';
-import { Trans } from '@lingui/react';
-import Button from 'ui/elements/Button';
-
-import styled from 'ui/themes/styled';
+import { Box, Flex, Text } from 'rebass/styled-components';
+import media from 'styled-media-query';
 import { FormikHook } from 'ui/@types/types';
-import Modal from 'ui/modules/Modal';
-// import { Header } from 'ui/modules/Header';
-import { LoadMore } from 'ui/modules/Loadmore';
+import Button from 'ui/elements/Button';
 import {
-  Wrapper,
-  WrapperCont,
+  HomeBox,
   List,
   MainContainer,
-  HomeBox,
   MenuList,
-  ObjectsList
+  ObjectsList,
+  Wrapper,
+  WrapperCont
 } from 'ui/elements/Layout';
+// import { Header } from 'ui/modules/Header';
+import { LoadMore } from 'ui/modules/Loadmore';
 import { SidePanel } from 'ui/modules/SidePanel';
+import SocialText from 'ui/modules/SocialText';
+import styled from 'ui/themes/styled';
 
 export interface Props {
   isJoined: boolean;
-  ActivitiesBox: JSX.Element;
-  FollowersBoxes: JSX.Element;
-  CollectionsBox: JSX.Element;
-  HeroCommunityBox: JSX.Element;
-  ThreadsBox: JSX.Element;
-  communityName: string;
-  basePath: string;
+  Activities: ReactElement[];
+  Members: ReactElement[];
+  Collections: ReactElement[];
+  HeroCommunity: ReactElement;
+  Threads: ReactElement[];
   newThreadFormik: null | FormikHook<{ text: string }>;
-  CreateCollectionPanel: React.ComponentType<{ done(): any }>;
+  createCollection: () => unknown;
   loadMoreActivities: FormikHook | null;
   loadMoreCollections: FormikHook | null;
   loadMoreThreads: FormikHook | null;
+  tabPaths: {
+    timeline: string;
+    members: string;
+    discussions: string;
+    collections: string;
+  };
 }
 
 export const Community: React.FC<Props> = ({
-  ActivitiesBox,
-  HeroCommunityBox,
-  CollectionsBox,
-  FollowersBoxes,
-  basePath,
+  Activities,
+  HeroCommunity,
+  Collections,
+  Members,
+  tabPaths,
   newThreadFormik,
-  isJoined,
-  communityName,
-  ThreadsBox,
-  CreateCollectionPanel,
+  // isJoined,
+  Threads,
   loadMoreActivities,
   loadMoreCollections,
-  loadMoreThreads
+  loadMoreThreads,
+  createCollection
 }) => {
-  const [isOpenCreateCollection, setOpenCreateCollection] = React.useState(
-    false
-  );
-
   return (
     <MainContainer>
-      {isOpenCreateCollection && (
-        <Modal closeModal={() => setOpenCreateCollection(false)}>
-          <CreateCollectionPanel done={() => setOpenCreateCollection(false)} />
-        </Modal>
-      )}
       <HomeBox>
         <WrapperCont>
           <Wrapper>
             {/* <Header name={communityName} /> */}
+            {HeroCommunity}
+            <Menu tabPaths={tabPaths} />
             <Switch>
-              <Route exact path={`${basePath}`}>
+              <Route exact path={tabPaths.timeline}>
                 <>
-                  {HeroCommunityBox}
-                  <Menu basePath={basePath} />
-                  <List mt={2}>{ActivitiesBox}</List>
-                  {loadMoreActivities && (
-                    <LoadMore LoadMoreFormik={loadMoreActivities} />
-                  )}
+                  <List mt={2}>{Activities}</List>
+                  {loadMoreActivities && <LoadMore LoadMoreFormik={loadMoreActivities} />}
                 </>
               </Route>
-              <Route path={`${basePath}/collections`}>
+              <Route exact path={tabPaths.collections}>
                 <>
-                  {HeroCommunityBox}
-                  <Menu basePath={basePath} />
-                  {isJoined && (
-                    <WrapButton p={2} mb={2}>
-                      <Button
-                        variant="outline"
-                        onClick={() => setOpenCreateCollection(true)}
-                      >
-                        <Trans>Create a new collection</Trans>
-                      </Button>
-                    </WrapButton>
-                  )}
-                  <ObjectsList>{CollectionsBox}</ObjectsList>
-                  {loadMoreCollections && (
-                    <LoadMore LoadMoreFormik={loadMoreCollections} />
-                  )}
+                  <Title px={3} mt={2}>
+                    <Text sx={{ flex: 1 }} variant="suptitle">
+                      <Trans>All collections</Trans>
+                    </Text>
+                    <CreateCollectionButton variant="outline" onClick={createCollection}>
+                      <Trans>Create a new collection</Trans>
+                    </CreateCollectionButton>
+                  </Title>
+                  <ObjectsList>
+                    <CollectionsBoxes>{Collections}</CollectionsBoxes>
+                  </ObjectsList>
+                  {loadMoreCollections && <LoadMore LoadMoreFormik={loadMoreCollections} />}
                 </>
               </Route>
-              <Route path={`${basePath}/discussions`}>
+              <Route exact path={tabPaths.discussions}>
                 <>
-                  {HeroCommunityBox}
-                  <Menu basePath={basePath} />
                   <WrapSocialText p={3} mb={2}>
                     {newThreadFormik && (
                       <SocialText
@@ -113,17 +99,17 @@ export const Community: React.FC<Props> = ({
                       />
                     )}
                   </WrapSocialText>
-                  <ObjectsList>{ThreadsBox}</ObjectsList>
-                  {loadMoreThreads && (
-                    <LoadMore LoadMoreFormik={loadMoreThreads} />
-                  )}
+                  <Title px={3} mt={2}>
+                    <Text variant="suptitle">All discussions</Text>
+                  </Title>
+                  <ObjectsList>{Threads}</ObjectsList>
+                  {loadMoreThreads && <LoadMore LoadMoreFormik={loadMoreThreads} />}
                 </>
               </Route>
-              <Route path={`${basePath}/members`}>
-                <Container>
-                  <FollowersMenu basePath={`${basePath}/members`} />
-                  <ObjectsList>{FollowersBoxes}</ObjectsList>
-                </Container>
+              <Route path={tabPaths.members}>
+                <>
+                  <ObjectsList>{Members}</ObjectsList>
+                </>
               </Route>
             </Switch>
           </Wrapper>
@@ -134,35 +120,81 @@ export const Community: React.FC<Props> = ({
   );
 };
 
-const FollowersMenu = ({ basePath }: { basePath: string }) => (
-  <MenuList m={2}>
-    <NavLink exact to={`${basePath}`}>
-      Members
-    </NavLink>
-  </MenuList>
-);
-
-const Menu = ({ basePath }: { basePath: string }) => (
-  <MenuList p={3} pt={0}>
-    <NavLink exact to={`${basePath}`}>
-      Recent activity
-    </NavLink>
-    <NavLink to={`${basePath}/collections`}>Collections</NavLink>
-    <NavLink to={`${basePath}/discussions`}>Discussions</NavLink>
-  </MenuList>
-);
-
-const Container = styled(Box)`
-  background: ${props => props.theme.colors.appInverse};
+const CreateCollectionButton = styled(Button)`
+  padding: 0;
+  text-transform: capitalize;
+  height: 34px;
+  line-height: 34px;
+  padding: 0 16px;
 `;
 
-const WrapButton = styled(Flex)`
+const CollectionsBoxes = styled(Box)`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 16px;
+  row-gap: 16px;
+  margin: 16px;
+  margin-bottom: 24px !important;
+  ${media.lessThan('medium')`
+  grid-template-columns: 1fr;
+  > div {
+    margin: 0 auto;
+    width: 300px;
+  }
+  `}
+`;
+
+// const FollowersMenu = ({ basePath }: { basePath: string }) => (
+//   <MenuList m={2}>
+//     <NavLink exact to={`${basePath}`}>
+//       Members
+//     </NavLink>
+//   </MenuList>
+// );
+
+const Menu: React.FC<{ tabPaths: Props['tabPaths'] }> = ({ tabPaths }) => (
+  <MenuList p={3} pt={0}>
+    <NavLink to={tabPaths.timeline}>
+      <Trans>Recent activity</Trans>
+    </NavLink>
+    <NavLink exact to={tabPaths.collections}>
+      <Trans>Collections</Trans>
+    </NavLink>
+    <NavLink to={tabPaths.discussions}>
+      <Trans>Discussions</Trans>
+    </NavLink>
+    <NavLink to={tabPaths.members}>
+      <Trans>Members</Trans>
+    </NavLink>
+  </MenuList>
+);
+
+const Title = styled(Flex)`
   background: ${props => props.theme.colors.appInverse};
+  height: 50px;
+  line-height: 50px;
+  align-items: center;}
+  </>
+);
+
+  border-bottom: ${props => props.theme.colors.border};
   button {
-    width: 100%;
-    height: 50px;
+    width: 190px;
+    font-size: 14px;
+    text-transform: inherit;
+    letter-spacing: 0;
+    padding: 0;
+    height: 32px;
+    line-height: 32px;
+    background: #ffe5cd;
+    color: #ca6a11;
+    border: none;
   }
 `;
+
+// const Container = styled(Box)`
+//   background: ${props => props.theme.colors.appInverse};
+// `;
 
 const WrapSocialText = styled(Box)`
   background: ${props => props.theme.colors.appInverse};

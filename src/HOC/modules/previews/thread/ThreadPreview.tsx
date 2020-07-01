@@ -20,7 +20,8 @@ export const ThreadPreviewHOC: FC<Props> = ({ threadId }) => {
 
     const props: ThreadPreviewUIProps = {
       content: mainComment.content,
-      createdAt: mainComment.createdAt,
+      // lastActivity: lastActivity ? `${lastActivity}` : '',
+      lastActivity: mainComment.createdAt,
       members: [],
       totalLikes: `${mainComment.likerCount || 0}`,
       totalReplies: totalReplies ? `${totalReplies}` : '',
@@ -28,7 +29,7 @@ export const ThreadPreviewHOC: FC<Props> = ({ threadId }) => {
     };
 
     return props;
-  }, [mainComment, totalReplies]);
+  }, [mainComment, totalReplies, threadId]);
 
   return threadPreviewProps && <ThreadPreviewUI {...threadPreviewProps} />;
 };

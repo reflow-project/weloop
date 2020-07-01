@@ -1,39 +1,25 @@
 import React, { FC, useMemo } from 'react';
-import { HomePageHOC, HomePageTab } from 'HOC/pages/home/HomeHoc';
+import { HomePageHOC } from 'HOC/pages/home/HomeHoc';
 import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { WithSidebarTemplate } from 'HOC/templates/WithSidebar/WithSidebar';
-import { NotFound } from 'ui/pages/notFound';
+import { NotFoundHOC } from 'HOC/pages/not-found/NotFound';
 import { RedirectAnonymousToLogin } from './wrappers/RedirectBySession';
+import { locationHelper } from './lib/helper';
 
 interface HomePageRouter {
   tab?: string;
 }
 const HomePageRouter: FC<RouteComponentProps<HomePageRouter>> = ({ match }) => {
-  const maybeTabStr = match.params.tab;
-  const tab =
-    maybeTabStr === 'mycommunities'
-      ? HomePageTab.MyCommunities
-      : maybeTabStr === 'mycollections'
-      ? HomePageTab.MyCollections
-      : !maybeTabStr
-      ? HomePageTab.Activities
-      : null;
-
   const homeProps: HomePageHOC | null = useMemo(
-    () =>
-      tab === null
-        ? null
-        : {
-            basePath: '',
-            tab
-          },
-    [tab]
+    () => ({
+      basePath: ''
+    }),
+    []
   );
 
   if (!homeProps) {
-    return <NotFound />;
+    return <NotFoundHOC />;
   }
-
   return (
     <RedirectAnonymousToLogin>
       <WithSidebarTemplate>
@@ -45,6 +31,8 @@ const HomePageRouter: FC<RouteComponentProps<HomePageRouter>> = ({ match }) => {
 
 export const HomePageRoute: RouteProps = {
   exact: true,
-  path: '/:tab?',
+  path: '/',
   component: HomePageRouter
 };
+
+export const homeLocation = locationHelper<undefined, undefined>(HomePageRoute);

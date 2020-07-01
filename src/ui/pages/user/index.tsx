@@ -1,36 +1,32 @@
+import { ellipsis } from 'polished';
 import * as React from 'react';
+import { Link } from 'react-feather';
 import { NavLink, Route, Switch } from 'react-router-dom';
-import { Flex, Text, Box } from 'rebass/styled-components';
+import { Box, Flex, Text } from 'rebass/styled-components';
 // import { Header } from 'ui/modules/Header';
 import { FormikHook } from 'ui/@types/types';
+import {
+  CollectionsWrapper,
+  HomeBox,
+  List,
+  MainContainer,
+  MenuList,
+  ObjectsList,
+  Wrapper,
+  WrapperCont
+} from 'ui/elements/Layout';
+import { Nav, NavItem, Panel, PanelTitle, WrapperPanel } from 'ui/elements/Panel';
 import { LoadMore } from 'ui/modules/Loadmore';
 import styled from 'ui/themes/styled';
-import { ellipsis } from 'polished';
-import {
-  Wrapper,
-  WrapperCont,
-  List,
-  ObjectsList,
-  MainContainer,
-  HomeBox,
-  MenuList
-} from 'ui/elements/Layout';
-import {
-  Nav,
-  NavItem,
-  Panel,
-  PanelTitle,
-  WrapperPanel
-} from 'ui/elements/Panel';
-import { Link } from 'react-feather';
+import { ReactElement } from 'react';
 
 export interface Props {
-  ActivityBoxes: JSX.Element;
-  LikesBoxes: JSX.Element; // FIX ME remove ? after add LikesBoxes at HOC
-  HeroUserBox: JSX.Element;
-  CommunityBoxes: JSX.Element;
-  CollectionsBoxes: JSX.Element;
-  UserBoxes: JSX.Element;
+  ActivityBoxes: ReactElement;
+  LikesBoxes: ReactElement; // FIX ME remove ? after add LikesBoxes at HOC
+  HeroUserBox: ReactElement;
+  CommunityBoxes: ReactElement;
+  CollectionsBoxes: ReactElement;
+  UserBoxes: ReactElement;
   basePath: string;
   totalCommunities: string;
   totalActivities: string;
@@ -82,9 +78,7 @@ export const User: React.FC<Props> = ({
             <Switch>
               <Route exact path={`${basePath}/`}>
                 <List>{ActivityBoxes}</List>
-                {loadMoreActivities && (
-                  <LoadMore LoadMoreFormik={loadMoreActivities} />
-                )}
+                {loadMoreActivities && <LoadMore LoadMoreFormik={loadMoreActivities} />}
               </Route>
               <Route exact path={`${basePath}/starred`}>
                 <List>{LikesBoxes}</List>
@@ -92,15 +86,13 @@ export const User: React.FC<Props> = ({
               </Route>
               <Route path={`${basePath}/communities`}>
                 <ObjectsList>{CommunityBoxes}</ObjectsList>
-                {loadMoreCommunities && (
-                  <LoadMore LoadMoreFormik={loadMoreCommunities} />
-                )}
+                {loadMoreCommunities && <LoadMore LoadMoreFormik={loadMoreCommunities} />}
               </Route>
               <Route path={`${basePath}/collections`}>
-                <ObjectsList>{CollectionsBoxes}</ObjectsList>
-                {loadMoreCollections && (
-                  <LoadMore LoadMoreFormik={loadMoreCollections} />
-                )}
+                <ObjectsList>
+                  <CollectionsWrapper>{CollectionsBoxes}</CollectionsWrapper>
+                </ObjectsList>
+                {loadMoreCollections && <LoadMore LoadMoreFormik={loadMoreCollections} />}
               </Route>
               {/* <Route path={`${basePath}/following`}>
                 {UserBoxes}
@@ -123,7 +115,7 @@ export const User: React.FC<Props> = ({
               <NavItem fontSize={1}>
                 <Flex>
                   <Link size={20} />{' '}
-                  <a href={userLink} target="_blank">
+                  <a href={userLink} target="_blank" rel="noopener noreferrer">
                     <TextLink ml={2} flex={1}>
                       {userLink}
                     </TextLink>

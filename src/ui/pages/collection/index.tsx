@@ -1,153 +1,144 @@
+import { Trans } from '@lingui/macro';
 import * as React from 'react';
+import { ReactElement } from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
-import { Flex, Box } from 'rebass/styled-components';
-import { Trans } from '@lingui/react';
-import styled from 'ui/themes/styled';
+import { Flex, Text } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
-import Modal from 'ui/modules/Modal';
 import Button from 'ui/elements/Button';
-import { Header } from 'ui/modules/Header';
-import { LoadMore } from 'ui/modules/Loadmore';
 import {
-  Wrapper,
-  WrapperCont,
+  HomeBox,
   // List,
   MainContainer,
-  HomeBox,
   MenuList,
-  ObjectsList
+  ObjectsList,
+  Wrapper,
+  WrapperCont
 } from 'ui/elements/Layout';
-import { SidePanel } from 'ui/modules/SidePanel';
+import { WrapperPanel } from 'ui/elements/Panel';
+// import { Header } from 'ui/modules/Header';
+import { LoadMore } from 'ui/modules/Loadmore';
+// import { SidePanel } from 'ui/modules/SidePanel';
+import styled from 'ui/themes/styled';
+import { HeaderWrapper } from '../thread';
+import { Box } from 'rebass';
 
 export interface Props {
-  ActivitiesBox: JSX.Element;
-  ResourcesBox: JSX.Element;
-  HeroCollectionBox: JSX.Element;
-  FollowersBoxes: JSX.Element;
-  ShareLinkBox: React.ComponentType<{ done(): any }>;
-  EditCollectionPanel: React.ComponentType<{ done(): any }>;
-  UploadResourcePanel: React.ComponentType<{ done(): any }>;
-  basePath: string;
-  collectionName: string;
-  loadMoreActivities: FormikHook | null;
+  Resources: ReactElement[];
+  HeroCollection: ReactElement;
+  Followers: ReactElement[];
+  ShareLink: null | ReactElement;
+  UploadResourcePanel: null | ReactElement;
+  shareLink(): unknown;
+  upload(): unknown;
+  tabPaths: {
+    resources: string;
+    followers: string;
+  };
   loadMoreResources: FormikHook | null;
   loadMoreFollowers: FormikHook | null;
   isCommunityMember: boolean;
+  communityId: string;
+  communityName: string;
+  communityIcon: string;
 }
 
 export const Collection: React.FC<Props> = ({
-  HeroCollectionBox,
-  ShareLinkBox,
-  EditCollectionPanel,
+  HeroCollection,
+  ShareLink,
   UploadResourcePanel,
-  ActivitiesBox,
-  FollowersBoxes,
-  ResourcesBox,
-  basePath,
-  collectionName,
-  loadMoreActivities,
+  Followers,
+  Resources,
+  tabPaths,
   loadMoreResources,
   loadMoreFollowers,
-  isCommunityMember
+  isCommunityMember,
+  communityId,
+  communityName,
+  communityIcon,
+  shareLink,
+  upload
 }) => {
-  const [isOpenEditCollection, setOpenEditCollection] = React.useState(false);
-  const [isShareLinkOpen, setOpenShareLink] = React.useState(false);
-  const [isUploadOpen, setUploadOpen] = React.useState(false);
-
   return (
     <MainContainer>
-      {isOpenEditCollection && (
-        <Modal closeModal={() => setOpenShareLink(false)}>
-          <EditCollectionPanel done={() => setOpenEditCollection(false)} />
-        </Modal>
-      )}
       <HomeBox>
         <WrapperCont>
           <Wrapper>
-            <Header name={collectionName} />
+            {/* <Header name={collectionName} /> */}
+            {HeroCollection}
+            <Menu tabPaths={tabPaths} />
             <Switch>
-              <Route path={`${basePath}/followers`}>
-                <White>
-                  <FollowersMenu basePath={`${basePath}/followers`} />
-                  <ObjectsList>{FollowersBoxes}</ObjectsList>
-                  {loadMoreFollowers && (
-                    <LoadMore LoadMoreFormik={loadMoreFollowers} />
-                  )}
-                </White>
-              </Route>
-              <Route exact path={`${basePath}/`}>
+              <Route path={tabPaths.followers}>
                 <>
-                  {HeroCollectionBox}
-                  <Menu basePath={basePath} />
+                  <ObjectsList>{Followers}</ObjectsList>
+                  {loadMoreFollowers && <LoadMore LoadMoreFormik={loadMoreFollowers} />}
+                </>
+              </Route>
+              <Route exact path={tabPaths.resources}>
+                <>
                   {isCommunityMember ? (
                     <WrapButton p={3}>
-                      <Button
-                        mr={2}
-                        onClick={() => setOpenShareLink(true)}
-                        variant="outline"
-                      >
+                      <Button mr={2} onClick={shareLink} variant="outline">
                         <Trans>Share link</Trans>
                       </Button>
-                      <Button
-                        onClick={() => setUploadOpen(true)}
-                        variant="outline"
-                      >
+                      <Button onClick={upload} variant="outline">
                         <Trans>Add new resource</Trans>
                       </Button>
                     </WrapButton>
                   ) : null}
-                  {isShareLinkOpen && (
-                    // <h1>jhhhh</h1>
-                    <ShareLinkBox done={() => setOpenShareLink(false)} />
-                  )}
-                  {isUploadOpen && (
-                    <UploadResourcePanel done={() => setUploadOpen(false)} />
-                  )}
-                  <ObjectsList>{ResourcesBox}</ObjectsList>
-                  {loadMoreResources && (
-                    <LoadMore LoadMoreFormik={loadMoreResources} />
-                  )}
+                  {ShareLink}
+                  {UploadResourcePanel}
+                  <ObjectsList>
+                    {Resources.map(Resource => (
+                      <Box mx={3} my={2} mb={3} key={Resource.key || ''}>
+                        {Resource}
+                      </Box>
+                    ))}
+                  </ObjectsList>
+                  {loadMoreResources && <LoadMore LoadMoreFormik={loadMoreResources} />}
                 </>
               </Route>
-              {/* <Route exact path={`${basePath}/`}>
-                <>
-                  {HeroCollectionBox}
-                  <Menu basePath={basePath} />
-                  <List>{ActivitiesBox}</List>
-                  {loadMoreActivities && (
-                    <LoadMore LoadMoreFormik={loadMoreActivities} />
-                  )}
-                </>
-              </Route> */}
             </Switch>
           </Wrapper>
         </WrapperCont>
       </HomeBox>
-      <SidePanel />
+      <WrapperPanel>
+        <TitleSection mb={2} variant="suptitle">
+          <Trans>Community</Trans>
+        </TitleSection>
+        <HeaderWrapper id={communityId} name={communityName} icon={communityIcon} />
+        {/* <SidePanel /> */}
+      </WrapperPanel>
     </MainContainer>
   );
 };
 export default Collection;
 
-const White = styled(Box)`
-  background: ${props => props.theme.colors.appInverse};
+const TitleSection = styled(Text)`
+  text-transform: capitalize;
 `;
 
-const FollowersMenu = ({ basePath }: { basePath: string }) => (
-  <MenuList m={2} p={2} pt={0}>
-    <NavLink exact to={`${basePath}`}>
-      Followers
-    </NavLink>
-  </MenuList>
-);
+// const White = styled(Box)`
+//   background: ${props => props.theme.colors.appInverse};
+// `;
 
-const Menu = ({ basePath }: { basePath: string }) => (
+// const FollowersMenu = ({ basePath }: { basePath: string }) => (
+//   <MenuList m={2} p={2} pt={0}>
+//     <NavLink exact to={`${basePath}`}>
+//       Followers
+//     </NavLink>
+//   </MenuList>
+// );
+
+const Menu: React.FC<{ tabPaths: Props['tabPaths'] }> = ({ tabPaths }) => (
   <MenuList p={3} pt={3}>
     {/* <NavLink exact to={`${basePath}`}>
       Recent activity
     </NavLink> */}
-    <NavLink exact to={`${basePath}/`}>
+    <NavLink exact to={tabPaths.resources}>
       <Trans>Resources</Trans>
+    </NavLink>
+    <NavLink exact to={tabPaths.followers}>
+      <Trans>Followers</Trans>
     </NavLink>
   </MenuList>
 );

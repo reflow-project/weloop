@@ -1,16 +1,21 @@
-import { MainHeaderHOC } from 'HOC/modules/previews/Header/Header';
+import { MainHeaderHOC } from 'HOC/modules/Header/Header';
 import React, { FC } from 'react';
 import { Guest, Props } from 'ui/templates/guest';
+import { ProvideSideBarContext } from 'HOC/context/SideBar';
+import { SearchBox } from 'HOC/modules/SearchBox/SearchBox';
 
 export interface GuestTemplate {
   withoutHeader?: boolean;
 }
-export const GuestTemplate: FC<GuestTemplate> = ({
-  children,
-  withoutHeader = false
-}) => {
+export const GuestTemplate: FC<GuestTemplate> = ({ children, withoutHeader = false }) => {
+  const HeaderBox = withoutHeader ? undefined : <MainHeaderHOC />;
   const props: Props = {
-    HeaderBox: withoutHeader ? undefined : MainHeaderHOC
+    HeaderBox,
+    SearchBox: <SearchBox />
   };
-  return <Guest {...props}>{children}</Guest>;
+  return (
+    <ProvideSideBarContext>
+      <Guest {...props}>{children}</Guest>
+    </ProvideSideBarContext>
+  );
 };

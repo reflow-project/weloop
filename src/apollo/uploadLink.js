@@ -10,7 +10,7 @@ const {
   createSignalIfSupported,
   parseAndCheckHttpResponse
 } = require('apollo-link-http-common');
-const { extractFiles, ReactNativeFile } = require('extract-files');
+const { extractFiles } = require('extract-files');
 
 /**
  * A React Native [`File`](https://developer.mozilla.org/docs/web/api/file)
@@ -56,7 +56,6 @@ const { extractFiles, ReactNativeFile } = require('extract-files');
  * })
  * ```
  */
-exports.ReactNativeFile = ReactNativeFile;
 
 /**
  * GraphQL request `fetch` options.
@@ -104,7 +103,7 @@ const setPath = (map, path, value) => {
  * })
  * ```
  */
-exports.createUploadLink = ({
+export const createUploadLink = ({
   uri: fetchUri = '/graphql',
   fetch: linkFetch = fetch,
   fetchOptions,

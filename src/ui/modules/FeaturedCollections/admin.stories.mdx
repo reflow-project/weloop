@@ -1,26 +1,27 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
-import { PropsTable } from '@storybook/components';
-import {getFeaturedCollectionsProps} from 'ui/mock/featuredCollections'
-import { FeaturedCollections } from 'ui/modules/FeaturedCollections';
-import {Box} from 'rebass';
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { useGetFeaturedCollectionsProps } from 'ui/mock/featuredCollections'
+import { FeaturedCollections } from 'ui/modules/FeaturedCollections'
+import { Box } from 'rebass'
 
-<Meta title="UX|FeaturedCollections - Admin User" component={FeaturedCollections}/>
+<Meta title="UX|FeaturedCollections - Admin User" component={FeaturedCollections} />
 
 # FeaturedCollections
+
 Let's define a story for the `Featured Collections preview` module
 
 <Preview>
   <Story name="Featured Collections preview module">
     <Box
-        sx={{
-          borderRadius: '6px',
-          background: '#fff',
-          width: '600px',
-          margin: '0 auto'
-        }}
-        p={2}
-      >
-        <FeaturedCollections {...getFeaturedCollectionsProps(true)} />
-    </Box>  
+      sx={{
+        borderRadius: '6px',
+        background: '#fff',
+        width: '600px',
+        margin: '0 auto',
+      }}
+      p={2}
+    >
+      <FeaturedCollections {...useGetFeaturedCollectionsProps(true)} />
+    </Box>
   </Story>
-</Preview> 
+</Preview>{' '}

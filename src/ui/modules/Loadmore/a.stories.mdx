@@ -1,19 +1,19 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
-import { PropsTable } from '@storybook/components';
-import {getLoadMoreProps} from 'ui/mock/loadmore'
-import { LoadMore } from '.';
-import {Box} from 'rebass'
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { useGetLoadMoreProps } from 'ui/mock/loadmore'
+import { LoadMore } from '.'
+import { Box } from 'rebass'
 
-<Meta title="Modules|Load more" component={LoadMore}/>
+<Meta title="Modules|Load more" component={LoadMore} />
 
 # LoadMore
+
 Let's define a story for the `Hero community preview` module
 
 <Preview>
   <Story name="Load more">
-    <Box sx={{width: '600px', margin: '0 auto'}}>
-      <LoadMore {...getLoadMoreProps()}/>
+    <Box sx={{ width: '600px', margin: '0 auto' }}>
+      <LoadMore {...useGetLoadMoreProps()} />
     </Box>
   </Story>
 </Preview>
-

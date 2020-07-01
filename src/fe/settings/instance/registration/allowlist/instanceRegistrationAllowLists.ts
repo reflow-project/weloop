@@ -6,47 +6,38 @@ import { DEFAULT_PAGE_SIZE } from 'mn-constants';
 // import { DEFAULT_PAGE_SIZE } from 'mn-constants';
 
 export const useInstanceRegistrationAllowLists = () => {
+  const [addEmailDomainMut, addEmailDomainStatus] = GQL.useAddEmailDomainToAllowListMutation();
   const [
-    addEmailDomainMut /* ,addEmailDomainStatus */
-  ] = GQL.useAddEmailDomainToAllowListMutation();
-  const [
-    removeEmailDomainMut /* ,removeEmailDomainStatus */
+    removeEmailDomainMut,
+    removeEmailDomainStatus
   ] = GQL.useRemoveEmailDomainFromAllowListMutation();
-  const [
-    addEmailMut /* ,addEmailStatus */
-  ] = GQL.useAddEmailToAllowListMutation();
-  const [
-    removeEmailMut /* ,removeEmailStatus */
-  ] = GQL.useRemoveEmailFromAllowListMutation();
-  const [
-    sendInviteEmailMut /* ,sendInviteEmailStatus */
-  ] = GQL.useSendInviteEmailMutation();
+  // const [
+  //   addEmailMut /* ,addEmailStatus */
+  // ] = GQL.useAddEmailToAllowListMutation();
+  const [removeEmailMut, removeEmailStatus] = GQL.useRemoveEmailFromAllowListMutation();
+  const [sendInviteEmailMut, sendInviteEmailStatus] = GQL.useSendInviteEmailMutation();
 
   const listEmailsQ = GQL.useInstanceRegisterEmailAccessesQuery({
     variables: {
       limit: DEFAULT_PAGE_SIZE
     }
   });
-  const listEmailsPage = usePage(
-    listEmailsQ.data?.registerEmailAccesses,
-    ({ cursor, update }) => {
-      return listEmailsQ.fetchMore({
-        variables: { ...cursor, limit: DEFAULT_PAGE_SIZE },
-        updateQuery: (prev, { fetchMoreResult }) => {
-          return fetchMoreResult?.registerEmailAccesses &&
-            prev.registerEmailAccesses
-            ? {
-                ...fetchMoreResult,
-                registerEmailAccesses: update({
-                  prev: prev.registerEmailAccesses,
-                  fetched: fetchMoreResult.registerEmailAccesses
-                })
-              }
-            : prev;
-        }
-      });
-    }
-  );
+  const listEmailsPage = usePage(listEmailsQ.data?.registerEmailAccesses, ({ cursor, update }) => {
+    return listEmailsQ.fetchMore({
+      variables: { ...cursor, limit: DEFAULT_PAGE_SIZE },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        return fetchMoreResult?.registerEmailAccesses && prev.registerEmailAccesses
+          ? {
+              ...fetchMoreResult,
+              registerEmailAccesses: update({
+                prev: prev.registerEmailAccesses,
+                fetched: fetchMoreResult.registerEmailAccesses
+              })
+            }
+          : prev;
+      }
+    });
+  });
 
   const listEmailDomainsQ = GQL.useInstanceRegisterEmailDomainAccessesQuery({
     variables: {
@@ -59,8 +50,7 @@ export const useInstanceRegistrationAllowLists = () => {
       return listEmailDomainsQ.fetchMore({
         variables: { ...cursor, limit: DEFAULT_PAGE_SIZE },
         updateQuery: (prev, { fetchMoreResult }) => {
-          return fetchMoreResult?.registerEmailDomainAccesses &&
-            prev.registerEmailDomainAccesses
+          return fetchMoreResult?.registerEmailDomainAccesses && prev.registerEmailDomainAccesses
             ? {
                 ...fetchMoreResult,
                 registerEmailDomainAccesses: update({
@@ -77,9 +67,7 @@ export const useInstanceRegistrationAllowLists = () => {
     (domain: string) => {
       return addEmailDomainMut({
         variables: { domain },
-        refetchQueries: [
-          GQL.InstanceRegisterEmailDomainAccessesQueryRefetch({})
-        ]
+        refetchQueries: [GQL.InstanceRegisterEmailDomainAccessesQueryRefetch({})]
       });
     },
     [addEmailDomainMut]
@@ -88,9 +76,7 @@ export const useInstanceRegistrationAllowLists = () => {
     (id: string) => {
       return removeEmailDomainMut({
         variables: { id },
-        refetchQueries: [
-          GQL.InstanceRegisterEmailDomainAccessesQueryRefetch({})
-        ]
+        refetchQueries: [GQL.InstanceRegisterEmailDomainAccessesQueryRefetch({})]
       });
     },
     [removeEmailDomainMut]
@@ -105,13 +91,14 @@ export const useInstanceRegistrationAllowLists = () => {
 
   const addEmail = useCallOrNotifyMustLogin(
     (email: string) => {
-      return addEmailMut({
+      return sendInviteEmailMut({
         variables: { email },
         refetchQueries: [GQL.InstanceRegisterEmailAccessesQueryRefetch({})]
       });
     },
-    [addEmailMut]
+    [sendInviteEmailMut]
   );
+
   const removeEmail = useCallOrNotifyMustLogin(
     (id: string) => {
       return removeEmailMut({
@@ -130,7 +117,11 @@ export const useInstanceRegistrationAllowLists = () => {
       removeEmailDomain,
       addEmail,
       removeEmail,
-      sendInviteEmail
+      sendInviteEmail,
+      addEmailDomainStatus,
+      removeEmailDomainStatus,
+      removeEmailStatus,
+      sendInviteEmailStatus
     };
   }, [
     listEmailDomainsPage,
@@ -139,6 +130,10 @@ export const useInstanceRegistrationAllowLists = () => {
     removeEmailDomain,
     addEmail,
     removeEmail,
-    sendInviteEmail
+    sendInviteEmail,
+    addEmailDomainStatus,
+    removeEmailDomainStatus,
+    removeEmailStatus,
+    sendInviteEmailStatus
   ]);
 };

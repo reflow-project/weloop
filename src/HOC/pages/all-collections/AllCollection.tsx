@@ -6,14 +6,18 @@ import {
 import { useAllCollections } from 'fe/collection/all/useAllCollections';
 import { CollectionPreviewHOC } from 'HOC/modules/previews/collection/CollectionPreview';
 import { useFormik } from 'formik';
+import { t } from '@lingui/macro';
+import { usePageTitle } from 'context/global/pageCtx';
+
+const allCollectionsPageTitle = t`All Collections`;
 
 export interface AllCollectionsPage {}
 export const AllCollectionsPage: FC<AllCollectionsPage> = () => {
+  usePageTitle(allCollectionsPageTitle);
   const { allCollectionsPage } = useAllCollections();
   const LoadMoreFormik = useFormik({
     initialValues: {},
-    onSubmit: () =>
-      allCollectionsPage.ready ? allCollectionsPage.next() : undefined
+    onSubmit: () => (allCollectionsPage.ready ? allCollectionsPage.next() : undefined)
   });
   const allCollectionsUIProps = useMemo<AllCollectionsUIProps>(() => {
     const CollectionsBoxes = (

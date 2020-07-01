@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'ui/themes/styled';
 import { Box } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import { FormikHook } from 'ui/@types/types';
 
 export interface Props {

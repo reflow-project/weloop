@@ -1,16 +1,16 @@
-import { Trans } from '@lingui/react';
-import { clearFix, darken } from 'polished';
-import React, { ComponentType, FC } from 'react';
-import { Settings, MoreVertical, Flag, Star } from 'react-feather';
+import { Trans } from '@lingui/macro';
+// import { NavLink } from 'react-router-dom';
+// import { MDComment } from 'ui/elements/Layout/comment';
+import Markdown from 'markdown-to-jsx';
+import { darken } from 'polished';
+import React, { FC } from 'react';
+import { Flag, MoreVertical, Settings, Star } from 'react-feather';
 import { Box, Flex, Text } from 'rebass/styled-components';
 import media from 'styled-media-query';
-import styled from 'ui/themes/styled';
-import Modal from 'ui/modules/Modal';
+import { FormikHook } from 'ui/@types/types';
 import Button from 'ui/elements/Button';
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
-import { FormikHook } from 'ui/@types/types';
-import { NavLink } from 'react-router-dom';
-import { MD_Comment } from 'ui/elements/Layout/comment';
+import styled from 'ui/themes/styled';
 
 export enum Status {
   Loading,
@@ -32,9 +32,15 @@ export interface CommunityLoaded {
   isFlagged: boolean;
   canModify: boolean;
   toggleJoinFormik: FormikHook;
-  EditCommunityPanel: ComponentType<{ done(): any }>;
-  FlagModal: ComponentType<{ done(): any }>;
-  FeaturedModal: ComponentType<{ done(): any }>;
+
+  edit(): any;
+
+  flag(): any;
+
+  addToFeatured(): any;
+
+  isOpenDropdown: boolean;
+  toggleDropdown(): any;
 }
 
 export interface CommunityLoading {
@@ -46,11 +52,6 @@ export interface Props {
 }
 
 export const HeroCommunity: FC<Props> = ({ community: c }) => {
-  const [isOpenSettings, setOpenSettings] = React.useState(false);
-  const [isOpenDropdown, setOpenDropdown] = React.useState(false);
-  const [isOpenFlag, setOpenFlag] = React.useState(false);
-  const [isOpenFeatured, setOpenFeatured] = React.useState(false);
-
   return c.status === Status.Loading ? (
     <Text>Loading...</Text>
   ) : (
@@ -59,28 +60,21 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
         <Background
           id="header"
           style={{
-            backgroundImage: `url(${c.icon})`
+            backgroundImage: `url("${c.icon}")`
           }}
         />
         <HeroInfo>
           <Title variant="heading" mt={0}>
             {c.name}
           </Title>
-          <Username fontSize={1}>@{c.fullName}</Username>
+          <Username fontSize={0}>@{c.fullName}</Username>
           {c.summary && (
             <Box mt={2}>
-              <MD_Comment content={c.summary} />
+              <Markdown>{c.summary}</Markdown>
+              {/* <MDComment content={c.summary} /> */}
             </Box>
           )}
           <Info mt={3}>
-            <InfoCommunity>
-              {/* <Badge mr={2}>Featured</Badge> */}
-              <MembersTot to={`${c.basePath}/members`}>
-                <Text variant="suptitle">
-                  <Total mr={2}>{c.totalMembers}</Total> <Trans>Members</Trans>
-                </Text>
-              </MembersTot>
-            </InfoCommunity>
             <Actions>
               <Button
                 mr={2}
@@ -91,70 +85,64 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
               >
                 {c.following ? <Trans>Leave</Trans> : <Trans>Join</Trans>}
               </Button>
-              <More onClick={() => setOpenDropdown(true)}>
+              <More onClick={c.toggleDropdown}>
                 <MoreVertical size={20} />
-                {isOpenDropdown && (
-                  <Dropdown orientation={'bottom'} cb={setOpenDropdown}>
-                    {c.canModify && (
-                      <DropdownItem onClick={() => setOpenSettings(true)}>
-                        <Settings size={20} color={'rgb(101, 119, 134)'} />
+                {c.isOpenDropdown && (
+                  <RightDd>
+                    <Dropdown orientation={'bottom'} close={c.toggleDropdown}>
+                      {c.canModify && (
+                        <DropdownItem onClick={c.edit}>
+                          <Settings size={20} color={'rgb(101, 119, 134)'} />
+                          <Text sx={{ flex: 1 }} ml={2}>
+                            <Trans>Edit the community</Trans>
+                          </Text>
+                        </DropdownItem>
+                      )}
+                      <DropdownItem onClick={c.flag}>
+                        <Flag size={20} color={'rgb(101, 119, 134)'} />
                         <Text sx={{ flex: 1 }} ml={2}>
-                          <Trans>Edit the community</Trans>
+                          {!c.isFlagged ? (
+                            <Trans>Flag this community</Trans>
+                          ) : (
+                            <Trans>Unflag this community</Trans>
+                          )}
                         </Text>
                       </DropdownItem>
-                    )}
-                    <DropdownItem onClick={() => setOpenFlag(true)}>
-                      <Flag size={20} color={'rgb(101, 119, 134)'} />
-                      <Text sx={{ flex: 1 }} ml={2}>
-                        {!c.isFlagged ? (
-                          <Trans>Flag this community</Trans>
-                        ) : (
-                          <Trans>Unflag this community</Trans>
-                        )}
-                      </Text>
-                    </DropdownItem>
-                    {c.isAdmin ? (
-                      <AdminDropdownItem onClick={() => setOpenFeatured(true)}>
-                        <Star size={20} color={'rgb(211, 103, 5)'} />
-                        <Text sx={{ flex: 1 }} ml={2}>
-                          {
-                            /* c.isFeatured ? (
+                      {c.isAdmin ? (
+                        <AdminDropdownItem onClick={c.addToFeatured}>
+                          <Star size={20} color={'rgb(211, 103, 5)'} />
+                          <Text sx={{ flex: 1 }} ml={2}>
+                            {
+                              /* c.isFeatured ? (
                             <Trans>Remove from featured list</Trans>
                           ) :  */ <Trans>
-                              Add to featured list
-                            </Trans>
-                          }
-                        </Text>
-                      </AdminDropdownItem>
-                    ) : null}
-                  </Dropdown>
+                                Add to featured list
+                              </Trans>
+                            }
+                          </Text>
+                        </AdminDropdownItem>
+                      ) : null}
+                    </Dropdown>
+                  </RightDd>
                 )}
               </More>
             </Actions>
           </Info>
         </HeroInfo>
       </Hero>
-      {isOpenSettings && (
-        <Modal closeModal={() => setOpenSettings(false)}>
-          <c.EditCommunityPanel done={() => setOpenSettings(false)} />
-        </Modal>
-      )}
-      {isOpenFlag && (
-        <Modal closeModal={() => setOpenFlag(false)}>
-          <c.FlagModal done={() => setOpenFlag(false)} />
-        </Modal>
-      )}
-      {isOpenFeatured && c.FeaturedModal && c.isAdmin && (
-        <Modal closeModal={() => setOpenFeatured(false)}>
-          <c.FeaturedModal done={() => setOpenFeatured(false)} />
-        </Modal>
-      )}
     </>
   );
 };
 
-const InfoCommunity = styled(Flex)`
-  align-items: center;
+// const InfoCommunity = styled(Flex)`
+//   align-items: center;
+// `;
+
+const RightDd = styled(Box)`
+  .dropdown {
+    right: 0;
+    left: auto;
+  }
 `;
 
 // const Badge = styled(Box)`
@@ -191,11 +179,12 @@ const Info = styled(Flex)`
   align-items: center;
   justify-content: space-between;
 `;
-const Total = styled(Text)`
-  color: ${props => props.theme.colors.primary};
-`;
+// const Total = styled(Text)`
+//   color: ${props => props.theme.colors.primary};
+// `;
 
 const Title = styled(Text)`
+  color: ${props => props.theme.colors.darker};
   ${media.lessThan('medium')`
 font-size: 20px !important;
 `};
@@ -209,35 +198,36 @@ const Username = styled(Text)`
   color: ${props => props.theme.colors.mediumdark};
   font-weight: 500;
   text-transform: lowercase;
+  font-size: 14px;
 `;
 
-const MembersTot = styled(NavLink)`
-  margin-top: 0px;
-  cursor: pointer;
-  cursor: pointer;
-  text-decoration: none;
-  * {
-    text-decoration: none;
-  }
-  flex: 1;
-  > div {
-    display: flex;
-  }
-  ${clearFix()} & span {
-    margin-right: 4px;
-    float: left;
-    height: 32px;
-    line-height: 32px;
-    & svg {
-      vertical-align: middle;
-    }
-    .--rtl & {
-      float: right;
-      margin-right: 0px;
-      margin-left: 8px;
-    }
-  }
-`;
+// const MembersTot = styled(NavLink)`
+//   margin-top: 0px;
+//   cursor: pointer;
+//   cursor: pointer;
+//   text-decoration: none;
+//   * {
+//     text-decoration: none;
+//   }
+//   flex: 1;
+//   > div {
+//     display: flex;
+//   }
+//   ${clearFix()} & span {
+//     margin-right: 4px;
+//     float: left;
+//     height: 32px;
+//     line-height: 32px;
+//     & svg {
+//       vertical-align: middle;
+//     }
+//     .--rtl & {
+//       float: right;
+//       margin-right: 0px;
+//       margin-left: 8px;
+//     }
+//   }
+// `;
 
 const Hero = styled(Box)`
   width: 100%;
@@ -257,9 +247,9 @@ const Background = styled.div`
   margin: 0 auto;
   border-radius: 4px;
   background-position: center center;
-  ${media.lessThan('medium')`
-    display: none;
-`};
+//   ${media.lessThan('medium')`
+//     display: none;
+// `};
 `;
 
 const HeroInfo = styled.div`

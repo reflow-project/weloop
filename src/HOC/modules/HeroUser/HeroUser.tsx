@@ -1,14 +1,10 @@
 import { useUser } from 'fe/user/useUser';
 import { useFormik } from 'formik';
 import { User } from 'graphql/types.generated';
-import React, { useMemo, useState, FC } from 'react';
-import {
-  HeroUser as HeroUserUI,
-  Loaded,
-  LoadedOther,
-  Props,
-  Status
-} from 'ui/modules/HeroUser';
+import { useNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
+import React, { FC, useMemo, useReducer } from 'react';
+import { HeroUser as HeroUserUI, Loaded, LoadedOther, Props, Status } from 'ui/modules/HeroUser';
+import Modal from 'ui/modules/Modal';
 import { FlagModalHOC } from '../FlagModal/flagModalHOC';
 
 export interface HeroUser {
@@ -16,11 +12,24 @@ export interface HeroUser {
 }
 export const HeroUser: FC<HeroUser> = ({ userId }) => {
   const { user, isAdmin, isMe, toggleFollow } = useUser(userId);
-  const [isOpenDropdown, setOpenDropdown] = useState(false);
+  const [isOpenDropdown, toggleDropdown] = useReducer(is => !is, false);
+
   const toggleFollowFormik = useFormik({
     initialValues: {},
     onSubmit: toggleFollow
   });
+  const notifiedMustLogin = useNotifyMustLogin();
+
+  const [isFlagging, toggleFlagging] = useReducer(is => {
+    return notifiedMustLogin() ? false : !is;
+  }, false);
+
+  const FlagModal =
+    user && isFlagging ? (
+      <Modal closeModal={toggleFlagging}>
+        <FlagModalHOC done={toggleFlagging} ctx={user} />
+      </Modal>
+    ) : null;
   const userHeroProps = useMemo<Props>(() => {
     if (!user) {
       return {
@@ -36,8 +45,7 @@ export const HeroUser: FC<HeroUser> = ({ userId }) => {
       location: user.location || '',
       name: user.name || '',
       summary: user.summary || '',
-      isFlagged: !!user.myFlag,
-      FlagModal: ({ done }) => <FlagModalHOC done={done} ctx={user} />
+      isFlagged: !!user.myFlag
     };
 
     if (isMe) {
@@ -50,10 +58,11 @@ export const HeroUser: FC<HeroUser> = ({ userId }) => {
       return props;
     } else {
       const props: LoadedOther = {
+        flag: toggleFlagging,
         me: isMe,
         following: !!user.myFollow,
         isOpenDropdown,
-        setOpenDropdown,
+        toggleDropdown,
         toggleFollowFormik,
         ...loadedProps
       };
@@ -62,5 +71,10 @@ export const HeroUser: FC<HeroUser> = ({ userId }) => {
     }
   }, [isMe, user, toggleFollowFormik, isAdmin, isOpenDropdown]);
 
-  return <HeroUserUI {...userHeroProps} />;
+  return (
+    <>
+      {FlagModal}
+      <HeroUserUI {...userHeroProps} />
+    </>
+  );
 };

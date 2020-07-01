@@ -16,7 +16,7 @@ export type SidebarFollowedCommunityFragment = (
 
 export type SidebarMeUserFragment = (
   { __typename: 'User' }
-  & Pick<Types.User, 'id' | 'name'>
+  & Pick<Types.User, 'id' | 'name' | 'preferredUsername' | 'displayUsername'>
   & { icon: Types.Maybe<(
     { __typename: 'Content' }
     & Pick<Types.Content, 'id' | 'url'>
@@ -54,5 +54,7 @@ export const SidebarMeUserFragmentDoc = gql`
     id
     url
   }
+  preferredUsername
+  displayUsername
 }
     `;

@@ -8,6 +8,7 @@ import {
   MainContainer,
   HomeBox,
   ObjectsList,
+  CollectionsWrapper,
   MenuList
 } from 'ui/elements/Layout';
 import { Flex, Box, Text } from 'rebass/styled-components';
@@ -16,24 +17,29 @@ import { FormikHook } from 'ui/@types/types';
 
 import { LoadMore } from 'ui/modules/Loadmore';
 import { SidePanel } from 'ui/modules/SidePanel';
+import { ReactElement } from 'react';
 
 export interface Props {
-  basePath: string;
-  FeaturedCommunitiesBox: JSX.Element;
-  FeaturedCollectionsBox: JSX.Element;
-  ActivitiesBox: JSX.Element;
-  CommunitiesBoxes: JSX.Element;
-  CollectionsBoxes: JSX.Element;
+  tabPaths: {
+    timeline: string;
+    communities: string;
+    collections: string;
+  };
+  FeaturedCommunitiesBox: ReactElement;
+  FeaturedCollectionsBox: ReactElement;
+  ActivitiesBox: ReactElement;
+  CommunitiesBoxes: ReactElement;
+  CollectionsBoxes: ReactElement;
   LoadMoreFormik: FormikHook | null;
 }
 export const Discover: React.FC<Props> = ({
-  basePath,
   ActivitiesBox,
   FeaturedCommunitiesBox,
   FeaturedCollectionsBox,
   CollectionsBoxes,
   CommunitiesBoxes,
-  LoadMoreFormik
+  LoadMoreFormik,
+  tabPaths
 }) => {
   return (
     <MainContainer>
@@ -42,17 +48,19 @@ export const Discover: React.FC<Props> = ({
           <WrapperFeatured>{FeaturedCommunitiesBox}</WrapperFeatured>
           <WrapperFeatured mt={2}>{FeaturedCollectionsBox}</WrapperFeatured>
           <Wrapper>
-            <Menu basePath={basePath} />
+            <Menu tabPaths={tabPaths} />
             <Switch>
-              <Route path={`${basePath}/communities`}>
+              <Route exact path={tabPaths.communities}>
                 <ObjectsList>{CommunitiesBoxes}</ObjectsList>
                 {LoadMoreFormik && <LoadMore LoadMoreFormik={LoadMoreFormik} />}
               </Route>
-              <Route path={`${basePath}/collections`}>
-                <ObjectsList>{CollectionsBoxes}</ObjectsList>
+              <Route exact path={tabPaths.collections}>
+                <ObjectsList>
+                  <CollectionsWrapper>{CollectionsBoxes}</CollectionsWrapper>
+                </ObjectsList>
                 {LoadMoreFormik && <LoadMore LoadMoreFormik={LoadMoreFormik} />}
               </Route>
-              <Route path={`${basePath}`}>
+              <Route exact path={tabPaths.timeline}>
                 <List>{ActivitiesBox}</List>
                 {LoadMoreFormik && <LoadMore LoadMoreFormik={LoadMoreFormik} />}
               </Route>
@@ -65,24 +73,29 @@ export const Discover: React.FC<Props> = ({
   );
 };
 
-const Menu = ({ basePath }: { basePath: string }) => (
+const Menu: React.FC<{ tabPaths: Props['tabPaths'] }> = ({ tabPaths }) => (
   <>
-    <Box p={2} mt={2}>
+    <Title px={2} mt={2}>
       <Text variant="suptitle">Browse Home instance</Text>
-    </Box>
+    </Title>
     <MenuList>
-      <NavLink exact to={`${basePath}`}>
+      <NavLink exact to={tabPaths.timeline}>
         <Trans>Timeline</Trans>
       </NavLink>
-      <NavLink exact to={`${basePath}/communities`}>
+      <NavLink exact to={tabPaths.communities}>
         <Trans>All communities</Trans>
       </NavLink>
-      <NavLink exact to={`${basePath}/collections`}>
+      <NavLink exact to={tabPaths.collections}>
         <Trans>All collections</Trans>
       </NavLink>
     </MenuList>
   </>
 );
+const Title = styled(Box)`
+  background: ${props => props.theme.colors.appInverse};
+  height: 40px;
+  line-height: 40px;
+`;
 
 const WrapperFeatured = styled(Flex)`
   display: flex;

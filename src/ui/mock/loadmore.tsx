@@ -1,8 +1,8 @@
 import { Props as LoadMoreProps } from 'ui/modules/Loadmore';
-import { ToggleFormik } from './formik';
+import { useToggleFormik } from './formik';
 
-export const getLoadMoreProps = (): LoadMoreProps => {
+export const useGetLoadMoreProps = (): LoadMoreProps => {
   return {
-    LoadMoreFormik: ToggleFormik()
+    LoadMoreFormik: useToggleFormik()
   };
 };

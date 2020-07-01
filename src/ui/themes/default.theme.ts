@@ -42,7 +42,7 @@ export const theme: MoodleThemeInterface = {
     },
     warning: {
       bg: colors.warning,
-      color: colors.light
+      color: colors.darker
     },
     avatar: {
       borderRadius: '100% !important'

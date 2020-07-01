@@ -1,19 +1,19 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
-import { PropsTable } from '@storybook/components';
-import {getShareLinkProps} from 'ui/mock/shareLink'
-import { ShareLink } from '.';
-import {Box} from 'rebass'
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { useGetShareLinkProps } from 'ui/mock/shareLink'
+import { ShareLink } from '.'
+import { Box } from 'rebass'
 
-<Meta title="Modules|Share a link" component={ShareLink}/>
+<Meta title="Modules|Share a link" component={ShareLink} />
 
 # ShareLink
+
 Let's define a story for the `Hero collection preview` module
 
 <Preview>
   <Story name="share a link">
-    <Box sx={{width: '600px', margin: '0 auto'}}>
-      <ShareLink {...getShareLinkProps()}/>
+    <Box sx={{ width: '600px', margin: '0 auto' }}>
+      <ShareLink {...useGetShareLinkProps()} />
     </Box>
   </Story>
 </Preview>
-

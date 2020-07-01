@@ -1,19 +1,19 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
-import { PropsTable } from '@storybook/components';
-import {getHeroCollectionProps} from 'ui/mock/heroCollection'
-import { HeroCollection } from '.';
-import {Box} from 'rebass'
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { useGetHeroCollectionProps } from 'ui/mock/heroCollection'
+import { HeroCollection } from '.'
+import { Box } from 'rebass'
 
-<Meta title="UX|Hero of a Collection - Admin User" component={HeroCollection}/>
+<Meta title="UX|Hero of a Collection - Admin User" component={HeroCollection} />
 
 # HeroCollection
+
 Let's define a story for the `Hero collection preview` module
 
 <Preview>
   <Story name="Hero collection module">
-    <Box sx={{width: '600px', margin: '0 auto'}}>
-      <HeroCollection {...getHeroCollectionProps(true)}/>
+    <Box sx={{ width: '600px', margin: '0 auto' }}>
+      <HeroCollection {...useGetHeroCollectionProps(true)} />
     </Box>
   </Story>
 </Preview>
-

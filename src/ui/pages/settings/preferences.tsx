@@ -1,18 +1,14 @@
-import * as React from 'react';
-import Button from 'ui/elements/Button';
-import { ContainerForm, Row, Actions } from 'ui/modules/Modal';
 import { Trans } from '@lingui/macro';
+import { Input, Label } from '@rebass/forms';
+import * as React from 'react';
+import Select from 'react-select';
 import { Box, Text } from 'rebass/styled-components';
+import { FormikHook } from 'ui/@types/types';
+import Button from 'ui/elements/Button';
+import { Actions, ContainerForm, Row } from 'ui/modules/Modal';
 // import { ArrowLeft, ArrowRight } from 'react-feather';
 // import media from 'styled-media-query';
 import styled from '../../themes/styled';
-import { LocaleContext } from '../../../context/global/localizationCtx';
-import Select from 'react-select';
-import { ActionContext } from '../../../context/global/actionCtx';
-import { setLang } from '../../../redux/localization';
-import { languages, locales } from '../../../mn-constants';
-import { FormikHook } from 'ui/@types/types';
-import { Label, Input } from '@rebass/forms';
 
 // const Header = styled(Flex)`
 //   border-bottom: ${props => props.theme.colors.border};
@@ -36,86 +32,74 @@ export interface EditPreferences {
   moodleWebsite: string;
 }
 
-export interface Props {
+export interface Props extends LanguageSelectProps {
   formik: FormikHook<EditPreferences>;
 }
 
 type LanguageSelectProps = {
-  fullWidth?: boolean;
-} & React.SelectHTMLAttributes<object>;
-
-const options = locales.map(loc => ({
-  value: loc,
-  label: languages[loc]
-}));
+  current: { value: string; label: string };
+  locales: { value: string; label: string }[];
+  setLocale(code: string): unknown;
+};
 
 export const LanguageSelect: React.FC<LanguageSelectProps> = props => {
-  const { locale } = React.useContext(LocaleContext);
-  const { dispatch } = React.useContext(ActionContext);
   return (
     <Select
-      options={options}
-      defaultValue={options.find(_ => _.value === locale)}
-      onChange={selectedKey => {
-        const selection =
-          !!selectedKey && 'length' in selectedKey
-            ? selectedKey[0]
-            : selectedKey;
+      options={props.locales as any}
+      defaultValue={props.current}
+      onChange={selectedCode => {
+        const selection = Array.isArray(selectedCode) ? selectedCode[0] : selectedCode;
         if (!selection) {
           return;
         }
-
-        dispatch(setLang.create(selection.value));
+        props.setLocale(selection.value);
       }}
     />
   );
 };
 const Preferences: React.FC<Props> = props => (
-  <LocaleContext.Consumer>
-    {value => (
-      <Box>
-        <Row>
-          <ContainerForm>
-            <label>
-              <Trans>Select language</Trans>
-            </label>
-            <LanguageSelect />
-            <Box width={1 / 2} mt={2}>
-              <Label htmlFor="moodleWebsite">Moodle LMS site location</Label>
-              <Input
-                id="moodleWebsite"
-                disabled={props.formik.isSubmitting}
-                value={props.formik.values.moodleWebsite}
-                onChange={props.formik.handleChange}
-                name="moodleWebsite"
-                placeholder={'Type your Moodle LMS instance'}
-              />
-            </Box>
-            <Actions sx={{ height: 'inherit !important' }}>
-              <Button
-                variant="primary"
-                isSubmitting={props.formik.isSubmitting}
-                isDisabled={props.formik.isSubmitting}
-                type="submit"
-                style={{ marginLeft: '10px' }}
-                onClick={props.formik.submitForm}
-              >
-                <Trans>Save</Trans>
-              </Button>
-            </Actions>
-          </ContainerForm>
-        </Row>
-        <TransifexLink variant="text" my={3} mt={2}>
-          <a
-            href="https://www.transifex.com/moodlenet/moodlenet/"
-            target="_blank"
+  <Box>
+    <Row>
+      <ContainerForm>
+        <label>
+          <Trans>Select language</Trans>
+        </label>
+        <LanguageSelect {...props} />
+        <Box width={1 / 2} mt={2}>
+          <Label htmlFor="moodleWebsite">Moodle LMS site location</Label>
+          <Input
+            id="moodleWebsite"
+            disabled={props.formik.isSubmitting}
+            value={props.formik.values.moodleWebsite}
+            onChange={props.formik.handleChange}
+            name="moodleWebsite"
+            placeholder={'Type your Moodle LMS instance'}
+          />
+        </Box>
+        <Actions sx={{ height: 'inherit !important' }}>
+          <Button
+            variant="primary"
+            isSubmitting={props.formik.isSubmitting}
+            isDisabled={props.formik.isSubmitting}
+            type="submit"
+            style={{ marginLeft: '10px' }}
+            onClick={props.formik.submitForm}
           >
-            <Trans>Want to contibute to MoodleNet translation?</Trans>
-          </a>
-        </TransifexLink>
-      </Box>
-    )}
-  </LocaleContext.Consumer>
+            <Trans>Save</Trans>
+          </Button>
+        </Actions>
+      </ContainerForm>
+    </Row>
+    <TransifexLink variant="text" my={3} mt={2}>
+      <a
+        href="https://www.transifex.com/moodlenet/moodlenet/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Trans>Want to contibute to MoodleNet translation?</Trans>
+      </a>
+    </TransifexLink>
+  </Box>
 );
 
 export default Preferences;

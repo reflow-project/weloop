@@ -1,7 +1,0 @@
-projects:
-  team:
-    schemaPath: src/graphql/main/team.moodle.net_schema.graphql
-    includes: ["src/**/!(*.client).graphql"]
-    extensions:
-      endpoints:
-        default: https://team.moodle.net/api/graphql

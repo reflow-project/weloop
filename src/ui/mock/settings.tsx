@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { action } from '@storybook/addon-actions';
 import Preferences, { EditPreferences } from 'ui/pages/settings/preferences';
 import { getActor } from './actor';
-import { getActions } from './activityPreview';
+import { useGetActions } from './activityPreview';
 import { Collection } from 'ui/modules/Previews/Collection';
 import { Comment } from 'ui/modules/Previews/Comment';
 import { FlaggedItem } from 'ui/modules/Previews/FlaggedItem';
@@ -12,7 +12,7 @@ import { Resource } from 'ui/modules/Previews/Resource';
 import Flags from 'ui/pages/settings/flags';
 import Instance from 'ui/pages/settings/instance';
 import Emails from 'ui/pages/settings/invites';
-import { ToggleFormik } from './formik';
+import { useToggleFormik } from './formik';
 import ModerationLog from 'ui/pages/settings/logs';
 import { User } from 'ui/modules/Previews/User';
 import {
@@ -21,7 +21,7 @@ import {
   Status as ActivityStatus
 } from 'ui/modules/ActivityPreview';
 
-export const getEditProfileProps = (): EditProfileProps => {
+export const useGetEditProfileProps = (): EditProfileProps => {
   const formik = useFormik<EditProfile>({
     initialValues: {
       image:
@@ -46,18 +46,36 @@ export const getEditProfileProps = (): EditProfileProps => {
   });
   return {
     formik,
-    basePath: '/',
+    sectionPaths: {
+      preferences: '/preferences',
+      instance: '/instance',
+      invites: '/invites',
+      flags: '/flags',
+      logs: '/logs',
+      general: '/'
+    },
     displayUsername: '@estrella@home.moodle.net',
     isAdmin: false,
-    Preferences: <Preferences formik={preferencesFormik} />,
-    Flags: <div>Flags section </div>, //FIXME
-    Instance: <div>Instance section </div>, //FIXME
-    Invites: <div>Invites section </div>, //FIXME,
-    ModerationLog: <div>ModerationLog section </div> //FIXME,
+    Preferences: (
+      <Preferences
+        formik={preferencesFormik}
+        current={{ label: 'English', value: 'en_GB' }}
+        locales={[
+          { label: 'English', value: 'en_GB' },
+          { label: 'Espanol', value: 'es_ES' }
+        ]}
+        setLocale={action('setLocale')}
+      />
+    ),
+    // FIXME mock with real components
+    Flags: <div>Flags section </div>,
+    Instance: <div>Instance section </div>,
+    Invites: <div>Invites section </div>,
+    ModerationLog: <div>ModerationLog section </div>
   };
 };
 
-export const getEditProfilePropsAdmin = (): EditProfileProps => {
+export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
   const activityPreviewProps: ActivityLoaded = {
     communityLink: 'communityLink',
     communityName: 'communityName',
@@ -66,7 +84,7 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
       <FlaggedItem
         FlaggedItemContextElement={
           <Comment
-            {...getActions()}
+            {...useGetActions()}
             url="/"
             content={
               'lol we should dox Estrella here is her address: 40 Camiño Bruno, Madrid but I have not got her postal code'
@@ -75,33 +93,9 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
             hideActions={true}
           />
         }
-        ignoreFlagFormik={useFormik({
-          initialValues: {},
-          onSubmit: () => {
-            action('ignoreFlagFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
-        deleteContentFormik={useFormik<{}>({
-          initialValues: {},
-          onSubmit: () => {
-            action('deleteContentFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
-        blockUserFormik={useFormik<{}>({
-          initialValues: {},
-          onSubmit: () => {
-            action('blockUserFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
+        ignoreFlag={action('ignoreFlagFormik')}
+        deleteContent={action('deleteContentFormik')}
+        blockUser={action('blockUserFormik')}
         type="Comment"
         reason="Abusive speech"
       />
@@ -126,9 +120,7 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
               'https://images.unsplash.com/photo-1562240020-ce31ccb0fa7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80'
             }
             name={'Interesting resources ;)'}
-            summary={
-              'A collection of copyrighted resources for your viewing pleasure!'
-            }
+            summary={'A collection of copyrighted resources for your viewing pleasure!'}
             totalResources={12}
             isFollowing={true}
             toggleFollowFormik={useFormik<{}>({
@@ -145,33 +137,9 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
             })}
           />
         }
-        ignoreFlagFormik={useFormik({
-          initialValues: {},
-          onSubmit: () => {
-            action('ignoreFlagFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
-        deleteContentFormik={useFormik<{}>({
-          initialValues: {},
-          onSubmit: () => {
-            action('deleteContentFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
-        blockUserFormik={useFormik<{}>({
-          initialValues: {},
-          onSubmit: () => {
-            action('blockUserFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
+        ignoreFlag={action('ignoreFlagFormik')}
+        deleteContent={action('deleteContentFormik')}
+        blockUser={action('blockUserFormik')}
         type="Collection"
         reason="Inappropriate Content"
       />
@@ -206,53 +174,24 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
               }),
               iLikeIt: true
             }}
+            collectionLink=""
+            collectionName="Collection name"
             isFlagged={true}
-            icon={
-              'http://cutcompcosts.com/wp-content/uploads/2014/06/Student-Teacher-Violence.jpg'
-            }
+            icon={'http://cutcompcosts.com/wp-content/uploads/2014/06/Student-Teacher-Violence.jpg'}
             name={'my teacher iz a loser'}
             summary={'mr james is rubbish and i dont lik him'}
             link={'anime.pdf'}
             license={'CC-BY-4.0'}
-            acceptedLicenses={['CC0-1.0', 'CC-BY-4.0', 'CC-BY-SA-4.0']}
-            isLocal={true}
-            type={'pdf'}
-            FlagModal={({ done }) => {
-              return <></>;
-            }}
-            // sendToMoodle={null}
-            MoodlePanel={({ done }) => {
-              return <></>;
-            }}
+            isFile={true}
+            isOpenDropdown={false}
+            sendToMoodle={action('sendToMoodle')}
+            toggleDropdown={action('toggleDropdown')}
+            toggleFlag={action('toggleFlag')}
           />
         }
-        ignoreFlagFormik={useFormik({
-          initialValues: {},
-          onSubmit: () => {
-            action('ignoreFlagFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
-        deleteContentFormik={useFormik<{}>({
-          initialValues: {},
-          onSubmit: () => {
-            action('deleteContentFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
-        blockUserFormik={useFormik<{}>({
-          initialValues: {},
-          onSubmit: () => {
-            action('blockUserFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
+        ignoreFlag={action('ignoreFlagFormik')}
+        deleteContent={action('deleteContentFormik')}
+        blockUser={action('blockUserFormik')}
         type="Resource"
         reason="Inappropriate content"
       />
@@ -271,9 +210,7 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
         FlaggedItemContextElement={
           <User
             hideActions={true}
-            image={
-              'https://pbs.twimg.com/profile_images/1161428802091802627/O49Ggs-7_400x400.jpg'
-            }
+            image={'https://pbs.twimg.com/profile_images/1161428802091802627/O49Ggs-7_400x400.jpg'}
             bio={`I'm a cool user`}
             username={'@favbooks@abc.com'}
             name={'˗ˏˋ Doug Belshaw ˎˊ˗ '}
@@ -293,33 +230,9 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
             })}
           />
         }
-        blockUserFormik={useFormik<{}>({
-          initialValues: {},
-          onSubmit: () => {
-            action('blockUserFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
-        deleteContentFormik={useFormik<{}>({
-          initialValues: {},
-          onSubmit: () => {
-            action('deleteContentFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
-        ignoreFlagFormik={useFormik<{}>({
-          initialValues: {},
-          onSubmit: () => {
-            action('ignoreFlagFormik')();
-            return new Promise((resolve, reject) => {
-              setTimeout(resolve, 3000);
-            });
-          }
-        })}
+        ignoreFlag={action('ignoreFlagFormik')}
+        deleteContent={action('deleteContentFormik')}
+        blockUser={action('blockUserFormik')}
         type="User"
         reason="Inappropriate language"
       />
@@ -329,14 +242,12 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
     createdAt: '2018-11-11'
   };
 
-  const ActivitiesBox = (
-    <React.Fragment>
-      <ActivityPreview {...activityPreviewProps} />
-      <ActivityPreview {...activityCollectionPreviewProps} />
-      <ActivityPreview {...activityResourcePreviewProps} />
-      <ActivityPreview {...activityUserPreviewProps} />
-    </React.Fragment>
-  );
+  const Activities = [
+    <ActivityPreview {...activityPreviewProps} />,
+    <ActivityPreview {...activityCollectionPreviewProps} />,
+    <ActivityPreview {...activityResourcePreviewProps} />,
+    <ActivityPreview {...activityUserPreviewProps} />
+  ];
 
   const formik = useFormik<EditProfile>({
     initialValues: {
@@ -365,15 +276,6 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
       });
     }
   });
-  const formikRemoveDomain = useFormik<{ domain: string }>({
-    initialValues: { domain: '' },
-    onSubmit: ({ domain }) => {
-      action(`formikRemoveDomain ${domain}`)();
-      return new Promise((resolve, reject) => {
-        setTimeout(resolve, 3000);
-      });
-    }
-  });
   const formikAddEmail = useFormik<{ email: string }>({
     initialValues: { email: '' },
     onSubmit: ({ email }) => {
@@ -383,24 +285,7 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
       });
     }
   });
-  const formikRemoveEmail = useFormik<{ email: string }>({
-    initialValues: { email: '' },
-    onSubmit: ({ email }) => {
-      action(`formikRemoveEmail ${email}`)();
-      return new Promise((resolve, reject) => {
-        setTimeout(resolve, 3000);
-      });
-    }
-  });
-  const formikSendInvite = useFormik<{ email: string }>({
-    initialValues: { email: '' },
-    onSubmit: ({ email }) => {
-      action(`formikSendInvite ${email}`)();
-      return new Promise((resolve, reject) => {
-        setTimeout(resolve, 3000);
-      });
-    }
-  });
+
   const preferencesFormik = useFormik<EditPreferences>({
     initialValues: { moodleWebsite: '' },
     onSubmit: () => {}
@@ -408,9 +293,26 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
 
   return {
     formik,
-    basePath: '/',
+    sectionPaths: {
+      preferences: '/preferences',
+      instance: '/instance',
+      invites: '/invites',
+      flags: '/flags',
+      logs: '/logs',
+      general: '/'
+    },
     displayUsername: '@ammaarah@home.moodle.net',
-    Preferences: <Preferences formik={preferencesFormik} />,
+    Preferences: (
+      <Preferences
+        formik={preferencesFormik}
+        current={{ label: 'English', value: 'en_GB' }}
+        locales={[
+          { label: 'English', value: 'en_GB' },
+          { label: 'Espanol', value: 'es_ES' }
+        ]}
+        setLocale={action('setLocale')}
+      />
+    ),
     Invites: (
       <Emails
         emailsList={[
@@ -420,18 +322,17 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
           'test@moodle.com'
         ]}
         formikAddEmail={formikAddEmail}
-        formikRemoveEmail={formikRemoveEmail}
-        formikSendInvite={formikSendInvite}
-        loadMoreEmails={ToggleFormik()}
+        sendInvite={action('sendInvite')}
+        loadMoreEmails={useToggleFormik()}
       />
     ),
-    Flags: <Flags FlagsBox={ActivitiesBox} loadMoreFlags={ToggleFormik()} />,
+    Flags: <Flags FlagPreviews={Activities} loadMoreFlags={useToggleFormik()} />,
     Instance: (
       <Instance
         formikAddDomain={formikAddDomain}
-        formikRemoveDomain={formikRemoveDomain}
         domainsList={['moodle.com']}
-        loadMoreDomains={ToggleFormik()}
+        loadMoreDomains={useToggleFormik()}
+        removeDomain={action('removeDomain')}
       />
     ),
     ModerationLog: <ModerationLog />,

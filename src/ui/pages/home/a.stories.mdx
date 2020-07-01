@@ -1,81 +1,100 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
-import { PropsTable } from '@storybook/components';
-import { Home, HomePageTab } from '.';
-import {WithSidebar} from 'ui/templates/withSidebar'
-import {MainHeader} from 'ui/modules/MainHeader'
-import {Sidebar} from 'ui/modules/Sidebar'
-import { ToggleFormik } from 'ui/mock/formik';
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { Home, HomePageTab } from '.'
+import { WithSidebar } from 'ui/templates/withSidebar'
+import { MainHeader } from 'ui/modules/MainHeader'
+import { Sidebar } from 'ui/modules/Sidebar'
+import { useToggleFormik } from 'ui/mock/formik'
 
-import {CommunityPreviewProps} from 'ui/mock/previews'
-import {ActivityPreview} from 'ui/modules/ActivityPreview'
-import {activityPreviewProps} from 'ui/mock/activityPreview'
-import {ResourcePreviewProps, CollectionPreviewProps, ThreadPreviewProps, CommentPreviewProps, LikedCommentPreviewProps } from 'ui/mock/previews'
-import {getSidebarProps} from 'ui/mock/sidebar'
+import { CommunityPreviewProps } from 'ui/mock/previews'
+import { ActivityPreview } from 'ui/modules/ActivityPreview'
+import { activityPreviewProps } from 'ui/mock/activityPreview'
+import {
+  ResourcePreviewProps,
+  CollectionPreviewProps,
+  ThreadPreviewProps,
+  CommentPreviewProps,
+  LikedCommentPreviewProps,
+} from 'ui/mock/previews'
+import { useGetSidebarProps } from 'ui/mock/sidebar'
 
-import {getMainHeaderProps} from 'ui/mock/mainHeader'
-import {Resource} from 'ui/modules/Previews/Resource'
-import {Collection} from 'ui/modules/Previews/Collection'
-import {Community} from 'ui/modules/Previews/Community'
-import {Comment} from 'ui/modules/Previews/Comment'
-import {Thread} from 'ui/modules/Previews/Thread'
-import {LikedComment} from 'ui/modules/Previews/LikedComment'
-const Head = () => <MainHeader {...getMainHeaderProps() } />
-const Side = () => <Sidebar {...getSidebarProps()}/>
+import { getMainHeaderProps } from 'ui/mock/mainHeader'
+import { Resource } from 'ui/modules/Previews/Resource'
+import { Collection } from 'ui/modules/Previews/Collection'
+import { Community } from 'ui/modules/Previews/Community'
+import { Comment } from 'ui/modules/Previews/Comment'
+import { Thread } from 'ui/modules/Previews/Thread'
+import { LikedComment } from 'ui/modules/Previews/LikedComment'
 
-<Meta title="Pages|My MoodleNet" component={Home}/>
-
+<Meta title="Pages|My MoodleNet" component={Home} />
 
 # Home
+
 The `Home` (or '**My MoodleNet**') page shows the user timeline, with links to all communities and all collections on the local instance. It is made up of the following:
+
 - **[Story](#story)**
 - **[Building blocks](#modules)**
 - **[Props](#props)**
-
 
 <div id="story">Story</div>
 
 <Preview>
   <Story name="Home page">
-    <WithSidebar 
-      HeaderBox={Head}
-      SidebarBox={Side}>
-        <Home 
-        InboxElements={<React.Fragment>
-          <ActivityPreview key={1} {...activityPreviewProps('Added a link', <Resource {...ResourcePreviewProps() }/>)} />
-          <ActivityPreview key={2} {...activityPreviewProps('Uploaded a resource', <Resource {...ResourcePreviewProps('license', 'pdf' ) }/>)} />
-          <ActivityPreview key={3} {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps() }/>)} />
-          <ActivityPreview key={4} {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps() }/>)} />
-          <ActivityPreview key={5} {...activityPreviewProps('Like a comment', <LikedComment {...LikedCommentPreviewProps() }/>)} />
-          <ActivityPreview key={6} {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps() }/>)} />
-          <ActivityPreview key={7} {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps() }/>)} />
-        </React.Fragment>}
-        FollowedCollectionsElements={[
-            (<Collection key={1} {...CollectionPreviewProps()} />),
-            (<Collection key={2} {...CollectionPreviewProps()} />),
-            (<Collection key={3} {...CollectionPreviewProps()} />),
-            (<Collection key={4} {...CollectionPreviewProps()} />),
-            (<Collection key={5} {...CollectionPreviewProps()} />),
-            (<Collection key={6} {...CollectionPreviewProps()} />),
-            (<Collection key={7} {...CollectionPreviewProps()} />),
-            (<Collection key={8} {...CollectionPreviewProps()} />),
-            (<Collection key={9} {...CollectionPreviewProps()} />),
-          ]}
-        FollowedCommunitiesElements={
+    <WithSidebar
+      SearchBox={<h1>test</h1>}
+      HeaderBox={<MainHeader {...getMainHeaderProps()} />}
+      SidebarBox={<Sidebar {...useGetSidebarProps()} />}
+      userImage={"string"}
+      userLink={"/"}
+      username={"test"}
+      name={"test"}
+      signout={() => console.log("test")}
+    >
+      <Home
+        InboxElements={
           <React.Fragment>
-            <Community key={1} {...CommunityPreviewProps()} />
-            <Community key={2} {...CommunityPreviewProps()} />
-            <Community key={3} {...CommunityPreviewProps()} />
-            <Community key={4} {...CommunityPreviewProps()} />
-            <Community key={5} {...CommunityPreviewProps()} />
-            <Community key={6} {...CommunityPreviewProps()} />
-            <Community key={7} {...CommunityPreviewProps()} />
+            <ActivityPreview
+              key={1}
+              {...activityPreviewProps('Added a link', <Resource {...ResourcePreviewProps()} />)}
+            />
+            <ActivityPreview
+              key={2}
+              {...activityPreviewProps(
+                'Uploaded a resource',
+                <Resource {...ResourcePreviewProps('license', 'pdf')} />
+              )}
+            />
+            <ActivityPreview
+              key={3}
+              {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps()} />)}
+            />
+            <ActivityPreview
+              key={4}
+              {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps()} />)}
+            />
+            <ActivityPreview
+              key={5}
+              {...activityPreviewProps(
+                'Like a comment',
+                <LikedComment {...LikedCommentPreviewProps()} />
+              )}
+            />
+            <ActivityPreview
+              key={6}
+              {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps()} />)}
+            />
+            <ActivityPreview
+              key={7}
+              {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps()} />)}
+            />
           </React.Fragment>
         }
-        basePath={"/"}
-        nextCommunitiesFormik={ToggleFormik()}
-        nextCollectionsFormik={ToggleFormik()}
-        nextInboxFormik={ToggleFormik()}
-        />
+        
+        basePath={'/'}
+        nextCommunitiesFormik={useToggleFormik()}
+        nextCollectionsFormik={useToggleFormik()}
+        nextInboxFormik={useToggleFormik()}
+      />
     </WithSidebar>
   </Story>
 </Preview>
@@ -90,7 +109,6 @@ The `Home` (or '**My MoodleNet**') page shows the user timeline, with links to a
 - **[ActivityPreview](#)**
 - **[Community](#)**
 - **[Collection](#)**
-
 
 <div id="props">Props</div>
 

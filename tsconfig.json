@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "resolveJsonModule": true,
     "outDir": "build/dist",
     "module": "esnext",
     "target": "es5",
@@ -10,18 +11,23 @@
     "jsx": "preserve",
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": false,
-    "importHelpers": true,
-    "strictNullChecks": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true,
-    "experimentalDecorators": true,
+    // "noImplicitReturns": true,
+    // "noImplicitThis": true,
+    // "noImplicitAny": false,
+    // "importHelpers": true,
+    // "strictNullChecks": true,
+    // "suppressImplicitAnyIndexErrors": true,
+    // "noUnusedLocals": true,
+    // "experimentalDecorators": true,
     "downlevelIteration": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "strict": true
   },
-  "exclude": ["node_modules", "build", "scripts", "config"]
+  "exclude": ["node_modules", "build", "scripts", "config"],
+  "include": ["src"]
 }

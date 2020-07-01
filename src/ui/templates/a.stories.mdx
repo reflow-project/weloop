@@ -14,34 +14,15 @@ Let's define a story for the `WithSidebar` module
 <Preview>
   <Story name="WithSidebar">
     <WithSidebar 
-      HeaderBox={<MainHeader user={{
-        icon:'https://pbs.twimg.com/profile_images/1161428802091802627/O49Ggs-7_400x400.jpg',
-        name: '˗ˏˋ Doug Belshaw ˎˊ˗  🇪🇺 ☠️ ✊',
-        id: "/test"
-      }}
-      isLogged={true}
-      isOpen= {false}
-      Search={ <Input placeholder="Search..." />}
-      logout= {() => console.log(false)} />}
-      SidebarBox={<Sidebar 
-      status={Status.Loaded}
-      communities={[{
-        link: {
-          url: "string",
-          external: true,
-        },
-        name: "test",
-        icon: "",
-      }]}
-      user={{
-        icon:'https://pbs.twimg.com/profile_images/1161428802091802627/O49Ggs-7_400x400.jpg',
-        name: '˗ˏˋ Doug Belshaw ˎˊ˗  🇪🇺 ☠️ ✊',
-        id: "/test"
-      }}
-      isOpen= {false}
-      Search={ <input />}
-      logout= {() => console.log(false)}
-    />}>
+      SearchBox={<h1>test</h1>}
+      HeaderBox={<MainHeader {...getMainHeaderProps()} />}
+      SidebarBox={<Sidebar {...useGetSidebarProps()} />}
+      userImage={"string"}
+      userLink={"/"}
+      username={"test"}
+      name={"test"}
+      signout={() => console.log("test")}
+    />
       <Box bg="#fff" width={"600px"}></Box>
     </WithSidebar>
   </Story>

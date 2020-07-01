@@ -1,20 +1,20 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
-import { PropsTable } from '@storybook/components';
-import {getEditCollectionModalProps} from 'ui/mock/editCollectionModal'
-import { EditCollectionPanel } from 'ui/modules/EditCollectionPanel';
-import { action } from '@storybook/addon-actions';
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { useGetEditCollectionModalProps } from 'ui/mock/editCollectionModal'
+import { EditCollectionPanel } from 'ui/modules/EditCollectionPanel'
+import { action } from '@storybook/addon-actions'
 import Modal from 'ui/modules/Modal'
 
-<Meta title="Modules|EditCollectionPanel" component={EditCollectionPanel}/>
+<Meta title="Modules|EditCollectionPanel" component={EditCollectionPanel} />
 
 # EditCollectionPanel
+
 Let's define a story for the `Activity preview` module
 
 <Preview>
   <Story name="edit collection module">
     <Modal closeModal={action('close modal')}>
-      <EditCollectionPanel {...getEditCollectionModalProps()} />
+      <EditCollectionPanel {...useGetEditCollectionModalProps()} />
     </Modal>
-  </Story>  
+  </Story>
 </Preview>
-
