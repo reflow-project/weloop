@@ -8,30 +8,33 @@ import {
   WrapperCont,
   MainContainer,
   HomeBox,
-  ObjectsList
+  ObjectsList,
+  CollectionsWrapper
 } from 'ui/elements/Layout';
+import { ReactElement } from 'react';
 
 export interface Props {
-  CollectionsBoxes: JSX.Element;
+  CollectionsBoxes: ReactElement;
   LoadMoreFormik: FormikHook;
 }
 
-export const AllCollections: React.FC<Props> = ({
-  CollectionsBoxes,
-  LoadMoreFormik
-}) => {
+export const AllCollections: React.FC<Props> = ({ CollectionsBoxes, LoadMoreFormik }) => {
   return (
-    <MainContainer>
-      <HomeBox>
-        <WrapperCont>
-          <Wrapper>
-            <Header name="All Collections" />
-            <ObjectsList>{CollectionsBoxes}</ObjectsList>
-            {LoadMoreFormik && <LoadMore LoadMoreFormik={LoadMoreFormik} />}
-          </Wrapper>
-        </WrapperCont>
-      </HomeBox>
-      <WrapperPanel />
-    </MainContainer>
+    <>
+      <MainContainer>
+        <HomeBox>
+          <WrapperCont>
+            <Wrapper>
+              <Header name="All Collections" />
+              <ObjectsList>
+                <CollectionsWrapper>{CollectionsBoxes}</CollectionsWrapper>
+              </ObjectsList>
+              {LoadMoreFormik && <LoadMore LoadMoreFormik={LoadMoreFormik} />}
+            </Wrapper>
+          </WrapperCont>
+        </HomeBox>
+        <WrapperPanel />
+      </MainContainer>
+    </>
   );
 };

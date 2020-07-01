@@ -1,12 +1,9 @@
-import {
-  BasicCreateFlagFormValues,
-  Props as FlagModalProps
-} from 'ui/modules/FlagModal';
-import { ToggleFormik } from './formik';
+import { BasicCreateFlagFormValues, Props as FlagModalProps } from 'ui/modules/FlagModal';
+import { useToggleFormik } from './formik';
 import { action } from '@storybook/addon-actions';
 import { useFormik } from 'formik';
 
-export const getFlagModalProps = (): FlagModalProps => {
+export const useGetFlagModalProps = (): FlagModalProps => {
   const flagFormik = useFormik<BasicCreateFlagFormValues>({
     initialValues: {
       reason: ''
@@ -18,7 +15,7 @@ export const getFlagModalProps = (): FlagModalProps => {
       });
     }
   });
-  const unflagFormik = ToggleFormik();
+  const unflagFormik = useToggleFormik();
   return {
     flagFormik,
     unflagFormik,

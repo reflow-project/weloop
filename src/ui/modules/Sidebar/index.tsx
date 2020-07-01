@@ -1,16 +1,18 @@
 import { Trans } from '@lingui/macro';
+import { LocaleContext } from 'context/global/localizationCtx';
+import { logo_small_url, my_timeline } from 'mn-constants';
 import { ellipsis } from 'polished';
 import * as React from 'react';
 import { Globe } from 'react-feather';
 import { NavLink } from 'react-router-dom';
 import { Box, Flex, Text } from 'rebass/styled-components';
 import media from 'styled-media-query';
-// import Loader from "../../components/elements/Loader/Loader";
-import styled from '../../themes/styled';
+import { FormikHook } from 'ui/@types/types';
 // import Dropdown from "./dropdown";
 import Avatar from 'ui/elements/Avatar';
-import { my_timeline, logo_small_url } from '../../../mn-constants';
-// const MnetLogo = require('static/img/logo-icon.png');
+// import Loader from "../../components/elements/Loader/Loader";
+import styled from '../../themes/styled';
+import { LoadMore } from '../Loadmore';
 
 export enum Status {
   Loading,
@@ -19,6 +21,9 @@ export enum Status {
 
 const SidebarComponent = styled(Flex)`
   width: 240px;
+  // ${media.lessThan('medium')`
+  //   width: 50px;
+  // `}
 `;
 
 const InternalWrapper = styled(Box)<{ isOpen: boolean }>`
@@ -52,7 +57,7 @@ const SidebarOverflow = styled(Box)`
 //   }
 //   input {
 //     margin: 0 8px !important;
-//     border-radius: 100px;
+//     border-radius: 100px;/1
 //     border-width: 1px;
 //     ${media.lessThan('1280px')`
 // display: none;
@@ -66,7 +71,7 @@ const Nav = styled(Box)`
 `;
 
 const CommunityLink = styled(NavLink)`
-  margin-bottom: 8px;
+  margin-bottom: 0px;
   img {
     width: 36px;
     height: 36px;
@@ -96,15 +101,13 @@ const SidebarLink = styled(NavLink)`
     }
   }
   div {
-    color: ${props =>
-      props.isActive ? props.theme.colors.primary : props.theme.colors.darker};
+    color: ${props => (props.isActive ? props.theme.colors.primary : props.theme.colors.darker)};
   }
 `;
 
 const NavItem = styled(Flex)`
   border-radius: 4px;
-  padding: 8px;
-  margin-bottom: 8px;
+  padding: 0px 4px;
   &:hover {
     background: ${props => props.theme.colors.medium};
   }
@@ -116,6 +119,8 @@ img {
 `;
 
 const ItemTitle = styled(Text)`
+  height: 50px;
+  line-height: 50px;
   font-size: 14px;
   font-weight: 600;
   color: ${props => props.theme.colors.darker};
@@ -148,18 +153,18 @@ const ItemTitleDir = styled(ItemTitle)`
 // `;
 
 export interface CommunityPreview {
-  link: {
-    url: string;
-    external: boolean;
-  };
+  link: string;
   name: string;
   icon: string;
 }
 
 interface SidebarLoaded {
   status: Status.Loaded;
+  discoverPath: string;
+  homePath: string;
   isSidebarOpen: boolean;
   communities: CommunityPreview[];
+  LoadMoreFormik: FormikHook | null;
 }
 
 export interface SidebarLoading {
@@ -170,11 +175,13 @@ export interface SidebarLoading {
 export type Props = SidebarLoaded | SidebarLoading;
 
 export const Sidebar: React.FC<Props> = props => {
-  // console.log('isSidebarOpen ' + (props.isSidebarOpen == true));
+  const { i18n } = React.useContext(LocaleContext);
+
+  //  console.log('isSidebarOpen ' + props.isSidebarOpen );
   return (
     <>
-      {props.isSidebarOpen == true ? (
-        <SidebarComponent>
+      {props.isSidebarOpen ? (
+        <SidebarComponent className="sidebar">
           <InternalWrapper>
             <SidebarFixed>
               {props.status === Status.Loading ? (
@@ -183,9 +190,9 @@ export const Sidebar: React.FC<Props> = props => {
                 <SidebarOverflow>
                   <>
                     <Nav>
-                      <SidebarLink exact to={'/discover'}>
+                      <SidebarLink exact to={props.discoverPath}>
                         <NavItem alignItems={'center'}>
-                          <Box>
+                          <Box height="50px">
                             <Globe size={36} strokeWidth="1" />
                           </Box>
                           <ItemTitleDir variant="link">
@@ -193,35 +200,27 @@ export const Sidebar: React.FC<Props> = props => {
                           </ItemTitleDir>
                         </NavItem>
                       </SidebarLink>
-                      <SidebarLink exact to={'/'}>
+                      <SidebarLink exact to={props.homePath}>
                         <NavItem alignItems={'center'}>
                           <Avatar size="s" src={logo_small_url} />
-                          <ItemTitleDir variant="link">
-                            {my_timeline}
-                          </ItemTitleDir>
+                          <ItemTitleDir variant="link">{i18n._(my_timeline)}</ItemTitleDir>
                         </NavItem>
                       </SidebarLink>
                     </Nav>
                     <Nav>
-                      {props.communities.map(
-                        (community: CommunityPreview, i) => (
-                          <CommunityLink
-                            key={community.link.url}
-                            to={community.link.url}
-                          >
-                            <NavItem alignItems={'center'} mb={2}>
-                              <Avatar
-                                size="s"
-                                initials={community.name.substr(0, 2)}
-                                src={community.icon}
-                              />
-                              <ItemTitleDir variant="link">
-                                {community.name}
-                              </ItemTitleDir>
-                            </NavItem>
-                          </CommunityLink>
-                        )
-                      )}
+                      {props.communities.map((community: CommunityPreview, i) => (
+                        <CommunityLink exact key={community.link} to={community.link}>
+                          <NavItem alignItems={'center'} mb={2}>
+                            <Avatar
+                              size="s"
+                              initials={community.name.substr(0, 2)}
+                              src={community.icon}
+                            />
+                            <ItemTitleDir variant="link">{community.name}</ItemTitleDir>
+                          </NavItem>
+                        </CommunityLink>
+                      ))}
+                      {props.LoadMoreFormik && <LoadMore LoadMoreFormik={props.LoadMoreFormik} />}
                     </Nav>
                   </>
                 </SidebarOverflow>

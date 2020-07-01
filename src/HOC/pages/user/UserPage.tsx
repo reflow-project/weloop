@@ -6,7 +6,6 @@ import { UserFollowedCommunityFragment } from 'fe/community/user/useUserFollowed
 import { getActivityActor } from 'fe/lib/activity/getActivityActor';
 import { getEventStringByContext } from 'fe/lib/activity/getActivityEventString';
 import { getCommunityInfoStrings } from 'fe/lib/activity/getContextCommunityInfo';
-import { useFormikPage } from 'fe/lib/helpers/usePage';
 import { useUserLikes } from 'fe/likes/user/useUserLikes';
 import { useUserFollowedUsers } from 'fe/user/followed/user/useUserFollowedUsers';
 import { UserFollowedUserFragment } from 'fe/user/followed/user/useUserFollowedUsers.generated';
@@ -21,67 +20,73 @@ import { CommunityPreviewHOC } from 'HOC/modules/previews/community/CommunityPre
 import { UserPreviewHOC } from 'HOC/modules/previews/user/UserPreview';
 import React, { FC, useMemo } from 'react';
 import { Box } from 'rebass';
-import {
-  ActivityPreview,
-  Status,
-  Props as ActivityPreviewProps
-} from 'ui/modules/ActivityPreview';
+import { ActivityPreview, Status, Props as ActivityPreviewProps } from 'ui/modules/ActivityPreview';
 import { Props, User as UserPageUI } from 'ui/pages/user';
+import { t } from '@lingui/macro';
+import { usePageTitle } from 'context/global/pageCtx';
 export interface UserPage {
   userId: User['id'];
   tab: UserPageTab;
   basePath: string;
 }
 export enum UserPageTab {
-  Activities,
   Starred,
   Communities,
   Collections,
-  Following
+  Following,
+  Activities
 }
-export const UserPage: FC<UserPage> = ({ userId, basePath }) => {
-  const user = useUser(userId);
+
+const userStarredPageTitle = t`User {name} - Starred`;
+const userCommunitiesPageTitle = t`User {name} - Communities`;
+const userCollectionsPageTitle = t`User {name} - Collections`;
+const userFollowingPageTitle = t`User {name} - Following`;
+const userActivitiesPageTitle = t`User {name} - Activities`;
+
+export const UserPage: FC<UserPage> = ({ userId, basePath, tab }) => {
+  const userInfo = useUser(userId);
+
+  const userPageTitle =
+    tab === UserPageTab.Starred
+      ? userStarredPageTitle
+      : tab === UserPageTab.Communities
+      ? userCommunitiesPageTitle
+      : tab === UserPageTab.Collections
+      ? userCollectionsPageTitle
+      : tab === UserPageTab.Following
+      ? userFollowingPageTitle
+      : tab === UserPageTab.Activities
+      ? userActivitiesPageTitle
+      : userActivitiesPageTitle; //never
+  usePageTitle(!!userInfo?.user?.name && userPageTitle, userInfo.user);
 
   const { likesPage } = useUserLikes(userId);
-  const [loadMoreLikes] = useFormikPage(likesPage);
+  const [loadMoreLikes] = likesPage.formiks;
 
   const { activitiesPage } = useUserOutboxActivities(userId);
-  const [loadMoreActivities] = useFormikPage(activitiesPage);
+  const [loadMoreActivities] = activitiesPage.formiks;
 
   const { followedCollectionsPage } = useUserFollowedCollections(userId);
-  const [loadMoreCollections] = useFormikPage(followedCollectionsPage);
+  const [loadMoreCollections] = followedCollectionsPage.formiks;
 
   const { followedCommunitiesPage } = useUserFollowedCommunities(userId);
-  const [loadMoreCommunities] = useFormikPage(followedCommunitiesPage);
+  const [loadMoreCommunities] = followedCommunitiesPage.formiks;
 
   const { followedUsersPage } = useUserFollowedUsers(userId);
-  const [loadMoreFollowing] = useFormikPage(followedUsersPage);
+  const [loadMoreFollowing] = followedUsersPage.formiks;
 
   const userPageProps = useMemo<Props>(() => {
-    const {
-      totalActivities,
-      totalCollections,
-      totalCommunities,
-      totalUsers
-    } = user;
+    const { totalActivities, totalCollections, totalCommunities, totalUsers } = userInfo;
     const LikesBoxes = (
       <>
         {likesPage.edges.map(like => {
-          const { communityLink, communityName } = getCommunityInfoStrings(
-            like.context
-          );
-          const actor = user.user ? getActivityActor(user.user) : null;
+          const { communityLink, communityName } = getCommunityInfoStrings(like.context);
+          const actor = userInfo.user ? getActivityActor(userInfo.user) : null;
           const activityContext = like;
-          const event = getEventStringByContext(
-            activityContext,
-            ActivityVerb.Created
-          );
+          const event = getEventStringByContext(activityContext, ActivityVerb.Created);
           const preview =
-            like.context.__typename == 'Comment' ? (
-              <LikedCommentPreviewHOC
-                key={like.id}
-                commentId={like.context.id}
-              />
+            like.context.__typename === 'Comment' ? (
+              <LikedCommentPreviewHOC key={like.id} commentId={like.context.id} />
             ) : (
               <PreviewComponent context={activityContext} />
             );
@@ -94,8 +99,8 @@ export const UserPage: FC<UserPage> = ({ userId, basePath }) => {
             status: Status.Loaded,
             preview
           };
-          console.log(activityProps, likesPage);
-          return <ActivityPreview {...activityProps} />;
+          // console.log(activityProps, likesPage);
+          return <ActivityPreview {...activityProps} key={activityContext.id} />;
         })}
       </>
     );
@@ -133,10 +138,7 @@ export const UserPage: FC<UserPage> = ({ userId, basePath }) => {
               context.__typename === 'Community'
           )
           .map(followedCommunity => (
-            <CommunityPreviewHOC
-              communityId={followedCommunity.id}
-              key={followedCommunity.id}
-            />
+            <CommunityPreviewHOC communityId={followedCommunity.id} key={followedCommunity.id} />
           ))}
       </>
     );
@@ -145,15 +147,9 @@ export const UserPage: FC<UserPage> = ({ userId, basePath }) => {
       <>
         {followedUsersPage.edges
           .map(follow => follow.context)
-          .filter(
-            (context): context is UserFollowedUserFragment =>
-              context.__typename === 'User'
-          )
+          .filter((context): context is UserFollowedUserFragment => context.__typename === 'User')
           .map(followedUser => (
-            <UserPreviewHOC
-              userId={followedUser.userId}
-              key={followedUser.userId}
-            />
+            <UserPreviewHOC userId={followedUser.userId} key={followedUser.userId} />
           ))}
       </>
     );
@@ -168,12 +164,12 @@ export const UserPage: FC<UserPage> = ({ userId, basePath }) => {
       CollectionsBoxes,
       CommunityBoxes,
       UserBoxes,
-      userName: user.user?.name || '',
+      userName: userInfo.user?.name || '',
       totalActivities: `${totalActivities || '0'}`,
       totalCollections: `${totalCollections || '0'}`,
       totalCommunities: `${totalCommunities || '0'}`,
       totalUsers: `${totalUsers || '0'}`,
-      userLink: user.user?.website || '',
+      userLink: userInfo.user?.website || '',
       loadMoreActivities,
       loadMoreCollections,
       loadMoreCommunities,
@@ -182,13 +178,19 @@ export const UserPage: FC<UserPage> = ({ userId, basePath }) => {
     };
     return props;
   }, [
-    activitiesPage,
+    userInfo,
+    likesPage,
+    activitiesPage.edges,
+    followedCollectionsPage.edges,
+    followedCommunitiesPage.edges,
+    followedUsersPage.edges,
+    userId,
     basePath,
-    user,
-    followedCollectionsPage,
-    followedCommunitiesPage,
-    followedUsersPage,
-    likesPage
+    loadMoreActivities,
+    loadMoreCollections,
+    loadMoreCommunities,
+    loadMoreFollowing,
+    loadMoreLikes
   ]);
   return <UserPageUI {...userPageProps} />;
 };

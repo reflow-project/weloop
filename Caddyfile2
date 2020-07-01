@@ -1,0 +1,32 @@
+# config for Caddy v2
+
+#:80 # comment this line and uncomment the next 4 to enable HTTPS/SSL 
+:443 
+tls {
+  on_demand
+}
+
+# define paths that should be proxied to Elixir backend
+@backend {
+  path /api/* /pub/* /oauth/* /.well-known/webfinger* /.well-known/nodeinfo*
+}
+
+root * /frontend
+
+route {
+    
+  # backend proxying
+  reverse_proxy @backend backend:4000 
+
+  # fallback to index (for single page site)
+  try_files {path} /index.html
+
+  # serve static frontend
+  file_server 
+}
+
+# options
+encode gzip
+handle_errors
+log
+

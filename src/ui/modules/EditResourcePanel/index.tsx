@@ -27,9 +27,7 @@ const tt = {
   placeholders: {
     url: i18nMark('The url of the resource'),
     name: i18nMark('Choose a name for the community'),
-    summary: i18nMark(
-      'Please describe who might be interested in this resource...'
-    ),
+    summary: i18nMark('Please describe who might be interested in this resource...'),
     image: i18nMark('Enter the URL of an image to represent the resource')
   }
 };
@@ -59,7 +57,7 @@ export const EditResourcePanel: React.FC<Props> = ({ cancel, formik }) => {
           />
           {formik.errors.url && (
             <AlertWrapper>
-              <Alert variant="bad">{formik.errors.url}</Alert>
+              <Alert variant="negative">{formik.errors.url}</Alert>
             </AlertWrapper>
           )}
         </ContainerForm>
@@ -77,7 +75,7 @@ export const EditResourcePanel: React.FC<Props> = ({ cancel, formik }) => {
           <CounterChars>{60 - formik.values.name.length}</CounterChars>
           {formik.errors.name && (
             <AlertWrapper>
-              <Alert variant="bad">{formik.errors.name}</Alert>
+              <Alert variant="negative">{formik.errors.name}</Alert>
             </AlertWrapper>
           )}
         </ContainerForm>
@@ -97,7 +95,7 @@ export const EditResourcePanel: React.FC<Props> = ({ cancel, formik }) => {
           <CounterChars>{500 - formik.values.summary.length}</CounterChars>
           {formik.errors.summary && (
             <AlertWrapper>
-              <Alert variant="bad">{formik.errors.summary}</Alert>
+              <Alert variant="negative">{formik.errors.summary}</Alert>
             </AlertWrapper>
           )}
         </ContainerForm>
@@ -116,7 +114,7 @@ export const EditResourcePanel: React.FC<Props> = ({ cancel, formik }) => {
           />
           {formik.errors.image && (
             <AlertWrapper>
-              <Alert variant="bad">{formik.errors.image}</Alert>
+              <Alert variant="negative">{formik.errors.image}</Alert>
             </AlertWrapper>
           )}
         </ContainerForm>

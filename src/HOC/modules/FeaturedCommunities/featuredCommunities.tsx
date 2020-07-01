@@ -1,56 +1,83 @@
-import React, { FC, useMemo } from 'react';
+import { useInstanceFeaturedCommunities } from 'fe/instance/featuredCommunities/useInstanceFeaturedCommunities';
+import { useMe } from 'fe/session/useMe';
+import React, { FC, useMemo, useReducer, useState, ReactElement } from 'react';
 import {
   FeaturedCommunities as FeaturedCommunitiesUI,
   FeaturedCommunitiesData
 } from 'ui/modules/FeaturedCommunities';
-import { useMe } from 'fe/session/useMe';
-import { DiscoverPageFeaturedCommunityInfoFragment } from 'HOC/pages/discover/DiscoverPage.generated';
-import { CommunityBase } from 'ui/modules/FeaturedCommunities/preview';
+import CommunitySmall, { CommunityProps } from 'ui/modules/FeaturedCommunities/preview';
+import Modal from 'ui/modules/Modal';
 import { FeatureModalHOC } from '../FeatureModal/FeatureModal';
-import { useInstanceFeaturedCommunities } from 'fe/instance/featuredCommunities/useInstanceFeaturedCommunities';
+import { CommunityFeatureFragment } from './featuredCommunity.generated';
+import { communityLocation } from 'routes/CommunityPageRoute';
 
 export interface FeaturedCommunities {}
 export const FeaturedCommunities: FC<FeaturedCommunities> = () => {
   const { isAdmin } = useMe();
   const { featuredCommunitiesPage } = useInstanceFeaturedCommunities();
-  const featuredCommunities = useMemo<CommunityBase[]>(
+
+  const [isEditing, toggleEdit] = useReducer(prev => !prev, false);
+  const [
+    selectedFeatureToRemove,
+    setSelectedFeatureToRemove
+  ] = useState<CommunityFeatureFragment | null>(null);
+
+  const featuredCommunities = useMemo<ReactElement[]>(
     () =>
       featuredCommunitiesPage.edges
-        .map(feature => feature.context)
-        .filter(
-          //FIXME: remove when fixed nullable context
-          (maybeCtx): maybeCtx is DiscoverPageFeaturedCommunityInfoFragment =>
-            !!maybeCtx && maybeCtx.__typename === 'Community'
-        )
-        .map<CommunityBase>(community => ({
-          ...community,
-          icon: community.icon?.url || ''
-        })),
-    [featuredCommunitiesPage]
+        .map(feature => {
+          const communityFragment = feature.context;
+          if (!communityFragment || communityFragment.__typename !== 'Community') {
+            return null;
+          }
+          const community: CommunityProps['community'] = {
+            icon: communityFragment.icon?.url || '',
+            name: communityFragment.name,
+            link: communityLocation.getPath(
+              { tab: undefined, communityId: communityFragment.id },
+              undefined
+            )
+          };
+          const props: CommunityProps = {
+            community,
+            canEdit: isAdmin,
+            isEditing,
+            remove: () => setSelectedFeatureToRemove(feature)
+          };
+          return <CommunitySmall key={communityFragment.id} {...props} />;
+        })
+        .filter((_): _ is ReactElement => !!_),
+    [featuredCommunitiesPage.edges, isAdmin, isEditing]
   );
 
-  const FeaturedModal = useMemo<FeaturedCommunitiesData['FeaturedModal']>(
-    () => ({ community, done }) => {
-      const communityFeature = featuredCommunitiesPage.edges.find(
-        feature =>
-          feature.context?.__typename === 'Community' && //FIXME: remove ? when fixed
-          feature.context.id === community.id
-      );
-      const featureId = communityFeature?.id;
-      return (
-        <FeatureModalHOC ctx={community} done={done} featureId={featureId} />
-      );
-    },
-    [featuredCommunities]
+  const RemoveFeaturedModal = useMemo(
+    () =>
+      selectedFeatureToRemove &&
+      selectedFeatureToRemove.context?.__typename === 'Community' && (
+        <Modal closeModal={() => setSelectedFeatureToRemove(null)}>
+          <FeatureModalHOC
+            ctx={selectedFeatureToRemove.context}
+            done={() => setSelectedFeatureToRemove(null)}
+            featureId={selectedFeatureToRemove.id}
+          />
+        </Modal>
+      ),
+    [selectedFeatureToRemove]
   );
 
   const propsUI = useMemo<FeaturedCommunitiesData>(() => {
     const props: FeaturedCommunitiesData = {
-      FeaturedModal,
+      isEditing,
+      toggleEdit,
       featuredCommunities,
-      isAdmin
+      canEdit: isAdmin
     };
     return props;
-  }, [isAdmin, featuredCommunities, FeaturedModal]);
-  return <FeaturedCommunitiesUI {...propsUI} />;
+  }, [isEditing, featuredCommunities, isAdmin]);
+  return (
+    <>
+      {RemoveFeaturedModal}
+      <FeaturedCommunitiesUI {...propsUI} />
+    </>
+  );
 };

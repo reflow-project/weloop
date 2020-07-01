@@ -1,15 +1,14 @@
-import React, { ComponentType, FC } from 'react';
-import { Box, Text, Flex } from 'rebass/styled-components';
-import { MapPin, MoreVertical, Flag } from 'react-feather';
-import styled from 'ui/themes/styled';
+import { Trans } from '@lingui/macro';
+import React, { FC } from 'react';
+import { Flag, MapPin, MoreVertical } from 'react-feather';
+import { Box, Flex, Text } from 'rebass/styled-components';
 import media from 'styled-media-query';
-import Button from 'ui/elements/Button';
-import { Trans } from '@lingui/react';
-import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
 import { FormikHook } from 'ui/@types/types';
-import Modal from 'ui/modules/Modal';
-import { NavLink } from 'react-router-dom';
-import { MD_Comment } from 'ui/elements/Layout/comment';
+import Button from 'ui/elements/Button';
+// import { NavLink } from 'react-router-dom';
+import { MDComment } from 'ui/elements/Layout/comment';
+import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
+import styled from 'ui/themes/styled';
 
 export enum Status {
   Loading,
@@ -29,7 +28,6 @@ export interface Loaded {
   displayUsername: string;
   location: string;
   summary: string;
-  FlagModal: ComponentType<{ done(): any }>;
 }
 export interface LoadedMe extends Loaded {
   me: true;
@@ -40,12 +38,12 @@ export interface LoadedOther extends Loaded {
   following: boolean;
   toggleFollowFormik: FormikHook<{}>;
   isOpenDropdown: boolean;
-  setOpenDropdown(open: boolean): unknown;
+  toggleDropdown(): unknown;
+  flag(): any;
 }
 export type Props = LoadedMe | LoadedOther | Loading;
 
 export const HeroUser: FC<Props> = props => {
-  const [isOpenFlag, setOpenFlag] = React.useState(false);
   if (props.status === Status.Loading) {
     return null;
   }
@@ -58,17 +56,13 @@ export const HeroUser: FC<Props> = props => {
           <WrapperHero>
             <Img
               style={{
-                backgroundImage: `url(${props.icon})`
+                backgroundImage: `url("${props.icon}")`
               }}
             />
           </WrapperHero>
           <HeroAction mr={2}>
             {props.me ? (
-              <NavLink exact to={'/settings/'}>
-                <Button mr={2} variant={'outline'}>
-                  <Trans>Edit Profile</Trans>
-                </Button>
-              </NavLink>
+              <></>
             ) : (
               <>
                 <Button
@@ -78,31 +72,25 @@ export const HeroUser: FC<Props> = props => {
                   isDisabled={props.toggleFollowFormik.isSubmitting}
                   onClick={props.toggleFollowFormik.submitForm}
                 >
-                  {props.following ? (
-                    <Trans>Unfollow</Trans>
-                  ) : (
-                    <Trans>Follow</Trans>
-                  )}
+                  {props.following ? <Trans>Unfollow</Trans> : <Trans>Follow</Trans>}
                 </Button>
                 <More>
-                  <MoreVertical
-                    size={20}
-                    onClick={() => props.setOpenDropdown(true)}
-                  />
+                  <MoreVertical size={20} onClick={props.toggleDropdown} />
                   {props.isOpenDropdown && (
-                    <Dropdown orientation={'bottom'} cb={props.setOpenDropdown}>
-                      <DropdownItem onClick={() => setOpenFlag(true)}>
-                        <Flag size={20} color={'rgb(101, 119, 134)'} />
-                        <Text sx={{ flex: 1 }} ml={2}>
-                          {!props.isFlagged ? (
-                            <Trans>Flag</Trans>
-                          ) : (
-                            <Trans>Unflag</Trans>
-                          )}{' '}
-                          {props.displayUsername}
-                        </Text>
-                      </DropdownItem>
-                    </Dropdown>
+                    <RightDd>
+                      <Dropdown orientation={'bottom'} close={props.toggleDropdown}>
+                        <DropdownItem onClick={props.flag}>
+                          <Flag size={20} color={'rgb(101, 119, 134)'} />
+                          <Text sx={{ flex: 1 }} ml={2}>
+                            {!props.isFlagged ? (
+                              <Trans>Flag this user</Trans>
+                            ) : (
+                              <Trans>Unflag this user</Trans>
+                            )}{' '}
+                          </Text>
+                        </DropdownItem>
+                      </Dropdown>
+                    </RightDd>
                   )}
                 </More>
               </>
@@ -110,12 +98,7 @@ export const HeroUser: FC<Props> = props => {
           </HeroAction>
         </FlexProfile>
         <HeroInfo ml={3}>
-          <HeroTitle
-            sx={{ fontSize: '18px' }}
-            mt={2}
-            variant="heading"
-            fontWeight={'bold'}
-          >
+          <HeroTitle sx={{ fontSize: '18px' }} mt={2} variant="heading" fontWeight={'bold'}>
             {props.name}
           </HeroTitle>
           <Username mt={1} fontSize={2}>
@@ -124,7 +107,7 @@ export const HeroUser: FC<Props> = props => {
           </Username>
 
           <Box mt={2}>
-            <MD_Comment content={props.summary} />
+            <MDComment content={props.summary} />
           </Box>
           {props.location ? (
             <Location mt={2}>
@@ -136,14 +119,16 @@ export const HeroUser: FC<Props> = props => {
           ) : null}
         </HeroInfo>
       </Hero>
-      {isOpenFlag && (
-        <Modal closeModal={() => setOpenFlag(false)}>
-          <props.FlagModal done={() => setOpenFlag(false)} />
-        </Modal>
-      )}
     </ProfileBox>
   );
 };
+
+const RightDd = styled(Box)`
+  .dropdown {
+    right: 0;
+    left: auto;
+  }
+`;
 
 const AdminBadge = styled(Box)`
   padding: 1px 8px;
@@ -220,8 +205,7 @@ const HeroBg = styled.div<{ src: string }>`
   height: 250px;
   margin: -4px;
   background: ${props => props.theme.colors.light};
-  background-image: url(${props =>
-    props.src ? props.src : props.theme.colors.light});
+  background-image: url("${props => (props.src ? props.src : props.theme.colors.light)}");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;

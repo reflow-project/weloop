@@ -1,12 +1,6 @@
 import * as React from 'react';
-import {
-  Nav,
-  NavItem,
-  Panel,
-  PanelTitle,
-  WrapperPanel
-} from 'ui/elements/Panel';
-import { Trans } from '@lingui/react';
+import { Nav, NavItem, Panel, PanelTitle, WrapperPanel } from 'ui/elements/Panel';
+import { Trans } from '@lingui/macro';
 import { Text } from 'rebass/styled-components';
 import styled from 'ui/themes/styled';
 
@@ -38,7 +32,13 @@ export const SidePanel: React.FC<Props> = props => {
             </NavItem>
             <NavItem fontSize={0}>
               <ComingSoon variant="text">
-                ✨<Trans>This feature is coming soon!</Trans>✨
+                <span aria-label="icon" role="img">
+                  ✨
+                </span>
+                <Trans>This feature is coming soon!</Trans>
+                <span aria-label="icon" role="img">
+                  ✨
+                </span>
               </ComingSoon>
             </NavItem>
           </Nav>
@@ -64,7 +64,13 @@ export const SidePanel: React.FC<Props> = props => {
               Postgraduate
             </NavItem>
             <ComingSoon variant="text">
-              ✨<Trans>This feature is coming soon!</Trans>✨
+              <span aria-label="icon" role="img">
+                ✨
+              </span>
+              <Trans>This feature is coming soon!</Trans>{' '}
+              <span aria-label="icon" role="img">
+                ✨
+              </span>
             </ComingSoon>
           </Nav>
         </Panel>

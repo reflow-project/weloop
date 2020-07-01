@@ -1,10 +1,10 @@
 import * as Types from '../../../graphql/types.generated';
 
-import { DiscoverPageFeaturedCommunityInfoFragment } from '../../../HOC/pages/discover/DiscoverPage.generated';
+import { CommunityFeatureFragment } from '../../../HOC/modules/FeaturedCommunities/featuredCommunity.generated';
 import { FullPageInfoFragment } from '../../../@fragments/misc.generated';
 import gql from 'graphql-tag';
 import { FullPageInfoFragmentDoc } from '../../../@fragments/misc.generated';
-import { DiscoverPageFeaturedCommunityInfoFragmentDoc } from '../../../HOC/pages/discover/DiscoverPage.generated';
+import { CommunityFeatureFragmentDoc } from '../../../HOC/modules/FeaturedCommunities/featuredCommunity.generated';
 import * as ApolloReactCommon from '@apollo/react-common';
 import * as ApolloReactHooks from '@apollo/react-hooks';
 
@@ -25,11 +25,7 @@ export type InstanceFeaturedCommunitiesQuery = (
         & FullPageInfoFragment
       ), edges: Array<(
         { __typename: 'Feature' }
-        & Pick<Types.Feature, 'id'>
-        & { context: Types.Maybe<{ __typename: 'Collection' } | (
-          { __typename: 'Community' }
-          & DiscoverPageFeaturedCommunityInfoFragment
-        )> }
+        & CommunityFeatureFragment
       )> }
     )> }
   )> }
@@ -45,16 +41,13 @@ export const InstanceFeaturedCommunitiesDocument = gql`
         ...FullPageInfo
       }
       edges {
-        id
-        context {
-          ...DiscoverPageFeaturedCommunityInfo
-        }
+        ...CommunityFeature
       }
     }
   }
 }
     ${FullPageInfoFragmentDoc}
-${DiscoverPageFeaturedCommunityInfoFragmentDoc}`;
+${CommunityFeatureFragmentDoc}`;
 
 /**
  * __useInstanceFeaturedCommunitiesQuery__

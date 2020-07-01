@@ -1,8 +1,9 @@
 import React, { FC, useMemo } from 'react';
 import { UserPage, UserPageTab } from 'HOC/pages/user/UserPage';
-import { NotFound } from 'ui/pages/notFound';
+import { NotFoundHOC } from 'HOC/pages/not-found/NotFound';
 import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { WithSidebarTemplate } from 'HOC/templates/WithSidebar/WithSidebar';
+import { locationHelper } from './lib/helper';
 
 interface UserPageRouter {
   userId: string;
@@ -10,7 +11,7 @@ interface UserPageRouter {
 }
 const UserPageRouter: FC<RouteComponentProps<UserPageRouter>> = ({ match }) => {
   const userId = match.params.userId;
-  const maybeTabStr = match.params.tab;
+  const maybeTabStr = match.params.tab as Tab;
   const tab =
     maybeTabStr === 'starred'
       ? UserPageTab.Starred
@@ -31,13 +32,12 @@ const UserPageRouter: FC<RouteComponentProps<UserPageRouter>> = ({ match }) => {
         : {
             tab,
             userId,
-            basePath: `/user/${userId}`
+            basePath: userLocation.getPath({ tab: undefined, userId }, undefined)
           },
     [tab, userId]
   );
-
   if (!props) {
-    return <NotFound />;
+    return <NotFoundHOC />;
   }
   return (
     <WithSidebarTemplate>
@@ -48,6 +48,14 @@ const UserPageRouter: FC<RouteComponentProps<UserPageRouter>> = ({ match }) => {
 
 export const UserPageRoute: RouteProps = {
   exact: true,
-  path: '/user/:userId/:tab?',
+  path: '/user/:userId/:tab(starred|communities|collections|following)?',
   component: UserPageRouter
 };
+
+type Tab = undefined | 'starred' | 'communities' | 'collections' | 'following';
+type Params = {
+  userId: string;
+  tab: Tab;
+};
+
+export const userLocation = locationHelper<Params, undefined>(UserPageRoute);

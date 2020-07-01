@@ -11,7 +11,7 @@ import { AlertCircle } from 'react-feather';
 import { AlertWrapper } from 'ui/modules/Modal';
 import { INVITE_ONLY_TEXT } from 'mn-constants';
 import media from 'styled-media-query';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import LogoContainer from 'ui/elements/Logo';
 
 let tt = {
@@ -28,6 +28,7 @@ let tt = {
 export interface Props {
   formik: FormikHook<SignUpFormValues>;
   registeredUsername?: string;
+  registeredEmail?: string;
 }
 
 export interface SignUpFormValues {
@@ -39,23 +40,34 @@ export interface SignUpFormValues {
   terms: boolean;
 }
 
-export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername }) => {
+export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername, registeredEmail }) => {
   return (
     <Container>
-      {!formik.isSubmitting && formik.submitCount && registeredUsername ? (
+      {!formik.isSubmitting && formik.submitCount && registeredUsername && registeredEmail ? (
         <Box mt={3}>
           <LogoContainer />
-          <Text variant="suptitle">
-            <Trans>Welcome</Trans> <b>{registeredUsername}</b>
-          </Text>
-          <Text mt={2} variant="text">
-            <Trans>
-              Please confirm your email address by clicking on the link we
-              emailed you (check your spam folder if necessary).
-            </Trans>
-          </Text>
-
-          <Alert variant="bad">{formik.errors.email}</Alert>
+          <Wrapper>
+            <Box>
+              <Text variant="suptitle">
+                <Trans>Welcome</Trans> <b>{registeredUsername}</b>
+              </Text>
+              <Text mt={2} variant="text">
+                <Trans>Please confirm your email address</Trans>
+                <b>{' ' + registeredEmail + ' '}</b>
+                <Trans>
+                  by clicking on the link we emailed you (check your spam folder if necessary).
+                </Trans>
+              </Text>
+            </Box>
+            <Browse>
+              <Link to={'/'}>
+                <Button mt={3} variant="primary">
+                  <Trans>Sign in</Trans>
+                </Button>
+              </Link>
+            </Browse>
+          </Wrapper>
+          >{/* <Alert variant="negative">{formik.errors.email}</Alert> */}
         </Box>
       ) : (
         <LoginWrapper>
@@ -69,7 +81,7 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername }) => {
             </Aware>
           </Header>
           <Flex mt={2}>
-            <FormWrapper>
+            <FormWrapper onSubmit={formik.handleSubmit}>
               <Box>
                 <label>
                   <Trans>Email</Trans>
@@ -82,7 +94,7 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername }) => {
                 />
                 {formik.errors.email && (
                   <AlertWrapper>
-                    <Alert variant="bad">{formik.errors.email}</Alert>
+                    <Alert variant="negative">{formik.errors.email}</Alert>
                   </AlertWrapper>
                 )}
               </Box>
@@ -98,7 +110,7 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername }) => {
                 />
                 {formik.errors.name && (
                   <AlertWrapper>
-                    <Alert variant="bad">{formik.errors.name}</Alert>
+                    <Alert variant="negative">{formik.errors.name}</Alert>
                   </AlertWrapper>
                 )}
               </Box>
@@ -114,7 +126,7 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername }) => {
                 />
                 {formik.errors.username && (
                   <AlertWrapper>
-                    <Alert variant="bad">{formik.errors.username}</Alert>
+                    <Alert variant="negative">{formik.errors.username}</Alert>
                   </AlertWrapper>
                 )}
               </Box>
@@ -131,7 +143,7 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername }) => {
                 />
                 {formik.errors.password && (
                   <AlertWrapper>
-                    <Alert variant="bad">{formik.errors.password}</Alert>
+                    <Alert variant="negative">{formik.errors.password}</Alert>
                   </AlertWrapper>
                 )}
               </Box>
@@ -148,7 +160,7 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername }) => {
                 />
                 {formik.errors.passwordConfirm && (
                   <AlertWrapper>
-                    <Alert variant="bad">{formik.errors.passwordConfirm}</Alert>
+                    <Alert variant="negative">{formik.errors.passwordConfirm}</Alert>
                   </AlertWrapper>
                 )}
               </Box>
@@ -165,6 +177,11 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername }) => {
                     Terms and Conditions
                   </NavLink>
                 </Label>
+                {formik.errors.terms && (
+                  <AlertWrapper>
+                    <Alert variant="negative">{formik.errors.terms}</Alert>
+                  </AlertWrapper>
+                )}
               </Box>
               <Box mt={3}>
                 <Button
@@ -172,9 +189,9 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername }) => {
                   isSubmitting={formik.isSubmitting}
                   isDisabled={formik.isSubmitting}
                   type="submit"
-                  onClick={formik.submitForm}
+                  // onClick={formik.submitForm}
                 >
-                  <Trans>Signup</Trans>
+                  <Trans>Sign up</Trans>
                 </Button>
               </Box>
             </FormWrapper>
@@ -185,6 +202,20 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername }) => {
   );
 };
 export default SignUpPage;
+
+const Browse = styled(Box)`
+  text-align: center;
+  margin-top: 10px;
+`;
+
+const Wrapper = styled.div`
+  background: #fff;
+  border-radius: 4px;
+  height: inherit;
+  padding: 30px 20px;
+  text-align: center;
+  height: fit-content;
+`;
 
 const LoginWrapper = styled(Box)`
   ${media.lessThan('medium')`
@@ -205,7 +236,7 @@ const Header = styled.div`
   text-align: center;
 `;
 
-const FormWrapper = styled(Box)`
+const FormWrapper = styled.form`
   margin: 0;
   flex: 1;
   input {
@@ -261,8 +292,7 @@ const FormWrapper = styled(Box)`
 // `;
 
 const Aware = styled(Flex)<{ green: boolean }>`
-  background: ${props =>
-    props.green ? '#546d4f' : props.theme.colors.primary};
+  background: ${props => (props.green ? '#546d4f' : props.theme.colors.secondary)};
   border-radius: 4px;
   align-items: center;
   div {

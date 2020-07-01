@@ -1,27 +1,33 @@
 import { Textarea } from '@rebass/forms';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Send } from 'react-feather';
-import { Box, Flex } from 'rebass/styled-components';
+import { Flex } from 'rebass/styled-components';
 // import { dropEmoji } from '../../lib/emoji';
 // import EmojiPicker from 'emoji-picker-react';
 // import OutsideClickHandler from 'react-outside-click-handler';
-import styled from 'styled-components';
+import Button from 'ui/elements/Button';
+import styled from 'ui/themes/styled';
+import { Trans } from '@lingui/macro';
 // const PickerWrap = styled.div`
 //   position: absolute;
 //   right: 10px;
 //   top: 45px;
 //   z-index: 999999999999999999;
 // `;
-const Wrapper = styled(Box)`
+const Wrapper = styled(Flex)`
   width: 100%;
   position: relative;
-  border: ${props => props.theme.colors.border};
-  border-radius: 4px;
+  height: 200px;
+  flex-direction: column;
 `;
 const SocialTextDiv = styled(Flex)`
   position: relative;
   width: 100%;
   align-items: center;
+  border: ${props => props.theme.colors.border};
+  border-radius: 4px;
+  margin-bottom: 8px;
+  background: white;
+  flex: 1;
 `;
 // const EmojiPickerTrigger = styled(Box)`
 //   cursor: pointer;
@@ -33,11 +39,11 @@ const SocialTextDiv = styled(Flex)`
 // `;
 
 const SocialTextArea = styled(Textarea)`
-  height: 60px;
-  border-radius: 4px;
-  border: 0px solid ${props => props.theme.colors.light} !important;
+  height: 100%;
   resize: none;
+  background: ${props => props.theme.colors.appInverse};
   flex: 1;
+  border: 0 !important;
   font-size: 16px !important;
   &:focus {
     outline: none;
@@ -46,7 +52,7 @@ const SocialTextArea = styled(Textarea)`
 `;
 
 const SocialActions = styled(Flex)`
-  // width: 70px;
+  align-self: flex-end;
 `;
 
 export interface Props {
@@ -92,7 +98,7 @@ export const SocialText: React.FC<Props> = ({
     if (!keepTextOnSubmit) {
       setText('');
     }
-  }, [text]);
+  }, [text, keepTextOnSubmit, submit]);
   useEffect(() => {
     if (!ref.current) {
       return;
@@ -105,7 +111,7 @@ export const SocialText: React.FC<Props> = ({
     }
     const txt = ref.current.value;
     setText(txt);
-  }, [ref.current, setText]);
+  }, [setText]);
   return (
     <Wrapper>
       <SocialTextDiv>
@@ -115,21 +121,6 @@ export const SocialText: React.FC<Props> = ({
           defaultValue={defaultValue}
           onInput={onChange}
         />
-        <SocialActions mr={3}>
-          {/* <EmojiPickerTrigger onClick={toggleEmoji}>
-            <Smile color={'rgba(0,0,0,.4)'} size="24" />
-          </EmojiPickerTrigger> */}
-          <Box
-            style={{ cursor: text ? 'pointer' : 'default' }}
-            ml={3}
-            onClick={handleSubmit}
-          >
-            <Send
-              color={text ? 'rgba(0,0,0,.4)' : 'rgba(0,0,0,.1)'}
-              size="24"
-            />
-          </Box>
-        </SocialActions>
         {/* {isEmojiOpen && (
           <OutsideClickHandler onOutsideClick={toggleEmoji}>
             <PickerWrap>
@@ -138,6 +129,21 @@ export const SocialText: React.FC<Props> = ({
           </OutsideClickHandler>
         )} */}
       </SocialTextDiv>
+      <SocialActions>
+        {/* <EmojiPickerTrigger onClick={toggleEmoji}>
+            <Smile color={'rgba(0,0,0,.4)'} size="24" />
+          </EmojiPickerTrigger> */}
+        <Button
+          variant="primary"
+          sx={{
+            cursor: text ? 'pointer' : 'default',
+            textTransform: 'capitalize'
+          }}
+          onClick={handleSubmit}
+        >
+          <Trans>Publish</Trans>
+        </Button>
+      </SocialActions>
     </Wrapper>
   );
 };

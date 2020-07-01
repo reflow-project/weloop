@@ -5,7 +5,7 @@ import {
 import { useFormik } from 'formik';
 import { action } from '@storybook/addon-actions';
 
-export const getEditCollectionModalProps = (): EditCollectionPanelProps => {
+export const useGetEditCollectionModalProps = (): EditCollectionPanelProps => {
   const formik = useFormik<EditCollectionFormValues>({
     initialValues: {
       icon: 'https://images.unsplash.com/photo-1468487422149-5edc5034604f',

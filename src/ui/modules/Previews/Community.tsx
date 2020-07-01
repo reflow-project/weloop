@@ -8,6 +8,7 @@ import { SimpleLink } from 'ui/helpers/SimpleLink';
 import { Users, Folder } from 'react-feather';
 import Button from 'ui/elements/Button';
 import { darken } from 'polished';
+import { Search } from './Collection';
 
 export interface Props {
   name: string;
@@ -18,13 +19,11 @@ export interface Props {
   threadsCount: number;
   toggleJoinFormik: FormikHook<{}>;
   joined: boolean;
-  link: {
-    url: string;
-    external: boolean;
-  };
+  link: SimpleLink;
   displayUsername: string;
   hideActions: boolean;
   isCreator: boolean;
+  isSearch?: boolean;
   // followers: string[]
 }
 
@@ -39,10 +38,16 @@ export const Community: React.FC<Props> = ({
   collectionsCount,
   link,
   displayUsername,
-  hideActions
+  hideActions,
+  isSearch
   // followers
 }) => (
   <Bordered>
+    {isSearch && (
+      <Search>
+        <Trans>Community</Trans>
+      </Search>
+    )}
     <Wrapper p={2}>
       <WrapperLink link={link}>
         <WrapperImage>
@@ -52,9 +57,7 @@ export const Community: React.FC<Props> = ({
           <Flex>
             <Box flex={1}>
               <Title variant="heading" fontSize={3}>
-                {name.length > 60
-                  ? name.replace(/^(.{56}[^\s]*).*/, '$1...')
-                  : name}
+                {name.length > 60 ? name.replace(/^(.{56}[^\s]*).*/, '$1...') : name}
               </Title>
               <Username>{displayUsername}</Username>
             </Box>
@@ -92,7 +95,10 @@ export const Community: React.FC<Props> = ({
                 variant="outline"
                 isDisabled={isCreator ? true : false}
                 isSubmitting={toggleJoinFormik.isSubmitting}
-                onClick={toggleJoinFormik.submitForm}
+                onClick={e => {
+                  e.preventDefault();
+                  toggleJoinFormik.submitForm();
+                }}
               >
                 <Text variant={'suptitle'}>
                   {joined ? <Trans>Leave</Trans> : <Trans>Join</Trans>}
@@ -118,7 +124,7 @@ const Actions = styled(Box)`
 `;
 
 const MetaWrapper = styled(Flex)`
-  svg  {
+  svg {
     margin: 0;
   }
 `;

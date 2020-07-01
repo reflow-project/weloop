@@ -1,11 +1,8 @@
-import {
-  LoadedMe as HeroUserProps,
-  Status,
-  LoadedOther
-} from 'ui/modules/HeroUser';
-import { ToggleFormik } from './formik';
+import { LoadedMe as HeroUserProps, Status, LoadedOther } from 'ui/modules/HeroUser';
+import { useToggleFormik } from './formik';
+import { action } from '@storybook/addon-actions';
 
-export const getHeroUserProps = (
+export const useGetHeroUserProps = (
   me = false,
   name = 'Estrella',
   displayUsername = 'estrella@home.moodle.net',
@@ -14,6 +11,8 @@ export const getHeroUserProps = (
   location = 'Madrid',
   summary = 'Spanish educator teaching at a local ESO (secondary) school, and leading a busy life!'
 ) => {
+  const toggleFollowFormik = useToggleFormik();
+
   if (me) {
     const props: HeroUserProps = {
       name,
@@ -23,9 +22,6 @@ export const getHeroUserProps = (
       icon,
       me: true,
       isFlagged: false,
-      FlagModal: ({ done }) => {
-        return <></>;
-      },
       isAdmin: false,
       location,
       summary
@@ -42,12 +38,10 @@ export const getHeroUserProps = (
       image,
       icon,
       isFlagged: false,
-      FlagModal: ({ done }) => {
-        return <></>;
-      },
+      flag: action('flag user'),
       isOpenDropdown: false,
-      setOpenDropdown: () => console.log('test'),
-      toggleFollowFormik: ToggleFormik(),
+      toggleDropdown: action('toggle Dropdown'),
+      toggleFollowFormik,
       location,
       summary
     };

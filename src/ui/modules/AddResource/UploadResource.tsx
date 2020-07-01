@@ -2,17 +2,11 @@ import { Trans } from '@lingui/macro';
 import { i18nMark } from '@lingui/react';
 import { Input, Textarea } from '@rebass/forms';
 import * as React from 'react';
-import { Box } from 'rebass/styled-components';
+import { Box, Text } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
 import Alert from 'ui/elements/Alert';
 import Button from 'ui/elements/Button';
-import {
-  Actions,
-  AlertWrapper,
-  ContainerForm,
-  CounterChars,
-  Row
-} from 'ui/modules/Modal';
+import { Actions, AlertWrapper, ContainerForm, CounterChars, Row } from 'ui/modules/Modal';
 import styled from 'ui/themes/styled';
 // import { clearFix } from 'polished';
 import DropzoneArea from 'ui/modules/DropzoneModal';
@@ -27,9 +21,7 @@ const tt = {
   placeholders: {
     // url: i18nMark('Enter the URL of the resource'),
     name: i18nMark('A title for the resource'),
-    summary: i18nMark(
-      'Please type or copy/paste a summary about the resource...'
-    ),
+    summary: i18nMark('Please type or copy/paste a summary about the resource...'),
     //author: i18nMark('A name for the resource author'),
     submit: i18nMark('Uploading the resource')
     // image: i18nMark('Enter the URL of an image to represent the resource')
@@ -62,17 +54,16 @@ export const UploadResource: React.FC<Props> = ({
   // console.log(formik.values.resourceFiles);
   // {formik.values.resourceFiles![0] !== undefined ? console.log('re %',formik.values.resourceFiles![0].type) : null}
   const onResourceFileSelect = React.useCallback(
-    (file: File) => formik.setFieldValue('resource', file, true),
-    []
+    (file: File) => formik.setValues({ ...formik.values, resource: file }),
+    [formik]
   );
   const initialResourceUrl =
     'string' === typeof formik.values.resource ? formik.values.resource : '';
   const onIconFileSelect = React.useCallback(
-    (file: File) => formik.setFieldValue('icon', file, true),
-    []
+    (file: File) => formik.setValues({ ...formik.values, icon: file }),
+    [formik]
   );
-  const initialIconUrl =
-    'string' === typeof formik.values.icon ? formik.values.icon : '';
+  const initialIconUrl = 'string' === typeof formik.values.icon ? formik.values.icon : '';
   return (
     <Wrapper>
       <Row>
@@ -85,6 +76,9 @@ export const UploadResource: React.FC<Props> = ({
             onFileSelect={onResourceFileSelect}
             uploadType="resource"
           />
+          <Adv>
+            <Trans>Max filesize: 20MB</Trans>
+          </Adv>
         </ContainerForm>
       </Row>
       <Row>
@@ -103,7 +97,7 @@ export const UploadResource: React.FC<Props> = ({
           </>
           {formik.errors.name && (
             <AlertWrapper>
-              <Alert variant="bad">{formik.errors.name}</Alert>
+              <Alert variant="negative">{formik.errors.name}</Alert>
             </AlertWrapper>
           )}
         </ContainerForm>
@@ -124,7 +118,7 @@ export const UploadResource: React.FC<Props> = ({
           </>
           {formik.errors.author && (
             <AlertWrapper>
-              <Alert variant="bad">{formik.errors.author}</Alert>
+              <Alert variant="negative">{formik.errors.author}</Alert>
             </AlertWrapper>
           )}
         </ContainerForm>
@@ -167,10 +161,7 @@ export const UploadResource: React.FC<Props> = ({
           <label>
             <Trans>CC License</Trans>
           </label>
-          <Link
-            href="https://blog.moodle.net/2019/free-cultural-works/"
-            target="blank"
-          >
+          <Link href="https://blog.moodle.net/2019/free-cultural-works/" target="blank">
             <Trans>Confused? Read this!</Trans>
           </Link>
         </LabelWrapper>
@@ -225,6 +216,10 @@ export const UploadResource: React.FC<Props> = ({
 
 export default UploadResource;
 
+const Adv = styled(Text)`
+  font-size: 12px;
+`;
+
 const Wrapper = styled(Box)`
   background: ${props => props.theme.colors.appInverse};
 `;
@@ -241,11 +236,11 @@ const Link = styled.a`
 const Label = styled.label`
   background-repeat: no-repeat;
   background-position: center center;
-  width: 115px !important;
+  width: 110px !important;
   line-height: 38px !important;
   display: inline-block;
   background-size: contain;
-  margin-right: 5px;
+  margin-right: 4px;
   border: 4px solid transparent;
   text-indent: -9999px;
   cursor: pointer;
@@ -253,15 +248,15 @@ const Label = styled.label`
 `;
 
 const LicenseLabel0 = styled(Label)`
-  background-image: url(${LicenseIcon0});
+  background-image: url("${LicenseIcon0}");
 `;
 
 const LicenseLabel1 = styled(Label)`
-  background-image: url(${LicenseIcon1});
+  background-image: url("${LicenseIcon1}");
 `;
 
 const LicenseLabel2 = styled(Label)`
-  background-image: url(${LicenseIcon2});
+  background-image: url("${LicenseIcon2}");
 `;
 
 const RadioButton = styled.input`

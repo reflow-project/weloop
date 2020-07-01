@@ -1,0 +1,21 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { useGetConfirmationPanelProps } from 'ui/mock/confirmationPanel'
+import { ConfirmationPanel } from '.'
+import { action } from '@storybook/addon-actions'
+import { Box } from 'rebass'
+import Modal from 'ui/modules/Modal'
+
+<Meta title="Modules| Confirmation Modal" component={ConfirmationPanel} />
+
+# ConfirmationPanel
+
+Let's define a story for the `Confirmation Modal preview` module
+
+<Preview>
+  <Story name="Confirmation Modal module">
+    <Modal closeModal={action('close modal')}>
+      <ConfirmationPanel {...useGetConfirmationPanelProps()} />
+    </Modal>
+  </Story>
+</Preview>

@@ -1,7 +1,7 @@
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import { DateTime } from 'luxon';
 import { clearFix } from 'polished';
-import React, { FC } from 'react';
+import React, { FC, ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Flex, Text } from 'rebass/styled-components';
 import Avatar from 'ui/elements/Avatar';
@@ -23,8 +23,10 @@ export interface ActivityLoading {
 export interface Activity {
   createdAt: string;
   actor: Actor | null;
+  commentActor?: Actor;
   event: string;
-  preview: JSX.Element;
+  threadUrl?: string;
+  preview: ReactElement;
   communityLink: string;
   communityName: string;
 }
@@ -35,13 +37,31 @@ export const ActivityPreview: FC<Props> = activity => {
   if (activity.status === Status.Loading) {
     return <Trans>loading...</Trans>;
   }
-  // console.log(activity.event);
   return (
     <FeedItem mb={2}>
       {activity.event.toLowerCase().includes('like') ||
       activity.event.toLowerCase().includes('flag')
+        ? activity.actor && <SmallActorComp actor={activity.actor} event={activity.event} />
+        : activity.event.toLowerCase().includes('commented')
         ? activity.actor && (
-            <SmallActorComp actor={activity.actor} event={activity.event} />
+            <SmallActorComp
+              actor={activity.actor}
+              commentActor={activity.commentActor}
+              event={activity.event}
+              threadUrl={activity.threadUrl}
+            />
+          )
+        : activity.event.toLowerCase().includes('discussion') ||
+          activity.event.toLowerCase().includes('comment')
+        ? activity.actor && (
+            <ActorComp
+              actor={activity.actor}
+              createdAt={activity.createdAt}
+              threadUrl={activity.threadUrl}
+              event={activity.event}
+              communityLink={activity.communityLink}
+              communityName={activity.communityName}
+            />
           )
         : activity.actor && (
             <ActorComp
@@ -64,6 +84,7 @@ export interface ActorProps {
   actor?: Actor;
   createdAt: string;
   event: string;
+  threadUrl?: string;
   communityName: string;
   communityLink: string;
 }
@@ -71,6 +92,7 @@ export const ActorComp: FC<ActorProps> = ({
   actor,
   createdAt,
   event,
+  threadUrl,
   communityName,
   communityLink
 }) => {
@@ -85,12 +107,8 @@ export const ActorComp: FC<ActorProps> = ({
                 <Name>
                   <Link to={actor.link}>{actor.name}</Link>
                 </Name>
-                <TextEvent
-                  sx={{ textTransform: 'lowercase' }}
-                  variant="text"
-                  ml={1}
-                >
-                  {event}
+                <TextEvent sx={{ textTransform: 'lowercase' }} variant="text" ml={1}>
+                  {threadUrl ? <Link to={threadUrl}>{event}</Link> : event}
                 </TextEvent>
               </Flex>
             </Flex>
@@ -108,27 +126,31 @@ export const ActorComp: FC<ActorProps> = ({
 
 export interface SmallActorProps {
   actor: Actor;
+  commentActor?: Actor;
   event: string;
+  threadUrl?: string;
 }
 
-export const SmallActorComp: FC<SmallActorProps> = ({ actor, event }) => {
+export const SmallActorComp: FC<SmallActorProps> = ({ actor, commentActor, event, threadUrl }) => {
   return (
     <Member sx={{ alignItems: 'center !important' }}>
       <Avatar
         size="s"
-        initials={actor.name}
-        src={actor.icon}
+        initials={commentActor ? commentActor.name : actor.name}
+        src={commentActor ? commentActor.icon : actor.icon}
         variant="avatar"
       />
       <MemberInfo sx={{ marginTop: 0 }} ml={2}>
         <Flex alignItems="center">
           <Flex flex={1}>
             <Name>
-              <Link to={actor.link}>{actor.name}</Link>
+              <Link to={commentActor ? commentActor.link : actor.link}>
+                {commentActor ? commentActor.name : actor.name}
+              </Link>
             </Name>
-            <Text sx={{ textTransform: 'lowercase' }} variant="text" ml={1}>
-              {event}
-            </Text>
+            <TextEvent sx={{ textTransform: 'lowercase' }} variant="text" ml={1}>
+              {threadUrl ? <Link to={threadUrl}>{event}</Link> : event}
+            </TextEvent>
           </Flex>
         </Flex>
       </MemberInfo>
@@ -144,6 +166,10 @@ const CommunityName = styled(Link)`
 
 const TextEvent = styled(Text)`
   color: ${props => props.theme.colors.dark};
+  a {
+    font-weight: 600;
+    color: ${props => props.theme.colors.darker};
+  }
 `;
 
 const Contents = styled(Box)``;

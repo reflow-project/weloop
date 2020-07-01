@@ -1,16 +1,12 @@
 // Add a resource to collection - step 1
 
 import { i18nMark } from '@lingui/react';
-import { clearFix } from 'polished';
 import * as React from 'react';
-// import { graphql, OperationOption } from 'react-apollo';
-// import { compose, withState } from 'recompose';
 import { FormikHook } from 'ui/@types/types';
 import styled from 'ui/themes/styled';
 import { Search } from 'react-feather';
+import { Box } from 'rebass/styled-components';
 import Loader from 'ui/elements/Loader';
-import { Row } from 'ui/modules/Modal';
-// import Fetched from './fetched';
 import { Input } from '@rebass/forms';
 import { LocaleContext } from '../../../context/global/localizationCtx';
 import Alert from 'ui/elements/Alert';
@@ -19,15 +15,11 @@ const tt = {
   placeholders: {
     url: i18nMark('Enter the URL of the resource'),
     name: i18nMark('A name or title for the resource'),
-    summary: i18nMark(
-      'Please type or copy/paste a summary about the resource...'
-    ),
+    summary: i18nMark('Please type or copy/paste a summary about the resource...'),
     submit: i18nMark('Fetch the resource'),
     image: i18nMark('Enter the URL of an image to represent the resource')
   }
 };
-
-// const FETCH_RESOURCE = require('../../../graphql/fetchResource.graphql');
 
 export interface Props {
   FetchLinkFormik: FormikHook<{ fetchUrl: string }>;
@@ -36,28 +28,13 @@ export interface Props {
   cancelFetched(): any;
 }
 
-// interface FormValues {
-//   fetchUrl: string;
-// }
-
-// const withFetchResource = graphql<{}>(FETCH_RESOURCE, {
-//   name: 'fetchResource'
-//   // TODO enforce proper types for OperationOption
-// } as OperationOption<{}, {}>);
-
 export const ShareLink = (props: Props) => {
   const { i18n } = React.useContext(LocaleContext);
-
-  // const [fetched, isFetched] = React.useState(false);
-  // const [name, onName] = React.useState("");
-  // const [summary, onSummary] = React.useState("");
-  // const [image, onImage] = React.useState("");
-  // const [url, onUrl] = React.useState("");
 
   return (
     <>
       <FetchedRow>
-        <ContainerForm>
+        <Form onSubmit={props.FetchLinkFormik.handleSubmit}>
           <SearchInput
             placeholder={i18n._(tt.placeholders.url)}
             onChange={props.FetchLinkFormik.handleChange}
@@ -67,13 +44,13 @@ export const ShareLink = (props: Props) => {
           <Span
             disabled={props.FetchLinkFormik.isSubmitting}
             type="submit"
-            onClick={props.FetchLinkFormik.submitForm}
+            // onClick={props.FetchLinkFormik.submitForm}
           >
             <Search width={18} height={18} strokeWidth={2} />
           </Span>
-        </ContainerForm>
+        </Form>
         {props.FetchLinkFormik.errors.fetchUrl && (
-          <Alert variant="bad">{props.FetchLinkFormik.errors.fetchUrl}</Alert>
+          <Alert variant="negative">{props.FetchLinkFormik.errors.fetchUrl}</Alert>
         )}
       </FetchedRow>
       {props.FetchLinkFormik.isSubmitting ? (
@@ -81,16 +58,19 @@ export const ShareLink = (props: Props) => {
           <Loader />
         </WrapperLoader>
       ) : null}
-      {props.isFetched ? (
-        <Fetched formik={props.formik} cancel={props.cancelFetched} />
-      ) : null}
+      {props.isFetched ? <Fetched formik={props.formik} cancel={props.cancelFetched} /> : null}
     </>
   );
 };
 
-const FetchedRow = styled(Row)`
+const Form = styled.form`
+  position: relative;
+`;
+
+const FetchedRow = styled(Box)`
   background: ${props => props.theme.colors.appInverse};
   border-top: ${props => props.theme.colors.border};
+  padding: 16px;
 `;
 
 const WrapperLoader = styled.div`
@@ -99,9 +79,9 @@ const WrapperLoader = styled.div`
 
 const SearchInput = styled(Input)`
   height: 40px;
-  background: white;
-  border-radius: 2px;
-  border: ${props => props.theme.colors.border};
+  background: ${props => props.theme.colors.appInverse};
+  border-radius: 4px;
+  border: 3px solid ${props => props.theme.colors.medium} !important;
 `;
 
 const Span = styled.button`
@@ -115,22 +95,11 @@ const Span = styled.button`
   height: 37px;
   cursor: pointer;
   color: ${props => props.theme.colors.gray};
-  &:hover {
-    svg {
-      stroke: ${props => props.theme.colors.secondary};
-    }
+  svg {
+    stroke: ${props => props.theme.colors.secondary} !important;
   }
   .--rtl & {
     left: 2px;
     right: auto;
-  }
-`;
-
-const ContainerForm = styled.div`
-  flex: 1;
-  ${clearFix()};
-  position: relative;
-  & form {
-    width: 100%;
   }
 `;

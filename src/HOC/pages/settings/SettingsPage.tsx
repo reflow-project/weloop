@@ -1,5 +1,4 @@
 import { useMe } from 'fe/session/useMe';
-import { useProfile } from 'fe/user/profile/useProfile';
 import { useFormik } from 'formik';
 import React, { FC, useMemo } from 'react';
 import {
@@ -12,23 +11,49 @@ import { InstanceSettingsSection } from './instance/InstanceSettingsSection';
 import { InstanceInvitesSection } from './invites/InstanceInvitesSection';
 import { InstanceModerationLogSection } from './moderationLog/InstanceModerationLogSection';
 import { PreferencesSettingsSection } from './preferences/PreferencesSettingsSection';
+import { t } from '@lingui/macro';
+import { usePageTitle } from 'context/global/pageCtx';
+import { settingsLocation } from 'routes/SettingsPageRoute';
 
 export enum SettingsPageTab {
-  General,
   Preferences,
   Invites,
   Instance,
   Flags,
-  ModerationLogs
+  ModerationLogs,
+  General
 }
 export interface SettingsPage {
   tab: SettingsPageTab;
   basePath: string;
 }
 
-export const SettingsPage: FC<SettingsPage> = ({ basePath }) => {
-  const { me } = useMe();
-  const { profile, updateProfile } = useProfile();
+const settingsPreferencesPageTitle = t`Settings - Preferences`;
+const settingsInvitesPageTitle = t`Settings - Invites`;
+const settingsInstancePageTitle = t`Settings - Instance`;
+const settingsFlagsPageTitle = t`Settings - Flags`;
+const settingsModerationLogsPageTitle = t`Settings - Moderation`;
+const settingsGeneralPageTitle = t`Settings - General`;
+
+export const SettingsPage: FC<SettingsPage> = ({ basePath, tab }) => {
+  const settingsPageTitle =
+    tab === SettingsPageTab.Preferences
+      ? settingsPreferencesPageTitle
+      : tab === SettingsPageTab.Invites
+      ? settingsInvitesPageTitle
+      : tab === SettingsPageTab.Instance
+      ? settingsInstancePageTitle
+      : tab === SettingsPageTab.Flags
+      ? settingsFlagsPageTitle
+      : tab === SettingsPageTab.ModerationLogs
+      ? settingsModerationLogsPageTitle
+      : tab === SettingsPageTab.General
+      ? settingsGeneralPageTitle
+      : settingsGeneralPageTitle; //never
+  usePageTitle(settingsPageTitle);
+
+  const { me, updateProfile } = useMe();
+  const profile = me?.user;
 
   const initialValues = useMemo<EditProfile>(
     () => ({
@@ -45,13 +70,22 @@ export const SettingsPage: FC<SettingsPage> = ({ basePath }) => {
   const updateProfileFormik = useFormik<EditProfile>({
     initialValues,
     enableReinitialize: true,
-    onSubmit: ({ icon, image, ...profile }) =>
-      updateProfile({ profile, icon, image })
+    onSubmit: ({ icon, image, ...profile }) => updateProfile({ profile, icon, image })
   });
-
+  const sectionPaths: SettingsUIProps['sectionPaths'] = useMemo(
+    () => ({
+      preferences: settingsLocation.getPath({ tab: 'preferences' }, undefined),
+      instance: settingsLocation.getPath({ tab: 'instance' }, undefined),
+      invites: settingsLocation.getPath({ tab: 'invites' }, undefined),
+      flags: settingsLocation.getPath({ tab: 'flags' }, undefined),
+      logs: settingsLocation.getPath({ tab: 'logs' }, undefined),
+      general: settingsLocation.getPath({ tab: undefined }, undefined)
+    }),
+    []
+  );
   const settingsPageProps = useMemo<SettingsUIProps | null>(() => {
     const props: SettingsUIProps = {
-      basePath,
+      sectionPaths,
       displayUsername: profile?.displayUsername || '',
       isAdmin: !!me?.isInstanceAdmin,
       formik: updateProfileFormik,
@@ -62,7 +96,7 @@ export const SettingsPage: FC<SettingsPage> = ({ basePath }) => {
       ModerationLog: <InstanceModerationLogSection />
     };
     return props;
-  }, [profile, updateProfileFormik]);
+  }, [me, profile, sectionPaths, updateProfileFormik]);
 
   return settingsPageProps && <SettingsPageUI {...settingsPageProps} />;
 };

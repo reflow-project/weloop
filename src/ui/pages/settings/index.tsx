@@ -1,32 +1,30 @@
+import { Trans } from '@lingui/macro';
+import { i18nMark } from '@lingui/react';
+import { Input, Textarea } from '@rebass/forms';
 import * as React from 'react';
-import { Flex, Box, Text } from 'rebass/styled-components';
-import media from 'styled-media-query';
-import { i18nMark, Trans } from '@lingui/react';
-import styled from 'ui/themes/styled';
-import { FormikHook } from 'ui/@types/types';
 import {
-  Sliders,
-  Settings as Sett,
-  MapPin,
-  Link,
   Droplet,
-  Mail,
+
   // Zap,
   Flag,
-  Monitor
+  Link,
+  Mail,
+  MapPin,
+  Monitor,
+  Settings as Sett,
+  Sliders
 } from 'react-feather';
-import { Switch, Route, NavLink } from 'react-router-dom';
-import { Input, Textarea } from '@rebass/forms';
-import DropzoneArea from 'ui/modules/DropzoneModal';
-import { ContainerForm, Actions } from 'ui/modules/Modal';
+import { NavLink, Route, Switch } from 'react-router-dom';
+import { Box, Flex, Text } from 'rebass/styled-components';
+import media from 'styled-media-query';
+import { FormikHook } from 'ui/@types/types';
 import Button from 'ui/elements/Button';
 // import { useHistory } from 'react-router';
-import {
-  Wrapper,
-  WrapperCont,
-  MainContainer,
-  HomeBox
-} from 'ui/elements/Layout';
+import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
+import DropzoneArea from 'ui/modules/DropzoneModal';
+import { Actions, ContainerForm } from 'ui/modules/Modal';
+import styled from 'ui/themes/styled';
+import { ReactElement } from 'react';
 
 const tt = {
   placeholders: {
@@ -48,14 +46,21 @@ export interface SettingsLoading {
 export interface Props {
   status?: Status.Loaded;
   formik: FormikHook<EditProfile>;
-  basePath: string;
+  sectionPaths: {
+    preferences: string;
+    instance: string;
+    invites: string;
+    flags: string;
+    logs: string;
+    general: string;
+  };
   displayUsername: string;
   isAdmin: boolean;
-  Preferences: JSX.Element;
-  Instance: JSX.Element;
-  Invites: JSX.Element;
-  Flags: JSX.Element;
-  ModerationLog: JSX.Element;
+  Preferences: ReactElement;
+  Instance: ReactElement;
+  Invites: ReactElement;
+  Flags: ReactElement;
+  ModerationLog: ReactElement;
 }
 
 export interface EditProfile {
@@ -76,7 +81,6 @@ export interface EditInstance {
 }
 
 export const Settings: React.FC<Props> = ({
-  basePath,
   formik,
   Preferences,
   Instance,
@@ -84,38 +88,34 @@ export const Settings: React.FC<Props> = ({
   Flags,
   ModerationLog,
   displayUsername,
-  isAdmin
+  isAdmin,
+  sectionPaths
 }) => {
   const onIconFileSelected = React.useCallback(
-    (file: File) => formik.setFieldValue('icon', file, true),
-    []
+    (file: File) => formik.setValues({ ...formik.values, icon: file }),
+    [formik]
   );
-  const initialIconUrl =
-    'string' === typeof formik.values.icon ? formik.values.icon : '';
+  const initialIconUrl = 'string' === typeof formik.values.icon ? formik.values.icon : '';
   const onImageFileSelected = React.useCallback(
-    (file: File) => formik.setFieldValue('image', file, true),
-    []
+    (file: File) => formik.setValues({ ...formik.values, image: file }),
+    [formik]
   );
-  const initialImageUrl =
-    'string' === typeof formik.values.image ? formik.values.image : '';
+  const initialImageUrl = 'string' === typeof formik.values.image ? formik.values.image : '';
 
   return (
     <MainContainer>
-      <Sidebar basePath={basePath} isAdmin={isAdmin} />
+      <Sidebar sectionPaths={sectionPaths} isAdmin={isAdmin} />
       <HomeBox>
         <WrapperCont>
           <Wrapper>
             <SettingsWrapper>
               <Switch>
-                <Route path={`${basePath}/preferences`}>{Preferences}</Route>
-                <Route path={`${basePath}/instance`}>{Instance}</Route>
-                <Route path={`${basePath}/invites`}>{Invites}</Route>
-                <Route path={`${basePath}/flags`}>{Flags}</Route>
-                <Route path={`${basePath}/logs`}>{ModerationLog}</Route>
-                {/* <Route path={`${basePath}/accounts`}>acc</Route>
-              <Route path={`${basePath}/notifications`}>notif</Route>
-              <Route path={`${basePath}/admin`}>admin</Route> */}
-                <Route path={`${basePath}`}>
+                <Route path={sectionPaths.preferences}>{Preferences}</Route>
+                <Route path={sectionPaths.instance}>{Instance}</Route>
+                <Route path={sectionPaths.invites}>{Invites}</Route>
+                <Route path={sectionPaths.flags}>{Flags}</Route>
+                <Route path={sectionPaths.logs}>{ModerationLog}</Route>
+                <Route path={sectionPaths.general}>
                   <ProfileBox p={1} pb={2}>
                     <Hero>
                       <Flex>
@@ -236,34 +236,35 @@ const SettingsWrapper = styled(Box)`
 //   }
 // `;
 
-const Sidebar = ({ basePath, isAdmin }) => {
+const Sidebar: React.FC<{ sectionPaths: Props['sectionPaths']; isAdmin: boolean }> = ({
+  sectionPaths,
+  isAdmin
+}) => {
   return (
-    <WrapperPanel ml={0} mr={2}>
+    <WrapperPanel mr={2}>
       <Panel>
         <Nav>
           <NavItem p={3} fontSize={1}>
-            <NavLink exact to={`${basePath}/`}>
-              <Flex
-                alignItems="center"
-                sx={{ textTransform: 'capitalize', fontSize: '14px' }}
-              >
+            <NavLink exact to={sectionPaths.general}>
+              <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                 <Icon className="icon" mr={1}>
                   <Sett size={20} />
                 </Icon>
-                General information
+                <Name>
+                  <Trans>General information</Trans>
+                </Name>
               </Flex>
             </NavLink>
           </NavItem>
           <NavItem p={3} fontSize={1}>
-            <NavLink to={`${basePath}/preferences`}>
-              <Flex
-                alignItems="center"
-                sx={{ textTransform: 'capitalize', fontSize: '14px' }}
-              >
+            <NavLink to={sectionPaths.preferences}>
+              <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                 <Icon className="icon" mr={1}>
                   <Sliders size={20} />
                 </Icon>
-                Preferences
+                <Name>
+                  <Trans>Preferences</Trans>
+                </Name>
               </Flex>
             </NavLink>
           </NavItem>
@@ -282,55 +283,51 @@ const Sidebar = ({ basePath, isAdmin }) => {
                 </Flex>
               </SectionTitle>
               <NavItem p={3} fontSize={1}>
-                <NavLink to={`${basePath}/instance`}>
-                  <Flex
-                    alignItems="center"
-                    sx={{ textTransform: 'capitalize', fontSize: '14px' }}
-                  >
+                <NavLink to={sectionPaths.instance}>
+                  <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                     <Icon className="icon" mr={1}>
                       <Droplet size={20} />
                     </Icon>
-                    Instance
+                    <Name>
+                      <Trans>Instance</Trans>
+                    </Name>
                   </Flex>
                 </NavLink>
               </NavItem>
               <NavItem p={3} fontSize={1}>
-                <NavLink to={`${basePath}/invites`}>
-                  <Flex
-                    alignItems="center"
-                    sx={{ textTransform: 'capitalize', fontSize: '14px' }}
-                  >
+                <NavLink to={sectionPaths.invites}>
+                  <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                     <Icon className="icon" mr={1}>
                       <Mail size={20} />
                     </Icon>
-                    Invites
+                    <Name>
+                      <Trans>Invites</Trans>
+                    </Name>
                   </Flex>
                 </NavLink>
               </NavItem>
               <NavItem p={3} fontSize={1}>
                 {/* <NavLink to={`${basePath}/reports`}> */}
-                <NavLink to={`${basePath}/flags`}>
-                  <Flex
-                    alignItems="center"
-                    sx={{ textTransform: 'capitalize', fontSize: '14px' }}
-                  >
+                <NavLink to={sectionPaths.flags}>
+                  <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                     <Icon className="icon" mr={1}>
                       <Flag size={20} />
                     </Icon>
-                    Flags
+                    <Name>
+                      <Trans>Flags</Trans>
+                    </Name>
                   </Flex>
                 </NavLink>
               </NavItem>
               <NavItem p={3} fontSize={1}>
-                <NavLink to={`${basePath}/logs`}>
-                  <Flex
-                    alignItems="center"
-                    sx={{ textTransform: 'capitalize', fontSize: '14px' }}
-                  >
+                <NavLink to={sectionPaths.logs}>
+                  <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                     <Icon className="icon" mr={1}>
                       <Monitor size={20} />
                     </Icon>
-                    Moderation log
+                    <Name>
+                      <Trans>Moderation log</Trans>
+                    </Name>
                   </Flex>
                 </NavLink>
               </NavItem>
@@ -363,6 +360,12 @@ const Sidebar = ({ basePath, isAdmin }) => {
     </WrapperPanel>
   );
 };
+
+const Name = styled(Text)`
+  ${media.lessThan('medium')`
+display: none;
+`};
+`;
 
 const SectionTitle = styled(Flex)`
   border-top: 4px solid ${props => props.theme.colors.lighter};
@@ -439,10 +442,6 @@ const Location = styled(Flex)`
       stroke: ${props => props.theme.colors.medium};
       vertical-align: text-bottom;
     }
-    .--rtl & {
-      margin-left: 8px;
-      margin-right: 0px;
-    }
   }
 `;
 
@@ -458,10 +457,6 @@ const RelevantLink = styled(Flex)`
     & svg {
       stroke: ${props => props.theme.colors.medium};
       vertical-align: text-bottom;
-    }
-    .--rtl & {
-      margin-left: 8px;
-      margin-right: 0px;
     }
   }
 `;
@@ -536,9 +531,9 @@ export const WrapperPanel = styled(Flex)`
   ${media.lessThan('1095px')`
   width: 290px;
 `};
-  ${media.lessThan('1005px')`
-   display: none;
-  `};
+  ${media.lessThan('medium')`
+  width: 80px;
+`};
 `;
 
 export const Panel = styled(Box)`

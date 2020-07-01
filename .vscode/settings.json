@@ -1,5 +1,3 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "editor.formatOnSave": false,
-  "prettier.semi": true
+  "todo-tree.general.rootFolder": "${workspaceFolder}/src"
 }

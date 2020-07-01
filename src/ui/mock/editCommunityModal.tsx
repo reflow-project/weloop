@@ -5,11 +5,10 @@ import {
 import { useFormik } from 'formik';
 import { action } from '@storybook/addon-actions';
 
-export const getEditCommunityModalProps = (): EditCommunityProps => {
+export const useGetEditCommunityModalProps = (): EditCommunityProps => {
   const formik = useFormik<EditCommunityFormValues>({
     initialValues: {
-      icon:
-        'https://upload.wikimedia.org/wikipedia/commons/6/63/Open_Badges_-_Logo.png',
+      icon: 'https://upload.wikimedia.org/wikipedia/commons/6/63/Open_Badges_-_Logo.png',
       name: 'Badge basics',
       summary: 'What are Open Badges and how can they be used?'
     },

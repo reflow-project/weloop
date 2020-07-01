@@ -11,13 +11,7 @@ import media from 'styled-media-query';
 import styled from 'ui/themes/styled';
 import { Flex, Text, Box } from 'rebass/styled-components';
 
-import {
-  Actions,
-  AlertWrapper,
-  Container,
-  ContainerForm,
-  CounterChars
-} from 'ui/modules/Modal';
+import { Actions, AlertWrapper, Container, ContainerForm, CounterChars } from 'ui/modules/Modal';
 
 const tt = {
   placeholders: {
@@ -42,76 +36,77 @@ export interface EditCommunityFormValues {
 
 export const EditCommunityPanel: React.FC<Props> = ({ cancel, formik }) => {
   const onIconFileSelected = React.useCallback(
-    (file: File) => formik.setFieldValue('icon', file, true),
-    []
+    (file: File) => formik.setValues({ ...formik.values, icon: file }),
+    [formik]
   );
-  const initialIconUrl =
-    'string' === typeof formik.values.icon ? formik.values.icon : '';
+  const initialIconUrl = 'string' === typeof formik.values.icon ? formik.values.icon : '';
   return (
     <Container>
-      <Hero>
-        <Box sx={{ width: '120px', height: '120px' }}>
-          <DropzoneArea
-            initialUrl={initialIconUrl}
-            onFileSelect={onIconFileSelected}
-            filePattern="image/*"
-          />
-        </Box>
-        {/* <Background style={{ backgroundImage: `url(${c.icon})` }} /> */}
-        <HeroInfo>
-          <Title fontSize={5} fontWeight={'bold'}>
-            <CollectionContainerForm>
-              <Input
-                placeholder={tt.placeholders.name}
-                disabled={formik.isSubmitting}
-                name="name"
-                value={formik.values.name}
-                onChange={formik.handleChange}
-              />
-              <CounterChars>{60 - formik.values.name.length}</CounterChars>
-              {formik.errors.name && (
-                <AlertWrapper>
-                  <Alert variant="bad">{formik.errors.name}</Alert>
-                </AlertWrapper>
-              )}
-            </CollectionContainerForm>
-          </Title>
+      <form onSubmit={formik.handleSubmit}>
+        <Hero>
+          <Box sx={{ width: '120px', height: '120px' }}>
+            <DropzoneArea
+              initialUrl={initialIconUrl}
+              onFileSelect={onIconFileSelected}
+              filePattern="image/*"
+            />
+          </Box>
+          {/* <Background style={{ backgroundImage: `url("${c.icon}")` }} /> */}
+          <HeroInfo>
+            <Title fontSize={5} fontWeight={'bold'}>
+              <CollectionContainerForm>
+                <Input
+                  placeholder={tt.placeholders.name}
+                  disabled={formik.isSubmitting}
+                  name="name"
+                  value={formik.values.name}
+                  onChange={formik.handleChange}
+                />
+                <CounterChars>{60 - formik.values.name.length}</CounterChars>
+                {formik.errors.name && (
+                  <AlertWrapper>
+                    <Alert variant="negative">{formik.errors.name}</Alert>
+                  </AlertWrapper>
+                )}
+              </CollectionContainerForm>
+            </Title>
 
-          <Description fontSize={2} mt={2}>
-            <CollectionContainerForm>
-              <Textarea
-                placeholder={tt.placeholders.summary}
-                disabled={formik.isSubmitting}
-                name="summary"
-                value={formik.values.summary}
-                onChange={formik.handleChange}
-              />
-              <CounterChars>{500 - formik.values.summary.length}</CounterChars>
-              {formik.errors.summary && (
-                <AlertWrapper>
-                  <Alert variant="bad">{formik.errors.summary}</Alert>
-                </AlertWrapper>
-              )}
-            </CollectionContainerForm>
-          </Description>
-        </HeroInfo>
-      </Hero>
+            <Description fontSize={2} mt={2}>
+              <CollectionContainerForm>
+                <Textarea
+                  placeholder={tt.placeholders.summary}
+                  disabled={formik.isSubmitting}
+                  name="summary"
+                  value={formik.values.summary}
+                  onChange={formik.handleChange}
+                />
+                <CounterChars>{500 - formik.values.summary.length}</CounterChars>
+                {formik.errors.summary && (
+                  <AlertWrapper>
+                    <Alert variant="negative">{formik.errors.summary}</Alert>
+                  </AlertWrapper>
+                )}
+              </CollectionContainerForm>
+            </Description>
+          </HeroInfo>
+        </Hero>
 
-      <Actions>
-        <Button
-          variant="primary"
-          isSubmitting={formik.isSubmitting}
-          isDisabled={formik.isSubmitting}
-          type="submit"
-          style={{ marginLeft: '10px' }}
-          onClick={formik.submitForm}
-        >
-          <Trans>Save</Trans>
-        </Button>
-        <Button variant="outline" onClick={cancel}>
-          <Trans>Cancel</Trans>
-        </Button>
-      </Actions>
+        <Actions>
+          <Button
+            variant="primary"
+            isSubmitting={formik.isSubmitting}
+            isDisabled={formik.isSubmitting}
+            type="submit"
+            style={{ marginLeft: '10px' }}
+            // onClick={formik.submitForm}
+          >
+            <Trans>Save</Trans>
+          </Button>
+          <Button variant="outline" onClick={cancel}>
+            <Trans>Cancel</Trans>
+          </Button>
+        </Actions>
+      </form>
     </Container>
   );
 };

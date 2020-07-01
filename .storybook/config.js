@@ -2,7 +2,7 @@ import { configure, addDecorator, addParameters } from '@storybook/react';
 import { withA11y } from '@storybook/addon-a11y';
 import { themeDeco } from 'ui/styleguide/storiesThemeDecorator';
 import { DocsPage, DocsContainer } from '@storybook/addon-docs/blocks';
-import {logo_large_url, APP_NAME, related_urls} from 'mn-constants';
+import { logo_large_url, APP_NAME, related_urls } from 'mn-constants';
 import { create } from '@storybook/theming';
 import StoryRouter from 'storybook-react-router';
 
@@ -17,7 +17,7 @@ const theme = create({
 
 addParameters({
   options: {
-    theme, 
+    theme,
     showPanel: false
   },
   docs: {
@@ -59,13 +59,12 @@ const loaderFn = () => {
     require('../src/ui/pages/user/a.stories.mdx'),
     require('../src/ui/pages/user/b.stories.mdx'),
     require('../src/ui/pages/settings/admin.stories.mdx'),
-    require('../src/ui/pages/settings/user.stories.mdx'),
     require('../src/ui/pages/notFound/a.stories.mdx'),
     // Modules
     require('../src/ui/modules/ActivityPreview/a.stories.mdx'),
     require('../src/ui/modules/ShareLink/a.stories.mdx'),
     // require('../src/ui/modules/addResource/a.stories.mdx'),
-    require('../src/ui/modules/ConfirmationModal/a.stories.mdx'),
+    require('../src/ui/modules/ConfirmationPanel/a.stories.mdx'),
     require('../src/ui/modules/CreateCollectionPanel/a.stories.mdx'),
     require('../src/ui/modules/CreateCommunityPanel/a.stories.mdx'),
     require('../src/ui/modules/EditCollectionPanel/a.stories.mdx'),

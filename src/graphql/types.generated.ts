@@ -188,7 +188,7 @@ export type CollectionThreadsArgs = {
 export type CollectionInput = {
   extraInfo?: Maybe<Scalars['Json']>,
   name: Scalars['String'],
-  preferredUsername: Scalars['String'],
+  preferredUsername?: Maybe<Scalars['String']>,
   summary?: Maybe<Scalars['String']>,
 };
 
@@ -387,7 +387,7 @@ export type CommunityThreadsArgs = {
 export type CommunityInput = {
   extraInfo?: Maybe<Scalars['Json']>,
   name: Scalars['String'],
-  preferredUsername: Scalars['String'],
+  preferredUsername?: Maybe<Scalars['String']>,
   summary?: Maybe<Scalars['String']>,
 };
 
@@ -608,6 +608,12 @@ export type Me = {
   isConfirmed: Scalars['Boolean'],
   /** Is the user a witch or wizard? */
   isInstanceAdmin: Scalars['Boolean'],
+  /** 
+ * I hope to go away soon, but in the interim I return just enough
+   * information about the collections and communities a user follows
+   * to match them up to the search results in the frontend
+ **/
+  searchFollows: Array<SearchFollow>,
   /** The public info */
   user: User,
   /** Would the user like to receive digest emails of updates? */
@@ -745,85 +751,66 @@ export type ResourcesPage = {
 
 export type RootMutationType = {
    __typename?: 'RootMutationType',
-  /** Update a resource */
-  updateResource?: Maybe<Resource>,
-  /** Close a flag */
-  resolveFlag?: Maybe<Flag>,
-  /** Flag a user, community, collection, resource or comment, returning the flag */
-  createFlag?: Maybe<Flag>,
   /** Fetch metadata from webpage */
   fetchWebMetadata?: Maybe<WebMetadata>,
-  /** Reset password request */
-  resetPasswordRequest?: Maybe<Scalars['Boolean']>,
-  /** Log out */
-  deleteSession?: Maybe<Scalars['Boolean']>,
-  deleteRegisterEmailAccess?: Maybe<RegisterEmailAccess>,
-  /** Deletes my account! */
-  deleteSelf?: Maybe<Scalars['Boolean']>,
-  createRegisterEmailDomainAccess: RegisterEmailDomainAccess,
-  /** Update a community */
-  updateCommunity?: Maybe<Community>,
-  /** Confirm email. Returns a login token. */
-  confirmEmail?: Maybe<AuthPayload>,
-  /** Update a profile */
-  updateProfile?: Maybe<Me>,
-  /** Sends an email invite */
-  sendInvite?: Maybe<Scalars['Boolean']>,
-  /** Reply to an existing comment in a thread */
-  createReply?: Maybe<Comment>,
-  /** Follow a community, collection or a user by their canonical url returning the follow */
-  createFollowByUrl?: Maybe<Follow>,
-  /** Modify a comment */
-  updateComment?: Maybe<Comment>,
-  /** Log in */
-  createSession?: Maybe<AuthPayload>,
-  /** Like a comment, collection, or resource returning the like */
-  createLike?: Maybe<Like>,
-  /** Create a user */
-  createUser?: Maybe<Me>,
-  /** Copy a resource */
-  copyResource?: Maybe<Resource>,
-  /** Follow a community, collection or thread returning the follow */
-  createFollow?: Maybe<Follow>,
-  deleteRegisterEmailDomainAccess?: Maybe<RegisterEmailDomainAccess>,
   createRegisterEmailAccess: RegisterEmailAccess,
-  /** Create a community */
-  createCommunity?: Maybe<Community>,
-  /** Create a collection */
-  createCollection?: Maybe<Collection>,
-  /** Create a resource */
-  createResource?: Maybe<Resource>,
   /** Update a collection */
   updateCollection?: Maybe<Collection>,
   /** Reset password */
   resetPassword?: Maybe<AuthPayload>,
-  /** Delete more or less anything */
-  delete?: Maybe<DeleteContext>,
+  deleteRegisterEmailAccess?: Maybe<RegisterEmailAccess>,
+  /** Log in */
+  createSession?: Maybe<AuthPayload>,
+  /** Deletes my account! */
+  deleteSelf?: Maybe<Scalars['Boolean']>,
+  /** Update a resource */
+  updateResource?: Maybe<Resource>,
+  /** Follow a community, collection or a user by their canonical url returning the follow */
+  createFollowByUrl?: Maybe<Follow>,
+  /** Confirm email. Returns a login token. */
+  confirmEmail?: Maybe<AuthPayload>,
   /** Deactivate a remote user, blocking further activities from it */
   deactivateUser?: Maybe<User>,
+  /** Modify a comment */
+  updateComment?: Maybe<Comment>,
+  /** Like a comment, collection, or resource returning the like */
+  createLike?: Maybe<Like>,
+  /** Reset password request */
+  resetPasswordRequest?: Maybe<Scalars['Boolean']>,
+  /** Sends an email invite */
+  sendInvite?: Maybe<Scalars['Boolean']>,
+  /** Log out */
+  deleteSession?: Maybe<Scalars['Boolean']>,
+  /** Reply to an existing comment in a thread */
+  createReply?: Maybe<Comment>,
+  /** Copy a resource */
+  copyResource?: Maybe<Resource>,
+  createRegisterEmailDomainAccess: RegisterEmailDomainAccess,
   /** Feature a community, or collection, returning the feature */
   createFeature?: Maybe<Feature>,
+  /** Follow a community, collection or thread returning the follow */
+  createFollow?: Maybe<Follow>,
+  /** Create a user */
+  createUser?: Maybe<Me>,
+  /** Close a flag */
+  resolveFlag?: Maybe<Flag>,
+  /** Create a community */
+  createCommunity?: Maybe<Community>,
+  /** Update a profile */
+  updateProfile?: Maybe<Me>,
+  /** Create a collection */
+  createCollection?: Maybe<Collection>,
+  deleteRegisterEmailDomainAccess?: Maybe<RegisterEmailDomainAccess>,
+  /** Update a community */
+  updateCommunity?: Maybe<Community>,
+  /** Delete more or less anything */
+  delete?: Maybe<DeleteContext>,
+  /** Flag a user, community, collection, resource or comment, returning the flag */
+  createFlag?: Maybe<Flag>,
   /** Create a new thread */
   createThread?: Maybe<Comment>,
-};
-
-
-export type RootMutationTypeUpdateResourceArgs = {
-  content?: Maybe<UploadInput>,
-  icon?: Maybe<UploadInput>,
-  resource: ResourceInput,
-  resourceId: Scalars['String']
-};
-
-
-export type RootMutationTypeResolveFlagArgs = {
-  flagId: Scalars['String']
-};
-
-
-export type RootMutationTypeCreateFlagArgs = {
-  contextId: Scalars['String'],
-  message: Scalars['String']
+  /** Create a resource */
+  createResource?: Maybe<Resource>,
 };
 
 
@@ -832,127 +819,8 @@ export type RootMutationTypeFetchWebMetadataArgs = {
 };
 
 
-export type RootMutationTypeResetPasswordRequestArgs = {
-  email: Scalars['String']
-};
-
-
-export type RootMutationTypeDeleteRegisterEmailAccessArgs = {
-  id: Scalars['String']
-};
-
-
-export type RootMutationTypeDeleteSelfArgs = {
-  iAmSure: Scalars['Boolean']
-};
-
-
-export type RootMutationTypeCreateRegisterEmailDomainAccessArgs = {
-  domain: Scalars['String']
-};
-
-
-export type RootMutationTypeUpdateCommunityArgs = {
-  community: CommunityUpdateInput,
-  communityId: Scalars['String'],
-  icon?: Maybe<UploadInput>,
-  image?: Maybe<UploadInput>
-};
-
-
-export type RootMutationTypeConfirmEmailArgs = {
-  token: Scalars['String']
-};
-
-
-export type RootMutationTypeUpdateProfileArgs = {
-  icon?: Maybe<UploadInput>,
-  image?: Maybe<UploadInput>,
-  profile: UpdateProfileInput
-};
-
-
-export type RootMutationTypeSendInviteArgs = {
-  email: Scalars['String']
-};
-
-
-export type RootMutationTypeCreateReplyArgs = {
-  comment: CommentInput,
-  inReplyToId: Scalars['String'],
-  threadId: Scalars['String']
-};
-
-
-export type RootMutationTypeCreateFollowByUrlArgs = {
-  url: Scalars['String']
-};
-
-
-export type RootMutationTypeUpdateCommentArgs = {
-  comment: CommentInput,
-  commentId: Scalars['String']
-};
-
-
-export type RootMutationTypeCreateSessionArgs = {
-  email: Scalars['String'],
-  password: Scalars['String']
-};
-
-
-export type RootMutationTypeCreateLikeArgs = {
-  contextId: Scalars['String']
-};
-
-
-export type RootMutationTypeCreateUserArgs = {
-  icon?: Maybe<UploadInput>,
-  image?: Maybe<UploadInput>,
-  user: RegistrationInput
-};
-
-
-export type RootMutationTypeCopyResourceArgs = {
-  collectionId: Scalars['String'],
-  resourceId: Scalars['String']
-};
-
-
-export type RootMutationTypeCreateFollowArgs = {
-  contextId: Scalars['String']
-};
-
-
-export type RootMutationTypeDeleteRegisterEmailDomainAccessArgs = {
-  id: Scalars['String']
-};
-
-
 export type RootMutationTypeCreateRegisterEmailAccessArgs = {
   email: Scalars['String']
-};
-
-
-export type RootMutationTypeCreateCommunityArgs = {
-  community: CommunityInput,
-  icon?: Maybe<UploadInput>,
-  image?: Maybe<UploadInput>
-};
-
-
-export type RootMutationTypeCreateCollectionArgs = {
-  collection: CollectionInput,
-  communityId: Scalars['String'],
-  icon?: Maybe<UploadInput>
-};
-
-
-export type RootMutationTypeCreateResourceArgs = {
-  collectionId: Scalars['String'],
-  content: UploadInput,
-  icon?: Maybe<UploadInput>,
-  resource: ResourceInput
 };
 
 
@@ -969,8 +837,37 @@ export type RootMutationTypeResetPasswordArgs = {
 };
 
 
-export type RootMutationTypeDeleteArgs = {
-  contextId: Scalars['String']
+export type RootMutationTypeDeleteRegisterEmailAccessArgs = {
+  id: Scalars['String']
+};
+
+
+export type RootMutationTypeCreateSessionArgs = {
+  email: Scalars['String'],
+  password: Scalars['String']
+};
+
+
+export type RootMutationTypeDeleteSelfArgs = {
+  iAmSure: Scalars['Boolean']
+};
+
+
+export type RootMutationTypeUpdateResourceArgs = {
+  content?: Maybe<UploadInput>,
+  icon?: Maybe<UploadInput>,
+  resource: ResourceInput,
+  resourceId: Scalars['String']
+};
+
+
+export type RootMutationTypeCreateFollowByUrlArgs = {
+  url: Scalars['String']
+};
+
+
+export type RootMutationTypeConfirmEmailArgs = {
+  token: Scalars['String']
 };
 
 
@@ -979,14 +876,123 @@ export type RootMutationTypeDeactivateUserArgs = {
 };
 
 
+export type RootMutationTypeUpdateCommentArgs = {
+  comment: CommentInput,
+  commentId: Scalars['String']
+};
+
+
+export type RootMutationTypeCreateLikeArgs = {
+  contextId: Scalars['String']
+};
+
+
+export type RootMutationTypeResetPasswordRequestArgs = {
+  email: Scalars['String']
+};
+
+
+export type RootMutationTypeSendInviteArgs = {
+  email: Scalars['String']
+};
+
+
+export type RootMutationTypeCreateReplyArgs = {
+  comment: CommentInput,
+  inReplyToId: Scalars['String'],
+  threadId: Scalars['String']
+};
+
+
+export type RootMutationTypeCopyResourceArgs = {
+  collectionId: Scalars['String'],
+  resourceId: Scalars['String']
+};
+
+
+export type RootMutationTypeCreateRegisterEmailDomainAccessArgs = {
+  domain: Scalars['String']
+};
+
+
 export type RootMutationTypeCreateFeatureArgs = {
   contextId: Scalars['String']
+};
+
+
+export type RootMutationTypeCreateFollowArgs = {
+  contextId: Scalars['String']
+};
+
+
+export type RootMutationTypeCreateUserArgs = {
+  icon?: Maybe<UploadInput>,
+  image?: Maybe<UploadInput>,
+  user: RegistrationInput
+};
+
+
+export type RootMutationTypeResolveFlagArgs = {
+  flagId: Scalars['String']
+};
+
+
+export type RootMutationTypeCreateCommunityArgs = {
+  community: CommunityInput,
+  icon?: Maybe<UploadInput>,
+  image?: Maybe<UploadInput>
+};
+
+
+export type RootMutationTypeUpdateProfileArgs = {
+  icon?: Maybe<UploadInput>,
+  image?: Maybe<UploadInput>,
+  profile: UpdateProfileInput
+};
+
+
+export type RootMutationTypeCreateCollectionArgs = {
+  collection: CollectionInput,
+  communityId: Scalars['String'],
+  icon?: Maybe<UploadInput>
+};
+
+
+export type RootMutationTypeDeleteRegisterEmailDomainAccessArgs = {
+  id: Scalars['String']
+};
+
+
+export type RootMutationTypeUpdateCommunityArgs = {
+  community: CommunityUpdateInput,
+  communityId: Scalars['String'],
+  icon?: Maybe<UploadInput>,
+  image?: Maybe<UploadInput>
+};
+
+
+export type RootMutationTypeDeleteArgs = {
+  contextId: Scalars['String']
+};
+
+
+export type RootMutationTypeCreateFlagArgs = {
+  contextId: Scalars['String'],
+  message: Scalars['String']
 };
 
 
 export type RootMutationTypeCreateThreadArgs = {
   comment: CommentInput,
   contextId: Scalars['String']
+};
+
+
+export type RootMutationTypeCreateResourceArgs = {
+  collectionId: Scalars['String'],
+  content: UploadInput,
+  icon?: Maybe<UploadInput>,
+  resource: ResourceInput
 };
 
 export type RootQueryType = {
@@ -1128,6 +1134,19 @@ export type RootQueryTypeUsernameAvailableArgs = {
   username: Scalars['String']
 };
 
+/** 
+ * I hope to go away soon, but in the interim I am a subset of a
+ * collection or community the user follows.
+ **/
+export type SearchFollow = {
+   __typename?: 'SearchFollow',
+  canonicalUrl: Scalars['String'],
+  collectionId?: Maybe<Scalars['String']>,
+  communityId?: Maybe<Scalars['String']>,
+  followId: Scalars['String'],
+  isCreator: Scalars['Boolean'],
+};
+
 /** A thread is essentially a list of comments */
 export type Thread = {
    __typename?: 'Thread',
@@ -1204,82 +1223,82 @@ export type UploadInput = {
 /** User profile information */
 export type User = {
    __typename?: 'User',
-  /** The users a user is following, most recently followed first */
-  userFollows?: Maybe<FollowsPage>,
-  /** Total number of followers, including private follows */
-  followerCount?: Maybe<Scalars['Int']>,
-  /** Whether the user has a public profile */
-  isPublic: Scalars['Boolean'],
+  /** The last time the user did anything */
+  lastActivity?: Maybe<Scalars['String']>,
+  /** Comments the user has made, most recently created first */
+  comments?: Maybe<CommentsPage>,
   /** A header background image url */
   image?: Maybe<Content>,
-  /** Total number of likers, including those we can't see */
-  likerCount?: Maybe<Scalars['Int']>,
   /** A valid URL */
   website?: Maybe<Scalars['String']>,
-  /** A url for the user, may be to a remote instance */
-  canonicalUrl?: Maybe<Scalars['String']>,
   /** Total number of likes, including those we can't see */
   likeCount?: Maybe<Scalars['Int']>,
-  /** A JSON document containing more info beyond the default fields */
-  extraInfo?: Maybe<Scalars['Json']>,
-  /** An instance-local UUID identifying the user */
-  id: Scalars['ID'],
-  /** When the user last updated their profile */
-  updatedAt: Scalars['String'],
+  /** The likes a user has created */
+  likes?: Maybe<LikesPage>,
   /** An avatar url */
   icon?: Maybe<Content>,
-  /** The collections a user is following, most recently followed first */
-  collectionFollows?: Maybe<FollowsPage>,
-  /** A name field */
-  name?: Maybe<Scalars['String']>,
-  /** Subscriptions users have to the collection */
-  follows?: Maybe<FollowsPage>,
-  /** An instance-unique identifier shared with communities and collections */
-  preferredUsername: Scalars['String'],
-  /** Possibly biographical information */
-  summary?: Maybe<Scalars['String']>,
+  /** When the user last updated their profile */
+  updatedAt: Scalars['String'],
+  /** The current user's flag of this user, if any */
+  myFlag?: Maybe<Flag>,
   /** Whether an instance admin has disabled the user's account */
   isDisabled: Scalars['Boolean'],
-  /** Activities of the user, most recently created first */
-  outbox?: Maybe<ActivitiesPage>,
+  /** Whether the user is local to the instance */
+  isLocal: Scalars['Boolean'],
+  /** Subscriptions users have to the collection */
+  followers?: Maybe<FollowsPage>,
+  /** A preferred username + the host domain */
+  displayUsername: Scalars['String'],
+  /** Possibly biographical information */
+  summary?: Maybe<Scalars['String']>,
+  /** Free text */
+  location?: Maybe<Scalars['String']>,
+  /** Total number of likers, including those we can't see */
+  likerCount?: Maybe<Scalars['Int']>,
+  /** The likes a user has from other people */
+  likers?: Maybe<LikesPage>,
+  /** A JSON document containing more info beyond the default fields */
+  extraInfo?: Maybe<Scalars['Json']>,
+  /** Total number of followers, including private follows */
+  followerCount?: Maybe<Scalars['Int']>,
+  /** An instance-local ULID identifying the user */
+  id: Scalars['ID'],
+  /** The communities a user is following, most recently followed first */
+  communityFollows?: Maybe<FollowsPage>,
+  /** A name field */
+  name?: Maybe<Scalars['String']>,
   /** The current user's like of this user, if any */
   myLike?: Maybe<Like>,
+  /** Whether the user has a public profile */
+  isPublic: Scalars['Boolean'],
+  /** When the user signed up */
+  createdAt: Scalars['String'],
+  /** Subscriptions users have to the collection */
+  follows?: Maybe<FollowsPage>,
   /** 
  * Activities of others the user is following, most recently created
    * first. Only available to the current user under `me`
  **/
   inbox?: Maybe<ActivitiesPage>,
-  /** The current user's follow of this user, if any */
-  myFollow?: Maybe<Follow>,
-  /** The last time the user did anything */
-  lastActivity?: Maybe<Scalars['String']>,
-  /** The current user's flag of this user, if any */
-  myFlag?: Maybe<Flag>,
+  /** A url for the user, may be to a remote instance */
+  canonicalUrl?: Maybe<Scalars['String']>,
+  /** An instance-unique identifier shared with communities and collections */
+  preferredUsername: Scalars['String'],
   /** Total number of things the user follows, including privately */
   followCount?: Maybe<Scalars['Int']>,
-  /** The likes a user has from other people */
-  likers?: Maybe<LikesPage>,
-  /** Whether the user is local to the instance */
-  isLocal: Scalars['Boolean'],
-  /** The communities a user is following, most recently followed first */
-  communityFollows?: Maybe<FollowsPage>,
-  /** When the user signed up */
-  createdAt: Scalars['String'],
-  /** A preferred username + the host domain */
-  displayUsername: Scalars['String'],
-  /** Comments the user has made, most recently created first */
-  comments?: Maybe<CommentsPage>,
-  /** Free text */
-  location?: Maybe<Scalars['String']>,
-  /** The likes a user has created */
-  likes?: Maybe<LikesPage>,
-  /** Subscriptions users have to the collection */
-  followers?: Maybe<FollowsPage>,
+  /** The users a user is following, most recently followed first */
+  userFollows?: Maybe<FollowsPage>,
+  /** Activities of the user, most recently created first */
+  outbox?: Maybe<ActivitiesPage>,
+  /** The current user's follow of this user, if any */
+  myFollow?: Maybe<Follow>,
+  /** The collections a user is following, most recently followed first */
+  collectionFollows?: Maybe<FollowsPage>,
 };
 
 
 /** User profile information */
-export type UserUserFollowsArgs = {
+export type UserCommentsArgs = {
   after?: Maybe<Array<Scalars['Cursor']>>,
   before?: Maybe<Array<Scalars['Cursor']>>,
   limit?: Maybe<Scalars['Int']>
@@ -1287,7 +1306,7 @@ export type UserUserFollowsArgs = {
 
 
 /** User profile information */
-export type UserCollectionFollowsArgs = {
+export type UserLikesArgs = {
   after?: Maybe<Array<Scalars['Cursor']>>,
   before?: Maybe<Array<Scalars['Cursor']>>,
   limit?: Maybe<Scalars['Int']>
@@ -1295,23 +1314,7 @@ export type UserCollectionFollowsArgs = {
 
 
 /** User profile information */
-export type UserFollowsArgs = {
-  after?: Maybe<Array<Scalars['Cursor']>>,
-  before?: Maybe<Array<Scalars['Cursor']>>,
-  limit?: Maybe<Scalars['Int']>
-};
-
-
-/** User profile information */
-export type UserOutboxArgs = {
-  after?: Maybe<Array<Scalars['Cursor']>>,
-  before?: Maybe<Array<Scalars['Cursor']>>,
-  limit?: Maybe<Scalars['Int']>
-};
-
-
-/** User profile information */
-export type UserInboxArgs = {
+export type UserFollowersArgs = {
   after?: Maybe<Array<Scalars['Cursor']>>,
   before?: Maybe<Array<Scalars['Cursor']>>,
   limit?: Maybe<Scalars['Int']>
@@ -1335,7 +1338,7 @@ export type UserCommunityFollowsArgs = {
 
 
 /** User profile information */
-export type UserCommentsArgs = {
+export type UserFollowsArgs = {
   after?: Maybe<Array<Scalars['Cursor']>>,
   before?: Maybe<Array<Scalars['Cursor']>>,
   limit?: Maybe<Scalars['Int']>
@@ -1343,7 +1346,7 @@ export type UserCommentsArgs = {
 
 
 /** User profile information */
-export type UserLikesArgs = {
+export type UserInboxArgs = {
   after?: Maybe<Array<Scalars['Cursor']>>,
   before?: Maybe<Array<Scalars['Cursor']>>,
   limit?: Maybe<Scalars['Int']>
@@ -1351,7 +1354,23 @@ export type UserLikesArgs = {
 
 
 /** User profile information */
-export type UserFollowersArgs = {
+export type UserUserFollowsArgs = {
+  after?: Maybe<Array<Scalars['Cursor']>>,
+  before?: Maybe<Array<Scalars['Cursor']>>,
+  limit?: Maybe<Scalars['Int']>
+};
+
+
+/** User profile information */
+export type UserOutboxArgs = {
+  after?: Maybe<Array<Scalars['Cursor']>>,
+  before?: Maybe<Array<Scalars['Cursor']>>,
+  limit?: Maybe<Scalars['Int']>
+};
+
+
+/** User profile information */
+export type UserCollectionFollowsArgs = {
   after?: Maybe<Array<Scalars['Cursor']>>,
   before?: Maybe<Array<Scalars['Cursor']>>,
   limit?: Maybe<Scalars['Int']>
@@ -1419,24 +1438,6 @@ export type WebMetadata = {
       },
       {
         "kind": "UNION",
-        "name": "FollowContext",
-        "possibleTypes": [
-          {
-            "name": "Collection"
-          },
-          {
-            "name": "Community"
-          },
-          {
-            "name": "Thread"
-          },
-          {
-            "name": "User"
-          }
-        ]
-      },
-      {
-        "kind": "UNION",
         "name": "FlagContext",
         "possibleTypes": [
           {
@@ -1492,6 +1493,24 @@ export type WebMetadata = {
           },
           {
             "name": "Resource"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "FollowContext",
+        "possibleTypes": [
+          {
+            "name": "Collection"
+          },
+          {
+            "name": "Community"
+          },
+          {
+            "name": "Thread"
+          },
+          {
+            "name": "User"
           }
         ]
       },
@@ -1632,10 +1651,6 @@ export type ResolversTypes = {
   PageInfo: ResolverTypeWrapper<PageInfo>,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
   User: ResolverTypeWrapper<User>,
-  FollowsPage: ResolverTypeWrapper<FollowsPage>,
-  Follow: ResolverTypeWrapper<Omit<Follow, 'context'> & { context: ResolversTypes['FollowContext'] }>,
-  FollowContext: ResolversTypes['Collection'] | ResolversTypes['Community'] | ResolversTypes['Thread'] | ResolversTypes['User'],
-  Thread: ResolverTypeWrapper<Omit<Thread, 'context'> & { context?: Maybe<ResolversTypes['ThreadContext']> }>,
   CommentsPage: ResolverTypeWrapper<CommentsPage>,
   Comment: ResolverTypeWrapper<Comment>,
   FlagsPage: ResolverTypeWrapper<FlagsPage>,
@@ -1652,7 +1667,11 @@ export type ResolversTypes = {
   LikesPage: ResolverTypeWrapper<LikesPage>,
   Like: ResolverTypeWrapper<Omit<Like, 'context'> & { context: ResolversTypes['LikeContext'] }>,
   LikeContext: ResolversTypes['Collection'] | ResolversTypes['Comment'] | ResolversTypes['Community'] | ResolversTypes['Resource'] | ResolversTypes['User'],
+  Thread: ResolverTypeWrapper<Omit<Thread, 'context'> & { context?: Maybe<ResolversTypes['ThreadContext']> }>,
   ThreadContext: ResolversTypes['Collection'] | ResolversTypes['Community'] | ResolversTypes['Flag'] | ResolversTypes['Resource'],
+  FollowsPage: ResolverTypeWrapper<FollowsPage>,
+  Follow: ResolverTypeWrapper<Omit<Follow, 'context'> & { context: ResolversTypes['FollowContext'] }>,
+  FollowContext: ResolversTypes['Collection'] | ResolversTypes['Community'] | ResolversTypes['Thread'] | ResolversTypes['User'],
   ActivitiesPage: ResolverTypeWrapper<ActivitiesPage>,
   ThreadsPage: ResolverTypeWrapper<ThreadsPage>,
   ResourcesPage: ResolverTypeWrapper<ResourcesPage>,
@@ -1663,23 +1682,24 @@ export type ResolversTypes = {
   FeaturesPage: ResolverTypeWrapper<FeaturesPage>,
   Instance: ResolverTypeWrapper<Instance>,
   Me: ResolverTypeWrapper<Me>,
+  SearchFollow: ResolverTypeWrapper<SearchFollow>,
   RegisterEmailAccessesPage: ResolverTypeWrapper<RegisterEmailAccessesPage>,
   RegisterEmailAccess: ResolverTypeWrapper<RegisterEmailAccess>,
   RegisterEmailDomainAccessesPage: ResolverTypeWrapper<RegisterEmailDomainAccessesPage>,
   RegisterEmailDomainAccess: ResolverTypeWrapper<RegisterEmailDomainAccess>,
   RootMutationType: ResolverTypeWrapper<{}>,
+  WebMetadata: ResolverTypeWrapper<WebMetadata>,
+  CollectionUpdateInput: CollectionUpdateInput,
   UploadInput: UploadInput,
   Upload: ResolverTypeWrapper<Scalars['Upload']>,
-  ResourceInput: ResourceInput,
-  WebMetadata: ResolverTypeWrapper<WebMetadata>,
-  CommunityUpdateInput: CommunityUpdateInput,
   AuthPayload: ResolverTypeWrapper<AuthPayload>,
-  UpdateProfileInput: UpdateProfileInput,
+  ResourceInput: ResourceInput,
   CommentInput: CommentInput,
   RegistrationInput: RegistrationInput,
   CommunityInput: CommunityInput,
+  UpdateProfileInput: UpdateProfileInput,
   CollectionInput: CollectionInput,
-  CollectionUpdateInput: CollectionUpdateInput,
+  CommunityUpdateInput: CommunityUpdateInput,
   DeleteContext: ResolversTypes['Collection'] | ResolversTypes['Comment'] | ResolversTypes['Community'] | ResolversTypes['Feature'] | ResolversTypes['Flag'] | ResolversTypes['Follow'] | ResolversTypes['Like'] | ResolversTypes['Resource'] | ResolversTypes['Thread'] | ResolversTypes['User'],
 };
 
@@ -1697,10 +1717,6 @@ export type ResolversParentTypes = {
   PageInfo: PageInfo,
   Boolean: Scalars['Boolean'],
   User: User,
-  FollowsPage: FollowsPage,
-  Follow: Omit<Follow, 'context'> & { context: ResolversParentTypes['FollowContext'] },
-  FollowContext: ResolversParentTypes['Collection'] | ResolversParentTypes['Community'] | ResolversParentTypes['Thread'] | ResolversParentTypes['User'],
-  Thread: Omit<Thread, 'context'> & { context?: Maybe<ResolversParentTypes['ThreadContext']> },
   CommentsPage: CommentsPage,
   Comment: Comment,
   FlagsPage: FlagsPage,
@@ -1717,7 +1733,11 @@ export type ResolversParentTypes = {
   LikesPage: LikesPage,
   Like: Omit<Like, 'context'> & { context: ResolversParentTypes['LikeContext'] },
   LikeContext: ResolversParentTypes['Collection'] | ResolversParentTypes['Comment'] | ResolversParentTypes['Community'] | ResolversParentTypes['Resource'] | ResolversParentTypes['User'],
+  Thread: Omit<Thread, 'context'> & { context?: Maybe<ResolversParentTypes['ThreadContext']> },
   ThreadContext: ResolversParentTypes['Collection'] | ResolversParentTypes['Community'] | ResolversParentTypes['Flag'] | ResolversParentTypes['Resource'],
+  FollowsPage: FollowsPage,
+  Follow: Omit<Follow, 'context'> & { context: ResolversParentTypes['FollowContext'] },
+  FollowContext: ResolversParentTypes['Collection'] | ResolversParentTypes['Community'] | ResolversParentTypes['Thread'] | ResolversParentTypes['User'],
   ActivitiesPage: ActivitiesPage,
   ThreadsPage: ThreadsPage,
   ResourcesPage: ResourcesPage,
@@ -1728,23 +1748,24 @@ export type ResolversParentTypes = {
   FeaturesPage: FeaturesPage,
   Instance: Instance,
   Me: Me,
+  SearchFollow: SearchFollow,
   RegisterEmailAccessesPage: RegisterEmailAccessesPage,
   RegisterEmailAccess: RegisterEmailAccess,
   RegisterEmailDomainAccessesPage: RegisterEmailDomainAccessesPage,
   RegisterEmailDomainAccess: RegisterEmailDomainAccess,
   RootMutationType: {},
+  WebMetadata: WebMetadata,
+  CollectionUpdateInput: CollectionUpdateInput,
   UploadInput: UploadInput,
   Upload: Scalars['Upload'],
-  ResourceInput: ResourceInput,
-  WebMetadata: WebMetadata,
-  CommunityUpdateInput: CommunityUpdateInput,
   AuthPayload: AuthPayload,
-  UpdateProfileInput: UpdateProfileInput,
+  ResourceInput: ResourceInput,
   CommentInput: CommentInput,
   RegistrationInput: RegistrationInput,
   CommunityInput: CommunityInput,
+  UpdateProfileInput: UpdateProfileInput,
   CollectionInput: CollectionInput,
-  CollectionUpdateInput: CollectionUpdateInput,
+  CommunityUpdateInput: CommunityUpdateInput,
   DeleteContext: ResolversParentTypes['Collection'] | ResolversParentTypes['Comment'] | ResolversParentTypes['Community'] | ResolversParentTypes['Feature'] | ResolversParentTypes['Flag'] | ResolversParentTypes['Follow'] | ResolversParentTypes['Like'] | ResolversParentTypes['Resource'] | ResolversParentTypes['Thread'] | ResolversParentTypes['User'],
 };
 
@@ -2026,6 +2047,7 @@ export type MeResolvers<ContextType = any, ParentType extends ResolversParentTyp
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   isConfirmed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
   isInstanceAdmin?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  searchFollows?: Resolver<Array<ResolversTypes['SearchFollow']>, ParentType, ContextType>,
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
   wantsEmailDigest?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
   wantsNotifications?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
@@ -2095,38 +2117,38 @@ export type ResourcesPageResolvers<ContextType = any, ParentType extends Resolve
 };
 
 export type RootMutationTypeResolvers<ContextType = any, ParentType extends ResolversParentTypes['RootMutationType'] = ResolversParentTypes['RootMutationType']> = {
-  updateResource?: Resolver<Maybe<ResolversTypes['Resource']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateResourceArgs, 'resource' | 'resourceId'>>,
-  resolveFlag?: Resolver<Maybe<ResolversTypes['Flag']>, ParentType, ContextType, RequireFields<RootMutationTypeResolveFlagArgs, 'flagId'>>,
-  createFlag?: Resolver<Maybe<ResolversTypes['Flag']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateFlagArgs, 'contextId' | 'message'>>,
   fetchWebMetadata?: Resolver<Maybe<ResolversTypes['WebMetadata']>, ParentType, ContextType, RequireFields<RootMutationTypeFetchWebMetadataArgs, 'url'>>,
-  resetPasswordRequest?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeResetPasswordRequestArgs, 'email'>>,
-  deleteSession?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
-  deleteRegisterEmailAccess?: Resolver<Maybe<ResolversTypes['RegisterEmailAccess']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteRegisterEmailAccessArgs, 'id'>>,
-  deleteSelf?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteSelfArgs, 'iAmSure'>>,
-  createRegisterEmailDomainAccess?: Resolver<ResolversTypes['RegisterEmailDomainAccess'], ParentType, ContextType, RequireFields<RootMutationTypeCreateRegisterEmailDomainAccessArgs, 'domain'>>,
-  updateCommunity?: Resolver<Maybe<ResolversTypes['Community']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateCommunityArgs, 'community' | 'communityId'>>,
-  confirmEmail?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, RequireFields<RootMutationTypeConfirmEmailArgs, 'token'>>,
-  updateProfile?: Resolver<Maybe<ResolversTypes['Me']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateProfileArgs, 'profile'>>,
-  sendInvite?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeSendInviteArgs, 'email'>>,
-  createReply?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateReplyArgs, 'comment' | 'inReplyToId' | 'threadId'>>,
-  createFollowByUrl?: Resolver<Maybe<ResolversTypes['Follow']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateFollowByUrlArgs, 'url'>>,
-  updateComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateCommentArgs, 'comment' | 'commentId'>>,
-  createSession?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateSessionArgs, 'email' | 'password'>>,
-  createLike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateLikeArgs, 'contextId'>>,
-  createUser?: Resolver<Maybe<ResolversTypes['Me']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateUserArgs, 'user'>>,
-  copyResource?: Resolver<Maybe<ResolversTypes['Resource']>, ParentType, ContextType, RequireFields<RootMutationTypeCopyResourceArgs, 'collectionId' | 'resourceId'>>,
-  createFollow?: Resolver<Maybe<ResolversTypes['Follow']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateFollowArgs, 'contextId'>>,
-  deleteRegisterEmailDomainAccess?: Resolver<Maybe<ResolversTypes['RegisterEmailDomainAccess']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteRegisterEmailDomainAccessArgs, 'id'>>,
   createRegisterEmailAccess?: Resolver<ResolversTypes['RegisterEmailAccess'], ParentType, ContextType, RequireFields<RootMutationTypeCreateRegisterEmailAccessArgs, 'email'>>,
-  createCommunity?: Resolver<Maybe<ResolversTypes['Community']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateCommunityArgs, 'community'>>,
-  createCollection?: Resolver<Maybe<ResolversTypes['Collection']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateCollectionArgs, 'collection' | 'communityId'>>,
-  createResource?: Resolver<Maybe<ResolversTypes['Resource']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateResourceArgs, 'collectionId' | 'content' | 'resource'>>,
   updateCollection?: Resolver<Maybe<ResolversTypes['Collection']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateCollectionArgs, 'collection' | 'collectionId'>>,
   resetPassword?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, RequireFields<RootMutationTypeResetPasswordArgs, 'password' | 'token'>>,
-  delete?: Resolver<Maybe<ResolversTypes['DeleteContext']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteArgs, 'contextId'>>,
+  deleteRegisterEmailAccess?: Resolver<Maybe<ResolversTypes['RegisterEmailAccess']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteRegisterEmailAccessArgs, 'id'>>,
+  createSession?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateSessionArgs, 'email' | 'password'>>,
+  deleteSelf?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteSelfArgs, 'iAmSure'>>,
+  updateResource?: Resolver<Maybe<ResolversTypes['Resource']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateResourceArgs, 'resource' | 'resourceId'>>,
+  createFollowByUrl?: Resolver<Maybe<ResolversTypes['Follow']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateFollowByUrlArgs, 'url'>>,
+  confirmEmail?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, RequireFields<RootMutationTypeConfirmEmailArgs, 'token'>>,
   deactivateUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<RootMutationTypeDeactivateUserArgs, 'id'>>,
+  updateComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateCommentArgs, 'comment' | 'commentId'>>,
+  createLike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateLikeArgs, 'contextId'>>,
+  resetPasswordRequest?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeResetPasswordRequestArgs, 'email'>>,
+  sendInvite?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeSendInviteArgs, 'email'>>,
+  deleteSession?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
+  createReply?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateReplyArgs, 'comment' | 'inReplyToId' | 'threadId'>>,
+  copyResource?: Resolver<Maybe<ResolversTypes['Resource']>, ParentType, ContextType, RequireFields<RootMutationTypeCopyResourceArgs, 'collectionId' | 'resourceId'>>,
+  createRegisterEmailDomainAccess?: Resolver<ResolversTypes['RegisterEmailDomainAccess'], ParentType, ContextType, RequireFields<RootMutationTypeCreateRegisterEmailDomainAccessArgs, 'domain'>>,
   createFeature?: Resolver<Maybe<ResolversTypes['Feature']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateFeatureArgs, 'contextId'>>,
+  createFollow?: Resolver<Maybe<ResolversTypes['Follow']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateFollowArgs, 'contextId'>>,
+  createUser?: Resolver<Maybe<ResolversTypes['Me']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateUserArgs, 'user'>>,
+  resolveFlag?: Resolver<Maybe<ResolversTypes['Flag']>, ParentType, ContextType, RequireFields<RootMutationTypeResolveFlagArgs, 'flagId'>>,
+  createCommunity?: Resolver<Maybe<ResolversTypes['Community']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateCommunityArgs, 'community'>>,
+  updateProfile?: Resolver<Maybe<ResolversTypes['Me']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateProfileArgs, 'profile'>>,
+  createCollection?: Resolver<Maybe<ResolversTypes['Collection']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateCollectionArgs, 'collection' | 'communityId'>>,
+  deleteRegisterEmailDomainAccess?: Resolver<Maybe<ResolversTypes['RegisterEmailDomainAccess']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteRegisterEmailDomainAccessArgs, 'id'>>,
+  updateCommunity?: Resolver<Maybe<ResolversTypes['Community']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateCommunityArgs, 'community' | 'communityId'>>,
+  delete?: Resolver<Maybe<ResolversTypes['DeleteContext']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteArgs, 'contextId'>>,
+  createFlag?: Resolver<Maybe<ResolversTypes['Flag']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateFlagArgs, 'contextId' | 'message'>>,
   createThread?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateThreadArgs, 'comment' | 'contextId'>>,
+  createResource?: Resolver<Maybe<ResolversTypes['Resource']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateResourceArgs, 'collectionId' | 'content' | 'resource'>>,
 };
 
 export type RootQueryTypeResolvers<ContextType = any, ParentType extends ResolversParentTypes['RootQueryType'] = ResolversParentTypes['RootQueryType']> = {
@@ -2150,6 +2172,14 @@ export type RootQueryTypeResolvers<ContextType = any, ParentType extends Resolve
   thread?: Resolver<Maybe<ResolversTypes['Thread']>, ParentType, ContextType, RequireFields<RootQueryTypeThreadArgs, 'threadId'>>,
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<RootQueryTypeUserArgs, 'userId'>>,
   usernameAvailable?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<RootQueryTypeUsernameAvailableArgs, 'username'>>,
+};
+
+export type SearchFollowResolvers<ContextType = any, ParentType extends ResolversParentTypes['SearchFollow'] = ResolversParentTypes['SearchFollow']> = {
+  canonicalUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  collectionId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  communityId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  followId?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  isCreator?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
 };
 
 export type ThreadResolvers<ContextType = any, ParentType extends ResolversParentTypes['Thread'] = ResolversParentTypes['Thread']> = {
@@ -2183,40 +2213,40 @@ export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTyp
 }
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  userFollows?: Resolver<Maybe<ResolversTypes['FollowsPage']>, ParentType, ContextType, UserUserFollowsArgs>,
-  followerCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
-  isPublic?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
-  image?: Resolver<Maybe<ResolversTypes['Content']>, ParentType, ContextType>,
-  likerCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
-  website?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  canonicalUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  likeCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
-  extraInfo?: Resolver<Maybe<ResolversTypes['Json']>, ParentType, ContextType>,
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
-  updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  icon?: Resolver<Maybe<ResolversTypes['Content']>, ParentType, ContextType>,
-  collectionFollows?: Resolver<Maybe<ResolversTypes['FollowsPage']>, ParentType, ContextType, UserCollectionFollowsArgs>,
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  follows?: Resolver<Maybe<ResolversTypes['FollowsPage']>, ParentType, ContextType, UserFollowsArgs>,
-  preferredUsername?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  summary?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  isDisabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
-  outbox?: Resolver<Maybe<ResolversTypes['ActivitiesPage']>, ParentType, ContextType, UserOutboxArgs>,
-  myLike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType>,
-  inbox?: Resolver<Maybe<ResolversTypes['ActivitiesPage']>, ParentType, ContextType, UserInboxArgs>,
-  myFollow?: Resolver<Maybe<ResolversTypes['Follow']>, ParentType, ContextType>,
   lastActivity?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  myFlag?: Resolver<Maybe<ResolversTypes['Flag']>, ParentType, ContextType>,
-  followCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
-  likers?: Resolver<Maybe<ResolversTypes['LikesPage']>, ParentType, ContextType, UserLikersArgs>,
-  isLocal?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
-  communityFollows?: Resolver<Maybe<ResolversTypes['FollowsPage']>, ParentType, ContextType, UserCommunityFollowsArgs>,
-  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  displayUsername?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   comments?: Resolver<Maybe<ResolversTypes['CommentsPage']>, ParentType, ContextType, UserCommentsArgs>,
-  location?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  image?: Resolver<Maybe<ResolversTypes['Content']>, ParentType, ContextType>,
+  website?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  likeCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
   likes?: Resolver<Maybe<ResolversTypes['LikesPage']>, ParentType, ContextType, UserLikesArgs>,
+  icon?: Resolver<Maybe<ResolversTypes['Content']>, ParentType, ContextType>,
+  updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  myFlag?: Resolver<Maybe<ResolversTypes['Flag']>, ParentType, ContextType>,
+  isDisabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  isLocal?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
   followers?: Resolver<Maybe<ResolversTypes['FollowsPage']>, ParentType, ContextType, UserFollowersArgs>,
+  displayUsername?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  summary?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  location?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  likerCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
+  likers?: Resolver<Maybe<ResolversTypes['LikesPage']>, ParentType, ContextType, UserLikersArgs>,
+  extraInfo?: Resolver<Maybe<ResolversTypes['Json']>, ParentType, ContextType>,
+  followerCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  communityFollows?: Resolver<Maybe<ResolversTypes['FollowsPage']>, ParentType, ContextType, UserCommunityFollowsArgs>,
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  myLike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType>,
+  isPublic?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  follows?: Resolver<Maybe<ResolversTypes['FollowsPage']>, ParentType, ContextType, UserFollowsArgs>,
+  inbox?: Resolver<Maybe<ResolversTypes['ActivitiesPage']>, ParentType, ContextType, UserInboxArgs>,
+  canonicalUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  preferredUsername?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  followCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
+  userFollows?: Resolver<Maybe<ResolversTypes['FollowsPage']>, ParentType, ContextType, UserUserFollowsArgs>,
+  outbox?: Resolver<Maybe<ResolversTypes['ActivitiesPage']>, ParentType, ContextType, UserOutboxArgs>,
+  myFollow?: Resolver<Maybe<ResolversTypes['Follow']>, ParentType, ContextType>,
+  collectionFollows?: Resolver<Maybe<ResolversTypes['FollowsPage']>, ParentType, ContextType, UserCollectionFollowsArgs>,
 };
 
 export type WebMetadataResolvers<ContextType = any, ParentType extends ResolversParentTypes['WebMetadata'] = ResolversParentTypes['WebMetadata']> = {
@@ -2274,6 +2304,7 @@ export type Resolvers<ContextType = any> = {
   ResourcesPage?: ResourcesPageResolvers<ContextType>,
   RootMutationType?: RootMutationTypeResolvers<ContextType>,
   RootQueryType?: RootQueryTypeResolvers<ContextType>,
+  SearchFollow?: SearchFollowResolvers<ContextType>,
   Thread?: ThreadResolvers<ContextType>,
   ThreadContext?: ThreadContextResolvers,
   ThreadsPage?: ThreadsPageResolvers<ContextType>,

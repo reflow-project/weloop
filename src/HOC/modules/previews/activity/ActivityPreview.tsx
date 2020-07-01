@@ -4,6 +4,7 @@ import * as GQL from 'graphql/types.generated';
 import React, { FC, useMemo } from 'react';
 import * as UI from 'ui/modules/ActivityPreview';
 import { PreviewComponent } from './PreviewComponent';
+import { threadLocation } from 'routes/ThreadPageRoute';
 
 export interface Props {
   activityId: GQL.Activity['id'];
@@ -20,10 +21,19 @@ export const ActivityPreviewHOC: FC<Props> = ({ activityId }) => {
         return null;
       }
 
+      const threadId =
+        activity.context.__typename === 'Comment'
+          ? activity.context.thread?.id
+          : activity.context.__typename === 'Like' &&
+            activity.context.context?.__typename === 'Comment'
+          ? activity.context.context.thread?.id
+          : undefined;
+
       const props: UI.Props = {
         status: UI.Status.Loaded,
         createdAt: activity.createdAt,
         actor: activity.user && getActivityActor(activity.user),
+        threadUrl: threadId && threadLocation.getPath({ threadId }, undefined),
         event: eventString,
         ...communityInfoStrings,
         preview: <PreviewComponent context={activity.context} />

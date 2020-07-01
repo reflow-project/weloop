@@ -10,7 +10,7 @@ export interface Props {
 
 export const useUserFollowedCommunities = (userId: User['id']) => {
   const userQ = GQL.useUserFollowedCommunitiesQuery({
-    variables: { userId }
+    variables: { userId, limit: DEFAULT_PAGE_SIZE }
   });
 
   const followedCommunitiesPage = usePage(
@@ -19,8 +19,7 @@ export const useUserFollowedCommunities = (userId: User['id']) => {
       return userQ.fetchMore({
         variables: { ...cursor, limit: DEFAULT_PAGE_SIZE, userId },
         updateQuery: (prev, { fetchMoreResult }) => {
-          return fetchMoreResult?.user?.communityFollows &&
-            prev.user?.communityFollows
+          return fetchMoreResult?.user?.communityFollows && prev.user?.communityFollows
             ? {
                 ...fetchMoreResult,
                 user: {

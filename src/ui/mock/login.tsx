@@ -2,7 +2,7 @@ import { LoginFormValues, Props as LoginProps } from 'ui/pages/login';
 import { useFormik } from 'formik';
 import { action } from '@storybook/addon-actions';
 
-export const getLoginProps = (): LoginProps => {
+export const useGetLoginProps = (): LoginProps => {
   const formik = useFormik<LoginFormValues>({
     initialValues: {
       email: '',

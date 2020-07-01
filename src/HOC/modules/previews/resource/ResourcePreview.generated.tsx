@@ -32,7 +32,7 @@ export type ResourcePreviewFragment = (
     & Pick<Types.LikesPage, 'totalCount'>
   )>, collection: Types.Maybe<(
     { __typename: 'Collection' }
-    & Pick<Types.Collection, 'id' | 'preferredUsername' | 'canonicalUrl' | 'summary'>
+    & Pick<Types.Collection, 'id' | 'name' | 'preferredUsername' | 'canonicalUrl' | 'summary'>
     & { icon: Types.Maybe<(
       { __typename: 'Content' }
       & Pick<Types.Content, 'id' | 'url'>
@@ -76,6 +76,7 @@ export const ResourcePreviewFragmentDoc = gql`
   }
   collection {
     id
+    name
     preferredUsername
     canonicalUrl
     icon {

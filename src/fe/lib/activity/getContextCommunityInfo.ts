@@ -1,8 +1,9 @@
 import { ActorPreviewFragment } from 'fe/lib/activity/types';
-import { CommunityInfoFragment } from 'HOC/modules/previews/community/CommunityPreview.generated';
 import Maybe from 'graphql/tsutils/Maybe';
+import { CommunityInfoFragment } from 'HOC/modules/previews/community/CommunityPreview.generated';
 import { UserPreviewFragment } from 'HOC/modules/previews/user/UserPreview.generated';
-import { getActivitySimpleLink } from './getActivitySimpleLink';
+import { communityLocation } from 'routes/CommunityPageRoute';
+
 export const getContextCommunityInfo = (
   context: Maybe<Exclude<ActorPreviewFragment, UserPreviewFragment>>
 ): Maybe<CommunityInfoFragment> => {
@@ -31,9 +32,7 @@ export const getContextCommunityInfo = (
   }
   return null;
 };
-export const getCommunityInfoStrings = (
-  context: Maybe<ActorPreviewFragment>
-) => {
+export const getCommunityInfoStrings = (context: Maybe<ActorPreviewFragment>) => {
   let communityLink = '';
   let communityName = '';
   let communityId = '';
@@ -41,7 +40,10 @@ export const getCommunityInfoStrings = (
   if (context && context.__typename !== 'User') {
     const communityInfo = getContextCommunityInfo(context);
     if (communityInfo) {
-      communityLink = getActivitySimpleLink(communityInfo);
+      communityLink = communityLocation.getPath(
+        { communityId: communityInfo.id, tab: undefined },
+        undefined
+      );
       communityName = communityInfo.name;
       communityId = communityInfo.id;
       communityIcon = communityInfo.icon?.url || '';

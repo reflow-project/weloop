@@ -1,19 +1,19 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
-import { PropsTable } from '@storybook/components';
-import {getHeroCommunityProps} from 'ui/mock/heroCommunity'
-import { HeroCommunity } from '.';
-import {Box} from 'rebass'
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { useGetHeroCommunityProps } from 'ui/mock/heroCommunity'
+import { HeroCommunity } from '.'
+import { Box } from 'rebass'
 
-<Meta title="Modules|Hero of a Community" component={HeroCommunity}/>
+<Meta title="Modules|Hero of a Community" component={HeroCommunity} />
 
 # HeroCommunity
+
 Let's define a story for the `Hero community preview` module
 
 <Preview>
   <Story name="Hero community module">
-    <Box sx={{width: '600px', margin: '0 auto'}}>
-      <HeroCommunity {...getHeroCommunityProps()}/>
+    <Box sx={{ width: '600px', margin: '0 auto' }}>
+      <HeroCommunity {...useGetHeroCommunityProps()} />
     </Box>
   </Story>
 </Preview>
-

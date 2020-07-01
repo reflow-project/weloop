@@ -1,14 +1,12 @@
 import { Trans } from '@lingui/macro';
-import React, { useRef, SFC, ComponentType } from 'react';
+import React, { SFC, useRef, ReactElement } from 'react';
 import Slider from 'react-slick';
+import { Box, Flex } from 'rebass';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
-import styled from 'ui/themes/styled';
-import CommunitySmall, { CommunityBase } from './preview';
-import { ChevronLeft, Right } from 'ui/Icons';
-import { Box, Flex } from 'rebass';
 import Button from 'ui/elements/Button';
-import Modal from 'ui/modules/Modal';
+import { ChevronLeft, Right } from 'ui/Icons';
+import styled from 'ui/themes/styled';
 
 export const Title = styled(Flex)`
   font-size: 15px;
@@ -72,23 +70,15 @@ const ActionItem = styled(Flex)`
 `;
 
 export interface FeaturedCommunitiesData {
-  isAdmin: boolean;
-  featuredCommunities: CommunityBase[];
-  FeaturedModal?: ComponentType<{ community: CommunityBase; done(): any }>;
+  canEdit: boolean;
+  featuredCommunities: ReactElement[];
+  toggleEdit(): any;
+  isEditing: boolean;
 }
 
 export const FeaturedCommunities: SFC<FeaturedCommunitiesData> = props => {
   const sliderRef = useRef<Slider>();
-  const [isEditing, setEditing] = React.useState(false);
-  const [
-    selectedCommunityForModal,
-    setSelectedCommunityForModal
-  ] = React.useState<null | CommunityBase>(null);
 
-  // const { RTL } = useContext(LocaleContext);
-  //   if (props.status === Status.Loading) {
-  //     return <Trans>loading...</Trans>;
-  //   }
   return (
     <>
       <Title>
@@ -96,10 +86,10 @@ export const FeaturedCommunities: SFC<FeaturedCommunitiesData> = props => {
           <Trans>Featured communities</Trans>{' '}
         </h5>
         <RightContext>
-          {props.isAdmin ? (
+          {props.canEdit ? (
             <ActionContainer>
-              <ActionItem onClick={() => setEditing(!isEditing)}>
-                {!isEditing ? (
+              <ActionItem onClick={props.toggleEdit}>
+                {!props.isEditing ? (
                   <Button variant={'outline'}>
                     <Trans>Edit</Trans>
                   </Button>
@@ -112,12 +102,7 @@ export const FeaturedCommunities: SFC<FeaturedCommunitiesData> = props => {
             </ActionContainer>
           ) : null}
           <span onClick={sliderRef.current && sliderRef.current.slickPrev}>
-            <ChevronLeft
-              width={26}
-              height={26}
-              strokeWidth={1}
-              color={'#333'}
-            />
+            <ChevronLeft width={26} height={26} strokeWidth={1} color={'#333'} />
           </span>
           <span onClick={sliderRef.current && sliderRef.current.slickNext}>
             <Right width={26} height={26} strokeWidth={1} color={'#333'} />
@@ -129,33 +114,16 @@ export const FeaturedCommunities: SFC<FeaturedCommunitiesData> = props => {
           ref={c => (sliderRef.current = c || undefined)}
           {...sliderSettings(props.featuredCommunities.length)}
         >
-          {props.featuredCommunities.map(community => (
-            <div key={community.id}>
-              <CommunitySmall
-                community={community}
-                isAdmin={props.isAdmin}
-                isEditing={isEditing}
-                remove={() => setSelectedCommunityForModal(community)}
-              />
-            </div>
-          ))}
+          {props.featuredCommunities}
         </Slider>
       </Box>
-      {selectedCommunityForModal && props.FeaturedModal != null && (
-        <Modal closeModal={() => setSelectedCommunityForModal(null)}>
-          <props.FeaturedModal
-            community={selectedCommunityForModal}
-            done={() => setSelectedCommunityForModal(null)}
-          />
-        </Modal>
-      )}
     </>
   );
 };
 
 export default FeaturedCommunities;
 
-const sliderSettings = slidesToShow => ({
+const sliderSettings = (slidesToShow: number) => ({
   dots: false,
   arrows: false,
   infinite: true,

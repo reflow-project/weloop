@@ -1,10 +1,10 @@
-import * as React from 'react';
-import { Box, Text } from 'rebass/styled-components';
-import styled from 'ui/themes/styled';
-import { Link } from 'react-router-dom';
-import Button from 'ui/elements/Button';
 import { Trans } from '@lingui/macro';
+import * as React from 'react';
+import { Link } from 'react-router-dom';
+import { Box, Text } from 'rebass/styled-components';
+import Button from 'ui/elements/Button';
 import LogoContainer from 'ui/elements/Logo';
+import styled from 'ui/themes/styled';
 
 const LoginWrapper = styled.div`
   display: grid;
@@ -55,17 +55,12 @@ export const ConfirmEmail: React.FC<Props> = ({ result }) => {
                 ) : result.error === null ? (
                   <>
                     <Text variant="text">Email confirmed</Text>
-                    <Text
-                      variant="text"
-                      sx={{ fontWeight: 'bold', marginTop: '5px' }}
-                    >
+                    <Text variant="text" sx={{ fontWeight: 'bold', marginTop: '5px' }}>
                       Welcome {result.username}!
                     </Text>
                   </>
                 ) : (
-                  <Text variant="text">
-                    Error in email confirmation: {result.error}
-                  </Text>
+                  <Text variant="text">Error in email confirmation: {result.error}</Text>
                 )}
               </Box>
               <Browse>

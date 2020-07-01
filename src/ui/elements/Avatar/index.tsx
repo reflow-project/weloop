@@ -21,8 +21,7 @@ const Wrapper = styled(Box)<{ bg?: string; size?: string }>`
       : props.size === 's'
       ? '32px'
       : '48px'};
-  background-color: ${props =>
-    props.bg ? 'transparent' : props.theme.colors.light};
+  background-color: ${props => (props.bg ? 'transparent' : props.theme.colors.light)};
   background-image: url("${props => props.bg}");
   background-size: cover;
   background-position: center center;
@@ -43,10 +42,8 @@ const Avatar: React.FC<{
   variant?: string;
   size?: string;
 }> = ({ size, src, initials, variant }) => (
-  <Wrapper size={size} bg={src} variant={variant}>
-    {initials && !src ? (
-      <span>{initials.substr(0, 2).toUpperCase()}</span>
-    ) : null}
+  <Wrapper size={size} bg={src}>
+    {initials && !src ? <span>{initials.substr(0, 2).toUpperCase()}</span> : null}
   </Wrapper>
 );
 

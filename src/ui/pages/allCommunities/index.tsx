@@ -3,23 +3,14 @@ import { Header } from 'ui/modules/Header';
 import { WrapperPanel } from 'ui/elements/Panel';
 import { LoadMore } from 'ui/modules/Loadmore';
 import { FormikHook } from 'ui/@types/types';
-import {
-  Wrapper,
-  WrapperCont,
-  MainContainer,
-  HomeBox,
-  ObjectsList
-} from 'ui/elements/Layout';
+import { Wrapper, WrapperCont, MainContainer, HomeBox, ObjectsList } from 'ui/elements/Layout';
 
 export interface Props {
-  CommunitiesBoxes: JSX.Element;
+  CommunitiesBoxes: React.ReactElement;
   LoadMoreFormik: FormikHook;
 }
 
-export const AllCommunities: React.FC<Props> = ({
-  CommunitiesBoxes,
-  LoadMoreFormik
-}) => {
+export const AllCommunities: React.FC<Props> = ({ CommunitiesBoxes, LoadMoreFormik }) => {
   return (
     <MainContainer>
       <HomeBox>

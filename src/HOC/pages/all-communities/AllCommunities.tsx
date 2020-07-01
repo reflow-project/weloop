@@ -6,23 +6,28 @@ import {
   Props as AllCommunitiesUIProps
 } from 'ui/pages/allCommunities';
 import { useFormik } from 'formik';
+import { Box } from 'rebass';
+import { t } from '@lingui/macro';
+import { usePageTitle } from 'context/global/pageCtx';
+
+const allCommunitiesPageTitle = t`All Communities`;
 
 export interface AllCommunitiesPage {}
 export const AllCommunitiesPage: FC<AllCommunitiesPage> = () => {
+  usePageTitle(allCommunitiesPageTitle);
   const { allCommunitiesPage } = useAllCommunities();
   const LoadMoreFormik = useFormik({
     initialValues: {},
-    onSubmit: () =>
-      allCommunitiesPage.ready ? allCommunitiesPage.next() : undefined
+    onSubmit: () => (allCommunitiesPage.ready ? allCommunitiesPage.next() : undefined)
   });
 
   const allCommunitiesUIProps = useMemo<AllCommunitiesUIProps>(() => {
     const CommunitiesBoxes = (
-      <>
+      <Box m={2}>
         {allCommunitiesPage.edges.map(communityPreview => (
           <CommunityPreviewHOC communityId={communityPreview.id} />
         ))}
-      </>
+      </Box>
     );
     const props: AllCommunitiesUIProps = {
       CommunitiesBoxes,
