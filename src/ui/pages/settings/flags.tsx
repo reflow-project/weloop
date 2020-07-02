@@ -1,29 +1,31 @@
 import * as React from 'react';
 import { Box, Text } from 'rebass/styled-components';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import { Row } from 'ui/modules/Modal';
 // import DropzoneArea from 'ui/modules/DropzoneModal';
 import { FormikHook } from 'ui/@types/types';
 import { LoadMore } from 'ui/modules/Loadmore';
+import { ReactElement } from 'react';
+import { BottomBordered } from 'ui/elements/Layout';
 
 export interface Props {
-  FlagsBox: JSX.Element;
+  FlagPreviews: ReactElement[];
   loadMoreFlags: FormikHook | null;
 }
 
-const Flags: React.FC<Props> = ({ FlagsBox, loadMoreFlags }) => {
+const Flags: React.FC<Props> = ({ FlagPreviews, loadMoreFlags }) => {
   return (
     <Box>
       <Text px={3} mt={2} variant="heading">
         <Trans>Flags</Trans>
       </Text>
       <Row>
-        {FlagsBox ? (
+        {FlagPreviews ? (
           <Box mt={2} sx={{ width: '600px' }}>
-            {FlagsBox}
-            {loadMoreFlags ? (
-              <LoadMore LoadMoreFormik={loadMoreFlags} />
-            ) : null}{' '}
+            {FlagPreviews.map(FlagPreview => (
+              <BottomBordered key={FlagPreview.key || ''}>{FlagPreview}</BottomBordered>
+            ))}
+            {loadMoreFlags ? <LoadMore LoadMoreFormik={loadMoreFlags} /> : null}{' '}
           </Box>
         ) : (
           <Text pt={3}>

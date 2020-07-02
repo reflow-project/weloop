@@ -1,19 +1,17 @@
 import { WithSidebarTemplate } from 'HOC/templates/WithSidebar/WithSidebar';
-import SearchComp from 'pages/search/Search';
+import { SearchPageHOC } from 'HOC/pages/search/Search';
 import React, { FC } from 'react';
 import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { searchDisabled } from 'mn-constants';
-import { NotFound } from 'ui/pages/notFound';
+import { NotFoundHOC } from 'HOC/pages/not-found/NotFound';
 
 interface SearchPageRouter {}
-const SearchPageRouter: FC<RouteComponentProps<SearchPageRouter>> = ({
-  match
-}) => {
+const SearchPageRouter: FC<RouteComponentProps<SearchPageRouter>> = () => {
   return searchDisabled ? (
-    <NotFound />
+    <NotFoundHOC />
   ) : (
     <WithSidebarTemplate>
-      <SearchComp />
+      <SearchPageHOC />
     </WithSidebarTemplate>
   );
 };

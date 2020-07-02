@@ -5,7 +5,7 @@ import {
 import { action } from '@storybook/addon-actions';
 import { useFormik } from 'formik';
 
-export const getCreateCollectionModalProps = (): CreateCollectionProps => {
+export const useGetCreateCollectionModalProps = (): CreateCollectionProps => {
   const formik = useFormik<BasicCreateCollectionFormValues>({
     initialValues: {
       icon: '',

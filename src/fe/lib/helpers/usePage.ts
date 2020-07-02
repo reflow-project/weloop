@@ -2,6 +2,7 @@ import Maybe from 'graphql/tsutils/Maybe';
 import { PageInfo } from 'graphql/types.generated';
 import { useMemo, useCallback } from 'react';
 import { useFormik } from 'formik';
+import { FormikHook } from 'ui/@types/types';
 
 interface Page<EdgeType> {
   edges: EdgeType[];
@@ -16,10 +17,7 @@ interface PreviousPageCursor {
   before: PageInfo['startCursor'];
   after: undefined;
 }
-type PageUpdater<EdgeType> = (_: {
-  prev: Page<EdgeType>;
-  fetched: Page<EdgeType>;
-}) => Page<EdgeType>;
+type PageUpdater<EdgeType> = (_: { prev: Page<EdgeType>; fetched: Page<EdgeType> }) => any; //Page<EdgeType>;
 
 type Fetch<EdgeType, Cursor extends FellowPageCursor> = (
   _: (
@@ -40,9 +38,7 @@ type FellowPageCursor = NextPageCursor | PreviousPageCursor;
 type BaseMngPage<Ready extends boolean> = {
   ready: Ready;
 };
-interface MngPageInitialized<EdgeType>
-  extends Page<EdgeType>,
-    BaseMngPage<true> {
+interface MngPageInitialized<EdgeType> extends Page<EdgeType>, BaseMngPage<true> {
   next(): Promise<unknown>;
   previous(): Promise<unknown>;
 }
@@ -50,20 +46,17 @@ interface MngPageUninitialized<EdgeType> extends BaseMngPage<false> {
   edges: EdgeType[];
 }
 
-export type MngPage<EdgeType> =
-  | MngPageUninitialized<EdgeType>
-  | MngPageInitialized<EdgeType>;
+export type MngPage<EdgeType> = MngPageUninitialized<EdgeType> | MngPageInitialized<EdgeType>;
 
-export const useFormikPage = <EdgeType>(page: MngPage<EdgeType>) => {
+export type FormikPaging = [FormikHook | null, FormikHook | null];
+export const useFormikPaging = <EdgeType>(page: MngPage<EdgeType>): FormikPaging => {
   const nextPageFormik = useFormik({
     initialValues: {},
     onSubmit: useCallback(() => (page?.ready ? page.next() : undefined), [page])
   });
   const previousPageFormik = useFormik({
     initialValues: {},
-    onSubmit: useCallback(() => (page?.ready ? page.previous() : undefined), [
-      page
-    ])
+    onSubmit: useCallback(() => (page?.ready ? page.previous() : undefined), [page])
   });
   return useMemo(
     () => [
@@ -75,10 +68,19 @@ export const useFormikPage = <EdgeType>(page: MngPage<EdgeType>) => {
 };
 
 export const usePage = <EdgeType>(
-  page: Maybe<Page<EdgeType>>,
+  gqlPage: Maybe<Page<EdgeType>>,
   fetch: Fetch<EdgeType, NextPageCursor> // = () => Promise.resolve()
-): MngPage<EdgeType> =>
-  useMemo<MngPage<EdgeType>>(() => mngPage(page, fetch), [page, fetch]);
+): MngPage<EdgeType> & { formiks: FormikPaging } => {
+  const page = useMemo<MngPage<EdgeType>>(() => mngPage(gqlPage, fetch), [gqlPage, fetch]);
+  const formiks = useFormikPaging(page);
+  return useMemo(
+    () => ({
+      ...page,
+      formiks
+    }),
+    [formiks, page]
+  );
+};
 
 export const mngPage = <EdgeType>(
   page: Maybe<Page<EdgeType>>,

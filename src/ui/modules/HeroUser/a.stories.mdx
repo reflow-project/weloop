@@ -1,19 +1,19 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
-import { PropsTable } from '@storybook/components';
-import {getHeroUserProps} from 'ui/mock/heroUser'
-import { HeroUser } from '.';
-import {Box} from 'rebass'
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { useGetHeroUserProps } from 'ui/mock/heroUser'
+import { HeroUser } from '.'
+import { Box } from 'rebass'
 
-<Meta title="Modules|Hero of a User" component={HeroUser}/>
+<Meta title="Modules|Hero of a User" component={HeroUser} />
 
 # HeroUser
+
 Let's define a story for the `Hero user preview` module
 
 <Preview>
   <Story name="Hero user module">
-    <Box sx={{width: '600px', margin: '0 auto', borderRadius: '6px'}}>
-      <HeroUser {...getHeroUserProps()}/>
+    <Box sx={{ width: '600px', margin: '0 auto', borderRadius: '6px' }}>
+      <HeroUser {...useGetHeroUserProps()} />
     </Box>
   </Story>
 </Preview>
-

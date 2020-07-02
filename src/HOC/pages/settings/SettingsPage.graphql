@@ -1,13 +1,11 @@
-fragment SettingsPageMe on Me{
-  user {
-    id
-    name
-    icon{ id, url },
-    image{ id, url },
-    location,
-    summary,
-    displayUsername,
-    website,
-    extraInfo
-  }
+fragment SettingsPageMeUser on User{
+  id
+  name
+  icon{ id, url },
+  image{ id, url },
+  location,
+  summary,
+  displayUsername,
+  website,
+  extraInfo
 }

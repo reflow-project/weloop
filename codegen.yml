@@ -4,19 +4,16 @@ overwrite: true
 watch: false
 hooks:
   afterStart: 
-    - node codegencleanup
-  onWatchTriggered:
-    - node codegencleanup
-     
+    - node codegencleanup   
 generates:
-  src/graphql/schema.generated.json:
-    plugins:
-      - introspection
   src/graphql/types.generated.ts:
     plugins:
       - typescript
       - fragment-matcher
       - typescript-resolvers
+  src/graphql/schema.generated.json:
+    plugins:
+      - introspection
   src/graphql/:
     preset: near-operation-file
     presetConfig:

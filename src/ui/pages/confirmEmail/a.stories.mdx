@@ -1,21 +1,22 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
-import {ConfirmEmail} from '.';
-import {Box} from 'rebass'
-import {getLoginProps} from 'ui/mock/login'
-import {Guest} from 'ui/templates/guest'
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { ConfirmEmail } from '.'
+import { Box } from 'rebass'
+import { useGetLoginProps } from 'ui/mock/login'
+import { Guest } from 'ui/templates/guest'
 
-<Meta title="Pages|Confirm Email" component={ConfirmEmail}/>
-
+<Meta title="Pages|Confirm Email" component={ConfirmEmail} />
 
 # Confirm Email
+
 The `Confirm` page displays a confirmation to the user that their email address has been confirmed. It is made up of the following:
+
 - **[Story](#story)**
 - **[Props](#props)**
 
 <Preview>
   <Story name="Confirm email page">
     <Guest>
-      <ConfirmEmail result={{username:"Ivan Minutillo", error: null}}  />
+      <ConfirmEmail result={{ username: 'Ivan Minutillo', error: null }} />
     </Guest>
   </Story>
 </Preview>

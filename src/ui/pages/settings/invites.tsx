@@ -1,27 +1,22 @@
-import { i18nMark, Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
+import { i18nMark } from '@lingui/react';
 import { Input, Label } from '@rebass/forms';
 import React from 'react';
 import { Box, Text } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
 import Button from 'ui/elements/Button';
 import { LoadMore } from 'ui/modules/Loadmore';
-import ConfirmationModal from 'ui/modules/ConfirmationModal';
 // import { FormikHook } from 'ui/@types/types';
-import Modal, { Actions, ContainerForm, Row } from 'ui/modules/Modal';
+import { Actions, ContainerForm, Row } from 'ui/modules/Modal';
 import styled from 'ui/themes/styled';
-// import { RotateCw } from 'react-feather';
-import { LocaleContext } from 'context/global/localizationCtx';
 
 const tt = {
   placeholders: {
-    email: i18nMark(
-      'Add email addresses (comma-separated) to invite to instance'
-    )
+    email: i18nMark('Add email addresses (comma-separated) to invite to instance')
   }
 };
 export interface Props {
-  formikRemoveEmail: FormikHook<WithEmail>;
-  formikSendInvite: FormikHook<WithEmail>;
+  sendInvite(email: string): unknown;
   formikAddEmail: FormikHook<WithEmail>;
   emailsList: string[];
   loadMoreEmails: FormikHook | null;
@@ -31,15 +26,7 @@ export interface WithEmail {
   email: string;
 }
 
-const Emails: React.FC<Props> = ({
-  emailsList,
-  formikAddEmail,
-  formikSendInvite,
-  formikRemoveEmail,
-  loadMoreEmails
-}) => {
-  const { i18n } = React.useContext(LocaleContext);
-
+const Emails: React.FC<Props> = ({ emailsList, formikAddEmail, sendInvite, loadMoreEmails }) => {
   return (
     <Box>
       <Text variant="heading" px={3} mt={2}>
@@ -86,33 +73,13 @@ const Emails: React.FC<Props> = ({
             >
               <RotateCw size={16} />
             </Resend> */}
-            <Button
-              variant="outline"
-              onClick={() => {
-                formikSendInvite.setValues({ email });
-                formikSendInvite.submitForm();
-              }}
-            >
+            <Button variant="outline" onClick={() => sendInvite(email)}>
               <Trans>Send again</Trans>
             </Button>
           </ListRow>
         ))}
         {loadMoreEmails ? <LoadMore LoadMoreFormik={loadMoreEmails} /> : null}{' '}
-        {/* FIX ME after add LoadMoreFormik */}
       </Box>
-      {formikRemoveEmail.values.email && (
-        <Modal closeModal={() => formikRemoveEmail.setValues({ email: '' })}>
-          <ConfirmationModal
-            done={() => formikRemoveEmail.setValues({ email: '' })}
-            formik={formikRemoveEmail}
-            modalAction={i18n._(`Remove email from whitelist`)}
-            modalDescription={i18n._(
-              `Are you sure you want to remove ${formikRemoveEmail.values.email} from the whitelisted emails?`
-            )}
-            modalTitle={i18n._(`Delete`)}
-          />
-        </Modal>
-      )}
     </Box>
   );
 };

@@ -1,10 +1,11 @@
+import { action } from '@storybook/addon-actions';
 import {
   Props as HeroCollectionProps,
   Status as HeroCollectionStatus
 } from 'ui/modules/HeroCollection';
-import { ToggleFormik } from './formik';
+import { useToggleFormik } from './formik';
 
-export const getHeroCollectionProps = (
+export const useGetHeroCollectionProps = (
   isAdmin = false,
   following = true,
   icon = 'https://i0.wp.com/japanese-journey.com/wp-content/uploads/2016/03/spaced-repetition.png',
@@ -27,14 +28,15 @@ export const getHeroCollectionProps = (
       fullName,
       communityIcon,
       communityId: '2',
+      isOpenDropdown: false,
+      toggleDropdown: action('toggleDropdown'),
       communityName,
       summary,
       followerCount: 10,
-      // contributorCount: 2,
-      toggleJoinFormik: ToggleFormik(),
-      EditCollectionPanel: ({ done }) => <></>,
-      FlagModal: ({ done }) => <></>,
-      FeaturedModal: () => <></>
+      toggleJoinFormik: useToggleFormik(),
+      edit: action('editCollection'),
+      addToFeatured: action('showAddToFeatured'),
+      flag: action('showFlag')
     }
   };
 };

@@ -4,7 +4,6 @@ fragment CommentPreview on Comment {
   inReplyTo { ...CommentPreviewBase }
   likerCount
   myLike{ id }
-  likerCount
   myFlag{ id }
   thread {
     id

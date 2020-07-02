@@ -5,7 +5,7 @@ import {
   Props as CreateCommunityProps
 } from 'ui/modules/CreateCommunityPanel';
 
-export const getCreateCommunityModalProps = (): CreateCommunityProps => {
+export const useGetCreateCommunityModalProps = (): CreateCommunityProps => {
   const formik = useFormik<CreateCommunityFormValues>({
     initialValues: {
       icon: '',

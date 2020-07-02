@@ -1,15 +1,13 @@
-import TermsAndConditionsPage from 'ui/pages/termsAndConditions';
 import React, { FC } from 'react';
 import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { GuestTemplate } from 'HOC/templates/Guest/Guest';
+import { TermsAndConditionsPageHOC } from 'HOC/pages/termsAndConditions/TermsAndConditionsPage';
 
 interface TermsAndConditionsPageRouter {}
-const TermsAndConditionsPageRouter: FC<RouteComponentProps<
-  TermsAndConditionsPageRouter
->> = () => {
+const TermsAndConditionsPageRouter: FC<RouteComponentProps<TermsAndConditionsPageRouter>> = () => {
   return (
     <GuestTemplate withoutHeader>
-      <TermsAndConditionsPage />
+      <TermsAndConditionsPageHOC />
     </GuestTemplate>
   );
 };

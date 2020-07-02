@@ -1,10 +1,7 @@
 import { useAddResource } from 'fe/resource/add/useAddResource';
 import { useFormik } from 'formik';
 import React, { FC, useEffect } from 'react';
-import {
-  ResourceFormValues,
-  UploadResource
-} from 'ui/modules/AddResource/UploadResource';
+import { ResourceFormValues, UploadResource } from 'ui/modules/AddResource/UploadResource';
 import * as Yup from 'yup';
 import { accepted_license_types } from 'mn-constants';
 import { ResourceInput } from 'graphql/types.generated';
@@ -15,7 +12,7 @@ export const validationSchema: Yup.ObjectSchema<ResourceFormValues> = Yup.object
 >({
   name: Yup.string()
     .max(90)
-    .required(),
+    .required('title is required'),
   summary: Yup.string().max(1000),
   icon: Yup.mixed<File | string>().test(...TestUrlOrFile),
   resource: Yup.mixed<File>().required(),
@@ -35,16 +32,14 @@ export interface AddResourceHOC {
   done(): any;
 }
 
-export const AddResourceHOC: FC<AddResourceHOC> = ({
-  done,
-  collectionId
-}: AddResourceHOC) => {
+export const AddResourceHOC: FC<AddResourceHOC> = ({ done, collectionId }: AddResourceHOC) => {
   const { create } = useAddResource();
-
   const formik = useFormik<ResourceFormValues>({
     validationSchema,
     initialValues,
     enableReinitialize: true,
+    validateOnBlur: false,
+    validateOnChange: false,
     onSubmit: vals => {
       const { resource: resourceFile, icon, name, license, summary } = vals;
       if (!resourceFile) {
@@ -66,12 +61,11 @@ export const AddResourceHOC: FC<AddResourceHOC> = ({
     }
   });
   const hideIconField =
-    !formik.values.resource ||
-    formik.values.resource.type.indexOf('image') !== -1;
+    !formik.values.resource || formik.values.resource.type.indexOf('image') !== -1;
 
   useEffect(() => {
-    hideIconField && formik.setValues({ ...formik.values, icon: null });
-  }, [hideIconField]);
+    hideIconField && formik.values.icon && formik.setValues({ ...formik.values, icon: null });
+  }, [formik, hideIconField]);
 
   return (
     <UploadResource

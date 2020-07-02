@@ -1,38 +1,28 @@
-import React from 'react';
-import styled from 'ui/themes/styled';
-import { XCircle, Slash, Flag } from 'react-feather';
-
-import { Box, Text, Flex } from 'rebass/styled-components';
-import { Trans } from '@lingui/react';
-import Modal from 'ui/modules/Modal';
-import { FormikHook } from 'ui/@types/types';
-import ConfirmationModal from '../ConfirmationModal';
-import { LocaleContext } from 'context/global/localizationCtx';
-import { darken } from 'polished';
+import { Trans } from '@lingui/macro';
 import { typography } from 'mn-constants';
+import { darken } from 'polished';
+import React, { ReactElement } from 'react';
+import { Flag, Slash, XCircle } from 'react-feather';
+import { Box, Flex, Text } from 'rebass/styled-components';
+import styled from 'ui/themes/styled';
 
 export interface FlaggedProps {
-  FlaggedItemContextElement: JSX.Element;
-  blockUserFormik: FormikHook;
-  deleteContentFormik: FormikHook;
-  ignoreFlagFormik: FormikHook;
+  FlaggedItemContextElement: ReactElement;
   type: string;
   reason: string;
+  blockUser(): unknown;
+  ignoreFlag(): unknown;
+  deleteContent(): unknown;
 }
 
 export const FlaggedItem: React.SFC<FlaggedProps> = ({
   FlaggedItemContextElement,
-  blockUserFormik,
-  deleteContentFormik,
-  ignoreFlagFormik,
   type,
-  reason
+  reason,
+  blockUser,
+  ignoreFlag,
+  deleteContent
 }) => {
-  const [isOpenDelete, setOpenDelete] = React.useState(false);
-  const [isOpenBlock, setOpenBlock] = React.useState(false);
-  const [isOpenIgnore, setOpenIgnore] = React.useState(false);
-  const { i18n } = React.useContext(LocaleContext);
-
   return (
     <Wrapper>
       <Reason>{FlaggedItemContextElement}</Reason>
@@ -43,84 +33,33 @@ export const FlaggedItem: React.SFC<FlaggedProps> = ({
         <Box>
           <Items>
             {type === 'User' ? (
-              <ActionItem onClick={() => setOpenBlock(true)}>
+              <ActionItem onClick={blockUser}>
                 <ActionIcon>
                   <Slash strokeWidth="1" size="18" />
                 </ActionIcon>
-                <Text
-                  variant={'suptitle'}
-                  sx={{ textTransform: 'capitalize' }}
-                  ml={1}
-                >
+                <Text variant={'suptitle'} sx={{ textTransform: 'capitalize' }} ml={1}>
                   <Trans>Block</Trans>
                 </Text>
               </ActionItem>
             ) : (
-              <ActionItem onClick={() => setOpenDelete(true)}>
+              <ActionItem onClick={deleteContent}>
                 <ActionIcon>
                   <XCircle strokeWidth="1" size="18" />
                 </ActionIcon>
-                <Text
-                  variant={'suptitle'}
-                  sx={{ textTransform: 'capitalize' }}
-                  ml={1}
-                >
+                <Text variant={'suptitle'} sx={{ textTransform: 'capitalize' }} ml={1}>
                   <Trans>Delete</Trans>
                 </Text>
               </ActionItem>
             )}
-            <ActionItem ml={2} onClick={() => setOpenIgnore(true)}>
+            <ActionItem ml={2} onClick={ignoreFlag}>
               <ActionIcon className="unflag">
                 <Flag className="hover" strokeWidth="1" size="16" />
               </ActionIcon>
-              <Text
-                variant={'suptitle'}
-                sx={{ textTransform: 'capitalize' }}
-                ml={1}
-              >
+              <Text variant={'suptitle'} sx={{ textTransform: 'capitalize' }} ml={1}>
                 <Trans>Ignore</Trans>
               </Text>
             </ActionItem>
           </Items>
-          {isOpenDelete && (
-            <Modal closeModal={() => setOpenDelete(false)}>
-              <ConfirmationModal
-                done={() => setOpenDelete(false)}
-                formik={deleteContentFormik}
-                modalAction={i18n._(`Delete flagged content`)}
-                modalDescription={i18n._(
-                  `Are you sure you want to permanently delete this ${type} content?`
-                )}
-                modalTitle={i18n._(`Delete`)}
-              />
-            </Modal>
-          )}
-          {isOpenBlock && (
-            <Modal closeModal={() => setOpenBlock(false)}>
-              <ConfirmationModal
-                done={() => setOpenBlock(false)}
-                formik={blockUserFormik}
-                modalAction={i18n._(`Delete user`)}
-                modalDescription={i18n._(
-                  `Are you sure you want to permanently delete this user?`
-                )}
-                modalTitle={i18n._(`Delete`)}
-              />
-            </Modal>
-          )}
-          {isOpenIgnore && (
-            <Modal closeModal={() => setOpenIgnore(false)}>
-              <ConfirmationModal
-                done={() => setOpenIgnore(false)}
-                formik={ignoreFlagFormik}
-                modalAction={i18n._(`Ignore flag`)}
-                modalDescription={i18n._(
-                  `Are you sure you want to ignore and delete this flag?`
-                )}
-                modalTitle={i18n._(`Ignore`)}
-              />
-            </Modal>
-          )}
         </Box>
       </Actions>
     </Wrapper>
@@ -146,11 +85,9 @@ const Actions = styled(Box)`
 
 const ActionItem = styled(Flex)<{ liked?: boolean }>`
   align-items: center;
-  color: ${props =>
-    props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+  color: ${props => (props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark)};
   div {
-    color: ${props =>
-      props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+    color: ${props => (props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark)};
   }
   &:hover {
     background: ${props =>
@@ -160,17 +97,14 @@ const ActionItem = styled(Flex)<{ liked?: boolean }>`
   }
   cursor: pointer;
   background: ${props =>
-    props.liked
-      ? props.theme.colors.secondary
-      : props.theme.colors.mediumlight};
+    props.liked ? props.theme.colors.secondary : props.theme.colors.mediumlight};
   border-radius: 4px;
   padding: 0 8px;
   margin-right: 8px;
   text-align: center;
   font-size: ${typography.size.s1};
   svg {
-    stroke: ${props =>
-      props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+    stroke: ${props => (props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark)};
   }
   a {
     display: flex;

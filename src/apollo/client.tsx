@@ -24,34 +24,24 @@ import { GraphQLError } from 'graphql';
 import HttpStatus from 'http-status-codes';
 import { Socket as PhoenixSocket } from 'phoenix';
 import { RootMutationType, RootQueryType } from '../graphql/types.generated';
-import {
-  GRAPHQL_ENDPOINT,
-  IS_DEV,
-  PHOENIX_SOCKET_ENDPOINT
-} from '../mn-constants';
+import { GRAPHQL_ENDPOINT, IS_DEV, PHOENIX_SOCKET_ENDPOINT } from '../mn-constants';
 import { getOpType } from '../util/apollo/operation';
 import { KVStore } from '../util/keyvaluestore/types';
 import { createUploadLink } from './uploadLink.js';
-const introspectionQueryResultData = require('../fragmentTypes.json');
+import introspectionQueryResultData from 'graphql/types.generated';
 
 export type MutationName = keyof RootMutationType;
 export type QueryName = keyof RootQueryType;
 export type OperationName = QueryName | MutationName;
 
-// const { meQuery } = require('../../../graphql/me.graphql');
 interface Cfg {
   localKVStore: KVStore;
   appLinks: ApolloLink[];
-  dispatch(payload: any);
 }
 
 const AUTH_TOKEN_KEY = 'AUTH_TOKEN';
 
-export default async function initialise({
-  localKVStore,
-  appLinks,
-  dispatch
-}: Cfg) {
+export default async function initialise({ localKVStore, appLinks }: Cfg) {
   let authToken = localKVStore.get(AUTH_TOKEN_KEY);
   const fragmentMatcher = new IntrospectionFragmentMatcher({
     introspectionQueryResultData
@@ -69,8 +59,7 @@ export default async function initialise({
           getCacheKey({ __typename: 'Community', id: args.communityId }),
         comment: (_, args, { getCacheKey }) =>
           getCacheKey({ __typename: 'Comment', id: args.commentId }),
-        user: (_, args, { getCacheKey }) =>
-          getCacheKey({ __typename: 'User', id: args.userId }),
+        user: (_, args, { getCacheKey }) => getCacheKey({ __typename: 'User', id: args.userId }),
         thread: (_, args, { getCacheKey }) =>
           getCacheKey({ __typename: 'Thread', id: args.threadId }),
         resource: (_, args, { getCacheKey }) =>
@@ -165,9 +154,7 @@ export default async function initialise({
           /ServerParseError/gi.test(err.message)
       );
       return Observable.of<FetchResult>({
-        errors: unexpectedError
-          ? [new GraphQLError(`Unexpected error`)]
-          : graphQLErrors
+        errors: unexpectedError ? [new GraphQLError(`Unexpected error`)] : graphQLErrors
       });
     } else if (response?.errors) {
       // RESPONSE ERROR
@@ -203,28 +190,22 @@ export default async function initialise({
     AnonResetPasswordMutationName,
     AnonResetPasswordRequestMutationName
   ];
-  const alertBlockMutationsForAnonymousLink = new ApolloLink(
-    (operation, nextLink) => {
-      if (!authToken) {
-        const optype = getOpType(operation);
-        if (
-          optype === 'mutation' &&
-          //@ts-ignore
-          !ALLOWED_ANONYMOUS_MUTATIONS.includes(operation.operationName)
-        ) {
-          return Observable.of<FetchResult>({
-            errors: [
-              new GraphQLError(
-                'You should log in for performing this operation!'
-              )
-            ]
-          });
-        }
+  const alertBlockMutationsForAnonymousLink = new ApolloLink((operation, nextLink) => {
+    if (!authToken) {
+      const optype = getOpType(operation);
+      if (
+        optype === 'mutation' &&
+        //@ts-ignore
+        !ALLOWED_ANONYMOUS_MUTATIONS.includes(operation.operationName)
+      ) {
+        return Observable.of<FetchResult>({
+          errors: [new GraphQLError('You should log in for performing this operation!')]
+        });
       }
-
-      return nextLink(operation);
     }
-  );
+
+    return nextLink(operation);
+  });
   // used for graphql query and mutations
   const httpLink = ApolloLink.from(
     [

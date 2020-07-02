@@ -11,10 +11,7 @@ import {
 
 export const useFlagPreview = (flagId: Flag['id']) => {
   const flagQ = useFlagPreviewDataQuery({ variables: { flagId } });
-  const [
-    deleteFlagContextMut,
-    deleteFlagContextStatus
-  ] = useDeleteFlagContextMutation();
+  const [deleteFlagContextMut, deleteFlagContextStatus] = useDeleteFlagContextMutation();
   const [deleteFlagMut, deleteFlagStatus] = useDeleteFlagMutation();
   const [
     deactivateFlaggedUserMut,
@@ -23,11 +20,7 @@ export const useFlagPreview = (flagId: Flag['id']) => {
 
   const flag = flagQ.data?.flag;
   const deactivateFlaggedUser = useCallOrNotifyMustLogin(async () => {
-    if (
-      !flag ||
-      flag.context.__typename !== 'User' ||
-      deactivateFlaggedUserStatus.loading
-    ) {
+    if (!flag || flag.context.__typename !== 'User' || deactivateFlaggedUserStatus.loading) {
       return;
     }
 
@@ -71,7 +64,18 @@ export const useFlagPreview = (flagId: Flag['id']) => {
       flag,
       deactivateFlaggedUser,
       deleteFlagContext,
-      ignoreFlag
+      ignoreFlag,
+      deleteFlagContextStatus,
+      deactivateFlaggedUserStatus,
+      ignoreFlagStatus: deleteFlagStatus
     };
-  }, [flag, deactivateFlaggedUser, deleteFlagContext, ignoreFlag]);
+  }, [
+    flag,
+    deactivateFlaggedUser,
+    deleteFlagContext,
+    ignoreFlag,
+    deleteFlagContextStatus,
+    deactivateFlaggedUserStatus,
+    deleteFlagStatus
+  ]);
 };

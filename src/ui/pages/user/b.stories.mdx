@@ -1,33 +1,38 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
-import { PropsTable } from '@storybook/components';
-import { User } from '.';
-import {HeroUser} from 'ui/modules/HeroUser'
-import {getHeroUserProps} from 'ui/mock/heroUser'
-import {Box} from 'rebass'
-import {ActivityPreview} from 'ui/modules/ActivityPreview'
-import {activityPreviewProps} from 'ui/mock/activityPreview'
-import {ResourcePreviewProps, UserPreviewProps, CommunityPreviewProps, CollectionPreviewProps, ThreadPreviewProps, CommentPreviewProps, LikedCommentPreviewProps } from 'ui/mock/previews'
-import {getSidebarProps} from 'ui/mock/sidebar'
-import {getLoadMoreProps} from 'ui/mock/loadmore'
-import {getMainHeaderProps} from 'ui/mock/mainHeader'
-import {Resource} from 'ui/modules/Previews/Resource'
-import {Collection} from 'ui/modules/Previews/Collection'
-import {Comment} from 'ui/modules/Previews/Comment'
-import { User as UserPreview } from 'ui/modules/Previews/User';
-import {Community} from 'ui/modules/Previews/Community';
-import {Thread} from 'ui/modules/Previews/Thread'
-import {LikedComment} from 'ui/modules/Previews/LikedComment'
-import {WithSidebar} from 'ui/templates/withSidebar'
-import {MainHeader} from 'ui/modules/MainHeader'
-import {Sidebar} from 'ui/modules/Sidebar'
-const Head = () => <MainHeader {...getMainHeaderProps() } />
-const Side = () => <Sidebar {...getSidebarProps()}/>
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { User } from '.'
+import { HeroUser } from 'ui/modules/HeroUser'
+import { useGetHeroUserProps } from 'ui/mock/heroUser'
+import { Box } from 'rebass'
+import { ActivityPreview } from 'ui/modules/ActivityPreview'
+import { activityPreviewProps } from 'ui/mock/activityPreview'
+import {
+  ResourcePreviewProps,
+  UserPreviewProps,
+  CommunityPreviewProps,
+  CollectionPreviewProps,
+  ThreadPreviewProps,
+  CommentPreviewProps,
+  LikedCommentPreviewProps,
+} from 'ui/mock/previews'
+import { useGetSidebarProps } from 'ui/mock/sidebar'
+import { useGetLoadMoreProps } from 'ui/mock/loadmore'
+import { getMainHeaderProps } from 'ui/mock/mainHeader'
+import { Resource } from 'ui/modules/Previews/Resource'
+import { Collection } from 'ui/modules/Previews/Collection'
+import { Comment } from 'ui/modules/Previews/Comment'
+import { User as UserPreview } from 'ui/modules/Previews/User'
+import { Community } from 'ui/modules/Previews/Community'
+import { Thread } from 'ui/modules/Previews/Thread'
+import { LikedComment } from 'ui/modules/Previews/LikedComment'
+import { WithSidebar } from 'ui/templates/withSidebar'
+import { MainHeader } from 'ui/modules/MainHeader'
+import { Sidebar } from 'ui/modules/Sidebar'
 
-
-<Meta title="Pages|Profile" component={User}/>
-
+<Meta title="Pages|Profile" component={User} />
 
 # Profile
+
 The `Profile` shows the profile page of a MoodleNet user. This is made up of the following components:
 
 - **[Story](#story)**
@@ -38,65 +43,110 @@ The `Profile` shows the profile page of a MoodleNet user. This is made up of the
 
 <Preview>
   <Story name="Profile page">
-    <WithSidebar 
-      HeaderBox={Head}
-      SidebarBox={Side}>
-        <User 
-        totalCommunities={"23"}
-        totalActivities={"23"}
+    <WithSidebar
+      SearchBox={<h1>test</h1>}
+      HeaderBox={<MainHeader {...getMainHeaderProps()} />}
+      SidebarBox={<Sidebar {...useGetSidebarProps()} />}
+      userImage={"string"}
+      userLink={"/"}
+      username={"test"}
+      name={"test"}
+      signout={() => console.log("test")}
+    >
+      <User
+        totalCommunities={'23'}
+        totalActivities={'23'}
         userLink=""
         userName="Estrella"
-        totalCollections={"23"}
-        totalUsers={"493"}
-        loadMoreActivities={getLoadMoreProps()}
-        loadMoreLikes={getLoadMoreProps()}
-        loadMoreCommunities={getLoadMoreProps()}
-        loadMoreCollections={getLoadMoreProps()}
-        loadMoreFollowing={getLoadMoreProps()}
-        HeroUserBox={(<HeroUser {...getHeroUserProps(true)} />)}
+        totalCollections={'23'}
+        totalUsers={'493'}
+        loadMoreActivities={useGetLoadMoreProps()}
+        loadMoreLikes={useGetLoadMoreProps()}
+        loadMoreCommunities={useGetLoadMoreProps()}
+        loadMoreCollections={useGetLoadMoreProps()}
+        loadMoreFollowing={useGetLoadMoreProps()}
+        HeroUserBox={<HeroUser {...useGetHeroUserProps(true)} />}
         ActivityBoxes={[
-          (<ActivityPreview key="1" {...activityPreviewProps('Added a link', <Resource {...ResourcePreviewProps() }/>)} />),
-          (<ActivityPreview key="2" {...activityPreviewProps('Uploaded a resource', <Resource {...ResourcePreviewProps('license', 'pdf' ) }/>)} />),
-          (<ActivityPreview key="3" {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps() }/>)} />),
-          (<ActivityPreview key="4" {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps() }/>)} />),
-          (<ActivityPreview key="5" {...activityPreviewProps('Like a comment', <LikedComment {...LikedCommentPreviewProps() }/>)} />),
-          (<ActivityPreview key="6" {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps() }/>)} />),
-          (<ActivityPreview key="7" {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps() }/>)} />)
+          <ActivityPreview
+            key="1"
+            {...activityPreviewProps('Added a link', <Resource {...ResourcePreviewProps()} />)}
+          />,
+          <ActivityPreview
+            key="2"
+            {...activityPreviewProps(
+              'Uploaded a resource',
+              <Resource {...ResourcePreviewProps('license', 'pdf')} />
+            )}
+          />,
+          <ActivityPreview
+            key="3"
+            {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps()} />)}
+          />,
+          <ActivityPreview
+            key="4"
+            {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps()} />)}
+          />,
+          <ActivityPreview
+            key="5"
+            {...activityPreviewProps(
+              'Like a comment',
+              <LikedComment {...LikedCommentPreviewProps()} />
+            )}
+          />,
+          <ActivityPreview
+            key="6"
+            {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps()} />)}
+          />,
+          <ActivityPreview
+            key="7"
+            {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps()} />)}
+          />,
         ]}
         CommunityBoxes={[
-            (<Community key="1" {...CommunityPreviewProps() } />),
-            (<Community key="2" {...CommunityPreviewProps() } />),
-            (<Community key="3" {...CommunityPreviewProps() } />),
-            (<Community key="4" {...CommunityPreviewProps() } />),
-            (<Community key="5" {...CommunityPreviewProps() } />),
-            (<Community key="6" {...CommunityPreviewProps() } />),
-            (<Community key="7" {...CommunityPreviewProps() } />),
-            (<Community key="8" {...CommunityPreviewProps() } />),
-            (<Community key="9" {...CommunityPreviewProps() } />)
+          <Community key="1" {...CommunityPreviewProps()} />,
+          <Community key="2" {...CommunityPreviewProps()} />,
+          <Community key="3" {...CommunityPreviewProps()} />,
+          <Community key="4" {...CommunityPreviewProps()} />,
+          <Community key="5" {...CommunityPreviewProps()} />,
+          <Community key="6" {...CommunityPreviewProps()} />,
+          <Community key="7" {...CommunityPreviewProps()} />,
+          <Community key="8" {...CommunityPreviewProps()} />,
+          <Community key="9" {...CommunityPreviewProps()} />,
         ]}
         CollectionsBoxes={[
-            <Box mb={2} key="1"><Collection {...CollectionPreviewProps()} /></Box>,
-            <Box mb={2} key="2"><Collection {...CollectionPreviewProps()} /></Box>,
-            <Box mb={2} key="3"><Collection {...CollectionPreviewProps()} /></Box>,
-            <Box mb={2} key="4"><Collection {...CollectionPreviewProps()} /></Box>,
-            <Box mb={2} key="5"><Collection {...CollectionPreviewProps()} /></Box>,
-            <Box mb={2} key="6"><Collection {...CollectionPreviewProps()} /></Box>
+          <Box mb={2} key="1">
+            <Collection {...CollectionPreviewProps()} />
+          </Box>,
+          <Box mb={2} key="2">
+            <Collection {...CollectionPreviewProps()} />
+          </Box>,
+          <Box mb={2} key="3">
+            <Collection {...CollectionPreviewProps()} />
+          </Box>,
+          <Box mb={2} key="4">
+            <Collection {...CollectionPreviewProps()} />
+          </Box>,
+          <Box mb={2} key="5">
+            <Collection {...CollectionPreviewProps()} />
+          </Box>,
+          <Box mb={2} key="6">
+            <Collection {...CollectionPreviewProps()} />
+          </Box>,
         ]}
         UserBoxes={[
-            ( <UserPreview key="1" {...UserPreviewProps() } />),
-            ( <UserPreview key="2" {...UserPreviewProps() } />),
-            ( <UserPreview key="3" {...UserPreviewProps() } />),
-            ( <UserPreview key="4" {...UserPreviewProps() } />),
-            ( <UserPreview key="5" {...UserPreviewProps() } />),
-            ( <UserPreview key="6" {...UserPreviewProps() } />),
-            ( <UserPreview key="7" {...UserPreviewProps() } />),
+          <UserPreview key="1" {...UserPreviewProps()} />,
+          <UserPreview key="2" {...UserPreviewProps()} />,
+          <UserPreview key="3" {...UserPreviewProps()} />,
+          <UserPreview key="4" {...UserPreviewProps()} />,
+          <UserPreview key="5" {...UserPreviewProps()} />,
+          <UserPreview key="6" {...UserPreviewProps()} />,
+          <UserPreview key="7" {...UserPreviewProps()} />,
         ]}
         basePath="/"
-        />
+      />
     </WithSidebar>
   </Story>
 </Preview>
-
 
 <div id="modules">Building blocks</div>
 

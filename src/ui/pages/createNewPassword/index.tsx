@@ -1,13 +1,13 @@
-import * as React from 'react';
 import { Trans } from '@lingui/macro';
-import styled from 'ui/themes/styled';
-import { Input } from '@rebass/forms';
-import { FormikHook } from 'ui/@types/types';
-import Button from 'ui/elements/Button';
-import Alert from 'ui/elements/Alert';
-import { AlertWrapper } from 'ui/modules/Modal';
 import { i18nMark } from '@lingui/react';
+import { Input } from '@rebass/forms';
+import * as React from 'react';
+import { FormikHook } from 'ui/@types/types';
+import Alert from 'ui/elements/Alert';
+import Button from 'ui/elements/Button';
 import LogoContainer from 'ui/elements/Logo';
+import { AlertWrapper } from 'ui/modules/Modal';
+import styled from 'ui/themes/styled';
 
 export interface NewPasswordFormValues {
   password: string;
@@ -41,7 +41,7 @@ export const CreateNewPassword: React.FC<Props> = ({ formik }) => {
             />
             {formik.errors.password && (
               <AlertWrapper>
-                <Alert variant="bad">{formik.errors.password}</Alert>
+                <Alert variant="negative">{formik.errors.password}</Alert>
               </AlertWrapper>
             )}
             <Spacer />
@@ -54,7 +54,7 @@ export const CreateNewPassword: React.FC<Props> = ({ formik }) => {
             />
             {formik.errors.passwordConfirm && (
               <AlertWrapper>
-                <Alert variant="bad">{formik.errors.passwordConfirm}</Alert>
+                <Alert variant="negative">{formik.errors.passwordConfirm}</Alert>
               </AlertWrapper>
             )}
             <Button

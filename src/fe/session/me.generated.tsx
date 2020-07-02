@@ -1,10 +1,13 @@
 import * as Types from '../../graphql/types.generated';
 
 import { SidebarMeUserFragment } from '../../HOC/modules/Sidebar/Sidebar.generated';
+import { SettingsPageMeUserFragment } from '../../HOC/pages/settings/SettingsPage.generated';
 import gql from 'graphql-tag';
+import { SettingsPageMeUserFragmentDoc } from '../../HOC/pages/settings/SettingsPage.generated';
 import { SidebarMeUserFragmentDoc } from '../../HOC/modules/Sidebar/Sidebar.generated';
 import * as ApolloReactCommon from '@apollo/react-common';
 import * as ApolloReactHooks from '@apollo/react-hooks';
+
 
 
 export type MeQueryVariables = {};
@@ -31,9 +34,28 @@ export type UseMeDataFragment = (
   & Pick<Types.Me, 'isInstanceAdmin' | 'email' | 'isConfirmed' | 'wantsEmailDigest' | 'wantsNotifications'>
   & { user: (
     { __typename: 'User' }
-    & Pick<Types.User, 'id' | 'extraInfo'>
+    & Pick<Types.User, 'id'>
+    & SettingsPageMeUserFragment
     & SidebarMeUserFragment
   ) }
+);
+
+export type MeUpdateMyProfileMutationVariables = {
+  profile: Types.UpdateProfileInput,
+  icon?: Types.Maybe<Types.UploadInput>,
+  image?: Types.Maybe<Types.UploadInput>
+};
+
+
+export type MeUpdateMyProfileMutation = (
+  { __typename: 'RootMutationType' }
+  & { updateProfile: Types.Maybe<(
+    { __typename: 'Me' }
+    & { user: (
+      { __typename: 'User' }
+      & SettingsPageMeUserFragment
+    ) }
+  )> }
 );
 
 export const UseMeDataFragmentDoc = gql`
@@ -45,11 +67,12 @@ export const UseMeDataFragmentDoc = gql`
   wantsNotifications
   user {
     id
+    ...SettingsPageMeUser
     ...SidebarMeUser
-    extraInfo
   }
 }
-    ${SidebarMeUserFragmentDoc}`;
+    ${SettingsPageMeUserFragmentDoc}
+${SidebarMeUserFragmentDoc}`;
 export const MeDocument = gql`
     query me {
   me {
@@ -111,6 +134,42 @@ export function useMeLogoutMutation(baseOptions?: ApolloReactHooks.MutationHookO
 export type MeLogoutMutationHookResult = ReturnType<typeof useMeLogoutMutation>;
 export type MeLogoutMutationResult = ApolloReactCommon.MutationResult<MeLogoutMutation>;
 export type MeLogoutMutationOptions = ApolloReactCommon.BaseMutationOptions<MeLogoutMutation, MeLogoutMutationVariables>;
+export const MeUpdateMyProfileDocument = gql`
+    mutation meUpdateMyProfile($profile: UpdateProfileInput!, $icon: UploadInput, $image: UploadInput) {
+  updateProfile(profile: $profile, icon: $icon, image: $image) {
+    user {
+      ...SettingsPageMeUser
+    }
+  }
+}
+    ${SettingsPageMeUserFragmentDoc}`;
+export type MeUpdateMyProfileMutationFn = ApolloReactCommon.MutationFunction<MeUpdateMyProfileMutation, MeUpdateMyProfileMutationVariables>;
+
+/**
+ * __useMeUpdateMyProfileMutation__
+ *
+ * To run a mutation, you first call `useMeUpdateMyProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMeUpdateMyProfileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [meUpdateMyProfileMutation, { data, loading, error }] = useMeUpdateMyProfileMutation({
+ *   variables: {
+ *      profile: // value for 'profile'
+ *      icon: // value for 'icon'
+ *      image: // value for 'image'
+ *   },
+ * });
+ */
+export function useMeUpdateMyProfileMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<MeUpdateMyProfileMutation, MeUpdateMyProfileMutationVariables>) {
+        return ApolloReactHooks.useMutation<MeUpdateMyProfileMutation, MeUpdateMyProfileMutationVariables>(MeUpdateMyProfileDocument, baseOptions);
+      }
+export type MeUpdateMyProfileMutationHookResult = ReturnType<typeof useMeUpdateMyProfileMutation>;
+export type MeUpdateMyProfileMutationResult = ApolloReactCommon.MutationResult<MeUpdateMyProfileMutation>;
+export type MeUpdateMyProfileMutationOptions = ApolloReactCommon.BaseMutationOptions<MeUpdateMyProfileMutation, MeUpdateMyProfileMutationVariables>;
 
 
 export interface MeQueryOperation {
@@ -145,6 +204,25 @@ export const MeLogoutMutationRefetch = (
   context?:any
 )=>({
   query:MeLogoutDocument,
+  variables,
+  context
+})
+      
+
+
+export interface MeUpdateMyProfileMutationOperation {
+  operationName: 'meUpdateMyProfile'
+  result: MeUpdateMyProfileMutation
+  variables: MeUpdateMyProfileMutationVariables
+  type: 'mutation'
+}
+export const MeUpdateMyProfileMutationName:MeUpdateMyProfileMutationOperation['operationName'] = 'meUpdateMyProfile'
+
+export const MeUpdateMyProfileMutationRefetch = (
+  variables:MeUpdateMyProfileMutationVariables, 
+  context?:any
+)=>({
+  query:MeUpdateMyProfileDocument,
   variables,
   context
 })

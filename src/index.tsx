@@ -12,7 +12,6 @@ import App from './containers/App/App';
 import { ProvideContexts } from './context/global';
 import * as K from './mn-constants';
 import { colors, typography } from './mn-constants';
-import createStore from './redux/store';
 import registerServiceWorker from './registerServiceWorker';
 import { createLocalSessionKVStorage } from './util/keyvaluestore/localSessionStorage';
 
@@ -36,7 +35,12 @@ async function run() {
       * {
         box-sizing: border-box;
       }
-
+      input, textarea {
+        ::placeholder {
+          font-size: 13px;
+          font-family: ${typography.type.primary} !important;
+        }
+      }
       body {
       background: ${colors.app};
       .ais-SearchBox {
@@ -44,7 +48,6 @@ async function run() {
         border: ${colors.border}
         height: 34px;
         width: 380px;
-        margin-top: 8px;
         background: ${colors.app}
         input {
           border: none;
@@ -82,24 +85,17 @@ async function run() {
     input:focus:-ms-input-placeholder, textarea:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
   `;
   const createLocalKVStore = createLocalSessionKVStorage('local');
-  const store = createStore({ createLocalKVStore });
 
   const apolloClient = await getApolloClient({
     localKVStore: createLocalKVStore('APOLLO#'),
-    appLinks: [MngErrorLink],
-    dispatch: store.dispatch
+    appLinks: [MngErrorLink]
   });
 
   const ApolloApp = () => (
     <ApolloProvider client={apolloClient.client}>
-      <ProvideContexts store={store}>
+      <ProvideContexts>
         <Global />
-        <ToastContainer
-          hideProgressBar
-          transition={Slide}
-          autoClose={3000}
-          newestOnTop
-        />
+        <ToastContainer hideProgressBar transition={Slide} autoClose={3000} newestOnTop />
         <App />
       </ProvideContexts>
     </ApolloProvider>

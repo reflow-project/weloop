@@ -1,15 +1,14 @@
-import React from 'react';
-import styled from 'ui/themes/styled';
-import { Box, Text, Flex } from 'rebass/styled-components';
-import SocialText from 'ui/modules/SocialText';
-import { i18nMark, Trans } from '@lingui/react';
-import { LocaleContext } from '../../../context/global/localizationCtx';
-import { FormikHook } from 'ui/@types/types';
-import { Star, CornerDownLeft } from 'react-feather';
+import { Trans } from '@lingui/macro';
 import DOMPurify from 'dompurify';
+import { typography } from 'mn-constants';
+import React from 'react';
+import { CornerDownLeft, Star } from 'react-feather';
+import { NavLink } from 'react-router-dom';
+import { Box, Flex, Text } from 'rebass/styled-components';
+import { FormikHook } from 'ui/@types/types';
+import styled from 'ui/themes/styled';
 import { ActorComp } from '../ActivityPreview';
 import { Actor } from '../ActivityPreview/types';
-import { typography } from 'mn-constants';
 
 export interface LikeActions {
   toggleLikeFormik: FormikHook<{}>;
@@ -20,41 +19,26 @@ export interface ReplyActions {
   replyFormik: FormikHook<{ replyMessage: string }>;
 }
 export interface CommentProps {
-  FlagModal: null | React.ComponentType<{ done(): unknown }>;
   like: LikeActions;
-  reply: ReplyActions;
   content: string;
   actor: Actor;
   createdAt: string;
   communityName: string;
   communityLink: string;
   hideActions?: boolean;
+  url: string;
 }
-
-const tt = {
-  placeholders: {
-    name: i18nMark('Post a reply'),
-    summary: i18nMark(
-      'Please describe what the collection is for and what kind of resources it is likely to contain...'
-    ),
-    image: i18nMark('Enter the URL of an image to represent the collection')
-  }
-};
 
 export const LikedComment: React.SFC<CommentProps> = ({
   content,
-  reply,
   like,
-  FlagModal,
   actor,
   createdAt,
   communityName,
   communityLink,
-  hideActions
+  hideActions,
+  url
 }) => {
-  const [talkModalVisible, showTalkModal] = React.useState(false);
-  const { i18n } = React.useContext(LocaleContext);
-  // const [isOpenFlagModal, setOpenFlagModal] = React.useState(false);
   return (
     <Wrapper pl={2}>
       <ActorComp
@@ -71,38 +55,27 @@ export const LikedComment: React.SFC<CommentProps> = ({
         mb={2}
       />
       <Actions mt={2}>
-        {talkModalVisible && (
-          <Box mb={2}>
-            <SocialText
-              placeholder={i18n._(tt.placeholders.name)}
-              defaultValue={''}
-              submit={msg => {
-                showTalkModal(false);
-                reply.replyFormik.setValues({ replyMessage: msg });
-                reply.replyFormik.submitForm();
-              }}
-            />
-          </Box>
-        )}
         {hideActions ? null : (
           <Box>
             <Items>
-              <ActionItem onClick={() => showTalkModal(!talkModalVisible)}>
-                <ActionIcon>
-                  <CornerDownLeft
-                    className="hover"
-                    strokeWidth="1"
-                    color="rgba(0,0,0,.4)"
-                    size="18"
-                  />
-                </ActionIcon>
-                <ActionText
-                  ml={1}
-                  variant={'text'}
-                  sx={{ textTransform: 'capitalize' }}
-                >
-                  <Trans>Reply</Trans>
-                </ActionText>
+              <ActionItem>
+                <NavLink to={url}>
+                  <ActionIcon>
+                    <CornerDownLeft
+                      className="hover"
+                      strokeWidth="1"
+                      color="rgba(0,0,0,.4)"
+                      size="18"
+                    />
+                  </ActionIcon>
+                  <ActionText
+                    ml={1}
+                    variant={'text'}
+                    sx={{ textTransform: 'capitalize', textDecoration: 'none' }}
+                  >
+                    <Trans>Reply</Trans>
+                  </ActionText>
+                </NavLink>
               </ActionItem>
               <ActionItem
                 liked={like.iLikeIt ? true : false}
@@ -111,11 +84,7 @@ export const LikedComment: React.SFC<CommentProps> = ({
                 <ActionIcon>
                   <Star strokeWidth="1" size="18" />
                 </ActionIcon>
-                <ActionText
-                  variant={'text'}
-                  sx={{ textTransform: 'capitalize' }}
-                  ml={1}
-                >
+                <ActionText variant={'text'} sx={{ textTransform: 'capitalize' }} ml={1}>
                   {like.totalLikes + ' '} <Trans>Star</Trans>
                 </ActionText>
               </ActionItem>
@@ -143,25 +112,20 @@ const Actions = styled(Box)`
 
 const ActionItem = styled(Flex)<{ liked?: boolean }>`
   align-items: center;
-  color: ${props =>
-    props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+  color: ${props => (props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark)};
   div {
-    color: ${props =>
-      props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+    color: ${props => (props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark)};
   }
   cursor: pointer;
   background: ${props =>
-    props.liked
-      ? props.theme.colors.secondary
-      : props.theme.colors.mediumlight};
+    props.liked ? props.theme.colors.secondary : props.theme.colors.mediumlight};
   border-radius: 4px;
   padding: 0 8px;
   margin-right: 8px;
   text-align: center;
   font-size: ${typography.size.s1};
   svg {
-    stroke: ${props =>
-      props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+    stroke: ${props => (props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark)};
   }
   a {
     display: flex;

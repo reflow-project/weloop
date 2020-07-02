@@ -4,13 +4,7 @@ import { Heading, Text } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
 import styled from 'ui/themes/styled';
 import { FormikHook } from 'ui/@types/types';
-import {
-  Actions,
-  Container,
-  ContainerForm,
-  Header,
-  Row
-} from 'ui/modules/Modal';
+import { Actions, Container, ContainerForm, Header, Row } from 'ui/modules/Modal';
 
 export interface Props {
   cancel(): any;
@@ -38,8 +32,8 @@ export const FeaturedModal: React.FC<Props> = ({
       <Row>
         <ContainerForm>
           <Text>
-            Are you sure you want to add {itemName} {itemType} to the featured
-            list of the Discover Page?
+            Are you sure you want to add {itemName} {itemType} to the featured list of the Discover
+            Page?
           </Text>
         </ContainerForm>
       </Row>
@@ -69,8 +63,8 @@ export const FeaturedModal: React.FC<Props> = ({
       <Row>
         <ContainerForm>
           <Text>
-            Are you sure you want to remove {itemName} {itemType} from the
-            featured list of the Discover Page?
+            Are you sure you want to remove {itemName} {itemType} from the featured list of the
+            Discover Page?
           </Text>
         </ContainerForm>
       </Row>

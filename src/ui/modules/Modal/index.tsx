@@ -46,7 +46,6 @@ const Dialog = styled.div`
     margin: 0;
     left: 8px;
     right: 8px;
-    top: 8px;
   `};
 `;
 

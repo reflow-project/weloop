@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import { action } from '@storybook/addon-actions';
 import { ShareResource } from 'ui/modules/ShareLink/fetched';
 
-export const getShareLinkProps = (): Props => {
+export const useGetShareLinkProps = (): Props => {
   return {
     FetchLinkFormik: useFormik<{ fetchUrl: string }>({
       initialValues: {

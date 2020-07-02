@@ -1,5 +1,7 @@
 fragment ThreadPreview on Thread {
   id
+  lastActivity
+  createdAt
   context{
     ...on Community {
       ...CommunityPreview

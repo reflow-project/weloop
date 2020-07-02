@@ -1,16 +1,15 @@
 import { SettingsPage, SettingsPageTab } from 'HOC/pages/settings/SettingsPage';
-import { NotFound } from 'ui/pages/notFound';
+import { NotFoundHOC } from 'HOC/pages/not-found/NotFound';
 import React, { FC, useMemo } from 'react';
 import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { WithoutSidebarTemplate } from 'HOC/templates/WithoutSidebar/WithoutSidebar';
 import { RedirectAnonymousToLogin } from './wrappers/RedirectBySession';
+import { locationHelper } from './lib/helper';
 
 interface SettingsPageRouter {
   tab?: string;
 }
-const SettingsPageRouter: FC<RouteComponentProps<SettingsPageRouter>> = ({
-  match
-}) => {
+const SettingsPageRouter: FC<RouteComponentProps<SettingsPageRouter>> = ({ match }) => {
   const maybeTabStr = match.params.tab;
   const tab =
     maybeTabStr === 'preferences'
@@ -39,7 +38,7 @@ const SettingsPageRouter: FC<RouteComponentProps<SettingsPageRouter>> = ({
   );
 
   if (!props) {
-    return <NotFound />;
+    return <NotFoundHOC />;
   }
 
   return (
@@ -53,6 +52,12 @@ const SettingsPageRouter: FC<RouteComponentProps<SettingsPageRouter>> = ({
 
 export const SettingsPageRoute: RouteProps = {
   exact: true,
-  path: '/settings/:tab?',
+  path: '/settings/:tab(preferences|logs|invites|instance|flags)?',
   component: SettingsPageRouter
 };
+
+type Tab = undefined | 'preferences' | 'logs' | 'invites' | 'instance' | 'flags';
+type Params = {
+  tab: Tab;
+};
+export const settingsLocation = locationHelper<Params, undefined>(SettingsPageRoute);

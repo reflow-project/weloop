@@ -22,7 +22,7 @@ export interface Props {
   content: string;
 }
 
-export const MD_Comment: React.SFC<Props> = ({ content }) => (
+export const MDComment: React.SFC<Props> = ({ content }) => (
   <Comment
     className={'markdown-body'}
     dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
