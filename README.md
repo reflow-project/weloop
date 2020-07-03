@@ -1,5 +1,7 @@
 # ZenPub Client
 
+![Deployment](https://github.com/reflow-project/zenpub-client/workflows/Deployment/badge.svg)
+
 ## About the project
 This app is based on [CommonsPub](http://commonspub.org), a project to create a generic federated server, based on the `ActivityPub` and `ActivityStreams` web standards). 
 
