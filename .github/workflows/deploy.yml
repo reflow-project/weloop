@@ -3,10 +3,10 @@ on:
   push:
     branches:
       - flavour/zenpub
-    workflow_dispatch:
-      inputs:
-        logLevel:
-          description: 'Log level'
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
 jobs:
   deploy:
     runs-on: ubuntu-latest
