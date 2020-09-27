@@ -9,6 +9,7 @@ import { CreateNewPasswordPageRoute } from 'routes/CreateNewPasswordPageRoute';
 import { DiscoverPageRoute } from 'routes/DiscoverPageRoute';
 import { HomePageRoute } from 'routes/HomePageRoute';
 import { LoginPageRoute } from 'routes/LoginPageRoute';
+import { MapsPageRoute } from 'routes/MapsPageRoute';
 import { ResetPasswordPageRoute } from 'routes/ResetPasswordPageRoute';
 import { SearchPageRoute } from 'routes/SearchPageRoute';
 import { SettingsPageRoute } from 'routes/SettingsPageRoute';
@@ -38,6 +39,7 @@ export const Router: React.FC = () => {
       <Route {...TermsAndConditionsPageRoute} />
       <Route {...LMSMoodleSearchRoute} />
       <Route {...HomePageRoute} />
+      <Route {...MapsPageRoute} />
       <Route component={NotFoundHOC} />
     </Switch>
   );
