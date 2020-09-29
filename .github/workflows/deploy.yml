@@ -28,6 +28,7 @@ jobs:
         run: npm run build
         env:
           REACT_APP_GRAPHQL_ENDPOINT: ${{ secrets.REACT_APP_GRAPHQL_ENDPOINT }}
+          REACT_APP_SENTRY_API_KEY: ${{ secrets.REACT_APP_SENTRY_API_KEY }}
           CI: false
 
       - name: Deploy to gh-pages
