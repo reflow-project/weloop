@@ -1,6 +1,6 @@
 import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
 import { Maps } from '.'
-import { useGetLoginProps } from 'ui/mock/login'
+import { getMapProps } from 'ui/mock/map'
 import { Guest } from 'ui/templates/guest'
 
 <Meta title="Pages|Maps" component={Maps} />
@@ -17,7 +17,7 @@ Lore impsum...
 
 <Preview>
   <Story name="Map page">
-    <Maps center={{lat: 3, lng: 4}}/>
+    <Maps {...getMapProps()}/>
   </Story>
 </Preview>
 
