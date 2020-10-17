@@ -2,25 +2,20 @@ import * as React from 'react';
 import styled from 'ui/themes/styled';
 import { Box } from 'rebass/styled-components';
 
-const Wrapper = styled(Box)<{ bg?: string; size?: string }>`
+const sizes = {
+  default: '48px',
+  s: '32px',
+  m: '140px',
+  l: '200px'
+};
+
+type Sizes = keyof typeof sizes;
+
+const Wrapper = styled(Box)<{ bg?: string; size: Sizes }>`
   font-family: ${props => props.theme.fontFamily};
   border-radius: 4px;
-  min-width: ${props =>
-    props.size === 'm'
-      ? '140px'
-      : props.size === 'l'
-      ? '200px'
-      : props.size === 's'
-      ? '32px'
-      : '48px'};
-  height: ${props =>
-    props.size === 'm'
-      ? '140px'
-      : props.size === 'l'
-      ? '200px'
-      : props.size === 's'
-      ? '32px'
-      : '48px'};
+  height: ${props => sizes[props.size]};
+  min-width: ${props => sizes[props.size]};
   background-color: ${props => (props.bg ? 'transparent' : props.theme.colors.light)};
   background-image: url("${props => props.bg}");
   background-size: cover;
@@ -36,12 +31,13 @@ const Wrapper = styled(Box)<{ bg?: string; size?: string }>`
     ${props => props.theme.colors.mediumdark};
   }
 `;
+
 const Avatar: React.FC<{
   src?: string;
   initials?: string;
   variant?: string;
-  size?: string;
-}> = ({ size, src, initials, variant }) => (
+  size?: Sizes;
+}> = ({ size = 'default', src, initials, variant }) => (
   <Wrapper size={size} bg={src}>
     {initials && !src ? <span>{initials.substr(0, 2).toUpperCase()}</span> : null}
   </Wrapper>

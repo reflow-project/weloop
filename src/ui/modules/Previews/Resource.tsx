@@ -66,6 +66,7 @@ export const Resource: React.FC<Props> = ({
   toggleFlag,
   sendToMoodle
 }) => {
+  const PaperClipOrExternalLink = isFile ? Paperclip : ExternalLink;
   return (
     <Bordered>
       {isSearch && (
@@ -76,16 +77,10 @@ export const Resource: React.FC<Props> = ({
       <Wrapper p={2}>
         {icon !== '' ? (
           <Avatar size="m" src={icon} />
-        ) : isFile ? (
-          <ResourceThumb>
-            <IconWrapper>
-              <Paperclip strokeWidth="2" size={64} />
-            </IconWrapper>
-          </ResourceThumb>
         ) : (
           <ResourceThumb>
             <IconWrapper>
-              <ExternalLink strokeWidth="2" size={64} />
+              <PaperClipOrExternalLink strokeWidth="2" size={64} />
             </IconWrapper>
           </ResourceThumb>
         )}
@@ -93,26 +88,18 @@ export const Resource: React.FC<Props> = ({
           <TitleLink href={link} target="_blank">
             {/* <Badge mt={1}>Video</Badge> */}
             <Title flex="1">
-              {isFile ? (
-                <Paperclip strokeWidth="1" size={18} />
-              ) : (
-                <ExternalLink strokeWidth="1" size={18} />
-              )}
+              <PaperClipOrExternalLink strokeWidth="1" size={18} />
               {name}
             </Title>
           </TitleLink>
           {isFile ? (
-            <>
-              <TypeItem mt={1}>{license}</TypeItem>
-            </>
+            <TypeItem mt={1}>{license}</TypeItem>
           ) : (
-            <>
-              <LinkResource>
-                <a href={link} target="_blank" rel="noopener noreferrer">
-                  <TextLink flex={1}>{link}</TextLink>
-                </a>
-              </LinkResource>
-            </>
+            <LinkResource>
+              <a href={link} target="_blank" rel="noopener noreferrer">
+                <TextLink flex={1}>{link}</TextLink>
+              </a>
+            </LinkResource>
           )}
           <Summary variant="text" mt={2}>
             {summary}
