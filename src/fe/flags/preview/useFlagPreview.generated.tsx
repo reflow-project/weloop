@@ -27,10 +27,10 @@ export type DeleteFlagMutationVariables = {
 
 export type DeleteFlagMutation = (
   { __typename: 'RootMutationType' }
-  & { delete: Types.Maybe<{ __typename: 'Collection' } | { __typename: 'Comment' } | { __typename: 'Community' } | { __typename: 'Feature' } | (
+  & { delete: Types.Maybe<{ __typename: 'Category' } | { __typename: 'Collection' } | { __typename: 'Comment' } | { __typename: 'Community' } | (
     { __typename: 'Flag' }
     & Pick<Types.Flag, 'id'>
-  ) | { __typename: 'Follow' } | { __typename: 'Like' } | { __typename: 'Resource' } | { __typename: 'Thread' } | { __typename: 'User' }> }
+  ) | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | { __typename: 'Resource' } | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | { __typename: 'User' }> }
 );
 
 export type DeleteFlagContextMutationVariables = {
@@ -40,7 +40,7 @@ export type DeleteFlagContextMutationVariables = {
 
 export type DeleteFlagContextMutation = (
   { __typename: 'RootMutationType' }
-  & { delete: Types.Maybe<(
+  & { delete: Types.Maybe<{ __typename: 'Category' } | (
     { __typename: 'Collection' }
     & Pick<Types.Collection, 'id'>
   ) | (
@@ -50,24 +50,18 @@ export type DeleteFlagContextMutation = (
     { __typename: 'Community' }
     & Pick<Types.Community, 'id'>
   ) | (
-    { __typename: 'Feature' }
-    & Pick<Types.Feature, 'id'>
-  ) | (
     { __typename: 'Flag' }
     & Pick<Types.Flag, 'id'>
   ) | (
     { __typename: 'Follow' }
     & Pick<Types.Follow, 'id'>
-  ) | (
+  ) | { __typename: 'Intent' } | (
     { __typename: 'Like' }
     & Pick<Types.Like, 'id'>
-  ) | (
+  ) | { __typename: 'Organisation' } | (
     { __typename: 'Resource' }
     & Pick<Types.Resource, 'id'>
-  ) | (
-    { __typename: 'Thread' }
-    & Pick<Types.Thread, 'id'>
-  ) | { __typename: 'User' }> }
+  ) | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | { __typename: 'User' }> }
 );
 
 export type DeactivateFlaggedUserMutationVariables = {
@@ -77,7 +71,7 @@ export type DeactivateFlaggedUserMutationVariables = {
 
 export type DeactivateFlaggedUserMutation = (
   { __typename: 'RootMutationType' }
-  & { delete: Types.Maybe<{ __typename: 'Collection' } | { __typename: 'Comment' } | { __typename: 'Community' } | { __typename: 'Feature' } | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Like' } | { __typename: 'Resource' } | { __typename: 'Thread' } | (
+  & { delete: Types.Maybe<{ __typename: 'Category' } | { __typename: 'Collection' } | { __typename: 'Comment' } | { __typename: 'Community' } | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | { __typename: 'Resource' } | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | (
     { __typename: 'User' }
     & Pick<Types.User, 'id'>
   )> }
@@ -163,9 +157,6 @@ export const DeleteFlagContextDocument = gql`
     ... on Community {
       id
     }
-    ... on Feature {
-      id
-    }
     ... on Flag {
       id
     }
@@ -176,9 +167,6 @@ export const DeleteFlagContextDocument = gql`
       id
     }
     ... on Resource {
-      id
-    }
-    ... on Thread {
       id
     }
   }

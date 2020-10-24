@@ -44,7 +44,7 @@ export const useFlagPreview = (flagId: Flag['id']) => {
         variables: { flagId: flag.id },
         refetchQueries: [AllFlagsQueryRefetch({})]
       }),
-      deleteFlagContextMut({ variables: { contextId: flag.context.id } })
+      deleteFlagContextMut({ variables: { contextId: flag.id } })
     ]);
   }, [flag]);
 

@@ -35,7 +35,7 @@ export type CommentPreviewFragment = (
         { __typename: 'Comment' }
         & CommentPreviewBaseFragment
       )> }
-    )>, context: Types.Maybe<(
+    )>, context: Types.Maybe<{ __typename: 'Category' } | (
       { __typename: 'Collection' }
       & Pick<Types.Collection, 'id'>
       & { community: Types.Maybe<(
@@ -43,14 +43,14 @@ export type CommentPreviewFragment = (
         & Pick<Types.Community, 'id'>
         & CommunityInfoFragment
       )> }
-    ) | (
+    ) | { __typename: 'Comment' } | (
       { __typename: 'Community' }
       & Pick<Types.Community, 'id'>
       & CommunityInfoFragment
     ) | (
       { __typename: 'Flag' }
       & Pick<Types.Flag, 'id'>
-    ) | (
+    ) | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | (
       { __typename: 'Resource' }
       & Pick<Types.Resource, 'id'>
       & { collection: Types.Maybe<(
@@ -62,7 +62,7 @@ export type CommentPreviewFragment = (
           & CommunityInfoFragment
         )> }
       )> }
-    )> }
+    ) | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | { __typename: 'User' }> }
   )> }
   & CommentPreviewBaseFragment
 );
@@ -87,16 +87,16 @@ export type CommentPreviewBaseFragment = (
 export type CommentPreviewThreadFragment = (
   { __typename: 'Thread' }
   & Pick<Types.Thread, 'id' | 'isLocal' | 'canonicalUrl'>
-  & { context: Types.Maybe<(
+  & { context: Types.Maybe<{ __typename: 'Category' } | (
     { __typename: 'Collection' }
     & CollectionPreviewFragment
-  ) | (
+  ) | { __typename: 'Comment' } | (
     { __typename: 'Community' }
     & CommunityPreviewFragment
-  ) | { __typename: 'Flag' } | (
+  ) | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | (
     { __typename: 'Resource' }
     & ResourcePreviewFragment
-  )> }
+  ) | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | { __typename: 'User' }> }
 );
 
 export const CommentPreviewBaseFragmentDoc = gql`

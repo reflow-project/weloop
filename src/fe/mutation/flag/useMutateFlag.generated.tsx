@@ -14,7 +14,7 @@ export type FlagMutation = (
   { __typename: 'RootMutationType' }
   & { createFlag: Types.Maybe<(
     { __typename: 'Flag' }
-    & { context: (
+    & { context: { __typename: 'Category' } | (
       { __typename: 'Collection' }
       & Pick<Types.Collection, 'id'>
       & { myFlag: Types.Maybe<(
@@ -35,14 +35,14 @@ export type FlagMutation = (
         { __typename: 'Flag' }
         & Pick<Types.Flag, 'id'>
       )> }
-    ) | (
+    ) | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | (
       { __typename: 'Resource' }
       & Pick<Types.Resource, 'id'>
       & { myFlag: Types.Maybe<(
         { __typename: 'Flag' }
         & Pick<Types.Flag, 'id'>
       )> }
-    ) | (
+    ) | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | (
       { __typename: 'User' }
       & { userId: Types.User['id'] }
       & { myFlag: Types.Maybe<(
@@ -60,9 +60,9 @@ export type UnflagMutationVariables = {
 
 export type UnflagMutation = (
   { __typename: 'RootMutationType' }
-  & { delete: Types.Maybe<{ __typename: 'Collection' } | { __typename: 'Comment' } | { __typename: 'Community' } | { __typename: 'Feature' } | (
+  & { delete: Types.Maybe<{ __typename: 'Category' } | { __typename: 'Collection' } | { __typename: 'Comment' } | { __typename: 'Community' } | (
     { __typename: 'Flag' }
-    & { context: (
+    & { context: { __typename: 'Category' } | (
       { __typename: 'Collection' }
       & Pick<Types.Collection, 'id'>
       & { myFlag: Types.Maybe<(
@@ -83,14 +83,14 @@ export type UnflagMutation = (
         { __typename: 'Flag' }
         & Pick<Types.Flag, 'id'>
       )> }
-    ) | (
+    ) | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | (
       { __typename: 'Resource' }
       & Pick<Types.Resource, 'id'>
       & { myFlag: Types.Maybe<(
         { __typename: 'Flag' }
         & Pick<Types.Flag, 'id'>
       )> }
-    ) | (
+    ) | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | (
       { __typename: 'User' }
       & { userId: Types.User['id'] }
       & { myFlag: Types.Maybe<(
@@ -98,7 +98,7 @@ export type UnflagMutation = (
         & Pick<Types.Flag, 'id'>
       )> }
     ) }
-  ) | { __typename: 'Follow' } | { __typename: 'Like' } | { __typename: 'Resource' } | { __typename: 'Thread' } | { __typename: 'User' }> }
+  ) | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | { __typename: 'Resource' } | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | { __typename: 'User' }> }
 );
 
 

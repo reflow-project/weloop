@@ -13,28 +13,21 @@ export type FollowMutation = (
   { __typename: 'RootMutationType' }
   & { createFollow: Types.Maybe<(
     { __typename: 'Follow' }
-    & { context: (
+    & { context: { __typename: 'Category' } | (
       { __typename: 'Collection' }
       & Pick<Types.Collection, 'id' | 'followerCount'>
       & { myFollow: Types.Maybe<(
         { __typename: 'Follow' }
         & Pick<Types.Follow, 'id'>
       )> }
-    ) | (
+    ) | { __typename: 'Comment' } | (
       { __typename: 'Community' }
       & Pick<Types.Community, 'id' | 'followerCount'>
       & { myFollow: Types.Maybe<(
         { __typename: 'Follow' }
         & Pick<Types.Follow, 'id'>
       )> }
-    ) | (
-      { __typename: 'Thread' }
-      & Pick<Types.Thread, 'id' | 'followerCount'>
-      & { myFollow: Types.Maybe<(
-        { __typename: 'Follow' }
-        & Pick<Types.Follow, 'id'>
-      )> }
-    ) | (
+    ) | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | { __typename: 'Resource' } | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | (
       { __typename: 'User' }
       & Pick<Types.User, 'followerCount'>
       & { userId: Types.User['id'] }
@@ -53,30 +46,23 @@ export type UnfollowMutationVariables = {
 
 export type UnfollowMutation = (
   { __typename: 'RootMutationType' }
-  & { delete: Types.Maybe<{ __typename: 'Collection' } | { __typename: 'Comment' } | { __typename: 'Community' } | { __typename: 'Feature' } | { __typename: 'Flag' } | (
+  & { delete: Types.Maybe<{ __typename: 'Category' } | { __typename: 'Collection' } | { __typename: 'Comment' } | { __typename: 'Community' } | { __typename: 'Flag' } | (
     { __typename: 'Follow' }
-    & { context: (
+    & { context: { __typename: 'Category' } | (
       { __typename: 'Collection' }
       & Pick<Types.Collection, 'id' | 'followerCount'>
       & { myFollow: Types.Maybe<(
         { __typename: 'Follow' }
         & Pick<Types.Follow, 'id'>
       )> }
-    ) | (
+    ) | { __typename: 'Comment' } | (
       { __typename: 'Community' }
       & Pick<Types.Community, 'id' | 'followerCount'>
       & { myFollow: Types.Maybe<(
         { __typename: 'Follow' }
         & Pick<Types.Follow, 'id'>
       )> }
-    ) | (
-      { __typename: 'Thread' }
-      & Pick<Types.Thread, 'id' | 'followerCount'>
-      & { myFollow: Types.Maybe<(
-        { __typename: 'Follow' }
-        & Pick<Types.Follow, 'id'>
-      )> }
-    ) | (
+    ) | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | { __typename: 'Resource' } | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | (
       { __typename: 'User' }
       & Pick<Types.User, 'followerCount'>
       & { userId: Types.User['id'] }
@@ -85,7 +71,7 @@ export type UnfollowMutation = (
         & Pick<Types.Follow, 'id'>
       )> }
     ) }
-  ) | { __typename: 'Like' } | { __typename: 'Resource' } | { __typename: 'Thread' } | { __typename: 'User' }> }
+  ) | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | { __typename: 'Resource' } | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | { __typename: 'User' }> }
 );
 
 
@@ -101,13 +87,6 @@ export const FollowDocument = gql`
         followerCount
       }
       ... on Community {
-        id
-        myFollow {
-          id
-        }
-        followerCount
-      }
-      ... on Thread {
         id
         myFollow {
           id
@@ -163,13 +142,6 @@ export const UnfollowDocument = gql`
           followerCount
         }
         ... on Community {
-          id
-          myFollow {
-            id
-          }
-          followerCount
-        }
-        ... on Thread {
           id
           myFollow {
             id

@@ -11,11 +11,6 @@ mutation follow($contextId: String!) {
           myFollow{ id }
           followerCount
         }
-        ...on Thread{
-          id
-          myFollow{ id }
-          followerCount
-        }
         ...on User{
           userId: id
           myFollow{ id }
@@ -35,11 +30,6 @@ mutation unfollow($contextId: String!) {
           followerCount
         }
         ...on Community{
-          id
-          myFollow{ id }
-          followerCount
-        }
-        ...on Thread{
           id
           myFollow{ id }
           followerCount

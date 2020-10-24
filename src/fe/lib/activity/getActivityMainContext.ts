@@ -16,9 +16,6 @@ export const getActivityMainContext = (
     if (!context.context) {
       return null;
     }
-    if (context.context.__typename === 'Thread') {
-      return context.context.comments?.edges[0];
-    }
     return getActivityMainContext(context.context);
   }
   // "Collection" | "Comment" | "Community" | "Resource" | "User"

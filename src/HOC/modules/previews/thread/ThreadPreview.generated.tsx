@@ -9,7 +9,6 @@ import { CommunityPreviewFragmentDoc } from '../community/CommunityPreview.gener
 import { CollectionPreviewFragmentDoc } from '../collection/CollectionPreview.generated';
 import { ResourcePreviewFragmentDoc } from '../resource/ResourcePreview.generated';
 import { FlagPreviewFragmentDoc } from '../flag/FlagPreview.generated';
-import { CommentPreviewFragment, CommentPreviewFragmentDoc } from '../comment/CommentPreview.generated';
 
 
 
@@ -18,19 +17,19 @@ import { CommentPreviewFragment, CommentPreviewFragmentDoc } from '../comment/Co
 export type ThreadPreviewFragment = (
   { __typename: 'Thread' }
   & Pick<Types.Thread, 'id' | 'lastActivity' | 'createdAt'>
-  & { context: Types.Maybe<(
+  & { context: Types.Maybe<{ __typename: 'Category' } | (
     { __typename: 'Collection' }
     & CollectionPreviewFragment
-  ) | (
+  ) | { __typename: 'Comment' } | (
     { __typename: 'Community' }
     & CommunityPreviewFragment
   ) | (
     { __typename: 'Flag' }
     & FlagPreviewFragment
-  ) | (
+  ) | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | (
     { __typename: 'Resource' }
     & ResourcePreviewFragment
-  )>, comments: Types.Maybe<(
+  ) | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | { __typename: 'User' }>, comments: Types.Maybe<(
     { __typename: 'CommentsPage' }
     & Pick<Types.CommentsPage, 'totalCount'>
     & { edges: Array<(

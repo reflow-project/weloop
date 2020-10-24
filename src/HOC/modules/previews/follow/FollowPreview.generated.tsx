@@ -1,6 +1,5 @@
 import * as Types from '../../../../graphql/types.generated';
 
-import { ThreadPreviewFragment } from '../thread/ThreadPreview.generated';
 import { UserPreviewFragment } from '../user/UserPreview.generated';
 import { CollectionPreviewFragment } from '../collection/CollectionPreview.generated';
 import { CommunityPreviewFragment } from '../community/CommunityPreview.generated';
@@ -8,8 +7,6 @@ import gql from 'graphql-tag';
 import { CommunityPreviewFragmentDoc } from '../community/CommunityPreview.generated';
 import { CollectionPreviewFragmentDoc } from '../collection/CollectionPreview.generated';
 import { UserPreviewFragmentDoc } from '../user/UserPreview.generated';
-import { ThreadPreviewFragmentDoc } from '../thread/ThreadPreview.generated';
-
 
 
 
@@ -17,16 +14,13 @@ import { ThreadPreviewFragmentDoc } from '../thread/ThreadPreview.generated';
 export type FollowPreviewFragment = (
   { __typename: 'Follow' }
   & Pick<Types.Follow, 'id'>
-  & { context: (
+  & { context: { __typename: 'Category' } | (
     { __typename: 'Collection' }
     & CollectionPreviewFragment
-  ) | (
+  ) | { __typename: 'Comment' } | (
     { __typename: 'Community' }
     & CommunityPreviewFragment
-  ) | (
-    { __typename: 'Thread' }
-    & ThreadPreviewFragment
-  ) | (
+  ) | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | { __typename: 'Resource' } | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | (
     { __typename: 'User' }
     & UserPreviewFragment
   ) }
@@ -45,12 +39,8 @@ export const FollowPreviewFragmentDoc = gql`
     ... on User {
       ...UserPreview
     }
-    ... on Thread {
-      ...ThreadPreview
-    }
   }
 }
     ${CommunityPreviewFragmentDoc}
 ${CollectionPreviewFragmentDoc}
-${UserPreviewFragmentDoc}
-${ThreadPreviewFragmentDoc}`;
+${UserPreviewFragmentDoc}`;

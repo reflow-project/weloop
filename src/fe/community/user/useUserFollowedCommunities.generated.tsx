@@ -32,10 +32,10 @@ export type UserFollowedCommunitiesQuery = (
       ), edges: Array<(
         { __typename: 'Follow' }
         & Pick<Types.Follow, 'id'>
-        & { context: { __typename: 'Collection' } | (
+        & { context: { __typename: 'Category' } | { __typename: 'Collection' } | { __typename: 'Comment' } | (
           { __typename: 'Community' }
           & UserFollowedCommunityFragment
-        ) | { __typename: 'Thread' } | { __typename: 'User' } }
+        ) | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | { __typename: 'Resource' } | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | { __typename: 'User' } }
       )> }
     )> }
   )> }
