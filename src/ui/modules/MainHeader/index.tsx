@@ -2,7 +2,7 @@ import { LocaleContext } from 'context/global/localizationCtx';
 import { logo_small_url, prompt_signin } from 'mn-constants';
 import { darken, ellipsis } from 'polished';
 import React, { ReactElement } from 'react';
-import { ChevronDown, ChevronLeft } from 'react-feather';
+import { ChevronDown, ChevronLeft, MapPin } from 'react-feather';
 // import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -49,6 +49,9 @@ export const MainHeader: React.FC<Props> = props => {
             {/* <Input /> */}
             {props.Search}
           </Search>
+          <MapLink to="/maps" title="Map">
+            <MapPin size="20" />
+          </MapLink>
         </Left>
         <Header alignItems={'center'}>
           {props.user ? (
@@ -113,6 +116,11 @@ const Search = styled(Box)`
     border: 0;
     background: ${props => props.theme.colors.app};
   }
+`;
+
+const MapLink = styled(Link)`
+  display: flex;
+  align-items: center;
 `;
 
 const Right = styled(Box)`
@@ -196,7 +204,7 @@ const Icon = styled(Box)`
 
 const Left = styled(Box)`
   display: grid;
-  grid-template-columns: auto auto 1fr;
+  grid-template-columns: auto auto 1fr auto;
   column-gap: 8px;
 `;
 
