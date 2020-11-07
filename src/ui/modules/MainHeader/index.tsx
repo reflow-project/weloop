@@ -119,7 +119,8 @@ const Search = styled(Box)`
 `;
 
 const MapLink = styled(Link)`
-  background: background: ${props => props.theme.colors.app};
+  display: flex;
+  align-items: center;
 `;
 
 const Right = styled(Box)`
