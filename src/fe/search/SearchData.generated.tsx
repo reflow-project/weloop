@@ -12,23 +12,12 @@ export type SearchHostIndexAndMyFollowsQuery = (
   & { instance: Types.Maybe<(
     { __typename: 'Instance' }
     & SearchInstanceFragment
-  )>, me: Types.Maybe<(
-    { __typename: 'Me' }
-    & SearchMeFragment
   )> }
 );
 
 export type SearchInstanceFragment = (
   { __typename: 'Instance' }
   & Pick<Types.Instance, 'hostname'>
-);
-
-export type SearchMeFragment = (
-  { __typename: 'Me' }
-  & { searchFollows: Array<(
-    { __typename: 'SearchFollow' }
-    & Pick<Types.SearchFollow, 'canonicalUrl' | 'collectionId' | 'communityId' | 'followId' | 'isCreator'>
-  )> }
 );
 
 export type SearchFollowMutationVariables = {
@@ -59,28 +48,13 @@ export const SearchInstanceFragmentDoc = gql`
   hostname
 }
     `;
-export const SearchMeFragmentDoc = gql`
-    fragment SearchMe on Me {
-  searchFollows {
-    canonicalUrl
-    collectionId
-    communityId
-    followId
-    isCreator
-  }
-}
-    `;
 export const SearchHostIndexAndMyFollowsDocument = gql`
     query SearchHostIndexAndMyFollows {
   instance {
     ...SearchInstance
   }
-  me {
-    ...SearchMe
-  }
 }
-    ${SearchInstanceFragmentDoc}
-${SearchMeFragmentDoc}`;
+    ${SearchInstanceFragmentDoc}`;
 
 /**
  * __useSearchHostIndexAndMyFollowsQuery__

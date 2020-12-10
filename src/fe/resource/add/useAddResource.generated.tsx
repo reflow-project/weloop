@@ -8,7 +8,7 @@ import * as ApolloReactHooks from '@apollo/react-hooks';
 
 
 export type AddResourceCreateResourceMutationVariables = {
-  collectionId: Types.Scalars['String'],
+  contextId: Types.Scalars['String'],
   resource: Types.ResourceInput,
   icon?: Types.Maybe<Types.UploadInput>,
   content: Types.UploadInput
@@ -26,8 +26,8 @@ export type AddResourceCreateResourceMutation = (
 
 
 export const AddResourceCreateResourceDocument = gql`
-    mutation addResourceCreateResource($collectionId: String!, $resource: ResourceInput!, $icon: UploadInput, $content: UploadInput!) {
-  createResource(collectionId: $collectionId, resource: $resource, content: $content, icon: $icon) {
+    mutation addResourceCreateResource($contextId: String!, $resource: ResourceInput!, $icon: UploadInput, $content: UploadInput!) {
+  createResource(contextId: $contextId, resource: $resource, content: $content, icon: $icon) {
     id
     ...AddResourceCreateResourceMutationResult
   }
@@ -48,7 +48,7 @@ export type AddResourceCreateResourceMutationFn = ApolloReactCommon.MutationFunc
  * @example
  * const [addResourceCreateResourceMutation, { data, loading, error }] = useAddResourceCreateResourceMutation({
  *   variables: {
- *      collectionId: // value for 'collectionId'
+ *      contextId: // value for 'contextId'
  *      resource: // value for 'resource'
  *      icon: // value for 'icon'
  *      content: // value for 'content'

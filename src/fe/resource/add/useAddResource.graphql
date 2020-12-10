@@ -1,6 +1,11 @@
-mutation addResourceCreateResource($collectionId: String!, $resource: ResourceInput!, $icon:UploadInput, $content:UploadInput!) {
-    createResource(collectionId: $collectionId, resource: $resource, content: $content, icon:$icon) {
-        id
-        ...AddResourceCreateResourceMutationResult
-    }
+mutation addResourceCreateResource(
+  $contextId: String!
+  $resource: ResourceInput!
+  $icon: UploadInput
+  $content: UploadInput!
+) {
+  createResource(contextId: $contextId, resource: $resource, content: $content, icon: $icon) {
+    id
+    ...AddResourceCreateResourceMutationResult
+  }
 }

@@ -9,7 +9,7 @@ import * as ApolloReactHooks from '@apollo/react-hooks';
 
 export type CreateCollectionMutationVariables = {
   collection: Types.CollectionInput,
-  communityId: Types.Scalars['String'],
+  contextId: Types.Scalars['String'],
   icon?: Types.Maybe<Types.UploadInput>
 };
 
@@ -24,8 +24,8 @@ export type CreateCollectionMutation = (
 
 
 export const CreateCollectionDocument = gql`
-    mutation createCollection($collection: CollectionInput!, $communityId: String!, $icon: UploadInput) {
-  createCollection(collection: $collection, communityId: $communityId, icon: $icon) {
+    mutation createCollection($collection: CollectionInput!, $contextId: String!, $icon: UploadInput) {
+  createCollection(collection: $collection, contextId: $contextId, icon: $icon) {
     ...CollectionPageData
   }
 }
@@ -46,7 +46,7 @@ export type CreateCollectionMutationFn = ApolloReactCommon.MutationFunction<Crea
  * const [createCollectionMutation, { data, loading, error }] = useCreateCollectionMutation({
  *   variables: {
  *      collection: // value for 'collection'
- *      communityId: // value for 'communityId'
+ *      contextId: // value for 'contextId'
  *      icon: // value for 'icon'
  *   },
  * });
