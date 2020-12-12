@@ -29,6 +29,17 @@ export const ActivityPreviewHOC: FC<Props> = ({ activityId }) => {
           ? activity.context.context.thread?.id
           : undefined;
 
+      let preview = <></>;
+      if (
+        activity.context.__typename !== 'Category' &&
+        activity.context.__typename !== 'Intent' &&
+        activity.context.__typename !== 'Organisation' &&
+        activity.context.__typename !== 'SpatialThing' &&
+        activity.context.__typename !== 'Taggable'
+      ) {
+        preview = <PreviewComponent context={activity.context} />;
+      }
+
       const props: UI.Props = {
         status: UI.Status.Loaded,
         createdAt: activity.createdAt,
@@ -36,7 +47,7 @@ export const ActivityPreviewHOC: FC<Props> = ({ activityId }) => {
         threadUrl: threadId && threadLocation.getPath({ threadId }, undefined),
         event: eventString,
         ...communityInfoStrings,
-        preview: <PreviewComponent context={activity.context} />
+        preview
       };
       return props;
     }

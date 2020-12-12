@@ -5,7 +5,14 @@ import { ActorPreviewFragment } from 'fe/lib/activity/types';
 export const getActivityMainContext = (
   context: Maybe<ActivityPreviewFragment['context']>
 ): Maybe<ActorPreviewFragment> => {
-  if (!context) {
+  if (
+    !context ||
+    context.__typename === 'Category' ||
+    context.__typename === 'Intent' ||
+    context.__typename === 'Organisation' ||
+    context.__typename === 'SpatialThing' ||
+    context.__typename === 'Taggable'
+  ) {
     return null;
   }
   if (
@@ -14,6 +21,16 @@ export const getActivityMainContext = (
     context.__typename === 'Like'
   ) {
     if (!context.context) {
+      return null;
+    }
+
+    if (
+      context.context.__typename === 'Flag' ||
+      context.context.__typename === 'Comment' ||
+      context.context.__typename === 'Follow' ||
+      context.context.__typename === 'Like' ||
+      context.context.__typename === 'Resource'
+    ) {
       return null;
     }
     return getActivityMainContext(context.context);
