@@ -12,7 +12,10 @@ export type ActorPreviewFragment =
   | ResourcePreviewFragment
   | CollectionPreviewFragment
   | CommunityPreviewFragment
-  | UserPreviewFragment;
+  | UserPreviewFragment
+  | FlagPreviewFragment
+  | FollowPreviewFragment
+  | LikePreviewFragment;
 
 export type ActivityContextPreviewFragment =
   | ActorPreviewFragment

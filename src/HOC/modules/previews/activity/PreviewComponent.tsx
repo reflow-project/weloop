@@ -14,9 +14,7 @@ export const PreviewComponent: FC<{
 }> = ({ context, flagged }) => {
   if (context.__typename === 'Collection') {
     if (flagged) {
-      return (
-        <CollectionPreviewHOC collectionId={context.id} flagged={flagged} />
-      );
+      return <CollectionPreviewHOC collectionId={context.id} flagged={flagged} />;
     } else {
       return <CollectionPreviewHOC collectionId={context.id} />;
     }
@@ -41,13 +39,10 @@ export const PreviewComponent: FC<{
       return <UserPreviewHOC userId={context.userId} />;
     }
   } else {
-    if (
-      context.__typename === 'Like' &&
-      context.context?.__typename === 'Comment'
-    ) {
+    if (context.__typename === 'Like' && context.context?.__typename === 'Comment') {
       return <LikedCommentPreviewHOC commentId={context.context.id} />;
     } else {
-      const mainContext = getActivityMainContext(context);
+      const mainContext = context !== undefined && getActivityMainContext(context);
       return mainContext ? <PreviewComponent context={mainContext} /> : null;
     }
   }
