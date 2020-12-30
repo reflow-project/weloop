@@ -3,24 +3,19 @@ import { Map as LeafletMap, Marker, Popup, TileLayer } from 'react-leaflet';
 import './leaflet.css';
 import styled from 'styled-components';
 import { theme } from 'ui/themes/default.theme';
-import { divIcon } from 'leaflet';
+import { divIcon, LatLngBounds, LatLngLiteral } from 'leaflet';
 import { MapPin } from 'react-feather';
 import ReactDOMServer from 'react-dom/server';
 
-export interface PositionProps {
-  lat: number;
-  lng: number;
-}
-
 export interface MarkerProps {
-  position: PositionProps;
+  position: LatLngLiteral;
   popup?: React.ReactNode;
 }
 
 export interface MapProps {
   tileUrl?: string;
   tileAttribution?: string;
-  center: PositionProps;
+  center?: LatLngLiteral;
   markers?: Array<MarkerProps>;
   zoom: number;
 }
@@ -40,9 +35,15 @@ export const Map: FC<MapProps> = ({
   markers = [],
   tileAttribution = defaultAttribution
 }) => {
+  const bounds = new LatLngBounds(markers.map(({ position }) => [position.lat, position.lng]));
+
   return (
     <Wrapper>
-      <LeafletMap center={center} zoom={zoom} style={{ height: '100%', width: '100%' }}>
+      <LeafletMap
+        center={center ?? bounds.getCenter()}
+        zoom={zoom}
+        style={{ height: '100%', width: '100%' }}
+      >
         <TileLayer url={defaultTileUrl} attribution={tileAttribution} />
         {markers.map(({ position, popup }) => (
           <Marker icon={markerIcon} position={position}>
