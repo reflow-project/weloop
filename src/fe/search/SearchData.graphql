@@ -1,34 +1,21 @@
-query SearchHostIndexAndMyFollows{
-  instance{
+query SearchHostIndexAndMyFollows {
+  instance {
     ...SearchInstance
-  }
-  me{
-    ...SearchMe
   }
 }
 
 fragment SearchInstance on Instance {
-    hostname
+  hostname
 }
 
-fragment SearchMe on Me {
-  searchFollows{
-    canonicalUrl
-    collectionId
-    communityId
-    followId
-    isCreator
-  }
-}
-
-mutation searchFollow($url:String!){
-  createFollowByUrl(url:$url){
+mutation searchFollow($url: String!) {
+  createFollowByUrl(url: $url) {
     id
   }
 }
 
-mutation searchUnfollow($contextId:String!){
-  delete(contextId:$contextId){
+mutation searchUnfollow($contextId: String!) {
+  delete(contextId: $contextId) {
     __typename
   }
 }

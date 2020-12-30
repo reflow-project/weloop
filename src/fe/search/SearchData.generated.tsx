@@ -12,23 +12,12 @@ export type SearchHostIndexAndMyFollowsQuery = (
   & { instance: Types.Maybe<(
     { __typename: 'Instance' }
     & SearchInstanceFragment
-  )>, me: Types.Maybe<(
-    { __typename: 'Me' }
-    & SearchMeFragment
   )> }
 );
 
 export type SearchInstanceFragment = (
   { __typename: 'Instance' }
   & Pick<Types.Instance, 'hostname'>
-);
-
-export type SearchMeFragment = (
-  { __typename: 'Me' }
-  & { searchFollows: Array<(
-    { __typename: 'SearchFollow' }
-    & Pick<Types.SearchFollow, 'canonicalUrl' | 'collectionId' | 'communityId' | 'followId' | 'isCreator'>
-  )> }
 );
 
 export type SearchFollowMutationVariables = {
@@ -51,7 +40,7 @@ export type SearchUnfollowMutationVariables = {
 
 export type SearchUnfollowMutation = (
   { __typename: 'RootMutationType' }
-  & { delete: Types.Maybe<{ __typename: 'Collection' } | { __typename: 'Comment' } | { __typename: 'Community' } | { __typename: 'Feature' } | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Like' } | { __typename: 'Resource' } | { __typename: 'Thread' } | { __typename: 'User' }> }
+  & { delete: Types.Maybe<{ __typename: 'Category' } | { __typename: 'Collection' } | { __typename: 'Comment' } | { __typename: 'Community' } | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | { __typename: 'Resource' } | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | { __typename: 'User' }> }
 );
 
 export const SearchInstanceFragmentDoc = gql`
@@ -59,28 +48,13 @@ export const SearchInstanceFragmentDoc = gql`
   hostname
 }
     `;
-export const SearchMeFragmentDoc = gql`
-    fragment SearchMe on Me {
-  searchFollows {
-    canonicalUrl
-    collectionId
-    communityId
-    followId
-    isCreator
-  }
-}
-    `;
 export const SearchHostIndexAndMyFollowsDocument = gql`
     query SearchHostIndexAndMyFollows {
   instance {
     ...SearchInstance
   }
-  me {
-    ...SearchMe
-  }
 }
-    ${SearchInstanceFragmentDoc}
-${SearchMeFragmentDoc}`;
+    ${SearchInstanceFragmentDoc}`;
 
 /**
  * __useSearchHostIndexAndMyFollowsQuery__

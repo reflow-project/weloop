@@ -80,7 +80,18 @@ export const UserPage: FC<UserPage> = ({ userId, basePath, tab }) => {
     const LikesBoxes = (
       <>
         {likesPage.edges.map(like => {
-          const { communityLink, communityName } = getCommunityInfoStrings(like.context);
+          const likeContext =
+            like.context.__typename !== 'Category' &&
+            like.context.__typename !== 'Flag' &&
+            like.context.__typename !== 'Follow' &&
+            like.context.__typename !== 'Like' &&
+            like.context.__typename !== 'SpatialThing' &&
+            like.context.__typename !== 'Organisation' &&
+            like.context.__typename !== 'Taggable' &&
+            like.context.__typename !== 'Intent'
+              ? like.context
+              : null;
+          const { communityLink, communityName } = getCommunityInfoStrings(likeContext);
           const actor = userInfo.user ? getActivityActor(userInfo.user) : null;
           const activityContext = like;
           const event = getEventStringByContext(activityContext, ActivityVerb.Created);

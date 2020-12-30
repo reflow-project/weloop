@@ -4,6 +4,9 @@ import {
   Collection,
   Comment,
   Community,
+  Flag,
+  Follow,
+  Like,
   Resource,
   Thread,
   User
@@ -18,7 +21,7 @@ import { UserPreviewHOC } from './user/UserPreview';
 import Maybe from 'graphql/tsutils/Maybe';
 
 export type Ctx = Pick<
-  Activity | Collection | Comment | Community | Resource | Thread | User,
+  Activity | Collection | Comment | Community | Resource | Thread | User | Flag | Follow | Like,
   'id' | '__typename'
 >;
 interface PreviewIndex {

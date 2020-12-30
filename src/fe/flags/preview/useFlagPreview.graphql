@@ -16,12 +16,12 @@ mutation deleteFlagContext($contextId:String!){
     ...on Collection { id }
     ...on Comment { id }
     ...on Community { id }
-    ...on Feature { id }
+    # ...on Feature { id }
     ...on Flag { id }
     ...on Follow { id }
     ...on Like { id }
     ...on Resource { id }
-    ...on Thread { id }
+    # ...on Thread { id }
   }
 }
 

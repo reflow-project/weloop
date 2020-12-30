@@ -20,7 +20,7 @@ import { CommentPreviewFragmentDoc } from '../comment/CommentPreview.generated';
 export type LikePreviewFragment = (
   { __typename: 'Like' }
   & Pick<Types.Like, 'id' | 'createdAt'>
-  & { context: (
+  & { context: { __typename: 'Category' } | (
     { __typename: 'Collection' }
     & CollectionPreviewFragment
   ) | (
@@ -29,10 +29,10 @@ export type LikePreviewFragment = (
   ) | (
     { __typename: 'Community' }
     & CommunityPreviewFragment
-  ) | (
+  ) | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | (
     { __typename: 'Resource' }
     & ResourcePreviewFragment
-  ) | (
+  ) | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | (
     { __typename: 'User' }
     & UserPreviewFragment
   ) }

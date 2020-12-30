@@ -11,6 +11,7 @@ import Modal from 'ui/modules/Modal';
 import { ConfirmationPanel } from 'ui/modules/ConfirmationPanel';
 import { i18n } from 'context/global/localizationCtx';
 import { threadLocation } from 'routes/ThreadPageRoute';
+import { ActivityContextPreviewFragment } from 'fe/lib/activity/types';
 
 interface FlagPreviewHOC {
   flagId: Flag['id'];
@@ -93,7 +94,13 @@ export const FlagPreviewHOC: FC<FlagPreviewHOC> = ({ flagId }) => {
         />
       );
     } else {
-      return flag ? <PreviewComponent context={flag.context} flagged={true} /> : <></>;
+      if (flag) {
+        return (
+          <PreviewComponent context={(flag.context as unknown) as ActivityContextPreviewFragment} />
+        );
+      } else {
+        return <></>;
+      }
     }
   }, [flag]);
 

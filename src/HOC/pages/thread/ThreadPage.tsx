@@ -38,6 +38,16 @@ export const ThreadPage: FC<ThreadPage> = ({ threadId }) => {
 
   const uiProps = useMemo<null | Props>(() => {
     const { context: threadContext, mainComment } = thread;
+    if (
+      threadContext &&
+      (threadContext.__typename === 'User' ||
+        threadContext.__typename === 'Like' ||
+        threadContext.__typename === 'Follow' ||
+        threadContext.__typename === 'Comment')
+    ) {
+      return null;
+    }
+
     const context = getActivityMainContext(threadContext);
     if (!(mainComment && context)) {
       return null;

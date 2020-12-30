@@ -40,7 +40,7 @@ export type ActivityPreviewFragment = (
       { __typename: 'Content' }
       & Pick<Types.Content, 'id' | 'url'>
     )> }
-  )>, context: Types.Maybe<(
+  )>, context: Types.Maybe<{ __typename: 'Category' } | (
     { __typename: 'Collection' }
     & CollectionPreviewFragment
   ) | (
@@ -55,13 +55,13 @@ export type ActivityPreviewFragment = (
   ) | (
     { __typename: 'Follow' }
     & FollowPreviewFragment
-  ) | (
+  ) | { __typename: 'Intent' } | (
     { __typename: 'Like' }
     & LikePreviewFragment
-  ) | (
+  ) | { __typename: 'Organisation' } | (
     { __typename: 'Resource' }
     & ResourcePreviewFragment
-  ) | (
+  ) | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | (
     { __typename: 'User' }
     & UserPreviewFragment
   )> }

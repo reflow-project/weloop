@@ -13,20 +13,20 @@ mutation addFeatured($contextId: String!) {
     }
 }
 
-mutation removeFeatured($contextId: String!) {
-  delete(contextId: $contextId){
-    ... on Feature {
-      context{
-        ...on Collection{
-          id
-          # featured{ id }
-        }
-        ...on Community{
-          id
-          # featured{ id }
-        }
-      }
-    }
-  }
-}
+# mutation removeFeatured($contextId: String!) {
+#   delete(contextId: $contextId){
+#     ... on Feature {
+#       context{
+#         ...on Collection{
+#           id
+#           # featured{ id }
+#         }
+#         ...on Community{
+#           id
+#           # featured{ id }
+#         }
+#       }
+#     }
+#   }
+# }
 

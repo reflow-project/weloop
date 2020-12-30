@@ -1,9 +1,6 @@
 import { InstanceFeaturedCollectionsQueryRefetch } from 'fe/instance/featuredCollections/instanceFeaturedCollections.generated';
 import { InstanceFeaturedCommunitiesQueryRefetch } from 'fe/instance/featuredCommunities/instanceFeaturedCommunities.generated';
-import {
-  useAddFeaturedMutation,
-  useRemoveFeaturedMutation
-} from 'fe/mutation/feature/useMutateFeature.generated';
+import { useAddFeaturedMutation } from 'fe/mutation/feature/useMutateFeature.generated';
 import { Collection, Community, Feature } from 'graphql/types.generated';
 import { useCallOrNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
 import { useMemo } from 'react';
@@ -23,8 +20,7 @@ export type UseFeaturedContext =
 
 export const useFeaturedContext = (ctx: UseFeaturedContext) => {
   const [addFeaturedMut, addFeaturedMutStatus] = useAddFeaturedMutation();
-  const [rmFeaturedMut, rmFeaturedMutStatus] = useRemoveFeaturedMutation();
-  const mutating = addFeaturedMutStatus.loading || rmFeaturedMutStatus.loading;
+  const mutating = addFeaturedMutStatus.loading;
   // const featuredCollectionsQ = useFeaturedCollectionsQuery();
   // const featuredCommunitiesQ = useFeaturedCommunitiesQuery();
 
@@ -67,17 +63,6 @@ export const useFeaturedContext = (ctx: UseFeaturedContext) => {
         },
         refetchQueries: [
           __typename === 'Community'
-            ? InstanceFeaturedCommunitiesQueryRefetch({})
-            : InstanceFeaturedCollectionsQueryRefetch({})
-        ]
-      });
-    } else {
-      return rmFeaturedMut({
-        variables: {
-          contextId: ctx.featureId // need it
-        },
-        refetchQueries: [
-          ctx.__typename === 'Community'
             ? InstanceFeaturedCommunitiesQueryRefetch({})
             : InstanceFeaturedCollectionsQueryRefetch({})
         ]

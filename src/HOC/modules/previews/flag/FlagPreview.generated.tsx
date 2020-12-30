@@ -23,7 +23,7 @@ export type FlagPreviewFragment = (
   & { creator: Types.Maybe<(
     { __typename: 'User' }
     & UserPreviewFragment
-  )>, context: (
+  )>, context: { __typename: 'Category' } | (
     { __typename: 'Collection' }
     & CollectionPreviewFragment
   ) | (
@@ -32,10 +32,10 @@ export type FlagPreviewFragment = (
   ) | (
     { __typename: 'Community' }
     & CommunityPreviewFragment
-  ) | (
+  ) | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | (
     { __typename: 'Resource' }
     & ResourcePreviewFragment
-  ) | (
+  ) | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | (
     { __typename: 'User' }
     & UserPreviewFragment
   ) }

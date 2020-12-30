@@ -35,10 +35,10 @@ export type MyCollectionFollowsDataFragment = (
       ), edges: Array<(
         { __typename: 'Follow' }
         & Pick<Types.Follow, 'id'>
-        & { context: (
+        & { context: { __typename: 'Category' } | (
           { __typename: 'Collection' }
           & MyFollowedCollectionDataFragment
-        ) | { __typename: 'Community' } | { __typename: 'Thread' } | { __typename: 'User' } }
+        ) | { __typename: 'Comment' } | { __typename: 'Community' } | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | { __typename: 'Resource' } | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | { __typename: 'User' } }
       )> }
     )> }
   ) }

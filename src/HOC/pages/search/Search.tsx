@@ -87,14 +87,14 @@ const CollectionPreviewHit: React.FC<{ hit: CollectionHit }> = ({ hit }) => {
 const CommunityPreviewHit: React.FC<{ hit: CommunityHit }> = ({ hit }) => {
   const isLocal = useIsLocal(hit);
   const previewFragment = communityHit2gql(hit, isLocal);
-  const { toggleFollowFormik: toggleJoinFormik, hitSearchFollow } = useFollowHitHelper(hit);
+  const { toggleFollowFormik: toggleJoinFormik } = useFollowHitHelper(hit);
   const props =
     previewFragment &&
     communityFragment2UIProps({
       community: previewFragment,
       hideActions: false,
       toggleJoinFormik,
-      isCreator: !!hitSearchFollow?.isCreator
+      isCreator: false //!!hitSearchFollow?.isCreator
     });
   !props && console.warn(`Could not preview searchHit:`, hit);
   // console.log(`Community:`, props)
@@ -161,22 +161,22 @@ const useIsLocal = (hit: Hit) => {
   return isLocal;
 };
 const useFollowHitHelper = (hit: Hit) => {
-  const { data } = useSearchHostIndexAndMyFollowsQuery({
-    context: mnCtx({ noShowError: true })
-  });
+  //TODO: fix this side step - I'm not sure what to do with this search
+  // const { data } = useSearchHostIndexAndMyFollowsQuery({
+  //   context: mnCtx({ noShowError: true })
+  // });
   const [follow, followResult] = useSearchFollowMutation();
   const [unfollow, unfollowResult] = useSearchUnfollowMutation();
-  const hitSearchFollow = React.useMemo(
-    () =>
-      (data?.me?.searchFollows || []).find(
-        searchFollow => searchFollow.canonicalUrl === hit.canonicalUrl
-      ),
-    [data, hit]
-  );
+  const hitSearchFollow = {}; //React.useMemo(
+  //   () =>
+  //     (data?.me?.searchFollows || []).find(
+  //       searchFollow => searchFollow.canonicalUrl === hit.canonicalUrl
+  //     ),
+  //   [data, hit]
+  // );
 
-  const canFollow = !hitSearchFollow?.followId;
-  const canUnfollow =
-    hitSearchFollow?.followId && !(hitSearchFollow.communityId && hitSearchFollow.isCreator);
+  const canFollow = false; //!hitSearchFollow?.followId;
+  const canUnfollow = false; //hitSearchFollow?.followId && !(hitSearchFollow.communityId && hitSearchFollow.isCreator);
 
   const toggleFollowFormik = useFormik({
     initialValues: {},
@@ -187,7 +187,7 @@ const useFollowHitHelper = (hit: Hit) => {
       if (hitSearchFollow && canUnfollow) {
         return unfollow({
           variables: {
-            contextId: hitSearchFollow.followId
+            contextId: '' //hitSearchFollow.followId
           }
         });
       } else if (canFollow) {

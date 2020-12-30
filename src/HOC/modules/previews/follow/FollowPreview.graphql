@@ -10,9 +10,5 @@ fragment FollowPreview on Follow{
     ...on User {
       ...UserPreview
     }
-    ...on Thread {
-      ...ThreadPreview
-      # ...CommentPreviewThread
-    }
   }
 }

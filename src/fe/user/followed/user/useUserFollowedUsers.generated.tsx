@@ -32,7 +32,7 @@ export type UserFollowedUsersQuery = (
       ), edges: Array<(
         { __typename: 'Follow' }
         & Pick<Types.Follow, 'id'>
-        & { context: { __typename: 'Collection' } | { __typename: 'Community' } | { __typename: 'Thread' } | (
+        & { context: { __typename: 'Category' } | { __typename: 'Collection' } | { __typename: 'Comment' } | { __typename: 'Community' } | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | { __typename: 'Resource' } | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | (
           { __typename: 'User' }
           & UserFollowedUserFragment
         ) }

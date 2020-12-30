@@ -26,7 +26,7 @@ export const useCreateCollection = (communityId: Community['id']) => {
 
       return createMut({
         variables: {
-          communityId: communityId,
+          contextId: communityId,
           icon: getMaybeUploadInput(icon, null),
           collection: {
             name: collection.name,

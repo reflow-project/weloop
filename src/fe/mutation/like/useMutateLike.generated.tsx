@@ -13,7 +13,7 @@ export type LikeMutation = (
   { __typename: 'RootMutationType' }
   & { createLike: Types.Maybe<(
     { __typename: 'Like' }
-    & { context: (
+    & { context: { __typename: 'Category' } | (
       { __typename: 'Collection' }
       & Pick<Types.Collection, 'id' | 'likerCount'>
       & { myLike: Types.Maybe<(
@@ -34,7 +34,7 @@ export type LikeMutation = (
         { __typename: 'Like' }
         & Pick<Types.Like, 'id'>
       )> }
-    ) | (
+    ) | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | (
       { __typename: 'Resource' }
       & Pick<Types.Resource, 'id'>
       & { myLike: Types.Maybe<(
@@ -44,7 +44,7 @@ export type LikeMutation = (
         { __typename: 'LikesPage' }
         & Pick<Types.LikesPage, 'totalCount'>
       )> }
-    ) | (
+    ) | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | (
       { __typename: 'User' }
       & Pick<Types.User, 'likerCount'>
       & { userId: Types.User['id'] }
@@ -63,9 +63,9 @@ export type UnlikeMutationVariables = {
 
 export type UnlikeMutation = (
   { __typename: 'RootMutationType' }
-  & { delete: Types.Maybe<{ __typename: 'Collection' } | { __typename: 'Comment' } | { __typename: 'Community' } | { __typename: 'Feature' } | { __typename: 'Flag' } | { __typename: 'Follow' } | (
+  & { delete: Types.Maybe<{ __typename: 'Category' } | { __typename: 'Collection' } | { __typename: 'Comment' } | { __typename: 'Community' } | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Intent' } | (
     { __typename: 'Like' }
-    & { context: (
+    & { context: { __typename: 'Category' } | (
       { __typename: 'Collection' }
       & Pick<Types.Collection, 'id' | 'likerCount'>
       & { myLike: Types.Maybe<(
@@ -86,7 +86,7 @@ export type UnlikeMutation = (
         { __typename: 'Like' }
         & Pick<Types.Like, 'id'>
       )> }
-    ) | (
+    ) | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | (
       { __typename: 'Resource' }
       & Pick<Types.Resource, 'id'>
       & { myLike: Types.Maybe<(
@@ -96,7 +96,7 @@ export type UnlikeMutation = (
         { __typename: 'LikesPage' }
         & Pick<Types.LikesPage, 'totalCount'>
       )> }
-    ) | (
+    ) | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | (
       { __typename: 'User' }
       & Pick<Types.User, 'likerCount'>
       & { userId: Types.User['id'] }
@@ -105,7 +105,7 @@ export type UnlikeMutation = (
         & Pick<Types.Like, 'id'>
       )> }
     ) }
-  ) | { __typename: 'Resource' } | { __typename: 'Thread' } | { __typename: 'User' }> }
+  ) | { __typename: 'Organisation' } | { __typename: 'Resource' } | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | { __typename: 'User' }> }
 );
 
 

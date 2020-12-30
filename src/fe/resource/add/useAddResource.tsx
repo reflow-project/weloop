@@ -1,7 +1,4 @@
-import {
-  getMaybeUploadInput,
-  getUploadInput
-} from 'fe/mutation/upload/getUploadInput';
+import { getMaybeUploadInput, getUploadInput } from 'fe/mutation/upload/getUploadInput';
 import Maybe from 'graphql/tsutils/Maybe';
 import { Collection, ResourceInput } from 'graphql/types.generated';
 import { useMemo } from 'react';
@@ -17,10 +14,7 @@ export interface AddResource {
   icon: Maybe<File | string>;
 }
 export const useAddResource = () => {
-  const [
-    createResource,
-    createResourceStatus
-  ] = GQL.useAddResourceCreateResourceMutation();
+  const [createResource, createResourceStatus] = GQL.useAddResourceCreateResourceMutation();
   const create = useCallOrNotifyMustLogin(
     async ({ collectionId, content, icon, resource }: AddResource) => {
       if (createResourceStatus.loading) {
@@ -29,7 +23,7 @@ export const useAddResource = () => {
 
       return createResource({
         variables: {
-          collectionId: collectionId,
+          contextId: collectionId,
           resource,
           content: getUploadInput(content),
           icon: getMaybeUploadInput(icon, null)

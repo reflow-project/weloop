@@ -8,10 +8,10 @@ import { DiscoverPageFeaturedCommunityInfoFragmentDoc } from '../../pages/discov
 export type CommunityFeatureFragment = (
   { __typename: 'Feature' }
   & Pick<Types.Feature, 'id'>
-  & { context: Types.Maybe<{ __typename: 'Collection' } | (
+  & { context: Types.Maybe<{ __typename: 'Category' } | { __typename: 'Collection' } | { __typename: 'Comment' } | (
     { __typename: 'Community' }
     & DiscoverPageFeaturedCommunityInfoFragment
-  )> }
+  ) | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | { __typename: 'Resource' } | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | { __typename: 'User' }> }
 );
 
 export const CommunityFeatureFragmentDoc = gql`
