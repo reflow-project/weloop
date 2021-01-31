@@ -17,7 +17,7 @@ export interface MapProps {
   tileAttribution?: string;
   center?: LatLngLiteral;
   markers?: Array<MarkerProps>;
-  zoom: number;
+  zoom?: number;
 }
 
 const defaultAttribution =
@@ -29,28 +29,37 @@ const mapPin = ReactDOMServer.renderToString(
 );
 const markerIcon = divIcon({ className: 'maker--pin', html: mapPin, iconSize: [30, 30] });
 
+const getCenter = (markers: Array<MarkerProps>, center?: MapProps['center']) => {
+  if (center) {
+    return center;
+  } else if (markers.length === 1) {
+    return markers[0].position;
+  } else if (markers.length > 1) {
+    const bounds = new LatLngBounds(markers.map(({ position }) => [position.lat, position.lng]));
+    return bounds.getCenter();
+  }
+};
+
 export const Map: FC<MapProps> = ({
   center,
   zoom = 20,
   markers = [],
   tileAttribution = defaultAttribution
 }) => {
-  const bounds = new LatLngBounds(markers.map(({ position }) => [position.lat, position.lng]));
+  const mapCenter = getCenter(markers, center);
 
   return (
     <Wrapper>
-      <LeafletMap
-        center={center ?? bounds.getCenter()}
-        zoom={zoom}
-        style={{ height: '100%', width: '100%' }}
-      >
-        <TileLayer url={defaultTileUrl} attribution={tileAttribution} />
-        {markers.map(({ position, popup }) => (
-          <Marker icon={markerIcon} position={position}>
-            {popup && <Popup>{popup}</Popup>}
-          </Marker>
-        ))}
-      </LeafletMap>
+      {mapCenter && (
+        <LeafletMap center={mapCenter} zoom={zoom} style={{ height: '100%', width: '100%' }}>
+          <TileLayer url={defaultTileUrl} attribution={tileAttribution} />
+          {markers.map(({ position, popup }, i) => (
+            <Marker icon={markerIcon} key={i} position={position}>
+              {popup && <Popup>{popup}</Popup>}
+            </Marker>
+          ))}
+        </LeafletMap>
+      )}
     </Wrapper>
   );
 };
