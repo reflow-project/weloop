@@ -3,26 +3,21 @@ import { Map as LeafletMap, Marker, Popup, TileLayer } from 'react-leaflet';
 import './leaflet.css';
 import styled from 'styled-components';
 import { theme } from 'ui/themes/default.theme';
-import { divIcon } from 'leaflet';
+import { divIcon, LatLngBounds, LatLngLiteral } from 'leaflet';
 import { MapPin } from 'react-feather';
 import ReactDOMServer from 'react-dom/server';
 
-export interface PositionProps {
-  lat: number;
-  lng: number;
-}
-
 export interface MarkerProps {
-  position: PositionProps;
+  position: LatLngLiteral;
   popup?: React.ReactNode;
 }
 
 export interface MapProps {
   tileUrl?: string;
   tileAttribution?: string;
-  center: PositionProps;
+  center?: LatLngLiteral;
   markers?: Array<MarkerProps>;
-  zoom: number;
+  zoom?: number;
 }
 
 const defaultAttribution =
@@ -34,22 +29,37 @@ const mapPin = ReactDOMServer.renderToString(
 );
 const markerIcon = divIcon({ className: 'maker--pin', html: mapPin, iconSize: [30, 30] });
 
+const getCenter = (markers: Array<MarkerProps>, center?: MapProps['center']) => {
+  if (center) {
+    return center;
+  } else if (markers.length === 1) {
+    return markers[0].position;
+  } else if (markers.length > 1) {
+    const bounds = new LatLngBounds(markers.map(({ position }) => [position.lat, position.lng]));
+    return bounds.getCenter();
+  }
+};
+
 export const Map: FC<MapProps> = ({
   center,
   zoom = 20,
   markers = [],
   tileAttribution = defaultAttribution
 }) => {
+  const mapCenter = getCenter(markers, center);
+
   return (
     <Wrapper>
-      <LeafletMap center={center} zoom={zoom} style={{ height: '100%', width: '100%' }}>
-        <TileLayer url={defaultTileUrl} attribution={tileAttribution} />
-        {markers.map(({ position, popup }) => (
-          <Marker icon={markerIcon} position={position}>
-            {popup && <Popup>{popup}</Popup>}
-          </Marker>
-        ))}
-      </LeafletMap>
+      {mapCenter && (
+        <LeafletMap center={mapCenter} zoom={zoom} style={{ height: '100%', width: '100%' }}>
+          <TileLayer url={defaultTileUrl} attribution={tileAttribution} />
+          {markers.map(({ position, popup }, i) => (
+            <Marker icon={markerIcon} key={i} position={position}>
+              {popup && <Popup>{popup}</Popup>}
+            </Marker>
+          ))}
+        </LeafletMap>
+      )}
     </Wrapper>
   );
 };

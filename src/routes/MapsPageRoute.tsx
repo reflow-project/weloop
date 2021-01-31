@@ -6,26 +6,26 @@ import { locationHelper } from './lib/helper';
 // import { NotFoundHOC } from 'HOC/pages/not-found/NotFound';
 import { WithSidebarTemplate } from 'HOC/templates/WithSidebar/WithSidebar';
 import { MapPageHOC } from 'HOC/pages/map/MapPage';
+import { NotFoundHOC } from 'HOC/pages/not-found/NotFound';
 
-interface MapsPageRouter {}
+interface MapsPageRouter {
+  communityId: string;
+}
 const MapsPageRouter: FC<RouteComponentProps<MapsPageRouter>> = ({ match }) => {
-  // const props = null; // TODO: implement Map HOC
-
-  // if (props === null) {
-  //   return <NotFoundHOC />;
-  // }
+  if (match === null) {
+    return <NotFoundHOC />;
+  }
 
   return (
     <WithSidebarTemplate>
-      {/* {TODO: use HOC component} */}
-      <MapPageHOC />
+      <MapPageHOC communityId={match.params.communityId} />
     </WithSidebarTemplate>
   );
 };
 
 export const MapsPageRoute: RouteProps = {
   exact: true,
-  path: '/maps',
+  path: '/communities/:communityId/map/',
   component: MapsPageRouter
 };
 

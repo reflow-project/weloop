@@ -4,7 +4,7 @@ import { darken, ellipsis } from 'polished';
 import React, { ReactElement } from 'react';
 import { ChevronDown, ChevronLeft, MapPin } from 'react-feather';
 // import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Box, Flex, Text } from 'rebass/styled-components';
 import media from 'styled-media-query';
@@ -13,6 +13,7 @@ import Avatar from 'ui/elements/Avatar';
 import styled from 'ui/themes/styled';
 // import Avatar from 'ui/elements/Avatar';
 import { DropdownSidebar } from './dropdown';
+import { communityLocation } from 'routes/CommunityPageRoute';
 
 export interface Props {
   user: null | {
@@ -32,6 +33,9 @@ export interface Props {
 export const MainHeader: React.FC<Props> = props => {
   const history = useHistory();
   const { i18n } = React.useContext(LocaleContext);
+  const location = useLocation();
+  const isCommunityPage = communityLocation.is(location.pathname);
+
   return (
     <HeaderWrapper>
       <Container>
@@ -49,9 +53,11 @@ export const MainHeader: React.FC<Props> = props => {
             {/* <Input /> */}
             {props.Search}
           </Search>
-          <MapLink to="/maps" title="Map">
-            <MapPin size="20" />
-          </MapLink>
+          {isCommunityPage && (
+            <MapLink to={location.pathname + '/map'} title="Map">
+              <MapPin size="20" />
+            </MapLink>
+          )}
         </Left>
         <Header alignItems={'center'}>
           {props.user ? (
