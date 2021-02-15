@@ -14,11 +14,11 @@ export const TopMessage: React.FC = () => {
           This site is currently in active development. We are looking forward to reading your
           feedback and ideas in our{' '}
           <a
-            href="https://tracker.moodle.org/projects/MDLNET/summary"
+            href="https://github.com/reflow-project/zenpub-client/issues"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Tracker
+            Issues Tracker
           </a>
           <span
             style={{
