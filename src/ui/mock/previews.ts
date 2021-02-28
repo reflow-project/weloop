@@ -216,12 +216,10 @@ export function FlaggedItemPreviewProps(
 
 export function ProposedIntentPreviewProps(
   icon = 'https://images.pexels.com/photos/745365/pexels-photo-745365.jpeg',
-  license = 'CC0-1.0',
   name = 'Shredded cotton'
 ): IProposedIntent {
   return {
     icon,
-    license,
     name,
     like: {
       toggleLikeFormik: useToggleFormik(),

@@ -21,7 +21,6 @@ export interface IProposedIntent {
   name: string;
   link: string;
   like: null | LikeActions;
-  license: string | null;
   isFlagged: boolean;
   hideActions?: boolean;
   collectionLink: string;

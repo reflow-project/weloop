@@ -1,0 +1,20 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { useGetProposedIntentModalProps } from 'ui/mock/proposedIntentModal'
+import { ProposedIntentPanel } from 'ui/modules/ProposedIntentPanel'
+import { action } from '@storybook/addon-actions'
+import Modal from 'ui/modules/Modal'
+
+<Meta title="Modules|View a proposed intent" component={ProposedIntentPanel} />
+
+# ProposedIntentPanel
+
+Let's define a story for the `Proposed Intent Panel` module
+
+<Preview>
+  <Story name="Create a Collection">
+    <Modal closeModal={action('close modal')}>
+      <ProposedIntentPanel {...useGetProposedIntentModalProps()} />
+    </Modal>
+  </Story>
+</Preview>
