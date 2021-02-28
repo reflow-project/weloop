@@ -52,29 +52,52 @@ export interface Props {
   logout(): void;
   toggleDropdown: any;
   userLink: string;
-  createCommunity: any;
   isAdmin: boolean;
 }
 
-export const DropdownSidebar: React.FC<Props> = ({
-  logout,
-  userLink,
-  toggleDropdown,
-  isAdmin,
-  createCommunity
-}) => {
+export const DropdownSidebar: React.FC<Props> = ({ logout, userLink, toggleDropdown, isAdmin }) => {
   const { push } = useHistory();
   return (
     <Dropdown orientation={'top'} close={toggleDropdown}>
       <List lined>
+        <Item>
+          <Text variant="text">
+            <a href="/">
+              <Trans>Home / Discover</Trans>
+            </a>
+          </Text>
+        </Item>
+        <Item>
+          <Text variant="text">
+            <a href="/communities/user">
+              <Trans>My Communities</Trans>
+            </a>
+          </Text>
+        </Item>
         <Item variant="link" onClick={() => push(userLink)}>
           <span>
             <User size={16} color={'#333'} />
           </span>
           <Text variant="text">
-            <Trans>Profile</Trans>
+            <Trans>My Profile</Trans>
           </Text>
         </Item>
+        <Item>
+          <Text variant="text">
+            <a href="/comments">
+              <Trans>My comments</Trans>
+            </a>
+          </Text>
+        </Item>
+        <Item>
+          <Text variant="text">
+            <a href="/favorites">
+              <Trans>My favorites</Trans>
+            </a>
+          </Text>
+        </Item>
+      </List>
+      <List>
         <Item variant="link" onClick={() => push('/settings')}>
           <span>
             <Settings size={16} color={'#333'} />
@@ -83,16 +106,41 @@ export const DropdownSidebar: React.FC<Props> = ({
             <Trans>Settings</Trans>
           </Text>
         </Item>
-      </List>
-      {isAdmin && (
-        <List lined>
+        {isAdmin && (
           <ItemButton variant="link" onClick={() => push('/settings/instance')}>
             <Text variant="text" sx={{ flex: 1, textAlign: 'center' }}>
               <Trans>Admin dashboard</Trans>
             </Text>
           </ItemButton>
-        </List>
-      )}
+        )}
+        <Item variant="link">
+          <Text variant="text">
+            <a href="/terms" target="_blank">
+              <Trans>Code of Conduct</Trans>
+            </a>
+          </Text>
+        </Item>
+        <Item variant="link" onClick={logout}>
+          <span>
+            <Power size={16} strokeWidth={1} color={'#333'} />
+          </span>
+          <Text variant="text">
+            <Trans>Sign out</Trans>
+          </Text>
+        </Item>
+      </List>
+    </Dropdown>
+  );
+};
+
+type TCreateDropdown = {
+  toggleDropdown: () => void;
+  createCommunity: any;
+};
+
+export const CreateDropdown: React.FC<TCreateDropdown> = ({ toggleDropdown, createCommunity }) => {
+  return (
+    <Dropdown orientation={'top'} close={toggleDropdown}>
       <List lined>
         <Item variant="link" onClick={() => createCommunity()}>
           <span>
@@ -102,24 +150,19 @@ export const DropdownSidebar: React.FC<Props> = ({
             <Trans>New Community</Trans>
           </Text>
         </Item>
-      </List>
-      <List lined>
         <Item variant="link">
           <Text variant="text">
-            <a href="/terms" target="_blank">
-              <Trans>Code of Conduct</Trans>
-            </a>
+            <Trans>Create a new collection</Trans>
           </Text>
         </Item>
-        <Text variant="text">v1.0 beta</Text>
-      </List>
-      <List>
-        <Item variant="link" onClick={logout}>
-          <span>
-            <Power size={16} strokeWidth={1} color={'#333'} />
-          </span>
+        <Item variant="link">
           <Text variant="text">
-            <Trans>Sign out</Trans>
+            <Trans>Create a new resource</Trans>
+          </Text>
+        </Item>
+        <Item variant="link">
+          <Text variant="text">
+            <Trans>Create a new request</Trans>
           </Text>
         </Item>
       </List>

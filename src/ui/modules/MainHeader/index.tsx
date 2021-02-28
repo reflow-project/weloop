@@ -1,7 +1,7 @@
 import { LocaleContext } from 'context/global/localizationCtx';
 import { logo_small_url, prompt_signin } from 'mn-constants';
 import { darken, ellipsis } from 'polished';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { ChevronDown, ChevronLeft, MapPin } from 'react-feather';
 // import { Link } from 'react-router-dom';
 import { useHistory, useLocation } from 'react-router';
@@ -12,7 +12,7 @@ import media from 'styled-media-query';
 import Avatar from 'ui/elements/Avatar';
 import styled from 'ui/themes/styled';
 // import Avatar from 'ui/elements/Avatar';
-import { DropdownSidebar } from './dropdown';
+import { DropdownSidebar, CreateDropdown } from './dropdown';
 import { communityLocation } from 'routes/CommunityPageRoute';
 
 export interface Props {
@@ -35,6 +35,7 @@ export const MainHeader: React.FC<Props> = props => {
   const { i18n } = React.useContext(LocaleContext);
   const location = useLocation();
   const isCommunityPage = communityLocation.is(location.pathname);
+  const [isCreateOpen, toggleCreate] = useState(false);
 
   return (
     <HeaderWrapper>
@@ -59,6 +60,27 @@ export const MainHeader: React.FC<Props> = props => {
             </MapLink>
           )}
         </Left>
+        <CreateNav>
+          {props.user && (
+            <NavItem sx={{ position: 'relative' }} alignItems="center" onClick={toggleCreate}>
+              <HeaderName ml={2} variant="link">
+                Create
+              </HeaderName>
+              <Right ml={2}>
+                <ChevronDown size="20" />
+              </Right>
+              {isCreateOpen && (
+                // TODO: use Dropdown component here....
+                <CreateDropdown
+                  createCommunity={props.createCommunity}
+                  toggleDropdown={() => {
+                    toggleCreate(!isCreateOpen);
+                  }}
+                />
+              )}
+            </NavItem>
+          )}
+        </CreateNav>
         <Header alignItems={'center'}>
           {props.user ? (
             <NavItem
@@ -81,7 +103,6 @@ export const MainHeader: React.FC<Props> = props => {
               {props.isOpenDropdown && (
                 <DropdownSidebar
                   isAdmin={props.user.isAdmin}
-                  createCommunity={props.createCommunity}
                   logout={props.user.logout}
                   userLink={props.user.link}
                   toggleDropdown={props.toggleDropdown}
@@ -107,7 +128,7 @@ const Container = styled(Box)`
   max-width: 1096px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 200px;
+  grid-template-columns: 1fr 100px 200px;
 `;
 const Search = styled(Box)`
   display: flex;
@@ -148,15 +169,26 @@ const NavItem = styled(Flex)`
     background: ${props => props.theme.colors.lighter};
   }
   ${media.lessThan('1280px')`
-img {
-    margin-right: 0;
-}
-`};
+    img {
+        margin-right: 0;
+    }
+  `};
 `;
 
 const Header = styled(Box)`
   cursor: pointer;
   flex: 0 0 200px;
+  order: 2;
+  justify-content: flex-end;
+  img {
+    min-width: 36px;
+    height: 36px;
+    border-radius: 36px;
+  }
+`;
+const CreateNav = styled(Box)`
+  cursor: pointer;
+  flex: 0 0 100px;
   order: 2;
   justify-content: flex-end;
   img {
