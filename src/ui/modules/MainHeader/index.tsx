@@ -189,7 +189,7 @@ const Header = styled(Box)`
 const CreateNav = styled(Box)`
   cursor: pointer;
   flex: 0 0 100px;
-  order: 3;
+  order: 2;
   justify-content: flex-end;
   img {
     min-width: 36px;
