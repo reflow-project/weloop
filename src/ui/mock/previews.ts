@@ -7,6 +7,7 @@ import { CommentProps as LikedCommentProps } from 'ui/modules/Previews/LikedComm
 import { CommentProps as MainCommentProps } from 'ui/modules/Previews/MainComment';
 import { Props as ResourceProps } from 'ui/modules/Previews/Resource';
 import { CommentProps as ThreadProps } from 'ui/modules/Previews/Thread';
+import { IProposedIntent } from 'ui/modules/Previews/ProposedIntent';
 import { Props as UserProps } from 'ui/modules/Previews/User';
 import { useGetActions } from './activityPreview';
 import { useToggleFormik } from './formik';
@@ -210,5 +211,29 @@ export function FlaggedItemPreviewProps(
     blockUser: action('blockUser'),
     deleteContent: action('deleteContent'),
     ignoreFlag: action('ignoreFlag')
+  };
+}
+
+export function ProposedIntentPreviewProps(
+  icon = 'https://images.pexels.com/photos/745365/pexels-photo-745365.jpeg',
+  license = 'CC0-1.0',
+  name = 'Shredded cotton'
+): IProposedIntent {
+  return {
+    icon,
+    license,
+    name,
+    like: {
+      toggleLikeFormik: useToggleFormik(),
+      iLikeIt: true,
+      totalLikes: 5
+    },
+    collectionLink: '',
+    collectionName: 'collectionName',
+    link: '/community/communityid/intent/intentid',
+    isFlagged: false,
+    isOpenDropdown: false,
+    toggleDropdown: action('toggleDropdown'),
+    toggleFlag: action('toggleFlag')
   };
 }

@@ -2,7 +2,7 @@ import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
 import { PropsTable } from '@storybook/components';
 import { ActivityPreview } from '.';
 import { CollectionPreviewProps, CommunityPreviewProps, ResourcePreviewProps, UserPreviewProps, CommentPreviewProps, LikedCommentPreviewProps, 
- FlaggedItemPreviewProps 
+ FlaggedItemPreviewProps,ProposedIntentPreviewProps 
 } from 'ui/mock/previews';
 import { activityPreviewProps } from 'ui/mock/activityPreview';
 import { Comment } from 'ui/modules/Previews/Comment';
@@ -11,6 +11,7 @@ import { FlaggedItem } from 'ui/modules/Previews/FlaggedItem';
 import { Collection } from '../Previews/Collection';
 import { Community } from '../Previews/Community';
 import { Resource } from '../Previews/Resource';
+import { ProposedIntent } from '../Previews/ProposedIntent';
 import { User } from '../Previews/User';
 import {Box} from 'rebass'
 
@@ -107,3 +108,13 @@ Let's define a story for the `Collection preview` module
 </Preview>
 
 
+# Proposed Intents
+A preview of a proposed intent preview
+
+<Preview>
+  <Story name="Created intent">
+    <Box p={2} width={"600px"}>
+      <ActivityPreview {...activityPreviewProps('Shredded cotton', <ProposedIntent {...ProposedIntentPreviewProps() }/>)} />
+    </Box>
+  </Story>
+</Preview>
