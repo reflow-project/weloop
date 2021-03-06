@@ -3,13 +3,33 @@ import { Nav, NavItem, Panel, PanelTitle, WrapperPanel } from 'ui/elements/Panel
 import { Trans } from '@lingui/macro';
 import { Text } from 'rebass/styled-components';
 import styled from 'ui/themes/styled';
+import { Community } from 'graphql/types.generated';
 
-export type Props = {};
+export type Props = {
+  communities?: Array<Community>;
+};
 
 export const SidePanel: React.FC<Props> = props => {
   return (
     <>
       <WrapperPanel>
+        <Panel>
+          <PanelTitle fontSize={0} fontWeight={'bold'}>
+            Popular communities
+          </PanelTitle>
+          <Nav>
+            {props.communities?.map((community, i) => {
+              const path = community.isLocal
+                ? `/communities/${community.id}`
+                : community.canonicalUrl;
+              return (
+                <NavItem key={i} mb={3} fontSize={0}>
+                  <a href={path ?? '/'}>{community.name}</a>
+                </NavItem>
+              );
+            })}
+          </Nav>
+        </Panel>
         <Panel>
           <PanelTitle fontSize={0} fontWeight={'bold'}>
             Popular hashtags

@@ -13,9 +13,9 @@ import {
   WrapperCont
 } from 'ui/elements/Layout';
 import { LoadMore } from 'ui/modules/Loadmore';
-import { SidePanel } from 'ui/modules/SidePanel';
 import styled from 'ui/themes/styled';
 import { ReactElement } from 'react';
+import { SidePanelHOC } from 'HOC/modules/SidePanel/SidePanel';
 
 export interface Props {
   // nextCommunitiesFormik?: FormikHook;
@@ -68,7 +68,7 @@ Props) => {
           </Wrapper>
         </WrapperCont>
       </HomeBox>
-      <SidePanel />
+      <SidePanelHOC />
     </MainContainer>
   );
 };

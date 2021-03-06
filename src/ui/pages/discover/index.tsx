@@ -16,8 +16,8 @@ import styled from 'ui/themes/styled';
 import { FormikHook } from 'ui/@types/types';
 
 import { LoadMore } from 'ui/modules/Loadmore';
-import { SidePanel } from 'ui/modules/SidePanel';
 import { ReactElement } from 'react';
+import { SidePanelHOC } from 'HOC/modules/SidePanel/SidePanel';
 
 export interface Props {
   tabPaths: {
@@ -68,7 +68,7 @@ export const Discover: React.FC<Props> = ({
           </Wrapper>
         </WrapperCont>
       </HomeBox>
-      <SidePanel />
+      <SidePanelHOC />
     </MainContainer>
   );
 };
