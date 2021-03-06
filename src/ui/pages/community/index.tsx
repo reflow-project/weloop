@@ -1,4 +1,5 @@
 import { Trans } from '@lingui/macro';
+import { SidePanelHOC } from 'HOC/modules/SidePanel/SidePanel';
 import * as React from 'react';
 import { ReactElement } from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
@@ -17,7 +18,6 @@ import {
 } from 'ui/elements/Layout';
 // import { Header } from 'ui/modules/Header';
 import { LoadMore } from 'ui/modules/Loadmore';
-import { SidePanel } from 'ui/modules/SidePanel';
 import SocialText from 'ui/modules/SocialText';
 import styled from 'ui/themes/styled';
 
@@ -115,7 +115,7 @@ export const Community: React.FC<Props> = ({
           </Wrapper>
         </WrapperCont>
       </HomeBox>
-      <SidePanel />
+      <SidePanelHOC />
     </MainContainer>
   );
 };
