@@ -231,7 +231,8 @@ const Sidebar = styled(Box)`
 `;
 
 const Content = styled(Box)`
-  overflow: auto;
+  // Enable to put the right side scrollbar next to the content
+  //overflow: auto;
 `;
 
 const Header = styled(Box)`
