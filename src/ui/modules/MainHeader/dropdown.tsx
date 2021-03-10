@@ -1,5 +1,16 @@
 import * as React from 'react';
-import { Settings, User, Power, Users } from 'react-feather';
+import {
+  Settings,
+  User,
+  Power,
+  Users,
+  MessageCircle,
+  Star,
+  Code,
+  Archive,
+  Plus,
+  PlusSquare
+} from 'react-feather';
 import styled from '../../themes/styled';
 import { Trans } from '@lingui/macro';
 import { useHistory } from 'react-router';
@@ -71,21 +82,30 @@ export const DropdownSidebar: React.FC<Props> = ({ logout, userLink, toggleDropd
         <Item>
           <Text variant="text">
             <a href="/communities/user">
-              <Trans>My Communities (errors)</Trans>
+              <span>
+                <Users size={16} color={'red'} />
+              </span>
+              <Trans>My Communities</Trans>
             </a>
           </Text>
         </Item>
         <Item>
           <Text variant="text">
             <a href="/comments">
-              <Trans>My comments (no page)</Trans>
+              <span>
+                <MessageCircle size={16} color={'red'} />
+              </span>
+              <Trans>My comments</Trans>
             </a>
           </Text>
         </Item>
         <Item>
           <Text variant="text">
             <a href="/favorites">
-              <Trans>My favorites (no page)</Trans>
+              <span>
+                <Star size={16} color={'red'} />
+              </span>
+              <Trans>My favorites</Trans>
             </a>
           </Text>
         </Item>
@@ -109,6 +129,9 @@ export const DropdownSidebar: React.FC<Props> = ({ logout, userLink, toggleDropd
         <Item variant="link">
           <Text variant="text">
             <a href="/terms" target="_blank">
+              <span>
+                <Code size={16} />
+              </span>
               <Trans>Code of Conduct</Trans>
             </a>
           </Text>
@@ -144,16 +167,25 @@ export const CreateDropdown: React.FC<TCreateDropdown> = ({ toggleDropdown, crea
           </Text>
         </Item>
         <Item variant="link">
+          <span>
+            <Archive size={16} color={'#333'} />
+          </span>
           <Text variant="text">
             <Trans>Create a new collection</Trans>
           </Text>
         </Item>
         <Item variant="link">
+          <span>
+            <PlusSquare size={16} color={'#333'} />
+          </span>
           <Text variant="text">
             <Trans>Create a new resource</Trans>
           </Text>
         </Item>
         <Item variant="link">
+          <span>
+            <Plus size={16} color={'#333'} />
+          </span>
           <Text variant="text">
             <Trans>Create a new request</Trans>
           </Text>
