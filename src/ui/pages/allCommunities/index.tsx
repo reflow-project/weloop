@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Header } from 'ui/modules/Header';
-import { WrapperPanel } from 'ui/elements/Panel';
 import { LoadMore } from 'ui/modules/Loadmore';
 import { FormikHook } from 'ui/@types/types';
 import { Wrapper, WrapperCont, MainContainer, HomeBox, ObjectsList } from 'ui/elements/Layout';
+import { SidePanelHOC } from 'HOC/modules/SidePanel/SidePanel';
 
 export interface Props {
   CommunitiesBoxes: React.ReactElement;
@@ -22,7 +22,7 @@ export const AllCommunities: React.FC<Props> = ({ CommunitiesBoxes, LoadMoreForm
           </Wrapper>
         </WrapperCont>
       </HomeBox>
-      <WrapperPanel />
+      <SidePanelHOC />
     </MainContainer>
   );
 };
