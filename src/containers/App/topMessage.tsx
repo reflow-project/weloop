@@ -24,8 +24,8 @@ export const TopMessage: React.FC = () => {
             style={{
               cursor: 'pointer',
               position: 'absolute',
-              top: '2px',
-              right: '2px'
+              top: '10px',
+              right: '10px'
             }}
             onClick={() => setShow(false)}
           >
@@ -38,11 +38,6 @@ export const TopMessage: React.FC = () => {
 };
 
 const AlertWrap = styled(Box)`
-  position: absolute;
-  z-index: 9;
-  left: 50%;
-  width: 250px;
-  margin-left: -125px !important;
   ${media.greaterThan('medium')`
     top 10px;
   `}
