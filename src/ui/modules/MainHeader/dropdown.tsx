@@ -60,20 +60,6 @@ export const DropdownSidebar: React.FC<Props> = ({ logout, userLink, toggleDropd
   return (
     <Dropdown orientation={'top'} close={toggleDropdown}>
       <List lined>
-        <Item>
-          <Text variant="text">
-            <a href="/">
-              <Trans>Home / Discover</Trans>
-            </a>
-          </Text>
-        </Item>
-        <Item>
-          <Text variant="text">
-            <a href="/communities/user">
-              <Trans>My Communities</Trans>
-            </a>
-          </Text>
-        </Item>
         <Item variant="link" onClick={() => push(userLink)}>
           <span>
             <User size={16} color={'#333'} />
@@ -84,15 +70,22 @@ export const DropdownSidebar: React.FC<Props> = ({ logout, userLink, toggleDropd
         </Item>
         <Item>
           <Text variant="text">
+            <a href="/communities/user">
+              <Trans>My Communities (errors)</Trans>
+            </a>
+          </Text>
+        </Item>
+        <Item>
+          <Text variant="text">
             <a href="/comments">
-              <Trans>My comments</Trans>
+              <Trans>My comments (no page)</Trans>
             </a>
           </Text>
         </Item>
         <Item>
           <Text variant="text">
             <a href="/favorites">
-              <Trans>My favorites</Trans>
+              <Trans>My favorites (no page)</Trans>
             </a>
           </Text>
         </Item>
