@@ -1,6 +1,7 @@
 fragment IntentPreview on Intent {
   id
   name
+  note
   tags {
     __typename
   }

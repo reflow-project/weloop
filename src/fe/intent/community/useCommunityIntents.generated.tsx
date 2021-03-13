@@ -6,7 +6,7 @@ import * as ApolloReactHooks from '@apollo/react-hooks';
 
 export type IntentPreviewFragment = (
   { __typename: 'Intent' }
-  & Pick<Types.Intent, 'id' | 'name'>
+  & Pick<Types.Intent, 'id' | 'name' | 'note'>
   & { tags: Types.Maybe<Array<Types.Maybe<{ __typename: 'Category' } | { __typename: 'Collection' } | { __typename: 'Comment' } | { __typename: 'Community' } | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | { __typename: 'Resource' } | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | { __typename: 'User' }>>> }
 );
 
@@ -27,6 +27,7 @@ export const IntentPreviewFragmentDoc = gql`
     fragment IntentPreview on Intent {
   id
   name
+  note
   tags {
     __typename
   }

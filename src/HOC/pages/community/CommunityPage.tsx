@@ -23,6 +23,7 @@ import Modal from 'ui/modules/Modal';
 import CommunityPageUI, { Props as CommunityProps } from 'ui/pages/community';
 import { communityLocation } from 'routes/CommunityPageRoute';
 import { useCommunityIntents } from 'fe/intent/community/useCommunityIntents';
+import { IntentPreviewHOC } from 'HOC/modules/previews/intent/IntentPreview';
 
 export enum CommunityPageTab {
   Activities,
@@ -128,11 +129,13 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
     .map(
       intent =>
         intent && (
-          <div>
-            ID:{intent.id}
-            <br />
-            Name{intent.name}
-          </div>
+          <IntentPreviewHOC
+            name={intent?.name ?? ''}
+            intentId={intent.id}
+            note={intent?.note ?? ''}
+            communityName={community?.name ?? ''}
+            communityLink={`/communities/${communityId}`}
+          />
         )
     )
     .filter((_): _ is ReactElement => !!_);
