@@ -22,12 +22,14 @@ import { Box } from 'rebass/styled-components';
 import Modal from 'ui/modules/Modal';
 import CommunityPageUI, { Props as CommunityProps } from 'ui/pages/community';
 import { communityLocation } from 'routes/CommunityPageRoute';
+import { useCommunityIntents } from 'fe/intent/community/useCommunityIntents';
 
 export enum CommunityPageTab {
   Activities,
   Collections,
   Discussions,
-  Members
+  Members,
+  Intents
 }
 export interface CommunityPage {
   communityId: Community['id'];
@@ -39,6 +41,7 @@ const communityActivitiesPageTitle = t`Community {name} - Activities`;
 const communityCollectionsPageTitle = t`Community {name} - Collections`;
 const communityDiscussionsPageTitle = t`Community {name} - Discussions`;
 const communityMembersPageTitle = t`Community {name} - Members`;
+const communityIntentsPageTitle = t`Community {name} - Intents`;
 
 export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab }) => {
   const { community, createThread } = useCommunity(communityId);
@@ -52,6 +55,8 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
       ? communityDiscussionsPageTitle
       : tab === CommunityPageTab.Collections
       ? communityCollectionsPageTitle
+      : tab === CommunityPageTab.Intents
+      ? communityIntentsPageTitle
       : communityCollectionsPageTitle; //never
   usePageTitle(!!community?.name && communityPageTitle, community);
 
@@ -62,6 +67,7 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
   const [loadMoreCollections] = collectionsPage.formiks;
   const { activitiesPage } = useCommunityOutboxActivities(communityId);
   const [loadMoreActivities] = activitiesPage.formiks;
+  const { communityIntents } = useCommunityIntents(communityId);
 
   const isJoined = !!community?.myFollow;
   const notifiedMustJoin = (msg: string) => {
@@ -118,6 +124,19 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
 
   const HeroCommunityBox = <HeroCommunity communityId={communityId} basePath={basePath} />;
 
+  const Intents = communityIntents
+    .map(
+      intent =>
+        intent && (
+          <div>
+            ID:{intent.id}
+            <br />
+            Name{intent.name}
+          </div>
+        )
+    )
+    .filter((_): _ is ReactElement => !!_);
+
   const notifiedMustLogin = useNotifyMustLogin();
   const [showCreateCollectionModal, toggleShowCreateCollectionModal] = useReducer(
     is =>
@@ -141,10 +160,12 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
       collections: communityLocation.getPath({ communityId, tab: undefined }, undefined),
       discussions: communityLocation.getPath({ communityId, tab: 'discussions' }, undefined),
       members: communityLocation.getPath({ communityId, tab: 'members' }, undefined),
-      timeline: communityLocation.getPath({ communityId, tab: 'timeline' }, undefined)
+      timeline: communityLocation.getPath({ communityId, tab: 'timeline' }, undefined),
+      intents: communityLocation.getPath({ communityId, tab: 'intents' }, undefined)
     };
     const props: CommunityProps = {
       Members,
+      Intents,
       Activities,
       Collections,
       HeroCommunity: HeroCommunityBox,
@@ -162,6 +183,7 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
     community,
     communityId,
     Members,
+    Intents,
     Activities,
     Collections,
     HeroCommunityBox,

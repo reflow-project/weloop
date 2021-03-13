@@ -25,6 +25,7 @@ export interface Props {
   isJoined: boolean;
   Activities: ReactElement[];
   Members: ReactElement[];
+  Intents: ReactElement[];
   Collections: ReactElement[];
   HeroCommunity: ReactElement;
   Threads: ReactElement[];
@@ -38,6 +39,7 @@ export interface Props {
     members: string;
     discussions: string;
     collections: string;
+    intents: string;
   };
 }
 
@@ -46,6 +48,7 @@ export const Community: React.FC<Props> = ({
   HeroCommunity,
   Collections,
   Members,
+  Intents,
   tabPaths,
   newThreadFormik,
   // isJoined,
@@ -111,6 +114,11 @@ export const Community: React.FC<Props> = ({
                   <ObjectsList>{Members}</ObjectsList>
                 </>
               </Route>
+              <Route path={tabPaths.intents}>
+                <>
+                  <ObjectsList>{Intents}</ObjectsList>
+                </>
+              </Route>
             </Switch>
           </Wrapper>
         </WrapperCont>
@@ -165,6 +173,9 @@ const Menu: React.FC<{ tabPaths: Props['tabPaths'] }> = ({ tabPaths }) => (
     </NavLink>
     <NavLink to={tabPaths.members}>
       <Trans>Members</Trans>
+    </NavLink>
+    <NavLink to={tabPaths.intents}>
+      <Trans>Intents</Trans>
     </NavLink>
   </MenuList>
 );

@@ -1,0 +1,12 @@
+fragment IntentPreview on Intent {
+  id
+  name
+  tags {
+    __typename
+  }
+}
+query communityIntents($communityId: ID) {
+  intentsFiltered(inScopeOf: [$communityId]) {
+    ...IntentPreview
+  }
+}

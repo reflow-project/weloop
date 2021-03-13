@@ -8,7 +8,7 @@ import gql from 'graphql-tag';
 import { CommunityPreviewFragmentDoc } from '../community/CommunityPreview.generated';
 import { CollectionPreviewFragmentDoc } from '../collection/CollectionPreview.generated';
 import { ResourcePreviewFragmentDoc } from '../resource/ResourcePreview.generated';
-import { FlagPreviewFragmentDoc } from '../flag/FlagPreview.generated'; //FIXME: This was manually imported
+import { FlagPreviewFragmentDoc } from '../flag/FlagPreview.generated';
 import {
   CommentPreviewFragment,
   CommentPreviewFragmentDoc
