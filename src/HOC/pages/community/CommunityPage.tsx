@@ -15,7 +15,7 @@ import { ActivityPreviewHOC } from 'HOC/modules/previews/activity/ActivityPrevie
 import { CollectionPreviewHOC } from 'HOC/modules/previews/collection/CollectionPreview';
 import { ThreadPreviewHOC } from 'HOC/modules/previews/thread/ThreadPreview';
 import { UserPreviewHOC } from 'HOC/modules/previews/user/UserPreview';
-import React, { FC, ReactElement, useMemo, useReducer } from 'react';
+import React, { FC, ReactElement, useMemo, useReducer, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Box } from 'rebass/styled-components';
@@ -24,6 +24,7 @@ import CommunityPageUI, { Props as CommunityProps } from 'ui/pages/community';
 import { communityLocation } from 'routes/CommunityPageRoute';
 import { useCommunityIntents } from 'fe/intent/community/useCommunityIntents';
 import { IntentPreviewHOC } from 'HOC/modules/previews/intent/IntentPreview';
+import { IntentPanelHOC } from 'HOC/modules/IntentPanel/IntentPanelHOC';
 
 export enum CommunityPageTab {
   Activities,
@@ -46,6 +47,7 @@ const communityIntentsPageTitle = t`Community {name} - Intents`;
 
 export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab }) => {
   const { community, createThread } = useCommunity(communityId);
+  const [openIntent, setOpenIntent] = useState<string | null>(null);
 
   const communityPageTitle =
     tab === CommunityPageTab.Members
@@ -135,6 +137,7 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
             note={intent?.note ?? ''}
             communityName={community?.name ?? ''}
             communityLink={`/communities/${communityId}`}
+            onOpen={setOpenIntent}
           />
         )
     )
@@ -152,6 +155,16 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
   const CreateCollectionModal = showCreateCollectionModal ? (
     <Modal closeModal={toggleShowCreateCollectionModal}>
       <CreateCollectionPanelHOC done={toggleShowCreateCollectionModal} communityId={communityId} />
+    </Modal>
+  ) : null;
+
+  const OpenIntentModal = openIntent ? (
+    <Modal
+      closeModal={() => {
+        setOpenIntent(null);
+      }}
+    >
+      <IntentPanelHOC communityName={community?.name ?? ''} intentId={openIntent} />
     </Modal>
   ) : null;
 
@@ -202,6 +215,7 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
     communityPageProps && (
       <>
         {CreateCollectionModal}
+        {OpenIntentModal}
         <CommunityPageUI {...communityPageProps} />
       </>
     )

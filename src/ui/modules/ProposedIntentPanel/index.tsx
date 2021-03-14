@@ -18,17 +18,11 @@ export type IProposedIntentHistoryItem = {
 };
 export type IProposedIntentPanel = IProposedIntent & {
   actor: Actor | null;
-  createdAt: string;
+  createdAt: string | null;
   tags?: Array<string>;
   resourceQuantity: number;
-  history: Array<IProposedIntentHistoryItem>;
+  history?: Array<IProposedIntentHistoryItem>;
 };
-
-export interface BasicCreateCollectionFormValues {
-  name: string;
-  summary: string;
-  icon: File | string | undefined;
-}
 
 export const ProposedIntentPanel: React.FC<IProposedIntentPanel> = ({
   actor,
@@ -48,7 +42,7 @@ export const ProposedIntentPanel: React.FC<IProposedIntentPanel> = ({
         <Heading m={2}>{name}</Heading>
         <ActorComp
           actor={actor ?? undefined}
-          createdAt={createdAt}
+          createdAt={createdAt ?? ''}
           event={'Created a resource'}
           communityLink={link}
           communityName={collectionName}
@@ -62,9 +56,11 @@ export const ProposedIntentPanel: React.FC<IProposedIntentPanel> = ({
 
       <ContentWrap>
         <Box>
-          <ImgWrwap>
-            <img src={icon} alt={name} />
-          </ImgWrwap>
+          {icon && icon !== '' && (
+            <ImgWrwap>
+              <img src={icon} alt={name} />
+            </ImgWrwap>
+          )}
           <ButtonWrap>
             <Button variant="outline">
               <Trans>Follow</Trans>
@@ -117,19 +113,20 @@ export const ProposedIntentPanel: React.FC<IProposedIntentPanel> = ({
                     verticalAlign: 'middle'
                   }}
                 >
-                  {history.length}
+                  {history && history.length}
                 </span>
                 <Clock style={{ display: 'inline-block' }} />
               </Button>
             </ButtonRow>
             {showHistory && (
               <History>
-                {history.map(item => (
-                  <li>
-                    <span>{item.action}</span>
-                    <span>{item.date}</span>
-                  </li>
-                ))}
+                {history &&
+                  history.map(item => (
+                    <li>
+                      <span>{item.action}</span>
+                      <span>{item.date}</span>
+                    </li>
+                  ))}
               </History>
             )}
           </Actions>

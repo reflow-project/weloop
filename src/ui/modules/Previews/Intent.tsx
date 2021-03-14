@@ -25,6 +25,7 @@ export interface Props {
   isSearch?: boolean;
   collectionLink: string;
   collectionName: string;
+  onOpen?: (id: string) => void;
 }
 
 export const Intent: React.FC<Props> = ({
@@ -36,7 +37,8 @@ export const Intent: React.FC<Props> = ({
   collectionName,
   like,
   isSearch,
-  hideActions
+  hideActions,
+  onOpen
 }) => {
   return (
     <Bordered>
@@ -48,7 +50,11 @@ export const Intent: React.FC<Props> = ({
       <Wrapper p={2}>
         {icon !== '' && <Avatar size="m" src={icon} />}
         <Infos flex={1} ml={3}>
-          <TitleLink href={link} target="_blank">
+          <TitleLink
+            onClick={() => {
+              onOpen && onOpen(link);
+            }}
+          >
             <Title flex="1">{name}</Title>
           </TitleLink>
           {summary && (
@@ -174,9 +180,11 @@ const Bordered = styled(Box)`
   box-shadow: 0px 2px 4px 0px #0000001f;
 `;
 
-const TitleLink = styled.a`
+const TitleLink = styled.button`
   text-decoration: none;
   color: ${props => props.theme.colors.darker};
+  background: 0;
+  border: 0;
 
   svg {
     margin: 0px;

@@ -8,6 +8,7 @@ export interface Props {
   note: string;
   communityLink: string;
   communityName: string;
+  onOpen: (id: string) => void;
 }
 
 export const IntentPreviewHOC: FC<Props> = ({
@@ -15,16 +16,18 @@ export const IntentPreviewHOC: FC<Props> = ({
   name,
   note,
   communityLink,
-  communityName
+  communityName,
+  onOpen
 }) => {
   const intentPreviewProps: IntentProps = {
     name,
     summary: note,
-    link: `/intent/${intentId}`,
+    link: intentId,
     like: null,
     hideActions: true,
     collectionLink: communityLink,
-    collectionName: communityName
+    collectionName: communityName,
+    onOpen
   };
 
   return intentPreviewProps && <IntentPreviewUI {...intentPreviewProps} />;

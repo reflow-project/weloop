@@ -17,7 +17,7 @@ export interface LikeActions {
 }
 
 export interface IProposedIntent {
-  icon: string;
+  icon?: string;
   name: string;
   link: string;
   like: null | LikeActions;
@@ -45,7 +45,7 @@ export const ProposedIntent: React.FC<IProposedIntent> = ({
         <Trans>Resource</Trans>
       </Search>
       <Wrapper p={2}>
-        {icon !== '' && <Avatar size="m" src={icon} />}
+        {icon && icon !== '' && <Avatar size="m" src={icon} />}
         <Infos flex={1} ml={3}>
           <TitleLink href={link}>
             <Title flex="1">{name}</Title>
