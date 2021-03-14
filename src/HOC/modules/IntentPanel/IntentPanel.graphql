@@ -1,0 +1,28 @@
+query intentPanel($intentId: ID) {
+  intent(id: $intentId) {
+    hasBeginning
+    hasPointInTime
+    name
+    note
+    image
+
+    tags {
+      ... on Taggable {
+        name
+      }
+    }
+
+    resourceQuantity {
+      hasUnit {
+        label
+      }
+      hasNumericalValue
+    }
+
+    provider {
+      name
+      image
+      id
+    }
+  }
+}

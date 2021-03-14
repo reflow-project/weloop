@@ -21,6 +21,8 @@ const CommunityPageRouter: FC<RouteComponentProps<CommunityPageRouter>> = ({ mat
       ? CommunityPageTab.Discussions
       : !maybeTabStr
       ? CommunityPageTab.Collections
+      : maybeTabStr === 'intents'
+      ? CommunityPageTab.Intents
       : null;
 
   const props = useMemo<CommunityPage | null>(() => {
@@ -46,11 +48,11 @@ const CommunityPageRouter: FC<RouteComponentProps<CommunityPageRouter>> = ({ mat
 
 export const CommunityPageRoute: RouteProps = {
   exact: true,
-  path: '/communities/:communityId/:tab(timeline|members|discussions)?',
+  path: '/communities/:communityId/:tab(timeline|members|discussions|intents)?',
   component: CommunityPageRouter
 };
 
-type Tab = undefined | 'timeline' | 'members' | 'discussions';
+type Tab = undefined | 'timeline' | 'members' | 'discussions' | 'intents';
 type Params = {
   communityId: string;
   tab: Tab;

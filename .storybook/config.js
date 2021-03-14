@@ -6,14 +6,11 @@ import { logo_large_url, APP_NAME, related_urls } from 'mn-constants';
 import { create } from '@storybook/theming';
 import StoryRouter from 'storybook-react-router';
 
-
 const theme = create({
   brandImage: logo_large_url,
   brandTitle: APP_NAME,
   url: related_urls.code
 });
-
-
 
 addParameters({
   options: {
@@ -23,15 +20,13 @@ addParameters({
   docs: {
     container: DocsContainer,
     page: DocsPage,
-    prepareForInline: (storyFn) => storyFn(),
-
+    prepareForInline: storyFn => storyFn()
   }
 });
 
 addDecorator(withA11y);
 addDecorator(themeDeco());
-addDecorator(StoryRouter())
-
+addDecorator(StoryRouter());
 
 const loaderFn = () => {
   // const allExports = [];
@@ -84,8 +79,8 @@ const loaderFn = () => {
     require('../src/ui/modules/Previews/a.stories.mdx'),
     require('../src/ui/modules/Sidebar/a.stories.mdx'),
     require('../src/ui/modules/SocialText/a.stories.mdx'),
-
-  ]
+    require('../src/ui/modules/ProposedIntentPanel/a.stories.mdx')
+  ];
   // allExports.push(Intro.map(a => a))
   // allExports.push(pages.map(a => a))
 

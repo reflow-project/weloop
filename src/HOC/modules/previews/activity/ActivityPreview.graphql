@@ -3,35 +3,41 @@ fragment ActivityPreview on Activity {
   verb
   createdAt
   user {
-      icon{ id, url }
-      image{ id, url }
-      userId: id 
-      userName: name
-      canonicalUrl
+    icon {
+      id
+      url
+    }
+    image {
+      id
+      url
+    }
+    userId: id
+    userName: name
+    canonicalUrl
   }
   context {
-    ...on Community {
+    ... on Community {
       ...CommunityPreview
     }
-    ...on Collection {
+    ... on Collection {
       ...CollectionPreview
     }
-    ...on Resource {
+    ... on Resource {
       ...ResourcePreview
     }
-    ...on User {
+    ... on User {
       ...UserPreview
     }
-    ...on Comment {
+    ... on Comment {
       ...CommentPreview
     }
-    ... on Flag{
+    ... on Flag {
       ...FlagPreview
     }
-    ... on Like{
+    ... on Like {
       ...LikePreview
     }
-    ... on Follow{
+    ... on Follow {
       ...FollowPreview
     }
   }

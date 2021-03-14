@@ -6,7 +6,9 @@ import { FlaggedProps } from 'ui/modules/Previews/FlaggedItem';
 import { CommentProps as LikedCommentProps } from 'ui/modules/Previews/LikedComment';
 import { CommentProps as MainCommentProps } from 'ui/modules/Previews/MainComment';
 import { Props as ResourceProps } from 'ui/modules/Previews/Resource';
+import { Props as IntentProps } from 'ui/modules/Previews/Intent';
 import { CommentProps as ThreadProps } from 'ui/modules/Previews/Thread';
+import { IProposedIntent } from 'ui/modules/Previews/ProposedIntent';
 import { Props as UserProps } from 'ui/modules/Previews/User';
 import { useGetActions } from './activityPreview';
 import { useToggleFormik } from './formik';
@@ -210,5 +212,47 @@ export function FlaggedItemPreviewProps(
     blockUser: action('blockUser'),
     deleteContent: action('deleteContent'),
     ignoreFlag: action('ignoreFlag')
+  };
+}
+
+export function IntentPreviewProps(
+  icon = 'https://images.pexels.com/photos/745365/pexels-photo-745365.jpeg',
+  name = 'Textile material',
+  summary = 'Textile material summary'
+): IntentProps {
+  return {
+    icon,
+    name,
+    like: {
+      toggleLikeFormik: useToggleFormik(),
+      iLikeIt: true,
+      totalLikes: 5
+    },
+    collectionLink: '',
+    collectionName: 'collectionName',
+    summary,
+    link: 'https://www.pinterest.it/topics/spacedrepetition/'
+  };
+}
+
+export function ProposedIntentPreviewProps(
+  icon = 'https://images.pexels.com/photos/745365/pexels-photo-745365.jpeg',
+  name = 'Shredded cotton'
+): IProposedIntent {
+  return {
+    icon,
+    name,
+    like: {
+      toggleLikeFormik: useToggleFormik(),
+      iLikeIt: true,
+      totalLikes: 5
+    },
+    collectionLink: '',
+    collectionName: 'collectionName',
+    link: '/community/communityid/intent/intentid',
+    isFlagged: false,
+    isOpenDropdown: false,
+    toggleDropdown: action('toggleDropdown'),
+    toggleFlag: action('toggleFlag')
   };
 }

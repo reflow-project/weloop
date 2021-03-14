@@ -3,6 +3,7 @@ import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
 import { PropsTable } from '@storybook/components';
 import { User } from './User';
 import { Resource } from './Resource';
+import { Intent } from './Intent';
 import {Community} from './Community';
 import {Collection} from './Collection';
 import {Comment} from './Comment';
@@ -20,7 +21,8 @@ CommentPreviewProps,
 MainCommentPreviewProps,
 LikedCommentPreviewProps,
 FlaggedItemPreviewProps,
-ThreadPreviewProps
+ThreadPreviewProps,
+IntentPreviewProps
  } from 'ui/mock/previews'
 import { activityPreviewProps } from 'ui/mock/activityPreview';
 import { ActivityPreview } from 'ui/modules/ActivityPreview';
@@ -209,3 +211,21 @@ Let's define a story for the `Liked Comment preview` module
     </Box>
   </Story>
 </Preview> 
+
+
+# Intent Preview
+
+<Preview>
+  <Story name="Created intent in community">
+     <Box
+        sx={{
+          borderRadius: '6px',
+          width: '600px',
+          margin: '0 auto'
+        }}
+        p={2}
+      >
+    <Intent {...IntentPreviewProps() } />
+    </Box>
+  </Story>
+</Preview>
