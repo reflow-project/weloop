@@ -5,7 +5,7 @@ export const PUBLIC_URL = process.env.PUBLIC_URL;
 export const SENTRY_KEY = process.env.REACT_APP_SENTRY_API_KEY;
 export const DEFAULT_PAGE_SIZE = parseInt(`${process.env.REACT_APP_DEFAULT_PAGE_SIZE}`) || 15;
 
-export const APP_NAME = 'ZenPub';
+export const APP_NAME = 'Reflow';
 export const INSTANCE_DESCRIPTION = 'Federated economic network for Reflow pilots';
 export const INVITE_ONLY_TEXT =
   process.env.REACT_APP_INVITE_ONLY_TEXT ||

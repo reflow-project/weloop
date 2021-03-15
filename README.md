@@ -1,4 +1,4 @@
-# ZenPub Client
+# Reflow Client
 
 ![Deployment](https://github.com/reflow-project/zenpub-client/workflows/Deployment/badge.svg)
 
