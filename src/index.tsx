@@ -65,6 +65,10 @@ async function run() {
       width: 100%; }
       }
 
+      .Toastify__toast--success{
+        background-color: #02e379;
+      }
+
       .Toastify__toast-container--top-right{
         top:60px !important;
         ${media.lessThan('480px')` 
