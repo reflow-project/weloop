@@ -126,7 +126,7 @@ export const nord = {
   lighter: '#444444',
   light: '#666666',
   mediumlight: '#999999',
-  medium: '#DDDDDD',
+  medium: '#D1D3D8',
   mediumdark: '#EEEEEE',
   dark: '#F3F3F3',
   darker: '#F8F8F8',
@@ -138,9 +138,9 @@ export const colors = {
   // Main
   app: 'rgb(245, 246, 247)',
   appInverse: '#fff',
-  primary: '#0d2451',
-  secondary: '#1EA7FD',
-  tertiary: '#DDDDDD',
+  primary: '#05244F',
+  secondary: '#02e379',
+  tertiary: '#D1D3D8',
 
   // Status
   positive: '#2db783',
@@ -152,7 +152,7 @@ export const colors = {
   lighter: '#F8F8F8',
   light: '#F3F3F3',
   mediumlight: '#EEEEEE',
-  medium: '#DDDDDD',
+  medium: '#D1D3D8',
   mediumdark: '#999999',
   dark: '#666666',
   darker: '#444444',
@@ -162,7 +162,7 @@ export const colors = {
 
 export const typography = {
   type: {
-    primary: '"Open Sans", sans-serif'
+    primary: '"Barlow", "Open Sans", sans-serif'
   },
   size: {
     s1: '12px',

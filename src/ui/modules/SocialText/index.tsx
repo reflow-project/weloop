@@ -48,7 +48,7 @@ const SocialTextArea = styled(Textarea)`
   &:focus {
     outline: none;
   }
-  font-family: 'Open Sans', sans-serif !important;
+  font-family: 'Barlow', 'Open Sans', sans-serif !important;
 `;
 
 const SocialActions = styled(Flex)`
