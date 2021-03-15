@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro';
 import { typography } from 'mn-constants';
 import { ellipsis } from 'polished';
 import * as React from 'react';
-import { ExternalLink, Flag, MoreHorizontal, Paperclip, Share, Star } from 'react-feather';
+import { ExternalLink, Flag, MoreHorizontal, Paperclip, Star } from 'react-feather';
 import { NavLink } from 'react-router-dom';
 // import { FileText, ExternalLink, Star } from 'react-feather';
 import { Box, Flex, Heading, Text } from 'rebass/styled-components';
@@ -145,12 +145,6 @@ export const Resource: React.FC<Props> = ({
                         </Text>
                       </DropdownItem>
                     )}
-                    <DropdownItem onClick={sendToMoodle}>
-                      <Share size={18} />
-                      <Text sx={{ flex: 1 }} ml={2}>
-                        <Trans>Send to Moodle</Trans>
-                      </Text>
-                    </DropdownItem>
                   </Dropdown>
                 </Right>
               )}
