@@ -20,16 +20,18 @@ Welcome to the Design Library. This area is designed to help:
 ## Getting started
 
 The client connects to a graphql endpoint to perform queries and mutation over the database. 
-In order to launch locally the client, you’ll need a running backend. [Here](https://github.com/dyne/zenpub/blob/develop/HACKING.md) you will find a detailed documentation about how to run the backend locally (manually or with docker).
+In order to launch locally the client, you’ll need a running backend. [Here](https://github.com/reflow-project/zenpub-client/blob/develop/HACKING.md) you will find a detailed documentation about how to run the backend locally (manually or with docker).
 Once you’ve a backend up and running on http://localhost:4000/api/graphql, you can move further running the client.
 *(nd. If you just want to run `storybook`, there is no need to install and run any backend, as stories are populated with fake data)*
+#
 ##### Get the code
-`git clone https://github.com/dyne/zenpub-client.git zenpub`
+`git clone https://github.com/reflow-project/zenpub-client.git`
+
 ##### Install the needed dependencies
 ```
-cd zenpub
 yarn
 ```
+
 ##### Extract the languages
 We use [linguijs](https://lingui.js.org/index.html) to provide multi-languages. Before launching the app, make sure you’ve added one or more translations to the app.
 
