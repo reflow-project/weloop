@@ -61,7 +61,6 @@ const SearchBar = styled(Box)`
 a {
   height: 40px;
   line-height: 40px;
-  font-size: 14px;
   padding: 0 8px;
   border-radius: 4px;
   text-decoration: none;
@@ -78,7 +77,6 @@ display: flex;
 align-items: center;
 input {
   width: 100%;
-  font-size: 13px;
   border-radius: 4px;
   max-width: 500px;
   height: 40px;

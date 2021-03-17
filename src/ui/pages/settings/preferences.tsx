@@ -109,7 +109,6 @@ const TransifexLink = styled(Text)`
   padding: 0px 20px;
 
   a {
-    font-size: 12px;
     text-decoration: underline;
     color: ${props => props.theme.colors.dark};
     &:hover {

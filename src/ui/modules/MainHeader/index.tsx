@@ -135,7 +135,6 @@ const Search = styled(Box)`
   margin-top: 7px;
   input {
     width: 100%;
-    font-size: 13px;
     border-radius: 4px;
     max-width: 500px;
     height: 36px;
@@ -211,12 +210,10 @@ const Signin = styled(NavItem)`
   }
   a {
     text-decoration: none;
-    font-size: 13px;
   }
   div {
     text-decoration: none;
     color: ${props => props.theme.colors.lighter};
-    font-size: 13px;
   }
 `;
 const Icon = styled(Box)`

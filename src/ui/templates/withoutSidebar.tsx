@@ -134,7 +134,6 @@ display: flex;
 align-items: center;
 input {
   width: 100%;
-  font-size: 13px;
   border-radius: 4px;
   max-width: 500px;
   height: 40px;

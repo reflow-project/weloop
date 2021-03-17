@@ -58,7 +58,6 @@ const FooterWrapper = styled(Box)`
     & li {
       float: left;
       margin-right: 16px;
-      font-size: 13px;
       & a {
         color: rgba(0, 0, 0, 0.45);
         text-decoration: none;

@@ -8,7 +8,6 @@ const Wrapper = styled(Box)`
   padding: 8px 16px;
   font-family: ${props => props.theme.fontFamily};
   font-weight: 600;
-  font-size: 13px;
 `;
 const Alert: React.FC<{ variant: string }> = ({ variant, children }) => (
   <Wrapper variant={variant || 'info'}>{children}</Wrapper>

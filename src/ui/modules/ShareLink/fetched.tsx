@@ -51,7 +51,7 @@ export const Fetched: React.FC<Props> = ({ cancel, formik }) => {
           </Box>
           {/* <Background style={{ backgroundImage: `url("${c.icon}")` }} /> */}
           <HeroInfo>
-            <Title fontSize={5} fontWeight={'bold'}>
+            <Title fontWeight={'bold'}>
               <CollectionContainerForm>
                 <Input
                   placeholder={tt.placeholders.name}
@@ -69,7 +69,7 @@ export const Fetched: React.FC<Props> = ({ cancel, formik }) => {
               </CollectionContainerForm>
             </Title>
 
-            <Description fontSize={2} mt={2}>
+            <Description mt={2}>
               <CollectionContainerForm>
                 <Textarea
                   placeholder={tt.placeholders.summary}
@@ -147,7 +147,6 @@ const HeroInfo = styled.div`
   & h2 {
     margin: 0;
     line-height: 32px !important;
-    font-size: 24px !important;
     color: ${props => props.theme.colors.mediumdark};
     ${media.lessThan('medium')`
       margin-top: 8px;
@@ -156,7 +155,6 @@ const HeroInfo = styled.div`
   & p {
     margin: 0;
     color: rgba(0, 0, 0, 0.8);
-    font-size: 15px;
     margin-top: 8px;
     color: ${props => props.theme.colors.mediumdark};
   }

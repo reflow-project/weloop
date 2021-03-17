@@ -91,14 +91,12 @@ const Span = styled(NavLink)`
 const Title = styled(Box)`
   line-height: initial;
   margin-top: 8px;
-  font-size: 22px;
   font-weight: 700;
   color: ${props => props.theme.colors.dark};
 `;
 const Username = styled(Box)`
   line-height: initial;
   margin-top: 8px;
-  font-size: 16px;
   font-weight: 500;
   color: ${props => props.theme.colors.mediumdark};
 `;

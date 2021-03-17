@@ -39,7 +39,7 @@ export const Search: SFC<Props> = ({ previews, Pagination, Filter }) => {
         </HomeBox>
         <WrapperPanel>
           <Panel>
-            <PanelTitle fontSize={0} fontWeight={'bold'}>
+            <PanelTitle fontWeight={'bold'}>
               <Trans>Filters</Trans>
             </PanelTitle>
             <Nav>

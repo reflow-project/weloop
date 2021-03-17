@@ -89,7 +89,6 @@ export const Actions = styled(Box)`
 
 export const CounterChars = styled.div`
   float: right;
-  font-size: 11px;
   text-transform: uppercase;
   background: #d0d9db;
   padding: 2px 10px;
@@ -124,7 +123,6 @@ export const Header = styled.div`
   & h5 {
     text-align: center !important;
     margin: 0 !important;
-    font-size: 18px;
   }
 `;
 

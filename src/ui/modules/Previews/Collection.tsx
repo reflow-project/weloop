@@ -83,7 +83,6 @@ export const Search = styled(Text)`
   padding: 8px;
   background-color: ${props => props.theme.colors.appInverse};
   font-weight: 700;
-  font-size: 11px;
   text-transform: uppercase;
   color: ${props => props.theme.colors.dark};
   border-top-left-radius: 4px;
@@ -99,10 +98,10 @@ const Meta = styled(Flex)`
 
 const Title = styled(Heading)`
   color: ${props => props.theme.colors.darker};
-  font-size: 16px;
   text-decoration: none;
   word-break: break-all;
   margin-top: 4px;
+  font-size: ${typography.size.m1};
   ${ellipsis('250px')};
 `;
 
@@ -148,7 +147,6 @@ const Info = styled(Box)`
   margin: 8px;
 `;
 const TotResources = styled(Text)`
-  font-size: 13px;
   flex: 1;
 `;
 const Action = styled(Box)``;
@@ -156,7 +154,6 @@ const Action = styled(Box)``;
 const ActionText = styled(Text)`
   color: ${props => props.theme.colors.darker};
   font-weight: 600;
-  font-size: 13px;
 `;
 
 export const tempCollection: React.FC<Props> = ({
@@ -275,6 +272,9 @@ const ActionItem = styled(Flex)<{ isFollowing?: boolean; bordered?: boolean }>`
       props.isFollowing ? props.theme.colors.mediumdark : props.theme.colors.primary};
     border-color: ${props =>
       props.isFollowing ? props.theme.colors.mediumdark : props.theme.colors.primary};
+    div {
+      color: ${props => props.theme.colors.lightest};
+    }
   }
 `;
 
@@ -312,7 +312,6 @@ const ActionItem = styled(Flex)<{ isFollowing?: boolean; bordered?: boolean }>`
 // const Username = styled(Text)`
 //   color: ${props => props.theme.colors.mediumdark};
 //   flex: 1;
-//   font-size: 14px;
 //   text-transform: lowercase;
 // `;
 
@@ -342,7 +341,6 @@ const Infos = styled(Box)`
 `;
 // const Title = styled(Heading)`
 //   color: ${props => props.theme.colors.darker};
-//   font-size: 20px;
 //   text-decoration: none;
 //   word-break: break-all;
 //   margin-top: 8px;

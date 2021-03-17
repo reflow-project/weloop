@@ -178,7 +178,6 @@ const Name = styled(Text)`
   text-decoration: none;
   display: flex;
   align-items: center;
-  font-size: 14px;
   flex-direction: row;
   a {
     font-weight: 800;
@@ -205,7 +204,6 @@ const FeedItem = styled(Box)`
   position: relative;
   padding: 16px;
   word-wrap: break-word;
-  font-size: 14px;
   ${clearFix()};
   transition: background 0.5s ease;
   margin-top: 0

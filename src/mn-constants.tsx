@@ -50,9 +50,9 @@ export const terms_privacy = {
 
 export const related_urls = {
   // replace the URLs as needed
-  project_homepage: 'https://commonspub.org',
-  code: 'https://gitlab.com/CommonsPub',
-  feedback: 'https://zo.team'
+  project_homepage: 'https://os.reflowproject.eu',
+  code: 'https://github.com/reflowproject',
+  feedback: 'https://os.reflowproject.eu'
 };
 
 export const IS_DEV = NODE_ENV === 'development';
@@ -135,7 +135,7 @@ export const nord = {
 };
 
 export const colors = {
-  // Main
+  // Reflow
   app: 'rgb(245, 246, 247)',
   appInverse: '#fff',
   primary: '#05244F',

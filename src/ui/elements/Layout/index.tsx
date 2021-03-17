@@ -64,7 +64,6 @@ export const Wrapper = styled(Flex)`
       display: inline-block;
 
       & h5 {
-        font-size: 13px;
         font-weight: 500;
       }
     }
@@ -72,7 +71,6 @@ export const Wrapper = styled(Flex)`
   & h4 {
     margin: 0;
     font-weight: 400 !important;
-    font-size: 14px !important;
     color: #151b26;
     line-height: 40px;
   }
@@ -91,7 +89,6 @@ export const MenuList = styled(Flex)`
     margin-right: 8px;
     color: ${props => props.theme.colors.darker};
     letterspacing: 1px;
-    font-size: 13px;
     padding: 0px 8px;
     line-height: 34px;
     white-space: nowrap;

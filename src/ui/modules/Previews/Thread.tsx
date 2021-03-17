@@ -88,13 +88,11 @@ const Member = styled(Box)<{ src: string }>`
 const Meta = styled(Flex)`
   color: ${props => props.theme.colors.mediumdark};
   font-weight: 500;
-  font-size: 13px;
 `;
 
 const Date = styled(Text)`
   color: ${props => props.theme.colors.mediumdark};
   font-weight: 500;
-  font-size: 13px;
   flex: 1;
 `;
 

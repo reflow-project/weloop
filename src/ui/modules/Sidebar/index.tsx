@@ -121,7 +121,6 @@ img {
 const ItemTitle = styled(Text)`
   height: 50px;
   line-height: 50px;
-  font-size: 14px;
   font-weight: 600;
   color: ${props => props.theme.colors.darker};
   a:focus,
@@ -149,7 +148,6 @@ const ItemTitleDir = styled(ItemTitle)`
 // const HeaderName = styled(Text)`
 //   flex: 1;
 //   ${ellipsis('180px')};
-//   font-size: 15px;
 // `;
 
 export interface CommunityPreview {

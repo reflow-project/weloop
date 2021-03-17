@@ -108,7 +108,7 @@ export const Resource: React.FC<Props> = ({
       </Wrapper>
       <Meta>
         <Collection ml={2}>
-          Added in <NavLink to={collectionLink}> +{collectionName}</NavLink>
+          Added in: <NavLink to={collectionLink}> {collectionName}</NavLink>
         </Collection>
         {hideActions ? null : (
           <Actions>
@@ -169,7 +169,6 @@ const Meta = styled(Flex)`
 
 const Collection = styled(Flex)`
   flex: 1;
-  font-size: 13px;
   a {
     text-decoration: underline;
     font-weight: 600;
@@ -275,7 +274,6 @@ const TypeItem = styled(Text)`
   text-transform: uppercase;
   border-radius: 4px;
   padding: 4px 8px;
-  font-size: 12px;
   font-weight: 600;
   cursor: default;
   margin-right: 4px;
@@ -308,7 +306,6 @@ const IconWrapper = styled.div`
 //   border-radius: 10px;
 //   border: 1px solid;
 //   padding: 0px 6px;
-//   font-size: 11px;
 //   cursor: default;
 //   margin-right: 6px;
 //   display: inline-flex;
@@ -316,7 +313,6 @@ const IconWrapper = styled.div`
 
 const TextLink = styled(Text)`
   ${ellipsis('380px')};
-  font-size: 13px;
   color: ${props => props.theme.colors.mediumdark};
 `;
 
@@ -360,6 +356,5 @@ const Infos = styled(Box)`
 `;
 const Title = styled(Heading)`
   color: ${props => props.theme.colors.darker};
-  font-size: 18px;
   text-decoration: none;
 `;

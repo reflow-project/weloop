@@ -9,7 +9,6 @@ import { ChevronLeft, Right } from 'ui/Icons';
 import styled from 'ui/themes/styled';
 
 export const Title = styled(Flex)`
-  font-size: 15px;
   font-weight: 700;
   padding: 8px;
   border-bottom: ${props => props.theme.colors.border};
@@ -21,7 +20,6 @@ export const Title = styled(Flex)`
     display: inline-block;
     flex: 1;
     padding: 0;
-    font-size: 12px;
     text-transform: uppercase;
     height: 30px;
     font-weight: 500;

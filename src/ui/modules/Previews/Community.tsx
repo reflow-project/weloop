@@ -56,7 +56,7 @@ export const Community: React.FC<Props> = ({
         <Box p={2}>
           <Flex>
             <Box flex={1}>
-              <Title variant="heading" fontSize={3}>
+              <Title variant="heading">
                 {name.length > 60 ? name.replace(/^(.{56}[^\s]*).*/, '$1...') : name}
               </Title>
               <Username>{displayUsername}</Username>
@@ -197,7 +197,6 @@ const WrapperImage = styled.div`
 
 const Title = styled(Heading)`
   color: ${props => props.theme.colors.darker};
-  font-size: 20px;
   text-decoration: none;
   word-break: break-all;
 `;

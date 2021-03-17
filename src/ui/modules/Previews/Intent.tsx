@@ -97,7 +97,6 @@ const Meta = styled(Flex)`
 
 const Collection = styled(Flex)`
   flex: 1;
-  font-size: 13px;
   a {
     text-decoration: underline;
     font-weight: 600;
@@ -215,6 +214,5 @@ const Infos = styled(Box)`
 `;
 const Title = styled(Heading)`
   color: ${props => props.theme.colors.darker};
-  font-size: 18px;
   text-decoration: none;
 `;

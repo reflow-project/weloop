@@ -108,11 +108,9 @@ export const User: React.FC<Props> = ({
       <WrapperPanel>
         {userLink.length > 0 ? (
           <Panel>
-            <PanelTitle fontSize={0} fontWeight={'bold'}>
-              Relevant links
-            </PanelTitle>
+            <PanelTitle fontWeight={'bold'}>Relevant links</PanelTitle>
             <Nav>
-              <NavItem fontSize={1}>
+              <NavItem>
                 <Flex>
                   <Link size={20} />{' '}
                   <a href={userLink} target="_blank" rel="noopener noreferrer">

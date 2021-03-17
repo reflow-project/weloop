@@ -34,7 +34,7 @@ const CollectionSmall: React.FC<CollectionProps> = ({ collection, canEdit, isEdi
           }}
         >
           <Infos>
-            <Title fontSize={1} my={2} fontWeight={600}>
+            <Title my={2} fontWeight={600}>
               {collection.name.length > 80
                 ? collection.name.replace(/^(.{76}[^\s]*).*/, '$1...')
                 : collection.name}
@@ -83,7 +83,6 @@ const Infos = styled.div`
 const Title = styled(Text)`
   color: rgba(250, 250, 250);
   ${ellipsis('170px')};
-  font-size: 14px;
   margin: 0;
   line-height: 40px;
 `;

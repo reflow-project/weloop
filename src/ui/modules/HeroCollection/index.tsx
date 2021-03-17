@@ -74,9 +74,7 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
         {/* </Box> */}
         <HeroInfo>
           <Title fontWeight={'bold'}>{c.name}</Title>
-          <Username mt={1} fontSize={2}>
-            +{c.fullName}
-          </Username>
+          <Username mt={1}>+{c.fullName}</Username>
           <Box mt={2}>
             <MDComment content={c.summary} />
           </Box>
@@ -208,13 +206,11 @@ const AdminDropdownItem = styled(DropdownItem)`
 
 const Title = styled(Text)`
   color: ${props => props.theme.colors.darker};
-  font-size: 24px;
 `;
 
 const Username = styled(Text)`
   color: ${props => props.theme.colors.mediumdark};
   font-weight: 500;
-  font-size: 14px;
   text-transform: lowercase;
 `;
 
@@ -227,7 +223,6 @@ const HeroInfo = styled.div`
   & h2 {
     margin: 0;
     line-height: 32px !important;
-    font-size: 24px !important;
     color: ${props => props.theme.colors.mediumdark};
     ${media.lessThan('medium')`
       margin-top: 8px;
@@ -236,7 +231,6 @@ const HeroInfo = styled.div`
   & p {
     margin: 0;
     color: rgba(0, 0, 0, 0.8);
-    font-size: 15px;
     margin-top: 8px;
     color: ${props => props.theme.colors.mediumdark};
   }

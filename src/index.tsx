@@ -31,42 +31,54 @@ async function run() {
           height: 100%;
           font-family: ${typography.type.primary} !important;
       }
-      
+
       * {
         box-sizing: border-box;
       }
       input, textarea {
         ::placeholder {
-          font-size: 13px;
           font-family: ${typography.type.primary} !important;
         }
       }
-      body {
-      background: ${colors.app};
-      .ais-SearchBox {
-        border-radius: 4px;
-        border: ${colors.border}
-        height: 34px;
-        width: 380px;
-        background: ${colors.app}
-        input {
-          border: none;
-          margin: 0 !important; 
-          border-radius: 4px;
-          text-indent: 30px;
-          padding: 0;
-          height: 32px;
-          background: ${colors.app};
-          font-size: 13px;
-        }
+      h1 {
+        font-size: 50px;
       }
-      .ais-InstantSearch__root { 
-        display: flex;
-      width: 100%; }
+      h2 {
+        font-size: 30px;
+      }
+      h3 {
+        font-size: 18px;
+      }
+      p {
+        font-size: 18px;
+      }
+
+      body {
+        background: ${colors.app};
+        .ais-SearchBox {
+          border-radius: 4px;
+          border: ${colors.border}
+          height: 34px;
+          width: 380px;
+          background: ${colors.app}
+          input {
+            border: none;
+            margin: 0 !important; 
+            border-radius: 4px;
+            text-indent: 30px;
+            padding: 0;
+            height: 32px;
+            background: ${colors.app};
+          }
+        }
+        .ais-InstantSearch__root { 
+          display: flex;
+        width: 100%;
+        }
       }
 
       .Toastify__toast--success{
-        background-color: #02e379;
+        background-color: ${colors.secondary};
       }
 
       .Toastify__toast-container--top-right{
@@ -76,13 +88,13 @@ async function run() {
           margin: 0 auto; 
         `}; 
     }
-      
+
     input, textarea{
       &:focus::placeholder{
         color: transparent;
       }
     }
-    
+
     input:focus::-webkit-input-placeholder, textarea:focus::-webkit-input-placeholder { color:transparent; }
     input:focus:-moz-placeholder, textarea:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */
     input:focus::-moz-placeholder, textarea:focus::-moz-placeholder { color:transparent; } /* FF 19+ */

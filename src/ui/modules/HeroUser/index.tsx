@@ -101,7 +101,7 @@ export const HeroUser: FC<Props> = props => {
           <HeroTitle sx={{ fontSize: '18px' }} mt={2} variant="heading" fontWeight={'bold'}>
             {props.name}
           </HeroTitle>
-          <Username mt={1} fontSize={2}>
+          <Username mt={1}>
             @{props.displayUsername}
             {props.me && props.isAdmin && <AdminBadge ml={2}>Admin</AdminBadge>}
           </Username>
@@ -178,14 +178,12 @@ const ProfileBox = styled(Box)`
 const Username = styled(Text)`
   color: ${props => props.theme.colors.mediumdark};
   font-weight: 500;
-  font-size: 14px;
 `;
 
 const Location = styled(Flex)`
   color: ${props => props.theme.colors.mediumdark};
   font-weight: 500;
   line-height: 26px;
-  font-size: 14px;
   border-radius: 100px;
   align-items: center;
   span {

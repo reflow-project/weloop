@@ -34,7 +34,7 @@ const CommunitySmall: React.FC<CommunityProps> = ({ community, canEdit, isEditin
           }}
         >
           <Infos>
-            <Title fontSize={1} my={2} fontWeight={600}>
+            <Title my={2} fontWeight={600}>
               {community.name.length > 80
                 ? community.name.replace(/^(.{76}[^\s]*).*/, '$1...')
                 : community.name}
@@ -84,7 +84,6 @@ const Infos = styled.div`
 const Title = styled(Text)`
   color: rgba(250, 250, 250);
   ${ellipsis('170px')};
-  font-size: 14px;
   margin: 0;
   line-height: 40px;
 `;

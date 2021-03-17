@@ -54,7 +54,6 @@ const ItemButton = styled(Item)`
     background: ${props => props.theme.colors.light};
   }
   div {
-    font-size: 12px;
     letter-spacing: 0;
   }
 `;

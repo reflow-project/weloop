@@ -50,7 +50,7 @@ export const ProposedIntentPanel: React.FC<IProposedIntentPanel> = ({
       </Header>
       <Hero>
         <HeroInfo>
-          <Title fontSize={5} fontWeight={'bold'}></Title>
+          <Title fontWeight={'bold'}></Title>
         </HeroInfo>
       </Hero>
 

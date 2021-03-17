@@ -149,7 +149,7 @@ export const Settings: React.FC<Props> = ({
                           />
                         </CollectionContainerForm>
 
-                        <Username mt={1} fontSize={2} p={2}>
+                        <Username mt={1} p={2}>
                           {displayUsername}
                         </Username>
                         <CollectionContainerForm>
@@ -228,7 +228,6 @@ const SettingsWrapper = styled(Box)`
 //   width: 100%;
 //   a {
 //     text-decoration: underline;
-//     font-size: 12px;
 //     color: ${props => props.theme.colors.dark};
 //     &:hover {
 //       color: ${props => props.theme.colors.darkest};
@@ -244,7 +243,7 @@ const Sidebar: React.FC<{ sectionPaths: Props['sectionPaths']; isAdmin: boolean 
     <WrapperPanel mr={2}>
       <Panel>
         <Nav>
-          <NavItem p={3} fontSize={1}>
+          <NavItem p={3}>
             <NavLink exact to={sectionPaths.general}>
               <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                 <Icon className="icon" mr={1}>
@@ -256,7 +255,7 @@ const Sidebar: React.FC<{ sectionPaths: Props['sectionPaths']; isAdmin: boolean 
               </Flex>
             </NavLink>
           </NavItem>
-          <NavItem p={3} fontSize={1}>
+          <NavItem p={3}>
             <NavLink to={sectionPaths.preferences}>
               <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                 <Icon className="icon" mr={1}>
@@ -270,7 +269,7 @@ const Sidebar: React.FC<{ sectionPaths: Props['sectionPaths']; isAdmin: boolean 
           </NavItem>
           {isAdmin ? (
             <>
-              <SectionTitle p={3} fontSize="1">
+              <SectionTitle p={3}>
                 <Flex
                   alignItems="center"
                   p={3}
@@ -282,7 +281,7 @@ const Sidebar: React.FC<{ sectionPaths: Props['sectionPaths']; isAdmin: boolean 
                   <Text variant="suptitle">Admin</Text>
                 </Flex>
               </SectionTitle>
-              <NavItem p={3} fontSize={1}>
+              <NavItem p={3}>
                 <NavLink to={sectionPaths.instance}>
                   <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                     <Icon className="icon" mr={1}>
@@ -294,7 +293,7 @@ const Sidebar: React.FC<{ sectionPaths: Props['sectionPaths']; isAdmin: boolean 
                   </Flex>
                 </NavLink>
               </NavItem>
-              <NavItem p={3} fontSize={1}>
+              <NavItem p={3}>
                 <NavLink to={sectionPaths.invites}>
                   <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                     <Icon className="icon" mr={1}>
@@ -306,7 +305,7 @@ const Sidebar: React.FC<{ sectionPaths: Props['sectionPaths']; isAdmin: boolean 
                   </Flex>
                 </NavLink>
               </NavItem>
-              <NavItem p={3} fontSize={1}>
+              <NavItem p={3}>
                 {/* <NavLink to={`${basePath}/reports`}> */}
                 <NavLink to={sectionPaths.flags}>
                   <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
@@ -319,7 +318,7 @@ const Sidebar: React.FC<{ sectionPaths: Props['sectionPaths']; isAdmin: boolean 
                   </Flex>
                 </NavLink>
               </NavItem>
-              <NavItem p={3} fontSize={1}>
+              <NavItem p={3}>
                 <NavLink to={sectionPaths.logs}>
                   <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                     <Icon className="icon" mr={1}>
@@ -333,28 +332,6 @@ const Sidebar: React.FC<{ sectionPaths: Props['sectionPaths']; isAdmin: boolean 
               </NavItem>
             </>
           ) : null}
-
-          {/* <NavItem p={3} fontSize={1}>
-          <NavLink to={`${basePath}/accounts`}>
-          <Flex alignItems="center" sx={{textTransform: "capitalize", fontSize: "14px"}}>
-                    <Icon className="icon" mr={1}><User size={20} /></Icon>Account
-                </Flex>
-          </NavLink>
-        </NavItem>
-        <NavItem p={3} fontSize={1}>
-        <NavLink to={`${basePath}/notifications`}>
-        <Flex alignItems="center" sx={{textTransform: "capitalize", fontSize: "14px"}}>
-                    <Icon className="icon" mr={1}><Bell size={20} /></Icon>Notifications
-                </Flex>
-        </NavLink>
-        </NavItem>
-        <NavItem p={3} fontSize={1}>
-          <NavLink to={`${basePath}/admin`}>
-          <Flex alignItems="center" sx={{textTransform: "capitalize", fontSize: "14px"}}>
-                    <Icon className="icon" mr={1}><Zap size={20} /></Icon>Admin
-                </Flex>
-          </NavLink>
-        </NavItem> */}
         </Nav>
       </Panel>
     </WrapperPanel>
@@ -426,14 +403,12 @@ const ProfileBox = styled(Box)``;
 const Username = styled(Text)`
   color: ${props => props.theme.colors.mediumdark};
   font-weight: 500;
-  font-size: 14px;
 `;
 
 const Location = styled(Flex)`
   color: ${props => props.theme.colors.medium};
   font-weight: 500;
   line-height: 26px;
-  font-size: 14px;
   border-radius: 100px;
   align-items: center;
   span {
@@ -449,7 +424,6 @@ const RelevantLink = styled(Flex)`
   color: ${props => props.theme.colors.medium};
   font-weight: 500;
   line-height: 26px;
-  font-size: 14px;
   border-radius: 100px;
   align-items: center;
   span {
@@ -482,7 +456,6 @@ const Hero = styled.div`
     margin-left: 136px;
     margin-top: -40px;
     line-height: 26px;
-    font-size: 16px;
     padding-bottom: 16px;
   }
 `;

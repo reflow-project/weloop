@@ -134,6 +134,10 @@ const CreateCollectionButton = styled(Button)`
   height: 34px;
   line-height: 34px;
   padding: 0 16px;
+  &:hover {
+    background: ${props => props.theme.colors.primary};
+    color: ${props => props.theme.colors.appInverse};
+  }
 `;
 
 const CollectionsBoxes = styled(Box)`
@@ -191,7 +195,6 @@ const Title = styled(Flex)`
   border-bottom: ${props => props.theme.colors.border};
   button {
     width: 190px;
-    font-size: 14px;
     text-transform: inherit;
     letter-spacing: 0;
     padding: 0;

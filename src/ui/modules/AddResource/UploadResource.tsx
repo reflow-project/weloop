@@ -216,9 +216,7 @@ export const UploadResource: React.FC<Props> = ({
 
 export default UploadResource;
 
-const Adv = styled(Text)`
-  font-size: 12px;
-`;
+const Adv = styled(Text)``;
 
 const Wrapper = styled(Box)`
   background: ${props => props.theme.colors.appInverse};
@@ -230,7 +228,6 @@ const LabelWrapper = styled.div`
 
 const Link = styled.a`
   display: block;
-  font-size: 13px;
 `;
 
 const Label = styled.label`

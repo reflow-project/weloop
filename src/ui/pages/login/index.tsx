@@ -81,7 +81,7 @@ export const Login: React.FC<Props> = ({ formik }) => {
               <Trans>Or</Trans>
             </Or>
             <Browse mt={3} p={3}>
-              <Text variant="heading" fontSize={3}>
+              <Text variant="heading">
                 <Trans>Browse this instance</Trans>
               </Text>
               <Text variant="text" mt={2}>
@@ -230,7 +230,6 @@ const ResetPass = styled(Text)`
   text-decoration: underline;
   cursor: pointer;
   a {
-    font-size: 14px;
     color: inherit;
   }
 `;

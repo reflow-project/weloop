@@ -45,7 +45,6 @@ const Logo = styled.div`
 `;
 
 const Tagline = styled.h5`
-  font-size: 16px;
   margin-top: 8px;
   margin-bottom: 40px;
   color: #000000a1;
