@@ -92,7 +92,8 @@ export const MenuList = styled(Flex)`
     padding: 0px 8px;
     line-height: 34px;
     white-space: nowrap;
-    &.active {
+    &.active,
+    &:hover {
       color: ${props => props.theme.colors.lighter};
       background: ${props => props.theme.colors.primary};
       border-radius: 4px;
