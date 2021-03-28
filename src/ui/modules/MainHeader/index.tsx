@@ -26,6 +26,7 @@ export interface Props {
   Search: ReactElement;
   toggleSideBar(): unknown;
   createCommunity(): unknown;
+  createIntent(): unknown;
   isOpenDropdown: boolean;
   toggleDropdown(): unknown;
 }
@@ -70,9 +71,9 @@ export const MainHeader: React.FC<Props> = props => {
                 <ChevronDown size="20" />
               </Right>
               {isCreateOpen && (
-                // TODO: use Dropdown component here....
                 <CreateDropdown
                   createCommunity={props.createCommunity}
+                  createIntent={props.createIntent}
                   toggleDropdown={() => {
                     toggleCreate(!isCreateOpen);
                   }}

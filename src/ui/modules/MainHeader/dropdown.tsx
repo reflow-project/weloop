@@ -151,9 +151,14 @@ export const DropdownSidebar: React.FC<Props> = ({ logout, userLink, toggleDropd
 type TCreateDropdown = {
   toggleDropdown: () => void;
   createCommunity: any;
+  createIntent: any;
 };
 
-export const CreateDropdown: React.FC<TCreateDropdown> = ({ toggleDropdown, createCommunity }) => {
+export const CreateDropdown: React.FC<TCreateDropdown> = ({
+  toggleDropdown,
+  createCommunity,
+  createIntent
+}) => {
   return (
     <Dropdown orientation={'top'} close={toggleDropdown}>
       <List lined>
@@ -173,7 +178,7 @@ export const CreateDropdown: React.FC<TCreateDropdown> = ({ toggleDropdown, crea
             <Trans>Create a new collection</Trans>
           </Text>
         </Item>
-        <Item variant="link">
+        <Item variant="link" onClick={() => createIntent()}>
           <span>
             <PlusSquare size={16} color={'#333'} />
           </span>
