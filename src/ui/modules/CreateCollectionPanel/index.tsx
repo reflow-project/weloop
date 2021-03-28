@@ -123,7 +123,7 @@ export const CreateCollectionPanel: React.FC<Props> = ({ cancel, formik }) => {
   );
 };
 
-const CollectionContainerForm = styled(ContainerForm)`
+export const CollectionContainerForm = styled(ContainerForm)`
   input {
     background: #fbfbfb;
     border: 0;
@@ -139,15 +139,15 @@ const CollectionContainerForm = styled(ContainerForm)`
   }
 `;
 
-const Title = styled(Text)`
+export const Title = styled(Text)`
   color: ${props => props.theme.colors.mediumdark};
 `;
 
-const Description = styled(Text)`
+export const Description = styled(Text)`
   color: ${props => props.theme.colors.mediumdark};
 `;
 
-const HeroInfo = styled.div`
+export const HeroInfo = styled.div`
   flex: 1;
   margin-left: 16px;
   position: relative;
@@ -172,7 +172,7 @@ const HeroInfo = styled.div`
   }
 `;
 
-const Hero = styled(Flex)`
+export const Hero = styled(Flex)`
   width: 100%;
   position: relative;
   padding: 16px;

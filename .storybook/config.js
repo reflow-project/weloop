@@ -63,6 +63,7 @@ const loaderFn = () => {
     require('../src/ui/modules/ConfirmationPanel/a.stories.mdx'),
     require('../src/ui/modules/CreateCollectionPanel/a.stories.mdx'),
     require('../src/ui/modules/CreateCommunityPanel/a.stories.mdx'),
+    require('../src/ui/modules/CreateIntentPanel/a.stories.mdx'),
     require('../src/ui/modules/EditCollectionPanel/a.stories.mdx'),
     require('../src/ui/modules/EditCommunityPanel/a.stories.mdx'),
     require('../src/ui/modules/EditResourcePanel/a.stories.mdx'),
