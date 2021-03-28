@@ -1,0 +1,14 @@
+mutation createIntent($name: String!, $communityId: ID!, $note: String) {
+  createIntent(
+    intent: { action: "produced", name: $name, inScopeOf: [$communityId], note: $note }
+  ) {
+    intent {
+      id
+      inScopeOf {
+        __typename
+      }
+      name
+      note
+    }
+  }
+}

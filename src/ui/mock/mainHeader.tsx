@@ -16,6 +16,7 @@ export const getMainHeaderProps = (): Props => {
     Search: <Input placeholder="Search..." />,
     toggleDropdown: action('toggle Dropdown'),
     createCommunity: action('create Community'),
+    createIntent: action('create Intent'),
     isOpenDropdown: false
   };
 };

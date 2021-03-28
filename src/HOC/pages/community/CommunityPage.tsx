@@ -129,9 +129,10 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
 
   const Intents = communityIntents
     .map(
-      intent =>
+      (intent, i) =>
         intent && (
           <IntentPreviewHOC
+            key={i}
             name={intent?.name ?? ''}
             intentId={intent.id}
             note={intent?.note ?? ''}
@@ -167,6 +168,8 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
       <IntentPanelHOC communityName={community?.name ?? ''} intentId={openIntent} />
     </Modal>
   ) : null;
+
+  // TODO: add CreateIntentModal here
 
   const communityPageProps = useMemo<CommunityProps | null>(() => {
     if (!community) {
