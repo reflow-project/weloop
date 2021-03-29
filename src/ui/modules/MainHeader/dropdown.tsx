@@ -172,7 +172,7 @@ export const CreateDropdown: React.FC<TCreateDropdown> = ({
         </Item>
         <Item variant="link">
           <span>
-            <Archive size={16} color={'#333'} />
+            <Archive size={16} color={'#ddd'} />
           </span>
           <Text variant="text">
             <Trans>Create a new collection</Trans>
@@ -188,7 +188,7 @@ export const CreateDropdown: React.FC<TCreateDropdown> = ({
         </Item>
         <Item variant="link">
           <span>
-            <Plus size={16} color={'#333'} />
+            <Plus size={16} color={'#ddd'} />
           </span>
           <Text variant="text">
             <Trans>Create a new request</Trans>
