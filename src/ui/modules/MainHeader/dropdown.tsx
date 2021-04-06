@@ -183,7 +183,7 @@ export const CreateDropdown: React.FC<TCreateDropdown> = ({
             <PlusSquare size={16} color={'#333'} />
           </span>
           <Text variant="text">
-            <Trans>Create a new resource</Trans>
+            <Trans>Create a new intent</Trans>
           </Text>
         </Item>
         <Item variant="link">
