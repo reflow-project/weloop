@@ -8,7 +8,7 @@ import {
   CreateIntentFormValues,
   SelectOption
 } from 'ui/modules/CreateIntentPanel';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 
 export type TCreateIntentPanelHOC = {
   done(): any;
@@ -17,6 +17,7 @@ export type TCreateIntentPanelHOC = {
 
 export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done }) => {
   const history = useHistory();
+  const location = useLocation();
   const { create } = useCreateIntent();
   const { myCommunityFollowsPage } = useMyFollowedCommunities();
   const communities = useMemo(
@@ -35,6 +36,7 @@ export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done }) 
         }),
     [myCommunityFollowsPage]
   );
+
   const formik = useFormik<CreateIntentFormValues>({
     initialValues: {
       name: '',
@@ -49,11 +51,14 @@ export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done }) 
         communityId: values.communityId,
         note: values.note
       })
-        .then(
-          res =>
-            res?.data?.createIntent?.intent &&
-            history.push(`/communities/${values.communityId}/intents`)
-        )
+        .then(res => {
+          const redirect = `/communities/${values.communityId}/intents`;
+          if (redirect === location.pathname) {
+            window.location.reload();
+          } else {
+            res?.data?.createIntent?.intent && history.replace(redirect);
+          }
+        })
         .catch(err => console.log(err));
     }
   });
