@@ -53,9 +53,11 @@ export const CommunityPageRoute: RouteProps = {
 };
 
 type Tab = undefined | 'timeline' | 'members' | 'discussions' | 'intents';
-type Params = {
+export type CommunityPageRouterParams = {
   communityId: string;
   tab: Tab;
 };
 
-export const communityLocation = locationHelper<Params, undefined>(CommunityPageRoute);
+export const communityLocation = locationHelper<CommunityPageRouterParams, undefined>(
+  CommunityPageRoute
+);

@@ -4,7 +4,7 @@ import { darken, ellipsis } from 'polished';
 import React, { ReactElement, useState } from 'react';
 import { ChevronDown, ChevronLeft, MapPin } from 'react-feather';
 // import { Link } from 'react-router-dom';
-import { useHistory, useLocation } from 'react-router';
+import { useHistory, useLocation, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Box, Flex, Text } from 'rebass/styled-components';
 import media from 'styled-media-query';
@@ -13,7 +13,7 @@ import Avatar from 'ui/elements/Avatar';
 import styled from 'ui/themes/styled';
 // import Avatar from 'ui/elements/Avatar';
 import { DropdownSidebar, CreateDropdown } from './dropdown';
-import { communityLocation } from 'routes/CommunityPageRoute';
+import { communityLocation, CommunityPageRouterParams } from 'routes/CommunityPageRoute';
 
 export interface Props {
   user: null | {
@@ -35,6 +35,7 @@ export const MainHeader: React.FC<Props> = props => {
   const history = useHistory();
   const { i18n } = React.useContext(LocaleContext);
   const location = useLocation();
+  const params = useParams<CommunityPageRouterParams>();
   const isCommunityPage = communityLocation.is(location.pathname);
   const [isCreateOpen, toggleCreate] = useState(false);
 
@@ -56,7 +57,7 @@ export const MainHeader: React.FC<Props> = props => {
             {props.Search}
           </Search>
           {isCommunityPage && (
-            <MapLink to={location.pathname + '/map'} title="Map">
+            <MapLink to={`/communities/${params.communityId}/map/`} title="Map">
               <MapPin size="20" />
             </MapLink>
           )}
