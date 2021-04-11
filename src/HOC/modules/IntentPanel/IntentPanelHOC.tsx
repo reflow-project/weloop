@@ -31,6 +31,13 @@ export const IntentPanelHOC: FC<Props> = ({ intentId, communityName }) => {
 
   const tags = (intentPanelData?.tags ?? []) as Array<Taggable>;
   const resourceQuantity = (intentPanelData.resourceQuantity?.hasNumericalValue ?? 0) as number;
+  const history =
+    intentPanelData.resourceInventoriedAs?.trace?.map(item => {
+      return {
+        action: item.action.label,
+        date: item.hasPointInTime ?? null
+      };
+    }) ?? [];
 
   const intentPanelProps: IProposedIntentPanel = {
     actor: actor,
@@ -41,7 +48,7 @@ export const IntentPanelHOC: FC<Props> = ({ intentId, communityName }) => {
     tags: tags.map(tag => tag.name ?? ''),
     icon: intentPanelData?.image,
     resourceQuantity,
-    history: [],
+    history,
     like: null,
     isFlagged: false,
     isOpenDropdown: false,

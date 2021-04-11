@@ -79,7 +79,6 @@ export const Container = styled.div`
 `;
 export const Actions = styled(Box)`
   ${clearFix()};
-  height: 60px;
   padding-top: 10px;
   padding-right: 10px;
   & button {

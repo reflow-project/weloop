@@ -11,9 +11,10 @@ import { ActorComp } from '../ActivityPreview';
 import { Actor } from '../ActivityPreview/types';
 import { Clock } from 'react-feather';
 import { theme } from 'ui/themes/default.theme';
+import { format } from 'date-fns';
 
 export type IProposedIntentHistoryItem = {
-  date: string;
+  date: string | null;
   action: string;
 };
 export type IProposedIntentPanel = IProposedIntent & {
@@ -121,10 +122,10 @@ export const ProposedIntentPanel: React.FC<IProposedIntentPanel> = ({
             {showHistory && (
               <History>
                 {history &&
-                  history.map(item => (
-                    <li>
+                  history.map((item, i) => (
+                    <li key={i}>
                       <span>{item.action}</span>
-                      <span>{item.date}</span>
+                      {item.date && <span>{format(new Date(item.date), 'do MMM yyyy')}</span>}
                     </li>
                   ))}
               </History>
