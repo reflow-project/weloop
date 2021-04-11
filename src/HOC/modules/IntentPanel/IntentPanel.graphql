@@ -19,6 +19,16 @@ query intentPanel($intentId: ID) {
       hasNumericalValue
     }
 
+    resourceInventoriedAs {
+      id
+      trace {
+        hasPointInTime
+        action {
+          label
+        }
+      }
+    }
+
     provider {
       name
       image

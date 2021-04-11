@@ -24,6 +24,17 @@ export type IntentPanelQuery = (
         { __typename: 'Unit' }
         & Pick<Types.Unit, 'label'>
       ) }
+    )>, resourceInventoriedAs: Types.Maybe<(
+      { __typename: 'EconomicResource' }
+      & Pick<Types.EconomicResource, 'id'>
+      & { trace: Types.Maybe<Array<(
+        { __typename: 'EconomicEvent' }
+        & Pick<Types.EconomicEvent, 'hasPointInTime'>
+        & { action: (
+          { __typename: 'Action' }
+          & Pick<Types.Action, 'label'>
+        ) }
+      )>> }
     )>, provider: Types.Maybe<(
       { __typename: 'Organization' }
       & Pick<Types.Organization, 'name' | 'image' | 'id'>
@@ -53,6 +64,15 @@ export const IntentPanelDocument = gql`
         label
       }
       hasNumericalValue
+    }
+    resourceInventoriedAs {
+      id
+      trace {
+        hasPointInTime
+        action {
+          label
+        }
+      }
     }
     provider {
       name
