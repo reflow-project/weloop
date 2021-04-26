@@ -5,44 +5,6 @@
 ## About the project
 This app is based on [CommonsPub](http://commonspub.org), a project to create a generic federated server, based on the `ActivityPub` and `ActivityStreams` web standards). 
 
-## Index
-
-- [Deploying MoodleNet](#deploying-moodlenet)
-- [Structure](#structure)
-    - [High level folder structure](#high-level-folder-structure)
-    - [Application source folder structure](#application-source-folder-structure)
-- [Development Scripts](#development-scripts)
-    - [`yarn start`](#yarn-start)
-    - [`yarn add-locale`](#yarn-add-locale)
-    - [`yarn extract`](#yarn-extract)
-    - [`yarn compile`](#yarn-compile)
-    - [`yarn build`](#yarn-build)
-- [Libraries](#libraries)
-- [Localisation](#localisation)
-    - [Set up](#set-up)
-    - [Usage](#usage)
-    - [Simple language strings](#simple-language-strings)
-    - [Language strings as reference](#language-strings-as-reference)
-    - [Plural language strings](#plural-language-strings)
-    - [Interpolated language strings](#interpolated-language-strings)
-    - [Updating language files](#updating-language-files)
-- [Dependencies](#dependencies)
-
-## Deploying MoodleNet
-
-
-Do you wish to run the client on your local machine? Read the [Getting started](https://gitlab.com/CommonsPub/Client/blob/develop/GETTING_STARTED.md).
-
-1. Make sure you have [Docker](https://www.docker.com/), a recent [docker-compose](https://docs.docker.com/compose/install/#install-compose) (which supports v3 configs) installed:
-
-```sh
-$ docker version
-Docker version 18.09.1-ce
-$ docker-compose -v                                                                                                                                              
-docker-compose version 1.23.2
-...
-```
-
 ### Flavours 
 
 CommonsPub comes in different flavours, which are made up of a combination of extensions and probably some custom branding. Each flavour has its own branch in the [CommonsPub repo](https://gitlab.com/CommonsPub/Server) regularly merged back-and-forth with its own repository.
@@ -95,49 +57,6 @@ We need to set some environment variables in order for MoodleNet to function, a 
 - `.env.secrets.example` (which you must copy to `.env.secrets`)
 	- set each password and secret with something random and secure
 	- MAIL_DOMAIN and MAIL_KEY are needed to configure transactional email, sign up at [Mailgun](https://www.mailgun.com/) and then configure the domain name and key 
-
-
-4. Once configured, build the docker image:
-
-```
-$ docker-compose build
-```
-
-Or if you're building on a Raspberry Pi:
-```
-$ docker-compose -f docker-compose.pi.yml build
-```
-
-5. Try it out 
-
-a) run the backend in console mode: `docker-compose run --rm backend bin/moodle_net start_iex`
-
-b) if you're in invite-only mode, add your email to the allowlist in order to be able to sign up: `MoodleNet.Access.create_register_email("myemail@domain.com")` and then exit (Ctrl+C and then `abort`)
-
-c) Start the docker containers with docker-compose:
-
-```sh
-$ docker-compose up
-```
-
-Or if you're running on a Raspberry Pi:
-```
-$ docker-compose -f docker-compose.pi.yml up
-```
-
-6. The MoodleNet backend and frontend should now be running at [http://localhost/](http://localhost/) on your machine and at https://your-domain-name.tld/ with SSL certificates automatically configured thanks to letsencrypt.org (if your domain was correctly configured).
-
-Once you've signed up, you may want to make yourself an instance admin, by running this in the backend console (see above): `MoodleNet.ReleaseTasks.make_instance_admin("your_username")`
-
-7. If that worked, start the app as a daemon next time:
-```sh
-$ docker-compose up -d
-```
-
-Or if you're running on a Raspberry Pi:
-```
-$ docker-compose -f docker-compose.pi.yml up -d
-```
 
 
 ## Structure
