@@ -2,6 +2,17 @@
 
 ![Deployment](https://github.com/reflow-project/zenpub-client/workflows/Deployment/badge.svg)
 
+**NOTE**: Since this project is a fork of a fork, this README (and other parts of the project) might be out of date.
+
+To quickly start the REFLOW version of the project, we should only need to create an `.env` file pointing to the REFLOW GraphQL API.
+
+Example `.env` file:
+
+```
+BASE_URL=https://api.reflowproject.eu
+REACT_APP_GRAPHQL_ENDPOINT=https://api.reflowproject.eu/api/graphql
+```
+
 ## About the project
 This app is based on [CommonsPub](http://commonspub.org), a project to create a generic federated server, based on the `ActivityPub` and `ActivityStreams` web standards). 
 
