@@ -6,7 +6,7 @@
 
 To quickly start the REFLOW version of the project, we should only need to create an `.env` file pointing to the REFLOW GraphQL API.
 
-Example `.env` file:
+Example part of an `.env` file (see `.env.example` for the whole file):
 
 ```
 BASE_URL=https://api.reflowproject.eu
