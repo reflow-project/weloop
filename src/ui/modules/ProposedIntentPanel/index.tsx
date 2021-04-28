@@ -62,6 +62,7 @@ export const ProposedIntentPanel: React.FC<IProposedIntentPanel> = ({
               <img src={icon} alt={name} />
             </ImgWrwap>
           )}
+          <h2>My first changes</h2>
           <ButtonWrap>
             <Button variant="outline">
               <Trans>Follow</Trans>
