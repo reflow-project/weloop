@@ -14,7 +14,7 @@ variables:
 
 #stages:
 #  - deploy
-#  - docs
+#  - build
 
 default:
   before_script:
@@ -31,19 +31,19 @@ default:
     # - yarn compile # compile localisation PO files into .js files 
 
 docs: # build and deploy documentation
-#   stage: docs
+#   stage: build
    only:
      - develop # Only run on staging branch
    script:
-     - mkdir docs 
-     #- yarn docs # generate TypeDocs
+     - mkdir build
+     #- yarn build # generate TypeDocs
      - yarn build-storybook # generate styleguide
-     - mv storybook-static docs/ui # include styleguide in build
-     - if [ ! -z "$DOCS_STAGING_BUCKET" ]; then aws s3 sync docs/ s3://${DOCS_STAGING_BUCKET}/docs/client/ --delete --exclude .git --acl public-read ; else echo "Skipping..."; fi # also copy docs to (a different) S3-served website
-     - if [ ! -z "$DOCS_STAGING_DISTRIBUTION_ID" ]; then aws cloudfront create-invalidation --distribution-id ${DOCS_STAGING_DISTRIBUTION_ID} --paths '/docs/client/*' ; else echo "Skipping..."; fi # invalidate the docs CloudFront's cache to serve the new version
+     - mv storybook-static build/ui # include styleguide in build
+     - if [ ! -z "$DOCS_STAGING_BUCKET" ]; then aws s3 sync build/ s3://${DOCS_STAGING_BUCKET}/build/client/ --delete --exclude .git --acl public-read ; else echo "Skipping..."; fi # also copy build to (a different) S3-served website
+     - if [ ! -z "$DOCS_STAGING_DISTRIBUTION_ID" ]; then aws cloudfront create-invalidation --distribution-id ${DOCS_STAGING_DISTRIBUTION_ID} --paths '/build/client/*' ; else echo "Skipping..."; fi # invalidate the build CloudFront's cache to serve the new version
    artifacts:
      paths:
-       - docs # The built files for Gitlab to serve
+       - build # The built files for Gitlab to serve
 
 deploy-staging: # build and deploy develop branch to app.next.moodle.net
 #  stage: deploy
@@ -55,7 +55,7 @@ deploy-staging: # build and deploy develop branch to app.next.moodle.net
     - rm -rf public # CRA and gitlab pages both use the public folder. Only do this in a build pipeline.
     - mv build public # Move build files to public dir for Gitlab Pages
     - cp public/index.html public/404.html # Not necessary, but helps with https://medium.com/@pshrmn/demystifying-single-page-applications-3068d0555d46
-    - mkdir -p docs && mv docs public/ # include docs in the final artifacts
+    - mkdir -p build && mv build public/ # include build in the final artifacts
     - if [ ! -z "$STAGING_BUCKET" ]; then aws s3 sync public/ s3://${STAGING_BUCKET} --delete --exclude .git --exclude README.md --acl public-read ; else echo "Skipping..."; fi # deploy frontend to staging's S3 bucket
     - if [ ! -z "$STAGING_DISTRIBUTION_ID" ]; then aws cloudfront create-invalidation --distribution-id ${STAGING_DISTRIBUTION_ID} --paths '/*' ; else echo "Skipping..."; fi # invalidate CloudFront's cache to serve the new version on staging
     - if [ ! -z "$TEAM_BUCKET" ]; then aws s3 sync public/ s3://${TEAM_BUCKET} --delete --exclude .git --exclude README.md --acl public-read ; else echo "Skipping..."; fi # deploy frontend to team.moodle.net

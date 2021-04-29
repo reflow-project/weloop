@@ -1,7 +1,7 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
-# docs
-/docs
+# build
+/build
 .docz/.cache
 .docz/node_modules
 .docz/public

@@ -44,7 +44,7 @@ export type IntentPanelQuery = (
     )> }
   )> }
 );
-
+// ++++++++
 
 export const IntentPanelDocument = gql`
     query intentPanel($intentId: ID) {
@@ -82,7 +82,46 @@ export const IntentPanelDocument = gql`
   }
 }
     `;
+// 1)++++ 2)-  3)++++ 4)++++ 5)++++
 
+//
+// export const createEconomicEvent = gql`
+//   mutation createEconomicEvent ( $intentId: ID ){
+//     createEconomicEvent(
+//           event: {
+//         note: String,
+//         action: String!,
+//         resourceInventoriedAs: ID!,
+//         provider: ID!, +
+//         receiver: ID!,
+//         resourceQuantity: {hasUnit: ID!, hasNumericalValue: Float!}
+//       }
+//     ) {
+//           economicEvent {
+//         id
+//         note
+//         resourceInventoriedAs { # updated details of the existing resource
+//           id
+//           name
+//           onhandQuantity {
+//             hasNumericalValue
+//             hasUnit {
+//               label
+//               symbol
+//             }
+//           }
+//           accountingQuantity {
+//             hasNumericalValue
+//             hasUnit {
+//               label
+//               symbol
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+//     `;
 /**
  * __useIntentPanelQuery__
  *
@@ -102,6 +141,15 @@ export const IntentPanelDocument = gql`
 export function useIntentPanelQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<IntentPanelQuery, IntentPanelQueryVariables>) {
         return ApolloReactHooks.useQuery<IntentPanelQuery, IntentPanelQueryVariables>(IntentPanelDocument, baseOptions);
       }
+export function useIntentActionsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<IntentPanelQuery, any>) {
+  return ApolloReactHooks.useQuery<any, any>(  gql`{
+  actions {
+    label
+    id
+    note
+  }
+}`, baseOptions);
+}
 export function useIntentPanelLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<IntentPanelQuery, IntentPanelQueryVariables>) {
           return ApolloReactHooks.useLazyQuery<IntentPanelQuery, IntentPanelQueryVariables>(IntentPanelDocument, baseOptions);
         }
