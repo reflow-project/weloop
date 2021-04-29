@@ -28,6 +28,7 @@
     "noEmit": true,
     "strict": true
   },
-  "exclude": ["node_modules", "build", "scripts", "config"],
+  "exclude": ["node_modules",
+    "build", "scripts", "config"],
   "include": ["src"]
 }

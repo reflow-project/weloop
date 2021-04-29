@@ -11,11 +11,13 @@ export type Props = {
 };
 
 export const IntentPanelHOC: FC<Props> = ({ intentId, communityName }) => {
+  const intentActionsQ = GQL.useIntentActionsQuery();
   const intentPanelQ = GQL.useIntentPanelQuery({
     variables: { intentId }
   });
 
   const intentPanelData = intentPanelQ.data?.intent;
+  const intentActions = intentActionsQ.data?.actions;
 
   if (!intentPanelData) {
     return null;
@@ -28,7 +30,7 @@ export const IntentPanelHOC: FC<Props> = ({ intentId, communityName }) => {
     name: provider?.name ?? '',
     link: provider?.id ?? ''
   };
-
+  // 1)++++ 2)- 3)++++ 4)- 5)++++
   const tags = (intentPanelData?.tags ?? []) as Array<Taggable>;
   const resourceQuantity = (intentPanelData.resourceQuantity?.hasNumericalValue ?? 0) as number;
   const history =
@@ -41,6 +43,7 @@ export const IntentPanelHOC: FC<Props> = ({ intentId, communityName }) => {
 
   const intentPanelProps: IProposedIntentPanel = {
     actor: actor,
+    actionList: intentActions,
     collectionName: communityName,
     link: intentId,
     createdAt: intentPanelData?.hasPointInTime ?? null,

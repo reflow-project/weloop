@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro';
 import * as React from 'react';
+import Select from 'ui/elements/Select';
 import Button from 'ui/elements/Button';
 import { clearFix } from 'polished';
 import media from 'styled-media-query';
@@ -17,7 +18,15 @@ export type IProposedIntentHistoryItem = {
   date: string | null;
   action: string;
 };
+
+export type IntentActions = {
+  id: string;
+  label: string;
+  note: string;
+};
+
 export type IProposedIntentPanel = IProposedIntent & {
+  actionList?: IntentActions[];
   actor: Actor | null;
   createdAt: string | null;
   tags?: Array<string>;
@@ -27,6 +36,7 @@ export type IProposedIntentPanel = IProposedIntent & {
 
 export const ProposedIntentPanel: React.FC<IProposedIntentPanel> = ({
   actor,
+  actionList,
   createdAt,
   link,
   name,
@@ -62,7 +72,6 @@ export const ProposedIntentPanel: React.FC<IProposedIntentPanel> = ({
               <img src={icon} alt={name} />
             </ImgWrwap>
           )}
-          <h2>My first changes</h2>
           <ButtonWrap>
             <Button variant="outline">
               <Trans>Follow</Trans>
@@ -80,15 +89,18 @@ export const ProposedIntentPanel: React.FC<IProposedIntentPanel> = ({
           </ButtonWrap>
         </Box>
         <Box>
-          {tags && (
-            <TagsList>
-              {tags.map(tag => (
-                <li>
-                  <a href={tag}>#{tag}</a>
-                </li>
-              ))}
-            </TagsList>
-          )}
+          <div style={{ margin: '0 10px 12px 0' }}>
+            <Select options={actionList} variant="primary" />
+          </div>
+          {/*{tags && (*/}
+          {/*  <TagsList>*/}
+          {/*    {tags.map(tag => (*/}
+          {/*      <li>*/}
+          {/*        <a href={tag}>#{tag}</a>*/}
+          {/*      </li>*/}
+          {/*    ))}*/}
+          {/*  </TagsList>*/}
+          {/*)}*/}
           <Actions>
             <Button variant="outline" style={{ marginBottom: '10px' }}>
               <Trans>Transfer Action</Trans>
@@ -173,18 +185,18 @@ const ContentWrap = styled.div`
   padding: 16px;
 `;
 
-const TagsList = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-  > li {
-    margin-right: 10px;
-  }
-  > li > a {
-    color: ${props => props.theme.colors.dark};
-    text-decoration: none;
-  }
-`;
+// const TagsList = styled.ul`
+//   display: flex;
+//   flex-wrap: wrap;
+//   list-style: none;
+//   > li {
+//     margin-right: 10px;
+//   }
+//   > li > a {
+//     color: ${props => props.theme.colors.dark};
+//     text-decoration: none;
+//   }
+// `
 
 const ImgWrwap = styled.div`
   margin-bottom: 16px;

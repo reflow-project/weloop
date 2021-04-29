@@ -1,7 +1,7 @@
 const path = require("path");
 
 module.exports = [
-  '@storybook/addon-docs/react/preset',
+  '@storybook/addon-build/react/preset',
   {
     name: "@storybook/preset-typescript",
     options: {
