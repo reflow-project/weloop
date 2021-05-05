@@ -175,7 +175,6 @@ export type Props = SidebarLoaded | SidebarLoading;
 export const Sidebar: React.FC<Props> = props => {
   const { i18n } = React.useContext(LocaleContext);
 
-  //  console.log('isSidebarOpen ' + props.isSidebarOpen );
   return (
     <>
       {props.isSidebarOpen ? (
