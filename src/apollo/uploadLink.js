@@ -21,7 +21,7 @@ const { extractFiles } = require('extract-files');
  * @kind typedef
  * @name ReactNativeFileSubstitute
  * @type {object}
- * @see [`extract-files` build](https://github.com/jaydenseric/extract-files#type-reactnativefilesubstitute).
+ * @see [`extract-files` docs](https://github.com/jaydenseric/extract-files#type-reactnativefilesubstitute).
  * @see [React Native `FormData` polyfill source](https://github.com/facebook/react-native/blob/v0.45.1/Libraries/Network/FormData.js#L34).
  * @prop {string} uri Filesystem path.
  * @prop {string} [name] File name.

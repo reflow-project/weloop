@@ -2,7 +2,7 @@ name: Deployment
 on:
   push:
     branches:
-      - flavour/zenpub
+      - main
   workflow_dispatch:
     inputs:
       logLevel:

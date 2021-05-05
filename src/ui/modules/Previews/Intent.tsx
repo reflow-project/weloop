@@ -40,18 +40,6 @@ export const Intent: React.FC<Props> = ({
   hideActions,
   onOpen
 }) => {
-  console.log({
-    icon,
-    name,
-    summary,
-    link,
-    collectionLink,
-    collectionName,
-    like,
-    isSearch,
-    hideActions,
-    onOpen
-  });
   return (
     <Bordered>
       {isSearch && (
