@@ -15,24 +15,9 @@ export const IntentPanelHOC: FC<Props> = ({ intentId, communityName }) => {
   const intentPanelQ = GQL.useIntentPanelQuery({
     variables: { intentId }
   });
-  //
-  // const createEconomicEventQ = GQL.useCreateEconomicEvent({
-  //   note: '',
-  //   action: '' ,
-  //   resourceInventoriedAs: '',
-  //   provider: null,
-  //   receiver: null,
-  //   resourceQuantity: {
-  //     hasUnit: 0,
-  //     hasNumericalValue: 0,
-  //   }
-  // });
 
   const intentPanelData = intentPanelQ.data?.intent;
   const intentActions = intentActionsQ.data?.actions;
-  // const economyEvent = createEconomicEventQ.data;
-
-  // console.log({economyEvent})
 
   if (!intentPanelData) {
     return null;
@@ -45,7 +30,7 @@ export const IntentPanelHOC: FC<Props> = ({ intentId, communityName }) => {
     name: provider?.name ?? '',
     link: provider?.id ?? ''
   };
-  // 1)++++ 2)- 3)++++ 4)- 5)++++
+
   const tags = (intentPanelData?.tags ?? []) as Array<Taggable>;
   const resourceQuantity = (intentPanelData.resourceQuantity?.hasNumericalValue ?? 0) as number;
   const history =
@@ -75,6 +60,5 @@ export const IntentPanelHOC: FC<Props> = ({ intentId, communityName }) => {
     collectionLink: communityName
   };
 
-  console.log({ intentPanelData });
   return <ProposedIntentPanel {...intentPanelProps} />;
 };
