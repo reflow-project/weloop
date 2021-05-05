@@ -59,7 +59,7 @@ const MNSelect: FC<Props> = props => {
         value: el.label,
         label: (
           <span>
-            <b>{el.label}l</b>
+            <b>{el.label}</b>
             <small>{el.note}</small>
           </span>
         )
