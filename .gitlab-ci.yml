@@ -21,21 +21,21 @@ default:
     - mkdir -p .pip # prepare to cache pip packages
     - export PATH=$PATH:.pip
     - apk add --update py-pip && pip install -U pip # install python & pip
-    - pip --cache-dir=.pip install awscli 
+    - pip --cache-dir=.pip install awscli
     - if [ ! -z "$TX_TOKEN" ]; then pip --cache-dir=.pip install transifex-client ; else echo "Skipping..."; fi # install transifex cli
     #- rm -rf node_modules
     - yarn # Install all JS dependencies
     # - yarn add-locale en_GB # make sure we have default language
     # - yarn extract # extract latest strings from source into English PO file for localisation
     - if [ ! -z "$TX_TOKEN" ]; then tx pull --force --no-interactive ; else echo "Skipping..."; fi #  pull all the latest localised PO files from transifex to be used by frontend
-    # - yarn compile # compile localisation PO files into .js files 
+    # - yarn compile # compile localisation PO files into .js files
 
 docs: # build and deploy documentation
 #   stage: docs
    only:
      - develop # Only run on staging branch
    script:
-     - mkdir docs 
+     - mkdir docs
      #- yarn docs # generate TypeDocs
      - yarn build-storybook # generate styleguide
      - mv storybook-static docs/ui # include styleguide in build
@@ -65,7 +65,7 @@ deploy-staging: # build and deploy develop branch to app.next.moodle.net
   artifacts:
     paths:
     - public # The built files for Gitlab Pages to serve
-  
+
 deploy-prod: # build and deploy master branch to app.moodle.net
 #  stage: deploy
   only:
