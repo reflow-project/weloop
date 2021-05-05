@@ -4,9 +4,9 @@ import * as React from 'react';
 import { ReactElement } from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import { Box, Flex, Text } from 'rebass/styled-components';
-import media from 'styled-media-query';
+// import media from 'styled-media-query';
 import { FormikHook } from 'ui/@types/types';
-import Button from 'ui/elements/Button';
+// import Button from 'ui/elements/Button';
 import {
   HomeBox,
   List,
@@ -26,7 +26,7 @@ export interface Props {
   Activities: ReactElement[];
   Members: ReactElement[];
   Intents: ReactElement[];
-  Collections: ReactElement[];
+  // Collections: ReactElement[];
   HeroCommunity: ReactElement;
   Threads: ReactElement[];
   newThreadFormik: null | FormikHook<{ text: string }>;
@@ -38,7 +38,7 @@ export interface Props {
     timeline: string;
     members: string;
     discussions: string;
-    collections: string;
+    // collections: string;
     intents: string;
   };
 }
@@ -46,7 +46,7 @@ export interface Props {
 export const Community: React.FC<Props> = ({
   Activities,
   HeroCommunity,
-  Collections,
+  // Collections,
   Members,
   Intents,
   tabPaths,
@@ -67,28 +67,31 @@ export const Community: React.FC<Props> = ({
             {HeroCommunity}
             <Menu tabPaths={tabPaths} />
             <Switch>
+              <Route path={tabPaths.intents}>
+                <ObjectsList>{Intents}</ObjectsList>
+              </Route>
               <Route exact path={tabPaths.timeline}>
                 <>
                   <List mt={2}>{Activities}</List>
                   {loadMoreActivities && <LoadMore LoadMoreFormik={loadMoreActivities} />}
                 </>
               </Route>
-              <Route exact path={tabPaths.collections}>
-                <>
-                  <Title px={3} mt={2}>
-                    <Text sx={{ flex: 1 }} variant="suptitle">
-                      <Trans>All collections</Trans>
-                    </Text>
-                    <CreateCollectionButton variant="outline" onClick={createCollection}>
-                      <Trans>Create a new collection</Trans>
-                    </CreateCollectionButton>
-                  </Title>
-                  <ObjectsList>
-                    <CollectionsBoxes>{Collections}</CollectionsBoxes>
-                  </ObjectsList>
-                  {loadMoreCollections && <LoadMore LoadMoreFormik={loadMoreCollections} />}
-                </>
-              </Route>
+              {/*<Route exact path={tabPaths.collections}>*/}
+              {/*  <>*/}
+              {/*    <Title px={3} mt={2}>*/}
+              {/*      <Text sx={{ flex: 1 }} variant="suptitle">*/}
+              {/*        <Trans>All collections</Trans>*/}
+              {/*      </Text>*/}
+              {/*      <CreateCollectionButton variant="outline" onClick={createCollection}>*/}
+              {/*        <Trans>Create a new collection</Trans>*/}
+              {/*      </CreateCollectionButton>*/}
+              {/*    </Title>*/}
+              {/*    <ObjectsList>*/}
+              {/*      <CollectionsBoxes>{Collections}</CollectionsBoxes>*/}
+              {/*    </ObjectsList>*/}
+              {/*    {loadMoreCollections && <LoadMore LoadMoreFormik={loadMoreCollections} />}*/}
+              {/*  </>*/}
+              {/*</Route>*/}
               <Route exact path={tabPaths.discussions}>
                 <>
                   <WrapSocialText p={3} mb={2}>
@@ -114,11 +117,6 @@ export const Community: React.FC<Props> = ({
                   <ObjectsList>{Members}</ObjectsList>
                 </>
               </Route>
-              <Route path={tabPaths.intents}>
-                <>
-                  <ObjectsList>{Intents}</ObjectsList>
-                </>
-              </Route>
             </Switch>
           </Wrapper>
         </WrapperCont>
@@ -127,34 +125,34 @@ export const Community: React.FC<Props> = ({
     </MainContainer>
   );
 };
-
-const CreateCollectionButton = styled(Button)`
-  padding: 0;
-  text-transform: capitalize;
-  height: 34px;
-  line-height: 34px;
-  padding: 0 16px;
-  &:hover {
-    background: ${props => props.theme.colors.primary};
-    color: ${props => props.theme.colors.appInverse};
-  }
-`;
-
-const CollectionsBoxes = styled(Box)`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 16px;
-  row-gap: 16px;
-  margin: 16px;
-  margin-bottom: 24px !important;
-  ${media.lessThan('medium')`
-  grid-template-columns: 1fr;
-  > div {
-    margin: 0 auto;
-    width: 300px;
-  }
-  `}
-`;
+//
+// const CreateCollectionButton = styled(Button)`
+//   padding: 0;
+//   text-transform: capitalize;
+//   height: 34px;
+//   line-height: 34px;
+//   padding: 0 16px;
+//   &:hover {
+//     background: ${props => props.theme.colors.primary};
+//     color: ${props => props.theme.colors.appInverse};
+//   }
+// `;
+//
+// const CollectionsBoxes = styled(Box)`
+//   display: grid;
+//   grid-template-columns: 1fr 1fr;
+//   column-gap: 16px;
+//   row-gap: 16px;
+//   margin: 16px;
+//   margin-bottom: 24px !important;
+//   ${media.lessThan('medium')`
+//   grid-template-columns: 1fr;
+//   > div {
+//     margin: 0 auto;
+//     width: 300px;
+//   }
+//   `}
+// `;
 
 // const FollowersMenu = ({ basePath }: { basePath: string }) => (
 //   <MenuList m={2}>
@@ -166,20 +164,20 @@ const CollectionsBoxes = styled(Box)`
 
 const Menu: React.FC<{ tabPaths: Props['tabPaths'] }> = ({ tabPaths }) => (
   <MenuList p={3} pt={0}>
+    <NavLink to={tabPaths.intents}>
+      <Trans>Intents</Trans>
+    </NavLink>
     <NavLink to={tabPaths.timeline}>
       <Trans>Recent activity</Trans>
     </NavLink>
-    <NavLink exact to={tabPaths.collections}>
-      <Trans>Collections</Trans>
-    </NavLink>
+    {/*<NavLink exact to={tabPaths.collections}>*/}
+    {/*  <Trans>Collections</Trans>*/}
+    {/*</NavLink>*/}
     <NavLink to={tabPaths.discussions}>
       <Trans>Discussions</Trans>
     </NavLink>
     <NavLink to={tabPaths.members}>
       <Trans>Members</Trans>
-    </NavLink>
-    <NavLink to={tabPaths.intents}>
-      <Trans>Intents</Trans>
     </NavLink>
   </MenuList>
 );

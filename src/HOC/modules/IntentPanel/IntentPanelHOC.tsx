@@ -30,7 +30,7 @@ export const IntentPanelHOC: FC<Props> = ({ intentId, communityName }) => {
     name: provider?.name ?? '',
     link: provider?.id ?? ''
   };
-  // 1)++++ 2)- 3)++++ 4)- 5)++++
+
   const tags = (intentPanelData?.tags ?? []) as Array<Taggable>;
   const resourceQuantity = (intentPanelData.resourceQuantity?.hasNumericalValue ?? 0) as number;
   const history =

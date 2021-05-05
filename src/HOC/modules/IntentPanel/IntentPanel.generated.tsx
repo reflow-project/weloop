@@ -8,6 +8,10 @@ export type IntentPanelQueryVariables = {
   intentId?: Types.Maybe<Types.Scalars['ID']>
 };
 
+export type EconomicEvent = {
+  intentId?: Types.Maybe<Types.Scalars['ID']>
+};
+
 
 export type IntentPanelQuery = (
   { __typename: 'RootQueryType' }
@@ -44,7 +48,7 @@ export type IntentPanelQuery = (
     )> }
   )> }
 );
-// ++++++++
+
 
 export const IntentPanelDocument = gql`
     query intentPanel($intentId: ID) {
@@ -82,46 +86,7 @@ export const IntentPanelDocument = gql`
   }
 }
     `;
-// 1)++++ 2)-  3)++++ 4)++++ 5)++++
 
-//
-// export const createEconomicEvent = gql`
-//   mutation createEconomicEvent ( $intentId: ID ){
-//     createEconomicEvent(
-//           event: {
-//         note: String,
-//         action: String!,
-//         resourceInventoriedAs: ID!,
-//         provider: ID!, +
-//         receiver: ID!,
-//         resourceQuantity: {hasUnit: ID!, hasNumericalValue: Float!}
-//       }
-//     ) {
-//           economicEvent {
-//         id
-//         note
-//         resourceInventoriedAs { # updated details of the existing resource
-//           id
-//           name
-//           onhandQuantity {
-//             hasNumericalValue
-//             hasUnit {
-//               label
-//               symbol
-//             }
-//           }
-//           accountingQuantity {
-//             hasNumericalValue
-//             hasUnit {
-//               label
-//               symbol
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }
-//     `;
 /**
  * __useIntentPanelQuery__
  *
@@ -150,6 +115,7 @@ export function useIntentActionsQuery(baseOptions?: ApolloReactHooks.QueryHookOp
   }
 }`, baseOptions);
 }
+
 export function useIntentPanelLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<IntentPanelQuery, IntentPanelQueryVariables>) {
           return ApolloReactHooks.useLazyQuery<IntentPanelQuery, IntentPanelQueryVariables>(IntentPanelDocument, baseOptions);
         }

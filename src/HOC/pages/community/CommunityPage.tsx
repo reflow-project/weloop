@@ -12,7 +12,7 @@ import { useNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
 import { CreateCollectionPanelHOC } from 'HOC/modules/CreateCollectionPanel/createCollectionPanelHOC';
 import { HeroCommunity } from 'HOC/modules/HeroCommunity/HeroCommunity';
 import { ActivityPreviewHOC } from 'HOC/modules/previews/activity/ActivityPreview';
-import { CollectionPreviewHOC } from 'HOC/modules/previews/collection/CollectionPreview';
+// import { CollectionPreviewHOC } from 'HOC/modules/previews/collection/CollectionPreview';
 import { ThreadPreviewHOC } from 'HOC/modules/previews/thread/ThreadPreview';
 import { UserPreviewHOC } from 'HOC/modules/previews/user/UserPreview';
 import React, { FC, ReactElement, useMemo, useReducer, useState } from 'react';
@@ -28,22 +28,21 @@ import { IntentPanelHOC } from 'HOC/modules/IntentPanel/IntentPanelHOC';
 
 export enum CommunityPageTab {
   Activities,
-  Collections,
+  Intents,
+  // Collections,
   Discussions,
-  Members,
-  Intents
+  Members
 }
 export interface CommunityPage {
   communityId: Community['id'];
   tab: CommunityPageTab;
   basePath: string;
 }
-
+const communityIntentsPageTitle = t`Community {name} - Intents`;
 const communityActivitiesPageTitle = t`Community {name} - Activities`;
-const communityCollectionsPageTitle = t`Community {name} - Collections`;
+// const communityCollectionsPageTitle = t`Community {name} - Collections`;
 const communityDiscussionsPageTitle = t`Community {name} - Discussions`;
 const communityMembersPageTitle = t`Community {name} - Members`;
-const communityIntentsPageTitle = t`Community {name} - Intents`;
 
 export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab }) => {
   const { community, createThread } = useCommunity(communityId);
@@ -56,11 +55,9 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
       ? communityActivitiesPageTitle
       : tab === CommunityPageTab.Discussions
       ? communityDiscussionsPageTitle
-      : tab === CommunityPageTab.Collections
-      ? communityCollectionsPageTitle
       : tab === CommunityPageTab.Intents
       ? communityIntentsPageTitle
-      : communityCollectionsPageTitle; //never
+      : communityIntentsPageTitle; //never
   usePageTitle(!!community?.name && communityPageTitle, community);
 
   const { communityFollowersPage } = useCommunityFollowers(communityId);
@@ -96,12 +93,12 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
   const Activities = activitiesPage.edges.map(activity => (
     <ActivityPreviewHOC activityId={activity.id} key={activity.id} />
   ));
-
-  const Collections = collectionsPage.edges.map(collection => (
-    <Box key={collection.id}>
-      <CollectionPreviewHOC collectionId={collection.id} key={collection.id} />
-    </Box>
-  ));
+  //
+  // const Collections = collectionsPage.edges.map(collection => (
+  //   <Box key={collection.id}>
+  //     <CollectionPreviewHOC collectionId={collection.id} key={collection.id} />
+  //   </Box>
+  // ));
 
   const Threads = threadsPage.edges
     .map(thread =>
@@ -176,7 +173,7 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
       return null;
     }
     const tabPaths: CommunityProps['tabPaths'] = {
-      collections: communityLocation.getPath({ communityId, tab: undefined }, undefined),
+      // collections: communityLocation.getPath({ communityId, tab: undefined }, undefined),
       discussions: communityLocation.getPath({ communityId, tab: 'discussions' }, undefined),
       members: communityLocation.getPath({ communityId, tab: 'members' }, undefined),
       timeline: communityLocation.getPath({ communityId, tab: 'timeline' }, undefined),
@@ -186,7 +183,7 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
       Members,
       Intents,
       Activities,
-      Collections,
+      // Collections,
       HeroCommunity: HeroCommunityBox,
       Threads,
       tabPaths,
@@ -197,6 +194,7 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
       loadMoreThreads,
       createCollection: toggleShowCreateCollectionModal
     };
+
     return props;
   }, [
     community,
@@ -204,7 +202,7 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
     Members,
     Intents,
     Activities,
-    Collections,
+    // Collections,
     HeroCommunityBox,
     Threads,
     isJoined,
