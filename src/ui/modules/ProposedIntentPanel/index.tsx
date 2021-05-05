@@ -46,6 +46,18 @@ export const ProposedIntentPanel: React.FC<IProposedIntentPanel> = ({
   resourceQuantity,
   history
 }) => {
+  console.log({
+    actor,
+    actionList,
+    createdAt,
+    link,
+    name,
+    collectionName,
+    tags,
+    icon,
+    resourceQuantity,
+    history
+  });
   const [showHistory, toggleHistory] = React.useState(false);
   return (
     <Container>

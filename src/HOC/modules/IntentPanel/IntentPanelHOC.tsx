@@ -15,9 +15,24 @@ export const IntentPanelHOC: FC<Props> = ({ intentId, communityName }) => {
   const intentPanelQ = GQL.useIntentPanelQuery({
     variables: { intentId }
   });
+  //
+  // const createEconomicEventQ = GQL.useCreateEconomicEvent({
+  //   note: '',
+  //   action: '' ,
+  //   resourceInventoriedAs: '',
+  //   provider: null,
+  //   receiver: null,
+  //   resourceQuantity: {
+  //     hasUnit: 0,
+  //     hasNumericalValue: 0,
+  //   }
+  // });
 
   const intentPanelData = intentPanelQ.data?.intent;
   const intentActions = intentActionsQ.data?.actions;
+  // const economyEvent = createEconomicEventQ.data;
+
+  // console.log({economyEvent})
 
   if (!intentPanelData) {
     return null;
@@ -60,5 +75,6 @@ export const IntentPanelHOC: FC<Props> = ({ intentId, communityName }) => {
     collectionLink: communityName
   };
 
+  console.log({ intentPanelData });
   return <ProposedIntentPanel {...intentPanelProps} />;
 };
