@@ -8,6 +8,10 @@ export type IntentPanelQueryVariables = {
   intentId?: Types.Maybe<Types.Scalars['ID']>
 };
 
+export type EconomicEvent = {
+  intentId?: Types.Maybe<Types.Scalars['ID']>
+};
+
 
 export type IntentPanelQuery = (
   { __typename: 'RootQueryType' }
@@ -102,6 +106,16 @@ export const IntentPanelDocument = gql`
 export function useIntentPanelQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<IntentPanelQuery, IntentPanelQueryVariables>) {
         return ApolloReactHooks.useQuery<IntentPanelQuery, IntentPanelQueryVariables>(IntentPanelDocument, baseOptions);
       }
+export function useIntentActionsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<IntentPanelQuery, any>) {
+  return ApolloReactHooks.useQuery<any, any>(  gql`{
+  actions {
+    label
+    id
+    note
+  }
+}`, baseOptions);
+}
+
 export function useIntentPanelLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<IntentPanelQuery, IntentPanelQueryVariables>) {
           return ApolloReactHooks.useLazyQuery<IntentPanelQuery, IntentPanelQueryVariables>(IntentPanelDocument, baseOptions);
         }
