@@ -145,7 +145,7 @@ This section mentions notable libraries and tools used within the application an
 ### Browser testing
 
 We're using [BrowserStack](https://www.browserstack.com/open-source) for testing the front-end in various browsers.
-![BrowserStack](build/assets/images/Browserstack-logo.svg)
+![BrowserStack](docs/assets/images/Browserstack-logo.svg)
 
 ## Localisation
 

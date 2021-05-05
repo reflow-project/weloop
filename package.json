@@ -2,7 +2,7 @@
   "name": "zenpub",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "http://os.reflowproject.eu/",
   "scripts": {
     "start": "cross-env NODE_ENV=development react-scripts start --incremental",
     "build": "lingui extract --clean ; lingui compile ; cross-env NODE_ENV=production react-scripts build",
@@ -14,7 +14,7 @@
     "add-locale": "lingui add-locale",
     "extract": "lingui extract --clean",
     "compile": "lingui compile",
-    "docs": "typedoc --out build src",
+    "docs": "typedoc --out docs src",
     "storybook": "start-storybook -p 5000 --docs",
     "build-storybook": "build-storybook --docs -c .storybook",
     "build-deploy-storybook": "./storybook_deploy.sh",
