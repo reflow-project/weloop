@@ -75,7 +75,7 @@ export const SettingsPage: FC<SettingsPage> = ({ basePath, tab }) => {
   const sectionPaths: SettingsUIProps['sectionPaths'] = useMemo(
     () => ({
       preferences: settingsLocation.getPath({ tab: 'preferences' }, undefined),
-      instance: settingsLocation.getPath({ tab: 'instance' }, undefined),
+      instance: settingsLocation.getPath({ tab: undefined }, undefined),
       invites: settingsLocation.getPath({ tab: 'invites' }, undefined),
       flags: settingsLocation.getPath({ tab: 'flags' }, undefined),
       logs: settingsLocation.getPath({ tab: 'logs' }, undefined),
