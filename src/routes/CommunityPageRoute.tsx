@@ -12,6 +12,7 @@ interface CommunityPageRouter {
 const CommunityPageRouter: FC<RouteComponentProps<CommunityPageRouter>> = ({ match }) => {
   const communityId = match.params.communityId;
   const maybeTabStr = match.params.tab;
+
   const tab =
     maybeTabStr === 'timeline'
       ? CommunityPageTab.Activities
@@ -19,10 +20,10 @@ const CommunityPageRouter: FC<RouteComponentProps<CommunityPageRouter>> = ({ mat
       ? CommunityPageTab.Members
       : maybeTabStr === 'discussions'
       ? CommunityPageTab.Discussions
-      : // : !maybeTabStr
-      // ? CommunityPageTab.Collections
-      maybeTabStr === 'intents'
-      ? CommunityPageTab.Intents
+      : !maybeTabStr
+      ? // ? CommunityPageTab.Collections
+        // maybeTabStr
+        CommunityPageTab.Intents
       : null;
 
   const props = useMemo<CommunityPage | null>(() => {

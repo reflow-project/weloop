@@ -177,7 +177,7 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
       discussions: communityLocation.getPath({ communityId, tab: 'discussions' }, undefined),
       members: communityLocation.getPath({ communityId, tab: 'members' }, undefined),
       timeline: communityLocation.getPath({ communityId, tab: 'timeline' }, undefined),
-      intents: communityLocation.getPath({ communityId, tab: 'intents' }, undefined)
+      intents: communityLocation.getPath({ communityId, tab: undefined }, undefined)
     };
     const props: CommunityProps = {
       Members,

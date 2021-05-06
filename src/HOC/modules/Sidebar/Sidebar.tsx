@@ -29,7 +29,7 @@ export const SidebarHOC: FC<SidebarHOC> = () => {
           return {
             icon: community.icon?.url || '',
             link: communityLocation.getPath(
-              { communityId: community.id, tab: 'intents' },
+              { communityId: community.id, tab: undefined },
               undefined
             ),
             name: community.name
