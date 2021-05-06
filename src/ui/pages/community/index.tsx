@@ -67,7 +67,7 @@ export const Community: React.FC<Props> = ({
             {HeroCommunity}
             <Menu tabPaths={tabPaths} />
             <Switch>
-              <Route path={tabPaths.intents}>
+              <Route exact path={tabPaths.intents}>
                 <ObjectsList>{Intents}</ObjectsList>
               </Route>
               <Route exact path={tabPaths.timeline}>
