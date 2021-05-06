@@ -164,7 +164,7 @@ export const Community: React.FC<Props> = ({
 
 const Menu: React.FC<{ tabPaths: Props['tabPaths'] }> = ({ tabPaths }) => (
   <MenuList p={3} pt={0}>
-    <NavLink to={tabPaths.intents}>
+    <NavLink exact to={tabPaths.intents}>
       <Trans>Intents</Trans>
     </NavLink>
     <NavLink to={tabPaths.timeline}>
