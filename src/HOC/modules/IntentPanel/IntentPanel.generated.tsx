@@ -49,7 +49,6 @@ export type IntentPanelQuery = (
   )> }
 );
 
-
 export const IntentPanelDocument = gql`
     query intentPanel($intentId: ID) {
   intent(id: $intentId) {
@@ -116,7 +115,7 @@ export function useIntentActionsQuery(baseOptions?: ApolloReactHooks.QueryHookOp
 }`, baseOptions);
 }
 
-export function useIntentPanelLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<IntentPanelQuery, IntentPanelQueryVariables>) {
+  export function useIntentPanelLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<IntentPanelQuery, IntentPanelQueryVariables>) {
           return ApolloReactHooks.useLazyQuery<IntentPanelQuery, IntentPanelQueryVariables>(IntentPanelDocument, baseOptions);
         }
 export type IntentPanelQueryHookResult = ReturnType<typeof useIntentPanelQuery>;
@@ -140,4 +139,3 @@ export const IntentPanelQueryRefetch = (
   variables,
   context
 })
-      

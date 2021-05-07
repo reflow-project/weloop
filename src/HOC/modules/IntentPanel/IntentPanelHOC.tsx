@@ -11,13 +11,11 @@ export type Props = {
 };
 
 export const IntentPanelHOC: FC<Props> = ({ intentId, communityName }) => {
-  const intentActionsQ = GQL.useIntentActionsQuery();
   const intentPanelQ = GQL.useIntentPanelQuery({
     variables: { intentId }
   });
 
   const intentPanelData = intentPanelQ.data?.intent;
-  const intentActions = intentActionsQ.data?.actions;
 
   if (!intentPanelData) {
     return null;
@@ -43,7 +41,6 @@ export const IntentPanelHOC: FC<Props> = ({ intentId, communityName }) => {
 
   const intentPanelProps: IProposedIntentPanel = {
     actor: actor,
-    actionList: intentActions,
     collectionName: communityName,
     link: intentId,
     createdAt: intentPanelData?.hasPointInTime ?? null,

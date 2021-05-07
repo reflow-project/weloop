@@ -17,11 +17,19 @@ const WrapperButton = styled(Button)<{
   opacity: ${props => (props.disabled === true ? '0.7' : '1')};
   cursor: ${props => (props.disabled === true ? 'default' : 'pointer')};
   &:hover && not:['disabled'] {
-    background: ${props =>
-      props.variant === 'primary' || props.variant === 'danger'
-        ? darken('0.1', props.theme.colors.primary)
-        : lighten('0.3', props.theme.colors.primary)};
-  }
+    background: ${props => {
+      switch (props.variant) {
+        case 'primary': {
+          return darken('0.1', props.theme.colors.primary);
+        }
+        case 'danger': {
+          return darken('0.1', props.theme.colors.primary);
+        }
+        default: {
+          lighten('0.3', props.theme.colors.primary);
+        }
+      }
+    }}
 `;
 
 export interface Props extends ButtonProps {
@@ -29,6 +37,7 @@ export interface Props extends ButtonProps {
   variant: string;
   isDisabled?: boolean;
   isIcon?: boolean;
+  className?: string;
 }
 
 const MNButton: FC<Props> = props => (
