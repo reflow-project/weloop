@@ -17,7 +17,6 @@ query actions {
 	label
 	id
 	note
-    }
   }
 }
 
