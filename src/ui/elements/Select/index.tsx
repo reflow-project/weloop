@@ -2,10 +2,10 @@ import Select from 'react-select';
 import React, { FC } from 'react';
 import styled from 'ui/themes/styled';
 import { darken, lighten, transitions } from 'polished';
-import { ButtonProps } from 'rebass';
-import { IntentActions } from '../../modules/ProposedIntentPanel';
+import { IntentActions } from '../../modules/EconomicEventManager';
 
 const WrapperSelect = styled(Select)`
+  margin-bottom: 10px;
   small {
     display: block;
     padding-top: 6px;
@@ -48,14 +48,18 @@ const WrapperSelect = styled(Select)`
   }
 `;
 
-export interface Props extends ButtonProps {
+export interface Props {
+  onSelect: (name: string, option: IntentActions) => void;
   options?: IntentActions[];
   variant: string;
+  id: string | number;
+  name: string;
 }
 
-const MNSelect: FC<Props> = props => {
-  const optionsList = props.options
-    ? props.options.map(el => ({
+const CustomSelect: FC<Props> = ({ onSelect, variant, name, options, id }) => {
+  const optionsList = options
+    ? options.map(el => ({
+        id: el.id,
         value: el.label,
         label: (
           <span>
@@ -68,19 +72,20 @@ const MNSelect: FC<Props> = props => {
 
   return (
     <WrapperSelect
-      variant={props.variant}
+      onChange={(option: any) => onSelect(name, { id: option.id, label: option.value })}
+      variant={variant}
       className="basic-single"
       classNamePrefix="select"
-      defaultValue={'All'}
       isDisabled={false}
       isLoading={false}
       isClearable={true}
       isRtl={false}
       isSearchable={true}
-      name="actions"
+      name={name}
+      id={id}
       options={optionsList}
     />
   );
 };
 
-export default MNSelect;
+export default CustomSelect;

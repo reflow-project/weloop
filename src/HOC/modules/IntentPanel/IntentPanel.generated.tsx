@@ -49,7 +49,6 @@ export type IntentPanelQuery = (
   )> }
 );
 
-
 export const IntentPanelDocument = gql`
     query intentPanel($intentId: ID) {
   intent(id: $intentId) {
@@ -140,4 +139,3 @@ export const IntentPanelQueryRefetch = (
   variables,
   context
 })
-      
