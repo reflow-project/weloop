@@ -14,9 +14,9 @@ query economicEventsFiltered($action: ID){
 
 query actions {
   actions {
-			label
-			id
-			note
+	label
+	id
+	note
     }
   }
 }
