@@ -115,7 +115,7 @@ export function useIntentActionsQuery(baseOptions?: ApolloReactHooks.QueryHookOp
 }`, baseOptions);
 }
 
-  export function useIntentPanelLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<IntentPanelQuery, IntentPanelQueryVariables>) {
+export function useIntentPanelLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<IntentPanelQuery, IntentPanelQueryVariables>) {
           return ApolloReactHooks.useLazyQuery<IntentPanelQuery, IntentPanelQueryVariables>(IntentPanelDocument, baseOptions);
         }
 export type IntentPanelQueryHookResult = ReturnType<typeof useIntentPanelQuery>;
