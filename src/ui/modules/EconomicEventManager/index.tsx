@@ -1,5 +1,7 @@
 import { Trans } from '@lingui/macro';
 import * as React from 'react';
+import { ToastContainer, Slide, toast } from 'react-toastify';
+import { useCreateEvent } from '../../../fe/intent/createEvent/useCreateEvent';
 import Button from '../../elements/Button';
 import Input from '../../elements/Input';
 import Select from 'ui/elements/Select';
@@ -60,7 +62,7 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
 }) => {
   const [eventVariables, setEventVariables] = React.useState({
     note: '',
-    action: { id: '', label: '' },
+    action: { id: '', label: '', note: '' },
     provider: { id: '', label: '' },
     receiver: { id: '', label: '' },
     hasUnit: { id: '', label: '' },
@@ -70,6 +72,12 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
   const [providerLst, setProviderLst] = React.useState<any>([]);
   const [receiverLst, setReceiverLst] = React.useState<any>([]);
   const [unitLst, setUnitLst] = React.useState<any>([]);
+  // const [searchValue, setSearchValue] = React.useState<any>({
+  //   action: '',
+  //   provider: '',
+  //   receiver: '',
+  //   hasUnit: '',
+  // })
 
   React.useEffect(() => {
     if (economicEvents.data?.length) {
@@ -99,20 +107,21 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
   }, [unitPages]);
 
   React.useEffect(() => {
-    return () => {
-      setEventVariables({
-        note: '',
-        action: { id: '', label: '' },
-        provider: { id: '', label: '' },
-        receiver: { id: '', label: '' },
-        hasUnit: { id: '', label: '' },
-        hasNumericalValue: ''
-      });
-    };
+    return handlerClearState();
   }, []);
 
+  const handlerClearState = () =>
+    setEventVariables({
+      note: '',
+      action: { id: '', label: '', note: '' },
+      provider: { id: '', label: '' },
+      receiver: { id: '', label: '' },
+      hasUnit: { id: '', label: '' },
+      hasNumericalValue: ''
+    });
+
   const actionHandler = (name: string, option: IntentActions) => {
-    eventVariablesHandler({ target: { name, value: option.id } });
+    eventVariablesHandler({ target: { name, value: option } });
     setAction(option.id);
   };
 
@@ -123,20 +132,39 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
       [name]: value
     });
   };
+  const { create } = useCreateEvent();
 
-  const formSubmit = (e: React.FormEvent<EventTarget>) => {
+  const formSubmit = async (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
-    console.log('Submit', eventVariables);
+    const result = await create({
+      note: eventVariables.note,
+      action: eventVariables.action.id,
+      provider: eventVariables.provider.id,
+      receiver: eventVariables.receiver.id,
+      hasUnit: eventVariables.hasUnit.id,
+      hasNumericalValue: +eventVariables.hasNumericalValue
+    });
+
+    !result?.errors &&
+      toast.success('Event was created success', {
+        position: 'top-right',
+        transition: Slide,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true
+      }) &&
+      handlerClearState();
   };
 
   return (
     <div style={{ margin: '0 10px 12px 0' }}>
       <FormStyled onSubmit={formSubmit}>
         <FormGroup>
-          <FormLabel>Select Action</FormLabel>
           <Select
             options={actionList}
             variant="primary"
+            value={eventVariables.action}
             id="action"
             name="action"
             onSelect={actionHandler}
@@ -150,6 +178,7 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
                 <Select
                   options={providerLst}
                   variant="primary"
+                  value={eventVariables.provider}
                   id="provider"
                   name="provider"
                   onSelect={actionHandler}
@@ -160,6 +189,7 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
                 <Select
                   options={receiverLst}
                   variant="primary"
+                  value={eventVariables.receiver}
                   id="receiver"
                   name="receiver"
                   onSelect={actionHandler}
@@ -184,6 +214,7 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
                 <FormLabel>unit</FormLabel>
                 <Select
                   options={unitLst}
+                  value={eventVariables.hasUnit}
                   variant="primary"
                   id="hasUnit"
                   name="hasUnit"
@@ -198,7 +229,7 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
                   name="hasNumericalValue"
                   onChange={eventVariablesHandler}
                   hint={{ class: 'error', value: '' }}
-                  placeholder="hasNumericalValue"
+                  placeholder="Numerical Value"
                   value={eventVariables.hasNumericalValue}
                 />
               </FormGroup>
@@ -211,6 +242,7 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
           </div>
         ) : null}
       </FormStyled>
+      <ToastContainer />
     </div>
   );
 };
