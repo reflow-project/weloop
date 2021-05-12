@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FC } from 'react';
+
 import EconomicEventManager, {
   EconomicEventManagerProps
 } from '../../../ui/modules/EconomicEventManager';
@@ -12,6 +13,7 @@ export const EconomicEventManagerHOC: FC = () => {
   const { loading, error, data } = GQL.useFilteredEconomicEventsQuery({
     variables: { action }
   });
+
   const unitPagesQ = GQL.useUnitPagesQuery();
 
   const intentActions = intentActionsQ.data?.actions;

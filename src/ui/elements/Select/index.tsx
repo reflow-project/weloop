@@ -54,9 +54,10 @@ export interface Props {
   variant: string;
   id: string | number;
   name: string;
+  value: IntentActions;
 }
 
-const CustomSelect: FC<Props> = ({ onSelect, variant, name, options, id }) => {
+const CustomSelect: FC<Props> = ({ onSelect, variant, name, options, id, value }) => {
   const optionsList = options
     ? options.map(el => ({
         id: el.id,
@@ -76,6 +77,7 @@ const CustomSelect: FC<Props> = ({ onSelect, variant, name, options, id }) => {
       variant={variant}
       className="basic-single"
       classNamePrefix="select"
+      value={optionsList.find(el => el.id === value.id) || null}
       isDisabled={false}
       isLoading={false}
       isClearable={true}
