@@ -35,7 +35,6 @@ export const queryActions =gql`{
   }
 }`
 
-
 export const queryUnitsPages = gql `{
   unitsPages {
     edges {

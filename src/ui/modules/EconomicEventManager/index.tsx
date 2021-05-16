@@ -5,7 +5,7 @@ import { useCreateEvent } from '../../../fe/intent/createEvent/useCreateEvent';
 import Button from '../../elements/Button';
 import Input from '../../elements/Input';
 import Select from 'ui/elements/Select';
-import styled from '../../themes/styled';
+import { FormLabel, FormGroup, FormStyled, ButtonWrap } from './styles';
 
 export type IntentActions = {
   id: string;
@@ -132,6 +132,14 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
       [name]: value
     });
   };
+  //
+  // const selectSearchHandler = (name: string, value: string) => {
+  //   if (value.length > 3) {
+  //     console.log(value)
+  //
+  //   }
+  // }
+
   const { create } = useCreateEvent();
 
   const formSubmit = async (e: React.FormEvent<EventTarget>) => {
@@ -168,6 +176,7 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
             id="action"
             name="action"
             onSelect={actionHandler}
+            // onInputChange={selectSearchHandler}
           />
         </FormGroup>
         {providerLst.length ? (
@@ -182,6 +191,7 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
                   id="provider"
                   name="provider"
                   onSelect={actionHandler}
+                  // onInputChange={selectSearchHandler}
                 />
               </FormGroup>
               <FormGroup>
@@ -193,6 +203,7 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
                   id="receiver"
                   name="receiver"
                   onSelect={actionHandler}
+                  // onInputChange={selectSearchHandler}
                 />
               </FormGroup>
             </div>
@@ -219,6 +230,7 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
                   id="hasUnit"
                   name="hasUnit"
                   onSelect={actionHandler}
+                  // onInputChange={selectSearchHandler}
                 />
               </FormGroup>
               <FormGroup>
@@ -247,50 +259,4 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
   );
 };
 
-const ButtonWrap = styled.div`
-  width: 100%;
-  margin-bottom: 16px;
-  > button {
-    width: 100%;
-  }
-
-  .event_btn {
-    height: 40px;
-    text-transform: uppercase;
-    font-family: 'Arial', sans-serif;
-    font-weight: 600;
-    letter-spacing: 1px;
-  }
-`;
-
 export default EconomicEventManager;
-
-const FormGroup = styled('div')<any>`
-  display: block;
-`;
-const FormLabel = styled('label')<any>`
-  display: block;
-  font-size: 10px;
-  color: #aaa;
-  font-family: 'Arial', sans-serif;
-  text-transform: uppercase;
-  margin-bottom: 2px;
-`;
-
-const FormStyled = styled('form')<any>`
-  .d-flex {
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    & > div {
-      width: calc(50% - 5px);
-    }
-
-    button {
-      width: 100%;
-      background: #cdcdcd;
-    }
-  }
-`;

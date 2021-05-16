@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'ui/themes/styled';
+import Alert from 'ui/elements/Alert';
 
 export interface Props {
   id: string | undefined;
@@ -75,8 +76,15 @@ const FieldWrapper = styled('div')<any>`
     text-transform: uppercase;
     margin-bottom: 10px;
   }
-   textarea {
-     padding: 10px;
-     height: 120px;
-   }
+  textarea {
+    padding: 10px;
+    height: 120px;
+  }
+`;
+
+export const CustomAlert = styled(Alert)`
+  background-color: transparent !important;
+  color: #ff5a5f !important;
+  text-align: right !important;
+  line-height: 1 !important;
 `;

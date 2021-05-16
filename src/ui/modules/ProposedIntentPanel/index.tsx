@@ -113,7 +113,7 @@ export const ProposedIntentPanel: React.FC<IProposedIntentPanel> = ({
                   history.map((item, i) => (
                     <li key={i}>
                       <span>{item.action}</span>
-                      {item.date && <span>{format(new Date(item.date), 'do MMM yyyy')}</span>}
+                      {item.date && <span>{format(new Date(item.date), 'dd MMM yyyy')}</span>}
                     </li>
                   ))}
               </History>

@@ -15,12 +15,26 @@ const WrapperSelect = styled(Select)`
   b,
   .select__value-container,
   .select__single-value {
+    display: block;
     font-family: 'Arial', sans-serif;
     font-weight: 600;
     font-size: 14px;
     color: #666666;
     letter-spacing: 1px;
     text-transform: uppercase;
+  }
+  .select__control > div {
+    height: 36px;
+  }
+  .select__value-container > div:not(.select__single-value) {
+    height: 36px;
+    padding: 0;
+    margin: 0;
+    line-height: 36px;
+  }
+  .select__value-container {
+    height: 36px;
+    padding: 0 10px;
   }
   .select__control--menu-is-open,
   .select__control--is-focused {
@@ -50,6 +64,7 @@ const WrapperSelect = styled(Select)`
 
 export interface Props {
   onSelect: (name: string, option: IntentActions) => void;
+  onInputChange?: (name: string, value: string) => void;
   options?: IntentActions[];
   variant: string;
   id: string | number;
@@ -57,7 +72,15 @@ export interface Props {
   value: IntentActions;
 }
 
-const CustomSelect: FC<Props> = ({ onSelect, variant, name, options, id, value }) => {
+const CustomSelect: FC<Props> = ({
+  onSelect,
+  onInputChange = () => {},
+  variant,
+  name,
+  options,
+  id,
+  value
+}) => {
   const optionsList = options
     ? options.map(el => ({
         id: el.id,
@@ -65,7 +88,7 @@ const CustomSelect: FC<Props> = ({ onSelect, variant, name, options, id, value }
         label: (
           <span>
             <b>{el.label}</b>
-            <small>{el.note}</small>
+            {el.note && <small>{el.note}</small>}
           </span>
         )
       }))
@@ -73,8 +96,9 @@ const CustomSelect: FC<Props> = ({ onSelect, variant, name, options, id, value }
 
   return (
     <WrapperSelect
-      onChange={(option: any) => onSelect(name, { id: option.id, label: option.value })}
+      onChange={(option: any) => onSelect(name, { id: option?.id, label: option?.value })}
       variant={variant}
+      // onInputChange={(value:string) => onInputChange(name, value)}
       className="basic-single"
       classNamePrefix="select"
       value={optionsList.find(el => el.id === value.id) || null}

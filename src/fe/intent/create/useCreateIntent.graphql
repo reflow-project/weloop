@@ -12,3 +12,43 @@ mutation createIntent($name: String!, $communityId: ID!, $note: String) {
     }
   }
 }
+
+mutation createOffer(
+  $name: String!,
+  $communityId: ID!,
+  $note: String,
+  $hasUnit: ID!,
+  $hasNumericalValue: Float!,
+) {
+  createOffer(intent: {
+    action: "produced",
+    name: $name,
+    resourceQuantity: {
+      hasUnit: $hasUnit,
+      hasNumericalValue: $hasNumericalValue
+    },
+
+    inScopeOf: [$communityId],
+    note: $note }) {
+    intent {
+      id
+      inScopeOf {
+        __typename
+      }
+      name
+      note
+      atLocation {
+        lat
+        long
+        alt
+      }
+      resourceQuantity {
+        hasUnit {
+          label
+          id
+        }
+        hasNumericalValue
+      }
+    }
+  }
+}

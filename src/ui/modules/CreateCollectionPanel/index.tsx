@@ -4,20 +4,11 @@ import { Input, Textarea } from '@rebass/forms';
 import { FormikHook } from 'ui/@types/types';
 import * as React from 'react';
 import Button from 'ui/elements/Button';
-import { clearFix } from 'polished';
-import media from 'styled-media-query';
-import styled from 'ui/themes/styled';
-import { Flex, Text, Box, Heading } from 'rebass/styled-components';
+import { Box, Heading } from 'rebass/styled-components';
 import DropzoneArea from 'ui/modules/DropzoneModal';
 import Alert from 'ui/elements/Alert';
-import {
-  Actions,
-  AlertWrapper,
-  Container,
-  ContainerForm,
-  CounterChars,
-  Header
-} from 'ui/modules/Modal';
+import { Actions, AlertWrapper, Container, CounterChars, Header } from 'ui/modules/Modal';
+import { Hero, HeroInfo, Title, CollectionContainerForm, Description } from './style';
 
 const tt = {
   placeholders: {
@@ -63,7 +54,7 @@ export const CreateCollectionPanel: React.FC<Props> = ({ cancel, formik }) => {
               filePattern="image/*"
             />
           </Box>
-          {/* <Background style={{ backgroundImage: `url("${c.icon}")` }} /> */}
+          {/*<Background style={{ backgroundImage: `url("${c.icon}")` }} /> */}
           <HeroInfo>
             <Title fontWeight={'bold'}>
               <CollectionContainerForm>
@@ -122,64 +113,5 @@ export const CreateCollectionPanel: React.FC<Props> = ({ cancel, formik }) => {
     </Container>
   );
 };
-
-export const CollectionContainerForm = styled(ContainerForm)`
-  input {
-    background: #fbfbfb;
-    border: 0;
-    font-weight: 700;
-  }
-
-  textarea {
-    background: #fbfbfb;
-    border-radius: 2px;
-    border: 0;
-    height: 120px;
-    resize: none;
-  }
-`;
-
-export const Title = styled(Text)`
-  color: ${props => props.theme.colors.mediumdark};
-`;
-
-export const Description = styled(Text)`
-  color: ${props => props.theme.colors.mediumdark};
-`;
-
-export const HeroInfo = styled.div`
-  flex: 1;
-  margin-left: 16px;
-  position: relative;
-  ${clearFix()};
-  & h2 {
-    margin: 0;
-    line-height: 32px !important;
-    color: ${props => props.theme.colors.mediumdark};
-    ${media.lessThan('medium')`
-      margin-top: 8px;
-    `};
-  }
-  & p {
-    margin: 0;
-    color: rgba(0, 0, 0, 0.8);
-    margin-top: 8px;
-    color: ${props => props.theme.colors.mediumdark};
-  }
-  .--rtl & {
-    margin-right: 16px;
-    margin-left: 0px;
-  }
-`;
-
-export const Hero = styled(Flex)`
-  width: 100%;
-  position: relative;
-  padding: 16px;
-  ${media.lessThan('medium')`
-  text-align: center;
-  display: block;
-`};
-`;
 
 export default CreateCollectionPanel;

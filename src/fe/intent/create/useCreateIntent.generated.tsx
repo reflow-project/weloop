@@ -10,6 +10,15 @@ export type CreateIntentMutationVariables = {
   note?: Types.Maybe<Types.Scalars['String']>
 };
 
+export type CreateOfferMutationVariables = {
+  name: Types.Scalars['String'],
+  action: Types.Scalars['ID'],
+  communityId: Types.Scalars['ID'],
+  note?: Types.Maybe<Types.Scalars['String']>
+  atLocation?:  Types.Maybe<Types.Scalars['String']>,
+  hasUnit: Types.Scalars['ID'],
+  hasNumericalValue: Types.Scalars['Int'],
+};
 
 export type CreateIntentMutation = (
   { __typename: 'RootMutationType' }
@@ -34,6 +43,47 @@ export const CreateIntentDocument = gql`
       }
       name
       note
+      
+    }
+  }
+}`;
+export const CreateOfferMutation = gql`
+mutation createOffer(
+  $name: String!, 
+  $communityId: ID!, 
+  $note: String,
+  $hasUnit: ID!,
+  $hasNumericalValue: Float!,
+) {
+  createOffer(intent: {
+    action: "produced",
+    name: $name, 
+    resourceQuantity: {
+      hasUnit: $hasUnit,
+      hasNumericalValue: $hasNumericalValue
+    },
+
+    inScopeOf: [$communityId], 
+    note: $note }) {
+    intent {
+      id
+      inScopeOf {
+        __typename
+      }
+      name
+      note
+      atLocation {
+        lat
+        long
+        alt
+      }
+      resourceQuantity {
+        hasUnit { 
+          label 
+          id
+        }
+        hasNumericalValue
+      }
     }
   }
 }
@@ -62,6 +112,10 @@ export type CreateIntentMutationFn = ApolloReactCommon.MutationFunction<CreateIn
 export function useCreateIntentMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateIntentMutation, CreateIntentMutationVariables>) {
         return ApolloReactHooks.useMutation<CreateIntentMutation, CreateIntentMutationVariables>(CreateIntentDocument, baseOptions);
       }
+
+export function useCreateOfferMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<any,  CreateOfferMutationVariables>) {
+  return ApolloReactHooks.useMutation<any, CreateOfferMutationVariables>(CreateOfferMutation, baseOptions);
+}
 export type CreateIntentMutationHookResult = ReturnType<typeof useCreateIntentMutation>;
 export type CreateIntentMutationResult = ApolloReactCommon.MutationResult<CreateIntentMutation>;
 export type CreateIntentMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateIntentMutation, CreateIntentMutationVariables>;

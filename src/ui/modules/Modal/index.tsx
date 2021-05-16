@@ -95,6 +95,7 @@ export const CounterChars = styled.div`
   margin-top: 4px;
   color: #32302e;
   letter-spacing: 1px;
+  margin-bottom: 10px;
 `;
 
 export const ContainerForm = styled.div`
