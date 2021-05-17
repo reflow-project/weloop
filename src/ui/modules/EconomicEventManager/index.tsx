@@ -154,7 +154,7 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
     });
 
     !result?.errors &&
-      toast.success('Event was created success', {
+      toast.success('Event was created', {
         position: 'top-right',
         transition: Slide,
         autoClose: 3000,

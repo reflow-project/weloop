@@ -98,7 +98,7 @@ export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done }) 
           }
 
           !response.errors &&
-            toast.success('Intent was created success', {
+            toast.success('Intent was created', {
               position: 'top-right',
               transition: Slide,
               autoClose: 3000,
