@@ -1,9 +1,9 @@
 import { Trans } from '@lingui/macro';
 import { i18nMark } from '@lingui/react';
 import React, { FC } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { Heading } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
-import { LocationPiker } from '../../elements/LocationPiker';
 import { FormikHook } from 'ui/@types/types';
 import { FormGroup, FormLabel } from '../EconomicEventManager/styles';
 import Input, { CustomAlert } from '../../elements/Input';
@@ -32,11 +32,19 @@ type UnitPage = {
   symbol: string;
 };
 
+type SpatialThings = {
+  id: string;
+  name: string;
+  lat: number;
+  long: number;
+};
+
 export type TCreateIntentPanel = {
   communities?: Array<SelectOption>;
   cancel: () => void;
   formik: FormikHook<CreateIntentFormValues>;
   unitPages?: UnitPage[];
+  spatialThings?: SpatialThings[];
 };
 
 export type SelectOption = {
@@ -48,7 +56,8 @@ export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
   formik,
   cancel,
   communities,
-  unitPages
+  unitPages,
+  spatialThings
 }) => {
   const [unitLst, setUnitLst] = React.useState<any>([]);
 
@@ -154,7 +163,21 @@ export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
 
             <CollectionContainerForm>
               <FormLabel>{i18nMark('location')}</FormLabel>
-              <LocationPiker />
+              <Select
+                onSelect={(name, option) => {
+                  formik.setValues({ ...formik.values, [name]: option.id });
+                }}
+                options={spatialThings?.map(el => ({ id: el.id, value: el.id, label: el.name }))}
+                value={{ id: formik.values.atLocation || '', label: '' }}
+                variant="primary"
+                id="atLocation"
+                name="atLocation"
+              />
+              {formik.errors.hasUnit && (
+                <AlertWrapper>
+                  <CustomAlert variant="negative">{formik.errors.atLocation}</CustomAlert>
+                </AlertWrapper>
+              )}
             </CollectionContainerForm>
 
             <Description mt={2}>
@@ -197,6 +220,7 @@ export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
           </Button>
         </Actions>
       </form>
+      <ToastContainer />
     </Container>
   );
 };

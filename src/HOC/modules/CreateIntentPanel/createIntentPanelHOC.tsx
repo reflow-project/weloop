@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import * as React from 'react';
 import { useMemo } from 'react';
 import { useMyFollowedCommunities } from 'fe/community/myFollowed/myFollowedCommunities';
-import { Slide, toast, ToastContainer } from 'react-toastify';
+import { Slide, toast } from 'react-toastify';
 import {
   CreateIntentPanel,
   CreateIntentFormValues,
@@ -23,7 +23,7 @@ export interface CreateOfferFormValues {
   name: string;
   communityId: string;
   note: string;
-  atLocation: string;
+  atLocation?: string;
   hasUnit: string;
   hasNumericalValue: number;
 }
@@ -51,6 +51,9 @@ export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done }) 
   const unitPagesQ = GQL.useUnitPagesQuery();
   const unitPages = unitPagesQ.data?.unitsPages;
 
+  const spatialThingsQ = GQL.useSpatialThingsQuery();
+  const spatialThings = spatialThingsQ.data?.spatialThingsPages;
+
   const SignupSchema = Yup.object().shape({
     name: Yup.string()
       .max(60, 'Too Long!')
@@ -72,6 +75,8 @@ export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done }) 
       hasUnit: '',
       hasNumericalValue: 0
     },
+    validateOnChange: false,
+    validateOnBlur: false,
     validationSchema: SignupSchema,
     enableReinitialize: true,
     onSubmit: (values: any) => {
@@ -93,7 +98,7 @@ export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done }) 
           }
 
           !response.errors &&
-            toast.success('Event was created success', {
+            toast.success('Intent was created success', {
               position: 'top-right',
               transition: Slide,
               autoClose: 3000,
@@ -110,12 +115,9 @@ export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done }) 
     communities: communities,
     formik: formik,
     unitPages: unitPages?.edges,
+    spatialThings: spatialThings?.edges,
     cancel: done
   };
 
-  return (
-    <CreateIntentPanel {...createIntentPanelProps}>
-      <ToastContainer />
-    </CreateIntentPanel>
-  );
+  return <CreateIntentPanel {...createIntentPanelProps} />;
 };

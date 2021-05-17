@@ -35,12 +35,24 @@ export const queryActions =gql`{
   }
 }`
 
+
+
 export const queryUnitsPages = gql `{
   unitsPages {
     edges {
       id
       symbol
       label
+    }
+  }
+}`
+export const querySpatialThings = gql `{
+  spatialThingsPages {
+    edges {
+      id
+      name
+      lat
+      long
     }
   }
 }`
@@ -55,4 +67,8 @@ export function useFilteredEconomicEventsQuery(baseOptions?: ApolloReactHooks.Qu
 
 export function useUnitPagesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<IntentPanelQueryVariables, any>) {
   return ApolloReactHooks.useQuery<any, any>(queryUnitsPages, baseOptions);
+}
+
+export function useSpatialThingsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<IntentPanelQueryVariables, any>) {
+  return ApolloReactHooks.useQuery<any, any>(querySpatialThings, baseOptions);
 }

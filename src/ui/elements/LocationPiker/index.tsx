@@ -1,44 +1,31 @@
+import { FC } from 'react';
 import * as React from 'react';
 import GooglePlacesAutocomplete, { geocodeByAddress } from 'react-google-places-autocomplete';
+import { FormikHook } from '../../@types/types';
+import { CreateIntentFormValues } from '../../modules/CreateIntentPanel';
 import styled from '../../themes/styled';
 
-export const LocationPiker = () => {
-  const [data] = React.useState<any>({});
-  const [autocomplete, setAutocomplete] = React.useState<any>('');
+type LocationPikerProps = {
+  formik: FormikHook<CreateIntentFormValues>;
+};
+
+export const LocationPiker: FC<LocationPikerProps> = ({ formik }) => {
   const autocompleteSelect = (address: any) => {
-    geocodeByAddress(address.description).then((results: any) => {
+    geocodeByAddress(address.label).then((results: any) => {
       if (!results[0]) return;
-
-      const names = ['', ''];
-      const fullName = [];
-      results[0].address_components.forEach((item: any) => {
-        if (item.types.indexOf('administrative_area_level_1') > -1) names[0] = item.short_name;
-        if (item.types.indexOf('country') > -1) names[1] = item.short_name;
-        // if (item.types.indexOf('locality') > -1) names[1] = item.short_name
-      });
-      if (names[0]) fullName.push(names[0]);
-      if (names[1]) fullName.push(names[1]);
-
-      setAutocomplete({
-        // @ts-ignore
-        autocomplete: fullName.join(', ') || null,
-        data: {
-          ...data,
-          location: fullName.join(', ') || null
-        }
-      });
+      formik.handleChange({ target: { name: 'atLocation', value: results[0].place_id } } as any);
     });
   };
 
   return (
     <WrapperSelect>
       <GooglePlacesAutocomplete
-        //@ts-ignore
-        placeholder="Please add your city and country location"
-        inputClassName="reflow__input"
-        suggestionsClassNames="reflow__suggestions"
-        initialValue={autocomplete}
-        onSelect={autocompleteSelect}
+        selectProps={{
+          placeholder: 'Please add your city and country location',
+          onChange: autocompleteSelect,
+          classNamePrefix: 'zenpub'
+        }}
+        apiKey="AIzaSyBlbsdiikbCINjPLwD7NNwtsA8-vTcrr0g"
         autocompletionRequest={{
           bounds: [
             {
@@ -86,7 +73,18 @@ const WrapperSelect = styled('div')`
     }
   }
   
-   .reflow__input {
+  .zenpub__menuList {
+    background: #fff;
+    max-height: 200px;
+    padding: 20;
+    box-shadow: 0px 2px 4px 0px #0000001f;
+  }
+  .zenpub__menuList > * ,
+  .zenpub__menuList > * > * {
+     display: block;
+  }
+  .zenpub__input {
+    width: 100%;
     height: 36px;
     margin: 0;
   }
