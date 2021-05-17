@@ -8,6 +8,8 @@ import {
   Star,
   Code,
   Archive,
+  Activity,
+  Package,
   Plus,
   PlusSquare
 } from 'react-feather';
@@ -85,6 +87,26 @@ export const DropdownSidebar: React.FC<Props> = ({ logout, userLink, toggleDropd
                 <Users size={16} color={'red'} />
               </span>
               <Trans>My Communities</Trans>
+            </a>
+          </Text>
+        </Item>
+        <Item>
+          <Text variant="text">
+            <a href="/inventory">
+              <span>
+                <Package size={16} color={'red'} />
+              </span>
+              <Trans>My Inventory</Trans>
+            </a>
+          </Text>
+        </Item>
+        <Item>
+          <Text variant="text">
+            <a href="/activity">
+              <span>
+                <Activity size={16} color={'red'} />
+              </span>
+              <Trans>My Activity</Trans>
             </a>
           </Text>
         </Item>
