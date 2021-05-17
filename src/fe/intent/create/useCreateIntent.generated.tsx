@@ -51,6 +51,7 @@ export const CreateOfferMutation = gql`
 mutation createOffer(
   $name: String!, 
   $communityId: ID!, 
+  $atLocation: ID, 
   $note: String,
   $hasUnit: ID!,
   $hasNumericalValue: Float!,
@@ -62,7 +63,7 @@ mutation createOffer(
       hasUnit: $hasUnit,
       hasNumericalValue: $hasNumericalValue
     },
-
+    atLocation: $atLocation,
     inScopeOf: [$communityId], 
     note: $note }) {
     intent {

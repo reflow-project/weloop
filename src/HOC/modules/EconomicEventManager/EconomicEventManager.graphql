@@ -30,4 +30,14 @@ query unitsPages {
   }
 }
 
+query  spatialThingsPages {
+    edges {
+      id
+      name
+      lat
+      long
+    }
+  }
+}
+
 
