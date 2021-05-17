@@ -3,37 +3,66 @@ import { i18nMark } from '@lingui/react';
 import React, { FC } from 'react';
 import { Heading } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
+import { LocationPiker } from '../../elements/LocationPiker';
 import { FormikHook } from 'ui/@types/types';
-import { Input, Textarea } from '@rebass/forms';
+import { FormGroup, FormLabel } from '../EconomicEventManager/styles';
+import Input, { CustomAlert } from '../../elements/Input';
 import { Actions, AlertWrapper, Container, CounterChars, Header } from 'ui/modules/Modal';
 import {
   Hero,
-  Title,
+  FlexBetweenContainer,
   CollectionContainerForm,
   HeroInfo,
   Description
-} from '../CreateCollectionPanel';
-import Alert from 'ui/elements/Alert';
-import Select from 'react-select';
+} from '../CreateCollectionPanel/style';
+import Select from 'ui/elements/Select';
 
 export type CreateIntentFormValues = {
   name: string;
+  note?: string;
   communityId: string;
-  note: string;
+  atLocation?: string;
+  hasUnit: string;
+  hasNumericalValue: number;
+};
+
+type UnitPage = {
+  id: string;
+  label: string;
+  symbol: string;
 };
 
 export type TCreateIntentPanel = {
-  communities: Array<SelectOption>;
-  cancel(): unknown;
+  communities?: Array<SelectOption>;
+  cancel: () => void;
   formik: FormikHook<CreateIntentFormValues>;
+  unitPages?: UnitPage[];
 };
 
 export type SelectOption = {
   label: string;
-  value: string;
+  id: string;
 };
 
-export const CreateIntentPanel: FC<TCreateIntentPanel> = ({ formik, cancel, communities }) => {
+export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
+  formik,
+  cancel,
+  communities,
+  unitPages
+}) => {
+  const [unitLst, setUnitLst] = React.useState<any>([]);
+
+  React.useEffect(() => {
+    if (unitPages?.length) {
+      const unit = unitPages.map(el => ({
+        id: el.id,
+        label: `${el.label} / ${el.symbol}`
+      }));
+
+      setUnitLst(unit);
+    }
+  }, [unitPages]);
+
   return (
     <Container>
       <form onSubmit={formik.handleSubmit}>
@@ -45,61 +74,115 @@ export const CreateIntentPanel: FC<TCreateIntentPanel> = ({ formik, cancel, comm
 
         <Hero>
           <HeroInfo>
-            <Title fontWeight={'bold'}>
-              <CollectionContainerForm>
+            <CollectionContainerForm>
+              <FormGroup>
+                <FormLabel>{i18nMark('Resource')}</FormLabel>
                 <Input
-                  placeholder={i18nMark('Name of your resource')}
-                  disabled={formik.isSubmitting}
+                  type="text"
+                  id="name"
                   name="name"
-                  value={formik.values.name}
+                  disabled={formik.isSubmitting}
                   onChange={formik.handleChange}
+                  hint={{ class: 'error', value: '' }}
+                  placeholder={i18nMark('Name of your resource')}
+                  value={formik.values.name}
                 />
-                <CounterChars>{60 - formik.values.name.length}</CounterChars>
-                {formik.errors.name && (
+              </FormGroup>
+              <CounterChars>{60 - formik.values.name.length}</CounterChars>
+              {formik.errors.name && (
+                <AlertWrapper>
+                  <CustomAlert variant="negative">{formik.errors.name}</CustomAlert>
+                </AlertWrapper>
+              )}
+            </CollectionContainerForm>
+            <CollectionContainerForm>
+              <FormLabel>{i18nMark('name')}</FormLabel>
+              <Select
+                onSelect={(name, option) => {
+                  formik.setValues({ ...formik.values, [name]: option.id });
+                }}
+                value={{ id: formik.values.communityId, label: '' }}
+                variant="primary"
+                id="communityId"
+                name="communityId"
+                options={communities as any}
+              />
+              {formik.errors.communityId && (
+                <AlertWrapper>
+                  <CustomAlert variant="negative">{formik.errors.communityId}</CustomAlert>
+                </AlertWrapper>
+              )}
+            </CollectionContainerForm>
+
+            <FlexBetweenContainer>
+              <FormGroup>
+                <FormLabel>{i18nMark('unit')}</FormLabel>
+                <Select
+                  onSelect={(name, option) => {
+                    formik.setValues({ ...formik.values, [name]: option.id });
+                  }}
+                  options={unitLst}
+                  value={{ id: formik.values.hasUnit, label: '' }}
+                  variant="primary"
+                  id="hasUnit"
+                  name="hasUnit"
+                />
+                {formik.errors.hasUnit && (
                   <AlertWrapper>
-                    <Alert variant="negative">{formik.errors.name}</Alert>
+                    <CustomAlert variant="negative">{formik.errors.hasUnit}</CustomAlert>
                   </AlertWrapper>
                 )}
-              </CollectionContainerForm>
-            </Title>
-
-            <Title>
-              <CollectionContainerForm>
-                <Select
-                  name="communityId"
-                  onChange={selectedCode => {
-                    const selection = Array.isArray(selectedCode) ? selectedCode[0] : selectedCode;
-                    if (!selection) {
-                      return;
-                    }
-                    formik.setValues({ ...formik.values, communityId: selection.value });
-                  }}
-                  options={communities as any}
+              </FormGroup>
+              <FormGroup>
+                <FormLabel>{i18nMark('Numerical Value')}</FormLabel>
+                <Input
+                  type="number"
+                  id="hasNumericalValue"
+                  name="hasNumericalValue"
+                  onChange={formik.handleChange}
+                  hint={{ class: 'error', value: '' }}
+                  placeholder={i18nMark('Numerical Value')}
+                  value={formik.values.hasNumericalValue.toString()}
                 />
-              </CollectionContainerForm>
-            </Title>
+                {formik.errors.hasNumericalValue && (
+                  <AlertWrapper>
+                    <CustomAlert variant="negative">{formik.errors.hasNumericalValue}</CustomAlert>
+                  </AlertWrapper>
+                )}
+              </FormGroup>
+            </FlexBetweenContainer>
+
+            <CollectionContainerForm>
+              <FormLabel>{i18nMark('location')}</FormLabel>
+              <LocationPiker />
+            </CollectionContainerForm>
 
             <Description mt={2}>
-              <CollectionContainerForm>
-                <Textarea
-                  placeholder={i18nMark('A description of your resource')}
-                  disabled={formik.isSubmitting}
+              <FormGroup>
+                <FormLabel>{i18nMark('description')}</FormLabel>
+                <Input
+                  type="textarea"
+                  id="note"
                   name="note"
-                  value={formik.values.note}
                   onChange={formik.handleChange}
+                  disabled={formik.isSubmitting}
+                  hint={{ class: 'error', value: '' }}
+                  placeholder={i18nMark('A description of your resource')}
+                  value={formik.values.note}
                 />
-                <CounterChars>{500 - formik.values.note.length}</CounterChars>
-                {formik.errors.note && (
-                  <AlertWrapper>
-                    <Alert variant="negative">{formik.errors.note}</Alert>
-                  </AlertWrapper>
-                )}
-              </CollectionContainerForm>
+              </FormGroup>
+              <CounterChars>
+                {formik.values.note ? 500 - formik.values.note.length : 500}
+              </CounterChars>
+              {formik.errors.note && (
+                <AlertWrapper>
+                  <CustomAlert variant="negative">{formik.errors.note}</CustomAlert>
+                </AlertWrapper>
+              )}
             </Description>
           </HeroInfo>
         </Hero>
-
-        <Actions>
+        <Actions mb={3}>
           <Button
             variant="primary"
             isSubmitting={formik.isSubmitting}

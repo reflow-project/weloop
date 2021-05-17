@@ -1,31 +1,39 @@
 import { useCallOrNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
 import { useMemo } from 'react';
-import { useCreateIntentMutation } from './useCreateIntent.generated';
+import { useCreateOfferMutation } from './useCreateIntent.generated';
 
-export interface CreateIntent {
+export interface CreateOffer {
   name: string;
-  note: string;
+  note?: string;
   communityId: string;
+  atLocation?: string;
+  hasUnit: string;
+  hasNumericalValue: number;
 }
 export const useCreateIntent = () => {
-  const [createMut, createMutStatus] = useCreateIntentMutation();
+  const [createOfferMut, createOfferMutStatus] = useCreateOfferMutation();
 
   const create = useCallOrNotifyMustLogin(
-    async ({ name, note, communityId }: CreateIntent) => {
-      if (createMutStatus.loading) {
+    async ({ name, note, communityId, atLocation, hasNumericalValue, hasUnit }: CreateOffer) => {
+      if (createOfferMutStatus.loading) {
         return;
       }
 
-      return createMut({
+      return createOfferMut({
         variables: {
-          name: name,
-          note: note,
-          communityId: communityId
+          name,
+          note,
+          communityId,
+          action: 'produced',
+          atLocation,
+          hasUnit,
+          hasNumericalValue
         }
       });
     },
-    [createMutStatus, createMut]
+    [createOfferMutStatus, createOfferMut]
   );
+
   return useMemo(() => {
     return {
       create

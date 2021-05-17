@@ -6,18 +6,21 @@ import {
 import { action } from '@storybook/addon-actions';
 import { useFormik } from 'formik';
 
-const communities: Array<SelectOption> = [{ label: 'Community name', value: 'community id' }];
+const communities: Array<SelectOption> = [{ label: 'Community name', id: 'community id' }];
 
 export const useGetCreateIntentModalProps = (): TCreateIntentPanel => {
   const formik = useFormik<CreateIntentFormValues>({
     initialValues: {
       name: '',
       communityId: '',
-      note: ''
+      note: '',
+      atLocation: '',
+      hasUnit: '',
+      hasNumericalValue: 0
     },
     onSubmit: () => {
       action('submit')();
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         setTimeout(resolve, 3000);
       });
     }

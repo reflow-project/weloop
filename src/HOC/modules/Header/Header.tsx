@@ -32,7 +32,7 @@ export const MainHeaderHOC: FC<MainHeaderHOC> = () => {
 
   const CreateIntentModal = showCreateIntent ? (
     <Modal closeModal={toggleShowCreateIntent}>
-      <CreateIntentPanelHOC communities={[]} done={toggleShowCreateIntent} />
+      <CreateIntentPanelHOC done={toggleShowCreateIntent} />
     </Modal>
   ) : null;
 
