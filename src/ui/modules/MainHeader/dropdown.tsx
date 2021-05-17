@@ -170,14 +170,6 @@ export const CreateDropdown: React.FC<TCreateDropdown> = ({
             <Trans>New Community</Trans>
           </Text>
         </Item>
-        <Item variant="link">
-          <span>
-            <Archive size={16} color={'#ddd'} />
-          </span>
-          <Text variant="text">
-            <Trans>Create a new collection</Trans>
-          </Text>
-        </Item>
         <Item variant="link" onClick={() => createIntent()}>
           <span>
             <PlusSquare size={16} color={'#333'} />
@@ -191,7 +183,15 @@ export const CreateDropdown: React.FC<TCreateDropdown> = ({
             <Plus size={16} color={'#ddd'} />
           </span>
           <Text variant="text">
-            <Trans>Create a new request</Trans>
+            <Trans>Create a new resource</Trans>
+          </Text>
+        </Item>
+        <Item variant="link">
+          <span>
+            <Archive size={16} color={'#ddd'} />
+          </span>
+          <Text variant="text">
+            <Trans>Create a new event?</Trans>
           </Text>
         </Item>
       </List>
