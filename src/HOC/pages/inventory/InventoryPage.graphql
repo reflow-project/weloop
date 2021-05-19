@@ -1,0 +1,5 @@
+  economicResourcesFiltered(agent: $agent) {
+    id
+    name
+    note
+  }
