@@ -104,11 +104,11 @@ export const IntentPanelDocument = gql`
  */
 export function useIntentPanelQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<IntentPanelQuery, IntentPanelQueryVariables>) {
         return ApolloReactHooks.useQuery<IntentPanelQuery, IntentPanelQueryVariables>(IntentPanelDocument, baseOptions);
-      }
+      };
 
 export function useIntentPanelLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<IntentPanelQuery, IntentPanelQueryVariables>) {
           return ApolloReactHooks.useLazyQuery<IntentPanelQuery, IntentPanelQueryVariables>(IntentPanelDocument, baseOptions);
-        }
+        };
 export type IntentPanelQueryHookResult = ReturnType<typeof useIntentPanelQuery>;
 export type IntentPanelLazyQueryHookResult = ReturnType<typeof useIntentPanelLazyQuery>;
 export type IntentPanelQueryResult = ApolloReactCommon.QueryResult<IntentPanelQuery, IntentPanelQueryVariables>;

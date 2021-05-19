@@ -1,0 +1,8 @@
+{
+  economicResource(id: $id) {
+    id
+    name
+    note
+    image
+  }
+}
