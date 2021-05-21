@@ -11,7 +11,7 @@ import styled from '../../themes/styled';
 
 export interface Props {
   userId: string;
-  inventory: EconomicResource[] | [];
+  inventory: any;
   error?: ApolloError | undefined;
   loading: boolean;
 }

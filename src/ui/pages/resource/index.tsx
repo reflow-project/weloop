@@ -8,7 +8,7 @@ import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout
 import styled from '../../themes/styled';
 
 export interface Props {
-  resource: EconomicResource;
+  resource?: EconomicResource;
   error?: ApolloError | undefined;
   loading: boolean;
 }

@@ -42,14 +42,10 @@ type EconomicEvent = {
 };
 
 export type EconomicEventManagerProps = {
-  actionList: IntentActions[] | undefined;
-  economicEvents: {
-    loading: boolean;
-    error: React.ReactNode;
-    data: EconomicEvent[];
-  };
-  unitPages: {
-    edges: UnitPage[];
+  actionList?: any;
+  economicEvents?: any;
+  unitPages?: {
+    edges: any;
   };
   setAction: any;
 };
@@ -81,11 +77,11 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
 
   React.useEffect(() => {
     if (economicEvents.data?.length) {
-      const providers = economicEvents.data.map(el => ({
+      const providers = economicEvents.data.map((el: any) => ({
         id: el.provider.id,
         label: el.provider.name
       }));
-      const receivers = economicEvents.data.map(el => ({
+      const receivers = economicEvents.data.map((el: any) => ({
         id: el.receiver.id,
         label: el.receiver.name
       }));
@@ -97,7 +93,7 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
 
   React.useEffect(() => {
     if (unitPages?.edges.length) {
-      const unit = unitPages.edges.map(el => ({
+      const unit = unitPages.edges.map((el: any) => ({
         id: el.id,
         label: `${el.label} / ${el.symbol}`
       }));

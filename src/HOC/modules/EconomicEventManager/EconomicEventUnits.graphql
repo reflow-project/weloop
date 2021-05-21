@@ -1,0 +1,9 @@
+query unitsPages {unitsPages {
+    edges {
+      id
+    symbol
+    label
+    }
+}
+}
+

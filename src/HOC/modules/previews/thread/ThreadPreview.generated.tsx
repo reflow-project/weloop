@@ -9,66 +9,65 @@ import { CommunityPreviewFragmentDoc } from '../community/CommunityPreview.gener
 import { CollectionPreviewFragmentDoc } from '../collection/CollectionPreview.generated';
 import { ResourcePreviewFragmentDoc } from '../resource/ResourcePreview.generated';
 import { FlagPreviewFragmentDoc } from '../flag/FlagPreview.generated';
-import {
-  CommentPreviewFragment,
-  CommentPreviewFragmentDoc
-} from '../comment/CommentPreview.generated';
+import { CommentPreviewFragment, CommentPreviewFragmentDoc } from '../comment/CommentPreview.generated';
 
-export type ThreadPreviewFragment = { __typename: 'Thread' } & Pick<
-  Types.Thread,
-  'id' | 'lastActivity' | 'createdAt'
-> & {
-    context: Types.Maybe<
-      | { __typename: 'Category' }
-      | ({ __typename: 'Collection' } & CollectionPreviewFragment)
-      | { __typename: 'Comment' }
-      | ({ __typename: 'Community' } & CommunityPreviewFragment)
-      | ({ __typename: 'Flag' } & FlagPreviewFragment)
-      | { __typename: 'Follow' }
-      | { __typename: 'Intent' }
-      | { __typename: 'Like' }
-      | { __typename: 'Organisation' }
-      | ({ __typename: 'Resource' } & ResourcePreviewFragment)
-      | { __typename: 'SpatialThing' }
-      | { __typename: 'Taggable' }
-      | { __typename: 'User' }
-    >;
-    comments: Types.Maybe<
-      { __typename: 'CommentsPage' } & Pick<Types.CommentsPage, 'totalCount'> & {
-          edges: Array<{ __typename: 'Comment' } & CommentPreviewFragment>;
-        }
-    >;
-  };
+
+
+
+
+export type ThreadPreviewFragment = (
+  { __typename: 'Thread' }
+  & Pick<Types.Thread, 'id' | 'lastActivity' | 'createdAt'>
+  & { context: Types.Maybe<{ __typename: 'Category' } | (
+    { __typename: 'Collection' }
+    & CollectionPreviewFragment
+  ) | { __typename: 'Comment' } | (
+    { __typename: 'Community' }
+    & CommunityPreviewFragment
+  ) | (
+    { __typename: 'Flag' }
+    & FlagPreviewFragment
+  ) | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | (
+    { __typename: 'Resource' }
+    & ResourcePreviewFragment
+  ) | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | { __typename: 'User' }>, comments: Types.Maybe<(
+    { __typename: 'CommentsPage' }
+    & Pick<Types.CommentsPage, 'totalCount'>
+    & { edges: Array<(
+      { __typename: 'Comment' }
+      & CommentPreviewFragment
+    )> }
+  )> }
+);
 
 export const ThreadPreviewFragmentDoc = gql`
-  fragment ThreadPreview on Thread {
-    id
-    lastActivity
-    createdAt
-    context {
-      ... on Community {
-        ...CommunityPreview
-      }
-      ... on Collection {
-        ...CollectionPreview
-      }
-      ... on Resource {
-        ...ResourcePreview
-      }
-      ... on Flag {
-        ...FlagPreview
-      }
+    fragment ThreadPreview on Thread {
+  id
+  lastActivity
+  createdAt
+  context {
+    ... on Community {
+      ...CommunityPreview
     }
-    comments(limit: 1) {
-      totalCount
-      edges {
-        ...CommentPreview
-      }
+    ... on Collection {
+      ...CollectionPreview
+    }
+    ... on Resource {
+      ...ResourcePreview
+    }
+    ... on Flag {
+      ...FlagPreview
     }
   }
-  ${CommunityPreviewFragmentDoc}
-  ${CollectionPreviewFragmentDoc}
-  ${ResourcePreviewFragmentDoc}
-  ${FlagPreviewFragmentDoc}
-  ${CommentPreviewFragmentDoc}
-`;
+  comments(limit: 1) {
+    totalCount
+    edges {
+      ...CommentPreview
+    }
+  }
+}
+    ${CommunityPreviewFragmentDoc}
+${CollectionPreviewFragmentDoc}
+${ResourcePreviewFragmentDoc}
+${FlagPreviewFragmentDoc}
+${CommentPreviewFragmentDoc}`;

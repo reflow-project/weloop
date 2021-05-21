@@ -1,36 +1,5 @@
-query economicEventsFiltered($action: ID){
-  economicEventsFiltered(action: $action) {
-    id
-    provider {
-      id
-      name
-    }
-    receiver {
-      id
-      name
-    }
-  }
-}
-
-query actions {
-  actions {
-	label
-	id
-	note
-  }
-}
-
-query unitsPages {
-  unitsPages {
-    edges {
-      id
-    symbol
-    label
-    }
-  }
-}
-
-query  spatialThingsPages {
+query spatialThingsPages {
+spatialThingsPages {
     edges {
       id
       name
@@ -39,5 +8,4 @@ query  spatialThingsPages {
     }
   }
 }
-
 

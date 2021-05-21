@@ -43,8 +43,8 @@ export type TCreateIntentPanel = {
   communities?: Array<SelectOption>;
   cancel: () => void;
   formik: FormikHook<CreateIntentFormValues>;
-  unitPages?: UnitPage[];
-  spatialThings?: SpatialThings[];
+  unitPages?: any;
+  spatialThings?: any;
 };
 
 export type SelectOption = {
@@ -63,7 +63,7 @@ export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
 
   React.useEffect(() => {
     if (unitPages?.length) {
-      const unit = unitPages.map(el => ({
+      const unit = unitPages.map((el: any) => ({
         id: el.id,
         label: `${el.label} / ${el.symbol}`
       }));
@@ -167,7 +167,11 @@ export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
                 onSelect={(name, option) => {
                   formik.setValues({ ...formik.values, [name]: option.id });
                 }}
-                options={spatialThings?.map(el => ({ id: el.id, value: el.id, label: el.name }))}
+                options={spatialThings?.map((el: any) => ({
+                  id: el.id,
+                  value: el.id,
+                  label: el.name
+                }))}
                 value={{ id: formik.values.atLocation || '', label: '' }}
                 variant="primary"
                 id="atLocation"

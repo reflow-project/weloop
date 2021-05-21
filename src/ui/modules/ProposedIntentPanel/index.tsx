@@ -13,6 +13,7 @@ import { Actor } from '../ActivityPreview/types';
 import { Clock } from 'react-feather';
 import { theme } from 'ui/themes/default.theme';
 import { format } from 'date-fns';
+import * as Types from '../../../graphql/types.generated';
 
 export type IProposedIntentHistoryItem = {
   date: string | null;
@@ -20,6 +21,7 @@ export type IProposedIntentHistoryItem = {
 };
 
 export type IProposedIntentPanel = IProposedIntent & {
+  actionList?: ({ __typename: 'Action' } & Pick<Types.Action, 'label' | 'id' | 'note'>)[];
   actor: Actor | null;
   createdAt: string | null;
   tags?: Array<string>;

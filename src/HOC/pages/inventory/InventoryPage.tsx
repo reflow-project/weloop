@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Inventory, Props as InventoryProps } from '../../../ui/pages/inventory';
-import * as GQL from './InventoryPage.generated';
+import { useEconomicResourcesFilteredQuery } from './InventoryPage.generated';
 
 type InventoryPageProps = {
   userId: string;
@@ -15,11 +15,11 @@ export interface EconomicResource {
 }
 
 export const InventoryPage: FC<InventoryPageProps> = ({ userId }) => {
-  const { data, loading, error } = GQL.useInventoryListQuery({
-    variables: { agent: userId }
+  const { data, loading, error } = useEconomicResourcesFilteredQuery({
+    variables: { agent: [userId] }
   });
 
-  const inventory: EconomicResource[] | [] = data?.economicResourcesFiltered || [];
+  const inventory: any = data?.economicResourcesFiltered || [];
 
   const props: InventoryProps = {
     userId,
