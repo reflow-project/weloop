@@ -11,6 +11,9 @@ import { ResourcePreviewFragmentDoc } from '../resource/ResourcePreview.generate
 import { CommunityPreviewFragmentDoc } from '../community/CommunityPreview.generated';
 
 
+
+
+
 export type CommentPreviewFragment = (
   { __typename: 'Comment' }
   & Pick<Types.Comment, 'id' | 'likerCount'>

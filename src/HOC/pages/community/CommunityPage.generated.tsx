@@ -3,11 +3,12 @@ import * as Types from '../../../graphql/types.generated';
 import { ActivityPreviewFragment } from '../../modules/previews/activity/ActivityPreview.generated';
 import { ThreadPreviewFragment } from '../../modules/previews/thread/ThreadPreview.generated';
 import { HeroCommunityDataFragment } from '../../modules/HeroCommunity/HeroCommunity.generated';
+import { CollectionPreviewFragment } from '../../modules/previews/collection/CollectionPreview.generated';
 import gql from 'graphql-tag';
 import { HeroCommunityDataFragmentDoc } from '../../modules/HeroCommunity/HeroCommunity.generated';
 import { ThreadPreviewFragmentDoc } from '../../modules/previews/thread/ThreadPreview.generated';
 import { ActivityPreviewFragmentDoc } from '../../modules/previews/activity/ActivityPreview.generated';
-import { CollectionPreviewFragment,  CollectionPreviewFragmentDoc} from '../../modules/previews/collection/CollectionPreview.generated';
+import { CollectionPreviewFragmentDoc } from '../../modules/previews/collection/CollectionPreview.generated';
 
 
 

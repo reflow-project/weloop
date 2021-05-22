@@ -12,7 +12,7 @@ import {
   TCreateIntentPanel
 } from 'ui/modules/CreateIntentPanel';
 import { useHistory, useLocation } from 'react-router';
-import { useUnitsPagesQuery } from '../EconomicEventManager/EconomicEventUnits.generated';
+import { useUnitsPagesQuery } from '../EconomicEventManager/EconomicEventManager.generated';
 import * as GQL from '../EconomicEventManager/EconomicEventManager.generated';
 
 import * as Yup from 'yup';
