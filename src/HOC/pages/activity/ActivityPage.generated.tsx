@@ -5,7 +5,7 @@ import * as ApolloReactCommon from '@apollo/react-common';
 import * as ApolloReactHooks from '@apollo/react-hooks';
 
 export type UserQueryVariables = {
-  userID: Types.Scalars['String']
+  userId: Types.Scalars['String']
 };
 
 
@@ -46,8 +46,8 @@ export type UserQuery = (
 
 
 export const UserDocument = gql`
-    query user($userID: String!) {
-  user(userId: $userID) {
+    query user($userId: String!) {
+  user(userId: $userId) {
     outbox(limit: 15) {
       edges {
         user {
@@ -93,7 +93,7 @@ export const UserDocument = gql`
  * @example
  * const { data, loading, error } = useUserQuery({
  *   variables: {
- *      userID: // value for 'userID'
+ *      userId: // value for 'userId'
  *   },
  * });
  */

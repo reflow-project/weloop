@@ -10,11 +10,7 @@ import { CommunityPreviewFragmentDoc } from '../community/CommunityPreview.gener
 import { CollectionPreviewFragmentDoc } from '../collection/CollectionPreview.generated';
 import { ResourcePreviewFragmentDoc } from '../resource/ResourcePreview.generated';
 import { FlagPreviewFragmentDoc } from '../flag/FlagPreview.generated';
-import { CommentPreviewFragmentDoc  } from '../comment/CommentPreview.generated';
-
-
-
-
+import { CommentPreviewFragmentDoc } from '../comment/CommentPreview.generated';
 
 export type ThreadPreviewFragment = (
   { __typename: 'Thread' }
@@ -69,9 +65,8 @@ export const ThreadPreviewFragmentDoc = gql`
     }
   }
 }
-${CommunityPreviewFragmentDoc}
+    ${CommunityPreviewFragmentDoc}
 ${CollectionPreviewFragmentDoc}
 ${ResourcePreviewFragmentDoc}
 ${FlagPreviewFragmentDoc}
-${CommentPreviewFragmentDoc}
-`;
+${CommentPreviewFragmentDoc}`;

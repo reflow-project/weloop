@@ -8,7 +8,7 @@ const ActivityPageRoute: FC<RouteComponentProps<any>> = ({ match }) => {
 
   const props = {
     userId: userId,
-    basePath: `/activity/user/${userId}`
+    basePath: `/activity`
   };
 
   return (
@@ -20,6 +20,6 @@ const ActivityPageRoute: FC<RouteComponentProps<any>> = ({ match }) => {
 
 export const ActivityPageRouter: RouteProps = {
   exact: false,
-  path: '/activity/user/:userId',
+  path: '/activity',
   component: ActivityPageRoute
 };
