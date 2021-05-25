@@ -18,9 +18,9 @@ export const my_timeline = 'My Timeline';
 export const instance_bg_img =
   'https://reflowproject.eu/wp-content/uploads/2019/08/reflow-cocreation-1.png';
 export const logo_large_url =
-  'https://pbs.twimg.com/profile_images/1176826011293556738/9jzWwP_g.png';
+  'https://raw.githubusercontent.com/reflow-project/zenpub-client/main/src/static/img/weloop_logo_1200x512.png';
 export const logo_small_url =
-  'https://pbs.twimg.com/profile_images/1176826011293556738/9jzWwP_g.png';
+  'https://raw.githubusercontent.com/reflow-project/zenpub-client/main/src/static/img/weloop_logo_128x128-01.png';
 
 export const terms_markdown_text = {
   // replace the text as needed
