@@ -1,4 +1,3 @@
-import { ApolloError } from 'apollo-client';
 import { SidePanelHOC } from 'HOC/modules/SidePanel/SidePanel';
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
@@ -10,13 +9,10 @@ import { typography } from '../../../mn-constants';
 import styled from '../../themes/styled';
 
 export interface Props {
-  userId: string;
   inventory: any;
-  error?: ApolloError | undefined;
-  loading: boolean;
 }
 
-export const Inventory: React.FC<Props> = ({ userId, inventory }) => {
+export const Inventory: React.FC<Props> = ({ inventory }) => {
   return (
     <MainContainer>
       <HomeBox>

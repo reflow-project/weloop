@@ -15,22 +15,15 @@ export interface EconomicResource {
 }
 
 export const InventoryPage: FC<InventoryPageProps> = ({ userId }) => {
-  const { data, loading, error } = useEconomicResourcesFilteredQuery({
+  const { data } = useEconomicResourcesFilteredQuery({
     variables: { agent: [userId] }
   });
 
   const inventory: any = data?.economicResourcesFiltered || [];
 
   const props: InventoryProps = {
-    userId,
-    inventory,
-    loading,
-    error
+    inventory
   };
 
-  return (
-    <>
-      <Inventory {...props} />
-    </>
-  );
+  return <Inventory {...props} />;
 };

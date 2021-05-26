@@ -10,61 +10,56 @@ import { ThreadPreviewFragmentDoc } from '../../modules/previews/thread/ThreadPr
 import { CollectionPreviewFragmentDoc } from '../../modules/previews/collection/CollectionPreview.generated';
 import { ActivityPreviewFragmentDoc } from '../../modules/previews/activity/ActivityPreview.generated';
 
+export type CommunityPageDataFragment = { __typename: 'Community' } & Pick<
+  Types.Community,
+  'id'
+  > & {
+    myFollow: Types.Maybe<{ __typename: 'Follow' } & Pick<Types.Follow, 'id'>>;
+} & HeroCommunityDataFragment;
 
+export type CommunityPageThreadFragment = { __typename: 'Thread' } & Pick<Types.Thread, 'id'> &
+  ThreadPreviewFragment;
 
+export type CommunityPageCollectionBaseFragment = { __typename: 'Collection' } & Pick<
+  Types.Collection,
+  'id'
+  > &
+  CollectionPreviewFragment;
 
-export type CommunityPageDataFragment = (
-  { __typename: 'Community' }
-  & Pick<Types.Community, 'id'>
-  & { myFollow: Types.Maybe<(
-      { __typename: 'Follow' }
-      & Pick<Types.Follow, 'id'>
-      )> }
-  & HeroCommunityDataFragment
-  );
-
-export type CommunityPageThreadFragment = (
-  { __typename: 'Thread' }
-  & Pick<Types.Thread, 'id'>
-  & ThreadPreviewFragment
-  );
-
-export type CommunityPageCollectionBaseFragment = (
-  { __typename: 'Collection' }
-  & Pick<Types.Collection, 'id'>
-  & CollectionPreviewFragment
-  );
-
-export type CommunityPageActivityBaseFragment = (
-  { __typename: 'Activity' }
-  & Pick<Types.Activity, 'id'>
-  & ActivityPreviewFragment
-  );
+export type CommunityPageActivityBaseFragment = { __typename: 'Activity' } & Pick<
+  Types.Activity,
+  'id'
+  > &
+  ActivityPreviewFragment;
 
 export const CommunityPageDataFragmentDoc = gql`
-    fragment CommunityPageData on Community {
-  id
-  myFollow {
+  fragment CommunityPageData on Community {
     id
+    myFollow {
+      id
+    }
+    ...HeroCommunityData
   }
-  ...HeroCommunityData
-}
-    ${HeroCommunityDataFragmentDoc}`;
+  ${HeroCommunityDataFragmentDoc}
+`;
 export const CommunityPageThreadFragmentDoc = gql`
-    fragment CommunityPageThread on Thread {
-  id
-  ...ThreadPreview
-}
-    ${ThreadPreviewFragmentDoc}`;
+  fragment CommunityPageThread on Thread {
+    id
+    ...ThreadPreview
+  }
+  ${ThreadPreviewFragmentDoc}
+`;
 export const CommunityPageCollectionBaseFragmentDoc = gql`
-    fragment CommunityPageCollectionBase on Collection {
-  id
-  ...CollectionPreview
-}
-    ${CollectionPreviewFragmentDoc}`;
+  fragment CommunityPageCollectionBase on Collection {
+    id
+    ...CollectionPreview
+  }
+  ${CollectionPreviewFragmentDoc}
+`;
 export const CommunityPageActivityBaseFragmentDoc = gql`
-    fragment CommunityPageActivityBase on Activity {
-  id
-  ...ActivityPreview
-}
-    ${ActivityPreviewFragmentDoc}`;
+  fragment CommunityPageActivityBase on Activity {
+    id
+    ...ActivityPreview
+  }
+  ${ActivityPreviewFragmentDoc}
+`;

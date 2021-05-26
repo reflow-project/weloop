@@ -2,15 +2,13 @@ import * as React from 'react';
 import { FC } from 'react';
 import { useActionsQuery } from '../IntentPanel/Actions.generated';
 
-import EconomicEventManager, {
-  EconomicEventManagerProps
-} from '../../../ui/modules/EconomicEventManager';
+import { EconomicEventManagerProps } from '../../../ui/modules/EconomicEventManager';
 import {
   useEconomicEventsFilteredQuery,
   useUnitsPagesQuery
 } from './EconomicEventManager.generated';
 
-export const EconomicEventManagerHOC: FC = () => {
+export const EconomicEventManagerHOC: FC = ({ children }) => {
   const [providerList, setProviderList] = React.useState<
     null | undefined | [] | { id: string; name: string }[]
   >([]);
@@ -45,5 +43,12 @@ export const EconomicEventManagerHOC: FC = () => {
     setAction
   };
 
-  return <EconomicEventManager {...economicEventManager} />;
+  const childrenWithProps = React.Children.map(children, child => {
+    if (React.isValidElement(child)) {
+      return React.cloneElement(child, { ...economicEventManager });
+    }
+    return child;
+  });
+
+  return <div>{childrenWithProps}</div>;
 };

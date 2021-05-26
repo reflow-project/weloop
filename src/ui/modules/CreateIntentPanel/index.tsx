@@ -131,6 +131,7 @@ export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
                     formik.setValues({ ...formik.values, [name]: option.id });
                   }}
                   options={unitLst}
+                  placeholder={i18nMark('unit')}
                   value={{ id: formik.values.hasUnit, label: '' }}
                   variant="primary"
                   id="hasUnit"
@@ -172,6 +173,7 @@ export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
                   value: el.id,
                   label: el.name
                 }))}
+                placeholder={i18nMark('Select location')}
                 value={{ id: formik.values.atLocation || '', label: '' }}
                 variant="primary"
                 id="atLocation"
@@ -194,7 +196,7 @@ export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
                   onChange={formik.handleChange}
                   disabled={formik.isSubmitting}
                   hint={{ class: 'error', value: '' }}
-                  placeholder={i18nMark('A description of your resource')}
+                  placeholder={i18nMark('A description of your intent')}
                   value={formik.values.note}
                 />
               </FormGroup>

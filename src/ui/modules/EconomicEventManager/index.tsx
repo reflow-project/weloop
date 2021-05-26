@@ -32,7 +32,7 @@ export type EconomicEventManagerProps = {
   setAction: any;
 };
 
-export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
+export const EconomicEventManager: React.FC<any> = ({
   actionList,
   setAction,
   providerList,
@@ -141,6 +141,7 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
           <Select
             options={actionList}
             variant="primary"
+            placeholder="Select action"
             value={eventVariables.action}
             id="action"
             name="action"
@@ -155,6 +156,7 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
                 <Select
                   options={providerArr}
                   variant="primary"
+                  placeholder="Provider"
                   value={eventVariables.provider}
                   id="provider"
                   name="provider"
@@ -167,6 +169,7 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
                 <Select
                   options={receiverArr}
                   variant="primary"
+                  placeholder="Receiver"
                   value={eventVariables.receiver}
                   id="receiver"
                   name="receiver"
@@ -194,6 +197,7 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
                 <Select
                   options={unitLst}
                   value={eventVariables.hasUnit}
+                  placeholder="Unit"
                   variant="primary"
                   id="hasUnit"
                   name="hasUnit"

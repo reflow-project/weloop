@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/macro';
 import * as React from 'react';
 import { EconomicEventManagerHOC } from '../../../HOC/modules/EconomicEventManager/EconomicEventManagerHOC';
+import EconomicEventManager from '../EconomicEventManager';
 import Button from 'ui/elements/Button';
 import { clearFix } from 'polished';
 import media from 'styled-media-query';
@@ -123,7 +124,9 @@ export const ProposedIntentPanel: React.FC<IProposedIntentPanel> = ({
           </ButtonWrap>
         </Box>
         <Box>
-          <EconomicEventManagerHOC />
+          <EconomicEventManagerHOC>
+            <EconomicEventManager />
+          </EconomicEventManagerHOC>
         </Box>
       </ContentWrap>
     </Container>

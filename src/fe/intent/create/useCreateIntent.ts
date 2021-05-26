@@ -10,6 +10,7 @@ export interface CreateOffer {
   hasUnit: string;
   hasNumericalValue: number;
 }
+
 export const useCreateIntent = () => {
   const [createOfferMut, createOfferMutStatus] = useCreateOfferMutation();
 

@@ -1,8 +1,32 @@
 import * as Types from '../../../graphql/types.generated';
 
+import { FollowPreviewFragment } from '../../modules/previews/follow/FollowPreview.generated';
+import { LikePreviewFragment } from '../../modules/previews/like/LikePreview.generated';
+import { FlagPreviewFragment } from '../../modules/previews/flag/FlagPreview.generated';
+import { CommentPreviewFragment } from '../../modules/previews/comment/CommentPreview.generated';
+import { UserPreviewFragment } from '../../modules/previews/user/UserPreview.generated';
+import { ResourcePreviewFragment } from '../../modules/previews/resource/ResourcePreview.generated';
+import { CollectionPreviewFragment } from '../../modules/previews/collection/CollectionPreview.generated';
+import { CommunityPreviewFragment } from '../../modules/previews/community/CommunityPreview.generated';
 import gql from 'graphql-tag';
+import { CommunityPreviewFragmentDoc } from '../../modules/previews/community/CommunityPreview.generated';
+import { CollectionPreviewFragmentDoc } from '../../modules/previews/collection/CollectionPreview.generated';
+import { ResourcePreviewFragmentDoc } from '../../modules/previews/resource/ResourcePreview.generated';
+import { UserPreviewFragmentDoc } from '../../modules/previews/user/UserPreview.generated';
+import { CommentPreviewFragmentDoc } from '../../modules/previews/comment/CommentPreview.generated';
+import { FlagPreviewFragmentDoc } from '../../modules/previews/flag/FlagPreview.generated';
+import { LikePreviewFragmentDoc } from '../../modules/previews/like/LikePreview.generated';
+import { FollowPreviewFragmentDoc } from '../../modules/previews/follow/FollowPreview.generated';
 import * as ApolloReactCommon from '@apollo/react-common';
 import * as ApolloReactHooks from '@apollo/react-hooks';
+
+
+
+
+
+
+
+
 
 export type UserQueryVariables = {
   userId: Types.Scalars['String']
@@ -29,13 +53,31 @@ export type UserQuery = (
             { __typename: 'Content' }
             & Pick<Types.Content, 'id'>
           )> }
-        )>, context: Types.Maybe<{ __typename: 'Category' } | { __typename: 'Collection' } | (
+        )>, context: Types.Maybe<{ __typename: 'Category' } | (
+          { __typename: 'Collection' }
+          & CollectionPreviewFragment
+        ) | (
           { __typename: 'Comment' }
-          & Pick<Types.Comment, 'content'>
-        ) | { __typename: 'Community' } | { __typename: 'Flag' } | { __typename: 'Follow' } | (
-          { __typename: 'Intent' }
-          & Pick<Types.Intent, 'name' | 'canonicalUrl'>
-        ) | { __typename: 'Like' } | { __typename: 'Organisation' } | { __typename: 'Resource' } | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | { __typename: 'User' }> }
+          & CommentPreviewFragment
+        ) | (
+          { __typename: 'Community' }
+          & CommunityPreviewFragment
+        ) | (
+          { __typename: 'Flag' }
+          & FlagPreviewFragment
+        ) | (
+          { __typename: 'Follow' }
+          & FollowPreviewFragment
+        ) | { __typename: 'Intent' } | (
+          { __typename: 'Like' }
+          & LikePreviewFragment
+        ) | { __typename: 'Organisation' } | (
+          { __typename: 'Resource' }
+          & ResourcePreviewFragment
+        ) | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | (
+          { __typename: 'User' }
+          & UserPreviewFragment
+        )> }
       )>, pageInfo: (
         { __typename: 'PageInfo' }
         & Pick<Types.PageInfo, 'hasNextPage' | 'hasPreviousPage'>
@@ -61,13 +103,29 @@ export const UserDocument = gql`
         }
         verb
         context {
-          __typename
-          ... on Intent {
-            name
-            canonicalUrl
+          ... on Community {
+            ...CommunityPreview
+          }
+          ... on Collection {
+            ...CollectionPreview
+          }
+          ... on Resource {
+            ...ResourcePreview
+          }
+          ... on User {
+            ...UserPreview
           }
           ... on Comment {
-            content
+            ...CommentPreview
+          }
+          ... on Flag {
+            ...FlagPreview
+          }
+          ... on Like {
+            ...LikePreview
+          }
+          ... on Follow {
+            ...FollowPreview
           }
         }
       }
@@ -79,7 +137,14 @@ export const UserDocument = gql`
     }
   }
 }
-    `;
+    ${CommunityPreviewFragmentDoc}
+${CollectionPreviewFragmentDoc}
+${ResourcePreviewFragmentDoc}
+${UserPreviewFragmentDoc}
+${CommentPreviewFragmentDoc}
+${FlagPreviewFragmentDoc}
+${LikePreviewFragmentDoc}
+${FollowPreviewFragmentDoc}`;
 
 /**
  * __useUserQuery__

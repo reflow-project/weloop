@@ -66,6 +66,7 @@ export interface Props {
   onSelect: (name: string, option: IntentActions) => void;
   onInputChange?: (name: string, value: string) => void;
   options?: IntentActions[];
+  placeholder?: string;
   variant: string;
   id: string | number;
   name: string;
@@ -76,6 +77,7 @@ const CustomSelect: FC<Props> = ({
   onSelect,
   onInputChange = () => {},
   variant,
+  placeholder = '',
   name,
   options,
   id,
@@ -98,10 +100,11 @@ const CustomSelect: FC<Props> = ({
     <WrapperSelect
       onChange={(option: any) => onSelect(name, { id: option?.id, label: option?.value })}
       variant={variant}
+      placeholder={placeholder}
       // onInputChange={(value:string) => onInputChange(name, value)}
       className="basic-single"
       classNamePrefix="select"
-      value={optionsList.find(el => el.id === value.id) || null}
+      value={optionsList.find(el => el.id === value?.id) || null}
       isDisabled={false}
       isLoading={false}
       isClearable={true}

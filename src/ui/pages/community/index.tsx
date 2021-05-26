@@ -16,7 +16,6 @@ import {
   Wrapper,
   WrapperCont
 } from 'ui/elements/Layout';
-// import { Header } from 'ui/modules/Header';
 import { LoadMore } from 'ui/modules/Loadmore';
 import SocialText from 'ui/modules/SocialText';
 import styled from 'ui/themes/styled';
@@ -26,6 +25,7 @@ export interface Props {
   Activities: ReactElement[];
   Members: ReactElement[];
   Intents: ReactElement[];
+  Inventory: any;
   // Collections: ReactElement[];
   HeroCommunity: ReactElement;
   Threads: ReactElement[];
@@ -40,6 +40,7 @@ export interface Props {
     discussions: string;
     // collections: string;
     intents: string;
+    inventory: string;
   };
 }
 
@@ -49,6 +50,7 @@ export const Community: React.FC<Props> = ({
   // Collections,
   Members,
   Intents,
+  Inventory,
   tabPaths,
   newThreadFormik,
   // isJoined,
@@ -69,6 +71,9 @@ export const Community: React.FC<Props> = ({
             <Switch>
               <Route exact path={tabPaths.intents}>
                 <ObjectsList>{Intents}</ObjectsList>
+              </Route>
+              <Route exact path={tabPaths.inventory}>
+                <ObjectsList>{Inventory}</ObjectsList>
               </Route>
               <Route exact path={tabPaths.timeline}>
                 <>
@@ -166,6 +171,9 @@ const Menu: React.FC<{ tabPaths: Props['tabPaths'] }> = ({ tabPaths }) => (
   <MenuList p={3} pt={0}>
     <NavLink exact to={tabPaths.intents}>
       <Trans>Intents</Trans>
+    </NavLink>
+    <NavLink exact to={tabPaths.inventory}>
+      <Trans>Recent Inventory</Trans>
     </NavLink>
     <NavLink to={tabPaths.timeline}>
       <Trans>Recent activity</Trans>

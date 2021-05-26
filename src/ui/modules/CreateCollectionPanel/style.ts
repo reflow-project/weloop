@@ -22,6 +22,10 @@ export const CollectionContainerForm = styled(ContainerForm)`
   .d-flex {
     display: flex;
     justify-content: space-between;
+
+    .item_col-6 {
+      width: calc(50% - 5px);
+    }
   }
 `;
 

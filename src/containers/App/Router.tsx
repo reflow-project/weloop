@@ -22,6 +22,7 @@ import { UserPageRoute } from 'routes/UserPageRoute';
 import { LMSMoodleSearchRoute } from 'routes/LMSMoodleSearchRoute';
 import { TermsAndConditionsPageRoute } from 'routes/TermsAndConditionsPage';
 import { NotFoundHOC } from 'HOC/pages/not-found/NotFound';
+
 export const Router: React.FC = () => {
   return (
     <Switch>

@@ -13,14 +13,30 @@
              }
              verb
              context  {
-             __typename
-              ...on Intent {
-                  name
-                  canonicalUrl
-                }
-              ...on Comment {
-                  content
-                }
+                 ... on Community {
+                   ...CommunityPreview
+                 }
+                 ... on Collection {
+                   ...CollectionPreview
+                 }
+                 ... on Resource {
+                   ...ResourcePreview
+                 }
+                 ... on User {
+                   ...UserPreview
+                 }
+                 ... on Comment {
+                   ...CommentPreview
+                 }
+                 ... on Flag {
+                   ...FlagPreview
+                 }
+                 ... on Like {
+                   ...LikePreview
+                 }
+                 ... on Follow {
+                   ...FollowPreview
+                 }
               }
 
              }
