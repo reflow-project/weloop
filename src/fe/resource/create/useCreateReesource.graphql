@@ -1,22 +1,22 @@
 mutation createEconomicEventAndNewResource(
-                               $note: String,
-                               $action: ID!,
-                               $provider: ID!,
-                               $receiver: ID!,
-                               $hasUnit: ID!,
-                               $hasNumericalValue: Float!,
-                               $name: String,
-                                ) {
+  $note: String,
+  $action: ID!,
+  $provider: ID!,
+  $receiver: ID!,
+  $hasUnit: ID!,
+  $hasNumericalValue: Float!,
+  $name: String,
+) {
   createEconomicEvent(  event: {
-                            note: $note,
-                            action: $action
-                            provider: $provider,
-                            receiver: $receiver,
-                            resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}
-                          },
-                          newInventoriedResource: {
-                            name: $name
-                          }) {
+    note: $note,
+    action: $action
+    provider: $provider,
+    receiver: $receiver,
+    resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}
+  },
+    newInventoriedResource: {
+      name: $name
+    }) {
     economicEvent {
       id
       note

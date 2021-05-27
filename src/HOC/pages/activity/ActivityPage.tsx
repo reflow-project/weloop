@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useMe } from '../../../fe/session/useMe';
 import { Activity, Props as ActivityProps } from '../../../ui/pages/activity';
 import { useUserQuery } from './ActivityPage.generated';
 
@@ -10,8 +11,11 @@ export interface EconomicResource {
 }
 
 export const ActivityPage: FC<ActivityProps> = ({ userId }) => {
+  const { me } = useMe();
+  const currentUser = me ? me.user.id : userId;
+
   const { error, data }: any = useUserQuery({
-    variables: { userId: '01F494QA0T31JTQGJ80QFHTFM0' }
+    variables: { userId: currentUser }
   });
 
   console.log({ data });

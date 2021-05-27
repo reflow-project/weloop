@@ -3,13 +3,14 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Box, Text } from 'rebass/styled-components';
 import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
+import { EconomicResourcesFilteredQuery } from '../../../HOC/pages/inventory/InventoryPage.generated';
 import { InventoryWrapper, InfoWrapper, ImageWrapper } from '../../../ui/pages/resource';
 import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
 import { typography } from '../../../mn-constants';
 import styled from '../../themes/styled';
 
 export interface Props {
-  inventory: any;
+  inventory: EconomicResourcesFilteredQuery['economicResourcesFiltered'];
 }
 
 export const Inventory: React.FC<Props> = ({ inventory }) => {

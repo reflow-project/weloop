@@ -2,7 +2,7 @@ import Select from 'react-select';
 import React, { FC } from 'react';
 import styled from 'ui/themes/styled';
 import { darken, lighten, transitions } from 'polished';
-import { IntentActions } from '../../modules/EconomicEventManager';
+import { Props } from './select';
 
 const WrapperSelect = styled(Select)`
   margin-bottom: 10px;
@@ -62,18 +62,7 @@ const WrapperSelect = styled(Select)`
   }
 `;
 
-export interface Props {
-  onSelect: (name: string, option: IntentActions) => void;
-  onInputChange?: (name: string, value: string) => void;
-  options?: IntentActions[];
-  placeholder?: string;
-  variant: string;
-  id: string | number;
-  name: string;
-  value: IntentActions;
-}
-
-const CustomSelect: FC<Props> = ({
+export const CustomSelect: FC<Props> = ({
   onSelect,
   onInputChange = () => {},
   variant,
@@ -116,5 +105,3 @@ const CustomSelect: FC<Props> = ({
     />
   );
 };
-
-export default CustomSelect;

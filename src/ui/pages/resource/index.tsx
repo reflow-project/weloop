@@ -1,7 +1,6 @@
 import { ApolloError } from 'apollo-client';
 import { SidePanelHOC } from 'HOC/modules/SidePanel/SidePanel';
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
 import { Box, Text } from 'rebass/styled-components';
 import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
 import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
@@ -19,21 +18,19 @@ export const ResourceItem: React.FC<Props> = ({ resource }) => {
       <HomeBox>
         <WrapperCont>
           <Wrapper>
-            <WrapperLink to={`/resource/${resource && resource.id}`}>
-              <InventoryWrapper key={resource && resource.id}>
-                <ImageWrapper>
-                  {resource && resource.image && (
-                    <img src={resource && resource.image} alt={resource && resource.name} />
-                  )}
-                </ImageWrapper>
-                <InfoWrapper>
-                  <Title variant="subhead">{resource && resource.name}</Title>
-                  <Box mr={1}>
-                    <Text variant="text">{resource && resource.note}</Text>
-                  </Box>
-                </InfoWrapper>
-              </InventoryWrapper>
-            </WrapperLink>
+            <InventoryWrapper key={resource && resource.id}>
+              <ImageWrapper>
+                {resource && resource.image && (
+                  <img src={resource && resource.image} alt={resource && resource.name} />
+                )}
+              </ImageWrapper>
+              <InfoWrapper>
+                <Title variant="subhead">{resource && resource.name}</Title>
+                <Box mr={1}>
+                  <Text variant="text">{resource && resource.note}</Text>
+                </Box>
+              </InfoWrapper>
+            </InventoryWrapper>
           </Wrapper>
         </WrapperCont>
       </HomeBox>
@@ -43,13 +40,6 @@ export const ResourceItem: React.FC<Props> = ({ resource }) => {
 };
 
 export default ResourceItem;
-
-const WrapperLink = styled(NavLink)`
-  text-decoration: none !important;
-  * {
-    text-decoration: none !important;
-  }
-`;
 
 const Title = styled(Text)`
   color: ${props => props.theme.colors.dark};

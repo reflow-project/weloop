@@ -23,10 +23,8 @@ export const EconomicEventManagerHOC: FC = ({ children }) => {
   });
 
   React.useEffect(() => {
-    const providers =
-      data && data.economicEventsFiltered && data?.economicEventsFiltered.map(el => el.provider);
-    const receivers =
-      data && data.economicEventsFiltered && data?.economicEventsFiltered.map(el => el.receiver);
+    const providers = data?.economicEventsFiltered?.map(el => el.provider);
+    const receivers = data?.economicEventsFiltered?.map(el => el.receiver);
     providers?.length && setProviderList(providers || null);
     receivers?.length && setReceiverList(receivers || []);
   }, [data]);

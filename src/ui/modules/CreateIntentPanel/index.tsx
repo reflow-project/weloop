@@ -8,6 +8,7 @@ import { FormikHook } from 'ui/@types/types';
 import { FormGroup, FormLabel } from '../EconomicEventManager/styles';
 import Input, { CustomAlert } from '../../elements/Input';
 import { Actions, AlertWrapper, Container, CounterChars, Header } from 'ui/modules/Modal';
+import * as Types from 'graphql/types.generated';
 import {
   Hero,
   FlexBetweenContainer,
@@ -15,7 +16,7 @@ import {
   HeroInfo,
   Description
 } from '../CreateCollectionPanel/style';
-import Select from 'ui/elements/Select';
+import { CustomSelect as Select } from 'ui/elements/CustomSelect';
 
 export type CreateIntentFormValues = {
   name: string;
@@ -43,8 +44,12 @@ export type TCreateIntentPanel = {
   communities?: Array<SelectOption>;
   cancel: () => void;
   formik: FormikHook<CreateIntentFormValues>;
-  unitPages?: any;
-  spatialThings?: any;
+  unitPages?: ({ __typename: 'Unit' } & Pick<Types.Unit, 'symbol' | 'label' | 'id'>)[] | null;
+  spatialThings?: Types.Maybe<
+    Types.Maybe<
+      { __typename: 'SpatialThing' } & Pick<Types.SpatialThing, 'name' | 'id' | 'lat' | 'long'>
+    >[]
+  > | null;
 };
 
 export type SelectOption = {
@@ -173,7 +178,7 @@ export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
                   value: el.id,
                   label: el.name
                 }))}
-                placeholder={i18nMark('Select location')}
+                placeholder={i18nMark('CustomSelect location')}
                 value={{ id: formik.values.atLocation || '', label: '' }}
                 variant="primary"
                 id="atLocation"

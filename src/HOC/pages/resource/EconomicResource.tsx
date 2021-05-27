@@ -12,7 +12,7 @@ export const EconomicResource: FC<ResourcePageProps> = ({ resourceId }) => {
   });
 
   const resource: any = data?.economicResource;
-  console.log(resource);
+
   const props: ResourceItemProps = {
     resource,
     loading,
