@@ -103,7 +103,7 @@ const Bavatar = styled(Box)`
   }
 `;
 
-const Icon = styled(Box)`
+export const Icon = styled(Box)`
   cursor: pointer;
   height: 40px;
   width: 40px;

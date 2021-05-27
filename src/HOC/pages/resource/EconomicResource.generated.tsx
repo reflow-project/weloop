@@ -14,6 +14,17 @@ export type EconomicResourceQuery = (
   & { economicResource: Types.Maybe<(
     { __typename: 'EconomicResource' }
     & Pick<Types.EconomicResource, 'id' | 'name' | 'note' | 'image'>
+    & { currentLocation: Types.Maybe<(
+      { __typename: 'SpatialThing' }
+      & Pick<Types.SpatialThing, 'id' | 'name' | 'lat' | 'long'>
+    )>, onhandQuantity: Types.Maybe<(
+      { __typename: 'Measure' }
+      & Pick<Types.Measure, 'id' | 'hasNumericalValue'>
+      & { hasUnit: (
+        { __typename: 'Unit' }
+        & Pick<Types.Unit, 'id' | 'label'>
+      ) }
+    )> }
   )> }
 );
 
@@ -25,6 +36,20 @@ export const EconomicResourceDocument = gql`
     name
     note
     image
+    currentLocation {
+      id
+      name
+      lat
+      long
+    }
+    onhandQuantity {
+      id
+      hasNumericalValue
+      hasUnit {
+        id
+        label
+      }
+    }
   }
 }
     `;

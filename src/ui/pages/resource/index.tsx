@@ -1,12 +1,12 @@
 import { ApolloError } from 'apollo-client';
 import { SidePanelHOC } from 'HOC/modules/SidePanel/SidePanel';
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
 import { Box, Text } from 'rebass/styled-components';
 import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
 import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
 import styled from '../../themes/styled';
-
+const MapIcon = require('react-feather/dist/icons/map').default;
+const BoxIcon = require('react-feather/dist/icons/box').default;
 export interface Props {
   resource?: EconomicResource;
   error?: ApolloError | undefined;
@@ -19,21 +19,41 @@ export const ResourceItem: React.FC<Props> = ({ resource }) => {
       <HomeBox>
         <WrapperCont>
           <Wrapper>
-            <WrapperLink to={`/resource/${resource && resource.id}`}>
-              <InventoryWrapper key={resource && resource.id}>
-                <ImageWrapper>
-                  {resource && resource.image && (
-                    <img src={resource && resource.image} alt={resource && resource.name} />
-                  )}
-                </ImageWrapper>
-                <InfoWrapper>
+            <InventoryWrapper key={resource && resource.id}>
+              <ImageWrapper>
+                {resource && resource.image && (
+                  <img src={resource && resource.image} alt={resource && resource.name} />
+                )}
+              </ImageWrapper>
+              <InfoWrapper>
+                <Box mr={1} mb={2}>
                   <Title variant="subhead">{resource && resource.name}</Title>
-                  <Box mr={1}>
-                    <Text variant="text">{resource && resource.note}</Text>
-                  </Box>
-                </InfoWrapper>
-              </InventoryWrapper>
-            </WrapperLink>
+                </Box>
+                <Box mr={1}>
+                  <Text variant="text">{resource && resource.note}</Text>
+                </Box>
+                <Box mr={1}>
+                  <Text variant="text">
+                    <Icon>
+                      <MapIcon size="16" />
+                    </Icon>
+                    <b>Location:</b>
+                    {resource?.currentLocation?.name
+                      ? resource.currentLocation.name
+                      : 'Not provided'}
+                  </Text>
+                </Box>
+                <Box mr={1}>
+                  <Text variant="text">
+                    <Icon>
+                      <BoxIcon size="16" />
+                    </Icon>
+                    <b>Quantity in stock:</b>
+                    {`${resource?.onhandQuantity?.hasNumericalValue} ${resource?.onhandQuantity?.hasUnit.label}`}
+                  </Text>
+                </Box>
+              </InfoWrapper>
+            </InventoryWrapper>
           </Wrapper>
         </WrapperCont>
       </HomeBox>
@@ -44,16 +64,17 @@ export const ResourceItem: React.FC<Props> = ({ resource }) => {
 
 export default ResourceItem;
 
-const WrapperLink = styled(NavLink)`
-  text-decoration: none !important;
-  * {
-    text-decoration: none !important;
-  }
-`;
-
 const Title = styled(Text)`
   color: ${props => props.theme.colors.dark};
   text-decoration: none !important;
+`;
+
+export const Icon = styled(Box)`
+  width: 30px;
+  display: inline-block;
+  svg {
+    stroke: ${props => props.theme.colors.mediumdark};
+  }
 `;
 
 export const InventoryWrapper = styled('div')`

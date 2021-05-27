@@ -9,7 +9,7 @@ import { typography } from '../../../mn-constants';
 import styled from '../../themes/styled';
 
 export interface Props {
-  inventory: any;
+  inventory: EconomicResource[];
 }
 
 export const Inventory: React.FC<Props> = ({ inventory }) => {
@@ -19,8 +19,8 @@ export const Inventory: React.FC<Props> = ({ inventory }) => {
         <WrapperCont>
           <Wrapper>
             {(inventory as EconomicResource[]).map(
-              ({ id, name, note, image }: EconomicResource) => (
-                <WrapperLink to={`/resource/${id}`}>
+              ({ id, name, note, image, currentLocation }: EconomicResource) => (
+                <WrapperLink to={`/inventory/${id}`}>
                   <InventoryWrapper key={id}>
                     <ImageWrapper>{image && <img src={image} alt={name} />}</ImageWrapper>
                     <InfoWrapper>

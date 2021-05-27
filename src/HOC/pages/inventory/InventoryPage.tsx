@@ -12,6 +12,20 @@ export interface EconomicResource {
   name: string;
   note: string;
   image?: string;
+  currentLocation?: {
+    id: string;
+    name: string;
+    lat: string;
+    long: string;
+  };
+  onhandQuantity?: {
+    id: string;
+    hasNumericalValue: number;
+    hasUnit: {
+      id: string;
+      label: string;
+    };
+  };
 }
 
 export const InventoryPage: FC<InventoryPageProps> = ({ userId }) => {
