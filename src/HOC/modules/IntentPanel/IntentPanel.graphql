@@ -1,4 +1,4 @@
-query intentPanel($intentId: ID) {
+query intentItem($intentId: ID) {
   intent(id: $intentId) {
     hasBeginning
     hasPointInTime

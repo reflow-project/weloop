@@ -1,4 +1,4 @@
-{
+query economicResource($id: ID!) {
   economicResource(id: $id) {
     id
     name

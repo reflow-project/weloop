@@ -9,6 +9,7 @@ import { CreateNewPasswordPageRoute } from 'routes/CreateNewPasswordPageRoute';
 import { DiscoverPageRoute } from 'routes/DiscoverPageRoute';
 import { InventoryPageRouter } from 'routes/InventoryPageRouter';
 import { InventoryResourceItemRouter } from 'routes/InventoryResourceItemRouter';
+import { ActivityPageRouter } from 'routes/ActivityPageRoute';
 import { HomePageRoute } from 'routes/HomePageRoute';
 import { LoginPageRoute } from 'routes/LoginPageRoute';
 import { MapsPageRoute } from 'routes/MapsPageRoute';
@@ -21,6 +22,7 @@ import { UserPageRoute } from 'routes/UserPageRoute';
 import { LMSMoodleSearchRoute } from 'routes/LMSMoodleSearchRoute';
 import { TermsAndConditionsPageRoute } from 'routes/TermsAndConditionsPage';
 import { NotFoundHOC } from 'HOC/pages/not-found/NotFound';
+
 export const Router: React.FC = () => {
   return (
     <Switch>
@@ -33,6 +35,7 @@ export const Router: React.FC = () => {
       <Route {...ThreadPageRoute} />
       <Route {...InventoryPageRouter} />
       <Route {...InventoryResourceItemRouter} />
+      <Route {...ActivityPageRouter} />
       <Route {...DiscoverPageRoute} />
       <Route {...SearchPageRoute} />
       <Route {...CreateNewPasswordPageRoute} />

@@ -173,13 +173,15 @@ export const DropdownSidebar: React.FC<Props> = ({ logout, userLink, toggleDropd
 type TCreateDropdown = {
   toggleDropdown: () => void;
   createCommunity: any;
-  createIntent: any;
+  createIntent: () => void;
+  createResource: () => void;
 };
 
 export const CreateDropdown: React.FC<TCreateDropdown> = ({
   toggleDropdown,
   createCommunity,
-  createIntent
+  createIntent,
+  createResource
 }) => {
   return (
     <Dropdown orientation={'top'} close={toggleDropdown}>
@@ -200,9 +202,9 @@ export const CreateDropdown: React.FC<TCreateDropdown> = ({
             <Trans>Create a new intent</Trans>
           </Text>
         </Item>
-        <Item variant="link">
+        <Item variant="link" onClick={() => createResource()}>
           <span>
-            <Plus size={16} color={'#ddd'} />
+            <Plus size={16} color={'#333'} />
           </span>
           <Text variant="text">
             <Trans>Create a new resource</Trans>

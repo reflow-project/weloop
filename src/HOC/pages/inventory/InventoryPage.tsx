@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
-import { Inventory, Props as InventoryProps } from '../../../ui/pages/inventory';
-import * as GQL from './InventoryPage.generated';
+import { useMe } from '../../../fe/session/useMe';
+import { Inventory } from '../../../ui/pages/inventory';
+import { useEconomicResourcesFilteredQuery } from './InventoryPage.generated';
 
 type InventoryPageProps = {
   userId: string;
@@ -12,25 +13,28 @@ export interface EconomicResource {
   name: string;
   note: string;
   image?: string;
+  currentLocation?: {
+    id: string;
+    name: string;
+    lat: string;
+    long: string;
+  };
+  onhandQuantity?: {
+    id: string;
+    hasNumericalValue: number;
+    hasUnit: {
+      id: string;
+      label: string;
+    };
+  };
 }
 
 export const InventoryPage: FC<InventoryPageProps> = ({ userId }) => {
-  const { data, loading, error } = GQL.useInventoryListQuery({
-    variables: { agent: userId }
+  const { me } = useMe();
+  const currentUser = me ? me.user.id : userId;
+  const { data } = useEconomicResourcesFilteredQuery({
+    variables: { agent: [currentUser] }
   });
 
-  const inventory: EconomicResource[] | [] = data?.economicResourcesFiltered || [];
-
-  const props: InventoryProps = {
-    userId,
-    inventory,
-    loading,
-    error
-  };
-
-  return (
-    <>
-      <Inventory {...props} />
-    </>
-  );
+  return <Inventory inventory={data?.economicResourcesFiltered || []} />;
 };

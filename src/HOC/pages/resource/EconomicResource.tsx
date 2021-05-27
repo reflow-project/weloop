@@ -6,19 +6,12 @@ type ResourcePageProps = {
   resourceId: string;
 };
 
-export interface EconomicResource {
-  id: string;
-  name: string;
-  note: string;
-  image?: string;
-}
-
 export const EconomicResource: FC<ResourcePageProps> = ({ resourceId }) => {
-  const { data, loading, error } = GQL.useInventoryItemQuery({
+  const { data, loading, error } = GQL.useEconomicResourceQuery({
     variables: { id: resourceId }
   });
 
-  const resource: EconomicResource = data?.economicResource || null;
+  const resource: any = data?.economicResource;
 
   const props: ResourceItemProps = {
     resource,

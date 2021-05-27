@@ -4,7 +4,8 @@ import { ToastContainer, Slide, toast } from 'react-toastify';
 import { useCreateEvent } from '../../../fe/intent/createEvent/useCreateEvent';
 import Button from '../../elements/Button';
 import Input from '../../elements/Input';
-import Select from 'ui/elements/Select';
+import { CustomSelect as Select } from 'ui/elements/CustomSelect';
+import { setSelectOption } from '../../elements/CustomSelect/select';
 import { FormLabel, FormGroup, FormStyled, ButtonWrap } from './styles';
 
 export type IntentActions = {
@@ -22,42 +23,21 @@ export type EconomicEventVariables = {
   hasNumericalValue: number | string | undefined;
 };
 
-type Person = {
-  id: string;
-  name: string;
-  __typename: string;
-};
-
-type UnitPage = {
-  id: string;
-  label: string;
-  symbol: string;
-};
-
-type EconomicEvent = {
-  id: string;
-  provider: Person;
-  receiver: Person;
-  __typename: string;
-};
-
 export type EconomicEventManagerProps = {
-  actionList: IntentActions[] | undefined;
-  economicEvents: {
-    loading: boolean;
-    error: React.ReactNode;
-    data: EconomicEvent[];
-  };
-  unitPages: {
-    edges: UnitPage[];
+  actionList?: any;
+  providerList: null | undefined | [] | { id: string; name: string }[];
+  receiverList: null | undefined | [] | { id: string; name: string }[];
+  unitPages?: {
+    edges: any;
   };
   setAction: any;
 };
 
-export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
+export const EconomicEventManager: React.FC<any> = ({
   actionList,
   setAction,
-  economicEvents,
+  providerList,
+  receiverList,
   unitPages
 }) => {
   const [eventVariables, setEventVariables] = React.useState({
@@ -69,41 +49,22 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
     hasNumericalValue: ''
   });
 
-  const [providerLst, setProviderLst] = React.useState<any>([]);
-  const [receiverLst, setReceiverLst] = React.useState<any>([]);
+  const [providerArr, setProviderArr] = React.useState<any>([]);
+  const [receiverArr, setReceiverArr] = React.useState<any>([]);
   const [unitLst, setUnitLst] = React.useState<any>([]);
-  // const [searchValue, setSearchValue] = React.useState<any>({
-  //   action: '',
-  //   provider: '',
-  //   receiver: '',
-  //   hasUnit: '',
-  // })
 
   React.useEffect(() => {
-    if (economicEvents.data?.length) {
-      const providers = economicEvents.data.map(el => ({
-        id: el.provider.id,
-        label: el.provider.name
-      }));
-      const receivers = economicEvents.data.map(el => ({
-        id: el.receiver.id,
-        label: el.receiver.name
-      }));
-
-      setProviderLst(providers);
-      setReceiverLst(receivers);
-    }
-  }, [economicEvents]);
+    setProviderArr(setSelectOption(providerList, 'name'));
+    setReceiverArr(setSelectOption(receiverList, 'name'));
+  }, [providerList, receiverList]);
 
   React.useEffect(() => {
-    if (unitPages?.edges.length) {
-      const unit = unitPages.edges.map(el => ({
-        id: el.id,
-        label: `${el.label} / ${el.symbol}`
-      }));
-
-      setUnitLst(unit);
-    }
+    setUnitLst(
+      setSelectOption(unitPages?.edges, {
+        variables: ['label', 'symbol'],
+        template: 'label / symbol'
+      })
+    );
   }, [unitPages]);
 
   React.useEffect(() => {
@@ -120,9 +81,12 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
       hasNumericalValue: ''
     });
 
-  const actionHandler = (name: string, option: IntentActions) => {
+  const actionHandler = (name: string, option: IntentActions | null) => {
     eventVariablesHandler({ target: { name, value: option } });
-    setAction(option.id);
+
+    if (option?.id) {
+      setAction(option.id);
+    }
   };
 
   const eventVariablesHandler = (event: any) => {
@@ -132,13 +96,6 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
       [name]: value
     });
   };
-  //
-  // const selectSearchHandler = (name: string, value: string) => {
-  //   if (value.length > 3) {
-  //     console.log(value)
-  //
-  //   }
-  // }
 
   const { create } = useCreateEvent();
 
@@ -172,21 +129,22 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
           <Select
             options={actionList}
             variant="primary"
+            placeholder="Select action"
             value={eventVariables.action}
             id="action"
             name="action"
             onSelect={actionHandler}
-            // onInputChange={selectSearchHandler}
           />
         </FormGroup>
-        {providerLst.length ? (
+        {providerArr.length ? (
           <div>
             <div className="d-flex">
               <FormGroup>
                 <FormLabel>Provider</FormLabel>
                 <Select
-                  options={providerLst}
+                  options={providerArr}
                   variant="primary"
+                  placeholder="Provider"
                   value={eventVariables.provider}
                   id="provider"
                   name="provider"
@@ -197,8 +155,9 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
               <FormGroup>
                 <FormLabel>Receiver</FormLabel>
                 <Select
-                  options={receiverLst}
+                  options={receiverArr}
                   variant="primary"
+                  placeholder="Receiver"
                   value={eventVariables.receiver}
                   id="receiver"
                   name="receiver"
@@ -226,6 +185,7 @@ export const EconomicEventManager: React.FC<EconomicEventManagerProps> = ({
                 <Select
                   options={unitLst}
                   value={eventVariables.hasUnit}
+                  placeholder="Unit"
                   variant="primary"
                   id="hasUnit"
                   name="hasUnit"

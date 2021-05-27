@@ -2,7 +2,7 @@ import Select from 'react-select';
 import React, { FC } from 'react';
 import styled from 'ui/themes/styled';
 import { darken, lighten, transitions } from 'polished';
-import { IntentActions } from '../../modules/EconomicEventManager';
+import { Props } from './select';
 
 const WrapperSelect = styled(Select)`
   margin-bottom: 10px;
@@ -62,20 +62,11 @@ const WrapperSelect = styled(Select)`
   }
 `;
 
-export interface Props {
-  onSelect: (name: string, option: IntentActions) => void;
-  onInputChange?: (name: string, value: string) => void;
-  options?: IntentActions[];
-  variant: string;
-  id: string | number;
-  name: string;
-  value: IntentActions;
-}
-
-const CustomSelect: FC<Props> = ({
+export const CustomSelect: FC<Props> = ({
   onSelect,
   onInputChange = () => {},
   variant,
+  placeholder = '',
   name,
   options,
   id,
@@ -98,10 +89,11 @@ const CustomSelect: FC<Props> = ({
     <WrapperSelect
       onChange={(option: any) => onSelect(name, { id: option?.id, label: option?.value })}
       variant={variant}
+      placeholder={placeholder}
       // onInputChange={(value:string) => onInputChange(name, value)}
       className="basic-single"
       classNamePrefix="select"
-      value={optionsList.find(el => el.id === value.id) || null}
+      value={optionsList.find(el => el.id === value?.id) || null}
       isDisabled={false}
       isLoading={false}
       isClearable={true}
@@ -113,5 +105,3 @@ const CustomSelect: FC<Props> = ({
     />
   );
 };
-
-export default CustomSelect;

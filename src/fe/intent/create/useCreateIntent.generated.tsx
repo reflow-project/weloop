@@ -6,19 +6,11 @@ import * as ApolloReactHooks from '@apollo/react-hooks';
 
 export type CreateIntentMutationVariables = {
   name: Types.Scalars['String'],
+  action: Types.Scalars['String'],
   communityId: Types.Scalars['ID'],
   note?: Types.Maybe<Types.Scalars['String']>
 };
 
-export type CreateOfferMutationVariables = {
-  name: Types.Scalars['String'],
-  action: Types.Scalars['ID'],
-  communityId: Types.Scalars['ID'],
-  note?: Types.Maybe<Types.Scalars['String']>
-  atLocation?:  Types.Maybe<Types.Scalars['String']>,
-  hasUnit: Types.Scalars['ID'],
-  hasNumericalValue: Types.Scalars['Int'],
-};
 
 export type CreateIntentMutation = (
   { __typename: 'RootMutationType' }
@@ -32,10 +24,43 @@ export type CreateIntentMutation = (
   )> }
 );
 
+export type CreateOfferMutationVariables = {
+  action: Types.Scalars['String'],
+  name: Types.Scalars['String'],
+  communityId: Types.Scalars['ID'],
+  note?: Types.Maybe<Types.Scalars['String']>,
+  hasUnit: Types.Scalars['ID'],
+  hasNumericalValue: Types.Scalars['Float'],
+  atLocation?: Types.Maybe<Types.Scalars['ID']>
+};
+
+
+export type CreateOfferMutation = (
+  { __typename: 'RootMutationType' }
+  & { createOffer: Types.Maybe<(
+    { __typename: 'IntentResponse' }
+    & { intent: (
+      { __typename: 'Intent' }
+      & Pick<Types.Intent, 'id' | 'name' | 'note'>
+      & { inScopeOf: Types.Maybe<Array<{ __typename: 'Category' } | { __typename: 'Collection' } | { __typename: 'Community' } | { __typename: 'Organisation' } | { __typename: 'Organization' } | { __typename: 'Person' } | { __typename: 'Taggable' } | { __typename: 'User' }>>, atLocation: Types.Maybe<(
+        { __typename: 'SpatialThing' }
+        & Pick<Types.SpatialThing, 'lat' | 'long' | 'alt'>
+      )>, resourceQuantity: Types.Maybe<(
+        { __typename: 'Measure' }
+        & Pick<Types.Measure, 'hasNumericalValue'>
+        & { hasUnit: (
+          { __typename: 'Unit' }
+          & Pick<Types.Unit, 'label' | 'id'>
+        ) }
+      )> }
+    ) }
+  )> }
+);
+
 
 export const CreateIntentDocument = gql`
-    mutation createIntent($name: String!, $communityId: ID!, $note: String) {
-  createIntent(intent: {action: "produced", name: $name, inScopeOf: [$communityId], note: $note}) {
+    mutation createIntent($name: String!, $action: String!, $communityId: ID!, $note: String) {
+  createIntent(intent: {action: $action, name: $name, inScopeOf: [$communityId], note: $note}) {
     intent {
       id
       inScopeOf {
@@ -43,48 +68,6 @@ export const CreateIntentDocument = gql`
       }
       name
       note
-      
-    }
-  }
-}`;
-export const CreateOfferMutation = gql`
-mutation createOffer(
-  $name: String!, 
-  $communityId: ID!, 
-  $atLocation: ID, 
-  $note: String,
-  $hasUnit: ID!,
-  $hasNumericalValue: Float!,
-) {
-  createOffer(intent: {
-    action: "produced",
-    name: $name, 
-    resourceQuantity: {
-      hasUnit: $hasUnit,
-      hasNumericalValue: $hasNumericalValue
-    },
-    atLocation: $atLocation,
-    inScopeOf: [$communityId], 
-    note: $note }) {
-    intent {
-      id
-      inScopeOf {
-        __typename
-      }
-      name
-      note
-      atLocation {
-        lat
-        long
-        alt
-      }
-      resourceQuantity {
-        hasUnit { 
-          label 
-          id
-        }
-        hasNumericalValue
-      }
     }
   }
 }
@@ -105,6 +88,7 @@ export type CreateIntentMutationFn = ApolloReactCommon.MutationFunction<CreateIn
  * const [createIntentMutation, { data, loading, error }] = useCreateIntentMutation({
  *   variables: {
  *      name: // value for 'name'
+ *      action: // value for 'action'
  *      communityId: // value for 'communityId'
  *      note: // value for 'note'
  *   },
@@ -113,13 +97,66 @@ export type CreateIntentMutationFn = ApolloReactCommon.MutationFunction<CreateIn
 export function useCreateIntentMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateIntentMutation, CreateIntentMutationVariables>) {
         return ApolloReactHooks.useMutation<CreateIntentMutation, CreateIntentMutationVariables>(CreateIntentDocument, baseOptions);
       }
-
-export function useCreateOfferMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<any,  CreateOfferMutationVariables>) {
-  return ApolloReactHooks.useMutation<any, CreateOfferMutationVariables>(CreateOfferMutation, baseOptions);
-}
 export type CreateIntentMutationHookResult = ReturnType<typeof useCreateIntentMutation>;
 export type CreateIntentMutationResult = ApolloReactCommon.MutationResult<CreateIntentMutation>;
 export type CreateIntentMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateIntentMutation, CreateIntentMutationVariables>;
+export const CreateOfferDocument = gql`
+    mutation createOffer($action: String!, $name: String!, $communityId: ID!, $note: String, $hasUnit: ID!, $hasNumericalValue: Float!, $atLocation: ID) {
+  createOffer(intent: {action: $action, name: $name, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}, inScopeOf: [$communityId], note: $note}) {
+    intent {
+      id
+      inScopeOf {
+        __typename
+      }
+      name
+      note
+      atLocation {
+        lat
+        long
+        alt
+      }
+      resourceQuantity {
+        hasUnit {
+          label
+          id
+        }
+        hasNumericalValue
+      }
+    }
+  }
+}
+    `;
+export type CreateOfferMutationFn = ApolloReactCommon.MutationFunction<CreateOfferMutation, CreateOfferMutationVariables>;
+
+/**
+ * __useCreateOfferMutation__
+ *
+ * To run a mutation, you first call `useCreateOfferMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOfferMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOfferMutation, { data, loading, error }] = useCreateOfferMutation({
+ *   variables: {
+ *      action: // value for 'action'
+ *      name: // value for 'name'
+ *      communityId: // value for 'communityId'
+ *      note: // value for 'note'
+ *      hasUnit: // value for 'hasUnit'
+ *      hasNumericalValue: // value for 'hasNumericalValue'
+ *      atLocation: // value for 'atLocation'
+ *   },
+ * });
+ */
+export function useCreateOfferMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateOfferMutation, CreateOfferMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateOfferMutation, CreateOfferMutationVariables>(CreateOfferDocument, baseOptions);
+      }
+export type CreateOfferMutationHookResult = ReturnType<typeof useCreateOfferMutation>;
+export type CreateOfferMutationResult = ApolloReactCommon.MutationResult<CreateOfferMutation>;
+export type CreateOfferMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateOfferMutation, CreateOfferMutationVariables>;
 
 
 export interface CreateIntentMutationOperation {
@@ -135,6 +172,25 @@ export const CreateIntentMutationRefetch = (
   context?:any
 )=>({
   query:CreateIntentDocument,
+  variables,
+  context
+})
+      
+
+
+export interface CreateOfferMutationOperation {
+  operationName: 'createOffer'
+  result: CreateOfferMutation
+  variables: CreateOfferMutationVariables
+  type: 'mutation'
+}
+export const CreateOfferMutationName:CreateOfferMutationOperation['operationName'] = 'createOffer'
+
+export const CreateOfferMutationRefetch = (
+  variables:CreateOfferMutationVariables, 
+  context?:any
+)=>({
+  query:CreateOfferDocument,
   variables,
   context
 })

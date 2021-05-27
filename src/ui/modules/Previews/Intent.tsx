@@ -177,6 +177,7 @@ const Bordered = styled(Box)`
   background: ${props => props.theme.colors.appInverse};
   border-radius: 4px;
   box-shadow: 0px 2px 4px 0px #0000001f;
+  margin: 10px;
 `;
 
 const TitleLink = styled.button`

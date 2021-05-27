@@ -12,6 +12,7 @@ import {
   TCreateIntentPanel
 } from 'ui/modules/CreateIntentPanel';
 import { useHistory, useLocation } from 'react-router';
+import { useUnitsPagesQuery } from '../EconomicEventManager/EconomicEventManager.generated';
 import * as GQL from '../EconomicEventManager/EconomicEventManager.generated';
 
 import * as Yup from 'yup';
@@ -48,10 +49,10 @@ export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done }) 
       });
   }, [myCommunityFollowsPage]);
 
-  const unitPagesQ = GQL.useUnitPagesQuery();
+  const unitPagesQ = useUnitsPagesQuery();
   const unitPages = unitPagesQ.data?.unitsPages;
 
-  const spatialThingsQ = GQL.useSpatialThingsQuery();
+  const spatialThingsQ = GQL.useSpatialThingsPagesQuery();
   const spatialThings = spatialThingsQ.data?.spatialThingsPages;
 
   const SignupSchema = Yup.object().shape({
@@ -115,7 +116,7 @@ export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done }) 
     communities: communities,
     formik: formik,
     unitPages: unitPages?.edges,
-    spatialThings: spatialThings?.edges,
+    spatialThings: spatialThings?.edges || null,
     cancel: done
   };
 

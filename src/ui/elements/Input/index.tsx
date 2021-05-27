@@ -9,7 +9,7 @@ export interface Props {
   onChange: any;
   placeholder?: string;
   label?: string;
-  value?: string;
+  value?: string | number;
   disabled?: boolean;
   hint?: {
     class: 'error' | 'success' | 'disabled';
