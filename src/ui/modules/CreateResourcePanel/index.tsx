@@ -2,11 +2,12 @@ import { Trans } from '@lingui/macro';
 import { i18nMark } from '@lingui/react';
 import React, { FC } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { Heading } from 'rebass/styled-components';
+import { Box, Heading } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
 import { FormikHook } from 'ui/@types/types';
 import { CustomSelect as Select } from 'ui/elements/CustomSelect';
 import { setSelectOption } from '../../elements/CustomSelect/select';
+import DropzoneArea from '../DropzoneModal';
 import { IntentActions } from '../EconomicEventManager';
 import { FormGroup, FormLabel } from '../EconomicEventManager/styles';
 import Input, { CustomAlert } from '../../elements/Input';
@@ -22,6 +23,7 @@ export type CreateIntentFormValues = {
   receiver: IntentActions;
   hasUnit: IntentActions;
   hasNumericalValue: number;
+  image: any;
 };
 
 export type TCreateResourcePanel = {
@@ -52,7 +54,10 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
   const [providerArr, setProviderArr] = React.useState<any>([]);
   const [receiverArr, setReceiverArr] = React.useState<any>([]);
   const [unitLst, setUnitLst] = React.useState<any>([]);
-
+  const onIconFileSelected = React.useCallback(
+    (file: File) => formik.setValues({ ...formik.values, image: file }),
+    [formik]
+  );
   React.useEffect(() => {
     if (unitPages?.length) {
       const unit = unitPages.map((el: { id: string; label: string; symbol: string }) => ({
@@ -77,7 +82,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
       })
     );
   }, [unitPages]);
-
+  const initialIconUrl = 'string' === typeof formik.values.image ? formik.values.image : '';
   return (
     <Container>
       <form onSubmit={formik.handleSubmit}>
@@ -92,6 +97,13 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
             <CollectionContainerForm>
               <FormGroup>
                 <FormLabel>{i18nMark('Resource')}</FormLabel>
+                <Box sx={{ width: '120px', height: '120px' }}>
+                  <DropzoneArea
+                    initialUrl={initialIconUrl}
+                    onFileSelect={onIconFileSelected}
+                    filePattern="image/*"
+                  />
+                </Box>
                 <Input
                   type="text"
                   id="name"

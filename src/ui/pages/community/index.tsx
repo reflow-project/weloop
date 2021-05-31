@@ -25,7 +25,7 @@ export interface Props {
   Activities: ReactElement[];
   Members: ReactElement[];
   Intents: ReactElement[];
-  Inventory: ReactElement[];
+  Inventory: any;
   // Collections: ReactElement[];
   HeroCommunity: ReactElement;
   Threads: ReactElement[];
