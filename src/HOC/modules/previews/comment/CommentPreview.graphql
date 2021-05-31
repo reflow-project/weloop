@@ -41,33 +41,33 @@ fragment CommentPreview on Comment {
   }
 }
 fragment CommentPreviewBase on Comment{
-    id
-    isLocal
-    content
+  id
+  isLocal
+  content
+  canonicalUrl
+  createdAt
+  creator  {
+    icon{ id, url }
+    image{ id, url }
+    userId: id
+    userName: name
     canonicalUrl
-    createdAt
-    creator  {
-        icon{ id, url }
-        image{ id, url }
-        userId: id 
-        userName: name
-        canonicalUrl
-    }
+  }
 }
 
 fragment CommentPreviewThread on Thread {
-        id
-        isLocal
-        canonicalUrl
-        context {
-          ...on Collection {
-            ...CollectionPreview
-          }
-          ...on Resource {
-            ...ResourcePreview
-          }
-          ...on Community {
-            ...CommunityPreview
-          }
-        }
+  id
+  isLocal
+  canonicalUrl
+  context {
+    ...on Collection {
+      ...CollectionPreview
     }
+    ...on Resource {
+      ...ResourcePreview
+    }
+    ...on Community {
+      ...CommunityPreview
+    }
+  }
+}

@@ -150,16 +150,16 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
 
   const Inventory = communityInventory
     .map(
-      (intent, i) =>
-        intent && (
+      (resource, i) =>
+        resource && (
           <IntentPreviewHOC
             key={i}
-            name={intent?.name ?? ''}
-            intentId={intent.id}
-            note={intent?.note ?? ''}
+            name={resource?.name ?? ''}
+            intentId={resource.id}
+            note={resource?.note ?? ''}
             communityName={community?.name ?? ''}
-            communityLink={`/communities/${communityId}`}
-            onOpen={setOpenIntent}
+            communityLink={`/resource/${resource.id}`}
+            onOpen={() => history.push(`/resource/${resource.id}`)}
           />
         )
     )

@@ -116,7 +116,7 @@ export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done }) 
     communities: communities,
     formik: formik,
     unitPages: unitPages?.edges,
-    spatialThings: spatialThings?.edges,
+    spatialThings: spatialThings?.edges || null,
     cancel: done
   };
 

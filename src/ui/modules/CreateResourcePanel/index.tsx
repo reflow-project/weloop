@@ -5,7 +5,8 @@ import { ToastContainer } from 'react-toastify';
 import { Heading } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
 import { FormikHook } from 'ui/@types/types';
-import Select from '../../elements/Select';
+import { CustomSelect as Select } from 'ui/elements/CustomSelect';
+import { setSelectOption } from '../../elements/CustomSelect/select';
 import { IntentActions } from '../EconomicEventManager';
 import { FormGroup, FormLabel } from '../EconomicEventManager/styles';
 import Input, { CustomAlert } from '../../elements/Input';
@@ -28,8 +29,8 @@ export type TCreateResourcePanel = {
   formik: FormikHook<CreateIntentFormValues>;
   unitPages?: any;
   actionList?: any;
-  providerList?: null | undefined | [] | { id: string; name: string }[];
-  receiverList?: null | undefined | [] | { id: string; name: string }[];
+  providerList?: null | { id: string; name: string }[];
+  receiverList?: null | { id: string; name: string }[];
   setAction: (name: string) => void;
 };
 
@@ -64,31 +65,17 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
   }, [unitPages]);
 
   React.useEffect(() => {
-    if (providerList?.length && receiverList?.length) {
-      // @ts-ignore
-      const providers = providerList?.map((el: { id: string; name: string }) => ({
-        id: el.id,
-        label: el.name
-      }));
-      // @ts-ignore
-      const receivers = receiverList?.map((el: { id: string; name: string }) => ({
-        id: el.id,
-        label: el.name
-      }));
-      setProviderArr(providers);
-      setReceiverArr(receivers);
-    }
+    setProviderArr(setSelectOption(providerList, 'name'));
+    setReceiverArr(setSelectOption(receiverList, 'name'));
   }, [providerList, receiverList]);
 
   React.useEffect(() => {
-    if (unitPages?.edges.length) {
-      const unit = unitPages?.edges.map((el: { id: string; label: string; symbol: string }) => ({
-        id: el.id,
-        label: `${el.label} / ${el.symbol}`
-      }));
-
-      setUnitLst(unit);
-    }
+    setUnitLst(
+      setSelectOption(unitPages?.edges, {
+        variables: ['label', 'symbol'],
+        template: 'label / symbol'
+      })
+    );
   }, [unitPages]);
 
   return (
@@ -132,7 +119,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                   variant="primary"
                   id="actions"
                   name="actions"
-                  placeholder={i18nMark('Select action')}
+                  placeholder={i18nMark('CustomSelect action')}
                   // @ts-ignore
                   value={formik.values.action}
                 />

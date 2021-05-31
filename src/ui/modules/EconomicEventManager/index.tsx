@@ -4,7 +4,8 @@ import { ToastContainer, Slide, toast } from 'react-toastify';
 import { useCreateEvent } from '../../../fe/intent/createEvent/useCreateEvent';
 import Button from '../../elements/Button';
 import Input from '../../elements/Input';
-import Select from 'ui/elements/Select';
+import { CustomSelect as Select } from 'ui/elements/CustomSelect';
+import { setSelectOption } from '../../elements/CustomSelect/select';
 import { FormLabel, FormGroup, FormStyled, ButtonWrap } from './styles';
 
 export type IntentActions = {
@@ -53,30 +54,17 @@ export const EconomicEventManager: React.FC<any> = ({
   const [unitLst, setUnitLst] = React.useState<any>([]);
 
   React.useEffect(() => {
-    // @ts-ignore
-    const providers = providerList?.map((el: { id: string; name: string }) => ({
-      id: el.id,
-      label: el.name
-    }));
-    // @ts-ignore
-    const receivers = receiverList?.map((el: { id: string; name: string }) => ({
-      id: el.id,
-      label: el.name
-    }));
-
-    setProviderArr(providers);
-    setReceiverArr(receivers);
+    setProviderArr(setSelectOption(providerList, 'name'));
+    setReceiverArr(setSelectOption(receiverList, 'name'));
   }, [providerList, receiverList]);
 
   React.useEffect(() => {
-    if (unitPages?.edges.length) {
-      const unit = unitPages.edges.map((el: { id: string; label: string; symbol: string }) => ({
-        id: el.id,
-        label: `${el.label} / ${el.symbol}`
-      }));
-
-      setUnitLst(unit);
-    }
+    setUnitLst(
+      setSelectOption(unitPages?.edges, {
+        variables: ['label', 'symbol'],
+        template: 'label / symbol'
+      })
+    );
   }, [unitPages]);
 
   React.useEffect(() => {
