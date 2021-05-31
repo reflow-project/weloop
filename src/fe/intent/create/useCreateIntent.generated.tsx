@@ -102,7 +102,7 @@ export type CreateIntentMutationResult = ApolloReactCommon.MutationResult<Create
 export type CreateIntentMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateIntentMutation, CreateIntentMutationVariables>;
 export const CreateOfferDocument = gql`
     mutation createOffer($action: String!, $name: String!, $communityId: ID!, $note: String, $hasUnit: ID!, $hasNumericalValue: Float!, $atLocation: ID) {
-  createOffer(intent: {action: $action, name: $name, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}, inScopeOf: [$communityId], note: $note}) {
+  createOffer(intent: {action: $action, name: $name, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}, atLocation: $atLocation, inScopeOf: [$communityId], note: $note}) {
     intent {
       id
       inScopeOf {

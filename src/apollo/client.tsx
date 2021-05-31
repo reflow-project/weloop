@@ -43,6 +43,7 @@ const AUTH_TOKEN_KEY = 'AUTH_TOKEN';
 
 export default async function initialise({ localKVStore, appLinks }: Cfg) {
   let authToken = localKVStore.get(AUTH_TOKEN_KEY);
+
   const fragmentMatcher = new IntrospectionFragmentMatcher({
     introspectionQueryResultData
   });

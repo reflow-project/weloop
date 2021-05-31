@@ -1,8 +1,8 @@
-import * as Types from '../../../graphql/types.generated'
+import * as Types from '../../../graphql/types.generated';
 
-import gql from 'graphql-tag'
-import * as ApolloReactCommon from '@apollo/react-common'
-import * as ApolloReactHooks from '@apollo/react-hooks'
+import gql from 'graphql-tag';
+import * as ApolloReactCommon from '@apollo/react-common';
+import * as ApolloReactHooks from '@apollo/react-hooks';
 
 export type CreateEconomicEventAndNewResourceMutationVariables = {
   note?: Types.Maybe<Types.Scalars['String']>,
@@ -17,113 +17,99 @@ export type CreateEconomicEventAndNewResourceMutationVariables = {
 
 export type CreateEconomicEventAndNewResourceMutation = (
   { __typename: 'RootMutationType' }
-  & {
-  createEconomicEvent: Types.Maybe<(
+  & { createEconomicEvent: Types.Maybe<(
     { __typename: 'EconomicEventResponse' }
-    & {
-    economicEvent: (
+    & { economicEvent: (
       { __typename: 'EconomicEvent' }
       & Pick<Types.EconomicEvent, 'id' | 'note'>
-      & {
-      receiver: (
+      & { receiver: (
         { __typename: 'Organization' }
         & Pick<Types.Organization, 'id' | 'name' | 'note'>
-        ) | (
+      ) | (
         { __typename: 'Person' }
         & Pick<Types.Person, 'id' | 'name' | 'note'>
-        ), provider: (
+      ), provider: (
         { __typename: 'Organization' }
         & Pick<Types.Organization, 'id' | 'name' | 'note'>
-        ) | (
+      ) | (
         { __typename: 'Person' }
         & Pick<Types.Person, 'id' | 'name' | 'note'>
-        ), resourceQuantity: Types.Maybe<(
+      ), resourceQuantity: Types.Maybe<(
         { __typename: 'Measure' }
         & Pick<Types.Measure, 'hasNumericalValue'>
-        & {
-        hasUnit: (
+        & { hasUnit: (
           { __typename: 'Unit' }
           & Pick<Types.Unit, 'label' | 'symbol'>
-          )
-      }
-        )>, resourceInventoriedAs: Types.Maybe<(
+        ) }
+      )>, resourceInventoriedAs: Types.Maybe<(
         { __typename: 'EconomicResource' }
         & Pick<Types.EconomicResource, 'id' | 'name'>
-        & {
-        onhandQuantity: Types.Maybe<(
+        & { onhandQuantity: Types.Maybe<(
           { __typename: 'Measure' }
           & Pick<Types.Measure, 'hasNumericalValue'>
-          & {
-          hasUnit: (
+          & { hasUnit: (
             { __typename: 'Unit' }
             & Pick<Types.Unit, 'label' | 'symbol'>
-            )
-        }
-          )>, accountingQuantity: Types.Maybe<(
+          ) }
+        )>, accountingQuantity: Types.Maybe<(
           { __typename: 'Measure' }
           & Pick<Types.Measure, 'hasNumericalValue'>
-          & {
-          hasUnit: (
+          & { hasUnit: (
             { __typename: 'Unit' }
             & Pick<Types.Unit, 'label' | 'symbol'>
-            )
-        }
-          )>
-      }
-        )>
-    }
-      )
-  }
-    )>
-}
-  );
+          ) }
+        )> }
+      )> }
+    ) }
+  )> }
+);
 
 
 export const CreateEconomicEventAndNewResourceDocument = gql`
-  mutation createEconomicEventAndNewResource($note: String, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!, $name: String) {
-    createEconomicEvent(event: {note: $note, action: $action, provider: $provider, receiver: $receiver, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}, newInventoriedResource: {name: $name}) {
-      economicEvent {
+    mutation createEconomicEventAndNewResource($note: String, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!, $name: String) {
+  createEconomicEvent(event: {note: $note, action: $action, provider: $provider, receiver: $receiver, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}, newInventoriedResource: {name: $name}) {
+    economicEvent {
+      id
+      note
+      receiver {
         id
+        name
         note
-        receiver {
-          id
-          name
-          note
+      }
+      provider {
+        id
+        name
+        note
+      }
+      resourceQuantity {
+        hasNumericalValue
+        hasUnit {
+          label
+          symbol
         }
-        provider {
-          id
-          name
-          note
-        }
-        resourceQuantity {
+      }
+      resourceInventoriedAs {
+        id
+        name
+        onhandQuantity {
           hasNumericalValue
           hasUnit {
             label
             symbol
           }
         }
-        resourceInventoriedAs {
-          id
-          name
-          onhandQuantity {
-            hasNumericalValue
-            hasUnit {
-              label
-              symbol
-            }
-          }
-          accountingQuantity {
-            hasNumericalValue
-            hasUnit {
-              label
-              symbol
-            }
+        accountingQuantity {
+          hasNumericalValue
+          hasUnit {
+            label
+            symbol
           }
         }
       }
     }
   }
-`
+}
+    `;
 export type CreateEconomicEventAndNewResourceMutationFn = ApolloReactCommon.MutationFunction<CreateEconomicEventAndNewResourceMutation, CreateEconomicEventAndNewResourceMutationVariables>;
 
 /**
@@ -150,9 +136,8 @@ export type CreateEconomicEventAndNewResourceMutationFn = ApolloReactCommon.Muta
  * });
  */
 export function useCreateEconomicEventAndNewResourceMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateEconomicEventAndNewResourceMutation, CreateEconomicEventAndNewResourceMutationVariables>) {
-  return ApolloReactHooks.useMutation<CreateEconomicEventAndNewResourceMutation, CreateEconomicEventAndNewResourceMutationVariables>(CreateEconomicEventAndNewResourceDocument, baseOptions)
-}
-
+        return ApolloReactHooks.useMutation<CreateEconomicEventAndNewResourceMutation, CreateEconomicEventAndNewResourceMutationVariables>(CreateEconomicEventAndNewResourceDocument, baseOptions);
+      }
 export type CreateEconomicEventAndNewResourceMutationHookResult = ReturnType<typeof useCreateEconomicEventAndNewResourceMutation>;
 export type CreateEconomicEventAndNewResourceMutationResult = ApolloReactCommon.MutationResult<CreateEconomicEventAndNewResourceMutation>;
 export type CreateEconomicEventAndNewResourceMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateEconomicEventAndNewResourceMutation, CreateEconomicEventAndNewResourceMutationVariables>;
@@ -164,15 +149,14 @@ export interface CreateEconomicEventAndNewResourceMutationOperation {
   variables: CreateEconomicEventAndNewResourceMutationVariables
   type: 'mutation'
 }
-
-export const CreateEconomicEventAndNewResourceMutationName: CreateEconomicEventAndNewResourceMutationOperation['operationName'] = 'createEconomicEventAndNewResource'
+export const CreateEconomicEventAndNewResourceMutationName:CreateEconomicEventAndNewResourceMutationOperation['operationName'] = 'createEconomicEventAndNewResource'
 
 export const CreateEconomicEventAndNewResourceMutationRefetch = (
-  variables: CreateEconomicEventAndNewResourceMutationVariables,
-  context?: any,
-) => ({
-  query: CreateEconomicEventAndNewResourceDocument,
+  variables:CreateEconomicEventAndNewResourceMutationVariables, 
+  context?:any
+)=>({
+  query:CreateEconomicEventAndNewResourceDocument,
   variables,
-  context,
+  context
 })
       

@@ -29,7 +29,7 @@ mutation createOffer(
       hasUnit: $hasUnit,
       hasNumericalValue: $hasNumericalValue
     },
-
+    atLocation: $atLocation,
     inScopeOf: [$communityId],
     note: $note }) {
     intent {

@@ -110,7 +110,7 @@ export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
               )}
             </CollectionContainerForm>
             <CollectionContainerForm>
-              <FormLabel>{i18nMark('name')}</FormLabel>
+              <FormLabel>{i18nMark('community name')}</FormLabel>
               <Select
                 onSelect={(name, option) => {
                   formik.setValues({ ...formik.values, [name]: option.id });
