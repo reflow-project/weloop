@@ -14,7 +14,7 @@ export type CommunityPageDataFragment = { __typename: 'Community' } & Pick<
   Types.Community,
   'id'
   > & {
-    myFollow: Types.Maybe<{ __typename: 'Follow' } & Pick<Types.Follow, 'id'>>;
+  myFollow: Types.Maybe<{ __typename: 'Follow' } & Pick<Types.Follow, 'id'>>;
 } & HeroCommunityDataFragment;
 
 export type CommunityPageThreadFragment = { __typename: 'Thread' } & Pick<Types.Thread, 'id'> &

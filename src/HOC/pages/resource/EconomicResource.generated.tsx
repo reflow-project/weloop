@@ -17,7 +17,30 @@ export type EconomicResourceQuery = (
     & { currentLocation: Types.Maybe<(
       { __typename: 'SpatialThing' }
       & Pick<Types.SpatialThing, 'id' | 'name' | 'lat' | 'long'>
-    )>, onhandQuantity: Types.Maybe<(
+    )>, track: Types.Maybe<Array<(
+      { __typename: 'EconomicEvent' }
+      & Pick<Types.EconomicEvent, 'id' | 'note'>
+      & { resourceQuantity: Types.Maybe<(
+        { __typename: 'Measure' }
+        & Pick<Types.Measure, 'id' | 'hasNumericalValue'>
+        & { hasUnit: (
+          { __typename: 'Unit' }
+          & Pick<Types.Unit, 'id' | 'label'>
+        ) }
+      )>, provider: (
+        { __typename: 'Organization' }
+        & Pick<Types.Organization, 'id' | 'name'>
+      ) | (
+        { __typename: 'Person' }
+        & Pick<Types.Person, 'id' | 'name'>
+      ), receiver: (
+        { __typename: 'Organization' }
+        & Pick<Types.Organization, 'id' | 'name'>
+      ) | (
+        { __typename: 'Person' }
+        & Pick<Types.Person, 'id' | 'name'>
+      ) }
+    )>>, onhandQuantity: Types.Maybe<(
       { __typename: 'Measure' }
       & Pick<Types.Measure, 'id' | 'hasNumericalValue'>
       & { hasUnit: (
@@ -41,6 +64,26 @@ export const EconomicResourceDocument = gql`
       name
       lat
       long
+    }
+    track {
+      id
+      note
+      resourceQuantity {
+        id
+        hasUnit {
+          id
+          label
+        }
+        hasNumericalValue
+      }
+      provider {
+        id
+        name
+      }
+      receiver {
+        id
+        name
+      }
     }
     onhandQuantity {
       id
