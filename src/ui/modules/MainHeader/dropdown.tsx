@@ -7,7 +7,6 @@ import {
   MessageCircle,
   Star,
   Code,
-  Archive,
   Activity,
   Package,
   Plus,
@@ -208,14 +207,6 @@ export const CreateDropdown: React.FC<TCreateDropdown> = ({
           </span>
           <Text variant="text">
             <Trans>Create a new resource</Trans>
-          </Text>
-        </Item>
-        <Item variant="link">
-          <span>
-            <Archive size={16} color={'#ddd'} />
-          </span>
-          <Text variant="text">
-            <Trans>Create a new event?</Trans>
           </Text>
         </Item>
       </List>

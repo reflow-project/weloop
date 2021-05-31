@@ -1,6 +1,6 @@
 # Reflow Client
 
-![Deployment](https://github.com/reflow-project/zenpub-client/workflows/Deployment/badge.svg)
+![Deployment](https://github.com/reflow-project/weloop/workflows/Deployment/badge.svg)
 
 **NOTE**: Since this project is a fork of a fork, this README (and other parts of the project) might be out of date.
 
