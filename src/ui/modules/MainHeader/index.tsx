@@ -27,6 +27,7 @@ export interface Props {
   toggleSideBar(): unknown;
   createCommunity(): unknown;
   createIntent(): unknown;
+  createResource: any;
   isOpenDropdown: boolean;
   toggleDropdown(): unknown;
 }
@@ -68,12 +69,13 @@ export const MainHeader: React.FC<Props> = props => {
               <HeaderName ml={2} variant="link">
                 Create
               </HeaderName>
-              <Right ml={2}>
+              <Right>
                 <ChevronDown size="20" />
               </Right>
               {isCreateOpen && (
                 <CreateDropdown
                   createCommunity={props.createCommunity}
+                  createResource={props.createResource}
                   createIntent={props.createIntent}
                   toggleDropdown={() => {
                     toggleCreate(!isCreateOpen);
@@ -130,7 +132,7 @@ const Container = styled(Box)`
   max-width: 1096px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 100px 200px;
+  grid-template-columns: 1fr 120px 200px;
 `;
 const Search = styled(Box)`
   display: flex;
@@ -164,8 +166,6 @@ const NavItem = styled(Flex)`
   border-radius: 0px;
   padding: 4px 8px;
   border-radius: 4px;
-  margin-top: 5px;
-  float: right;
   &:hover {
     background: ${props => props.theme.colors.lighter};
   }
@@ -178,9 +178,11 @@ const NavItem = styled(Flex)`
 
 const Header = styled(Box)`
   cursor: pointer;
+  display: flex;
   flex: 0 0 200px;
   order: 2;
   justify-content: flex-end;
+  align-items: center;
   img {
     min-width: 36px;
     height: 36px;
@@ -189,9 +191,11 @@ const Header = styled(Box)`
 `;
 const CreateNav = styled(Box)`
   cursor: pointer;
-  flex: 0 0 100px;
+  display: flex;
+  flex: 0 0 120px;
   order: 2;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
   img {
     min-width: 36px;
     height: 36px;

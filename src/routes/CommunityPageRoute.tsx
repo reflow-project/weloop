@@ -1,8 +1,8 @@
-import React, { FC, useMemo } from 'react';
-import { CommunityPageTab, CommunityPage } from 'HOC/pages/community/CommunityPage';
+import { CommunityPage, CommunityPageTab } from 'HOC/pages/community/CommunityPage';
 import { NotFoundHOC } from 'HOC/pages/not-found/NotFound';
-import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { WithSidebarTemplate } from 'HOC/templates/WithSidebar/WithSidebar';
+import React, { FC, useMemo } from 'react';
+import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { locationHelper } from './lib/helper';
 
 interface CommunityPageRouter {
@@ -16,6 +16,8 @@ const CommunityPageRouter: FC<RouteComponentProps<CommunityPageRouter>> = ({ mat
   const tab =
     maybeTabStr === 'timeline'
       ? CommunityPageTab.Activities
+      : maybeTabStr === 'inventory'
+      ? CommunityPageTab.Inventory
       : maybeTabStr === 'members'
       ? CommunityPageTab.Members
       : maybeTabStr === 'discussions'
@@ -49,11 +51,11 @@ const CommunityPageRouter: FC<RouteComponentProps<CommunityPageRouter>> = ({ mat
 
 export const CommunityPageRoute: RouteProps = {
   exact: true,
-  path: '/communities/:communityId/:tab(timeline|members|discussions|intents)?',
+  path: '/communities/:communityId/:tab(inventory|timeline|members|discussions|intents)?',
   component: CommunityPageRouter
 };
 
-type Tab = undefined | 'timeline' | 'members' | 'discussions' | 'intents';
+type Tab = undefined | 'timeline' | 'members' | 'discussions' | 'intents' | 'inventory';
 export type CommunityPageRouterParams = {
   communityId: string;
   tab: Tab;

@@ -96,6 +96,12 @@ export const CounterChars = styled.div`
   color: #32302e;
   letter-spacing: 1px;
   margin-bottom: 10px;
+
+  &::after {
+    clear: both;
+    content: '';
+    display: table;
+  }
 `;
 
 export const ContainerForm = styled.div`

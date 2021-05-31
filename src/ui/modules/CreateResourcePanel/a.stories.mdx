@@ -1,0 +1,20 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { PropsTable } from '@storybook/components'
+import { useGetCreateIntentModalProps } from 'ui/mock/createIntentModal'
+import { CreateIntentPanel } from 'ui/modules/CreateIntentPanel'
+import { action } from '@storybook/addon-actions'
+import Modal from 'ui/modules/Modal'
+
+<Meta title="Modules|Create an Intent" component={CreateIntentPanel} />
+
+# CreateIntentPanel
+
+Let's define a story for the `Create Inent Panel preview` module
+
+<Preview>
+  <Story name="Create an Intent">
+    <Modal closeModal={action('close modal')}>
+      <CreateIntentPanel {...useGetCreateIntentModalProps()} />
+    </Modal>
+  </Story>
+</Preview>

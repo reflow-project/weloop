@@ -4,16 +4,12 @@ import gql from 'graphql-tag';
 import * as ApolloReactCommon from '@apollo/react-common';
 import * as ApolloReactHooks from '@apollo/react-hooks';
 
-export type IntentPanelQueryVariables = {
-  intentId?: Types.Maybe<Types.Scalars['ID']>
-};
-
-export type EconomicEvent = {
+export type IntentItemQueryVariables = {
   intentId?: Types.Maybe<Types.Scalars['ID']>
 };
 
 
-export type IntentPanelQuery = (
+export type IntentItemQuery = (
   { __typename: 'RootQueryType' }
   & { intent: Types.Maybe<(
     { __typename: 'Intent' }
@@ -49,8 +45,9 @@ export type IntentPanelQuery = (
   )> }
 );
 
-export const IntentPanelDocument = gql`
-    query intentPanel($intentId: ID) {
+
+export const IntentItemDocument = gql`
+    query intentItem($intentId: ID) {
   intent(id: $intentId) {
     hasBeginning
     hasPointInTime
@@ -87,46 +84,46 @@ export const IntentPanelDocument = gql`
     `;
 
 /**
- * __useIntentPanelQuery__
+ * __useIntentItemQuery__
  *
- * To run a query within a React component, call `useIntentPanelQuery` and pass it any options that fit your needs.
- * When your component renders, `useIntentPanelQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * To run a query within a React component, call `useIntentItemQuery` and pass it any options that fit your needs.
+ * When your component renders, `useIntentItemQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useIntentPanelQuery({
+ * const { data, loading, error } = useIntentItemQuery({
  *   variables: {
  *      intentId: // value for 'intentId'
  *   },
  * });
  */
-export function useIntentPanelQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<IntentPanelQuery, IntentPanelQueryVariables>) {
-        return ApolloReactHooks.useQuery<IntentPanelQuery, IntentPanelQueryVariables>(IntentPanelDocument, baseOptions);
-      };
+export function useIntentItemQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<IntentItemQuery, IntentItemQueryVariables>) {
+        return ApolloReactHooks.useQuery<IntentItemQuery, IntentItemQueryVariables>(IntentItemDocument, baseOptions);
+      }
+export function useIntentItemLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<IntentItemQuery, IntentItemQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<IntentItemQuery, IntentItemQueryVariables>(IntentItemDocument, baseOptions);
+        }
+export type IntentItemQueryHookResult = ReturnType<typeof useIntentItemQuery>;
+export type IntentItemLazyQueryHookResult = ReturnType<typeof useIntentItemLazyQuery>;
+export type IntentItemQueryResult = ApolloReactCommon.QueryResult<IntentItemQuery, IntentItemQueryVariables>;
 
-export function useIntentPanelLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<IntentPanelQuery, IntentPanelQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<IntentPanelQuery, IntentPanelQueryVariables>(IntentPanelDocument, baseOptions);
-        };
-export type IntentPanelQueryHookResult = ReturnType<typeof useIntentPanelQuery>;
-export type IntentPanelLazyQueryHookResult = ReturnType<typeof useIntentPanelLazyQuery>;
-export type IntentPanelQueryResult = ApolloReactCommon.QueryResult<IntentPanelQuery, IntentPanelQueryVariables>;
 
-
-export interface IntentPanelQueryOperation {
-  operationName: 'intentPanel'
-  result: IntentPanelQuery
-  variables: IntentPanelQueryVariables
+export interface IntentItemQueryOperation {
+  operationName: 'intentItem'
+  result: IntentItemQuery
+  variables: IntentItemQueryVariables
   type: 'query'
 }
-export const IntentPanelQueryName:IntentPanelQueryOperation['operationName'] = 'intentPanel'
+export const IntentItemQueryName:IntentItemQueryOperation['operationName'] = 'intentItem'
 
-export const IntentPanelQueryRefetch = (
-  variables:IntentPanelQueryVariables, 
+export const IntentItemQueryRefetch = (
+  variables:IntentItemQueryVariables, 
   context?:any
 )=>({
-  query:IntentPanelDocument,
+  query:IntentItemDocument,
   variables,
   context
 })
+      

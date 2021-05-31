@@ -1,6 +1,6 @@
-mutation createIntent($name: String!, $communityId: ID!, $note: String) {
+mutation createIntent($name: String!, $action: String!, $communityId: ID!, $note: String) {
   createIntent(
-    intent: { action: "produced", name: $name, inScopeOf: [$communityId], note: $note }
+    intent: { action: $action, name: $name, inScopeOf: [$communityId], note: $note }
   ) {
     intent {
       id
@@ -14,14 +14,16 @@ mutation createIntent($name: String!, $communityId: ID!, $note: String) {
 }
 
 mutation createOffer(
+	$action: String!
   $name: String!,
   $communityId: ID!,
   $note: String,
   $hasUnit: ID!,
   $hasNumericalValue: Float!,
+  $atLocation: ID
 ) {
   createOffer(intent: {
-    action: "produced",
+    action: $action,
     name: $name,
     resourceQuantity: {
       hasUnit: $hasUnit,

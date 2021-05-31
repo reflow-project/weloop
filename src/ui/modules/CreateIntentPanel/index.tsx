@@ -8,6 +8,7 @@ import { FormikHook } from 'ui/@types/types';
 import { FormGroup, FormLabel } from '../EconomicEventManager/styles';
 import Input, { CustomAlert } from '../../elements/Input';
 import { Actions, AlertWrapper, Container, CounterChars, Header } from 'ui/modules/Modal';
+import * as Types from 'graphql/types.generated';
 import {
   Hero,
   FlexBetweenContainer,
@@ -15,7 +16,7 @@ import {
   HeroInfo,
   Description
 } from '../CreateCollectionPanel/style';
-import Select from 'ui/elements/Select';
+import { CustomSelect as Select } from 'ui/elements/CustomSelect';
 
 export type CreateIntentFormValues = {
   name: string;
@@ -43,8 +44,12 @@ export type TCreateIntentPanel = {
   communities?: Array<SelectOption>;
   cancel: () => void;
   formik: FormikHook<CreateIntentFormValues>;
-  unitPages?: UnitPage[];
-  spatialThings?: SpatialThings[];
+  unitPages?: ({ __typename: 'Unit' } & Pick<Types.Unit, 'symbol' | 'label' | 'id'>)[] | null;
+  spatialThings?: Types.Maybe<
+    Types.Maybe<
+      { __typename: 'SpatialThing' } & Pick<Types.SpatialThing, 'name' | 'id' | 'lat' | 'long'>
+    >[]
+  > | null;
 };
 
 export type SelectOption = {
@@ -63,7 +68,7 @@ export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
 
   React.useEffect(() => {
     if (unitPages?.length) {
-      const unit = unitPages.map(el => ({
+      const unit = unitPages.map((el: any) => ({
         id: el.id,
         label: `${el.label} / ${el.symbol}`
       }));
@@ -131,6 +136,7 @@ export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
                     formik.setValues({ ...formik.values, [name]: option.id });
                   }}
                   options={unitLst}
+                  placeholder={i18nMark('unit')}
                   value={{ id: formik.values.hasUnit, label: '' }}
                   variant="primary"
                   id="hasUnit"
@@ -167,7 +173,12 @@ export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
                 onSelect={(name, option) => {
                   formik.setValues({ ...formik.values, [name]: option.id });
                 }}
-                options={spatialThings?.map(el => ({ id: el.id, value: el.id, label: el.name }))}
+                options={spatialThings?.map((el: any) => ({
+                  id: el.id,
+                  value: el.id,
+                  label: el.name
+                }))}
+                placeholder={i18nMark('CustomSelect location')}
                 value={{ id: formik.values.atLocation || '', label: '' }}
                 variant="primary"
                 id="atLocation"
@@ -190,7 +201,7 @@ export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
                   onChange={formik.handleChange}
                   disabled={formik.isSubmitting}
                   hint={{ class: 'error', value: '' }}
-                  placeholder={i18nMark('A description of your resource')}
+                  placeholder={i18nMark('A description of your intent')}
                   value={formik.values.note}
                 />
               </FormGroup>

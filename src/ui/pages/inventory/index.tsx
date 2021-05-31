@@ -1,22 +1,19 @@
-import { ApolloError } from 'apollo-client';
 import { SidePanelHOC } from 'HOC/modules/SidePanel/SidePanel';
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Box, Text } from 'rebass/styled-components';
 import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
+import { EconomicResourcesFilteredQuery } from '../../../HOC/pages/inventory/InventoryPage.generated';
 import { InventoryWrapper, InfoWrapper, ImageWrapper } from '../../../ui/pages/resource';
 import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
 import { typography } from '../../../mn-constants';
 import styled from '../../themes/styled';
 
 export interface Props {
-  userId: string;
-  inventory: EconomicResource[] | [];
-  error?: ApolloError | undefined;
-  loading: boolean;
+  inventory: EconomicResourcesFilteredQuery['economicResourcesFiltered'];
 }
 
-export const Inventory: React.FC<Props> = ({ userId, inventory }) => {
+export const Inventory: React.FC<Props> = ({ inventory }) => {
   return (
     <MainContainer>
       <HomeBox>

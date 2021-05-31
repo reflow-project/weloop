@@ -2,6 +2,7 @@ import * as React from 'react';
 import { FC } from 'react';
 import { Taggable } from 'graphql/types.generated';
 import { Actor } from 'ui/modules/ActivityPreview/types';
+import { useActionsQuery } from './Actions.generated';
 import ProposedIntentPanel, { IProposedIntentPanel } from 'ui/modules/ProposedIntentPanel';
 import * as GQL from './IntentPanel.generated';
 
@@ -11,11 +12,12 @@ export type Props = {
 };
 
 export const IntentPanelHOC: FC<Props> = ({ intentId, communityName }) => {
-  const intentPanelQ = GQL.useIntentPanelQuery({
+  const intentActionsQ = useActionsQuery();
+  const intentPanelQ = GQL.useIntentItemQuery({
     variables: { intentId }
   });
-
   const intentPanelData = intentPanelQ.data?.intent;
+  const intentActions = intentActionsQ.data?.actions || [];
 
   if (!intentPanelData) {
     return null;
@@ -41,6 +43,7 @@ export const IntentPanelHOC: FC<Props> = ({ intentId, communityName }) => {
 
   const intentPanelProps: IProposedIntentPanel = {
     actor: actor,
+    actionList: intentActions,
     collectionName: communityName,
     link: intentId,
     createdAt: intentPanelData?.hasPointInTime ?? null,

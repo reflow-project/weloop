@@ -1,0 +1,50 @@
+query user($userId: String!) {
+    user(userId: $userId) {
+        outbox(limit:15) {
+            edges {
+                user {
+                    icon {
+                        id
+                    }
+                    name
+                    image {
+                        id
+                    }
+                }
+                verb
+                context  {
+                    ... on Community {
+                        ...CommunityPreview
+                    }
+                    ... on Collection {
+                        ...CollectionPreview
+                    }
+                    ... on Resource {
+                        ...ResourcePreview
+                    }
+                    ... on User {
+                        ...UserPreview
+                    }
+                    ... on Comment {
+                        ...CommentPreview
+                    }
+                    ... on Flag {
+                        ...FlagPreview
+                    }
+                    ... on Like {
+                        ...LikePreview
+                    }
+                    ... on Follow {
+                        ...FollowPreview
+                    }
+                }
+
+            }
+            totalCount
+            pageInfo {
+                hasNextPage
+                hasPreviousPage
+            }
+        }
+    }
+}
