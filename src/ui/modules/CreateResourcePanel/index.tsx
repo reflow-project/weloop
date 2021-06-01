@@ -23,7 +23,7 @@ export type CreateIntentFormValues = {
   receiver: IntentActions;
   hasUnit: IntentActions;
   hasNumericalValue: number;
-  image: any;
+  image: string | File | undefined;
 };
 
 export type TCreateResourcePanel = {
@@ -95,50 +95,59 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
         <Hero>
           <HeroInfo>
             <CollectionContainerForm>
-              <FormGroup>
-                <FormLabel>{i18nMark('Resource')}</FormLabel>
-                <Box sx={{ width: '120px', height: '120px' }}>
+              <div className="d-flex">
+                <Box sx={{ width: '140', height: '140' }} className="item_photo">
                   <DropzoneArea
                     initialUrl={initialIconUrl}
                     onFileSelect={onIconFileSelected}
                     filePattern="image/*"
                   />
                 </Box>
-                <Input
-                  type="text"
-                  id="name"
-                  name="name"
-                  disabled={formik.isSubmitting}
-                  onChange={formik.handleChange}
-                  placeholder={i18nMark('Name of your resource')}
-                  value={formik.values.name}
-                />
-              </FormGroup>
-              <CounterChars>{60 - formik.values.name.length}</CounterChars>
-              {formik.errors.name && (
-                <CustomAlert variant="negative">{formik.errors.name}</CustomAlert>
-              )}
-            </CollectionContainerForm>
-            <CollectionContainerForm>
-              <FormGroup>
-                <FormLabel>Actions</FormLabel>
-                <Select
-                  onSelect={(name, option) => {
-                    setAction(option.id);
-                    formik.setValues({ ...formik.values, action: option });
-                  }}
-                  options={actionList}
-                  variant="primary"
-                  id="actions"
-                  name="actions"
-                  placeholder={i18nMark('CustomSelect action')}
-                  // @ts-ignore
-                  value={formik.values.action}
-                />
-              </FormGroup>
-              {formik.errors.action && (
-                <CustomAlert variant="negative">{formik.errors.action && 'Required'}</CustomAlert>
-              )}
+                <div className="item_info">
+                  <Box>
+                    <FormGroup>
+                      <FormLabel>{i18nMark('Resource')}</FormLabel>
+                      <Input
+                        type="text"
+                        id="name"
+                        name="name"
+                        disabled={formik.isSubmitting}
+                        onChange={formik.handleChange}
+                        placeholder={i18nMark('Name of your resource')}
+                        value={formik.values.name}
+                      />
+                      <CounterChars>{60 - formik.values.name.length}</CounterChars>
+                    </FormGroup>
+                    {formik.errors.name && (
+                      <CustomAlert variant="negative">{formik.errors.name}</CustomAlert>
+                    )}
+                  </Box>
+                  <br />
+                  <Box>
+                    <FormGroup>
+                      <FormLabel>Actions</FormLabel>
+                      <Select
+                        onSelect={(name, option) => {
+                          setAction(option.id);
+                          formik.setValues({ ...formik.values, action: option });
+                        }}
+                        options={actionList}
+                        variant="primary"
+                        id="actions"
+                        name="actions"
+                        placeholder={i18nMark('CustomSelect action')}
+                        // @ts-ignore
+                        value={formik.values.action}
+                      />
+                    </FormGroup>
+                    {formik.errors.action && (
+                      <CustomAlert variant="negative">
+                        {formik.errors.action && 'Required'}
+                      </CustomAlert>
+                    )}
+                  </Box>
+                </div>
+              </div>
             </CollectionContainerForm>
             <CollectionContainerForm>
               <div className="d-flex">

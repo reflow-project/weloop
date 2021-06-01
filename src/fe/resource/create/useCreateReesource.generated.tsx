@@ -12,6 +12,7 @@ export type CreateEconomicEventAndNewResourceMutationVariables = {
   hasUnit: Types.Scalars['ID'],
   hasNumericalValue: Types.Scalars['Float'],
   name?: Types.Maybe<Types.Scalars['String']>,
+  image?: Types.Maybe<Types.Scalars['URI']>
 };
 
 
@@ -43,7 +44,7 @@ export type CreateEconomicEventAndNewResourceMutation = (
         ) }
       )>, resourceInventoriedAs: Types.Maybe<(
         { __typename: 'EconomicResource' }
-        & Pick<Types.EconomicResource, 'id' | 'name'>
+        & Pick<Types.EconomicResource, 'id' | 'name' | 'image'>
         & { onhandQuantity: Types.Maybe<(
           { __typename: 'Measure' }
           & Pick<Types.Measure, 'hasNumericalValue'>
@@ -66,8 +67,8 @@ export type CreateEconomicEventAndNewResourceMutation = (
 
 
 export const CreateEconomicEventAndNewResourceDocument = gql`
-    mutation createEconomicEventAndNewResource($note: String, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!, $name: String) {
-  createEconomicEvent(event: {note: $note, action: $action, provider: $provider, receiver: $receiver, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}, newInventoriedResource: {name: $name}) {
+    mutation createEconomicEventAndNewResource($note: String, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!, $name: String, $image: URI) {
+  createEconomicEvent(event: {note: $note, action: $action, provider: $provider, receiver: $receiver, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}, newInventoriedResource: {name: $name, image: $image}) {
     economicEvent {
       id
       note
@@ -91,6 +92,7 @@ export const CreateEconomicEventAndNewResourceDocument = gql`
       resourceInventoriedAs {
         id
         name
+        image
         onhandQuantity {
           hasNumericalValue
           hasUnit {

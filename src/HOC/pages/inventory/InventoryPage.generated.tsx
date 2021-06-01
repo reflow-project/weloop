@@ -13,7 +13,7 @@ export type EconomicResourcesFilteredQuery = (
   { __typename: 'RootQueryType' }
   & { economicResourcesFiltered: Types.Maybe<Array<Types.Maybe<(
     { __typename: 'EconomicResource' }
-    & Pick<Types.EconomicResource, 'id' | 'name' | 'note'>
+    & Pick<Types.EconomicResource, 'id' | 'name' | 'note' | 'image'>
   )>>> }
 );
 
@@ -24,6 +24,7 @@ export const EconomicResourcesFilteredDocument = gql`
     id
     name
     note
+    image
   }
 }
     `;

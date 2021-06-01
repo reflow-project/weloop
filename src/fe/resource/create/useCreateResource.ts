@@ -10,6 +10,7 @@ export interface CreateResource {
   receiver: string;
   hasUnit: string;
   hasNumericalValue: number;
+  image: any;
 }
 
 export const useCreateResource = () => {
@@ -26,7 +27,8 @@ export const useCreateResource = () => {
       provider,
       receiver,
       hasUnit,
-      hasNumericalValue
+      hasNumericalValue,
+      image
     }: CreateResource) => {
       if (createResourceMutStatus.loading) {
         return;
@@ -40,7 +42,8 @@ export const useCreateResource = () => {
           provider,
           receiver,
           hasUnit,
-          hasNumericalValue
+          hasNumericalValue,
+          image
         }
       });
     },

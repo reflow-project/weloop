@@ -190,30 +190,31 @@ export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
                 </AlertWrapper>
               )}
             </CollectionContainerForm>
-
-            <Description mt={2}>
-              <FormGroup>
-                <FormLabel>{i18nMark('description')}</FormLabel>
-                <Input
-                  type="textarea"
-                  id="note"
-                  name="note"
-                  onChange={formik.handleChange}
-                  disabled={formik.isSubmitting}
-                  hint={{ class: 'error', value: '' }}
-                  placeholder={i18nMark('A description of your intent')}
-                  value={formik.values.note}
-                />
-              </FormGroup>
-              <CounterChars>
-                {formik.values.note ? 500 - formik.values.note.length : 500}
-              </CounterChars>
-              {formik.errors.note && (
-                <AlertWrapper>
-                  <CustomAlert variant="negative">{formik.errors.note}</CustomAlert>
-                </AlertWrapper>
-              )}
-            </Description>
+            <CollectionContainerForm>
+              <Description mt={2}>
+                <FormGroup>
+                  <FormLabel>{i18nMark('description')}</FormLabel>
+                  <Input
+                    type="textarea"
+                    id="note"
+                    name="note"
+                    onChange={formik.handleChange}
+                    disabled={formik.isSubmitting}
+                    hint={{ class: 'error', value: '' }}
+                    placeholder={i18nMark('A description of your intent')}
+                    value={formik.values.note}
+                  />
+                </FormGroup>
+                <CounterChars>
+                  {formik.values.note ? 500 - formik.values.note.length : 500}
+                </CounterChars>
+                {formik.errors.note && (
+                  <AlertWrapper>
+                    <CustomAlert variant="negative">{formik.errors.note}</CustomAlert>
+                  </AlertWrapper>
+                )}
+              </Description>
+            </CollectionContainerForm>
           </HeroInfo>
         </Hero>
         <Actions mb={3}>

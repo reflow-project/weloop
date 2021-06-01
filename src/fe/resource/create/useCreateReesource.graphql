@@ -6,7 +6,7 @@ mutation createEconomicEventAndNewResource(
   $hasUnit: ID!,
   $hasNumericalValue: Float!,
   $name: String,
-#  $image: URI,
+  $image: URI,
 ) {
   createEconomicEvent(  event: {
     note: $note,
@@ -17,7 +17,7 @@ mutation createEconomicEventAndNewResource(
   },
     newInventoriedResource: {
       name: $name,
-#      image: $image
+      image: $image
     }) {
     economicEvent {
       id
@@ -42,6 +42,7 @@ mutation createEconomicEventAndNewResource(
       resourceInventoriedAs { # the newly created resource
         id
         name
+        image
         onhandQuantity {
           hasNumericalValue
           hasUnit {

@@ -13,6 +13,25 @@ export interface EconomicResource {
   name: string;
   note: string;
   image?: string;
+  resourceInventoriedAs?: {
+    id: string;
+    name: string;
+    image: string;
+    onhandQuantity?: {
+      hasNumericalValue: string;
+      hasUnit?: {
+        label: string;
+        symbol: string;
+      };
+    };
+    accountingQuantity?: {
+      hasNumericalValue: number;
+      hasUnit?: {
+        label: string;
+        symbol: string;
+      };
+    };
+  };
   currentLocation?: {
     id: string;
     name: string;

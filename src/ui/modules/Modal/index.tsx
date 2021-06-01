@@ -87,21 +87,17 @@ export const Actions = styled(Box)`
 `;
 
 export const CounterChars = styled.div`
-  float: right;
+  position: absolute;
+  top: 2px;
+  right: 8px;
   text-transform: uppercase;
+  text-align: center;
   background: #d0d9db;
   padding: 2px 10px;
+  border-radius: 12px;
   font-weight: 600;
-  margin-top: 4px;
-  color: #32302e;
+  color: #fff;
   letter-spacing: 1px;
-  margin-bottom: 10px;
-
-  &::after {
-    clear: both;
-    content: '';
-    display: table;
-  }
 `;
 
 export const ContainerForm = styled.div`

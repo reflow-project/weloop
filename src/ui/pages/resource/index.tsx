@@ -18,11 +18,9 @@ export const ResourceItem: React.FC<Props> = ({ resource }) => {
       <HomeBox>
         <WrapperCont>
           <Wrapper>
-            <InventoryWrapper key={resource && resource.id}>
+            <InventoryWrapper key={resource?.id}>
               <ImageWrapper>
-                {resource && resource.image && (
-                  <img src={resource && resource.image} alt={resource && resource.name} />
-                )}
+                {resource?.image && <img src={resource.image} alt={resource.name} />}
               </ImageWrapper>
               <InfoWrapper>
                 <Title variant="subhead">{resource && resource.name}</Title>
@@ -39,9 +37,7 @@ export const ResourceItem: React.FC<Props> = ({ resource }) => {
   );
 };
 
-export default ResourceItem;
-
-const Title = styled(Text)`
+export const Title = styled(Text)`
   color: ${props => props.theme.colors.dark};
   text-decoration: none !important;
 `;
