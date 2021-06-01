@@ -19,21 +19,19 @@ export const Inventory: React.FC<Props> = ({ inventory }) => {
       <HomeBox>
         <WrapperCont>
           <Wrapper>
-            {(inventory as EconomicResource[]).map(
-              ({ id, name, note, image }: EconomicResource) => (
-                <WrapperLink to={`/resource/${id}`}>
-                  <InventoryWrapper key={id}>
-                    <ImageWrapper>{image && <img src={image} alt={name} />}</ImageWrapper>
-                    <InfoWrapper>
-                      <Title variant="subhead">{name}</Title>
-                      <Box mr={1}>
-                        <Text variant="text">{note}</Text>
-                      </Box>
-                    </InfoWrapper>
-                  </InventoryWrapper>
-                </WrapperLink>
-              )
-            )}
+            {(inventory as any).map(({ id, name, note, image }: EconomicResource) => (
+              <WrapperLink to={`/inventory/${id}`}>
+                <InventoryWrapper key={id}>
+                  <ImageWrapper>{image && <img src={image} alt={name} />}</ImageWrapper>
+                  <InfoWrapper>
+                    <Title variant="subhead">{name}</Title>
+                    <Box mr={1}>
+                      <Text variant="text">{note}</Text>
+                    </Box>
+                  </InfoWrapper>
+                </InventoryWrapper>
+              </WrapperLink>
+            ))}
           </Wrapper>
         </WrapperCont>
       </HomeBox>

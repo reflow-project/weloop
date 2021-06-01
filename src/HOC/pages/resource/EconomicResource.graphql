@@ -4,5 +4,39 @@ query economicResource($id: ID!) {
     name
     note
     image
+    currentLocation {
+          id
+          name
+          lat
+          long
+        }
+    track {
+      id
+      note
+      resourceQuantity {
+        id
+        hasUnit {
+          id
+          label
+        }
+        hasNumericalValue
+      }
+      provider {
+        id
+        name
+      }
+      receiver {
+        id
+        name
+      }
+    }
+    onhandQuantity {
+      id,
+      hasNumericalValue
+      hasUnit {
+        id
+        label
+      }
+    }
   }
 }

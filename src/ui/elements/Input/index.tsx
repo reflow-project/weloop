@@ -73,7 +73,6 @@ const FieldWrapper = styled('div')<any>`
     font-size: 14px;
     color: #666666;
     letter-spacing: 1px;
-    text-transform: uppercase;
     margin-bottom: 10px;
   }
   textarea {

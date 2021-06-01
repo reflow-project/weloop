@@ -60,8 +60,7 @@ const DropzoneArea: React.FC<Props> = ({ initialUrl, uploadType, onFileSelect, f
       setCurrentFile({ file, localUrl: URL.createObjectURL(file) });
     }
   });
-  // const rejectedFile = rejectedFiles[0];
-  // console.log({ rejectedFiles, acceptedFiles });
+
   return (
     <>
       <Box sx={{ height: '100%' }} {...getRootProps({ className: 'dropzone' })}>
