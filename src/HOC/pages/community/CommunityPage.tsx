@@ -158,8 +158,8 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
             intentId={resource.id}
             note={resource?.note ?? ''}
             communityName={community?.name ?? ''}
-            communityLink={`/resource/${resource.id}`}
-            onOpen={() => history.push(`/resource/${resource.id}`)}
+            communityLink={`/inventory/${resource.id}`}
+            onOpen={() => history.push(`/inventory/${resource.id}`)}
           />
         )
     )

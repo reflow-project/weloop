@@ -27,6 +27,25 @@ export interface EconomicResource {
       label: string;
     };
   };
+  track: {
+    id: string;
+    note: string;
+    resourceQuantity: {
+      hasNumericalValue: number;
+      hasUnit: {
+        id: string;
+        label: string;
+      };
+    };
+    provider: {
+      id: string;
+      name: string;
+    };
+    receiver: {
+      id: string;
+      name: string;
+    };
+  }[];
 }
 
 export const InventoryPage: FC<InventoryPageProps> = ({ userId }) => {

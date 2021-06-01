@@ -51,7 +51,6 @@ export const UploadResource: React.FC<Props> = ({
 }) => {
   const [license0, license1, license2] = acceptedLicenses;
   const { i18n } = React.useContext(LocaleContext);
-  // console.log(formik.values.resourceFiles);
   // {formik.values.resourceFiles![0] !== undefined ? console.log('re %',formik.values.resourceFiles![0].type) : null}
   const onResourceFileSelect = React.useCallback(
     (file: File) => formik.setValues({ ...formik.values, resource: file }),

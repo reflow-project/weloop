@@ -172,7 +172,7 @@ export const CommentPreviewFragmentDoc = gql`
             ...CommunityInfo
           }
         }
-        ... on Resource { 
+        ... on Resource {
           id
           collection {
             id
