@@ -54,9 +54,9 @@ export const Community: React.FC<Props> = ({
   // isJoined,
   Threads,
   loadMoreActivities,
-  loadMoreCollections,
-  loadMoreThreads,
-  createCollection
+  // loadMoreCollections,
+  loadMoreThreads
+  // createCollection
 }) => {
   return (
     <MainContainer>
@@ -68,7 +68,6 @@ export const Community: React.FC<Props> = ({
             <Menu tabPaths={tabPaths} />
             <Switch>
               <Route exact path={tabPaths.intents}>
-                gi
                 <ObjectsList>{Intents}</ObjectsList>
               </Route>
               <Route exact path={tabPaths.timeline}>
