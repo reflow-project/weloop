@@ -41,7 +41,7 @@ export const ResourceItem: React.FC<Props> = ({ resource }) => {
                     <Icon>
                       <PenIcon size="16" />
                     </Icon>
-                    <b>Note:</b>
+                    <Trans>Note:</Trans>{' '}
                     <Trans>{resource?.note ? resource.note : 'Not provided'}</Trans>
                   </Box>
                   <Box mr={1}>
@@ -51,7 +51,7 @@ export const ResourceItem: React.FC<Props> = ({ resource }) => {
                       </Icon>
                       <b>
                         <Trans>Location:</Trans>
-                      </b>
+                      </b>{' '}
                       {resource?.currentLocation?.name
                         ? resource.currentLocation.name
                         : 'Not provided'}
@@ -62,7 +62,7 @@ export const ResourceItem: React.FC<Props> = ({ resource }) => {
                       <Icon>
                         <BoxIcon size="16" />
                       </Icon>
-                      <b>Quantity in stock:</b>
+                      <b>Quantity in stock:</b>{' '}
                       {`${resource?.onhandQuantity?.hasNumericalValue} ${resource?.onhandQuantity?.hasUnit.label}`}
                     </Text>
                   </Box>
@@ -75,8 +75,8 @@ export const ResourceItem: React.FC<Props> = ({ resource }) => {
                               <PenIcon size="16" />
                             </Icon>
                             <b>
-                              <Trans>Track note:</Trans>
-                            </b>
+                              <Trans>Track note: </Trans>
+                            </b>{' '}
                             {track.note ? track.note : 'Not provided'}
                           </Text>
                         </Box>
@@ -85,7 +85,7 @@ export const ResourceItem: React.FC<Props> = ({ resource }) => {
                             <Icon>
                               <BoxIcon size="16" />
                             </Icon>
-                            <b>Quantity in stock:</b>
+                            <b>Quantity in stock:</b>{' '}
                             {`${track.resourceQuantity.hasNumericalValue} ${track.resourceQuantity.hasUnit.label}`}
                           </Text>
                         </Box>
@@ -96,7 +96,7 @@ export const ResourceItem: React.FC<Props> = ({ resource }) => {
                             </Icon>
                             <b>
                               <Trans>Provider:</Trans>
-                            </b>
+                            </b>{' '}
                             {track.provider ? track.provider.name : 'Not provided'}
                           </Text>
                         </Box>
