@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import ResourceItem, { Props as ResourceItemProps } from 'ui/pages/resource';
+import { ResourceItem, Props as ResourceItemProps } from 'ui/pages/resource';
 import * as GQL from './EconomicResource.generated';
 
 type ResourcePageProps = {

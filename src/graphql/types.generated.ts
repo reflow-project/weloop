@@ -11,13 +11,6 @@ export type Scalars = {
   Float: number,
   /** The `URI` type simply declares a reference to an external web URL, Holochain entry or other resource. */
   URI: any,
-  /** 
- * The `DateTime` scalar type represents a date and time in the UTC
-   * timezone. The DateTime appears in a JSON response as an ISO8601 formatted
-   * string, including UTC timezone ("Z"). The parsed date and time string will
-   * be converted to UTC if there is an offset.
- **/
-  DateTime: any,
   /** Arbitrary json stored as a string */
   Json: any,
   /** 
@@ -30,6 +23,13 @@ export type Scalars = {
    * Is actually a string or integer. May be extended in future.
  **/
   Cursor: any,
+  /** 
+ * The `DateTime` scalar type represents a date and time in the UTC
+   * timezone. The DateTime appears in a JSON response as an ISO8601 formatted
+   * string, including UTC timezone ("Z"). The parsed date and time string will
+   * be converted to UTC if there is an offset.
+ **/
+  DateTime: any,
   /** Represents an uploaded file. */
   Upload: any,
 };
@@ -3450,68 +3450,68 @@ export type RegistrationInput = {
 
 export type Resource = {
    __typename?: 'Resource',
-  /** A url for the resource, may be to a remote instance */
-  canonicalUrl?: Maybe<Scalars['String']>,
-  /** The current user's flag of the resource, if any */
-  myFlag?: Maybe<Flag>,
-  /** Can you use this without needing an account somewhere? */
-  publicAccess?: Maybe<Scalars['Boolean']>,
-  /** A JSON document containing more info beyond the default fields */
-  extraInfo?: Maybe<Scalars['Json']>,
-  /** The user who created the resource */
-  creator?: Maybe<User>,
-  /** The file type */
-  mimeType?: Maybe<Scalars['String']>,
-  /** The collection this resource is a part of, if any */
-  collection?: Maybe<Collection>,
-  /** An instance-local UUID identifying the resource */
-  id: Scalars['String'],
-  /** A link to an external resource */
-  content?: Maybe<Content>,
-  /** Resource's level */
-  level?: Maybe<Scalars['String']>,
-  /** Whether the resource is public */
-  isPublic: Scalars['Boolean'],
-  /** The type of content that may be embeded */
-  embedType?: Maybe<Scalars['String']>,
-  /** Whether an instance admin has hidden the resource */
-  isDisabled: Scalars['Boolean'],
-  /** Whether the resource is local to the instance */
-  isLocal: Scalars['Boolean'],
-  /** The HTML code of content that may be embeded */
-  embedCode?: Maybe<Scalars['String']>,
-  /** The original resource author */
-  author?: Maybe<Scalars['String']>,
-  /** When the resource was last updated */
-  updatedAt: Scalars['String'],
-  /** Resource's subject */
-  subject?: Maybe<Scalars['String']>,
-  /** An avatar url */
-  icon?: Maybe<Content>,
-  /** Total number of likers, including those we can't see */
-  likerCount?: Maybe<Scalars['Int']>,
-  /** Description */
-  summary?: Maybe<Scalars['String']>,
-  /** How can you access it? see https://www.w3.org/wiki/WebSchemas/Accessibility */
-  accessibilityFeature?: Maybe<Array<Maybe<Scalars['String']>>>,
-  /** The collection or other context this resource is in */
-  context?: Maybe<AnyContext>,
-  /** Can you use it without paying? */
-  freeAccess?: Maybe<Scalars['Boolean']>,
-  /** Resource's language */
-  language?: Maybe<Scalars['String']>,
-  /** The current user's like of the resource, if any */
-  myLike?: Maybe<Like>,
-  /** Users who like the resource, most recently liked first */
-  likers?: Maybe<LikesPage>,
-  /** When the resource was created */
-  createdAt: Scalars['String'],
-  /** Resource's type */
-  type?: Maybe<Scalars['String']>,
-  /** A name field */
-  name: Scalars['String'],
   /** What license is it available under? */
   license?: Maybe<Scalars['String']>,
+  /** The HTML code of content that may be embeded */
+  embedCode?: Maybe<Scalars['String']>,
+  /** How can you access it? see https://www.w3.org/wiki/WebSchemas/Accessibility */
+  accessibilityFeature?: Maybe<Array<Maybe<Scalars['String']>>>,
+  /** A JSON document containing more info beyond the default fields */
+  extraInfo?: Maybe<Scalars['Json']>,
+  /** The collection this resource is a part of, if any */
+  collection?: Maybe<Collection>,
+  /** Whether the resource is local to the instance */
+  isLocal: Scalars['Boolean'],
+  /** An instance-local UUID identifying the resource */
+  id: Scalars['String'],
+  /** Resource's level */
+  level?: Maybe<Scalars['String']>,
+  /** Resource's subject */
+  subject?: Maybe<Scalars['String']>,
+  /** When the resource was last updated */
+  updatedAt: Scalars['String'],
+  /** Total number of likers, including those we can't see */
+  likerCount?: Maybe<Scalars['Int']>,
+  /** Can you use it without paying? */
+  freeAccess?: Maybe<Scalars['Boolean']>,
+  /** Whether the resource is public */
+  isPublic: Scalars['Boolean'],
+  /** The user who created the resource */
+  creator?: Maybe<User>,
+  /** The type of content that may be embeded */
+  embedType?: Maybe<Scalars['String']>,
+  /** The file type */
+  mimeType?: Maybe<Scalars['String']>,
+  /** A link to an external resource */
+  content?: Maybe<Content>,
+  /** Users who like the resource, most recently liked first */
+  likers?: Maybe<LikesPage>,
+  /** Whether an instance admin has hidden the resource */
+  isDisabled: Scalars['Boolean'],
+  /** Can you use this without needing an account somewhere? */
+  publicAccess?: Maybe<Scalars['Boolean']>,
+  /** The current user's flag of the resource, if any */
+  myFlag?: Maybe<Flag>,
+  /** The original resource author */
+  author?: Maybe<Scalars['String']>,
+  /** An avatar url */
+  icon?: Maybe<Content>,
+  /** The collection or other context this resource is in */
+  context?: Maybe<AnyContext>,
+  /** Description */
+  summary?: Maybe<Scalars['String']>,
+  /** Resource's language */
+  language?: Maybe<Scalars['String']>,
+  /** A url for the resource, may be to a remote instance */
+  canonicalUrl?: Maybe<Scalars['String']>,
+  /** Resource's type */
+  type?: Maybe<Scalars['String']>,
+  /** When the resource was created */
+  createdAt: Scalars['String'],
+  /** The current user's like of the resource, if any */
+  myLike?: Maybe<Like>,
+  /** A name field */
+  name: Scalars['String'],
   /** Flags users have made about the resource, most recently created first */
   flags?: Maybe<FlagsPage>,
 };
@@ -3630,387 +3630,199 @@ export type ResourceSpecificationUpdateParams = {
 
 export type RootMutationType = {
    __typename?: 'RootMutationType',
-  updateProductBatch?: Maybe<ProductBatchResponse>,
+  updateEconomicResource?: Maybe<EconomicResourceResponse>,
+  /** Erase record of a person and thus remove them from the collaboration space */
+  deletePerson?: Maybe<Scalars['Boolean']>,
+  /** Deletes my account! */
+  deleteSelf?: Maybe<Scalars['Boolean']>,
+  deleteRecipeFlow?: Maybe<Scalars['Boolean']>,
+  createAppreciation?: Maybe<AppreciationResponse>,
+  /** Reply to an existing comment in a thread */
+  createReply?: Maybe<Comment>,
+  /** Create a new Category */
+  createCategory?: Maybe<Category>,
+  createPlan?: Maybe<PlanResponse>,
+  updateEconomicEvent?: Maybe<EconomicEventResponse>,
+  /** Modify a comment */
+  updateComment?: Maybe<Comment>,
+  updateAgreement?: Maybe<AgreementResponse>,
+  createProductBatch?: Maybe<ProductBatchResponse>,
+  createIntent?: Maybe<IntentResponse>,
+  /** Creates a new offer for the logged in user, will ignore any provider specified. */
+  createOffer?: Maybe<IntentResponse>,
+  createProposal?: Maybe<ProposalResponse>,
+  createScenarioDefinition?: Maybe<ScenarioDefinitionResponse>,
+  updateAgentRelationshipRole?: Maybe<AgentRelationshipRoleResponse>,
+  createSpatialThing?: Maybe<SpatialThingResponse>,
+  updateProcess?: Maybe<ProcessResponse>,
+  createScenario?: Maybe<ScenarioResponse>,
+  /** Erase record of an organization and thus remove it from the collaboration space */
+  deleteOrganization?: Maybe<Scalars['Boolean']>,
+  /** Like a comment, collection, or resource returning the like */
+  createLike?: Maybe<Like>,
+  createClaim?: Maybe<ClaimResponse>,
+  createRecipeFlow?: Maybe<RecipeFlowResponse>,
+  /** Update a category */
+  updateCategory?: Maybe<Category>,
+  deleteRecipeProcess?: Maybe<Scalars['Boolean']>,
+  updateCommitment?: Maybe<CommitmentResponse>,
   /** Reset password request */
   resetPasswordRequest?: Maybe<Scalars['Boolean']>,
-  updateRecipeExchange?: Maybe<RecipeExchangeResponse>,
-  /** Create a resource */
-  createResource?: Maybe<Resource>,
-  /** Update a organisation */
-  updateOrganisation?: Maybe<Organisation>,
-  createRegisterEmailDomainAccess: RegisterEmailDomainAccess,
-  /** Update a profile */
-  updateProfile?: Maybe<Me>,
-  deleteCommitment?: Maybe<Scalars['Boolean']>,
-  createSpatialThing?: Maybe<SpatialThingResponse>,
-  createScenarioDefinition?: Maybe<ScenarioDefinitionResponse>,
-  deleteAgentRelationship?: Maybe<Scalars['Boolean']>,
-  /** Update profile details */
-  updatePerson?: Maybe<PersonResponse>,
-  /** Update a community */
-  updateCommunity?: Maybe<Community>,
-  deletePlan?: Maybe<Scalars['Boolean']>,
-  /** 
- * Send a proposal to another agent.
-   * @param proposed the (`Proposal`) to send to an involved agent
-   * @param proposedTo the (`Agent`) to include in the proposal
- **/
-  proposeTo?: Maybe<ProposedToResponse>,
-  createCommitment?: Maybe<CommitmentResponse>,
-  /** Create a Taggable out of something else. You can also directly use the tag() mutation with a pointer ID instead. */
-  makeTaggable?: Maybe<Taggable>,
-  deleteRecipeFlow?: Maybe<Scalars['Boolean']>,
-  deleteProposal?: Maybe<Scalars['Boolean']>,
-  createSettlement?: Maybe<SettlementResponse>,
-  /** Follow a community, collection or thread returning the follow */
-  createFollow?: Maybe<Follow>,
-  /** Create a profile to represent something (which already exists, pass the ID passed as context) in feeds and federation */
-  addProfileTo?: Maybe<Profile>,
+  /** Deactivate a remote user, blocking further activities from it */
+  deactivateUser?: Maybe<User>,
+  /** Create a new thread, within an optional context */
+  createThread?: Maybe<Comment>,
+  createAgentRelationshipRole?: Maybe<AgentRelationshipRoleResponse>,
+  deleteClaim?: Maybe<Scalars['Boolean']>,
+  updateClaim?: Maybe<ClaimResponse>,
+  deleteRecipeResource?: Maybe<Scalars['Boolean']>,
+  createAgreement?: Maybe<AgreementResponse>,
+  /** Feature a community, or collection, returning the feature */
+  createFeature?: Maybe<Feature>,
   /** 
  * Tag a thing (using a Pointer) with one or more Taggables (or Categories, or
    * even Pointers to anything that can become taggable)
  **/
   tag?: Maybe<Scalars['Boolean']>,
-  createResourceSpecification?: Maybe<ResourceSpecificationResponse>,
-  updateRecipeResource?: Maybe<RecipeResourceResponse>,
-  createScenario?: Maybe<ScenarioResponse>,
-  createRecipeExchange?: Maybe<RecipeExchangeResponse>,
-  createRecipeResource?: Maybe<RecipeResourceResponse>,
-  deleteProductBatch?: Maybe<Scalars['Boolean']>,
-  createProcessSpecification?: Maybe<ProcessSpecificationResponse>,
-  createEconomicEvent?: Maybe<EconomicEventResponse>,
-  /** Close a flag */
-  resolveFlag?: Maybe<Flag>,
-  deleteAppreciation?: Maybe<Scalars['Boolean']>,
-  /** Update organization profile details */
-  updateOrganization?: Maybe<OrganizationResponse>,
-  updateSpatialThing?: Maybe<SpatialThingResponse>,
-  createAppreciation?: Maybe<AppreciationResponse>,
-  /** Erase record of a person and thus remove them from the collaboration space */
-  deletePerson?: Maybe<Scalars['Boolean']>,
-  createRegisterEmailAccess: RegisterEmailAccess,
-  /** Follow a community, collection or a user by their canonical url returning the follow */
-  createFollowByUrl?: Maybe<Follow>,
-  updateProcessSpecification?: Maybe<ProcessSpecificationResponse>,
-  deleteProcessSpecification?: Maybe<Scalars['Boolean']>,
-  /** Confirm email. Returns a login token. */
-  confirmEmail?: Maybe<AuthPayload>,
-  updateProposal?: Maybe<ProposalResponse>,
-  /** Copy a resource */
-  copyResource?: Maybe<Resource>,
-  deleteScenario?: Maybe<Scalars['Boolean']>,
-  createAgentRelationshipRole?: Maybe<AgentRelationshipRoleResponse>,
-  /** Sends an email invite, and adds the email to invite list for private instances */
-  sendInvite?: Maybe<Scalars['Boolean']>,
-  updateResourceSpecification?: Maybe<ResourceSpecificationResponse>,
-  /** Create a character to represent something (which already exists, pass the ID passed as context) in feeds and federation */
-  characterise?: Maybe<Character>,
-  createClaim?: Maybe<ClaimResponse>,
-  createProductBatch?: Maybe<ProductBatchResponse>,
-  /** Registers a new organization (group agent) with the collaboration space */
-  createOrganization?: Maybe<OrganizationResponse>,
-  updateAgentRelationshipRole?: Maybe<AgentRelationshipRoleResponse>,
-  createFulfillment?: Maybe<FulfillmentResponse>,
-  createProcess?: Maybe<ProcessResponse>,
-  deleteEconomicEvent?: Maybe<Scalars['Boolean']>,
-  deleteEconomicResource?: Maybe<Scalars['Boolean']>,
-  /** Delete more or less anything */
-  delete?: Maybe<AnyContext>,
-  /** Modify a comment */
-  updateComment?: Maybe<Comment>,
-  /** Log out */
-  deleteSession?: Maybe<Scalars['Boolean']>,
-  /** Reply to an existing comment in a thread */
-  createReply?: Maybe<Comment>,
-  updateEconomicResource?: Maybe<EconomicResourceResponse>,
-  /** Like a comment, collection, or resource returning the like */
-  createLike?: Maybe<Like>,
-  updateScenario?: Maybe<ScenarioResponse>,
-  deleteScenarioDefinition?: Maybe<Scalars['Boolean']>,
-  /** Creates a new offer for the logged in user, will ignore any provider specified. */
-  createOffer?: Maybe<IntentResponse>,
-  deleteIntent?: Maybe<Scalars['Boolean']>,
-  updateAgentRelationship?: Maybe<AgentRelationshipResponse>,
-  deleteFulfillment?: Maybe<Scalars['Boolean']>,
-  /** Create a organisation */
-  createOrganisation?: Maybe<Organisation>,
-  updateEconomicEvent?: Maybe<EconomicEventResponse>,
-  /** Creates a new need for the logged in user, will ignore any receiver specified. */
-  createNeed?: Maybe<IntentResponse>,
-  deleteResourceSpecification?: Maybe<Scalars['Boolean']>,
-  createRecipeFlow?: Maybe<RecipeFlowResponse>,
-  deleteSatisfaction?: Maybe<Scalars['Boolean']>,
-  updateSettlement?: Maybe<SettlementResponse>,
-  updateClaim?: Maybe<ClaimResponse>,
-  updateCommitment?: Maybe<CommitmentResponse>,
-  updateUnit?: Maybe<UnitResponse>,
-  /** Deactivate a remote user, blocking further activities from it */
-  deactivateUser?: Maybe<User>,
-  createProposal?: Maybe<ProposalResponse>,
-  /** Create a new Category */
-  createCategory?: Maybe<Category>,
-  deleteRecipeProcess?: Maybe<Scalars['Boolean']>,
+  /** Registers a new (human) person with the collaboration space */
+  createPerson?: Maybe<PersonResponse>,
   /** Fetch metadata from webpage */
   fetchWebMetadata?: Maybe<WebMetadata>,
-  /** Reset password */
-  resetPassword?: Maybe<AuthPayload>,
-  deleteRegisterEmailDomainAccess?: Maybe<RegisterEmailDomainAccess>,
-  updateProcess?: Maybe<ProcessResponse>,
-  deleteRegisterEmailAccess?: Maybe<RegisterEmailAccess>,
-  deleteProposedIntent?: Maybe<Scalars['Boolean']>,
+  deleteProposedTo?: Maybe<Scalars['Boolean']>,
+  deleteResourceSpecification?: Maybe<Scalars['Boolean']>,
+  deleteIntent?: Maybe<Scalars['Boolean']>,
+  /** Registers a new organization (group agent) with the collaboration space */
+  createOrganization?: Maybe<OrganizationResponse>,
+  createAgentRelationship?: Maybe<AgentRelationshipResponse>,
+  createRegisterEmailAccess: RegisterEmailAccess,
+  deleteScenario?: Maybe<Scalars['Boolean']>,
+  /** Create a character to represent something (which already exists, pass the ID passed as context) in feeds and federation */
+  characterise?: Maybe<Character>,
+  deleteProcess?: Maybe<Scalars['Boolean']>,
+  deleteAgentRelationshipRole?: Maybe<Scalars['Boolean']>,
   /** Log in, works with both username and email */
   createSession?: Maybe<AuthPayload>,
   deleteSettlement?: Maybe<Scalars['Boolean']>,
-  updateAgreement?: Maybe<AgreementResponse>,
-  createUnit?: Maybe<UnitResponse>,
-  /** Erase record of an organization and thus remove it from the collaboration space */
-  deleteOrganization?: Maybe<Scalars['Boolean']>,
-  deleteClaim?: Maybe<Scalars['Boolean']>,
-  createRecipeProcess?: Maybe<RecipeProcessResponse>,
-  createIntent?: Maybe<IntentResponse>,
-  updateFulfillment?: Maybe<FulfillmentResponse>,
-  createPlan?: Maybe<PlanResponse>,
-  createAgreement?: Maybe<AgreementResponse>,
-  /** Update a collection */
-  updateCollection?: Maybe<Collection>,
-  updateScenarioDefinition?: Maybe<ScenarioDefinitionResponse>,
-  createSatisfaction?: Maybe<SatisfactionResponse>,
-  updateAppreciation?: Maybe<AppreciationResponse>,
-  createAgentRelationship?: Maybe<AgentRelationshipResponse>,
-  updateIntent?: Maybe<IntentResponse>,
-  deleteRecipeResource?: Maybe<Scalars['Boolean']>,
-  /** Create a new thread, within an optional context */
-  createThread?: Maybe<Comment>,
+  updateAgentRelationship?: Maybe<AgentRelationshipResponse>,
+  updateResourceSpecification?: Maybe<ResourceSpecificationResponse>,
+  /** Create a resource */
+  createResource?: Maybe<Resource>,
+  createRecipeResource?: Maybe<RecipeResourceResponse>,
+  /** Delete more or less anything */
+  delete?: Maybe<AnyContext>,
+  createRegisterEmailDomainAccess: RegisterEmailDomainAccess,
+  /** Update a community */
+  updateCommunity?: Maybe<Community>,
+  updateRecipeFlow?: Maybe<RecipeFlowResponse>,
+  deleteAppreciation?: Maybe<Scalars['Boolean']>,
   /** Create a user */
   createUser?: Maybe<Me>,
+  /** Log out */
+  deleteSession?: Maybe<Scalars['Boolean']>,
+  createCommitment?: Maybe<CommitmentResponse>,
+  deleteRegisterEmailAccess?: Maybe<RegisterEmailAccess>,
+  updateIntent?: Maybe<IntentResponse>,
+  updateAppreciation?: Maybe<AppreciationResponse>,
+  updateSettlement?: Maybe<SettlementResponse>,
   deleteUnit?: Maybe<Scalars['Boolean']>,
-  updateSatisfaction?: Maybe<SatisfactionResponse>,
-  updatePlan?: Maybe<PlanResponse>,
-  /** Create a collection */
-  createCollection?: Maybe<Collection>,
-  /** Deletes my account! */
-  deleteSelf?: Maybe<Scalars['Boolean']>,
-  deleteAgentRelationshipRole?: Maybe<Scalars['Boolean']>,
-  /** Registers a new (human) person with the collaboration space */
-  createPerson?: Maybe<PersonResponse>,
+  deleteEconomicEvent?: Maybe<Scalars['Boolean']>,
   /** 
  * Include an existing intent as part of a proposal.
    * @param publishedIn the (`Proposal`) to include the intent in
    * @param publishes the (`Intent`) to include as part of the proposal
  **/
   proposeIntent?: Maybe<ProposedIntentResponse>,
-  /** Create a community */
-  createCommunity?: Maybe<Community>,
-  /** Feature a community, or collection, returning the feature */
-  createFeature?: Maybe<Feature>,
-  deleteSpatialThing?: Maybe<Scalars['Boolean']>,
-  deleteRecipeExchange?: Maybe<Scalars['Boolean']>,
-  /** Flag a user, community, collection, resource or comment, returning the flag */
-  createFlag?: Maybe<Flag>,
+  updateProductBatch?: Maybe<ProductBatchResponse>,
+  createSettlement?: Maybe<SettlementResponse>,
   updateRecipeProcess?: Maybe<RecipeProcessResponse>,
-  /** Update a resource */
-  updateResource?: Maybe<Resource>,
-  deleteProposedTo?: Maybe<Scalars['Boolean']>,
-  updateRecipeFlow?: Maybe<RecipeFlowResponse>,
-  deleteProcess?: Maybe<Scalars['Boolean']>,
+  deleteCommitment?: Maybe<Scalars['Boolean']>,
+  createResourceSpecification?: Maybe<ResourceSpecificationResponse>,
+  createProcess?: Maybe<ProcessResponse>,
   /** Create a Category to represents this taxonomy_tag in feeds and federation */
   ingestTaxonomyTag?: Maybe<Taggable>,
-  /** Update a category */
-  updateCategory?: Maybe<Category>,
+  deleteProposedIntent?: Maybe<Scalars['Boolean']>,
+  /** Sends an email invite, and adds the email to invite list for private instances */
+  sendInvite?: Maybe<Scalars['Boolean']>,
+  createRecipeExchange?: Maybe<RecipeExchangeResponse>,
+  /** Follow a community, collection or a user by their canonical url returning the follow */
+  createFollowByUrl?: Maybe<Follow>,
+  updateFulfillment?: Maybe<FulfillmentResponse>,
+  updateSatisfaction?: Maybe<SatisfactionResponse>,
+  /** Confirm email. Returns a login token. */
+  confirmEmail?: Maybe<AuthPayload>,
+  /** Update a profile */
+  updateProfile?: Maybe<Me>,
+  deleteProductBatch?: Maybe<Scalars['Boolean']>,
+  createSatisfaction?: Maybe<SatisfactionResponse>,
+  updateRecipeExchange?: Maybe<RecipeExchangeResponse>,
+  /** Reset password */
+  resetPassword?: Maybe<AuthPayload>,
+  updateProcessSpecification?: Maybe<ProcessSpecificationResponse>,
+  /** Create a collection */
+  createCollection?: Maybe<Collection>,
   deleteAgreement?: Maybe<Scalars['Boolean']>,
+  deletePlan?: Maybe<Scalars['Boolean']>,
+  createUnit?: Maybe<UnitResponse>,
+  /** Update profile details */
+  updatePerson?: Maybe<PersonResponse>,
+  deleteProcessSpecification?: Maybe<Scalars['Boolean']>,
+  updateProposal?: Maybe<ProposalResponse>,
+  updateSpatialThing?: Maybe<SpatialThingResponse>,
+  createEconomicEvent?: Maybe<EconomicEventResponse>,
+  /** Update a resource */
+  updateResource?: Maybe<Resource>,
+  /** 
+ * Send a proposal to another agent.
+   * @param proposed the (`Proposal`) to send to an involved agent
+   * @param proposedTo the (`Agent`) to include in the proposal
+ **/
+  proposeTo?: Maybe<ProposedToResponse>,
+  deleteScenarioDefinition?: Maybe<Scalars['Boolean']>,
+  /** Follow a community, collection or thread returning the follow */
+  createFollow?: Maybe<Follow>,
+  deleteEconomicResource?: Maybe<Scalars['Boolean']>,
+  deleteProposal?: Maybe<Scalars['Boolean']>,
+  /** Update a organisation */
+  updateOrganisation?: Maybe<Organisation>,
+  updateUnit?: Maybe<UnitResponse>,
+  deleteRecipeExchange?: Maybe<Scalars['Boolean']>,
+  updateRecipeResource?: Maybe<RecipeResourceResponse>,
+  createProcessSpecification?: Maybe<ProcessSpecificationResponse>,
+  /** Create a organisation */
+  createOrganisation?: Maybe<Organisation>,
+  /** Copy a resource */
+  copyResource?: Maybe<Resource>,
+  deleteSpatialThing?: Maybe<Scalars['Boolean']>,
+  /** Creates a new need for the logged in user, will ignore any receiver specified. */
+  createNeed?: Maybe<IntentResponse>,
+  /** Update a collection */
+  updateCollection?: Maybe<Collection>,
+  updateScenario?: Maybe<ScenarioResponse>,
+  /** Create a profile to represent something (which already exists, pass the ID passed as context) in feeds and federation */
+  addProfileTo?: Maybe<Profile>,
+  /** Flag a user, community, collection, resource or comment, returning the flag */
+  createFlag?: Maybe<Flag>,
+  createFulfillment?: Maybe<FulfillmentResponse>,
+  createRecipeProcess?: Maybe<RecipeProcessResponse>,
+  deleteFulfillment?: Maybe<Scalars['Boolean']>,
+  /** Update organization profile details */
+  updateOrganization?: Maybe<OrganizationResponse>,
+  updatePlan?: Maybe<PlanResponse>,
+  deleteRegisterEmailDomainAccess?: Maybe<RegisterEmailDomainAccess>,
+  /** Close a flag */
+  resolveFlag?: Maybe<Flag>,
+  updateScenarioDefinition?: Maybe<ScenarioDefinitionResponse>,
+  deleteAgentRelationship?: Maybe<Scalars['Boolean']>,
+  /** Create a Taggable out of something else. You can also directly use the tag() mutation with a pointer ID instead. */
+  makeTaggable?: Maybe<Taggable>,
+  /** Create a community */
+  createCommunity?: Maybe<Community>,
+  deleteSatisfaction?: Maybe<Scalars['Boolean']>,
 };
 
 
-export type RootMutationTypeUpdateProductBatchArgs = {
-  productBatch: ProductBatchUpdateParams
-};
-
-
-export type RootMutationTypeResetPasswordRequestArgs = {
-  email: Scalars['String']
-};
-
-
-export type RootMutationTypeUpdateRecipeExchangeArgs = {
-  recipeExchange?: Maybe<RecipeExchangeUpdateParams>
-};
-
-
-export type RootMutationTypeCreateResourceArgs = {
-  content: UploadInput,
-  contextId?: Maybe<Scalars['String']>,
-  icon?: Maybe<UploadInput>,
-  resource: ResourceInput
-};
-
-
-export type RootMutationTypeUpdateOrganisationArgs = {
-  organisation: OrganisationUpdateInput,
-  organisationId: Scalars['String']
-};
-
-
-export type RootMutationTypeCreateRegisterEmailDomainAccessArgs = {
-  domain: Scalars['String']
-};
-
-
-export type RootMutationTypeUpdateProfileArgs = {
-  icon?: Maybe<UploadInput>,
-  image?: Maybe<UploadInput>,
-  profile: UpdateProfileInput
-};
-
-
-export type RootMutationTypeDeleteCommitmentArgs = {
-  id: Scalars['ID']
-};
-
-
-export type RootMutationTypeCreateSpatialThingArgs = {
-  inScopeOf?: Maybe<Scalars['ID']>,
-  spatialThing: SpatialThingCreateParams
-};
-
-
-export type RootMutationTypeCreateScenarioDefinitionArgs = {
-  plan: ScenarioDefinitionCreateParams
-};
-
-
-export type RootMutationTypeDeleteAgentRelationshipArgs = {
-  id: Scalars['ID']
-};
-
-
-export type RootMutationTypeUpdatePersonArgs = {
-  person: AgentUpdateParams
-};
-
-
-export type RootMutationTypeUpdateCommunityArgs = {
-  community: CommunityUpdateInput,
-  communityId: Scalars['String'],
-  icon?: Maybe<UploadInput>,
-  image?: Maybe<UploadInput>
-};
-
-
-export type RootMutationTypeDeletePlanArgs = {
-  id: Scalars['ID']
-};
-
-
-export type RootMutationTypeProposeToArgs = {
-  proposed: Scalars['ID'],
-  proposedTo: Scalars['ID']
-};
-
-
-export type RootMutationTypeCreateCommitmentArgs = {
-  commitment?: Maybe<CommitmentCreateParams>
-};
-
-
-export type RootMutationTypeMakeTaggableArgs = {
-  contextId?: Maybe<Scalars['String']>
-};
-
-
-export type RootMutationTypeDeleteRecipeFlowArgs = {
-  id: Scalars['ID']
-};
-
-
-export type RootMutationTypeDeleteProposalArgs = {
-  id: Scalars['ID']
-};
-
-
-export type RootMutationTypeCreateSettlementArgs = {
-  settlement: SettlementCreateParams
-};
-
-
-export type RootMutationTypeCreateFollowArgs = {
-  contextId: Scalars['String']
-};
-
-
-export type RootMutationTypeAddProfileToArgs = {
-  contextId: Scalars['String']
-};
-
-
-export type RootMutationTypeTagArgs = {
-  taggables: Array<Maybe<Scalars['String']>>,
-  thing: Scalars['String']
-};
-
-
-export type RootMutationTypeCreateResourceSpecificationArgs = {
-  resourceSpecification?: Maybe<ResourceSpecificationCreateParams>
-};
-
-
-export type RootMutationTypeUpdateRecipeResourceArgs = {
-  recipeResource?: Maybe<RecipeResourceUpdateParams>
-};
-
-
-export type RootMutationTypeCreateScenarioArgs = {
-  plan: ScenarioCreateParams
-};
-
-
-export type RootMutationTypeCreateRecipeExchangeArgs = {
-  recipeExchange?: Maybe<RecipeExchangeCreateParams>
-};
-
-
-export type RootMutationTypeCreateRecipeResourceArgs = {
-  recipeResource?: Maybe<RecipeResourceCreateParams>
-};
-
-
-export type RootMutationTypeDeleteProductBatchArgs = {
-  id: Scalars['ID']
-};
-
-
-export type RootMutationTypeCreateProcessSpecificationArgs = {
-  processSpecification?: Maybe<ProcessSpecificationCreateParams>
-};
-
-
-export type RootMutationTypeCreateEconomicEventArgs = {
-  event: EconomicEventCreateParams,
-  newInventoriedResource?: Maybe<EconomicResourceCreateParams>
-};
-
-
-export type RootMutationTypeResolveFlagArgs = {
-  flagId: Scalars['String']
-};
-
-
-export type RootMutationTypeDeleteAppreciationArgs = {
-  id: Scalars['ID']
-};
-
-
-export type RootMutationTypeUpdateOrganizationArgs = {
-  organization: AgentUpdateParams
-};
-
-
-export type RootMutationTypeUpdateSpatialThingArgs = {
-  spatialThing: SpatialThingUpdateParams
-};
-
-
-export type RootMutationTypeCreateAppreciationArgs = {
-  appreciation: AppreciationCreateParams
+export type RootMutationTypeUpdateEconomicResourceArgs = {
+  resource: EconomicResourceUpdateParams
 };
 
 
@@ -4019,115 +3831,18 @@ export type RootMutationTypeDeletePersonArgs = {
 };
 
 
-export type RootMutationTypeCreateRegisterEmailAccessArgs = {
-  email: Scalars['String']
+export type RootMutationTypeDeleteSelfArgs = {
+  iAmSure: Scalars['Boolean']
 };
 
 
-export type RootMutationTypeCreateFollowByUrlArgs = {
-  url: Scalars['String']
-};
-
-
-export type RootMutationTypeUpdateProcessSpecificationArgs = {
-  processSpecification?: Maybe<ProcessSpecificationUpdateParams>
-};
-
-
-export type RootMutationTypeDeleteProcessSpecificationArgs = {
+export type RootMutationTypeDeleteRecipeFlowArgs = {
   id: Scalars['ID']
 };
 
 
-export type RootMutationTypeConfirmEmailArgs = {
-  token: Scalars['String']
-};
-
-
-export type RootMutationTypeUpdateProposalArgs = {
-  proposal?: Maybe<ProposalUpdateParams>
-};
-
-
-export type RootMutationTypeCopyResourceArgs = {
-  contextId: Scalars['String'],
-  resourceId: Scalars['String']
-};
-
-
-export type RootMutationTypeDeleteScenarioArgs = {
-  id: Scalars['ID']
-};
-
-
-export type RootMutationTypeCreateAgentRelationshipRoleArgs = {
-  agentRelationshipRole?: Maybe<AgentRelationshipRoleCreateParams>
-};
-
-
-export type RootMutationTypeSendInviteArgs = {
-  email: Scalars['String']
-};
-
-
-export type RootMutationTypeUpdateResourceSpecificationArgs = {
-  resourceSpecification?: Maybe<ResourceSpecificationUpdateParams>
-};
-
-
-export type RootMutationTypeCharacteriseArgs = {
-  contextId: Scalars['String']
-};
-
-
-export type RootMutationTypeCreateClaimArgs = {
-  claim: ClaimCreateParams
-};
-
-
-export type RootMutationTypeCreateProductBatchArgs = {
-  productBatch: ProductBatchCreateParams
-};
-
-
-export type RootMutationTypeCreateOrganizationArgs = {
-  organization: AgentCreateParams
-};
-
-
-export type RootMutationTypeUpdateAgentRelationshipRoleArgs = {
-  agentRelationshipRole?: Maybe<AgentRelationshipRoleUpdateParams>
-};
-
-
-export type RootMutationTypeCreateFulfillmentArgs = {
-  fulfillment: FulfillmentCreateParams
-};
-
-
-export type RootMutationTypeCreateProcessArgs = {
-  process: ProcessCreateParams
-};
-
-
-export type RootMutationTypeDeleteEconomicEventArgs = {
-  id: Scalars['ID']
-};
-
-
-export type RootMutationTypeDeleteEconomicResourceArgs = {
-  id: Scalars['ID']
-};
-
-
-export type RootMutationTypeDeleteArgs = {
-  contextId: Scalars['String']
-};
-
-
-export type RootMutationTypeUpdateCommentArgs = {
-  comment: CommentInput,
-  commentId: Scalars['String']
+export type RootMutationTypeCreateAppreciationArgs = {
+  appreciation: AppreciationCreateParams
 };
 
 
@@ -4138,49 +3853,15 @@ export type RootMutationTypeCreateReplyArgs = {
 };
 
 
-export type RootMutationTypeUpdateEconomicResourceArgs = {
-  resource: EconomicResourceUpdateParams
+export type RootMutationTypeCreateCategoryArgs = {
+  category?: Maybe<CategoryInput>,
+  character?: Maybe<CharacterInput>,
+  profile?: Maybe<ProfileInput>
 };
 
 
-export type RootMutationTypeCreateLikeArgs = {
-  contextId: Scalars['String']
-};
-
-
-export type RootMutationTypeUpdateScenarioArgs = {
-  plan: ScenarioUpdateParams
-};
-
-
-export type RootMutationTypeDeleteScenarioDefinitionArgs = {
-  id: Scalars['ID']
-};
-
-
-export type RootMutationTypeCreateOfferArgs = {
-  intent?: Maybe<IntentCreateParams>
-};
-
-
-export type RootMutationTypeDeleteIntentArgs = {
-  id: Scalars['ID']
-};
-
-
-export type RootMutationTypeUpdateAgentRelationshipArgs = {
-  relationship: AgentRelationshipUpdateParams
-};
-
-
-export type RootMutationTypeDeleteFulfillmentArgs = {
-  id: Scalars['ID']
-};
-
-
-export type RootMutationTypeCreateOrganisationArgs = {
-  contextId?: Maybe<Scalars['String']>,
-  organisation: OrganisationInput
+export type RootMutationTypeCreatePlanArgs = {
+  plan: PlanCreateParams
 };
 
 
@@ -4189,48 +3870,29 @@ export type RootMutationTypeUpdateEconomicEventArgs = {
 };
 
 
-export type RootMutationTypeCreateNeedArgs = {
+export type RootMutationTypeUpdateCommentArgs = {
+  comment: CommentInput,
+  commentId: Scalars['String']
+};
+
+
+export type RootMutationTypeUpdateAgreementArgs = {
+  agreement?: Maybe<AgreementUpdateParams>
+};
+
+
+export type RootMutationTypeCreateProductBatchArgs = {
+  productBatch: ProductBatchCreateParams
+};
+
+
+export type RootMutationTypeCreateIntentArgs = {
   intent?: Maybe<IntentCreateParams>
 };
 
 
-export type RootMutationTypeDeleteResourceSpecificationArgs = {
-  id: Scalars['ID']
-};
-
-
-export type RootMutationTypeCreateRecipeFlowArgs = {
-  recipeFlow?: Maybe<RecipeFlowCreateParams>
-};
-
-
-export type RootMutationTypeDeleteSatisfactionArgs = {
-  id: Scalars['ID']
-};
-
-
-export type RootMutationTypeUpdateSettlementArgs = {
-  s0ettlement: SettlementUpdateParams
-};
-
-
-export type RootMutationTypeUpdateClaimArgs = {
-  claim: ClaimUpdateParams
-};
-
-
-export type RootMutationTypeUpdateCommitmentArgs = {
-  commitment?: Maybe<CommitmentUpdateParams>
-};
-
-
-export type RootMutationTypeUpdateUnitArgs = {
-  unit: UnitUpdateParams
-};
-
-
-export type RootMutationTypeDeactivateUserArgs = {
-  id: Scalars['String']
+export type RootMutationTypeCreateOfferArgs = {
+  intent?: Maybe<IntentCreateParams>
 };
 
 
@@ -4239,8 +3901,55 @@ export type RootMutationTypeCreateProposalArgs = {
 };
 
 
-export type RootMutationTypeCreateCategoryArgs = {
+export type RootMutationTypeCreateScenarioDefinitionArgs = {
+  plan: ScenarioDefinitionCreateParams
+};
+
+
+export type RootMutationTypeUpdateAgentRelationshipRoleArgs = {
+  agentRelationshipRole?: Maybe<AgentRelationshipRoleUpdateParams>
+};
+
+
+export type RootMutationTypeCreateSpatialThingArgs = {
+  inScopeOf?: Maybe<Scalars['ID']>,
+  spatialThing: SpatialThingCreateParams
+};
+
+
+export type RootMutationTypeUpdateProcessArgs = {
+  process: ProcessUpdateParams
+};
+
+
+export type RootMutationTypeCreateScenarioArgs = {
+  plan: ScenarioCreateParams
+};
+
+
+export type RootMutationTypeDeleteOrganizationArgs = {
+  id: Scalars['ID']
+};
+
+
+export type RootMutationTypeCreateLikeArgs = {
+  contextId: Scalars['String']
+};
+
+
+export type RootMutationTypeCreateClaimArgs = {
+  claim: ClaimCreateParams
+};
+
+
+export type RootMutationTypeCreateRecipeFlowArgs = {
+  recipeFlow?: Maybe<RecipeFlowCreateParams>
+};
+
+
+export type RootMutationTypeUpdateCategoryArgs = {
   category?: Maybe<CategoryInput>,
+  categoryId?: Maybe<Scalars['ID']>,
   character?: Maybe<CharacterInput>,
   profile?: Maybe<ProfileInput>
 };
@@ -4251,33 +3960,119 @@ export type RootMutationTypeDeleteRecipeProcessArgs = {
 };
 
 
+export type RootMutationTypeUpdateCommitmentArgs = {
+  commitment?: Maybe<CommitmentUpdateParams>
+};
+
+
+export type RootMutationTypeResetPasswordRequestArgs = {
+  email: Scalars['String']
+};
+
+
+export type RootMutationTypeDeactivateUserArgs = {
+  id: Scalars['String']
+};
+
+
+export type RootMutationTypeCreateThreadArgs = {
+  comment: CommentInput,
+  contextId?: Maybe<Scalars['String']>
+};
+
+
+export type RootMutationTypeCreateAgentRelationshipRoleArgs = {
+  agentRelationshipRole?: Maybe<AgentRelationshipRoleCreateParams>
+};
+
+
+export type RootMutationTypeDeleteClaimArgs = {
+  id: Scalars['ID']
+};
+
+
+export type RootMutationTypeUpdateClaimArgs = {
+  claim: ClaimUpdateParams
+};
+
+
+export type RootMutationTypeDeleteRecipeResourceArgs = {
+  id: Scalars['ID']
+};
+
+
+export type RootMutationTypeCreateAgreementArgs = {
+  agreement?: Maybe<AgreementCreateParams>
+};
+
+
+export type RootMutationTypeCreateFeatureArgs = {
+  contextId: Scalars['String']
+};
+
+
+export type RootMutationTypeTagArgs = {
+  taggables: Array<Maybe<Scalars['String']>>,
+  thing: Scalars['String']
+};
+
+
+export type RootMutationTypeCreatePersonArgs = {
+  person: AgentCreateParams
+};
+
+
 export type RootMutationTypeFetchWebMetadataArgs = {
   url: Scalars['String']
 };
 
 
-export type RootMutationTypeResetPasswordArgs = {
-  password: Scalars['String'],
-  token: Scalars['String']
+export type RootMutationTypeDeleteProposedToArgs = {
+  id: Scalars['ID']
 };
 
 
-export type RootMutationTypeDeleteRegisterEmailDomainAccessArgs = {
-  id: Scalars['String']
+export type RootMutationTypeDeleteResourceSpecificationArgs = {
+  id: Scalars['ID']
 };
 
 
-export type RootMutationTypeUpdateProcessArgs = {
-  process: ProcessUpdateParams
+export type RootMutationTypeDeleteIntentArgs = {
+  id: Scalars['ID']
 };
 
 
-export type RootMutationTypeDeleteRegisterEmailAccessArgs = {
-  id: Scalars['String']
+export type RootMutationTypeCreateOrganizationArgs = {
+  organization: AgentCreateParams
 };
 
 
-export type RootMutationTypeDeleteProposedIntentArgs = {
+export type RootMutationTypeCreateAgentRelationshipArgs = {
+  relationship: AgentRelationshipCreateParams
+};
+
+
+export type RootMutationTypeCreateRegisterEmailAccessArgs = {
+  email: Scalars['String']
+};
+
+
+export type RootMutationTypeDeleteScenarioArgs = {
+  id: Scalars['ID']
+};
+
+
+export type RootMutationTypeCharacteriseArgs = {
+  contextId: Scalars['String']
+};
+
+
+export type RootMutationTypeDeleteProcessArgs = {
+  id: Scalars['ID']
+};
+
+
+export type RootMutationTypeDeleteAgentRelationshipRoleArgs = {
   id: Scalars['ID']
 };
 
@@ -4294,91 +4089,54 @@ export type RootMutationTypeDeleteSettlementArgs = {
 };
 
 
-export type RootMutationTypeUpdateAgreementArgs = {
-  agreement?: Maybe<AgreementUpdateParams>
+export type RootMutationTypeUpdateAgentRelationshipArgs = {
+  relationship: AgentRelationshipUpdateParams
 };
 
 
-export type RootMutationTypeCreateUnitArgs = {
-  unit: UnitCreateParams
+export type RootMutationTypeUpdateResourceSpecificationArgs = {
+  resourceSpecification?: Maybe<ResourceSpecificationUpdateParams>
 };
 
 
-export type RootMutationTypeDeleteOrganizationArgs = {
+export type RootMutationTypeCreateResourceArgs = {
+  content: UploadInput,
+  contextId?: Maybe<Scalars['String']>,
+  icon?: Maybe<UploadInput>,
+  resource: ResourceInput
+};
+
+
+export type RootMutationTypeCreateRecipeResourceArgs = {
+  recipeResource?: Maybe<RecipeResourceCreateParams>
+};
+
+
+export type RootMutationTypeDeleteArgs = {
+  contextId: Scalars['String']
+};
+
+
+export type RootMutationTypeCreateRegisterEmailDomainAccessArgs = {
+  domain: Scalars['String']
+};
+
+
+export type RootMutationTypeUpdateCommunityArgs = {
+  community: CommunityUpdateInput,
+  communityId: Scalars['String'],
+  icon?: Maybe<UploadInput>,
+  image?: Maybe<UploadInput>
+};
+
+
+export type RootMutationTypeUpdateRecipeFlowArgs = {
+  recipeFlow?: Maybe<RecipeFlowUpdateParams>
+};
+
+
+export type RootMutationTypeDeleteAppreciationArgs = {
   id: Scalars['ID']
-};
-
-
-export type RootMutationTypeDeleteClaimArgs = {
-  id: Scalars['ID']
-};
-
-
-export type RootMutationTypeCreateRecipeProcessArgs = {
-  recipeProcess?: Maybe<RecipeProcessCreateParams>
-};
-
-
-export type RootMutationTypeCreateIntentArgs = {
-  intent?: Maybe<IntentCreateParams>
-};
-
-
-export type RootMutationTypeUpdateFulfillmentArgs = {
-  fulfillment: FulfillmentUpdateParams
-};
-
-
-export type RootMutationTypeCreatePlanArgs = {
-  plan: PlanCreateParams
-};
-
-
-export type RootMutationTypeCreateAgreementArgs = {
-  agreement?: Maybe<AgreementCreateParams>
-};
-
-
-export type RootMutationTypeUpdateCollectionArgs = {
-  collection: CollectionUpdateInput,
-  collectionId: Scalars['String'],
-  icon?: Maybe<UploadInput>
-};
-
-
-export type RootMutationTypeUpdateScenarioDefinitionArgs = {
-  plan: ScenarioDefinitionUpdateParams
-};
-
-
-export type RootMutationTypeCreateSatisfactionArgs = {
-  satisfaction?: Maybe<SatisfactionCreateParams>
-};
-
-
-export type RootMutationTypeUpdateAppreciationArgs = {
-  appreciation: AppreciationUpdateParams
-};
-
-
-export type RootMutationTypeCreateAgentRelationshipArgs = {
-  relationship: AgentRelationshipCreateParams
-};
-
-
-export type RootMutationTypeUpdateIntentArgs = {
-  intent?: Maybe<IntentUpdateParams>
-};
-
-
-export type RootMutationTypeDeleteRecipeResourceArgs = {
-  id: Scalars['ID']
-};
-
-
-export type RootMutationTypeCreateThreadArgs = {
-  comment: CommentInput,
-  contextId?: Maybe<Scalars['String']>
 };
 
 
@@ -4389,40 +4147,38 @@ export type RootMutationTypeCreateUserArgs = {
 };
 
 
+export type RootMutationTypeCreateCommitmentArgs = {
+  commitment?: Maybe<CommitmentCreateParams>
+};
+
+
+export type RootMutationTypeDeleteRegisterEmailAccessArgs = {
+  id: Scalars['String']
+};
+
+
+export type RootMutationTypeUpdateIntentArgs = {
+  intent?: Maybe<IntentUpdateParams>
+};
+
+
+export type RootMutationTypeUpdateAppreciationArgs = {
+  appreciation: AppreciationUpdateParams
+};
+
+
+export type RootMutationTypeUpdateSettlementArgs = {
+  s0ettlement: SettlementUpdateParams
+};
+
+
 export type RootMutationTypeDeleteUnitArgs = {
   id: Scalars['ID']
 };
 
 
-export type RootMutationTypeUpdateSatisfactionArgs = {
-  satisfaction?: Maybe<SatisfactionUpdateParams>
-};
-
-
-export type RootMutationTypeUpdatePlanArgs = {
-  plan: PlanUpdateParams
-};
-
-
-export type RootMutationTypeCreateCollectionArgs = {
-  collection: CollectionInput,
-  contextId?: Maybe<Scalars['String']>,
-  icon?: Maybe<UploadInput>
-};
-
-
-export type RootMutationTypeDeleteSelfArgs = {
-  iAmSure: Scalars['Boolean']
-};
-
-
-export type RootMutationTypeDeleteAgentRelationshipRoleArgs = {
+export type RootMutationTypeDeleteEconomicEventArgs = {
   id: Scalars['ID']
-};
-
-
-export type RootMutationTypeCreatePersonArgs = {
-  person: AgentCreateParams
 };
 
 
@@ -4433,37 +4189,154 @@ export type RootMutationTypeProposeIntentArgs = {
 };
 
 
-export type RootMutationTypeCreateCommunityArgs = {
-  community: CommunityInput,
-  contextId?: Maybe<Scalars['String']>,
-  icon?: Maybe<UploadInput>,
-  image?: Maybe<UploadInput>
+export type RootMutationTypeUpdateProductBatchArgs = {
+  productBatch: ProductBatchUpdateParams
 };
 
 
-export type RootMutationTypeCreateFeatureArgs = {
-  contextId: Scalars['String']
-};
-
-
-export type RootMutationTypeDeleteSpatialThingArgs = {
-  id: Scalars['ID']
-};
-
-
-export type RootMutationTypeDeleteRecipeExchangeArgs = {
-  id: Scalars['ID']
-};
-
-
-export type RootMutationTypeCreateFlagArgs = {
-  contextId: Scalars['String'],
-  message: Scalars['String']
+export type RootMutationTypeCreateSettlementArgs = {
+  settlement: SettlementCreateParams
 };
 
 
 export type RootMutationTypeUpdateRecipeProcessArgs = {
   recipeProcess?: Maybe<RecipeProcessUpdateParams>
+};
+
+
+export type RootMutationTypeDeleteCommitmentArgs = {
+  id: Scalars['ID']
+};
+
+
+export type RootMutationTypeCreateResourceSpecificationArgs = {
+  resourceSpecification?: Maybe<ResourceSpecificationCreateParams>
+};
+
+
+export type RootMutationTypeCreateProcessArgs = {
+  process: ProcessCreateParams
+};
+
+
+export type RootMutationTypeIngestTaxonomyTagArgs = {
+  taxonomyTagId?: Maybe<Scalars['Int']>
+};
+
+
+export type RootMutationTypeDeleteProposedIntentArgs = {
+  id: Scalars['ID']
+};
+
+
+export type RootMutationTypeSendInviteArgs = {
+  email: Scalars['String']
+};
+
+
+export type RootMutationTypeCreateRecipeExchangeArgs = {
+  recipeExchange?: Maybe<RecipeExchangeCreateParams>
+};
+
+
+export type RootMutationTypeCreateFollowByUrlArgs = {
+  url: Scalars['String']
+};
+
+
+export type RootMutationTypeUpdateFulfillmentArgs = {
+  fulfillment: FulfillmentUpdateParams
+};
+
+
+export type RootMutationTypeUpdateSatisfactionArgs = {
+  satisfaction?: Maybe<SatisfactionUpdateParams>
+};
+
+
+export type RootMutationTypeConfirmEmailArgs = {
+  token: Scalars['String']
+};
+
+
+export type RootMutationTypeUpdateProfileArgs = {
+  icon?: Maybe<UploadInput>,
+  image?: Maybe<UploadInput>,
+  profile: UpdateProfileInput
+};
+
+
+export type RootMutationTypeDeleteProductBatchArgs = {
+  id: Scalars['ID']
+};
+
+
+export type RootMutationTypeCreateSatisfactionArgs = {
+  satisfaction?: Maybe<SatisfactionCreateParams>
+};
+
+
+export type RootMutationTypeUpdateRecipeExchangeArgs = {
+  recipeExchange?: Maybe<RecipeExchangeUpdateParams>
+};
+
+
+export type RootMutationTypeResetPasswordArgs = {
+  password: Scalars['String'],
+  token: Scalars['String']
+};
+
+
+export type RootMutationTypeUpdateProcessSpecificationArgs = {
+  processSpecification?: Maybe<ProcessSpecificationUpdateParams>
+};
+
+
+export type RootMutationTypeCreateCollectionArgs = {
+  collection: CollectionInput,
+  contextId?: Maybe<Scalars['String']>,
+  icon?: Maybe<UploadInput>
+};
+
+
+export type RootMutationTypeDeleteAgreementArgs = {
+  id: Scalars['ID']
+};
+
+
+export type RootMutationTypeDeletePlanArgs = {
+  id: Scalars['ID']
+};
+
+
+export type RootMutationTypeCreateUnitArgs = {
+  unit: UnitCreateParams
+};
+
+
+export type RootMutationTypeUpdatePersonArgs = {
+  person: AgentUpdateParams
+};
+
+
+export type RootMutationTypeDeleteProcessSpecificationArgs = {
+  id: Scalars['ID']
+};
+
+
+export type RootMutationTypeUpdateProposalArgs = {
+  proposal?: Maybe<ProposalUpdateParams>
+};
+
+
+export type RootMutationTypeUpdateSpatialThingArgs = {
+  spatialThing: SpatialThingUpdateParams
+};
+
+
+export type RootMutationTypeCreateEconomicEventArgs = {
+  event: EconomicEventCreateParams,
+  newInventoriedResource?: Maybe<EconomicResourceCreateParams>
 };
 
 
@@ -4475,226 +4348,368 @@ export type RootMutationTypeUpdateResourceArgs = {
 };
 
 
-export type RootMutationTypeDeleteProposedToArgs = {
+export type RootMutationTypeProposeToArgs = {
+  proposed: Scalars['ID'],
+  proposedTo: Scalars['ID']
+};
+
+
+export type RootMutationTypeDeleteScenarioDefinitionArgs = {
   id: Scalars['ID']
 };
 
 
-export type RootMutationTypeUpdateRecipeFlowArgs = {
-  recipeFlow?: Maybe<RecipeFlowUpdateParams>
+export type RootMutationTypeCreateFollowArgs = {
+  contextId: Scalars['String']
 };
 
 
-export type RootMutationTypeDeleteProcessArgs = {
+export type RootMutationTypeDeleteEconomicResourceArgs = {
   id: Scalars['ID']
 };
 
 
-export type RootMutationTypeIngestTaxonomyTagArgs = {
-  taxonomyTagId?: Maybe<Scalars['Int']>
+export type RootMutationTypeDeleteProposalArgs = {
+  id: Scalars['ID']
 };
 
 
-export type RootMutationTypeUpdateCategoryArgs = {
-  category?: Maybe<CategoryInput>,
-  categoryId?: Maybe<Scalars['ID']>,
-  character?: Maybe<CharacterInput>,
-  profile?: Maybe<ProfileInput>
+export type RootMutationTypeUpdateOrganisationArgs = {
+  organisation: OrganisationUpdateInput,
+  organisationId: Scalars['String']
 };
 
 
-export type RootMutationTypeDeleteAgreementArgs = {
+export type RootMutationTypeUpdateUnitArgs = {
+  unit: UnitUpdateParams
+};
+
+
+export type RootMutationTypeDeleteRecipeExchangeArgs = {
+  id: Scalars['ID']
+};
+
+
+export type RootMutationTypeUpdateRecipeResourceArgs = {
+  recipeResource?: Maybe<RecipeResourceUpdateParams>
+};
+
+
+export type RootMutationTypeCreateProcessSpecificationArgs = {
+  processSpecification?: Maybe<ProcessSpecificationCreateParams>
+};
+
+
+export type RootMutationTypeCreateOrganisationArgs = {
+  contextId?: Maybe<Scalars['String']>,
+  organisation: OrganisationInput
+};
+
+
+export type RootMutationTypeCopyResourceArgs = {
+  contextId: Scalars['String'],
+  resourceId: Scalars['String']
+};
+
+
+export type RootMutationTypeDeleteSpatialThingArgs = {
+  id: Scalars['ID']
+};
+
+
+export type RootMutationTypeCreateNeedArgs = {
+  intent?: Maybe<IntentCreateParams>
+};
+
+
+export type RootMutationTypeUpdateCollectionArgs = {
+  collection: CollectionUpdateInput,
+  collectionId: Scalars['String'],
+  icon?: Maybe<UploadInput>
+};
+
+
+export type RootMutationTypeUpdateScenarioArgs = {
+  plan: ScenarioUpdateParams
+};
+
+
+export type RootMutationTypeAddProfileToArgs = {
+  contextId: Scalars['String']
+};
+
+
+export type RootMutationTypeCreateFlagArgs = {
+  contextId: Scalars['String'],
+  message: Scalars['String']
+};
+
+
+export type RootMutationTypeCreateFulfillmentArgs = {
+  fulfillment: FulfillmentCreateParams
+};
+
+
+export type RootMutationTypeCreateRecipeProcessArgs = {
+  recipeProcess?: Maybe<RecipeProcessCreateParams>
+};
+
+
+export type RootMutationTypeDeleteFulfillmentArgs = {
+  id: Scalars['ID']
+};
+
+
+export type RootMutationTypeUpdateOrganizationArgs = {
+  organization: AgentUpdateParams
+};
+
+
+export type RootMutationTypeUpdatePlanArgs = {
+  plan: PlanUpdateParams
+};
+
+
+export type RootMutationTypeDeleteRegisterEmailDomainAccessArgs = {
+  id: Scalars['String']
+};
+
+
+export type RootMutationTypeResolveFlagArgs = {
+  flagId: Scalars['String']
+};
+
+
+export type RootMutationTypeUpdateScenarioDefinitionArgs = {
+  plan: ScenarioDefinitionUpdateParams
+};
+
+
+export type RootMutationTypeDeleteAgentRelationshipArgs = {
+  id: Scalars['ID']
+};
+
+
+export type RootMutationTypeMakeTaggableArgs = {
+  contextId?: Maybe<Scalars['String']>
+};
+
+
+export type RootMutationTypeCreateCommunityArgs = {
+  community: CommunityInput,
+  contextId?: Maybe<Scalars['String']>,
+  icon?: Maybe<UploadInput>,
+  image?: Maybe<UploadInput>
+};
+
+
+export type RootMutationTypeDeleteSatisfactionArgs = {
   id: Scalars['ID']
 };
 
 export type RootQueryType = {
    __typename?: 'RootQueryType',
-  proposals?: Maybe<Array<Proposal>>,
-  plan?: Maybe<Plan>,
-  economicResource?: Maybe<EconomicResource>,
-  /** Get paginated list of economic resources */
-  economicResourcesPages: EconomicResourcePage,
-  /** Get list of categories we know about */
-  categories: CategoriesPage,
-  /** Get a taxonomy_tag by ID  */
-  taxonomyTag?: Maybe<TaxonomyTag>,
-  commitments?: Maybe<Array<Commitment>>,
-  /** Get list of profiles. You usually would query for a type associated with profile, rather than profiles directly. */
-  profiles: ProfilesPage,
   agreements?: Maybe<Array<Agreement>>,
-  /** Get list of organisations, most recent activity first */
-  organisations: OrganisationsPage,
-  /** Get paginated list of economic events */
-  economicEventsPages: EconomicEventPage,
-  /** Loads all agents publicly registered within this collaboration space */
-  agents?: Maybe<Array<Agent>>,
-  /** Loads all people who have publicly registered with this collaboration space. */
-  people?: Maybe<Array<Person>>,
-  recipeProcess?: Maybe<RecipeProcess>,
-  /** Get paginated list of proposals */
-  proposalsPages: ProposalsPage,
-  recipeFlow?: Maybe<RecipeFlow>,
-  unitsPages: UnitsPage,
-  recipeProcesses?: Maybe<Array<RecipeProcess>>,
   activity?: Maybe<Activity>,
-  measures?: Maybe<Array<Measure>>,
-  /** Get paginated list of processes */
-  processesPages: ProcessPage,
-  /** TEMPORARY - get filtered but non-paginated list of proposals */
-  proposalsFiltered?: Maybe<Array<Maybe<Proposal>>>,
-  claims?: Maybe<Array<Claim>>,
-  processSpecifications?: Maybe<Array<ProcessSpecification>>,
-  recipeResources?: Maybe<Array<RecipeResource>>,
-  /** Get a comment by its id */
-  comment?: Maybe<Comment>,
-  /** Retrieve details of an agent relationship by its ID */
-  agentRelationship?: Maybe<AgentRelationship>,
-  scenarioDefinition?: Maybe<ScenarioDefinition>,
-  /** Get a collection by id */
-  collection?: Maybe<Collection>,
-  /** Get a user, by either username or ID */
-  user?: Maybe<User>,
-  settlement?: Maybe<Settlement>,
-  claim?: Maybe<Claim>,
-  spatialThing?: Maybe<SpatialThing>,
-  /** Find an agent (person or organization) by their ID */
-  agent?: Maybe<Agent>,
-  /** Loads details of the currently authenticated REA agent */
-  myAgent?: Maybe<Agent>,
-  spatialThings?: Maybe<Array<SpatialThing>>,
-  /** Get list of languages we know about */
-  languages: LanguagesPage,
-  scenarios?: Maybe<Array<Scenario>>,
-  intents?: Maybe<Array<Intent>>,
-  /** TEMPORARY - get filtered but non-paginated list of resources */
-  economicResourcesFiltered?: Maybe<Array<Maybe<EconomicResource>>>,
-  actions?: Maybe<Array<Action>>,
-  productBatches?: Maybe<Array<ProductBatch>>,
-  economicEvents?: Maybe<Array<EconomicEvent>>,
-  scenario?: Maybe<Scenario>,
-  commitment?: Maybe<Commitment>,
-  /** Find a person by their ID */
-  person?: Maybe<Person>,
-  recipeExchange?: Maybe<RecipeExchange>,
-  economicResources?: Maybe<Array<EconomicResource>>,
-  /** Loads all organizations publicly registered within this collaboration space */
-  organizations?: Maybe<Array<Organization>>,
-  /** Fetch a like by ID */
-  like?: Maybe<Like>,
-  country?: Maybe<Country>,
-  resourceSpecification?: Maybe<ResourceSpecification>,
-  /** Get a community */
-  community?: Maybe<Community>,
-  /** Get paginated list of organizations */
-  organizationsPages: AgentsPage,
-  /** Get paginated list of intents */
-  intentsPages: IntentsPage,
-  /** Check if a user exists with a username */
-  usernameAvailable: Scalars['Boolean'],
-  /** Get paginated list of people */
-  peoplePages: AgentsPage,
-  productBatch?: Maybe<ProductBatch>,
-  agreement?: Maybe<Agreement>,
-  /** Get a resource */
-  resource?: Maybe<Resource>,
-  /** Get paginated list of active offers (intents with no receiver) */
-  offersPages: IntentsPage,
+  units?: Maybe<Array<Unit>>,
   measure?: Maybe<Measure>,
-  /** Find an organization (group) agent by its ID */
-  organization?: Maybe<Organization>,
-  fulfillments?: Maybe<Array<Fulfillment>>,
-  /** Get a character by id. You usually would query for a type associated with character, rather than characters directly. */
-  character?: Maybe<Character>,
-  economicEvent?: Maybe<EconomicEvent>,
-  processes?: Maybe<Array<Process>>,
-  spatialThingsPages: SpatialThingsPage,
-  registerEmailAccesses: RegisterEmailAccessesPage,
-  /** Retrieve details of all the relationships between all agents registered in this collaboration space */
-  agentRelationships?: Maybe<Array<AgentRelationship>>,
-  process?: Maybe<Process>,
-  /** TEMPORARY - get filtered but non-paginated list of intents */
-  intentsFiltered?: Maybe<Array<Maybe<Intent>>>,
-  scenarioDefinitions?: Maybe<Array<ScenarioDefinition>>,
-  plans?: Maybe<Array<Plan>>,
-  /** Retrieves a follow by id */
-  follow?: Maybe<Follow>,
-  /** Retrieve all possible kinds of associations that agents may have with one another in this collaboration space */
-  agentRelationshipRoles?: Maybe<Array<AgentRelationshipRole>>,
-  fulfillment?: Maybe<Fulfillment>,
-  registerEmailDomainAccesses: RegisterEmailDomainAccessesPage,
-  /** Get list of characters. You usually would query for a type associated with character, rather than characters directly. */
-  characters: CharactersPage,
-  /** Get list of known users */
-  users: UsersPage,
-  action?: Maybe<Action>,
-  feature?: Maybe<Feature>,
-  satisfaction?: Maybe<Satisfaction>,
-  recipeFlows?: Maybe<Array<RecipeFlow>>,
-  settlements?: Maybe<Array<Settlement>>,
-  measuresPages: MeasuresPage,
-  processSpecification?: Maybe<ProcessSpecification>,
-  recipeResource?: Maybe<RecipeResource>,
   /** Get a taggable by ID  */
   taggable?: Maybe<Taggable>,
-  /** Get a thread */
-  thread?: Maybe<Thread>,
-  recipeExchanges?: Maybe<Array<RecipeExchange>>,
-  /** Get a profile by id. You usually would query for a type associated with profile, rather than profiles directly. */
-  profile?: Maybe<Profile>,
-  /** Retrieve details of an agent relationship role by its ID */
-  agentRelationshipRole?: Maybe<AgentRelationshipRole>,
-  language?: Maybe<Language>,
-  units?: Maybe<Array<Unit>>,
-  resourceSpecifications?: Maybe<Array<ResourceSpecification>>,
-  economicEventsFiltered?: Maybe<Array<EconomicEvent>>,
-  features?: Maybe<FeaturesPage>,
-  /** Get list of communities, most followed first */
-  communities: CommunitiesPage,
-  satisfactions?: Maybe<Array<Satisfaction>>,
-  /** Get my user */
-  me?: Maybe<Me>,
-  flag?: Maybe<Flag>,
-  /** Get a organisation by id */
-  organisation?: Maybe<Organisation>,
-  /** Get list of countries we know about */
-  countries: CountriesPages,
-  /** Get a category by ID  */
-  category?: Maybe<Category>,
-  intent?: Maybe<Intent>,
+  claim?: Maybe<Claim>,
+  recipeFlows?: Maybe<Array<RecipeFlow>>,
+  /** Get list of categories we know about */
+  categories: CategoriesPage,
+  /** Get list of languages we know about */
+  languages: LanguagesPage,
+  /** Get list of profiles. You usually would query for a type associated with profile, rather than profiles directly. */
+  profiles: ProfilesPage,
   /** Get paginated list of active needs (intents with no provider) */
   needsPages: IntentsPage,
-  /** Get list of collections, most recent activity first */
-  collections: CollectionsPage,
+  /** Find an agent (person or organization) by their ID */
+  agent?: Maybe<Agent>,
+  productBatches?: Maybe<Array<ProductBatch>>,
+  scenario?: Maybe<Scenario>,
+  /** Get paginated list of processes */
+  processesPages: ProcessPage,
+  economicEvents?: Maybe<Array<EconomicEvent>>,
+  /** Retrieve all possible kinds of associations that agents may have with one another in this collaboration space */
+  agentRelationshipRoles?: Maybe<Array<AgentRelationshipRole>>,
+  /** Get a collection by id */
+  collection?: Maybe<Collection>,
+  intent?: Maybe<Intent>,
+  /** Loads all people who have publicly registered with this collaboration space. */
+  people?: Maybe<Array<Person>>,
+  economicEvent?: Maybe<EconomicEvent>,
+  agreement?: Maybe<Agreement>,
+  /** Retrieve details of an agent relationship by its ID */
+  agentRelationship?: Maybe<AgentRelationship>,
+  satisfaction?: Maybe<Satisfaction>,
+  /** Get paginated list of intents */
+  intentsPages: IntentsPage,
+  /** TEMPORARY - get filtered but non-paginated list of proposals */
+  proposalsFiltered?: Maybe<Array<Maybe<Proposal>>>,
+  /** Get a comment by its id */
+  comment?: Maybe<Comment>,
+  /** Get paginated list of economic resources */
+  economicResourcesPages: EconomicResourcePage,
+  /** Get paginated list of active offers (intents with no receiver) */
+  offersPages: IntentsPage,
+  /** Get a user, by either username or ID */
+  user?: Maybe<User>,
+  recipeResources?: Maybe<Array<RecipeResource>>,
+  /** Get paginated list of proposals */
+  proposalsPages: ProposalsPage,
+  resourceSpecification?: Maybe<ResourceSpecification>,
+  spatialThingsPages: SpatialThingsPage,
+  intents?: Maybe<Array<Intent>>,
+  /** Find a person by their ID */
+  person?: Maybe<Person>,
+  scenarios?: Maybe<Array<Scenario>>,
+  proposals?: Maybe<Array<Proposal>>,
+  economicResources?: Maybe<Array<EconomicResource>>,
+  /** Retrieves a follow by id */
+  follow?: Maybe<Follow>,
+  /** TEMPORARY - get filtered but non-paginated list of intents */
+  intentsFiltered?: Maybe<Array<Maybe<Intent>>>,
   /** Get list of taxonomy_tags we know about */
   taxonomyTags: TaxonomyTagsPage,
+  /** Retrieve details of an agent relationship role by its ID */
+  agentRelationshipRole?: Maybe<AgentRelationshipRole>,
+  recipeExchange?: Maybe<RecipeExchange>,
+  /** Get paginated list of organizations */
+  organizationsPages: AgentsPage,
+  /** Get a organisation by id */
+  organisation?: Maybe<Organisation>,
+  scenarioDefinitions?: Maybe<Array<ScenarioDefinition>>,
+  /** Get list of known users */
+  users: UsersPage,
+  fulfillments?: Maybe<Array<Fulfillment>>,
+  plan?: Maybe<Plan>,
+  /** Get list of countries we know about */
+  countries: CountriesPages,
+  recipeProcesses?: Maybe<Array<RecipeProcess>>,
+  country?: Maybe<Country>,
+  /** Get list of communities, most followed first */
+  communities: CommunitiesPage,
+  processSpecifications?: Maybe<Array<ProcessSpecification>>,
+  /** Retrieve details of all the relationships between all agents registered in this collaboration space */
+  agentRelationships?: Maybe<Array<AgentRelationship>>,
+  resourceSpecifications?: Maybe<Array<ResourceSpecification>>,
+  /** Get a taxonomy_tag by ID  */
+  taxonomyTag?: Maybe<TaxonomyTag>,
+  /** Get a resource */
+  resource?: Maybe<Resource>,
+  commitment?: Maybe<Commitment>,
+  /** Get a character by id. You usually would query for a type associated with character, rather than characters directly. */
+  character?: Maybe<Character>,
+  /** Find an organization (group) agent by its ID */
+  organization?: Maybe<Organization>,
+  spatialThing?: Maybe<SpatialThing>,
+  spatialThings?: Maybe<Array<SpatialThing>>,
+  measuresPages: MeasuresPage,
+  /** Loads all agents publicly registered within this collaboration space */
+  agents?: Maybe<Array<Agent>>,
+  productBatch?: Maybe<ProductBatch>,
+  fulfillment?: Maybe<Fulfillment>,
+  processes?: Maybe<Array<Process>>,
+  /** Get my user */
+  me?: Maybe<Me>,
+  process?: Maybe<Process>,
+  processSpecification?: Maybe<ProcessSpecification>,
+  unitsPages: UnitsPage,
+  settlements?: Maybe<Array<Settlement>>,
+  measures?: Maybe<Array<Measure>>,
+  registerEmailDomainAccesses: RegisterEmailDomainAccessesPage,
+  proposal?: Maybe<Proposal>,
+  /** TEMPORARY - get filtered but non-paginated list of resources */
+  economicResourcesFiltered?: Maybe<Array<Maybe<EconomicResource>>>,
+  /** Loads details of the currently authenticated REA agent */
+  myAgent?: Maybe<Agent>,
+  /** Get list of collections, most recent activity first */
+  collections: CollectionsPage,
+  feature?: Maybe<Feature>,
+  claims?: Maybe<Array<Claim>>,
+  /** Get paginated list of economic events */
+  economicEventsPages: EconomicEventPage,
+  action?: Maybe<Action>,
+  /** Fetch a like by ID */
+  like?: Maybe<Like>,
+  /** Loads all organizations publicly registered within this collaboration space */
+  organizations?: Maybe<Array<Organization>>,
+  registerEmailAccesses: RegisterEmailAccessesPage,
+  commitments?: Maybe<Array<Commitment>>,
+  features?: Maybe<FeaturesPage>,
+  /** Get a thread */
+  thread?: Maybe<Thread>,
+  actions?: Maybe<Array<Action>>,
+  /** Get a profile by id. You usually would query for a type associated with profile, rather than profiles directly. */
+  profile?: Maybe<Profile>,
+  scenarioDefinition?: Maybe<ScenarioDefinition>,
+  /** Check if a user exists with a username */
+  usernameAvailable: Scalars['Boolean'],
+  satisfactions?: Maybe<Array<Satisfaction>>,
+  recipeResource?: Maybe<RecipeResource>,
+  plans?: Maybe<Array<Plan>>,
+  language?: Maybe<Language>,
+  /** Get a community */
+  community?: Maybe<Community>,
+  economicResource?: Maybe<EconomicResource>,
+  /** Get list of organisations, most recent activity first */
+  organisations: OrganisationsPage,
+  flag?: Maybe<Flag>,
+  /** Get a category by ID  */
+  category?: Maybe<Category>,
+  /** Get paginated list of people */
+  peoplePages: AgentsPage,
+  recipeProcess?: Maybe<RecipeProcess>,
+  settlement?: Maybe<Settlement>,
+  /** Get list of characters. You usually would query for a type associated with character, rather than characters directly. */
+  characters: CharactersPage,
+  economicEventsFiltered?: Maybe<Array<EconomicEvent>>,
   flags?: Maybe<FlagsPage>,
   unit?: Maybe<Unit>,
-  proposal?: Maybe<Proposal>,
+  recipeExchanges?: Maybe<Array<RecipeExchange>>,
   /** A logical object for the local instance */
   instance?: Maybe<Instance>,
+  recipeFlow?: Maybe<RecipeFlow>,
 };
 
 
-export type RootQueryTypeProposalsArgs = {
+export type RootQueryTypeAgreementsArgs = {
   limit?: Maybe<Scalars['Int']>,
   start?: Maybe<Scalars['ID']>
 };
 
 
-export type RootQueryTypePlanArgs = {
+export type RootQueryTypeActivityArgs = {
+  activityId: Scalars['String']
+};
+
+
+export type RootQueryTypeUnitsArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeMeasureArgs = {
   id?: Maybe<Scalars['ID']>
 };
 
 
-export type RootQueryTypeEconomicResourceArgs = {
+export type RootQueryTypeTaggableArgs = {
+  id?: Maybe<Scalars['String']>
+};
+
+
+export type RootQueryTypeClaimArgs = {
   id?: Maybe<Scalars['ID']>
 };
 
 
-export type RootQueryTypeEconomicResourcesPagesArgs = {
-  after?: Maybe<Array<Scalars['Cursor']>>,
-  before?: Maybe<Array<Scalars['Cursor']>>,
-  limit?: Maybe<Scalars['Int']>
+export type RootQueryTypeRecipeFlowsArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
 };
 
 
@@ -4705,15 +4720,10 @@ export type RootQueryTypeCategoriesArgs = {
 };
 
 
-export type RootQueryTypeTaxonomyTagArgs = {
-  pointerId?: Maybe<Scalars['String']>,
-  tagId?: Maybe<Scalars['Int']>
-};
-
-
-export type RootQueryTypeCommitmentsArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
+export type RootQueryTypeLanguagesArgs = {
+  after?: Maybe<Array<Scalars['Cursor']>>,
+  before?: Maybe<Array<Scalars['Cursor']>>,
+  limit?: Maybe<Scalars['Int']>
 };
 
 
@@ -4725,29 +4735,55 @@ export type RootQueryTypeProfilesArgs = {
 };
 
 
-export type RootQueryTypeAgreementsArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeOrganisationsArgs = {
+export type RootQueryTypeNeedsPagesArgs = {
   after?: Maybe<Array<Scalars['Cursor']>>,
   before?: Maybe<Array<Scalars['Cursor']>>,
   limit?: Maybe<Scalars['Int']>
 };
 
 
-export type RootQueryTypeEconomicEventsPagesArgs = {
+export type RootQueryTypeAgentArgs = {
+  id?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeProductBatchesArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeScenarioArgs = {
+  id?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeProcessesPagesArgs = {
   after?: Maybe<Array<Scalars['Cursor']>>,
   before?: Maybe<Array<Scalars['Cursor']>>,
   limit?: Maybe<Scalars['Int']>
 };
 
 
-export type RootQueryTypeAgentsArgs = {
+export type RootQueryTypeEconomicEventsArgs = {
   limit?: Maybe<Scalars['Int']>,
   start?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeAgentRelationshipRolesArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeCollectionArgs = {
+  collectionId: Scalars['String']
+};
+
+
+export type RootQueryTypeIntentArgs = {
+  id?: Maybe<Scalars['ID']>
 };
 
 
@@ -4757,48 +4793,27 @@ export type RootQueryTypePeopleArgs = {
 };
 
 
-export type RootQueryTypeRecipeProcessArgs = {
+export type RootQueryTypeEconomicEventArgs = {
   id?: Maybe<Scalars['ID']>
 };
 
 
-export type RootQueryTypeProposalsPagesArgs = {
-  after?: Maybe<Array<Scalars['Cursor']>>,
-  before?: Maybe<Array<Scalars['Cursor']>>,
-  limit?: Maybe<Scalars['Int']>
-};
-
-
-export type RootQueryTypeRecipeFlowArgs = {
+export type RootQueryTypeAgreementArgs = {
   id?: Maybe<Scalars['ID']>
 };
 
 
-export type RootQueryTypeUnitsPagesArgs = {
-  after?: Maybe<Array<Maybe<Scalars['Cursor']>>>,
-  before?: Maybe<Array<Maybe<Scalars['Cursor']>>>,
-  limit?: Maybe<Scalars['Int']>
+export type RootQueryTypeAgentRelationshipArgs = {
+  id?: Maybe<Scalars['ID']>
 };
 
 
-export type RootQueryTypeRecipeProcessesArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
+export type RootQueryTypeSatisfactionArgs = {
+  id?: Maybe<Scalars['ID']>
 };
 
 
-export type RootQueryTypeActivityArgs = {
-  activityId: Scalars['String']
-};
-
-
-export type RootQueryTypeMeasuresArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeProcessesPagesArgs = {
+export type RootQueryTypeIntentsPagesArgs = {
   after?: Maybe<Array<Scalars['Cursor']>>,
   before?: Maybe<Array<Scalars['Cursor']>>,
   limit?: Maybe<Scalars['Int']>
@@ -4813,207 +4828,15 @@ export type RootQueryTypeProposalsFilteredArgs = {
 };
 
 
-export type RootQueryTypeClaimsArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeProcessSpecificationsArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeRecipeResourcesArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
-};
-
-
 export type RootQueryTypeCommentArgs = {
   commentId: Scalars['String']
 };
 
 
-export type RootQueryTypeAgentRelationshipArgs = {
-  id?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeScenarioDefinitionArgs = {
-  id?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeCollectionArgs = {
-  collectionId: Scalars['String']
-};
-
-
-export type RootQueryTypeUserArgs = {
-  userId?: Maybe<Scalars['String']>,
-  username?: Maybe<Scalars['String']>
-};
-
-
-export type RootQueryTypeSettlementArgs = {
-  id?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeClaimArgs = {
-  id?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeSpatialThingArgs = {
-  id?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeAgentArgs = {
-  id?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeSpatialThingsArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeLanguagesArgs = {
+export type RootQueryTypeEconomicResourcesPagesArgs = {
   after?: Maybe<Array<Scalars['Cursor']>>,
   before?: Maybe<Array<Scalars['Cursor']>>,
   limit?: Maybe<Scalars['Int']>
-};
-
-
-export type RootQueryTypeScenariosArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeIntentsArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeEconomicResourcesFilteredArgs = {
-  agent?: Maybe<Array<Maybe<Scalars['ID']>>>,
-  currentLocation?: Maybe<Array<Maybe<Scalars['ID']>>>,
-  geolocation?: Maybe<GeolocationFilters>,
-  inScopeOf?: Maybe<Array<Maybe<Scalars['ID']>>>,
-  state?: Maybe<Array<Maybe<Scalars['ID']>>>,
-  tagIds?: Maybe<Array<Maybe<Scalars['ID']>>>
-};
-
-
-export type RootQueryTypeProductBatchesArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeEconomicEventsArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeScenarioArgs = {
-  id?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeCommitmentArgs = {
-  id?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypePersonArgs = {
-  id?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeRecipeExchangeArgs = {
-  id?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeEconomicResourcesArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeOrganizationsArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeLikeArgs = {
-  likeId: Scalars['String']
-};
-
-
-export type RootQueryTypeCountryArgs = {
-  countryId: Scalars['String']
-};
-
-
-export type RootQueryTypeResourceSpecificationArgs = {
-  id?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeCommunityArgs = {
-  communityId: Scalars['String']
-};
-
-
-export type RootQueryTypeOrganizationsPagesArgs = {
-  after?: Maybe<Array<Scalars['Cursor']>>,
-  before?: Maybe<Array<Scalars['Cursor']>>,
-  limit?: Maybe<Scalars['Int']>
-};
-
-
-export type RootQueryTypeIntentsPagesArgs = {
-  after?: Maybe<Array<Scalars['Cursor']>>,
-  before?: Maybe<Array<Scalars['Cursor']>>,
-  limit?: Maybe<Scalars['Int']>
-};
-
-
-export type RootQueryTypeUsernameAvailableArgs = {
-  username: Scalars['String']
-};
-
-
-export type RootQueryTypePeoplePagesArgs = {
-  after?: Maybe<Array<Scalars['Cursor']>>,
-  before?: Maybe<Array<Scalars['Cursor']>>,
-  limit?: Maybe<Scalars['Int']>
-};
-
-
-export type RootQueryTypeProductBatchArgs = {
-  id?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeAgreementArgs = {
-  id?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeResourceArgs = {
-  resourceId: Scalars['String']
 };
 
 
@@ -5024,35 +4847,27 @@ export type RootQueryTypeOffersPagesArgs = {
 };
 
 
-export type RootQueryTypeMeasureArgs = {
-  id?: Maybe<Scalars['ID']>
+export type RootQueryTypeUserArgs = {
+  userId?: Maybe<Scalars['String']>,
+  username?: Maybe<Scalars['String']>
 };
 
 
-export type RootQueryTypeOrganizationArgs = {
-  id?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeFulfillmentsArgs = {
+export type RootQueryTypeRecipeResourcesArgs = {
   limit?: Maybe<Scalars['Int']>,
   start?: Maybe<Scalars['ID']>
 };
 
 
-export type RootQueryTypeCharacterArgs = {
-  characterId: Scalars['String']
+export type RootQueryTypeProposalsPagesArgs = {
+  after?: Maybe<Array<Scalars['Cursor']>>,
+  before?: Maybe<Array<Scalars['Cursor']>>,
+  limit?: Maybe<Scalars['Int']>
 };
 
 
-export type RootQueryTypeEconomicEventArgs = {
+export type RootQueryTypeResourceSpecificationArgs = {
   id?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeProcessesArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
 };
 
 
@@ -5063,21 +4878,37 @@ export type RootQueryTypeSpatialThingsPagesArgs = {
 };
 
 
-export type RootQueryTypeRegisterEmailAccessesArgs = {
-  after?: Maybe<Array<Scalars['Cursor']>>,
-  before?: Maybe<Array<Scalars['Cursor']>>,
-  limit?: Maybe<Scalars['Int']>
-};
-
-
-export type RootQueryTypeAgentRelationshipsArgs = {
+export type RootQueryTypeIntentsArgs = {
   limit?: Maybe<Scalars['Int']>,
   start?: Maybe<Scalars['ID']>
 };
 
 
-export type RootQueryTypeProcessArgs = {
+export type RootQueryTypePersonArgs = {
   id?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeScenariosArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeProposalsArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeEconomicResourcesArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeFollowArgs = {
+  followId: Scalars['String']
 };
 
 
@@ -5093,46 +4924,38 @@ export type RootQueryTypeIntentsFilteredArgs = {
 };
 
 
-export type RootQueryTypeScenarioDefinitionsArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
+export type RootQueryTypeTaxonomyTagsArgs = {
+  after?: Maybe<Array<Scalars['Cursor']>>,
+  before?: Maybe<Array<Scalars['Cursor']>>,
+  limit?: Maybe<Scalars['Int']>
 };
 
 
-export type RootQueryTypePlansArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeFollowArgs = {
-  followId: Scalars['String']
-};
-
-
-export type RootQueryTypeAgentRelationshipRolesArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeFulfillmentArgs = {
+export type RootQueryTypeAgentRelationshipRoleArgs = {
   id?: Maybe<Scalars['ID']>
 };
 
 
-export type RootQueryTypeRegisterEmailDomainAccessesArgs = {
+export type RootQueryTypeRecipeExchangeArgs = {
+  id?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeOrganizationsPagesArgs = {
   after?: Maybe<Array<Scalars['Cursor']>>,
   before?: Maybe<Array<Scalars['Cursor']>>,
   limit?: Maybe<Scalars['Int']>
 };
 
 
-export type RootQueryTypeCharactersArgs = {
-  after?: Maybe<Array<Scalars['Cursor']>>,
-  before?: Maybe<Array<Scalars['Cursor']>>,
-  facets?: Maybe<Array<Scalars['String']>>,
-  limit?: Maybe<Scalars['Int']>
+export type RootQueryTypeOrganisationArgs = {
+  organisationId: Scalars['String']
+};
+
+
+export type RootQueryTypeScenarioDefinitionsArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
 };
 
 
@@ -5143,28 +4966,92 @@ export type RootQueryTypeUsersArgs = {
 };
 
 
-export type RootQueryTypeActionArgs = {
-  id?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeFeatureArgs = {
-  featureId: Scalars['String']
-};
-
-
-export type RootQueryTypeSatisfactionArgs = {
-  id?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeRecipeFlowsArgs = {
+export type RootQueryTypeFulfillmentsArgs = {
   limit?: Maybe<Scalars['Int']>,
   start?: Maybe<Scalars['ID']>
 };
 
 
-export type RootQueryTypeSettlementsArgs = {
+export type RootQueryTypePlanArgs = {
+  id?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeCountriesArgs = {
+  after?: Maybe<Array<Scalars['Cursor']>>,
+  before?: Maybe<Array<Scalars['Cursor']>>,
+  limit?: Maybe<Scalars['Int']>
+};
+
+
+export type RootQueryTypeRecipeProcessesArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeCountryArgs = {
+  countryId: Scalars['String']
+};
+
+
+export type RootQueryTypeCommunitiesArgs = {
+  after?: Maybe<Array<Scalars['Cursor']>>,
+  before?: Maybe<Array<Scalars['Cursor']>>,
+  limit?: Maybe<Scalars['Int']>
+};
+
+
+export type RootQueryTypeProcessSpecificationsArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeAgentRelationshipsArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeResourceSpecificationsArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeTaxonomyTagArgs = {
+  pointerId?: Maybe<Scalars['String']>,
+  tagId?: Maybe<Scalars['Int']>
+};
+
+
+export type RootQueryTypeResourceArgs = {
+  resourceId: Scalars['String']
+};
+
+
+export type RootQueryTypeCommitmentArgs = {
+  id?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeCharacterArgs = {
+  characterId: Scalars['String']
+};
+
+
+export type RootQueryTypeOrganizationArgs = {
+  id?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeSpatialThingArgs = {
+  id?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeSpatialThingsArgs = {
   limit?: Maybe<Scalars['Int']>,
   start?: Maybe<Scalars['ID']>
 };
@@ -5177,120 +5064,76 @@ export type RootQueryTypeMeasuresPagesArgs = {
 };
 
 
+export type RootQueryTypeAgentsArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeProductBatchArgs = {
+  id?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeFulfillmentArgs = {
+  id?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeProcessesArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeProcessArgs = {
+  id?: Maybe<Scalars['ID']>
+};
+
+
 export type RootQueryTypeProcessSpecificationArgs = {
   id?: Maybe<Scalars['ID']>
 };
 
 
-export type RootQueryTypeRecipeResourceArgs = {
-  id?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeTaggableArgs = {
-  id?: Maybe<Scalars['String']>
-};
-
-
-export type RootQueryTypeThreadArgs = {
-  threadId: Scalars['String']
-};
-
-
-export type RootQueryTypeRecipeExchangesArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeProfileArgs = {
-  profileId: Scalars['String']
-};
-
-
-export type RootQueryTypeAgentRelationshipRoleArgs = {
-  id?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeLanguageArgs = {
-  languageId: Scalars['String']
-};
-
-
-export type RootQueryTypeUnitsArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeResourceSpecificationsArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  start?: Maybe<Scalars['ID']>
-};
-
-
-export type RootQueryTypeEconomicEventsFilteredArgs = {
-  action?: Maybe<Scalars['ID']>,
-  endDate?: Maybe<Scalars['String']>,
-  providerId?: Maybe<Scalars['ID']>,
-  receiverId?: Maybe<Scalars['ID']>,
-  resourceClassifiedAs?: Maybe<Array<Scalars['URI']>>,
-  startDate?: Maybe<Scalars['String']>
-};
-
-
-export type RootQueryTypeFeaturesArgs = {
+export type RootQueryTypeUnitsPagesArgs = {
   after?: Maybe<Array<Maybe<Scalars['Cursor']>>>,
   before?: Maybe<Array<Maybe<Scalars['Cursor']>>>,
   limit?: Maybe<Scalars['Int']>
 };
 
 
-export type RootQueryTypeCommunitiesArgs = {
-  after?: Maybe<Array<Scalars['Cursor']>>,
-  before?: Maybe<Array<Scalars['Cursor']>>,
-  limit?: Maybe<Scalars['Int']>
-};
-
-
-export type RootQueryTypeSatisfactionsArgs = {
+export type RootQueryTypeSettlementsArgs = {
   limit?: Maybe<Scalars['Int']>,
   start?: Maybe<Scalars['ID']>
 };
 
 
-export type RootQueryTypeFlagArgs = {
-  flagId: Scalars['String']
+export type RootQueryTypeMeasuresArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
 };
 
 
-export type RootQueryTypeOrganisationArgs = {
-  organisationId: Scalars['String']
-};
-
-
-export type RootQueryTypeCountriesArgs = {
+export type RootQueryTypeRegisterEmailDomainAccessesArgs = {
   after?: Maybe<Array<Scalars['Cursor']>>,
   before?: Maybe<Array<Scalars['Cursor']>>,
   limit?: Maybe<Scalars['Int']>
 };
 
 
-export type RootQueryTypeCategoryArgs = {
-  categoryId?: Maybe<Scalars['String']>
-};
-
-
-export type RootQueryTypeIntentArgs = {
+export type RootQueryTypeProposalArgs = {
   id?: Maybe<Scalars['ID']>
 };
 
 
-export type RootQueryTypeNeedsPagesArgs = {
-  after?: Maybe<Array<Scalars['Cursor']>>,
-  before?: Maybe<Array<Scalars['Cursor']>>,
-  limit?: Maybe<Scalars['Int']>
+export type RootQueryTypeEconomicResourcesFilteredArgs = {
+  agent?: Maybe<Array<Maybe<Scalars['ID']>>>,
+  currentLocation?: Maybe<Array<Maybe<Scalars['ID']>>>,
+  geolocation?: Maybe<GeolocationFilters>,
+  inScopeOf?: Maybe<Array<Maybe<Scalars['ID']>>>,
+  state?: Maybe<Array<Maybe<Scalars['ID']>>>,
+  tagIds?: Maybe<Array<Maybe<Scalars['ID']>>>
 };
 
 
@@ -5301,10 +5144,161 @@ export type RootQueryTypeCollectionsArgs = {
 };
 
 
-export type RootQueryTypeTaxonomyTagsArgs = {
+export type RootQueryTypeFeatureArgs = {
+  featureId: Scalars['String']
+};
+
+
+export type RootQueryTypeClaimsArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeEconomicEventsPagesArgs = {
   after?: Maybe<Array<Scalars['Cursor']>>,
   before?: Maybe<Array<Scalars['Cursor']>>,
   limit?: Maybe<Scalars['Int']>
+};
+
+
+export type RootQueryTypeActionArgs = {
+  id?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeLikeArgs = {
+  likeId: Scalars['String']
+};
+
+
+export type RootQueryTypeOrganizationsArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeRegisterEmailAccessesArgs = {
+  after?: Maybe<Array<Scalars['Cursor']>>,
+  before?: Maybe<Array<Scalars['Cursor']>>,
+  limit?: Maybe<Scalars['Int']>
+};
+
+
+export type RootQueryTypeCommitmentsArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeFeaturesArgs = {
+  after?: Maybe<Array<Maybe<Scalars['Cursor']>>>,
+  before?: Maybe<Array<Maybe<Scalars['Cursor']>>>,
+  limit?: Maybe<Scalars['Int']>
+};
+
+
+export type RootQueryTypeThreadArgs = {
+  threadId: Scalars['String']
+};
+
+
+export type RootQueryTypeProfileArgs = {
+  profileId: Scalars['String']
+};
+
+
+export type RootQueryTypeScenarioDefinitionArgs = {
+  id?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeUsernameAvailableArgs = {
+  username: Scalars['String']
+};
+
+
+export type RootQueryTypeSatisfactionsArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeRecipeResourceArgs = {
+  id?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypePlansArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeLanguageArgs = {
+  languageId: Scalars['String']
+};
+
+
+export type RootQueryTypeCommunityArgs = {
+  communityId: Scalars['String']
+};
+
+
+export type RootQueryTypeEconomicResourceArgs = {
+  id?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeOrganisationsArgs = {
+  after?: Maybe<Array<Scalars['Cursor']>>,
+  before?: Maybe<Array<Scalars['Cursor']>>,
+  limit?: Maybe<Scalars['Int']>
+};
+
+
+export type RootQueryTypeFlagArgs = {
+  flagId: Scalars['String']
+};
+
+
+export type RootQueryTypeCategoryArgs = {
+  categoryId?: Maybe<Scalars['String']>
+};
+
+
+export type RootQueryTypePeoplePagesArgs = {
+  after?: Maybe<Array<Scalars['Cursor']>>,
+  before?: Maybe<Array<Scalars['Cursor']>>,
+  limit?: Maybe<Scalars['Int']>
+};
+
+
+export type RootQueryTypeRecipeProcessArgs = {
+  id?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeSettlementArgs = {
+  id?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeCharactersArgs = {
+  after?: Maybe<Array<Scalars['Cursor']>>,
+  before?: Maybe<Array<Scalars['Cursor']>>,
+  facets?: Maybe<Array<Scalars['String']>>,
+  limit?: Maybe<Scalars['Int']>
+};
+
+
+export type RootQueryTypeEconomicEventsFilteredArgs = {
+  action?: Maybe<Scalars['ID']>,
+  endDate?: Maybe<Scalars['String']>,
+  providerId?: Maybe<Scalars['ID']>,
+  receiverId?: Maybe<Scalars['ID']>,
+  resourceClassifiedAs?: Maybe<Array<Scalars['URI']>>,
+  startDate?: Maybe<Scalars['String']>
 };
 
 
@@ -5320,7 +5314,13 @@ export type RootQueryTypeUnitArgs = {
 };
 
 
-export type RootQueryTypeProposalArgs = {
+export type RootQueryTypeRecipeExchangesArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  start?: Maybe<Scalars['ID']>
+};
+
+
+export type RootQueryTypeRecipeFlowArgs = {
   id?: Maybe<Scalars['ID']>
 };
 
@@ -5779,77 +5779,77 @@ export type UploadInput = {
 /** User profile information */
 export type User = {
    __typename?: 'User',
-  /** A url for the user, may be to a remote instance */
-  canonicalUrl?: Maybe<Scalars['String']>,
-  /** The current user's flag of this user, if any */
-  myFlag?: Maybe<Flag>,
-  /** The collections a user is following, most recently followed first */
-  collectionFollows?: Maybe<FollowsPage>,
-  /** The current user's follow of this user, if any */
-  myFollow?: Maybe<Follow>,
-  /** A JSON document containing more info beyond the default fields */
-  extraInfo?: Maybe<Scalars['Json']>,
-  /** User's geo coordinates. See also location. */
-  geolocation?: Maybe<SpatialThing>,
-  /** An instance-unique identifier shared with communities and collections */
-  preferredUsername: Scalars['String'],
   /** Free text description of user's location. See also geolocation. */
   location?: Maybe<Scalars['String']>,
+  /** An instance-unique identifier shared with communities and collections */
+  preferredUsername: Scalars['String'],
+  /** A preferred username + the host domain */
+  displayUsername: Scalars['String'],
+  /** Total number of likes, including those we can't see */
+  likeCount?: Maybe<Scalars['Int']>,
+  /** The collections a user is following, most recently followed first */
+  collectionFollows?: Maybe<FollowsPage>,
+  /** A JSON document containing more info beyond the default fields */
+  extraInfo?: Maybe<Scalars['Json']>,
+  /** Whether the user is local to the instance */
+  isLocal: Scalars['Boolean'],
+  /** The likes a user has created */
+  likes?: Maybe<LikesPage>,
+  /** An instance-local ULID identifying the user */
+  id: Scalars['ID'],
+  /** A valid URL */
+  website?: Maybe<Scalars['String']>,
   /** 
  * Activities of others the user is following, most recently created
    * first. Only available to the current user under `me`
  **/
   inbox?: Maybe<ActivitiesPage>,
-  /** An instance-local ULID identifying the user */
-  id: Scalars['ID'],
-  /** The users a user is following, most recently followed first */
-  userFollows?: Maybe<FollowsPage>,
-  /** A valid URL */
-  website?: Maybe<Scalars['String']>,
-  /** Whether the user has a public profile */
-  isPublic: Scalars['Boolean'],
-  /** Whether an instance admin has disabled the user's account */
-  isDisabled: Scalars['Boolean'],
-  /** Whether the user is local to the instance */
-  isLocal: Scalars['Boolean'],
-  /** A preferred username + the host domain */
-  displayUsername: Scalars['String'],
-  /** Total number of followers, including private follows */
-  followerCount?: Maybe<Scalars['Int']>,
-  /** Subscriptions users have to the collection */
-  follows?: Maybe<FollowsPage>,
+  /** The current user's follow of this user, if any */
+  myFollow?: Maybe<Follow>,
   /** When the user last updated their profile */
   updatedAt: Scalars['String'],
-  /** Total number of things the user follows, including privately */
-  followCount?: Maybe<Scalars['Int']>,
-  /** An avatar url */
-  icon?: Maybe<Content>,
-  /** The last time the user did anything */
-  lastActivity?: Maybe<Scalars['String']>,
   /** Total number of likers, including those we can't see */
   likerCount?: Maybe<Scalars['Int']>,
-  /** Possibly biographical information */
-  summary?: Maybe<Scalars['String']>,
-  /** A header background image url */
-  image?: Maybe<Content>,
-  /** The likes a user has created */
-  likes?: Maybe<LikesPage>,
-  /** Activities of the user, most recently created first */
-  outbox?: Maybe<ActivitiesPage>,
-  /** The communities a user is following, most recently followed first */
-  communityFollows?: Maybe<FollowsPage>,
-  /** Total number of likes, including those we can't see */
-  likeCount?: Maybe<Scalars['Int']>,
-  /** The current user's like of this user, if any */
-  myLike?: Maybe<Like>,
-  /** The likes a user has from other people */
-  likers?: Maybe<LikesPage>,
-  /** When the user signed up */
-  createdAt: Scalars['String'],
+  /** The last time the user did anything */
+  lastActivity?: Maybe<Scalars['String']>,
+  /** Total number of things the user follows, including privately */
+  followCount?: Maybe<Scalars['Int']>,
+  /** The users a user is following, most recently followed first */
+  userFollows?: Maybe<FollowsPage>,
+  /** Whether the user has a public profile */
+  isPublic: Scalars['Boolean'],
   /** Subscriptions users have to the collection */
   followers?: Maybe<FollowsPage>,
+  /** User's geo coordinates. See also location. */
+  geolocation?: Maybe<SpatialThing>,
+  /** The likes a user has from other people */
+  likers?: Maybe<LikesPage>,
+  /** Whether an instance admin has disabled the user's account */
+  isDisabled: Scalars['Boolean'],
+  /** The current user's flag of this user, if any */
+  myFlag?: Maybe<Flag>,
+  /** A header background image url */
+  image?: Maybe<Content>,
+  /** An avatar url */
+  icon?: Maybe<Content>,
   /** Comments the user has made, most recently created first */
   comments?: Maybe<CommentsPage>,
+  /** The communities a user is following, most recently followed first */
+  communityFollows?: Maybe<FollowsPage>,
+  /** Activities of the user, most recently created first */
+  outbox?: Maybe<ActivitiesPage>,
+  /** Subscriptions users have to the collection */
+  follows?: Maybe<FollowsPage>,
+  /** Possibly biographical information */
+  summary?: Maybe<Scalars['String']>,
+  /** Total number of followers, including private follows */
+  followerCount?: Maybe<Scalars['Int']>,
+  /** A url for the user, may be to a remote instance */
+  canonicalUrl?: Maybe<Scalars['String']>,
+  /** When the user signed up */
+  createdAt: Scalars['String'],
+  /** The current user's like of this user, if any */
+  myLike?: Maybe<Like>,
   /** A name field */
   name?: Maybe<Scalars['String']>,
 };
@@ -5857,6 +5857,14 @@ export type User = {
 
 /** User profile information */
 export type UserCollectionFollowsArgs = {
+  after?: Maybe<Array<Scalars['Cursor']>>,
+  before?: Maybe<Array<Scalars['Cursor']>>,
+  limit?: Maybe<Scalars['Int']>
+};
+
+
+/** User profile information */
+export type UserLikesArgs = {
   after?: Maybe<Array<Scalars['Cursor']>>,
   before?: Maybe<Array<Scalars['Cursor']>>,
   limit?: Maybe<Scalars['Int']>
@@ -5880,31 +5888,7 @@ export type UserUserFollowsArgs = {
 
 
 /** User profile information */
-export type UserFollowsArgs = {
-  after?: Maybe<Array<Scalars['Cursor']>>,
-  before?: Maybe<Array<Scalars['Cursor']>>,
-  limit?: Maybe<Scalars['Int']>
-};
-
-
-/** User profile information */
-export type UserLikesArgs = {
-  after?: Maybe<Array<Scalars['Cursor']>>,
-  before?: Maybe<Array<Scalars['Cursor']>>,
-  limit?: Maybe<Scalars['Int']>
-};
-
-
-/** User profile information */
-export type UserOutboxArgs = {
-  after?: Maybe<Array<Scalars['Cursor']>>,
-  before?: Maybe<Array<Scalars['Cursor']>>,
-  limit?: Maybe<Scalars['Int']>
-};
-
-
-/** User profile information */
-export type UserCommunityFollowsArgs = {
+export type UserFollowersArgs = {
   after?: Maybe<Array<Scalars['Cursor']>>,
   before?: Maybe<Array<Scalars['Cursor']>>,
   limit?: Maybe<Scalars['Int']>
@@ -5920,7 +5904,7 @@ export type UserLikersArgs = {
 
 
 /** User profile information */
-export type UserFollowersArgs = {
+export type UserCommentsArgs = {
   after?: Maybe<Array<Scalars['Cursor']>>,
   before?: Maybe<Array<Scalars['Cursor']>>,
   limit?: Maybe<Scalars['Int']>
@@ -5928,7 +5912,23 @@ export type UserFollowersArgs = {
 
 
 /** User profile information */
-export type UserCommentsArgs = {
+export type UserCommunityFollowsArgs = {
+  after?: Maybe<Array<Scalars['Cursor']>>,
+  before?: Maybe<Array<Scalars['Cursor']>>,
+  limit?: Maybe<Scalars['Int']>
+};
+
+
+/** User profile information */
+export type UserOutboxArgs = {
+  after?: Maybe<Array<Scalars['Cursor']>>,
+  before?: Maybe<Array<Scalars['Cursor']>>,
+  limit?: Maybe<Scalars['Int']>
+};
+
+
+/** User profile information */
+export type UserFollowsArgs = {
   after?: Maybe<Array<Scalars['Cursor']>>,
   before?: Maybe<Array<Scalars['Cursor']>>,
   limit?: Maybe<Scalars['Int']>
@@ -5971,18 +5971,6 @@ export type WebMetadata = {
       const result: IntrospectionResultData = {
   "__schema": {
     "types": [
-      {
-        "kind": "INTERFACE",
-        "name": "Agent",
-        "possibleTypes": [
-          {
-            "name": "Organization"
-          },
-          {
-            "name": "Person"
-          }
-        ]
-      },
       {
         "kind": "UNION",
         "name": "AnyContext",
@@ -6055,6 +6043,18 @@ export type WebMetadata = {
           },
           {
             "name": "User"
+          }
+        ]
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "Agent",
+        "possibleTypes": [
+          {
+            "name": "Organization"
+          },
+          {
+            "name": "Person"
           }
         ]
       },
@@ -6162,16 +6162,11 @@ export type ResolversTypes = {
   RootQueryType: ResolverTypeWrapper<{}>,
   Int: ResolverTypeWrapper<Scalars['Int']>,
   ID: ResolverTypeWrapper<Scalars['ID']>,
-  Proposal: ResolverTypeWrapper<Omit<Proposal, 'inScopeOf'> & { inScopeOf?: Maybe<Array<ResolversTypes['AccountingScope']>> }>,
-  URI: ResolverTypeWrapper<Scalars['URI']>,
-  DateTime: ResolverTypeWrapper<Scalars['DateTime']>,
-  Agent: ResolverTypeWrapper<Agent>,
-  AgentType: AgentType,
-  String: ResolverTypeWrapper<Scalars['String']>,
-  agentCommitmentSearchParams: AgentCommitmentSearchParams,
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
+  Agreement: ResolverTypeWrapper<Agreement>,
   Commitment: ResolverTypeWrapper<Omit<Commitment, 'inScopeOf'> & { inScopeOf?: Maybe<Array<ResolversTypes['AccountingScope']>> }>,
   Action: ResolverTypeWrapper<Action>,
+  String: ResolverTypeWrapper<Scalars['String']>,
+  URI: ResolverTypeWrapper<Scalars['URI']>,
   SpatialThing: ResolverTypeWrapper<Omit<SpatialThing, 'inScopeOf'> & { inScopeOf?: Maybe<ResolversTypes['AnyContext']> }>,
   Float: ResolverTypeWrapper<Scalars['Float']>,
   Json: ResolverTypeWrapper<Scalars['Json']>,
@@ -6183,20 +6178,21 @@ export type ResolversTypes = {
   Collection: ResolverTypeWrapper<Omit<Collection, 'context'> & { context?: Maybe<ResolversTypes['AnyContext']> }>,
   Community: ResolverTypeWrapper<Omit<Community, 'context'> & { context?: Maybe<ResolversTypes['AnyContext']> }>,
   User: ResolverTypeWrapper<User>,
-  Flag: ResolverTypeWrapper<Omit<Flag, 'context'> & { context: ResolversTypes['AnyContext'] }>,
   FollowsPage: ResolverTypeWrapper<FollowsPage>,
   Follow: ResolverTypeWrapper<Omit<Follow, 'context'> & { context: ResolversTypes['AnyContext'] }>,
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
   PageInfo: ResolverTypeWrapper<PageInfo>,
+  LikesPage: ResolverTypeWrapper<LikesPage>,
+  Like: ResolverTypeWrapper<Omit<Like, 'context'> & { context: ResolversTypes['AnyContext'] }>,
   ActivitiesPage: ResolverTypeWrapper<ActivitiesPage>,
   Activity: ResolverTypeWrapper<Omit<Activity, 'context'> & { context?: Maybe<ResolversTypes['AnyContext']> }>,
   ActivityVerb: ActivityVerb,
+  Flag: ResolverTypeWrapper<Omit<Flag, 'context'> & { context: ResolversTypes['AnyContext'] }>,
   Content: ResolverTypeWrapper<Content>,
   FileMetadata: ResolverTypeWrapper<FileMetadata>,
   FileIntrinsics: ResolverTypeWrapper<FileIntrinsics>,
   ContentMirror: ResolverTypeWrapper<ContentMirror>,
   ContentUpload: ResolverTypeWrapper<ContentUpload>,
-  LikesPage: ResolverTypeWrapper<LikesPage>,
-  Like: ResolverTypeWrapper<Omit<Like, 'context'> & { context: ResolversTypes['AnyContext'] }>,
   CommentsPage: ResolverTypeWrapper<CommentsPage>,
   Comment: ResolverTypeWrapper<Comment>,
   FlagsPage: ResolverTypeWrapper<FlagsPage>,
@@ -6212,8 +6208,12 @@ export type ResolversTypes = {
   Intent: ResolverTypeWrapper<Omit<Intent, 'inScopeOf' | 'tags'> & { inScopeOf?: Maybe<Array<ResolversTypes['AccountingScope']>>, tags?: Maybe<Array<Maybe<ResolversTypes['AnyContext']>>> }>,
   Measure: ResolverTypeWrapper<Measure>,
   Unit: ResolverTypeWrapper<Omit<Unit, 'inScopeOf'> & { inScopeOf?: Maybe<ResolversTypes['AnyContext']> }>,
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']>,
   AccountingScope: ResolversTypes['Category'] | ResolversTypes['Collection'] | ResolversTypes['Community'] | ResolversTypes['Organisation'] | ResolversTypes['Organization'] | ResolversTypes['Person'] | ResolversTypes['Taggable'] | ResolversTypes['User'],
   Organization: ResolverTypeWrapper<Omit<Organization, 'inScopeOf'> & { inScopeOf?: Maybe<Array<ResolversTypes['AccountingScope']>> }>,
+  Agent: ResolverTypeWrapper<Agent>,
+  AgentType: AgentType,
+  agentCommitmentSearchParams: AgentCommitmentSearchParams,
   agentEventSearchParams: AgentEventSearchParams,
   EconomicEvent: ResolverTypeWrapper<Omit<EconomicEvent, 'inScopeOf' | 'tags' | 'trace' | 'track'> & { inScopeOf?: Maybe<Array<ResolversTypes['AccountingScope']>>, tags?: Maybe<Array<Maybe<ResolversTypes['AnyContext']>>>, trace?: Maybe<Array<ResolversTypes['ProductionFlowItem']>>, track?: Maybe<Array<ResolversTypes['ProductionFlowItem']>> }>,
   Appreciation: ResolverTypeWrapper<Appreciation>,
@@ -6226,7 +6226,6 @@ export type ResolversTypes = {
   TimeUnit: TimeUnit,
   Plan: ResolverTypeWrapper<Omit<Plan, 'inScopeOf'> & { inScopeOf?: Maybe<Array<ResolversTypes['AccountingScope']>> }>,
   planProcessSearchParams: PlanProcessSearchParams,
-  Agreement: ResolverTypeWrapper<Agreement>,
   ResourceSpecification: ResolverTypeWrapper<ResourceSpecification>,
   EconomicResource: ResolverTypeWrapper<EconomicResource>,
   ProductBatch: ResolverTypeWrapper<ProductBatch>,
@@ -6237,151 +6236,152 @@ export type ResolversTypes = {
   agentResourceSearchParams: AgentResourceSearchParams,
   agentPlanSearchParams: AgentPlanSearchParams,
   agentProcessSearchParams: AgentProcessSearchParams,
+  Proposal: ResolverTypeWrapper<Omit<Proposal, 'inScopeOf'> & { inScopeOf?: Maybe<Array<ResolversTypes['AccountingScope']>> }>,
+  ProposedTo: ResolverTypeWrapper<ProposedTo>,
+  ProposedIntent: ResolverTypeWrapper<ProposedIntent>,
   AgentRelationship: ResolverTypeWrapper<Omit<AgentRelationship, 'inScopeOf'> & { inScopeOf?: Maybe<Array<ResolversTypes['AccountingScope']>> }>,
   AgentRelationshipRole: ResolverTypeWrapper<AgentRelationshipRole>,
   Person: ResolverTypeWrapper<Person>,
   Taggable: ResolverTypeWrapper<Omit<Taggable, 'context' | 'things'> & { context?: Maybe<ResolversTypes['AnyContext']>, things?: Maybe<Array<Maybe<ResolversTypes['AnyContext']>>> }>,
-  ProposedIntent: ResolverTypeWrapper<ProposedIntent>,
-  ProposedTo: ResolverTypeWrapper<ProposedTo>,
-  EconomicResourcePage: ResolverTypeWrapper<EconomicResourcePage>,
-  TaxonomyTag: ResolverTypeWrapper<TaxonomyTag>,
-  TaxonomyTagsPage: ResolverTypeWrapper<TaxonomyTagsPage>,
-  ProfilesPage: ResolverTypeWrapper<ProfilesPage>,
-  EconomicEventPage: ResolverTypeWrapper<EconomicEventPage>,
-  RecipeProcess: ResolverTypeWrapper<RecipeProcess>,
-  ProposalsPage: ResolverTypeWrapper<ProposalsPage>,
+  Claim: ResolverTypeWrapper<Omit<Claim, 'inScopeOf'> & { inScopeOf?: Maybe<Array<ResolversTypes['AccountingScope']>> }>,
   RecipeFlow: ResolverTypeWrapper<RecipeFlow>,
   RecipeResource: ResolverTypeWrapper<RecipeResource>,
-  UnitsPage: ResolverTypeWrapper<UnitsPage>,
+  RecipeProcess: ResolverTypeWrapper<RecipeProcess>,
+  LanguagesPage: ResolverTypeWrapper<LanguagesPage>,
+  Language: ResolverTypeWrapper<Language>,
+  ProfilesPage: ResolverTypeWrapper<ProfilesPage>,
+  IntentsPage: ResolverTypeWrapper<IntentsPage>,
   ProcessPage: ResolverTypeWrapper<ProcessPage>,
   GeolocationFilters: GeolocationFilters,
   GeolocationDistance: GeolocationDistance,
   GeolocationPoint: GeolocationPoint,
-  Claim: ResolverTypeWrapper<Omit<Claim, 'inScopeOf'> & { inScopeOf?: Maybe<Array<ResolversTypes['AccountingScope']>> }>,
-  Settlement: ResolverTypeWrapper<Settlement>,
-  LanguagesPage: ResolverTypeWrapper<LanguagesPage>,
-  Language: ResolverTypeWrapper<Language>,
-  RecipeExchange: ResolverTypeWrapper<RecipeExchange>,
-  Country: ResolverTypeWrapper<Country>,
-  AgentsPage: ResolverTypeWrapper<AgentsPage>,
-  IntentsPage: ResolverTypeWrapper<IntentsPage>,
+  EconomicResourcePage: ResolverTypeWrapper<EconomicResourcePage>,
+  ProposalsPage: ResolverTypeWrapper<ProposalsPage>,
   SpatialThingsPage: ResolverTypeWrapper<SpatialThingsPage>,
-  RegisterEmailAccessesPage: ResolverTypeWrapper<RegisterEmailAccessesPage>,
-  RegisterEmailAccess: ResolverTypeWrapper<RegisterEmailAccess>,
+  TaxonomyTagsPage: ResolverTypeWrapper<TaxonomyTagsPage>,
+  TaxonomyTag: ResolverTypeWrapper<TaxonomyTag>,
+  RecipeExchange: ResolverTypeWrapper<RecipeExchange>,
+  AgentsPage: ResolverTypeWrapper<AgentsPage>,
+  UsersPage: ResolverTypeWrapper<UsersPage>,
+  CountriesPages: ResolverTypeWrapper<CountriesPages>,
+  Country: ResolverTypeWrapper<Country>,
+  MeasuresPage: ResolverTypeWrapper<MeasuresPage>,
+  Me: ResolverTypeWrapper<Me>,
+  UnitsPage: ResolverTypeWrapper<UnitsPage>,
+  Settlement: ResolverTypeWrapper<Settlement>,
   RegisterEmailDomainAccessesPage: ResolverTypeWrapper<RegisterEmailDomainAccessesPage>,
   RegisterEmailDomainAccess: ResolverTypeWrapper<RegisterEmailDomainAccess>,
-  CharactersPage: ResolverTypeWrapper<CharactersPage>,
-  UsersPage: ResolverTypeWrapper<UsersPage>,
   Feature: ResolverTypeWrapper<Omit<Feature, 'context'> & { context?: Maybe<ResolversTypes['AnyContext']> }>,
-  MeasuresPage: ResolverTypeWrapper<MeasuresPage>,
+  EconomicEventPage: ResolverTypeWrapper<EconomicEventPage>,
+  RegisterEmailAccessesPage: ResolverTypeWrapper<RegisterEmailAccessesPage>,
+  RegisterEmailAccess: ResolverTypeWrapper<RegisterEmailAccess>,
   FeaturesPage: ResolverTypeWrapper<FeaturesPage>,
-  Me: ResolverTypeWrapper<Me>,
-  CountriesPages: ResolverTypeWrapper<CountriesPages>,
+  CharactersPage: ResolverTypeWrapper<CharactersPage>,
   Instance: ResolverTypeWrapper<Instance>,
   RootMutationType: ResolverTypeWrapper<{}>,
-  ProductBatchUpdateParams: ProductBatchUpdateParams,
-  ProductBatchResponse: ResolverTypeWrapper<ProductBatchResponse>,
-  RecipeExchangeUpdateParams: RecipeExchangeUpdateParams,
-  RecipeExchangeResponse: ResolverTypeWrapper<RecipeExchangeResponse>,
-  UploadInput: UploadInput,
-  Upload: ResolverTypeWrapper<Scalars['Upload']>,
-  ResourceInput: ResourceInput,
-  OrganisationUpdateInput: OrganisationUpdateInput,
-  UpdateProfileInput: UpdateProfileInput,
-  SpatialThingCreateParams: SpatialThingCreateParams,
-  SpatialThingResponse: ResolverTypeWrapper<SpatialThingResponse>,
-  ScenarioDefinitionCreateParams: ScenarioDefinitionCreateParams,
-  IDuration: IDuration,
-  ScenarioDefinitionResponse: ResolverTypeWrapper<ScenarioDefinitionResponse>,
-  AgentUpdateParams: AgentUpdateParams,
-  PersonResponse: ResolverTypeWrapper<PersonResponse>,
-  CommunityUpdateInput: CommunityUpdateInput,
-  ProposedToResponse: ResolverTypeWrapper<ProposedToResponse>,
-  CommitmentCreateParams: CommitmentCreateParams,
-  IMeasure: IMeasure,
-  CommitmentResponse: ResolverTypeWrapper<CommitmentResponse>,
-  SettlementCreateParams: SettlementCreateParams,
-  SettlementResponse: ResolverTypeWrapper<SettlementResponse>,
-  ResourceSpecificationCreateParams: ResourceSpecificationCreateParams,
-  ResourceSpecificationResponse: ResolverTypeWrapper<ResourceSpecificationResponse>,
-  RecipeResourceUpdateParams: RecipeResourceUpdateParams,
-  RecipeResourceResponse: ResolverTypeWrapper<RecipeResourceResponse>,
-  ScenarioCreateParams: ScenarioCreateParams,
-  ScenarioResponse: ResolverTypeWrapper<ScenarioResponse>,
-  RecipeExchangeCreateParams: RecipeExchangeCreateParams,
-  RecipeResourceCreateParams: RecipeResourceCreateParams,
-  ProcessSpecificationCreateParams: ProcessSpecificationCreateParams,
-  ProcessSpecificationResponse: ResolverTypeWrapper<ProcessSpecificationResponse>,
-  EconomicEventCreateParams: EconomicEventCreateParams,
-  EconomicResourceCreateParams: EconomicResourceCreateParams,
-  EconomicEventResponse: ResolverTypeWrapper<EconomicEventResponse>,
-  OrganizationResponse: ResolverTypeWrapper<OrganizationResponse>,
-  SpatialThingUpdateParams: SpatialThingUpdateParams,
-  AppreciationCreateParams: AppreciationCreateParams,
-  AppreciationResponse: ResolverTypeWrapper<AppreciationResponse>,
-  ProcessSpecificationUpdateParams: ProcessSpecificationUpdateParams,
-  AuthPayload: ResolverTypeWrapper<AuthPayload>,
-  ProposalUpdateParams: ProposalUpdateParams,
-  ProposalResponse: ResolverTypeWrapper<ProposalResponse>,
-  AgentRelationshipRoleCreateParams: AgentRelationshipRoleCreateParams,
-  AgentRelationshipRoleResponse: ResolverTypeWrapper<AgentRelationshipRoleResponse>,
-  ResourceSpecificationUpdateParams: ResourceSpecificationUpdateParams,
-  ClaimCreateParams: ClaimCreateParams,
-  ClaimResponse: ResolverTypeWrapper<ClaimResponse>,
-  ProductBatchCreateParams: ProductBatchCreateParams,
-  AgentCreateParams: AgentCreateParams,
-  AgentRelationshipRoleUpdateParams: AgentRelationshipRoleUpdateParams,
-  FulfillmentCreateParams: FulfillmentCreateParams,
-  FulfillmentResponse: ResolverTypeWrapper<FulfillmentResponse>,
-  ProcessCreateParams: ProcessCreateParams,
-  ProcessResponse: ResolverTypeWrapper<ProcessResponse>,
-  CommentInput: CommentInput,
   EconomicResourceUpdateParams: EconomicResourceUpdateParams,
   EconomicResourceResponse: ResolverTypeWrapper<EconomicResourceResponse>,
-  ScenarioUpdateParams: ScenarioUpdateParams,
-  IntentCreateParams: IntentCreateParams,
-  IntentResponse: ResolverTypeWrapper<IntentResponse>,
-  AgentRelationshipUpdateParams: AgentRelationshipUpdateParams,
-  AgentRelationshipResponse: ResolverTypeWrapper<AgentRelationshipResponse>,
-  OrganisationInput: OrganisationInput,
-  EconomicEventUpdateParams: EconomicEventUpdateParams,
-  RecipeFlowCreateParams: RecipeFlowCreateParams,
-  RecipeFlowResponse: ResolverTypeWrapper<RecipeFlowResponse>,
-  SettlementUpdateParams: SettlementUpdateParams,
-  ClaimUpdateParams: ClaimUpdateParams,
-  CommitmentUpdateParams: CommitmentUpdateParams,
-  UnitUpdateParams: UnitUpdateParams,
-  UnitResponse: ResolverTypeWrapper<UnitResponse>,
-  ProposalCreateParams: ProposalCreateParams,
+  AppreciationCreateParams: AppreciationCreateParams,
+  AppreciationResponse: ResolverTypeWrapper<AppreciationResponse>,
+  CommentInput: CommentInput,
   CategoryInput: CategoryInput,
   CharacterInput: CharacterInput,
   ProfileInput: ProfileInput,
-  WebMetadata: ResolverTypeWrapper<WebMetadata>,
-  ProcessUpdateParams: ProcessUpdateParams,
-  AgreementUpdateParams: AgreementUpdateParams,
-  AgreementResponse: ResolverTypeWrapper<AgreementResponse>,
-  UnitCreateParams: UnitCreateParams,
-  RecipeProcessCreateParams: RecipeProcessCreateParams,
-  RecipeProcessResponse: ResolverTypeWrapper<RecipeProcessResponse>,
-  FulfillmentUpdateParams: FulfillmentUpdateParams,
   PlanCreateParams: PlanCreateParams,
   PlanResponse: ResolverTypeWrapper<PlanResponse>,
+  EconomicEventUpdateParams: EconomicEventUpdateParams,
+  EconomicEventResponse: ResolverTypeWrapper<EconomicEventResponse>,
+  AgreementUpdateParams: AgreementUpdateParams,
+  AgreementResponse: ResolverTypeWrapper<AgreementResponse>,
+  ProductBatchCreateParams: ProductBatchCreateParams,
+  ProductBatchResponse: ResolverTypeWrapper<ProductBatchResponse>,
+  IntentCreateParams: IntentCreateParams,
+  IMeasure: IMeasure,
+  IntentResponse: ResolverTypeWrapper<IntentResponse>,
+  ProposalCreateParams: ProposalCreateParams,
+  ProposalResponse: ResolverTypeWrapper<ProposalResponse>,
+  ScenarioDefinitionCreateParams: ScenarioDefinitionCreateParams,
+  IDuration: IDuration,
+  ScenarioDefinitionResponse: ResolverTypeWrapper<ScenarioDefinitionResponse>,
+  AgentRelationshipRoleUpdateParams: AgentRelationshipRoleUpdateParams,
+  AgentRelationshipRoleResponse: ResolverTypeWrapper<AgentRelationshipRoleResponse>,
+  SpatialThingCreateParams: SpatialThingCreateParams,
+  SpatialThingResponse: ResolverTypeWrapper<SpatialThingResponse>,
+  ProcessUpdateParams: ProcessUpdateParams,
+  ProcessResponse: ResolverTypeWrapper<ProcessResponse>,
+  ScenarioCreateParams: ScenarioCreateParams,
+  ScenarioResponse: ResolverTypeWrapper<ScenarioResponse>,
+  ClaimCreateParams: ClaimCreateParams,
+  ClaimResponse: ResolverTypeWrapper<ClaimResponse>,
+  RecipeFlowCreateParams: RecipeFlowCreateParams,
+  RecipeFlowResponse: ResolverTypeWrapper<RecipeFlowResponse>,
+  CommitmentUpdateParams: CommitmentUpdateParams,
+  CommitmentResponse: ResolverTypeWrapper<CommitmentResponse>,
+  AgentRelationshipRoleCreateParams: AgentRelationshipRoleCreateParams,
+  ClaimUpdateParams: ClaimUpdateParams,
   AgreementCreateParams: AgreementCreateParams,
-  CollectionUpdateInput: CollectionUpdateInput,
-  ScenarioDefinitionUpdateParams: ScenarioDefinitionUpdateParams,
-  SatisfactionCreateParams: SatisfactionCreateParams,
-  SatisfactionResponse: ResolverTypeWrapper<SatisfactionResponse>,
-  AppreciationUpdateParams: AppreciationUpdateParams,
+  AgentCreateParams: AgentCreateParams,
+  PersonResponse: ResolverTypeWrapper<PersonResponse>,
+  WebMetadata: ResolverTypeWrapper<WebMetadata>,
+  OrganizationResponse: ResolverTypeWrapper<OrganizationResponse>,
   AgentRelationshipCreateParams: AgentRelationshipCreateParams,
-  IntentUpdateParams: IntentUpdateParams,
-  RegistrationInput: RegistrationInput,
-  SatisfactionUpdateParams: SatisfactionUpdateParams,
-  PlanUpdateParams: PlanUpdateParams,
-  CollectionInput: CollectionInput,
-  ProposedIntentResponse: ResolverTypeWrapper<ProposedIntentResponse>,
-  CommunityInput: CommunityInput,
-  RecipeProcessUpdateParams: RecipeProcessUpdateParams,
+  AgentRelationshipResponse: ResolverTypeWrapper<AgentRelationshipResponse>,
+  AuthPayload: ResolverTypeWrapper<AuthPayload>,
+  AgentRelationshipUpdateParams: AgentRelationshipUpdateParams,
+  ResourceSpecificationUpdateParams: ResourceSpecificationUpdateParams,
+  ResourceSpecificationResponse: ResolverTypeWrapper<ResourceSpecificationResponse>,
+  UploadInput: UploadInput,
+  Upload: ResolverTypeWrapper<Scalars['Upload']>,
+  ResourceInput: ResourceInput,
+  RecipeResourceCreateParams: RecipeResourceCreateParams,
+  RecipeResourceResponse: ResolverTypeWrapper<RecipeResourceResponse>,
+  CommunityUpdateInput: CommunityUpdateInput,
   RecipeFlowUpdateParams: RecipeFlowUpdateParams,
+  RegistrationInput: RegistrationInput,
+  CommitmentCreateParams: CommitmentCreateParams,
+  IntentUpdateParams: IntentUpdateParams,
+  AppreciationUpdateParams: AppreciationUpdateParams,
+  SettlementUpdateParams: SettlementUpdateParams,
+  SettlementResponse: ResolverTypeWrapper<SettlementResponse>,
+  ProposedIntentResponse: ResolverTypeWrapper<ProposedIntentResponse>,
+  ProductBatchUpdateParams: ProductBatchUpdateParams,
+  SettlementCreateParams: SettlementCreateParams,
+  RecipeProcessUpdateParams: RecipeProcessUpdateParams,
+  RecipeProcessResponse: ResolverTypeWrapper<RecipeProcessResponse>,
+  ResourceSpecificationCreateParams: ResourceSpecificationCreateParams,
+  ProcessCreateParams: ProcessCreateParams,
+  RecipeExchangeCreateParams: RecipeExchangeCreateParams,
+  RecipeExchangeResponse: ResolverTypeWrapper<RecipeExchangeResponse>,
+  FulfillmentUpdateParams: FulfillmentUpdateParams,
+  FulfillmentResponse: ResolverTypeWrapper<FulfillmentResponse>,
+  SatisfactionUpdateParams: SatisfactionUpdateParams,
+  SatisfactionResponse: ResolverTypeWrapper<SatisfactionResponse>,
+  UpdateProfileInput: UpdateProfileInput,
+  SatisfactionCreateParams: SatisfactionCreateParams,
+  RecipeExchangeUpdateParams: RecipeExchangeUpdateParams,
+  ProcessSpecificationUpdateParams: ProcessSpecificationUpdateParams,
+  ProcessSpecificationResponse: ResolverTypeWrapper<ProcessSpecificationResponse>,
+  CollectionInput: CollectionInput,
+  UnitCreateParams: UnitCreateParams,
+  UnitResponse: ResolverTypeWrapper<UnitResponse>,
+  AgentUpdateParams: AgentUpdateParams,
+  ProposalUpdateParams: ProposalUpdateParams,
+  SpatialThingUpdateParams: SpatialThingUpdateParams,
+  EconomicEventCreateParams: EconomicEventCreateParams,
+  EconomicResourceCreateParams: EconomicResourceCreateParams,
+  ProposedToResponse: ResolverTypeWrapper<ProposedToResponse>,
+  OrganisationUpdateInput: OrganisationUpdateInput,
+  UnitUpdateParams: UnitUpdateParams,
+  RecipeResourceUpdateParams: RecipeResourceUpdateParams,
+  ProcessSpecificationCreateParams: ProcessSpecificationCreateParams,
+  OrganisationInput: OrganisationInput,
+  CollectionUpdateInput: CollectionUpdateInput,
+  ScenarioUpdateParams: ScenarioUpdateParams,
+  FulfillmentCreateParams: FulfillmentCreateParams,
+  RecipeProcessCreateParams: RecipeProcessCreateParams,
+  PlanUpdateParams: PlanUpdateParams,
+  ScenarioDefinitionUpdateParams: ScenarioDefinitionUpdateParams,
+  CommunityInput: CommunityInput,
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -6389,16 +6389,11 @@ export type ResolversParentTypes = {
   RootQueryType: {},
   Int: Scalars['Int'],
   ID: Scalars['ID'],
-  Proposal: Omit<Proposal, 'inScopeOf'> & { inScopeOf?: Maybe<Array<ResolversParentTypes['AccountingScope']>> },
-  URI: Scalars['URI'],
-  DateTime: Scalars['DateTime'],
-  Agent: Agent,
-  AgentType: AgentType,
-  String: Scalars['String'],
-  agentCommitmentSearchParams: AgentCommitmentSearchParams,
-  Boolean: Scalars['Boolean'],
+  Agreement: Agreement,
   Commitment: Omit<Commitment, 'inScopeOf'> & { inScopeOf?: Maybe<Array<ResolversParentTypes['AccountingScope']>> },
   Action: Action,
+  String: Scalars['String'],
+  URI: Scalars['URI'],
   SpatialThing: Omit<SpatialThing, 'inScopeOf'> & { inScopeOf?: Maybe<ResolversParentTypes['AnyContext']> },
   Float: Scalars['Float'],
   Json: Scalars['Json'],
@@ -6410,20 +6405,21 @@ export type ResolversParentTypes = {
   Collection: Omit<Collection, 'context'> & { context?: Maybe<ResolversParentTypes['AnyContext']> },
   Community: Omit<Community, 'context'> & { context?: Maybe<ResolversParentTypes['AnyContext']> },
   User: User,
-  Flag: Omit<Flag, 'context'> & { context: ResolversParentTypes['AnyContext'] },
   FollowsPage: FollowsPage,
   Follow: Omit<Follow, 'context'> & { context: ResolversParentTypes['AnyContext'] },
+  Boolean: Scalars['Boolean'],
   PageInfo: PageInfo,
+  LikesPage: LikesPage,
+  Like: Omit<Like, 'context'> & { context: ResolversParentTypes['AnyContext'] },
   ActivitiesPage: ActivitiesPage,
   Activity: Omit<Activity, 'context'> & { context?: Maybe<ResolversParentTypes['AnyContext']> },
   ActivityVerb: ActivityVerb,
+  Flag: Omit<Flag, 'context'> & { context: ResolversParentTypes['AnyContext'] },
   Content: Content,
   FileMetadata: FileMetadata,
   FileIntrinsics: FileIntrinsics,
   ContentMirror: ContentMirror,
   ContentUpload: ContentUpload,
-  LikesPage: LikesPage,
-  Like: Omit<Like, 'context'> & { context: ResolversParentTypes['AnyContext'] },
   CommentsPage: CommentsPage,
   Comment: Comment,
   FlagsPage: FlagsPage,
@@ -6439,8 +6435,12 @@ export type ResolversParentTypes = {
   Intent: Omit<Intent, 'inScopeOf' | 'tags'> & { inScopeOf?: Maybe<Array<ResolversParentTypes['AccountingScope']>>, tags?: Maybe<Array<Maybe<ResolversParentTypes['AnyContext']>>> },
   Measure: Measure,
   Unit: Omit<Unit, 'inScopeOf'> & { inScopeOf?: Maybe<ResolversParentTypes['AnyContext']> },
+  DateTime: Scalars['DateTime'],
   AccountingScope: ResolversParentTypes['Category'] | ResolversParentTypes['Collection'] | ResolversParentTypes['Community'] | ResolversParentTypes['Organisation'] | ResolversParentTypes['Organization'] | ResolversParentTypes['Person'] | ResolversParentTypes['Taggable'] | ResolversParentTypes['User'],
   Organization: Omit<Organization, 'inScopeOf'> & { inScopeOf?: Maybe<Array<ResolversParentTypes['AccountingScope']>> },
+  Agent: Agent,
+  AgentType: AgentType,
+  agentCommitmentSearchParams: AgentCommitmentSearchParams,
   agentEventSearchParams: AgentEventSearchParams,
   EconomicEvent: Omit<EconomicEvent, 'inScopeOf' | 'tags' | 'trace' | 'track'> & { inScopeOf?: Maybe<Array<ResolversParentTypes['AccountingScope']>>, tags?: Maybe<Array<Maybe<ResolversParentTypes['AnyContext']>>>, trace?: Maybe<Array<ResolversParentTypes['ProductionFlowItem']>>, track?: Maybe<Array<ResolversParentTypes['ProductionFlowItem']>> },
   Appreciation: Appreciation,
@@ -6453,7 +6453,6 @@ export type ResolversParentTypes = {
   TimeUnit: TimeUnit,
   Plan: Omit<Plan, 'inScopeOf'> & { inScopeOf?: Maybe<Array<ResolversParentTypes['AccountingScope']>> },
   planProcessSearchParams: PlanProcessSearchParams,
-  Agreement: Agreement,
   ResourceSpecification: ResourceSpecification,
   EconomicResource: EconomicResource,
   ProductBatch: ProductBatch,
@@ -6464,151 +6463,152 @@ export type ResolversParentTypes = {
   agentResourceSearchParams: AgentResourceSearchParams,
   agentPlanSearchParams: AgentPlanSearchParams,
   agentProcessSearchParams: AgentProcessSearchParams,
+  Proposal: Omit<Proposal, 'inScopeOf'> & { inScopeOf?: Maybe<Array<ResolversParentTypes['AccountingScope']>> },
+  ProposedTo: ProposedTo,
+  ProposedIntent: ProposedIntent,
   AgentRelationship: Omit<AgentRelationship, 'inScopeOf'> & { inScopeOf?: Maybe<Array<ResolversParentTypes['AccountingScope']>> },
   AgentRelationshipRole: AgentRelationshipRole,
   Person: Person,
   Taggable: Omit<Taggable, 'context' | 'things'> & { context?: Maybe<ResolversParentTypes['AnyContext']>, things?: Maybe<Array<Maybe<ResolversParentTypes['AnyContext']>>> },
-  ProposedIntent: ProposedIntent,
-  ProposedTo: ProposedTo,
-  EconomicResourcePage: EconomicResourcePage,
-  TaxonomyTag: TaxonomyTag,
-  TaxonomyTagsPage: TaxonomyTagsPage,
-  ProfilesPage: ProfilesPage,
-  EconomicEventPage: EconomicEventPage,
-  RecipeProcess: RecipeProcess,
-  ProposalsPage: ProposalsPage,
+  Claim: Omit<Claim, 'inScopeOf'> & { inScopeOf?: Maybe<Array<ResolversParentTypes['AccountingScope']>> },
   RecipeFlow: RecipeFlow,
   RecipeResource: RecipeResource,
-  UnitsPage: UnitsPage,
+  RecipeProcess: RecipeProcess,
+  LanguagesPage: LanguagesPage,
+  Language: Language,
+  ProfilesPage: ProfilesPage,
+  IntentsPage: IntentsPage,
   ProcessPage: ProcessPage,
   GeolocationFilters: GeolocationFilters,
   GeolocationDistance: GeolocationDistance,
   GeolocationPoint: GeolocationPoint,
-  Claim: Omit<Claim, 'inScopeOf'> & { inScopeOf?: Maybe<Array<ResolversParentTypes['AccountingScope']>> },
-  Settlement: Settlement,
-  LanguagesPage: LanguagesPage,
-  Language: Language,
-  RecipeExchange: RecipeExchange,
-  Country: Country,
-  AgentsPage: AgentsPage,
-  IntentsPage: IntentsPage,
+  EconomicResourcePage: EconomicResourcePage,
+  ProposalsPage: ProposalsPage,
   SpatialThingsPage: SpatialThingsPage,
-  RegisterEmailAccessesPage: RegisterEmailAccessesPage,
-  RegisterEmailAccess: RegisterEmailAccess,
+  TaxonomyTagsPage: TaxonomyTagsPage,
+  TaxonomyTag: TaxonomyTag,
+  RecipeExchange: RecipeExchange,
+  AgentsPage: AgentsPage,
+  UsersPage: UsersPage,
+  CountriesPages: CountriesPages,
+  Country: Country,
+  MeasuresPage: MeasuresPage,
+  Me: Me,
+  UnitsPage: UnitsPage,
+  Settlement: Settlement,
   RegisterEmailDomainAccessesPage: RegisterEmailDomainAccessesPage,
   RegisterEmailDomainAccess: RegisterEmailDomainAccess,
-  CharactersPage: CharactersPage,
-  UsersPage: UsersPage,
   Feature: Omit<Feature, 'context'> & { context?: Maybe<ResolversParentTypes['AnyContext']> },
-  MeasuresPage: MeasuresPage,
+  EconomicEventPage: EconomicEventPage,
+  RegisterEmailAccessesPage: RegisterEmailAccessesPage,
+  RegisterEmailAccess: RegisterEmailAccess,
   FeaturesPage: FeaturesPage,
-  Me: Me,
-  CountriesPages: CountriesPages,
+  CharactersPage: CharactersPage,
   Instance: Instance,
   RootMutationType: {},
-  ProductBatchUpdateParams: ProductBatchUpdateParams,
-  ProductBatchResponse: ProductBatchResponse,
-  RecipeExchangeUpdateParams: RecipeExchangeUpdateParams,
-  RecipeExchangeResponse: RecipeExchangeResponse,
-  UploadInput: UploadInput,
-  Upload: Scalars['Upload'],
-  ResourceInput: ResourceInput,
-  OrganisationUpdateInput: OrganisationUpdateInput,
-  UpdateProfileInput: UpdateProfileInput,
-  SpatialThingCreateParams: SpatialThingCreateParams,
-  SpatialThingResponse: SpatialThingResponse,
-  ScenarioDefinitionCreateParams: ScenarioDefinitionCreateParams,
-  IDuration: IDuration,
-  ScenarioDefinitionResponse: ScenarioDefinitionResponse,
-  AgentUpdateParams: AgentUpdateParams,
-  PersonResponse: PersonResponse,
-  CommunityUpdateInput: CommunityUpdateInput,
-  ProposedToResponse: ProposedToResponse,
-  CommitmentCreateParams: CommitmentCreateParams,
-  IMeasure: IMeasure,
-  CommitmentResponse: CommitmentResponse,
-  SettlementCreateParams: SettlementCreateParams,
-  SettlementResponse: SettlementResponse,
-  ResourceSpecificationCreateParams: ResourceSpecificationCreateParams,
-  ResourceSpecificationResponse: ResourceSpecificationResponse,
-  RecipeResourceUpdateParams: RecipeResourceUpdateParams,
-  RecipeResourceResponse: RecipeResourceResponse,
-  ScenarioCreateParams: ScenarioCreateParams,
-  ScenarioResponse: ScenarioResponse,
-  RecipeExchangeCreateParams: RecipeExchangeCreateParams,
-  RecipeResourceCreateParams: RecipeResourceCreateParams,
-  ProcessSpecificationCreateParams: ProcessSpecificationCreateParams,
-  ProcessSpecificationResponse: ProcessSpecificationResponse,
-  EconomicEventCreateParams: EconomicEventCreateParams,
-  EconomicResourceCreateParams: EconomicResourceCreateParams,
-  EconomicEventResponse: EconomicEventResponse,
-  OrganizationResponse: OrganizationResponse,
-  SpatialThingUpdateParams: SpatialThingUpdateParams,
-  AppreciationCreateParams: AppreciationCreateParams,
-  AppreciationResponse: AppreciationResponse,
-  ProcessSpecificationUpdateParams: ProcessSpecificationUpdateParams,
-  AuthPayload: AuthPayload,
-  ProposalUpdateParams: ProposalUpdateParams,
-  ProposalResponse: ProposalResponse,
-  AgentRelationshipRoleCreateParams: AgentRelationshipRoleCreateParams,
-  AgentRelationshipRoleResponse: AgentRelationshipRoleResponse,
-  ResourceSpecificationUpdateParams: ResourceSpecificationUpdateParams,
-  ClaimCreateParams: ClaimCreateParams,
-  ClaimResponse: ClaimResponse,
-  ProductBatchCreateParams: ProductBatchCreateParams,
-  AgentCreateParams: AgentCreateParams,
-  AgentRelationshipRoleUpdateParams: AgentRelationshipRoleUpdateParams,
-  FulfillmentCreateParams: FulfillmentCreateParams,
-  FulfillmentResponse: FulfillmentResponse,
-  ProcessCreateParams: ProcessCreateParams,
-  ProcessResponse: ProcessResponse,
-  CommentInput: CommentInput,
   EconomicResourceUpdateParams: EconomicResourceUpdateParams,
   EconomicResourceResponse: EconomicResourceResponse,
-  ScenarioUpdateParams: ScenarioUpdateParams,
-  IntentCreateParams: IntentCreateParams,
-  IntentResponse: IntentResponse,
-  AgentRelationshipUpdateParams: AgentRelationshipUpdateParams,
-  AgentRelationshipResponse: AgentRelationshipResponse,
-  OrganisationInput: OrganisationInput,
-  EconomicEventUpdateParams: EconomicEventUpdateParams,
-  RecipeFlowCreateParams: RecipeFlowCreateParams,
-  RecipeFlowResponse: RecipeFlowResponse,
-  SettlementUpdateParams: SettlementUpdateParams,
-  ClaimUpdateParams: ClaimUpdateParams,
-  CommitmentUpdateParams: CommitmentUpdateParams,
-  UnitUpdateParams: UnitUpdateParams,
-  UnitResponse: UnitResponse,
-  ProposalCreateParams: ProposalCreateParams,
+  AppreciationCreateParams: AppreciationCreateParams,
+  AppreciationResponse: AppreciationResponse,
+  CommentInput: CommentInput,
   CategoryInput: CategoryInput,
   CharacterInput: CharacterInput,
   ProfileInput: ProfileInput,
-  WebMetadata: WebMetadata,
-  ProcessUpdateParams: ProcessUpdateParams,
-  AgreementUpdateParams: AgreementUpdateParams,
-  AgreementResponse: AgreementResponse,
-  UnitCreateParams: UnitCreateParams,
-  RecipeProcessCreateParams: RecipeProcessCreateParams,
-  RecipeProcessResponse: RecipeProcessResponse,
-  FulfillmentUpdateParams: FulfillmentUpdateParams,
   PlanCreateParams: PlanCreateParams,
   PlanResponse: PlanResponse,
+  EconomicEventUpdateParams: EconomicEventUpdateParams,
+  EconomicEventResponse: EconomicEventResponse,
+  AgreementUpdateParams: AgreementUpdateParams,
+  AgreementResponse: AgreementResponse,
+  ProductBatchCreateParams: ProductBatchCreateParams,
+  ProductBatchResponse: ProductBatchResponse,
+  IntentCreateParams: IntentCreateParams,
+  IMeasure: IMeasure,
+  IntentResponse: IntentResponse,
+  ProposalCreateParams: ProposalCreateParams,
+  ProposalResponse: ProposalResponse,
+  ScenarioDefinitionCreateParams: ScenarioDefinitionCreateParams,
+  IDuration: IDuration,
+  ScenarioDefinitionResponse: ScenarioDefinitionResponse,
+  AgentRelationshipRoleUpdateParams: AgentRelationshipRoleUpdateParams,
+  AgentRelationshipRoleResponse: AgentRelationshipRoleResponse,
+  SpatialThingCreateParams: SpatialThingCreateParams,
+  SpatialThingResponse: SpatialThingResponse,
+  ProcessUpdateParams: ProcessUpdateParams,
+  ProcessResponse: ProcessResponse,
+  ScenarioCreateParams: ScenarioCreateParams,
+  ScenarioResponse: ScenarioResponse,
+  ClaimCreateParams: ClaimCreateParams,
+  ClaimResponse: ClaimResponse,
+  RecipeFlowCreateParams: RecipeFlowCreateParams,
+  RecipeFlowResponse: RecipeFlowResponse,
+  CommitmentUpdateParams: CommitmentUpdateParams,
+  CommitmentResponse: CommitmentResponse,
+  AgentRelationshipRoleCreateParams: AgentRelationshipRoleCreateParams,
+  ClaimUpdateParams: ClaimUpdateParams,
   AgreementCreateParams: AgreementCreateParams,
-  CollectionUpdateInput: CollectionUpdateInput,
-  ScenarioDefinitionUpdateParams: ScenarioDefinitionUpdateParams,
-  SatisfactionCreateParams: SatisfactionCreateParams,
-  SatisfactionResponse: SatisfactionResponse,
-  AppreciationUpdateParams: AppreciationUpdateParams,
+  AgentCreateParams: AgentCreateParams,
+  PersonResponse: PersonResponse,
+  WebMetadata: WebMetadata,
+  OrganizationResponse: OrganizationResponse,
   AgentRelationshipCreateParams: AgentRelationshipCreateParams,
-  IntentUpdateParams: IntentUpdateParams,
-  RegistrationInput: RegistrationInput,
-  SatisfactionUpdateParams: SatisfactionUpdateParams,
-  PlanUpdateParams: PlanUpdateParams,
-  CollectionInput: CollectionInput,
-  ProposedIntentResponse: ProposedIntentResponse,
-  CommunityInput: CommunityInput,
-  RecipeProcessUpdateParams: RecipeProcessUpdateParams,
+  AgentRelationshipResponse: AgentRelationshipResponse,
+  AuthPayload: AuthPayload,
+  AgentRelationshipUpdateParams: AgentRelationshipUpdateParams,
+  ResourceSpecificationUpdateParams: ResourceSpecificationUpdateParams,
+  ResourceSpecificationResponse: ResourceSpecificationResponse,
+  UploadInput: UploadInput,
+  Upload: Scalars['Upload'],
+  ResourceInput: ResourceInput,
+  RecipeResourceCreateParams: RecipeResourceCreateParams,
+  RecipeResourceResponse: RecipeResourceResponse,
+  CommunityUpdateInput: CommunityUpdateInput,
   RecipeFlowUpdateParams: RecipeFlowUpdateParams,
+  RegistrationInput: RegistrationInput,
+  CommitmentCreateParams: CommitmentCreateParams,
+  IntentUpdateParams: IntentUpdateParams,
+  AppreciationUpdateParams: AppreciationUpdateParams,
+  SettlementUpdateParams: SettlementUpdateParams,
+  SettlementResponse: SettlementResponse,
+  ProposedIntentResponse: ProposedIntentResponse,
+  ProductBatchUpdateParams: ProductBatchUpdateParams,
+  SettlementCreateParams: SettlementCreateParams,
+  RecipeProcessUpdateParams: RecipeProcessUpdateParams,
+  RecipeProcessResponse: RecipeProcessResponse,
+  ResourceSpecificationCreateParams: ResourceSpecificationCreateParams,
+  ProcessCreateParams: ProcessCreateParams,
+  RecipeExchangeCreateParams: RecipeExchangeCreateParams,
+  RecipeExchangeResponse: RecipeExchangeResponse,
+  FulfillmentUpdateParams: FulfillmentUpdateParams,
+  FulfillmentResponse: FulfillmentResponse,
+  SatisfactionUpdateParams: SatisfactionUpdateParams,
+  SatisfactionResponse: SatisfactionResponse,
+  UpdateProfileInput: UpdateProfileInput,
+  SatisfactionCreateParams: SatisfactionCreateParams,
+  RecipeExchangeUpdateParams: RecipeExchangeUpdateParams,
+  ProcessSpecificationUpdateParams: ProcessSpecificationUpdateParams,
+  ProcessSpecificationResponse: ProcessSpecificationResponse,
+  CollectionInput: CollectionInput,
+  UnitCreateParams: UnitCreateParams,
+  UnitResponse: UnitResponse,
+  AgentUpdateParams: AgentUpdateParams,
+  ProposalUpdateParams: ProposalUpdateParams,
+  SpatialThingUpdateParams: SpatialThingUpdateParams,
+  EconomicEventCreateParams: EconomicEventCreateParams,
+  EconomicResourceCreateParams: EconomicResourceCreateParams,
+  ProposedToResponse: ProposedToResponse,
+  OrganisationUpdateInput: OrganisationUpdateInput,
+  UnitUpdateParams: UnitUpdateParams,
+  RecipeResourceUpdateParams: RecipeResourceUpdateParams,
+  ProcessSpecificationCreateParams: ProcessSpecificationCreateParams,
+  OrganisationInput: OrganisationInput,
+  CollectionUpdateInput: CollectionUpdateInput,
+  ScenarioUpdateParams: ScenarioUpdateParams,
+  FulfillmentCreateParams: FulfillmentCreateParams,
+  RecipeProcessCreateParams: RecipeProcessCreateParams,
+  PlanUpdateParams: PlanUpdateParams,
+  ScenarioDefinitionUpdateParams: ScenarioDefinitionUpdateParams,
+  CommunityInput: CommunityInput,
 };
 
 export type AccountingScopeResolvers<ContextType = any, ParentType extends ResolversParentTypes['AccountingScope'] = ResolversParentTypes['AccountingScope']> = {
@@ -7611,37 +7611,37 @@ export type RegisterEmailDomainAccessesPageResolvers<ContextType = any, ParentTy
 };
 
 export type ResourceResolvers<ContextType = any, ParentType extends ResolversParentTypes['Resource'] = ResolversParentTypes['Resource']> = {
-  canonicalUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  myFlag?: Resolver<Maybe<ResolversTypes['Flag']>, ParentType, ContextType>,
-  publicAccess?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
-  extraInfo?: Resolver<Maybe<ResolversTypes['Json']>, ParentType, ContextType>,
-  creator?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>,
-  mimeType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  collection?: Resolver<Maybe<ResolversTypes['Collection']>, ParentType, ContextType>,
-  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  content?: Resolver<Maybe<ResolversTypes['Content']>, ParentType, ContextType>,
-  level?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  isPublic?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
-  embedType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  isDisabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
-  isLocal?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
-  embedCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  author?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  subject?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  icon?: Resolver<Maybe<ResolversTypes['Content']>, ParentType, ContextType>,
-  likerCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
-  summary?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  accessibilityFeature?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>,
-  context?: Resolver<Maybe<ResolversTypes['AnyContext']>, ParentType, ContextType>,
-  freeAccess?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
-  language?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  myLike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType>,
-  likers?: Resolver<Maybe<ResolversTypes['LikesPage']>, ParentType, ContextType, ResourceLikersArgs>,
-  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   license?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  embedCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  accessibilityFeature?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>,
+  extraInfo?: Resolver<Maybe<ResolversTypes['Json']>, ParentType, ContextType>,
+  collection?: Resolver<Maybe<ResolversTypes['Collection']>, ParentType, ContextType>,
+  isLocal?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  level?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  subject?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  likerCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
+  freeAccess?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
+  isPublic?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  creator?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>,
+  embedType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  mimeType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  content?: Resolver<Maybe<ResolversTypes['Content']>, ParentType, ContextType>,
+  likers?: Resolver<Maybe<ResolversTypes['LikesPage']>, ParentType, ContextType, ResourceLikersArgs>,
+  isDisabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  publicAccess?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
+  myFlag?: Resolver<Maybe<ResolversTypes['Flag']>, ParentType, ContextType>,
+  author?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  icon?: Resolver<Maybe<ResolversTypes['Content']>, ParentType, ContextType>,
+  context?: Resolver<Maybe<ResolversTypes['AnyContext']>, ParentType, ContextType>,
+  summary?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  language?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  canonicalUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  myLike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType>,
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   flags?: Resolver<Maybe<ResolversTypes['FlagsPage']>, ParentType, ContextType, ResourceFlagsArgs>,
 };
 
@@ -7667,252 +7667,252 @@ export type ResourceSpecificationResponseResolvers<ContextType = any, ParentType
 };
 
 export type RootMutationTypeResolvers<ContextType = any, ParentType extends ResolversParentTypes['RootMutationType'] = ResolversParentTypes['RootMutationType']> = {
-  updateProductBatch?: Resolver<Maybe<ResolversTypes['ProductBatchResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateProductBatchArgs, 'productBatch'>>,
-  resetPasswordRequest?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeResetPasswordRequestArgs, 'email'>>,
-  updateRecipeExchange?: Resolver<Maybe<ResolversTypes['RecipeExchangeResponse']>, ParentType, ContextType, RootMutationTypeUpdateRecipeExchangeArgs>,
-  createResource?: Resolver<Maybe<ResolversTypes['Resource']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateResourceArgs, 'content' | 'resource'>>,
-  updateOrganisation?: Resolver<Maybe<ResolversTypes['Organisation']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateOrganisationArgs, 'organisation' | 'organisationId'>>,
-  createRegisterEmailDomainAccess?: Resolver<ResolversTypes['RegisterEmailDomainAccess'], ParentType, ContextType, RequireFields<RootMutationTypeCreateRegisterEmailDomainAccessArgs, 'domain'>>,
-  updateProfile?: Resolver<Maybe<ResolversTypes['Me']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateProfileArgs, 'profile'>>,
-  deleteCommitment?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteCommitmentArgs, 'id'>>,
-  createSpatialThing?: Resolver<Maybe<ResolversTypes['SpatialThingResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateSpatialThingArgs, 'spatialThing'>>,
-  createScenarioDefinition?: Resolver<Maybe<ResolversTypes['ScenarioDefinitionResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateScenarioDefinitionArgs, 'plan'>>,
-  deleteAgentRelationship?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteAgentRelationshipArgs, 'id'>>,
-  updatePerson?: Resolver<Maybe<ResolversTypes['PersonResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdatePersonArgs, 'person'>>,
-  updateCommunity?: Resolver<Maybe<ResolversTypes['Community']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateCommunityArgs, 'community' | 'communityId'>>,
-  deletePlan?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeletePlanArgs, 'id'>>,
-  proposeTo?: Resolver<Maybe<ResolversTypes['ProposedToResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeProposeToArgs, 'proposed' | 'proposedTo'>>,
-  createCommitment?: Resolver<Maybe<ResolversTypes['CommitmentResponse']>, ParentType, ContextType, RootMutationTypeCreateCommitmentArgs>,
-  makeTaggable?: Resolver<Maybe<ResolversTypes['Taggable']>, ParentType, ContextType, RootMutationTypeMakeTaggableArgs>,
-  deleteRecipeFlow?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteRecipeFlowArgs, 'id'>>,
-  deleteProposal?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteProposalArgs, 'id'>>,
-  createSettlement?: Resolver<Maybe<ResolversTypes['SettlementResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateSettlementArgs, 'settlement'>>,
-  createFollow?: Resolver<Maybe<ResolversTypes['Follow']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateFollowArgs, 'contextId'>>,
-  addProfileTo?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType, RequireFields<RootMutationTypeAddProfileToArgs, 'contextId'>>,
-  tag?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeTagArgs, 'taggables' | 'thing'>>,
-  createResourceSpecification?: Resolver<Maybe<ResolversTypes['ResourceSpecificationResponse']>, ParentType, ContextType, RootMutationTypeCreateResourceSpecificationArgs>,
-  updateRecipeResource?: Resolver<Maybe<ResolversTypes['RecipeResourceResponse']>, ParentType, ContextType, RootMutationTypeUpdateRecipeResourceArgs>,
-  createScenario?: Resolver<Maybe<ResolversTypes['ScenarioResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateScenarioArgs, 'plan'>>,
-  createRecipeExchange?: Resolver<Maybe<ResolversTypes['RecipeExchangeResponse']>, ParentType, ContextType, RootMutationTypeCreateRecipeExchangeArgs>,
-  createRecipeResource?: Resolver<Maybe<ResolversTypes['RecipeResourceResponse']>, ParentType, ContextType, RootMutationTypeCreateRecipeResourceArgs>,
-  deleteProductBatch?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteProductBatchArgs, 'id'>>,
-  createProcessSpecification?: Resolver<Maybe<ResolversTypes['ProcessSpecificationResponse']>, ParentType, ContextType, RootMutationTypeCreateProcessSpecificationArgs>,
-  createEconomicEvent?: Resolver<Maybe<ResolversTypes['EconomicEventResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateEconomicEventArgs, 'event'>>,
-  resolveFlag?: Resolver<Maybe<ResolversTypes['Flag']>, ParentType, ContextType, RequireFields<RootMutationTypeResolveFlagArgs, 'flagId'>>,
-  deleteAppreciation?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteAppreciationArgs, 'id'>>,
-  updateOrganization?: Resolver<Maybe<ResolversTypes['OrganizationResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateOrganizationArgs, 'organization'>>,
-  updateSpatialThing?: Resolver<Maybe<ResolversTypes['SpatialThingResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateSpatialThingArgs, 'spatialThing'>>,
-  createAppreciation?: Resolver<Maybe<ResolversTypes['AppreciationResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateAppreciationArgs, 'appreciation'>>,
-  deletePerson?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeletePersonArgs, 'id'>>,
-  createRegisterEmailAccess?: Resolver<ResolversTypes['RegisterEmailAccess'], ParentType, ContextType, RequireFields<RootMutationTypeCreateRegisterEmailAccessArgs, 'email'>>,
-  createFollowByUrl?: Resolver<Maybe<ResolversTypes['Follow']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateFollowByUrlArgs, 'url'>>,
-  updateProcessSpecification?: Resolver<Maybe<ResolversTypes['ProcessSpecificationResponse']>, ParentType, ContextType, RootMutationTypeUpdateProcessSpecificationArgs>,
-  deleteProcessSpecification?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteProcessSpecificationArgs, 'id'>>,
-  confirmEmail?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, RequireFields<RootMutationTypeConfirmEmailArgs, 'token'>>,
-  updateProposal?: Resolver<Maybe<ResolversTypes['ProposalResponse']>, ParentType, ContextType, RootMutationTypeUpdateProposalArgs>,
-  copyResource?: Resolver<Maybe<ResolversTypes['Resource']>, ParentType, ContextType, RequireFields<RootMutationTypeCopyResourceArgs, 'contextId' | 'resourceId'>>,
-  deleteScenario?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteScenarioArgs, 'id'>>,
-  createAgentRelationshipRole?: Resolver<Maybe<ResolversTypes['AgentRelationshipRoleResponse']>, ParentType, ContextType, RootMutationTypeCreateAgentRelationshipRoleArgs>,
-  sendInvite?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeSendInviteArgs, 'email'>>,
-  updateResourceSpecification?: Resolver<Maybe<ResolversTypes['ResourceSpecificationResponse']>, ParentType, ContextType, RootMutationTypeUpdateResourceSpecificationArgs>,
-  characterise?: Resolver<Maybe<ResolversTypes['Character']>, ParentType, ContextType, RequireFields<RootMutationTypeCharacteriseArgs, 'contextId'>>,
-  createClaim?: Resolver<Maybe<ResolversTypes['ClaimResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateClaimArgs, 'claim'>>,
-  createProductBatch?: Resolver<Maybe<ResolversTypes['ProductBatchResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateProductBatchArgs, 'productBatch'>>,
-  createOrganization?: Resolver<Maybe<ResolversTypes['OrganizationResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateOrganizationArgs, 'organization'>>,
-  updateAgentRelationshipRole?: Resolver<Maybe<ResolversTypes['AgentRelationshipRoleResponse']>, ParentType, ContextType, RootMutationTypeUpdateAgentRelationshipRoleArgs>,
-  createFulfillment?: Resolver<Maybe<ResolversTypes['FulfillmentResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateFulfillmentArgs, 'fulfillment'>>,
-  createProcess?: Resolver<Maybe<ResolversTypes['ProcessResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateProcessArgs, 'process'>>,
-  deleteEconomicEvent?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteEconomicEventArgs, 'id'>>,
-  deleteEconomicResource?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteEconomicResourceArgs, 'id'>>,
-  delete?: Resolver<Maybe<ResolversTypes['AnyContext']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteArgs, 'contextId'>>,
-  updateComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateCommentArgs, 'comment' | 'commentId'>>,
-  deleteSession?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
-  createReply?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateReplyArgs, 'comment' | 'inReplyToId' | 'threadId'>>,
   updateEconomicResource?: Resolver<Maybe<ResolversTypes['EconomicResourceResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateEconomicResourceArgs, 'resource'>>,
-  createLike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateLikeArgs, 'contextId'>>,
-  updateScenario?: Resolver<Maybe<ResolversTypes['ScenarioResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateScenarioArgs, 'plan'>>,
-  deleteScenarioDefinition?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteScenarioDefinitionArgs, 'id'>>,
-  createOffer?: Resolver<Maybe<ResolversTypes['IntentResponse']>, ParentType, ContextType, RootMutationTypeCreateOfferArgs>,
-  deleteIntent?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteIntentArgs, 'id'>>,
-  updateAgentRelationship?: Resolver<Maybe<ResolversTypes['AgentRelationshipResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateAgentRelationshipArgs, 'relationship'>>,
-  deleteFulfillment?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteFulfillmentArgs, 'id'>>,
-  createOrganisation?: Resolver<Maybe<ResolversTypes['Organisation']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateOrganisationArgs, 'organisation'>>,
-  updateEconomicEvent?: Resolver<Maybe<ResolversTypes['EconomicEventResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateEconomicEventArgs, 'event'>>,
-  createNeed?: Resolver<Maybe<ResolversTypes['IntentResponse']>, ParentType, ContextType, RootMutationTypeCreateNeedArgs>,
-  deleteResourceSpecification?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteResourceSpecificationArgs, 'id'>>,
-  createRecipeFlow?: Resolver<Maybe<ResolversTypes['RecipeFlowResponse']>, ParentType, ContextType, RootMutationTypeCreateRecipeFlowArgs>,
-  deleteSatisfaction?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteSatisfactionArgs, 'id'>>,
-  updateSettlement?: Resolver<Maybe<ResolversTypes['SettlementResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateSettlementArgs, 's0ettlement'>>,
-  updateClaim?: Resolver<Maybe<ResolversTypes['ClaimResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateClaimArgs, 'claim'>>,
-  updateCommitment?: Resolver<Maybe<ResolversTypes['CommitmentResponse']>, ParentType, ContextType, RootMutationTypeUpdateCommitmentArgs>,
-  updateUnit?: Resolver<Maybe<ResolversTypes['UnitResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateUnitArgs, 'unit'>>,
-  deactivateUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<RootMutationTypeDeactivateUserArgs, 'id'>>,
-  createProposal?: Resolver<Maybe<ResolversTypes['ProposalResponse']>, ParentType, ContextType, RootMutationTypeCreateProposalArgs>,
+  deletePerson?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeletePersonArgs, 'id'>>,
+  deleteSelf?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteSelfArgs, 'iAmSure'>>,
+  deleteRecipeFlow?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteRecipeFlowArgs, 'id'>>,
+  createAppreciation?: Resolver<Maybe<ResolversTypes['AppreciationResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateAppreciationArgs, 'appreciation'>>,
+  createReply?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateReplyArgs, 'comment' | 'inReplyToId' | 'threadId'>>,
   createCategory?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RootMutationTypeCreateCategoryArgs>,
-  deleteRecipeProcess?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteRecipeProcessArgs, 'id'>>,
-  fetchWebMetadata?: Resolver<Maybe<ResolversTypes['WebMetadata']>, ParentType, ContextType, RequireFields<RootMutationTypeFetchWebMetadataArgs, 'url'>>,
-  resetPassword?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, RequireFields<RootMutationTypeResetPasswordArgs, 'password' | 'token'>>,
-  deleteRegisterEmailDomainAccess?: Resolver<Maybe<ResolversTypes['RegisterEmailDomainAccess']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteRegisterEmailDomainAccessArgs, 'id'>>,
+  createPlan?: Resolver<Maybe<ResolversTypes['PlanResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreatePlanArgs, 'plan'>>,
+  updateEconomicEvent?: Resolver<Maybe<ResolversTypes['EconomicEventResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateEconomicEventArgs, 'event'>>,
+  updateComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateCommentArgs, 'comment' | 'commentId'>>,
+  updateAgreement?: Resolver<Maybe<ResolversTypes['AgreementResponse']>, ParentType, ContextType, RootMutationTypeUpdateAgreementArgs>,
+  createProductBatch?: Resolver<Maybe<ResolversTypes['ProductBatchResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateProductBatchArgs, 'productBatch'>>,
+  createIntent?: Resolver<Maybe<ResolversTypes['IntentResponse']>, ParentType, ContextType, RootMutationTypeCreateIntentArgs>,
+  createOffer?: Resolver<Maybe<ResolversTypes['IntentResponse']>, ParentType, ContextType, RootMutationTypeCreateOfferArgs>,
+  createProposal?: Resolver<Maybe<ResolversTypes['ProposalResponse']>, ParentType, ContextType, RootMutationTypeCreateProposalArgs>,
+  createScenarioDefinition?: Resolver<Maybe<ResolversTypes['ScenarioDefinitionResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateScenarioDefinitionArgs, 'plan'>>,
+  updateAgentRelationshipRole?: Resolver<Maybe<ResolversTypes['AgentRelationshipRoleResponse']>, ParentType, ContextType, RootMutationTypeUpdateAgentRelationshipRoleArgs>,
+  createSpatialThing?: Resolver<Maybe<ResolversTypes['SpatialThingResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateSpatialThingArgs, 'spatialThing'>>,
   updateProcess?: Resolver<Maybe<ResolversTypes['ProcessResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateProcessArgs, 'process'>>,
-  deleteRegisterEmailAccess?: Resolver<Maybe<ResolversTypes['RegisterEmailAccess']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteRegisterEmailAccessArgs, 'id'>>,
-  deleteProposedIntent?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteProposedIntentArgs, 'id'>>,
+  createScenario?: Resolver<Maybe<ResolversTypes['ScenarioResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateScenarioArgs, 'plan'>>,
+  deleteOrganization?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteOrganizationArgs, 'id'>>,
+  createLike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateLikeArgs, 'contextId'>>,
+  createClaim?: Resolver<Maybe<ResolversTypes['ClaimResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateClaimArgs, 'claim'>>,
+  createRecipeFlow?: Resolver<Maybe<ResolversTypes['RecipeFlowResponse']>, ParentType, ContextType, RootMutationTypeCreateRecipeFlowArgs>,
+  updateCategory?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RootMutationTypeUpdateCategoryArgs>,
+  deleteRecipeProcess?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteRecipeProcessArgs, 'id'>>,
+  updateCommitment?: Resolver<Maybe<ResolversTypes['CommitmentResponse']>, ParentType, ContextType, RootMutationTypeUpdateCommitmentArgs>,
+  resetPasswordRequest?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeResetPasswordRequestArgs, 'email'>>,
+  deactivateUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<RootMutationTypeDeactivateUserArgs, 'id'>>,
+  createThread?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateThreadArgs, 'comment'>>,
+  createAgentRelationshipRole?: Resolver<Maybe<ResolversTypes['AgentRelationshipRoleResponse']>, ParentType, ContextType, RootMutationTypeCreateAgentRelationshipRoleArgs>,
+  deleteClaim?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteClaimArgs, 'id'>>,
+  updateClaim?: Resolver<Maybe<ResolversTypes['ClaimResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateClaimArgs, 'claim'>>,
+  deleteRecipeResource?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteRecipeResourceArgs, 'id'>>,
+  createAgreement?: Resolver<Maybe<ResolversTypes['AgreementResponse']>, ParentType, ContextType, RootMutationTypeCreateAgreementArgs>,
+  createFeature?: Resolver<Maybe<ResolversTypes['Feature']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateFeatureArgs, 'contextId'>>,
+  tag?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeTagArgs, 'taggables' | 'thing'>>,
+  createPerson?: Resolver<Maybe<ResolversTypes['PersonResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreatePersonArgs, 'person'>>,
+  fetchWebMetadata?: Resolver<Maybe<ResolversTypes['WebMetadata']>, ParentType, ContextType, RequireFields<RootMutationTypeFetchWebMetadataArgs, 'url'>>,
+  deleteProposedTo?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteProposedToArgs, 'id'>>,
+  deleteResourceSpecification?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteResourceSpecificationArgs, 'id'>>,
+  deleteIntent?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteIntentArgs, 'id'>>,
+  createOrganization?: Resolver<Maybe<ResolversTypes['OrganizationResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateOrganizationArgs, 'organization'>>,
+  createAgentRelationship?: Resolver<Maybe<ResolversTypes['AgentRelationshipResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateAgentRelationshipArgs, 'relationship'>>,
+  createRegisterEmailAccess?: Resolver<ResolversTypes['RegisterEmailAccess'], ParentType, ContextType, RequireFields<RootMutationTypeCreateRegisterEmailAccessArgs, 'email'>>,
+  deleteScenario?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteScenarioArgs, 'id'>>,
+  characterise?: Resolver<Maybe<ResolversTypes['Character']>, ParentType, ContextType, RequireFields<RootMutationTypeCharacteriseArgs, 'contextId'>>,
+  deleteProcess?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteProcessArgs, 'id'>>,
+  deleteAgentRelationshipRole?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteAgentRelationshipRoleArgs, 'id'>>,
   createSession?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateSessionArgs, 'password'>>,
   deleteSettlement?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteSettlementArgs, 'id'>>,
-  updateAgreement?: Resolver<Maybe<ResolversTypes['AgreementResponse']>, ParentType, ContextType, RootMutationTypeUpdateAgreementArgs>,
-  createUnit?: Resolver<Maybe<ResolversTypes['UnitResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateUnitArgs, 'unit'>>,
-  deleteOrganization?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteOrganizationArgs, 'id'>>,
-  deleteClaim?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteClaimArgs, 'id'>>,
-  createRecipeProcess?: Resolver<Maybe<ResolversTypes['RecipeProcessResponse']>, ParentType, ContextType, RootMutationTypeCreateRecipeProcessArgs>,
-  createIntent?: Resolver<Maybe<ResolversTypes['IntentResponse']>, ParentType, ContextType, RootMutationTypeCreateIntentArgs>,
-  updateFulfillment?: Resolver<Maybe<ResolversTypes['FulfillmentResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateFulfillmentArgs, 'fulfillment'>>,
-  createPlan?: Resolver<Maybe<ResolversTypes['PlanResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreatePlanArgs, 'plan'>>,
-  createAgreement?: Resolver<Maybe<ResolversTypes['AgreementResponse']>, ParentType, ContextType, RootMutationTypeCreateAgreementArgs>,
-  updateCollection?: Resolver<Maybe<ResolversTypes['Collection']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateCollectionArgs, 'collection' | 'collectionId'>>,
-  updateScenarioDefinition?: Resolver<Maybe<ResolversTypes['ScenarioDefinitionResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateScenarioDefinitionArgs, 'plan'>>,
-  createSatisfaction?: Resolver<Maybe<ResolversTypes['SatisfactionResponse']>, ParentType, ContextType, RootMutationTypeCreateSatisfactionArgs>,
-  updateAppreciation?: Resolver<Maybe<ResolversTypes['AppreciationResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateAppreciationArgs, 'appreciation'>>,
-  createAgentRelationship?: Resolver<Maybe<ResolversTypes['AgentRelationshipResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateAgentRelationshipArgs, 'relationship'>>,
-  updateIntent?: Resolver<Maybe<ResolversTypes['IntentResponse']>, ParentType, ContextType, RootMutationTypeUpdateIntentArgs>,
-  deleteRecipeResource?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteRecipeResourceArgs, 'id'>>,
-  createThread?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateThreadArgs, 'comment'>>,
-  createUser?: Resolver<Maybe<ResolversTypes['Me']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateUserArgs, 'user'>>,
-  deleteUnit?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteUnitArgs, 'id'>>,
-  updateSatisfaction?: Resolver<Maybe<ResolversTypes['SatisfactionResponse']>, ParentType, ContextType, RootMutationTypeUpdateSatisfactionArgs>,
-  updatePlan?: Resolver<Maybe<ResolversTypes['PlanResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdatePlanArgs, 'plan'>>,
-  createCollection?: Resolver<Maybe<ResolversTypes['Collection']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateCollectionArgs, 'collection'>>,
-  deleteSelf?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteSelfArgs, 'iAmSure'>>,
-  deleteAgentRelationshipRole?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteAgentRelationshipRoleArgs, 'id'>>,
-  createPerson?: Resolver<Maybe<ResolversTypes['PersonResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreatePersonArgs, 'person'>>,
-  proposeIntent?: Resolver<Maybe<ResolversTypes['ProposedIntentResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeProposeIntentArgs, 'publishedIn' | 'publishes'>>,
-  createCommunity?: Resolver<Maybe<ResolversTypes['Community']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateCommunityArgs, 'community'>>,
-  createFeature?: Resolver<Maybe<ResolversTypes['Feature']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateFeatureArgs, 'contextId'>>,
-  deleteSpatialThing?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteSpatialThingArgs, 'id'>>,
-  deleteRecipeExchange?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteRecipeExchangeArgs, 'id'>>,
-  createFlag?: Resolver<Maybe<ResolversTypes['Flag']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateFlagArgs, 'contextId' | 'message'>>,
-  updateRecipeProcess?: Resolver<Maybe<ResolversTypes['RecipeProcessResponse']>, ParentType, ContextType, RootMutationTypeUpdateRecipeProcessArgs>,
-  updateResource?: Resolver<Maybe<ResolversTypes['Resource']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateResourceArgs, 'resource' | 'resourceId'>>,
-  deleteProposedTo?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteProposedToArgs, 'id'>>,
+  updateAgentRelationship?: Resolver<Maybe<ResolversTypes['AgentRelationshipResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateAgentRelationshipArgs, 'relationship'>>,
+  updateResourceSpecification?: Resolver<Maybe<ResolversTypes['ResourceSpecificationResponse']>, ParentType, ContextType, RootMutationTypeUpdateResourceSpecificationArgs>,
+  createResource?: Resolver<Maybe<ResolversTypes['Resource']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateResourceArgs, 'content' | 'resource'>>,
+  createRecipeResource?: Resolver<Maybe<ResolversTypes['RecipeResourceResponse']>, ParentType, ContextType, RootMutationTypeCreateRecipeResourceArgs>,
+  delete?: Resolver<Maybe<ResolversTypes['AnyContext']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteArgs, 'contextId'>>,
+  createRegisterEmailDomainAccess?: Resolver<ResolversTypes['RegisterEmailDomainAccess'], ParentType, ContextType, RequireFields<RootMutationTypeCreateRegisterEmailDomainAccessArgs, 'domain'>>,
+  updateCommunity?: Resolver<Maybe<ResolversTypes['Community']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateCommunityArgs, 'community' | 'communityId'>>,
   updateRecipeFlow?: Resolver<Maybe<ResolversTypes['RecipeFlowResponse']>, ParentType, ContextType, RootMutationTypeUpdateRecipeFlowArgs>,
-  deleteProcess?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteProcessArgs, 'id'>>,
+  deleteAppreciation?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteAppreciationArgs, 'id'>>,
+  createUser?: Resolver<Maybe<ResolversTypes['Me']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateUserArgs, 'user'>>,
+  deleteSession?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
+  createCommitment?: Resolver<Maybe<ResolversTypes['CommitmentResponse']>, ParentType, ContextType, RootMutationTypeCreateCommitmentArgs>,
+  deleteRegisterEmailAccess?: Resolver<Maybe<ResolversTypes['RegisterEmailAccess']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteRegisterEmailAccessArgs, 'id'>>,
+  updateIntent?: Resolver<Maybe<ResolversTypes['IntentResponse']>, ParentType, ContextType, RootMutationTypeUpdateIntentArgs>,
+  updateAppreciation?: Resolver<Maybe<ResolversTypes['AppreciationResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateAppreciationArgs, 'appreciation'>>,
+  updateSettlement?: Resolver<Maybe<ResolversTypes['SettlementResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateSettlementArgs, 's0ettlement'>>,
+  deleteUnit?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteUnitArgs, 'id'>>,
+  deleteEconomicEvent?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteEconomicEventArgs, 'id'>>,
+  proposeIntent?: Resolver<Maybe<ResolversTypes['ProposedIntentResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeProposeIntentArgs, 'publishedIn' | 'publishes'>>,
+  updateProductBatch?: Resolver<Maybe<ResolversTypes['ProductBatchResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateProductBatchArgs, 'productBatch'>>,
+  createSettlement?: Resolver<Maybe<ResolversTypes['SettlementResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateSettlementArgs, 'settlement'>>,
+  updateRecipeProcess?: Resolver<Maybe<ResolversTypes['RecipeProcessResponse']>, ParentType, ContextType, RootMutationTypeUpdateRecipeProcessArgs>,
+  deleteCommitment?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteCommitmentArgs, 'id'>>,
+  createResourceSpecification?: Resolver<Maybe<ResolversTypes['ResourceSpecificationResponse']>, ParentType, ContextType, RootMutationTypeCreateResourceSpecificationArgs>,
+  createProcess?: Resolver<Maybe<ResolversTypes['ProcessResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateProcessArgs, 'process'>>,
   ingestTaxonomyTag?: Resolver<Maybe<ResolversTypes['Taggable']>, ParentType, ContextType, RootMutationTypeIngestTaxonomyTagArgs>,
-  updateCategory?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RootMutationTypeUpdateCategoryArgs>,
+  deleteProposedIntent?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteProposedIntentArgs, 'id'>>,
+  sendInvite?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeSendInviteArgs, 'email'>>,
+  createRecipeExchange?: Resolver<Maybe<ResolversTypes['RecipeExchangeResponse']>, ParentType, ContextType, RootMutationTypeCreateRecipeExchangeArgs>,
+  createFollowByUrl?: Resolver<Maybe<ResolversTypes['Follow']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateFollowByUrlArgs, 'url'>>,
+  updateFulfillment?: Resolver<Maybe<ResolversTypes['FulfillmentResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateFulfillmentArgs, 'fulfillment'>>,
+  updateSatisfaction?: Resolver<Maybe<ResolversTypes['SatisfactionResponse']>, ParentType, ContextType, RootMutationTypeUpdateSatisfactionArgs>,
+  confirmEmail?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, RequireFields<RootMutationTypeConfirmEmailArgs, 'token'>>,
+  updateProfile?: Resolver<Maybe<ResolversTypes['Me']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateProfileArgs, 'profile'>>,
+  deleteProductBatch?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteProductBatchArgs, 'id'>>,
+  createSatisfaction?: Resolver<Maybe<ResolversTypes['SatisfactionResponse']>, ParentType, ContextType, RootMutationTypeCreateSatisfactionArgs>,
+  updateRecipeExchange?: Resolver<Maybe<ResolversTypes['RecipeExchangeResponse']>, ParentType, ContextType, RootMutationTypeUpdateRecipeExchangeArgs>,
+  resetPassword?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, RequireFields<RootMutationTypeResetPasswordArgs, 'password' | 'token'>>,
+  updateProcessSpecification?: Resolver<Maybe<ResolversTypes['ProcessSpecificationResponse']>, ParentType, ContextType, RootMutationTypeUpdateProcessSpecificationArgs>,
+  createCollection?: Resolver<Maybe<ResolversTypes['Collection']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateCollectionArgs, 'collection'>>,
   deleteAgreement?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteAgreementArgs, 'id'>>,
+  deletePlan?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeletePlanArgs, 'id'>>,
+  createUnit?: Resolver<Maybe<ResolversTypes['UnitResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateUnitArgs, 'unit'>>,
+  updatePerson?: Resolver<Maybe<ResolversTypes['PersonResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdatePersonArgs, 'person'>>,
+  deleteProcessSpecification?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteProcessSpecificationArgs, 'id'>>,
+  updateProposal?: Resolver<Maybe<ResolversTypes['ProposalResponse']>, ParentType, ContextType, RootMutationTypeUpdateProposalArgs>,
+  updateSpatialThing?: Resolver<Maybe<ResolversTypes['SpatialThingResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateSpatialThingArgs, 'spatialThing'>>,
+  createEconomicEvent?: Resolver<Maybe<ResolversTypes['EconomicEventResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateEconomicEventArgs, 'event'>>,
+  updateResource?: Resolver<Maybe<ResolversTypes['Resource']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateResourceArgs, 'resource' | 'resourceId'>>,
+  proposeTo?: Resolver<Maybe<ResolversTypes['ProposedToResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeProposeToArgs, 'proposed' | 'proposedTo'>>,
+  deleteScenarioDefinition?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteScenarioDefinitionArgs, 'id'>>,
+  createFollow?: Resolver<Maybe<ResolversTypes['Follow']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateFollowArgs, 'contextId'>>,
+  deleteEconomicResource?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteEconomicResourceArgs, 'id'>>,
+  deleteProposal?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteProposalArgs, 'id'>>,
+  updateOrganisation?: Resolver<Maybe<ResolversTypes['Organisation']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateOrganisationArgs, 'organisation' | 'organisationId'>>,
+  updateUnit?: Resolver<Maybe<ResolversTypes['UnitResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateUnitArgs, 'unit'>>,
+  deleteRecipeExchange?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteRecipeExchangeArgs, 'id'>>,
+  updateRecipeResource?: Resolver<Maybe<ResolversTypes['RecipeResourceResponse']>, ParentType, ContextType, RootMutationTypeUpdateRecipeResourceArgs>,
+  createProcessSpecification?: Resolver<Maybe<ResolversTypes['ProcessSpecificationResponse']>, ParentType, ContextType, RootMutationTypeCreateProcessSpecificationArgs>,
+  createOrganisation?: Resolver<Maybe<ResolversTypes['Organisation']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateOrganisationArgs, 'organisation'>>,
+  copyResource?: Resolver<Maybe<ResolversTypes['Resource']>, ParentType, ContextType, RequireFields<RootMutationTypeCopyResourceArgs, 'contextId' | 'resourceId'>>,
+  deleteSpatialThing?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteSpatialThingArgs, 'id'>>,
+  createNeed?: Resolver<Maybe<ResolversTypes['IntentResponse']>, ParentType, ContextType, RootMutationTypeCreateNeedArgs>,
+  updateCollection?: Resolver<Maybe<ResolversTypes['Collection']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateCollectionArgs, 'collection' | 'collectionId'>>,
+  updateScenario?: Resolver<Maybe<ResolversTypes['ScenarioResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateScenarioArgs, 'plan'>>,
+  addProfileTo?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType, RequireFields<RootMutationTypeAddProfileToArgs, 'contextId'>>,
+  createFlag?: Resolver<Maybe<ResolversTypes['Flag']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateFlagArgs, 'contextId' | 'message'>>,
+  createFulfillment?: Resolver<Maybe<ResolversTypes['FulfillmentResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateFulfillmentArgs, 'fulfillment'>>,
+  createRecipeProcess?: Resolver<Maybe<ResolversTypes['RecipeProcessResponse']>, ParentType, ContextType, RootMutationTypeCreateRecipeProcessArgs>,
+  deleteFulfillment?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteFulfillmentArgs, 'id'>>,
+  updateOrganization?: Resolver<Maybe<ResolversTypes['OrganizationResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateOrganizationArgs, 'organization'>>,
+  updatePlan?: Resolver<Maybe<ResolversTypes['PlanResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdatePlanArgs, 'plan'>>,
+  deleteRegisterEmailDomainAccess?: Resolver<Maybe<ResolversTypes['RegisterEmailDomainAccess']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteRegisterEmailDomainAccessArgs, 'id'>>,
+  resolveFlag?: Resolver<Maybe<ResolversTypes['Flag']>, ParentType, ContextType, RequireFields<RootMutationTypeResolveFlagArgs, 'flagId'>>,
+  updateScenarioDefinition?: Resolver<Maybe<ResolversTypes['ScenarioDefinitionResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeUpdateScenarioDefinitionArgs, 'plan'>>,
+  deleteAgentRelationship?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteAgentRelationshipArgs, 'id'>>,
+  makeTaggable?: Resolver<Maybe<ResolversTypes['Taggable']>, ParentType, ContextType, RootMutationTypeMakeTaggableArgs>,
+  createCommunity?: Resolver<Maybe<ResolversTypes['Community']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateCommunityArgs, 'community'>>,
+  deleteSatisfaction?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<RootMutationTypeDeleteSatisfactionArgs, 'id'>>,
 };
 
 export type RootQueryTypeResolvers<ContextType = any, ParentType extends ResolversParentTypes['RootQueryType'] = ResolversParentTypes['RootQueryType']> = {
-  proposals?: Resolver<Maybe<Array<ResolversTypes['Proposal']>>, ParentType, ContextType, RootQueryTypeProposalsArgs>,
-  plan?: Resolver<Maybe<ResolversTypes['Plan']>, ParentType, ContextType, RootQueryTypePlanArgs>,
-  economicResource?: Resolver<Maybe<ResolversTypes['EconomicResource']>, ParentType, ContextType, RootQueryTypeEconomicResourceArgs>,
-  economicResourcesPages?: Resolver<ResolversTypes['EconomicResourcePage'], ParentType, ContextType, RootQueryTypeEconomicResourcesPagesArgs>,
-  categories?: Resolver<ResolversTypes['CategoriesPage'], ParentType, ContextType, RootQueryTypeCategoriesArgs>,
-  taxonomyTag?: Resolver<Maybe<ResolversTypes['TaxonomyTag']>, ParentType, ContextType, RootQueryTypeTaxonomyTagArgs>,
-  commitments?: Resolver<Maybe<Array<ResolversTypes['Commitment']>>, ParentType, ContextType, RootQueryTypeCommitmentsArgs>,
-  profiles?: Resolver<ResolversTypes['ProfilesPage'], ParentType, ContextType, RootQueryTypeProfilesArgs>,
   agreements?: Resolver<Maybe<Array<ResolversTypes['Agreement']>>, ParentType, ContextType, RootQueryTypeAgreementsArgs>,
-  organisations?: Resolver<ResolversTypes['OrganisationsPage'], ParentType, ContextType, RootQueryTypeOrganisationsArgs>,
-  economicEventsPages?: Resolver<ResolversTypes['EconomicEventPage'], ParentType, ContextType, RootQueryTypeEconomicEventsPagesArgs>,
-  agents?: Resolver<Maybe<Array<ResolversTypes['Agent']>>, ParentType, ContextType, RootQueryTypeAgentsArgs>,
-  people?: Resolver<Maybe<Array<ResolversTypes['Person']>>, ParentType, ContextType, RootQueryTypePeopleArgs>,
-  recipeProcess?: Resolver<Maybe<ResolversTypes['RecipeProcess']>, ParentType, ContextType, RootQueryTypeRecipeProcessArgs>,
-  proposalsPages?: Resolver<ResolversTypes['ProposalsPage'], ParentType, ContextType, RootQueryTypeProposalsPagesArgs>,
-  recipeFlow?: Resolver<Maybe<ResolversTypes['RecipeFlow']>, ParentType, ContextType, RootQueryTypeRecipeFlowArgs>,
-  unitsPages?: Resolver<ResolversTypes['UnitsPage'], ParentType, ContextType, RootQueryTypeUnitsPagesArgs>,
-  recipeProcesses?: Resolver<Maybe<Array<ResolversTypes['RecipeProcess']>>, ParentType, ContextType, RootQueryTypeRecipeProcessesArgs>,
   activity?: Resolver<Maybe<ResolversTypes['Activity']>, ParentType, ContextType, RequireFields<RootQueryTypeActivityArgs, 'activityId'>>,
-  measures?: Resolver<Maybe<Array<ResolversTypes['Measure']>>, ParentType, ContextType, RootQueryTypeMeasuresArgs>,
-  processesPages?: Resolver<ResolversTypes['ProcessPage'], ParentType, ContextType, RootQueryTypeProcessesPagesArgs>,
-  proposalsFiltered?: Resolver<Maybe<Array<Maybe<ResolversTypes['Proposal']>>>, ParentType, ContextType, RootQueryTypeProposalsFilteredArgs>,
-  claims?: Resolver<Maybe<Array<ResolversTypes['Claim']>>, ParentType, ContextType, RootQueryTypeClaimsArgs>,
-  processSpecifications?: Resolver<Maybe<Array<ResolversTypes['ProcessSpecification']>>, ParentType, ContextType, RootQueryTypeProcessSpecificationsArgs>,
-  recipeResources?: Resolver<Maybe<Array<ResolversTypes['RecipeResource']>>, ParentType, ContextType, RootQueryTypeRecipeResourcesArgs>,
-  comment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<RootQueryTypeCommentArgs, 'commentId'>>,
-  agentRelationship?: Resolver<Maybe<ResolversTypes['AgentRelationship']>, ParentType, ContextType, RootQueryTypeAgentRelationshipArgs>,
-  scenarioDefinition?: Resolver<Maybe<ResolversTypes['ScenarioDefinition']>, ParentType, ContextType, RootQueryTypeScenarioDefinitionArgs>,
-  collection?: Resolver<Maybe<ResolversTypes['Collection']>, ParentType, ContextType, RequireFields<RootQueryTypeCollectionArgs, 'collectionId'>>,
-  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RootQueryTypeUserArgs>,
-  settlement?: Resolver<Maybe<ResolversTypes['Settlement']>, ParentType, ContextType, RootQueryTypeSettlementArgs>,
-  claim?: Resolver<Maybe<ResolversTypes['Claim']>, ParentType, ContextType, RootQueryTypeClaimArgs>,
-  spatialThing?: Resolver<Maybe<ResolversTypes['SpatialThing']>, ParentType, ContextType, RootQueryTypeSpatialThingArgs>,
-  agent?: Resolver<Maybe<ResolversTypes['Agent']>, ParentType, ContextType, RootQueryTypeAgentArgs>,
-  myAgent?: Resolver<Maybe<ResolversTypes['Agent']>, ParentType, ContextType>,
-  spatialThings?: Resolver<Maybe<Array<ResolversTypes['SpatialThing']>>, ParentType, ContextType, RootQueryTypeSpatialThingsArgs>,
-  languages?: Resolver<ResolversTypes['LanguagesPage'], ParentType, ContextType, RootQueryTypeLanguagesArgs>,
-  scenarios?: Resolver<Maybe<Array<ResolversTypes['Scenario']>>, ParentType, ContextType, RootQueryTypeScenariosArgs>,
-  intents?: Resolver<Maybe<Array<ResolversTypes['Intent']>>, ParentType, ContextType, RootQueryTypeIntentsArgs>,
-  economicResourcesFiltered?: Resolver<Maybe<Array<Maybe<ResolversTypes['EconomicResource']>>>, ParentType, ContextType, RootQueryTypeEconomicResourcesFilteredArgs>,
-  actions?: Resolver<Maybe<Array<ResolversTypes['Action']>>, ParentType, ContextType>,
-  productBatches?: Resolver<Maybe<Array<ResolversTypes['ProductBatch']>>, ParentType, ContextType, RootQueryTypeProductBatchesArgs>,
-  economicEvents?: Resolver<Maybe<Array<ResolversTypes['EconomicEvent']>>, ParentType, ContextType, RootQueryTypeEconomicEventsArgs>,
-  scenario?: Resolver<Maybe<ResolversTypes['Scenario']>, ParentType, ContextType, RootQueryTypeScenarioArgs>,
-  commitment?: Resolver<Maybe<ResolversTypes['Commitment']>, ParentType, ContextType, RootQueryTypeCommitmentArgs>,
-  person?: Resolver<Maybe<ResolversTypes['Person']>, ParentType, ContextType, RootQueryTypePersonArgs>,
-  recipeExchange?: Resolver<Maybe<ResolversTypes['RecipeExchange']>, ParentType, ContextType, RootQueryTypeRecipeExchangeArgs>,
-  economicResources?: Resolver<Maybe<Array<ResolversTypes['EconomicResource']>>, ParentType, ContextType, RootQueryTypeEconomicResourcesArgs>,
-  organizations?: Resolver<Maybe<Array<ResolversTypes['Organization']>>, ParentType, ContextType, RootQueryTypeOrganizationsArgs>,
-  like?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType, RequireFields<RootQueryTypeLikeArgs, 'likeId'>>,
-  country?: Resolver<Maybe<ResolversTypes['Country']>, ParentType, ContextType, RequireFields<RootQueryTypeCountryArgs, 'countryId'>>,
-  resourceSpecification?: Resolver<Maybe<ResolversTypes['ResourceSpecification']>, ParentType, ContextType, RootQueryTypeResourceSpecificationArgs>,
-  community?: Resolver<Maybe<ResolversTypes['Community']>, ParentType, ContextType, RequireFields<RootQueryTypeCommunityArgs, 'communityId'>>,
-  organizationsPages?: Resolver<ResolversTypes['AgentsPage'], ParentType, ContextType, RootQueryTypeOrganizationsPagesArgs>,
-  intentsPages?: Resolver<ResolversTypes['IntentsPage'], ParentType, ContextType, RootQueryTypeIntentsPagesArgs>,
-  usernameAvailable?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<RootQueryTypeUsernameAvailableArgs, 'username'>>,
-  peoplePages?: Resolver<ResolversTypes['AgentsPage'], ParentType, ContextType, RootQueryTypePeoplePagesArgs>,
-  productBatch?: Resolver<Maybe<ResolversTypes['ProductBatch']>, ParentType, ContextType, RootQueryTypeProductBatchArgs>,
-  agreement?: Resolver<Maybe<ResolversTypes['Agreement']>, ParentType, ContextType, RootQueryTypeAgreementArgs>,
-  resource?: Resolver<Maybe<ResolversTypes['Resource']>, ParentType, ContextType, RequireFields<RootQueryTypeResourceArgs, 'resourceId'>>,
-  offersPages?: Resolver<ResolversTypes['IntentsPage'], ParentType, ContextType, RootQueryTypeOffersPagesArgs>,
-  measure?: Resolver<Maybe<ResolversTypes['Measure']>, ParentType, ContextType, RootQueryTypeMeasureArgs>,
-  organization?: Resolver<Maybe<ResolversTypes['Organization']>, ParentType, ContextType, RootQueryTypeOrganizationArgs>,
-  fulfillments?: Resolver<Maybe<Array<ResolversTypes['Fulfillment']>>, ParentType, ContextType, RootQueryTypeFulfillmentsArgs>,
-  character?: Resolver<Maybe<ResolversTypes['Character']>, ParentType, ContextType, RequireFields<RootQueryTypeCharacterArgs, 'characterId'>>,
-  economicEvent?: Resolver<Maybe<ResolversTypes['EconomicEvent']>, ParentType, ContextType, RootQueryTypeEconomicEventArgs>,
-  processes?: Resolver<Maybe<Array<ResolversTypes['Process']>>, ParentType, ContextType, RootQueryTypeProcessesArgs>,
-  spatialThingsPages?: Resolver<ResolversTypes['SpatialThingsPage'], ParentType, ContextType, RootQueryTypeSpatialThingsPagesArgs>,
-  registerEmailAccesses?: Resolver<ResolversTypes['RegisterEmailAccessesPage'], ParentType, ContextType, RootQueryTypeRegisterEmailAccessesArgs>,
-  agentRelationships?: Resolver<Maybe<Array<ResolversTypes['AgentRelationship']>>, ParentType, ContextType, RootQueryTypeAgentRelationshipsArgs>,
-  process?: Resolver<Maybe<ResolversTypes['Process']>, ParentType, ContextType, RootQueryTypeProcessArgs>,
-  intentsFiltered?: Resolver<Maybe<Array<Maybe<ResolversTypes['Intent']>>>, ParentType, ContextType, RootQueryTypeIntentsFilteredArgs>,
-  scenarioDefinitions?: Resolver<Maybe<Array<ResolversTypes['ScenarioDefinition']>>, ParentType, ContextType, RootQueryTypeScenarioDefinitionsArgs>,
-  plans?: Resolver<Maybe<Array<ResolversTypes['Plan']>>, ParentType, ContextType, RootQueryTypePlansArgs>,
-  follow?: Resolver<Maybe<ResolversTypes['Follow']>, ParentType, ContextType, RequireFields<RootQueryTypeFollowArgs, 'followId'>>,
-  agentRelationshipRoles?: Resolver<Maybe<Array<ResolversTypes['AgentRelationshipRole']>>, ParentType, ContextType, RootQueryTypeAgentRelationshipRolesArgs>,
-  fulfillment?: Resolver<Maybe<ResolversTypes['Fulfillment']>, ParentType, ContextType, RootQueryTypeFulfillmentArgs>,
-  registerEmailDomainAccesses?: Resolver<ResolversTypes['RegisterEmailDomainAccessesPage'], ParentType, ContextType, RootQueryTypeRegisterEmailDomainAccessesArgs>,
-  characters?: Resolver<ResolversTypes['CharactersPage'], ParentType, ContextType, RootQueryTypeCharactersArgs>,
-  users?: Resolver<ResolversTypes['UsersPage'], ParentType, ContextType, RootQueryTypeUsersArgs>,
-  action?: Resolver<Maybe<ResolversTypes['Action']>, ParentType, ContextType, RootQueryTypeActionArgs>,
-  feature?: Resolver<Maybe<ResolversTypes['Feature']>, ParentType, ContextType, RequireFields<RootQueryTypeFeatureArgs, 'featureId'>>,
-  satisfaction?: Resolver<Maybe<ResolversTypes['Satisfaction']>, ParentType, ContextType, RootQueryTypeSatisfactionArgs>,
-  recipeFlows?: Resolver<Maybe<Array<ResolversTypes['RecipeFlow']>>, ParentType, ContextType, RootQueryTypeRecipeFlowsArgs>,
-  settlements?: Resolver<Maybe<Array<ResolversTypes['Settlement']>>, ParentType, ContextType, RootQueryTypeSettlementsArgs>,
-  measuresPages?: Resolver<ResolversTypes['MeasuresPage'], ParentType, ContextType, RootQueryTypeMeasuresPagesArgs>,
-  processSpecification?: Resolver<Maybe<ResolversTypes['ProcessSpecification']>, ParentType, ContextType, RootQueryTypeProcessSpecificationArgs>,
-  recipeResource?: Resolver<Maybe<ResolversTypes['RecipeResource']>, ParentType, ContextType, RootQueryTypeRecipeResourceArgs>,
-  taggable?: Resolver<Maybe<ResolversTypes['Taggable']>, ParentType, ContextType, RootQueryTypeTaggableArgs>,
-  thread?: Resolver<Maybe<ResolversTypes['Thread']>, ParentType, ContextType, RequireFields<RootQueryTypeThreadArgs, 'threadId'>>,
-  recipeExchanges?: Resolver<Maybe<Array<ResolversTypes['RecipeExchange']>>, ParentType, ContextType, RootQueryTypeRecipeExchangesArgs>,
-  profile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType, RequireFields<RootQueryTypeProfileArgs, 'profileId'>>,
-  agentRelationshipRole?: Resolver<Maybe<ResolversTypes['AgentRelationshipRole']>, ParentType, ContextType, RootQueryTypeAgentRelationshipRoleArgs>,
-  language?: Resolver<Maybe<ResolversTypes['Language']>, ParentType, ContextType, RequireFields<RootQueryTypeLanguageArgs, 'languageId'>>,
   units?: Resolver<Maybe<Array<ResolversTypes['Unit']>>, ParentType, ContextType, RootQueryTypeUnitsArgs>,
-  resourceSpecifications?: Resolver<Maybe<Array<ResolversTypes['ResourceSpecification']>>, ParentType, ContextType, RootQueryTypeResourceSpecificationsArgs>,
-  economicEventsFiltered?: Resolver<Maybe<Array<ResolversTypes['EconomicEvent']>>, ParentType, ContextType, RootQueryTypeEconomicEventsFilteredArgs>,
-  features?: Resolver<Maybe<ResolversTypes['FeaturesPage']>, ParentType, ContextType, RootQueryTypeFeaturesArgs>,
-  communities?: Resolver<ResolversTypes['CommunitiesPage'], ParentType, ContextType, RootQueryTypeCommunitiesArgs>,
-  satisfactions?: Resolver<Maybe<Array<ResolversTypes['Satisfaction']>>, ParentType, ContextType, RootQueryTypeSatisfactionsArgs>,
-  me?: Resolver<Maybe<ResolversTypes['Me']>, ParentType, ContextType>,
-  flag?: Resolver<Maybe<ResolversTypes['Flag']>, ParentType, ContextType, RequireFields<RootQueryTypeFlagArgs, 'flagId'>>,
-  organisation?: Resolver<Maybe<ResolversTypes['Organisation']>, ParentType, ContextType, RequireFields<RootQueryTypeOrganisationArgs, 'organisationId'>>,
-  countries?: Resolver<ResolversTypes['CountriesPages'], ParentType, ContextType, RootQueryTypeCountriesArgs>,
-  category?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RootQueryTypeCategoryArgs>,
-  intent?: Resolver<Maybe<ResolversTypes['Intent']>, ParentType, ContextType, RootQueryTypeIntentArgs>,
+  measure?: Resolver<Maybe<ResolversTypes['Measure']>, ParentType, ContextType, RootQueryTypeMeasureArgs>,
+  taggable?: Resolver<Maybe<ResolversTypes['Taggable']>, ParentType, ContextType, RootQueryTypeTaggableArgs>,
+  claim?: Resolver<Maybe<ResolversTypes['Claim']>, ParentType, ContextType, RootQueryTypeClaimArgs>,
+  recipeFlows?: Resolver<Maybe<Array<ResolversTypes['RecipeFlow']>>, ParentType, ContextType, RootQueryTypeRecipeFlowsArgs>,
+  categories?: Resolver<ResolversTypes['CategoriesPage'], ParentType, ContextType, RootQueryTypeCategoriesArgs>,
+  languages?: Resolver<ResolversTypes['LanguagesPage'], ParentType, ContextType, RootQueryTypeLanguagesArgs>,
+  profiles?: Resolver<ResolversTypes['ProfilesPage'], ParentType, ContextType, RootQueryTypeProfilesArgs>,
   needsPages?: Resolver<ResolversTypes['IntentsPage'], ParentType, ContextType, RootQueryTypeNeedsPagesArgs>,
-  collections?: Resolver<ResolversTypes['CollectionsPage'], ParentType, ContextType, RootQueryTypeCollectionsArgs>,
+  agent?: Resolver<Maybe<ResolversTypes['Agent']>, ParentType, ContextType, RootQueryTypeAgentArgs>,
+  productBatches?: Resolver<Maybe<Array<ResolversTypes['ProductBatch']>>, ParentType, ContextType, RootQueryTypeProductBatchesArgs>,
+  scenario?: Resolver<Maybe<ResolversTypes['Scenario']>, ParentType, ContextType, RootQueryTypeScenarioArgs>,
+  processesPages?: Resolver<ResolversTypes['ProcessPage'], ParentType, ContextType, RootQueryTypeProcessesPagesArgs>,
+  economicEvents?: Resolver<Maybe<Array<ResolversTypes['EconomicEvent']>>, ParentType, ContextType, RootQueryTypeEconomicEventsArgs>,
+  agentRelationshipRoles?: Resolver<Maybe<Array<ResolversTypes['AgentRelationshipRole']>>, ParentType, ContextType, RootQueryTypeAgentRelationshipRolesArgs>,
+  collection?: Resolver<Maybe<ResolversTypes['Collection']>, ParentType, ContextType, RequireFields<RootQueryTypeCollectionArgs, 'collectionId'>>,
+  intent?: Resolver<Maybe<ResolversTypes['Intent']>, ParentType, ContextType, RootQueryTypeIntentArgs>,
+  people?: Resolver<Maybe<Array<ResolversTypes['Person']>>, ParentType, ContextType, RootQueryTypePeopleArgs>,
+  economicEvent?: Resolver<Maybe<ResolversTypes['EconomicEvent']>, ParentType, ContextType, RootQueryTypeEconomicEventArgs>,
+  agreement?: Resolver<Maybe<ResolversTypes['Agreement']>, ParentType, ContextType, RootQueryTypeAgreementArgs>,
+  agentRelationship?: Resolver<Maybe<ResolversTypes['AgentRelationship']>, ParentType, ContextType, RootQueryTypeAgentRelationshipArgs>,
+  satisfaction?: Resolver<Maybe<ResolversTypes['Satisfaction']>, ParentType, ContextType, RootQueryTypeSatisfactionArgs>,
+  intentsPages?: Resolver<ResolversTypes['IntentsPage'], ParentType, ContextType, RootQueryTypeIntentsPagesArgs>,
+  proposalsFiltered?: Resolver<Maybe<Array<Maybe<ResolversTypes['Proposal']>>>, ParentType, ContextType, RootQueryTypeProposalsFilteredArgs>,
+  comment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<RootQueryTypeCommentArgs, 'commentId'>>,
+  economicResourcesPages?: Resolver<ResolversTypes['EconomicResourcePage'], ParentType, ContextType, RootQueryTypeEconomicResourcesPagesArgs>,
+  offersPages?: Resolver<ResolversTypes['IntentsPage'], ParentType, ContextType, RootQueryTypeOffersPagesArgs>,
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RootQueryTypeUserArgs>,
+  recipeResources?: Resolver<Maybe<Array<ResolversTypes['RecipeResource']>>, ParentType, ContextType, RootQueryTypeRecipeResourcesArgs>,
+  proposalsPages?: Resolver<ResolversTypes['ProposalsPage'], ParentType, ContextType, RootQueryTypeProposalsPagesArgs>,
+  resourceSpecification?: Resolver<Maybe<ResolversTypes['ResourceSpecification']>, ParentType, ContextType, RootQueryTypeResourceSpecificationArgs>,
+  spatialThingsPages?: Resolver<ResolversTypes['SpatialThingsPage'], ParentType, ContextType, RootQueryTypeSpatialThingsPagesArgs>,
+  intents?: Resolver<Maybe<Array<ResolversTypes['Intent']>>, ParentType, ContextType, RootQueryTypeIntentsArgs>,
+  person?: Resolver<Maybe<ResolversTypes['Person']>, ParentType, ContextType, RootQueryTypePersonArgs>,
+  scenarios?: Resolver<Maybe<Array<ResolversTypes['Scenario']>>, ParentType, ContextType, RootQueryTypeScenariosArgs>,
+  proposals?: Resolver<Maybe<Array<ResolversTypes['Proposal']>>, ParentType, ContextType, RootQueryTypeProposalsArgs>,
+  economicResources?: Resolver<Maybe<Array<ResolversTypes['EconomicResource']>>, ParentType, ContextType, RootQueryTypeEconomicResourcesArgs>,
+  follow?: Resolver<Maybe<ResolversTypes['Follow']>, ParentType, ContextType, RequireFields<RootQueryTypeFollowArgs, 'followId'>>,
+  intentsFiltered?: Resolver<Maybe<Array<Maybe<ResolversTypes['Intent']>>>, ParentType, ContextType, RootQueryTypeIntentsFilteredArgs>,
   taxonomyTags?: Resolver<ResolversTypes['TaxonomyTagsPage'], ParentType, ContextType, RootQueryTypeTaxonomyTagsArgs>,
+  agentRelationshipRole?: Resolver<Maybe<ResolversTypes['AgentRelationshipRole']>, ParentType, ContextType, RootQueryTypeAgentRelationshipRoleArgs>,
+  recipeExchange?: Resolver<Maybe<ResolversTypes['RecipeExchange']>, ParentType, ContextType, RootQueryTypeRecipeExchangeArgs>,
+  organizationsPages?: Resolver<ResolversTypes['AgentsPage'], ParentType, ContextType, RootQueryTypeOrganizationsPagesArgs>,
+  organisation?: Resolver<Maybe<ResolversTypes['Organisation']>, ParentType, ContextType, RequireFields<RootQueryTypeOrganisationArgs, 'organisationId'>>,
+  scenarioDefinitions?: Resolver<Maybe<Array<ResolversTypes['ScenarioDefinition']>>, ParentType, ContextType, RootQueryTypeScenarioDefinitionsArgs>,
+  users?: Resolver<ResolversTypes['UsersPage'], ParentType, ContextType, RootQueryTypeUsersArgs>,
+  fulfillments?: Resolver<Maybe<Array<ResolversTypes['Fulfillment']>>, ParentType, ContextType, RootQueryTypeFulfillmentsArgs>,
+  plan?: Resolver<Maybe<ResolversTypes['Plan']>, ParentType, ContextType, RootQueryTypePlanArgs>,
+  countries?: Resolver<ResolversTypes['CountriesPages'], ParentType, ContextType, RootQueryTypeCountriesArgs>,
+  recipeProcesses?: Resolver<Maybe<Array<ResolversTypes['RecipeProcess']>>, ParentType, ContextType, RootQueryTypeRecipeProcessesArgs>,
+  country?: Resolver<Maybe<ResolversTypes['Country']>, ParentType, ContextType, RequireFields<RootQueryTypeCountryArgs, 'countryId'>>,
+  communities?: Resolver<ResolversTypes['CommunitiesPage'], ParentType, ContextType, RootQueryTypeCommunitiesArgs>,
+  processSpecifications?: Resolver<Maybe<Array<ResolversTypes['ProcessSpecification']>>, ParentType, ContextType, RootQueryTypeProcessSpecificationsArgs>,
+  agentRelationships?: Resolver<Maybe<Array<ResolversTypes['AgentRelationship']>>, ParentType, ContextType, RootQueryTypeAgentRelationshipsArgs>,
+  resourceSpecifications?: Resolver<Maybe<Array<ResolversTypes['ResourceSpecification']>>, ParentType, ContextType, RootQueryTypeResourceSpecificationsArgs>,
+  taxonomyTag?: Resolver<Maybe<ResolversTypes['TaxonomyTag']>, ParentType, ContextType, RootQueryTypeTaxonomyTagArgs>,
+  resource?: Resolver<Maybe<ResolversTypes['Resource']>, ParentType, ContextType, RequireFields<RootQueryTypeResourceArgs, 'resourceId'>>,
+  commitment?: Resolver<Maybe<ResolversTypes['Commitment']>, ParentType, ContextType, RootQueryTypeCommitmentArgs>,
+  character?: Resolver<Maybe<ResolversTypes['Character']>, ParentType, ContextType, RequireFields<RootQueryTypeCharacterArgs, 'characterId'>>,
+  organization?: Resolver<Maybe<ResolversTypes['Organization']>, ParentType, ContextType, RootQueryTypeOrganizationArgs>,
+  spatialThing?: Resolver<Maybe<ResolversTypes['SpatialThing']>, ParentType, ContextType, RootQueryTypeSpatialThingArgs>,
+  spatialThings?: Resolver<Maybe<Array<ResolversTypes['SpatialThing']>>, ParentType, ContextType, RootQueryTypeSpatialThingsArgs>,
+  measuresPages?: Resolver<ResolversTypes['MeasuresPage'], ParentType, ContextType, RootQueryTypeMeasuresPagesArgs>,
+  agents?: Resolver<Maybe<Array<ResolversTypes['Agent']>>, ParentType, ContextType, RootQueryTypeAgentsArgs>,
+  productBatch?: Resolver<Maybe<ResolversTypes['ProductBatch']>, ParentType, ContextType, RootQueryTypeProductBatchArgs>,
+  fulfillment?: Resolver<Maybe<ResolversTypes['Fulfillment']>, ParentType, ContextType, RootQueryTypeFulfillmentArgs>,
+  processes?: Resolver<Maybe<Array<ResolversTypes['Process']>>, ParentType, ContextType, RootQueryTypeProcessesArgs>,
+  me?: Resolver<Maybe<ResolversTypes['Me']>, ParentType, ContextType>,
+  process?: Resolver<Maybe<ResolversTypes['Process']>, ParentType, ContextType, RootQueryTypeProcessArgs>,
+  processSpecification?: Resolver<Maybe<ResolversTypes['ProcessSpecification']>, ParentType, ContextType, RootQueryTypeProcessSpecificationArgs>,
+  unitsPages?: Resolver<ResolversTypes['UnitsPage'], ParentType, ContextType, RootQueryTypeUnitsPagesArgs>,
+  settlements?: Resolver<Maybe<Array<ResolversTypes['Settlement']>>, ParentType, ContextType, RootQueryTypeSettlementsArgs>,
+  measures?: Resolver<Maybe<Array<ResolversTypes['Measure']>>, ParentType, ContextType, RootQueryTypeMeasuresArgs>,
+  registerEmailDomainAccesses?: Resolver<ResolversTypes['RegisterEmailDomainAccessesPage'], ParentType, ContextType, RootQueryTypeRegisterEmailDomainAccessesArgs>,
+  proposal?: Resolver<Maybe<ResolversTypes['Proposal']>, ParentType, ContextType, RootQueryTypeProposalArgs>,
+  economicResourcesFiltered?: Resolver<Maybe<Array<Maybe<ResolversTypes['EconomicResource']>>>, ParentType, ContextType, RootQueryTypeEconomicResourcesFilteredArgs>,
+  myAgent?: Resolver<Maybe<ResolversTypes['Agent']>, ParentType, ContextType>,
+  collections?: Resolver<ResolversTypes['CollectionsPage'], ParentType, ContextType, RootQueryTypeCollectionsArgs>,
+  feature?: Resolver<Maybe<ResolversTypes['Feature']>, ParentType, ContextType, RequireFields<RootQueryTypeFeatureArgs, 'featureId'>>,
+  claims?: Resolver<Maybe<Array<ResolversTypes['Claim']>>, ParentType, ContextType, RootQueryTypeClaimsArgs>,
+  economicEventsPages?: Resolver<ResolversTypes['EconomicEventPage'], ParentType, ContextType, RootQueryTypeEconomicEventsPagesArgs>,
+  action?: Resolver<Maybe<ResolversTypes['Action']>, ParentType, ContextType, RootQueryTypeActionArgs>,
+  like?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType, RequireFields<RootQueryTypeLikeArgs, 'likeId'>>,
+  organizations?: Resolver<Maybe<Array<ResolversTypes['Organization']>>, ParentType, ContextType, RootQueryTypeOrganizationsArgs>,
+  registerEmailAccesses?: Resolver<ResolversTypes['RegisterEmailAccessesPage'], ParentType, ContextType, RootQueryTypeRegisterEmailAccessesArgs>,
+  commitments?: Resolver<Maybe<Array<ResolversTypes['Commitment']>>, ParentType, ContextType, RootQueryTypeCommitmentsArgs>,
+  features?: Resolver<Maybe<ResolversTypes['FeaturesPage']>, ParentType, ContextType, RootQueryTypeFeaturesArgs>,
+  thread?: Resolver<Maybe<ResolversTypes['Thread']>, ParentType, ContextType, RequireFields<RootQueryTypeThreadArgs, 'threadId'>>,
+  actions?: Resolver<Maybe<Array<ResolversTypes['Action']>>, ParentType, ContextType>,
+  profile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType, RequireFields<RootQueryTypeProfileArgs, 'profileId'>>,
+  scenarioDefinition?: Resolver<Maybe<ResolversTypes['ScenarioDefinition']>, ParentType, ContextType, RootQueryTypeScenarioDefinitionArgs>,
+  usernameAvailable?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<RootQueryTypeUsernameAvailableArgs, 'username'>>,
+  satisfactions?: Resolver<Maybe<Array<ResolversTypes['Satisfaction']>>, ParentType, ContextType, RootQueryTypeSatisfactionsArgs>,
+  recipeResource?: Resolver<Maybe<ResolversTypes['RecipeResource']>, ParentType, ContextType, RootQueryTypeRecipeResourceArgs>,
+  plans?: Resolver<Maybe<Array<ResolversTypes['Plan']>>, ParentType, ContextType, RootQueryTypePlansArgs>,
+  language?: Resolver<Maybe<ResolversTypes['Language']>, ParentType, ContextType, RequireFields<RootQueryTypeLanguageArgs, 'languageId'>>,
+  community?: Resolver<Maybe<ResolversTypes['Community']>, ParentType, ContextType, RequireFields<RootQueryTypeCommunityArgs, 'communityId'>>,
+  economicResource?: Resolver<Maybe<ResolversTypes['EconomicResource']>, ParentType, ContextType, RootQueryTypeEconomicResourceArgs>,
+  organisations?: Resolver<ResolversTypes['OrganisationsPage'], ParentType, ContextType, RootQueryTypeOrganisationsArgs>,
+  flag?: Resolver<Maybe<ResolversTypes['Flag']>, ParentType, ContextType, RequireFields<RootQueryTypeFlagArgs, 'flagId'>>,
+  category?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RootQueryTypeCategoryArgs>,
+  peoplePages?: Resolver<ResolversTypes['AgentsPage'], ParentType, ContextType, RootQueryTypePeoplePagesArgs>,
+  recipeProcess?: Resolver<Maybe<ResolversTypes['RecipeProcess']>, ParentType, ContextType, RootQueryTypeRecipeProcessArgs>,
+  settlement?: Resolver<Maybe<ResolversTypes['Settlement']>, ParentType, ContextType, RootQueryTypeSettlementArgs>,
+  characters?: Resolver<ResolversTypes['CharactersPage'], ParentType, ContextType, RootQueryTypeCharactersArgs>,
+  economicEventsFiltered?: Resolver<Maybe<Array<ResolversTypes['EconomicEvent']>>, ParentType, ContextType, RootQueryTypeEconomicEventsFilteredArgs>,
   flags?: Resolver<Maybe<ResolversTypes['FlagsPage']>, ParentType, ContextType, RootQueryTypeFlagsArgs>,
   unit?: Resolver<Maybe<ResolversTypes['Unit']>, ParentType, ContextType, RootQueryTypeUnitArgs>,
-  proposal?: Resolver<Maybe<ResolversTypes['Proposal']>, ParentType, ContextType, RootQueryTypeProposalArgs>,
+  recipeExchanges?: Resolver<Maybe<Array<ResolversTypes['RecipeExchange']>>, ParentType, ContextType, RootQueryTypeRecipeExchangesArgs>,
   instance?: Resolver<Maybe<ResolversTypes['Instance']>, ParentType, ContextType>,
+  recipeFlow?: Resolver<Maybe<ResolversTypes['RecipeFlow']>, ParentType, ContextType, RootQueryTypeRecipeFlowArgs>,
 };
 
 export type SatisfactionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Satisfaction'] = ResolversParentTypes['Satisfaction']> = {
@@ -8067,40 +8067,40 @@ export interface UriScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes[
 }
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  canonicalUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  myFlag?: Resolver<Maybe<ResolversTypes['Flag']>, ParentType, ContextType>,
-  collectionFollows?: Resolver<Maybe<ResolversTypes['FollowsPage']>, ParentType, ContextType, UserCollectionFollowsArgs>,
-  myFollow?: Resolver<Maybe<ResolversTypes['Follow']>, ParentType, ContextType>,
-  extraInfo?: Resolver<Maybe<ResolversTypes['Json']>, ParentType, ContextType>,
-  geolocation?: Resolver<Maybe<ResolversTypes['SpatialThing']>, ParentType, ContextType>,
-  preferredUsername?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   location?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  inbox?: Resolver<Maybe<ResolversTypes['ActivitiesPage']>, ParentType, ContextType, UserInboxArgs>,
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
-  userFollows?: Resolver<Maybe<ResolversTypes['FollowsPage']>, ParentType, ContextType, UserUserFollowsArgs>,
-  website?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  isPublic?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
-  isDisabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
-  isLocal?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  preferredUsername?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   displayUsername?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  followerCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
-  follows?: Resolver<Maybe<ResolversTypes['FollowsPage']>, ParentType, ContextType, UserFollowsArgs>,
-  updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  followCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
-  icon?: Resolver<Maybe<ResolversTypes['Content']>, ParentType, ContextType>,
-  lastActivity?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  likerCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
-  summary?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  image?: Resolver<Maybe<ResolversTypes['Content']>, ParentType, ContextType>,
-  likes?: Resolver<Maybe<ResolversTypes['LikesPage']>, ParentType, ContextType, UserLikesArgs>,
-  outbox?: Resolver<Maybe<ResolversTypes['ActivitiesPage']>, ParentType, ContextType, UserOutboxArgs>,
-  communityFollows?: Resolver<Maybe<ResolversTypes['FollowsPage']>, ParentType, ContextType, UserCommunityFollowsArgs>,
   likeCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
-  myLike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType>,
-  likers?: Resolver<Maybe<ResolversTypes['LikesPage']>, ParentType, ContextType, UserLikersArgs>,
-  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  collectionFollows?: Resolver<Maybe<ResolversTypes['FollowsPage']>, ParentType, ContextType, UserCollectionFollowsArgs>,
+  extraInfo?: Resolver<Maybe<ResolversTypes['Json']>, ParentType, ContextType>,
+  isLocal?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  likes?: Resolver<Maybe<ResolversTypes['LikesPage']>, ParentType, ContextType, UserLikesArgs>,
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  website?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  inbox?: Resolver<Maybe<ResolversTypes['ActivitiesPage']>, ParentType, ContextType, UserInboxArgs>,
+  myFollow?: Resolver<Maybe<ResolversTypes['Follow']>, ParentType, ContextType>,
+  updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  likerCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
+  lastActivity?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  followCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
+  userFollows?: Resolver<Maybe<ResolversTypes['FollowsPage']>, ParentType, ContextType, UserUserFollowsArgs>,
+  isPublic?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
   followers?: Resolver<Maybe<ResolversTypes['FollowsPage']>, ParentType, ContextType, UserFollowersArgs>,
+  geolocation?: Resolver<Maybe<ResolversTypes['SpatialThing']>, ParentType, ContextType>,
+  likers?: Resolver<Maybe<ResolversTypes['LikesPage']>, ParentType, ContextType, UserLikersArgs>,
+  isDisabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  myFlag?: Resolver<Maybe<ResolversTypes['Flag']>, ParentType, ContextType>,
+  image?: Resolver<Maybe<ResolversTypes['Content']>, ParentType, ContextType>,
+  icon?: Resolver<Maybe<ResolversTypes['Content']>, ParentType, ContextType>,
   comments?: Resolver<Maybe<ResolversTypes['CommentsPage']>, ParentType, ContextType, UserCommentsArgs>,
+  communityFollows?: Resolver<Maybe<ResolversTypes['FollowsPage']>, ParentType, ContextType, UserCommunityFollowsArgs>,
+  outbox?: Resolver<Maybe<ResolversTypes['ActivitiesPage']>, ParentType, ContextType, UserOutboxArgs>,
+  follows?: Resolver<Maybe<ResolversTypes['FollowsPage']>, ParentType, ContextType, UserFollowsArgs>,
+  summary?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  followerCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
+  canonicalUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  myLike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType>,
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
 };
 

@@ -2,11 +2,12 @@ import { Trans } from '@lingui/macro';
 import { i18nMark } from '@lingui/react';
 import React, { FC } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { Heading } from 'rebass/styled-components';
+import { Box, Heading } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
 import { FormikHook } from 'ui/@types/types';
 import { CustomSelect as Select } from 'ui/elements/CustomSelect';
 import { setSelectOption } from '../../elements/CustomSelect/select';
+import DropzoneArea from '../DropzoneModal';
 import { IntentActions } from '../EconomicEventManager';
 import { FormGroup, FormLabel } from '../EconomicEventManager/styles';
 import Input, { CustomAlert } from '../../elements/Input';
@@ -22,6 +23,7 @@ export type CreateIntentFormValues = {
   receiver: IntentActions;
   hasUnit: IntentActions;
   hasNumericalValue: number;
+  image: string | File | undefined;
 };
 
 export type TCreateResourcePanel = {
@@ -52,7 +54,10 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
   const [providerArr, setProviderArr] = React.useState<any>([]);
   const [receiverArr, setReceiverArr] = React.useState<any>([]);
   const [unitLst, setUnitLst] = React.useState<any>([]);
-
+  const onIconFileSelected = React.useCallback(
+    (file: File) => formik.setValues({ ...formik.values, image: file }),
+    [formik]
+  );
   React.useEffect(() => {
     if (unitPages?.length) {
       const unit = unitPages.map((el: { id: string; label: string; symbol: string }) => ({
@@ -77,7 +82,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
       })
     );
   }, [unitPages]);
-
+  const initialIconUrl = 'string' === typeof formik.values.image ? formik.values.image : '';
   return (
     <Container>
       <form onSubmit={formik.handleSubmit}>
@@ -90,43 +95,58 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
         <Hero>
           <HeroInfo>
             <CollectionContainerForm>
-              <FormGroup>
-                <FormLabel>{i18nMark('Resource')}</FormLabel>
-                <Input
-                  type="text"
-                  id="name"
-                  name="name"
-                  disabled={formik.isSubmitting}
-                  onChange={formik.handleChange}
-                  placeholder={i18nMark('Name of your resource')}
-                  value={formik.values.name}
-                />
-              </FormGroup>
-              <CounterChars>{60 - formik.values.name.length}</CounterChars>
-              {formik.errors.name && (
-                <CustomAlert variant="negative">{formik.errors.name}</CustomAlert>
-              )}
-            </CollectionContainerForm>
-            <CollectionContainerForm>
-              <FormGroup>
-                <FormLabel>Actions</FormLabel>
-                <Select
-                  onSelect={(name, option) => {
-                    setAction(option.id);
-                    formik.setValues({ ...formik.values, action: option });
-                  }}
-                  options={actionList}
-                  variant="primary"
-                  id="actions"
-                  name="actions"
-                  placeholder={i18nMark('CustomSelect action')}
-                  // @ts-ignore
-                  value={formik.values.action}
-                />
-              </FormGroup>
-              {formik.errors.action && (
-                <CustomAlert variant="negative">{formik.errors.action && 'Required'}</CustomAlert>
-              )}
+              <div className="d-flex">
+                <Box sx={{ width: '140', height: '140' }} className="item_photo">
+                  <DropzoneArea
+                    initialUrl={initialIconUrl}
+                    onFileSelect={onIconFileSelected}
+                    filePattern="image/*"
+                  />
+                </Box>
+                <div className="item_info">
+                  <Box>
+                    <FormGroup>
+                      <FormLabel>{i18nMark('Resource')}</FormLabel>
+                      <Input
+                        type="text"
+                        id="name"
+                        name="name"
+                        disabled={formik.isSubmitting}
+                        onChange={formik.handleChange}
+                        placeholder={i18nMark('Name of your resource')}
+                        value={formik.values.name}
+                      />
+                      <CounterChars>{60 - formik.values.name.length}</CounterChars>
+                    </FormGroup>
+                    {formik.errors.name && (
+                      <CustomAlert variant="negative">{formik.errors.name}</CustomAlert>
+                    )}
+                  </Box>
+                  <br />
+                  <Box>
+                    <FormGroup>
+                      <FormLabel>Actions</FormLabel>
+                      <Select
+                        onSelect={(name, option) => {
+                          setAction(option.id);
+                          formik.setValues({ ...formik.values, action: option });
+                        }}
+                        options={actionList}
+                        variant="primary"
+                        id="actions"
+                        name="actions"
+                        placeholder={i18nMark('CustomSelect action')}
+                        value={formik.values.action}
+                      />
+                    </FormGroup>
+                    {formik.errors.action && (
+                      <CustomAlert variant="negative">
+                        {formik.errors.action && 'Required'}
+                      </CustomAlert>
+                    )}
+                  </Box>
+                </div>
+              </div>
             </CollectionContainerForm>
             <CollectionContainerForm>
               <div className="d-flex">

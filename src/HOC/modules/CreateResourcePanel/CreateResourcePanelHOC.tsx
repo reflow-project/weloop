@@ -52,6 +52,7 @@ export const CreateResourcePanelHOC: FC<any> = ({ done, ...props }) => {
     initialValues: {
       name: '',
       note: '',
+      image: undefined,
       action: {
         id: '',
         label: ''
@@ -77,6 +78,7 @@ export const CreateResourcePanelHOC: FC<any> = ({ done, ...props }) => {
     validateOnBlur: false,
     validationSchema: SignupSchema,
     enableReinitialize: true,
+
     onSubmit: (values: any) => {
       //TODO: do validation and return proper data
       return create({
@@ -86,7 +88,8 @@ export const CreateResourcePanelHOC: FC<any> = ({ done, ...props }) => {
         provider: values.provider.id,
         receiver: values.receiver.id,
         hasUnit: values.hasUnit.id,
-        hasNumericalValue: values.hasNumericalValue
+        hasNumericalValue: values.hasNumericalValue,
+        image: values.image
       })
         .then((response: any) => {
           const redirect = `/inventory/user/${me?.user.id} `;

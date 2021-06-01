@@ -2,6 +2,7 @@ import styled from '../../themes/styled';
 
 export const FormGroup = styled('div')<any>`
   display: block;
+  position: relative;
 `;
 export const FormLabel = styled('label')<any>`
   display: block;

@@ -3,5 +3,6 @@ query economicResourcesFiltered($agent: [ID]) {
     id
     name
     note
+    image
   }
 }

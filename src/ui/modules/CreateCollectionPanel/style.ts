@@ -5,6 +5,8 @@ import styled from '../../themes/styled';
 import { ContainerForm } from '../Modal';
 
 export const CollectionContainerForm = styled(ContainerForm)`
+  position: relative;
+
   input {
     background: #fbfbfb;
     border: 0;
@@ -22,9 +24,24 @@ export const CollectionContainerForm = styled(ContainerForm)`
   .d-flex {
     display: flex;
     justify-content: space-between;
+    align-items: stretch;
 
     .item_col-6 {
-      width: calc(50% - 5px);
+      flex-basis: calc(50% - 5px);
+    }
+
+    .item_photo {
+      margin-bottom: 10px;
+      flex-basis: 140px;
+      height: 140px;
+
+      .bopsip {
+        height: 140px !important;
+      }
+    }
+    .item_info {
+      margin-bottom: 10px;
+      flex-basis: calc(100% - 160px);
     }
   }
 `;
