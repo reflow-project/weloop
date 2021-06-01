@@ -108,9 +108,7 @@ export const CreateResourcePanelHOC: FC<any> = ({ done, ...props }) => {
         .catch((error: any) => console.log(error));
     }
   });
-  React.useEffect(() => {
-    console.log(formik.values.image);
-  }, [formik]);
+
   const CreateResourcePanelProps: TCreateResourcePanel = {
     ...props,
     formik,
