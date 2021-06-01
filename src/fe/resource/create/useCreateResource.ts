@@ -10,7 +10,7 @@ export interface CreateResource {
   receiver: string;
   hasUnit: string;
   hasNumericalValue: number;
-  image: any;
+  image: string | File | undefined;
 }
 
 export const useCreateResource = () => {

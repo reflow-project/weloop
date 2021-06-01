@@ -136,7 +136,6 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                         id="actions"
                         name="actions"
                         placeholder={i18nMark('CustomSelect action')}
-                        // @ts-ignore
                         value={formik.values.action}
                       />
                     </FormGroup>
