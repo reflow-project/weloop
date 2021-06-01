@@ -117,7 +117,7 @@ export const ResourceItem: React.FC<Props> = ({ resource }) => {
                 </div>
                 <ActionsWrapper>
                   <Button mr={2} onClick={() => {}} variant="button">
-                    <Trans>Manage resource</Trans>
+                    <Trans>Edit</Trans>
                   </Button>
                 </ActionsWrapper>
               </InfoWrapper>
