@@ -56,9 +56,9 @@ export const Community: React.FC<Props> = ({
   // isJoined,
   Threads,
   loadMoreActivities,
-  loadMoreCollections,
-  loadMoreThreads,
-  createCollection
+  // loadMoreCollections,
+  loadMoreThreads
+  // createCollection
 }) => {
   return (
     <MainContainer>
