@@ -11,7 +11,8 @@ export type CreateEconomicEventAndNewResourceMutationVariables = {
   receiver: Types.Scalars['ID'],
   hasUnit: Types.Scalars['ID'],
   hasNumericalValue: Types.Scalars['Float'],
-  name?: Types.Maybe<Types.Scalars['String']>
+  name?: Types.Maybe<Types.Scalars['String']>,
+  image?: Types.Maybe<Types.Scalars['URI']>
 };
 
 
@@ -133,6 +134,7 @@ export type CreateEconomicEventAndNewResourceMutationFn = ApolloReactCommon.Muta
  *      hasUnit: // value for 'hasUnit'
  *      hasNumericalValue: // value for 'hasNumericalValue'
  *      name: // value for 'name'
+ *      image: // value for 'image'
  *   },
  * });
  */
@@ -153,7 +155,7 @@ export interface CreateEconomicEventAndNewResourceMutationOperation {
 export const CreateEconomicEventAndNewResourceMutationName:CreateEconomicEventAndNewResourceMutationOperation['operationName'] = 'createEconomicEventAndNewResource'
 
 export const CreateEconomicEventAndNewResourceMutationRefetch = (
-  variables:CreateEconomicEventAndNewResourceMutationVariables,
+  variables:CreateEconomicEventAndNewResourceMutationVariables, 
   context?:any
 )=>({
   query:CreateEconomicEventAndNewResourceDocument,
