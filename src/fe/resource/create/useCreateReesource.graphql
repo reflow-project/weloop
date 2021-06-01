@@ -8,7 +8,7 @@ mutation createEconomicEventAndNewResource(
   $name: String,
   $image: URI,
 ) {
-  createEconomicEvent(  event: {
+  createEconomicEvent( event: {
     note: $note,
     action: $action
     provider: $provider,

@@ -52,7 +52,7 @@ export const CreateResourcePanelHOC: FC<any> = ({ done, ...props }) => {
     initialValues: {
       name: '',
       note: '',
-      image: '',
+      image: undefined,
       action: {
         id: '',
         label: ''
@@ -88,8 +88,8 @@ export const CreateResourcePanelHOC: FC<any> = ({ done, ...props }) => {
         provider: values.provider.id,
         receiver: values.receiver.id,
         hasUnit: values.hasUnit.id,
-        hasNumericalValue: values.hasNumericalValue
-        // image: values.image,
+        hasNumericalValue: values.hasNumericalValue,
+        image: values.image
       })
         .then((response: any) => {
           const redirect = `/inventory/user/${me?.user.id} `;
@@ -108,7 +108,9 @@ export const CreateResourcePanelHOC: FC<any> = ({ done, ...props }) => {
         .catch((error: any) => console.log(error));
     }
   });
-
+  React.useEffect(() => {
+    console.log(formik.values.image);
+  }, [formik]);
   const CreateResourcePanelProps: TCreateResourcePanel = {
     ...props,
     formik,
