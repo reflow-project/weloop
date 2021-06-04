@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useCallOrNotifyMustLogin } from '../../../HOC/lib/notifyMustLogin';
 import { EconomicResourceQueryRefetch } from '../../../HOC/pages/resource/EconomicResource.generated';
-import { useCreateEconomicEventAndExistResourceMutation } from './useCreateReesource.generated';
+import { useCreateEconomicEventAndExistResourceMutation } from './useCreateResource.generated';
 
 export interface CreateResource {
   id: string;

@@ -5,25 +5,40 @@ import * as React from 'react';
 import { Box, Text } from 'rebass/styled-components';
 import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
 import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
-import Button from '../../elements/Button';
+import Button from 'ui/elements/Button';
 import styled from '../../themes/styled';
 const MapIcon = require('react-feather/dist/icons/map').default;
 const BoxIcon = require('react-feather/dist/icons/box').default;
 const PenIcon = require('react-feather/dist/icons/edit').default;
+const EditIcon = require('react-feather/dist/icons/edit-3').default;
 const UserIcon = require('react-feather/dist/icons/user').default;
 export interface Props {
   openEditModal: () => void;
+  openUpdateResourceModal: () => void;
   resource?: EconomicResource;
   error?: ApolloError | undefined;
   loading: boolean;
 }
 
-export const ResourceItem: React.FC<Props> = ({ resource, openEditModal }) => {
+export const ResourceItem: React.FC<Props> = ({
+  resource,
+  openEditModal,
+  openUpdateResourceModal
+}) => {
   return (
     <MainContainer>
       <HomeBox>
         <WrapperCont>
           <Wrapper>
+            <ActionsWrapper>
+              <Button mr={2} onClick={openEditModal} variant="button">
+                <Trans>Perform event</Trans>
+              </Button>
+
+              <Button ml={2} onClick={openUpdateResourceModal} variant="error">
+                <EditIcon size="20" /> <Trans>Edit</Trans>
+              </Button>
+            </ActionsWrapper>
             <InventoryWrapper>
               <ImageWrapper>
                 {resource?.image && <img src={resource.image} alt={resource.name} />}
@@ -36,11 +51,15 @@ export const ResourceItem: React.FC<Props> = ({ resource, openEditModal }) => {
                   </Title>
                 </Box>
                 <Box mr={1}>
-                  <Icon>
-                    <PenIcon size="16" />
-                  </Icon>
-                  <Trans>Note:</Trans>{' '}
-                  <Trans>{resource?.note ? resource.note : 'Not provided'}</Trans>
+                  <Text variant="text">
+                    <Icon>
+                      <PenIcon size="16" />
+                    </Icon>
+                    <b>
+                      <Trans>Note:</Trans>{' '}
+                    </b>{' '}
+                    <Trans>{resource?.note ? resource.note : 'Not provided'}</Trans>
+                  </Text>
                 </Box>
                 <Box mr={1}>
                   <Text variant="text">
@@ -128,11 +147,6 @@ export const ResourceItem: React.FC<Props> = ({ resource, openEditModal }) => {
                     </TrackWrapper>
                   );
                 })}
-                <ActionsWrapper>
-                  <Button mr={2} onClick={openEditModal} variant="button">
-                    <Trans>Perform event</Trans>
-                  </Button>
-                </ActionsWrapper>
               </InfoWrapper>
             </InventoryWrapper>
           </Wrapper>
@@ -189,6 +203,10 @@ export const ActionsWrapper = styled('div')`
   justify-content: flex-end;
   padding: 15px 0 0;
   
+  &:not(:last-child) {
+    margin-bottom: 10px;
+    }
+  
   button {
     margin-right: 0;
   }
@@ -212,6 +230,7 @@ export const ImageWrapper = styled('div')`
     width: 100%;
     height: 140px;
     object-fit: cover;
+    border-radius: 4px;
   }
 `;
 

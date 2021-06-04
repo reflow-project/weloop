@@ -181,7 +181,7 @@ export type CreateEconomicEventAndNewResourceMutationResult = ApolloReactCommon.
 export type CreateEconomicEventAndNewResourceMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateEconomicEventAndNewResourceMutation, CreateEconomicEventAndNewResourceMutationVariables>;
 export const CreateEconomicEventAndExistResourceDocument = gql`
     mutation createEconomicEventAndExistResource($id: ID!, $note: String, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!, $atLocation: ID, $name: String, $eventNote: String, $image: URI) {
-  createEconomicEvent(event: {resourceInventoriedAs: $id, note: $note, action: $action, provider: $provider, receiver: $receiver, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}, newInventoriedResource: {name: $name, note: $eventNote, image: $image, currentLocation: $atLocation}) {
+  createEconomicEvent(event: {resourceInventoriedAs: $id, note: $eventNote, action: $action, provider: $provider, receiver: $receiver, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}, newInventoriedResource: {name: $name, note: $note, image: $image, currentLocation: $atLocation}) {
     economicEvent {
       id
       action {

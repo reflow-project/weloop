@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useCallOrNotifyMustLogin } from '../../../HOC/lib/notifyMustLogin';
-import { useCreateEconomicEventAndNewResourceMutation } from './useCreateReesource.generated';
+import { useCreateEconomicEventAndNewResourceMutation } from './useCreateResource.generated';
 
 export interface CreateResource {
   name: string;
