@@ -149,7 +149,6 @@ export const EconomicEventManager: React.FC<any> = ({
                   id="provider"
                   name="provider"
                   onSelect={actionHandler}
-                  // onInputChange={selectSearchHandler}
                 />
               </FormGroup>
               <FormGroup>
@@ -162,7 +161,6 @@ export const EconomicEventManager: React.FC<any> = ({
                   id="receiver"
                   name="receiver"
                   onSelect={actionHandler}
-                  // onInputChange={selectSearchHandler}
                 />
               </FormGroup>
             </div>
@@ -190,7 +188,6 @@ export const EconomicEventManager: React.FC<any> = ({
                   id="hasUnit"
                   name="hasUnit"
                   onSelect={actionHandler}
-                  // onInputChange={selectSearchHandler}
                 />
               </FormGroup>
               <FormGroup>

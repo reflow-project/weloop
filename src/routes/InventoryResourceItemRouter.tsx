@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { RouteComponentProps, RouteProps } from 'react-router-dom';
-import { EconomicResource } from 'HOC/pages/resource/EconomicResource';
+import { EconomicResourceHOK } from 'HOC/pages/resource/EconomicResourceHOK';
 import { WithSidebarTemplate } from '../HOC/templates/WithSidebar/WithSidebar';
 
 interface InventoryResourceItemRouteProps {
@@ -18,7 +18,7 @@ const InventoryResourceItemRoute: FC<RouteComponentProps<InventoryResourceItemRo
 
   return (
     <WithSidebarTemplate>
-      <EconomicResource {...props} />
+      <EconomicResourceHOK {...props} />
     </WithSidebarTemplate>
   );
 };

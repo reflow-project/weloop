@@ -27,7 +27,10 @@ export type EconomicResourceQuery = (
           { __typename: 'Unit' }
           & Pick<Types.Unit, 'id' | 'label'>
         ) }
-      )>, provider: (
+      )>, action: (
+        { __typename: 'Action' }
+        & Pick<Types.Action, 'id' | 'label'>
+      ), provider: (
         { __typename: 'Organization' }
         & Pick<Types.Organization, 'id' | 'name'>
       ) | (
@@ -75,6 +78,10 @@ export const EconomicResourceDocument = gql`
           label
         }
         hasNumericalValue
+      }
+      action {
+        id
+        label
       }
       provider {
         id

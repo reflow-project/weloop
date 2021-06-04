@@ -56,6 +56,10 @@ export interface EconomicResource {
         label: string;
       };
     };
+    action?: {
+      id: string;
+      label: string;
+    };
     provider: {
       id: string;
       name: string;

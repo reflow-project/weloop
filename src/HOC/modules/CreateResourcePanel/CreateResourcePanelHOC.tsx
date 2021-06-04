@@ -7,7 +7,12 @@ import { useHistory } from 'react-router-dom';
 import { TestUrlOrFile } from 'HOC/lib/formik-validations';
 import { useCreateResource } from '../../../fe/resource/create/useCreateResource';
 import { useMe } from '../../../fe/session/useMe';
-import { CreateResourcePanel, TCreateResourcePanel } from '../../../ui/modules/CreateResourcePanel';
+import {
+  CreateResourcePanel,
+  TCreateResourcePanel,
+  CreateIntentFormValues
+} from '../../../ui/modules/CreateResourcePanel';
+import { EconomicResource } from '../../pages/inventory/InventoryPage';
 import { EconomicEventManagerHOC } from '../EconomicEventManager/EconomicEventManagerHOC';
 
 export const validationSchema: Yup.ObjectSchema<BasicCreateCollectionFormValues> = Yup.object<
@@ -21,7 +26,12 @@ export const validationSchema: Yup.ObjectSchema<BasicCreateCollectionFormValues>
   icon: Yup.mixed<string | File>().test(...TestUrlOrFile)
 });
 
-export const CreateResourcePanelHOC: FC<any> = ({ done, ...props }) => {
+export interface Props {
+  done: () => void;
+  resource?: EconomicResource;
+}
+
+export const CreateResourcePanelHOC: FC<Props> = ({ done, resource, ...props }) => {
   const { me } = useMe();
   const history = useHistory();
   const { create } = useCreateResource();
@@ -79,7 +89,7 @@ export const CreateResourcePanelHOC: FC<any> = ({ done, ...props }) => {
     validationSchema: SignupSchema,
     enableReinitialize: true,
 
-    onSubmit: (values: any) => {
+    onSubmit: (values: CreateIntentFormValues) => {
       //TODO: do validation and return proper data
       return create({
         name: values.name,
@@ -111,6 +121,7 @@ export const CreateResourcePanelHOC: FC<any> = ({ done, ...props }) => {
 
   const CreateResourcePanelProps: TCreateResourcePanel = {
     ...props,
+    title: 'Create a new Resource',
     formik,
     done
   };
