@@ -21,7 +21,6 @@ const WrapperSelect = styled(Select)`
     font-size: 14px;
     color: #666666;
     letter-spacing: 1px;
-    text-transform: uppercase;
   }
   .select__control > div {
     height: 36px;
