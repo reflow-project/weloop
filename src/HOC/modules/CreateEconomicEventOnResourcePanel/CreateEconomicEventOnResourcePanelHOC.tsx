@@ -145,7 +145,7 @@ export const CreateEconomicEventOnResourcePanelHOC: FC<Props> = ({ done, resourc
         image: values.image
       })
         .then((response: any) => {
-          !response.errors &&
+          if (!response.errors) {
             toast.success(`Event on resource ${resource.name} created`, {
               position: 'top-right',
               transition: Slide,
@@ -154,18 +154,12 @@ export const CreateEconomicEventOnResourcePanelHOC: FC<Props> = ({ done, resourc
               closeOnClick: true,
               pauseOnHover: true
             });
-          done();
+            done();
+          } else {
+            console.log(response.errors[0].message);
+          }
         })
-        .catch((error: any) => {
-          toast.error(error.message, {
-            position: 'top-right',
-            transition: Slide,
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true
-          });
-        });
+        .catch((error: any) => console.log(error));
     }
   });
 
