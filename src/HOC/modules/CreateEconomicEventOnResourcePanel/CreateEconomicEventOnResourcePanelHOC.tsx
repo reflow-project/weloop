@@ -10,7 +10,6 @@ import {
   CreateEventOnResourceFormValues
 } from '../../../ui/modules/CreateEventOnResourcePanel';
 import { EconomicResource } from '../../pages/inventory/InventoryPage';
-import * as GQL from '../EconomicEventManager/EconomicEventManager.generated';
 import { EconomicEventManagerHOC } from '../EconomicEventManager/EconomicEventManagerHOC';
 
 export interface BasicCreateEventFormValues {
@@ -43,6 +42,7 @@ export const CreateEconomicEventOnResourcePanelHOC: FC<Props> = ({ done, resourc
       .max(60, 'Too Long!')
       .required('Required'),
     note: Yup.string().max(500, 'Too Long!'),
+    eventNote: Yup.string().max(500, 'Too Long!'),
     action: Yup.object().shape({
       id: Yup.string().required('Required')
     }),
@@ -59,8 +59,6 @@ export const CreateEconomicEventOnResourcePanelHOC: FC<Props> = ({ done, resourc
       .required('Required')
       .notOneOf([0, '0', null, undefined], 'Not null')
   });
-  const spatialThingsQ = GQL.useSpatialThingsPagesQuery();
-  const spatialThings = spatialThingsQ.data?.spatialThingsPages;
 
   const formik = useFormik<any>({
     initialValues: React.useMemo(() => {
@@ -133,12 +131,11 @@ export const CreateEconomicEventOnResourcePanelHOC: FC<Props> = ({ done, resourc
     enableReinitialize: true,
 
     onSubmit: (values: CreateEventOnResourceFormValues) => {
-      //TODO: do validation and return proper data
       return create({
         id: resource.id,
         name: values.name,
         atLocation: values.atLocation.id,
-        eventNote: values.note || '',
+        eventNote: values.eventNote || '',
         action: values.action.id,
         note: values.note,
         provider: values.provider.id,
@@ -159,13 +156,21 @@ export const CreateEconomicEventOnResourcePanelHOC: FC<Props> = ({ done, resourc
             });
           done();
         })
-        .catch((error: any) => console.log(error));
+        .catch((error: any) => {
+          toast.error(error.message, {
+            position: 'top-right',
+            transition: Slide,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true
+          });
+        });
     }
   });
 
   const CreateResourcePanelProps: TCreateResourcePanel = {
     ...props,
-    spatialThings: spatialThings?.edges,
     title: `Create a new event on resource ${resource.name}`,
     formik,
     done

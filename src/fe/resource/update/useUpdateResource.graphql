@@ -1,0 +1,17 @@
+mutation updateEconomicResource (
+  $id: ID!,
+  $note: String,
+  $image: URI,
+) {
+  updateEconomicResource (
+    resource: {
+      id: $id,
+      note: $note,
+      image: $image,
+    }
+  ) {
+    economicResource {
+      id
+    }
+  }
+}

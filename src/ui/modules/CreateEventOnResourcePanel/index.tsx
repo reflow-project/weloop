@@ -2,18 +2,17 @@ import { Trans } from '@lingui/macro';
 import { i18nMark } from '@lingui/react';
 import React, { FC } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { Box, Heading } from 'rebass/styled-components';
+import { Box, Heading, Text } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
 import { FormikHook } from 'ui/@types/types';
 import { CustomSelect as Select } from 'ui/elements/CustomSelect';
 import { setSelectOption } from '../../elements/CustomSelect/select';
-import DropzoneArea from '../DropzoneModal';
+import { ImageWrapper, Title } from '../../pages/resource';
 import { IntentActions } from '../EconomicEventManager';
 import { FormGroup, FormLabel } from '../EconomicEventManager/styles';
 import Input, { CustomAlert } from '../../elements/Input';
-import { Actions, AlertWrapper, Container, CounterChars, Header } from 'ui/modules/Modal';
+import { Actions, Container, CounterChars, Header } from 'ui/modules/Modal';
 import { Hero, CollectionContainerForm, HeroInfo } from '../CreateCollectionPanel/style';
-import * as Types from '../../../graphql/types.generated';
 
 export type CreateEventOnResourceFormValues = {
   name: string;
@@ -32,11 +31,6 @@ export type TCreateResourcePanel = {
   title: string;
   done: any;
   formik: FormikHook<CreateEventOnResourceFormValues>;
-  spatialThings?:
-    | Types.Maybe<
-        { __typename: 'SpatialThing' } & Pick<Types.SpatialThing, 'name' | 'id' | 'lat' | 'long'>
-      >[]
-    | null;
   unitPages?: any;
   actionList?: any;
   providerList?: null | { id: string; name: string }[];
@@ -56,22 +50,16 @@ export const CreateEventOnResourcePanel: FC<TCreateResourcePanel> = ({
   actionList,
   providerList,
   receiverList,
-  spatialThings,
   setAction = () => {}
 }) => {
   const [providerArr, setProviderArr] = React.useState<any>([]);
   const [receiverArr, setReceiverArr] = React.useState<any>([]);
-  const onIconFileSelected = React.useCallback(
-    (file: File) => formik.setValues({ ...formik.values, image: file }),
-    [formik]
-  );
 
   React.useEffect(() => {
     setProviderArr(setSelectOption(providerList, 'name'));
     setReceiverArr(setSelectOption(receiverList, 'name'));
   }, [providerList, receiverList]);
 
-  const initialIconUrl = 'string' === typeof formik.values.image ? formik.values.image : '';
   return (
     <Container>
       <form onSubmit={formik.handleSubmit}>
@@ -86,88 +74,40 @@ export const CreateEventOnResourcePanel: FC<TCreateResourcePanel> = ({
             <CollectionContainerForm>
               <div className="d-flex">
                 <Box sx={{ width: '140', height: '140' }} className="item_photo">
-                  <DropzoneArea
-                    initialUrl={initialIconUrl}
-                    onFileSelect={onIconFileSelected}
-                    filePattern="image/*"
-                  />
-                  <p></p>
-                  <FormLabel>Image URL</FormLabel>
-                  <Input
-                    type="text"
-                    id="image"
-                    name="image"
-                    onChange={formik.handleChange}
-                    placeholder={i18nMark('Image')}
-                    value={
-                      typeof formik.values.image !== 'object'
-                        ? formik.values.image
-                        : formik.values.image.path
-                    }
-                  />
+                  <ImageWrapper>
+                    <img
+                      src={
+                        typeof formik.values.image !== 'object'
+                          ? formik.values.image
+                          : formik.values.image.path
+                      }
+                      alt="img"
+                    />
+                  </ImageWrapper>
                 </Box>
                 <div className="item_info">
-                  <Box>
-                    <FormGroup>
-                      <FormLabel>{i18nMark('Resource')}</FormLabel>
-                      <Input
-                        type="text"
-                        id="name"
-                        name="name"
-                        disabled={formik.isSubmitting}
-                        onChange={formik.handleChange}
-                        placeholder={i18nMark('Name of your resource')}
-                        value={formik.values.name}
-                      />
-                      <CounterChars>{60 - formik.values.name.length}</CounterChars>
-                    </FormGroup>
-                    {formik.errors.name && (
-                      <CustomAlert variant="negative">{formik.errors.name}</CustomAlert>
-                    )}
+                  <Box mr={1} mb={2}>
+                    <Title variant="heading">
+                      {' '}
+                      <Trans>{formik.values.name}</Trans>
+                    </Title>
                   </Box>
-                  <Box>
-                    <FormLabel>{i18nMark('location')}</FormLabel>
-                    <Select
-                      onSelect={(name, option) => {
-                        formik.setValues({ ...formik.values, [name]: option });
-                      }}
-                      options={spatialThings?.map((el: any) => ({
-                        id: el.id,
-                        value: el.id,
-                        label: el.name
-                      }))}
-                      placeholder={i18nMark('CustomSelect location')}
-                      value={formik.values.atLocation}
-                      variant="primary"
-                      id="atLocation"
-                      name="atLocation"
-                    />
-                    {formik.errors.hasUnit && (
-                      <AlertWrapper>
-                        <CustomAlert variant="negative">{formik.errors.atLocation}</CustomAlert>
-                      </AlertWrapper>
-                    )}
+                  <Box mr={1} mb={2}>
+                    <Text variant="text">
+                      <b>
+                        <Trans>Location:</Trans>{' '}
+                      </b>{' '}
+                      <Trans>{formik.values.atLocation?.label}</Trans>
+                    </Text>
                   </Box>
-
-                  <CollectionContainerForm>
-                    <FormGroup>
-                      <FormLabel>{i18nMark('Note')}</FormLabel>
-                      <Input
-                        type="textarea"
-                        id="eventNote"
-                        name="eventNote"
-                        onChange={formik.handleChange}
-                        placeholder={i18nMark('Note')}
-                        value={formik.values.eventNote}
-                      />
-                      <CounterChars>
-                        {formik.values.eventNote ? 500 - formik.values.eventNote.length : 500}
-                      </CounterChars>
-                    </FormGroup>
-                    {formik.errors.eventNote && (
-                      <CustomAlert variant="negative">{formik.errors.eventNote}</CustomAlert>
-                    )}
-                  </CollectionContainerForm>
+                  <Box mr={1}>
+                    <Text variant="text">
+                      <b>
+                        <Trans>Note:</Trans>{' '}
+                      </b>{' '}
+                      <Trans>{formik.values.note}</Trans>
+                    </Text>
+                  </Box>
                 </div>
               </div>
             </CollectionContainerForm>
@@ -282,19 +222,19 @@ export const CreateEventOnResourcePanel: FC<TCreateResourcePanel> = ({
               <FormGroup>
                 <FormLabel>Event Note</FormLabel>
                 <Input
-                  id="note"
+                  id="eventNote"
                   type="textarea"
-                  name="note"
+                  name="eventNote"
                   onChange={formik.handleChange}
                   placeholder={i18nMark('Event Note')}
-                  value={formik.values.note}
+                  value={formik.values.eventNote}
                 />
               </FormGroup>
               <CounterChars>
-                {formik.values.note ? 500 - formik.values.note.length : 500}
+                {formik.values.eventNote ? 500 - formik.values.eventNote.length : 500}
               </CounterChars>
-              {formik.errors.note && (
-                <CustomAlert variant="negative">{formik.errors.note}</CustomAlert>
+              {formik.errors.eventNote && (
+                <CustomAlert variant="negative">{formik.errors.eventNote}</CustomAlert>
               )}
             </CollectionContainerForm>
           </HeroInfo>
