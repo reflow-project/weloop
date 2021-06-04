@@ -99,7 +99,7 @@ export const ResourceItem: React.FC<Props> = ({ resource, openEditModal }) => {
                           <Icon>
                             <BoxIcon size="16" />
                           </Icon>
-                          <b>Quantity in stock:</b>{' '}
+                          <b>Quantity</b>{' '}
                           {`${track.resourceQuantity.hasNumericalValue} ${track.resourceQuantity.hasUnit.label}`}
                         </Text>
                       </Box>
