@@ -7,11 +7,14 @@ import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
 import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
 import Button from 'ui/elements/Button';
 import styled from '../../themes/styled';
+
 const MapIcon = require('react-feather/dist/icons/map').default;
 const BoxIcon = require('react-feather/dist/icons/box').default;
 const PenIcon = require('react-feather/dist/icons/edit').default;
 const EditIcon = require('react-feather/dist/icons/edit-3').default;
 const UserIcon = require('react-feather/dist/icons/user').default;
+const QRCode = require('qrcode.react');
+
 export interface Props {
   openEditModal: () => void;
   openUpdateResourceModal: () => void;
@@ -20,11 +23,19 @@ export interface Props {
   loading: boolean;
 }
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export const ResourceItem: React.FC<Props> = ({
   resource,
   openEditModal,
   openUpdateResourceModal
 }) => {
+  const [baseUrl, setBaseUrl] = React.useState(BASE_URL);
+  React.useEffect(() => {
+    setBaseUrl(BASE_URL);
+  }, []);
+
+  console.log({ BASE_URL });
   return (
     <MainContainer>
       <HomeBox>
@@ -40,9 +51,14 @@ export const ResourceItem: React.FC<Props> = ({
               </Button>
             </ActionsWrapper>
             <InventoryWrapper>
-              <ImageWrapper>
-                {resource?.image && <img src={resource.image} alt={resource.name} />}
-              </ImageWrapper>
+              <div>
+                <ImageWrapper>
+                  {resource?.image && <img src={resource.image} alt={resource.name} />}
+                </ImageWrapper>
+                <QRCodeWrapper>
+                  {resource?.id && <QRCode value={`${baseUrl}/inventory/${resource?.id}`} />}
+                </QRCodeWrapper>
+              </div>
               <InfoWrapper>
                 <Box mr={1} mb={2}>
                   <Title variant="heading">
@@ -232,6 +248,12 @@ export const ImageWrapper = styled('div')`
     object-fit: cover;
     border-radius: 4px;
   }
+`;
+export const QRCodeWrapper = styled(ImageWrapper)`
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const IconWrapper = styled(ImageWrapper)`
