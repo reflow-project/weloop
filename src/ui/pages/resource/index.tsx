@@ -134,8 +134,8 @@ export const ResourceItem: React.FC<Props> = ({
                           <Icon>
                             <BoxIcon size="16" />
                           </Icon>
-                          <b>Quantity in stock:</b>{' '}
-                          {`${track.resourceQuantity.hasNumericalValue} ${track.resourceQuantity.hasUnit.label}`}
+                          <b>Quantity</b>{' '}
+                          {`${track.resourceQuantity?.hasNumericalValue} ${track.resourceQuantity?.hasUnit.label}`}
                         </Text>
                       </Box>
                       <Box mr={1}>
