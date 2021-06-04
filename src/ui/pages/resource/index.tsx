@@ -181,6 +181,7 @@ export const InventoryWrapper = styled('div')`
 export const TrackWrapper = styled('div')`
   flex-basis: calc(100% - 100px);
   padding 10px 10px 10px 20px;
+  border-bottom: 1px solid #ccc
 `;
 
 export const ActionsWrapper = styled('div')`
