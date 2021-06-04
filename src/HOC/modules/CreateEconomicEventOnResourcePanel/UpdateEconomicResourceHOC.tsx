@@ -75,7 +75,7 @@ export const UpdateEconomicResourceHOC: FC<Props> = ({ done, resource, ...props 
         image: values.image
       })
         .then((response: any) => {
-          !response.errors &&
+          if (!response.errors) {
             toast.success(`Resource was updated`, {
               position: 'top-right',
               transition: Slide,
@@ -84,18 +84,12 @@ export const UpdateEconomicResourceHOC: FC<Props> = ({ done, resource, ...props 
               closeOnClick: true,
               pauseOnHover: true
             });
-          done();
+            done();
+          } else {
+            console.log(response.errors[0].message);
+          }
         })
-        .catch((error: any) => {
-          toast.error(error.message, {
-            position: 'top-right',
-            transition: Slide,
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true
-          });
-        });
+        .catch((error: any) => console.log(error));
     }
   });
 
