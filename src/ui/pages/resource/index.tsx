@@ -35,7 +35,6 @@ export const ResourceItem: React.FC<Props> = ({
     setBaseUrl(BASE_URL);
   }, []);
 
-  console.log({ BASE_URL });
   return (
     <MainContainer>
       <HomeBox>
