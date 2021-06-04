@@ -12,109 +12,124 @@ const BoxIcon = require('react-feather/dist/icons/box').default;
 const PenIcon = require('react-feather/dist/icons/edit').default;
 const UserIcon = require('react-feather/dist/icons/user').default;
 export interface Props {
+  openEditModal: () => void;
   resource?: EconomicResource;
   error?: ApolloError | undefined;
   loading: boolean;
 }
 
-export const ResourceItem: React.FC<Props> = ({ resource }) => {
+export const ResourceItem: React.FC<Props> = ({ resource, openEditModal }) => {
   return (
     <MainContainer>
       <HomeBox>
         <WrapperCont>
           <Wrapper>
-            <InventoryWrapper key={resource?.id}>
+            <InventoryWrapper>
               <ImageWrapper>
                 {resource?.image && <img src={resource.image} alt={resource.name} />}
               </ImageWrapper>
               <InfoWrapper>
-                <div>
-                  <Box mr={1} mb={2}>
-                    <Title variant="subhead">
-                      {' '}
-                      <Trans>{resource && resource.name}</Trans>
-                    </Title>
-                  </Box>
-                  <Box mr={1}>
+                <Box mr={1} mb={2}>
+                  <Title variant="heading">
+                    {' '}
+                    <Trans>{resource && resource.name}</Trans>
+                  </Title>
+                </Box>
+                <Box mr={1}>
+                  <Icon>
+                    <PenIcon size="16" />
+                  </Icon>
+                  <Trans>Note:</Trans>{' '}
+                  <Trans>{resource?.note ? resource.note : 'Not provided'}</Trans>
+                </Box>
+                <Box mr={1}>
+                  <Text variant="text">
                     <Icon>
-                      <PenIcon size="16" />
+                      <MapIcon size="16" />
                     </Icon>
-                    <Trans>Note:</Trans>{' '}
-                    <Trans>{resource?.note ? resource.note : 'Not provided'}</Trans>
-                  </Box>
-                  <Box mr={1}>
-                    <Text variant="text">
-                      <Icon>
-                        <MapIcon size="16" />
-                      </Icon>
-                      <b>
-                        <Trans>Location:</Trans>
-                      </b>{' '}
-                      {resource?.currentLocation?.name
-                        ? resource.currentLocation.name
-                        : 'Not provided'}
-                    </Text>
-                  </Box>
-                  <Box mr={1}>
-                    <Text variant="text">
-                      <Icon>
-                        <BoxIcon size="16" />
-                      </Icon>
-                      <b>Quantity in stock:</b>{' '}
+                    <b>
+                      <Trans>Location:</Trans>
+                    </b>{' '}
+                    {resource?.currentLocation?.name
+                      ? resource.currentLocation.name
+                      : 'Not provided'}
+                  </Text>
+                </Box>
+                <Box mr={1}>
+                  <Text variant="text">
+                    <Icon>
+                      <BoxIcon size="16" />
+                    </Icon>
+                    <b>Quantity in stock:</b>{' '}
+                    <span
+                      style={{
+                        color:
+                          resource?.onhandQuantity && resource.onhandQuantity.hasNumericalValue < 0
+                            ? 'red'
+                            : 'inherit'
+                      }}
+                    >
                       {`${resource?.onhandQuantity?.hasNumericalValue} ${resource?.onhandQuantity?.hasUnit.label}`}
-                    </Text>
-                  </Box>
-                  {resource?.track?.map(track => {
-                    return (
-                      <TrackWrapper>
-                        <Box mr={1}>
-                          <Text variant="text">
-                            <Icon>
-                              <PenIcon size="16" />
-                            </Icon>
-                            <b>
-                              <Trans>Track note: </Trans>
-                            </b>{' '}
-                            {track.note ? track.note : 'Not provided'}
-                          </Text>
-                        </Box>
-                        <Box mr={1}>
-                          <Text variant="text">
-                            <Icon>
-                              <BoxIcon size="16" />
-                            </Icon>
-                            <b>Quantity in stock:</b>{' '}
-                            {`${track.resourceQuantity.hasNumericalValue} ${track.resourceQuantity.hasUnit.label}`}
-                          </Text>
-                        </Box>
-                        <Box mr={1}>
-                          <Text variant="text">
-                            <Icon>
-                              <UserIcon size="16" />
-                            </Icon>
-                            <b>
-                              <Trans>Provider:</Trans>
-                            </b>{' '}
-                            {track.provider ? track.provider.name : 'Not provided'}
-                          </Text>
-                        </Box>
-                        <Box mr={1}>
-                          <Text variant="text">
-                            <Icon>
-                              <UserIcon size="16" />
-                            </Icon>
-                            <b>
-                              <Trans>Receiver:</Trans>
-                            </b>
-                            {track.receiver ? track.receiver.name : 'Not provided'}
-                          </Text>
-                        </Box>
-                      </TrackWrapper>
-                    );
-                  })}
-                </div>
+                    </span>
+                  </Text>
+                </Box>
+                {resource?.track?.map(track => {
+                  return (
+                    <TrackWrapper>
+                      <Badge>
+                        {track.action ? (
+                          <Trans>{track.action.label}</Trans>
+                        ) : (
+                          <Trans>Not provided</Trans>
+                        )}
+                      </Badge>
+                      <Box mr={1}>
+                        <Text variant="text">
+                          <Icon>
+                            <PenIcon size="16" />
+                          </Icon>
+                          <b>
+                            <Trans>Track note: </Trans>
+                          </b>{' '}
+                          {track.note ? track.note : 'Not provided'}
+                        </Text>
+                      </Box>
+                      <Box mr={1}>
+                        <Text variant="text">
+                          <Icon>
+                            <BoxIcon size="16" />
+                          </Icon>
+                          <b>Quantity in stock:</b>{' '}
+                          {`${track.resourceQuantity.hasNumericalValue} ${track.resourceQuantity.hasUnit.label}`}
+                        </Text>
+                      </Box>
+                      <Box mr={1}>
+                        <Text variant="text">
+                          <Icon>
+                            <UserIcon size="16" />
+                          </Icon>
+                          <b>
+                            <Trans>Provider:</Trans>
+                          </b>{' '}
+                          {track.provider ? track.provider.name : 'Not provided'}
+                        </Text>
+                      </Box>
+                      <Box mr={1}>
+                        <Text variant="text">
+                          <Icon>
+                            <UserIcon size="16" />
+                          </Icon>
+                          <b>
+                            <Trans>Receiver:</Trans>
+                          </b>
+                          {track.receiver ? track.receiver.name : 'Not provided'}
+                        </Text>
+                      </Box>
+                    </TrackWrapper>
+                  );
+                })}
                 <ActionsWrapper>
-                  <Button mr={2} onClick={() => {}} variant="button">
+                  <Button mr={2} onClick={openEditModal} variant="button">
                     <Trans>Perform event</Trans>
                   </Button>
                 </ActionsWrapper>
@@ -128,6 +143,18 @@ export const ResourceItem: React.FC<Props> = ({ resource }) => {
   );
 };
 
+export const Badge = styled(Text)`
+  background: ${props => props.theme.colors.primary};
+  color: ${props => props.theme.colors.light};
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 10px;
+  border-radius: 4px;
+  padding: 3px 5px;
+  width: auto;
+  display: inline-block;
+  margin-bottom: 10px;
+`;
 export const Title = styled(Text)`
   color: ${props => props.theme.colors.dark};
   text-decoration: none !important;
@@ -152,9 +179,11 @@ export const InventoryWrapper = styled('div')`
 `;
 
 export const TrackWrapper = styled('div')`
+  flex-basis: calc(100% - 100px);
   padding 10px 10px 10px 20px;
   border-bottom: 1px solid #ccc
 `;
+
 export const ActionsWrapper = styled('div')`
   display: flex
   justify-content: flex-end;
@@ -183,5 +212,15 @@ export const ImageWrapper = styled('div')`
     width: 100%;
     height: 140px;
     object-fit: cover;
+  }
+`;
+
+export const IconWrapper = styled(ImageWrapper)`
+  flex-basis: 100px;
+  width: 100px;
+  height: 100px;
+
+  img {
+    height: 100px;
   }
 `;

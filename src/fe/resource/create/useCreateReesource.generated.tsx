@@ -6,6 +6,7 @@ import * as ApolloReactHooks from '@apollo/react-hooks';
 
 export type CreateEconomicEventAndNewResourceMutationVariables = {
   note?: Types.Maybe<Types.Scalars['String']>,
+  atLocation?: Types.Maybe<Types.Scalars['ID']>,
   action: Types.Scalars['ID'],
   provider: Types.Scalars['ID'],
   receiver: Types.Scalars['ID'],
@@ -65,10 +66,43 @@ export type CreateEconomicEventAndNewResourceMutation = (
   )> }
 );
 
+export type CreateEconomicEventAndExistResourceMutationVariables = {
+  id: Types.Scalars['ID'],
+  note?: Types.Maybe<Types.Scalars['String']>,
+  action: Types.Scalars['ID'],
+  provider: Types.Scalars['ID'],
+  receiver: Types.Scalars['ID'],
+  hasUnit: Types.Scalars['ID'],
+  hasNumericalValue: Types.Scalars['Float'],
+  atLocation?: Types.Maybe<Types.Scalars['ID']>,
+  name?: Types.Maybe<Types.Scalars['String']>,
+  eventNote?: Types.Maybe<Types.Scalars['String']>,
+  image?: Types.Maybe<Types.Scalars['URI']>
+};
+
+
+export type CreateEconomicEventAndExistResourceMutation = (
+  { __typename: 'RootMutationType' }
+  & { createEconomicEvent: Types.Maybe<(
+    { __typename: 'EconomicEventResponse' }
+    & { economicEvent: (
+      { __typename: 'EconomicEvent' }
+      & Pick<Types.EconomicEvent, 'id'>
+      & { action: (
+        { __typename: 'Action' }
+        & Pick<Types.Action, 'id'>
+      ) }
+    ), economicResource: Types.Maybe<(
+      { __typename: 'EconomicResource' }
+      & Pick<Types.EconomicResource, 'id'>
+    )> }
+  )> }
+);
+
 
 export const CreateEconomicEventAndNewResourceDocument = gql`
-    mutation createEconomicEventAndNewResource($note: String, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!, $name: String, $image: URI) {
-  createEconomicEvent(event: {note: $note, action: $action, provider: $provider, receiver: $receiver, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}, newInventoriedResource: {name: $name, image: $image}) {
+    mutation createEconomicEventAndNewResource($note: String, $atLocation: ID, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!, $name: String, $image: URI) {
+  createEconomicEvent(event: {note: $note, action: $action, atLocation: $atLocation, provider: $provider, receiver: $receiver, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}, newInventoriedResource: {name: $name, image: $image}) {
     economicEvent {
       id
       note
@@ -128,6 +162,7 @@ export type CreateEconomicEventAndNewResourceMutationFn = ApolloReactCommon.Muta
  * const [createEconomicEventAndNewResourceMutation, { data, loading, error }] = useCreateEconomicEventAndNewResourceMutation({
  *   variables: {
  *      note: // value for 'note'
+ *      atLocation: // value for 'atLocation'
  *      action: // value for 'action'
  *      provider: // value for 'provider'
  *      receiver: // value for 'receiver'
@@ -144,6 +179,56 @@ export function useCreateEconomicEventAndNewResourceMutation(baseOptions?: Apoll
 export type CreateEconomicEventAndNewResourceMutationHookResult = ReturnType<typeof useCreateEconomicEventAndNewResourceMutation>;
 export type CreateEconomicEventAndNewResourceMutationResult = ApolloReactCommon.MutationResult<CreateEconomicEventAndNewResourceMutation>;
 export type CreateEconomicEventAndNewResourceMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateEconomicEventAndNewResourceMutation, CreateEconomicEventAndNewResourceMutationVariables>;
+export const CreateEconomicEventAndExistResourceDocument = gql`
+    mutation createEconomicEventAndExistResource($id: ID!, $note: String, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!, $atLocation: ID, $name: String, $eventNote: String, $image: URI) {
+  createEconomicEvent(event: {resourceInventoriedAs: $id, note: $note, action: $action, provider: $provider, receiver: $receiver, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}, newInventoriedResource: {name: $name, note: $eventNote, image: $image, currentLocation: $atLocation}) {
+    economicEvent {
+      id
+      action {
+        id
+      }
+    }
+    economicResource {
+      id
+    }
+  }
+}
+    `;
+export type CreateEconomicEventAndExistResourceMutationFn = ApolloReactCommon.MutationFunction<CreateEconomicEventAndExistResourceMutation, CreateEconomicEventAndExistResourceMutationVariables>;
+
+/**
+ * __useCreateEconomicEventAndExistResourceMutation__
+ *
+ * To run a mutation, you first call `useCreateEconomicEventAndExistResourceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateEconomicEventAndExistResourceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createEconomicEventAndExistResourceMutation, { data, loading, error }] = useCreateEconomicEventAndExistResourceMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      note: // value for 'note'
+ *      action: // value for 'action'
+ *      provider: // value for 'provider'
+ *      receiver: // value for 'receiver'
+ *      hasUnit: // value for 'hasUnit'
+ *      hasNumericalValue: // value for 'hasNumericalValue'
+ *      atLocation: // value for 'atLocation'
+ *      name: // value for 'name'
+ *      eventNote: // value for 'eventNote'
+ *      image: // value for 'image'
+ *   },
+ * });
+ */
+export function useCreateEconomicEventAndExistResourceMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateEconomicEventAndExistResourceMutation, CreateEconomicEventAndExistResourceMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateEconomicEventAndExistResourceMutation, CreateEconomicEventAndExistResourceMutationVariables>(CreateEconomicEventAndExistResourceDocument, baseOptions);
+      }
+export type CreateEconomicEventAndExistResourceMutationHookResult = ReturnType<typeof useCreateEconomicEventAndExistResourceMutation>;
+export type CreateEconomicEventAndExistResourceMutationResult = ApolloReactCommon.MutationResult<CreateEconomicEventAndExistResourceMutation>;
+export type CreateEconomicEventAndExistResourceMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateEconomicEventAndExistResourceMutation, CreateEconomicEventAndExistResourceMutationVariables>;
 
 
 export interface CreateEconomicEventAndNewResourceMutationOperation {
@@ -159,6 +244,25 @@ export const CreateEconomicEventAndNewResourceMutationRefetch = (
   context?:any
 )=>({
   query:CreateEconomicEventAndNewResourceDocument,
+  variables,
+  context
+})
+      
+
+
+export interface CreateEconomicEventAndExistResourceMutationOperation {
+  operationName: 'createEconomicEventAndExistResource'
+  result: CreateEconomicEventAndExistResourceMutation
+  variables: CreateEconomicEventAndExistResourceMutationVariables
+  type: 'mutation'
+}
+export const CreateEconomicEventAndExistResourceMutationName:CreateEconomicEventAndExistResourceMutationOperation['operationName'] = 'createEconomicEventAndExistResource'
+
+export const CreateEconomicEventAndExistResourceMutationRefetch = (
+  variables:CreateEconomicEventAndExistResourceMutationVariables, 
+  context?:any
+)=>({
+  query:CreateEconomicEventAndExistResourceDocument,
   variables,
   context
 })

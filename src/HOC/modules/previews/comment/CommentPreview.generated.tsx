@@ -20,13 +20,13 @@ export type CommentPreviewFragment = (
   & { inReplyTo: Types.Maybe<(
     { __typename: 'Comment' }
     & CommentPreviewBaseFragment
-    )>, myLike: Types.Maybe<(
+  )>, myLike: Types.Maybe<(
     { __typename: 'Like' }
     & Pick<Types.Like, 'id'>
-    )>, myFlag: Types.Maybe<(
+  )>, myFlag: Types.Maybe<(
     { __typename: 'Flag' }
     & Pick<Types.Flag, 'id'>
-    )>, thread: Types.Maybe<(
+  )>, thread: Types.Maybe<(
     { __typename: 'Thread' }
     & Pick<Types.Thread, 'id'>
     & { comments: Types.Maybe<(
@@ -34,23 +34,23 @@ export type CommentPreviewFragment = (
       & { edges: Array<(
         { __typename: 'Comment' }
         & CommentPreviewBaseFragment
-        )> }
-      )>, context: Types.Maybe<{ __typename: 'Category' } | (
+      )> }
+    )>, context: Types.Maybe<{ __typename: 'Category' } | (
       { __typename: 'Collection' }
       & Pick<Types.Collection, 'id'>
       & { community: Types.Maybe<(
         { __typename: 'Community' }
         & Pick<Types.Community, 'id'>
         & CommunityInfoFragment
-        )> }
-      ) | { __typename: 'Comment' } | (
+      )> }
+    ) | { __typename: 'Comment' } | (
       { __typename: 'Community' }
       & Pick<Types.Community, 'id'>
       & CommunityInfoFragment
-      ) | (
+    ) | (
       { __typename: 'Flag' }
       & Pick<Types.Flag, 'id'>
-      ) | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | (
+    ) | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | (
       { __typename: 'Resource' }
       & Pick<Types.Resource, 'id'>
       & { collection: Types.Maybe<(
@@ -60,12 +60,12 @@ export type CommentPreviewFragment = (
           { __typename: 'Community' }
           & Pick<Types.Community, 'id'>
           & CommunityInfoFragment
-          )> }
         )> }
-      ) | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | { __typename: 'User' }> }
-    )> }
+      )> }
+    ) | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | { __typename: 'User' }> }
+  )> }
   & CommentPreviewBaseFragment
-  );
+);
 
 export type CommentPreviewBaseFragment = (
   { __typename: 'Comment' }
@@ -77,12 +77,12 @@ export type CommentPreviewBaseFragment = (
     & { icon: Types.Maybe<(
       { __typename: 'Content' }
       & Pick<Types.Content, 'id' | 'url'>
-      )>, image: Types.Maybe<(
+    )>, image: Types.Maybe<(
       { __typename: 'Content' }
       & Pick<Types.Content, 'id' | 'url'>
-      )> }
     )> }
-  );
+  )> }
+);
 
 export type CommentPreviewThreadFragment = (
   { __typename: 'Thread' }
@@ -90,105 +90,105 @@ export type CommentPreviewThreadFragment = (
   & { context: Types.Maybe<{ __typename: 'Category' } | (
     { __typename: 'Collection' }
     & CollectionPreviewFragment
-    ) | { __typename: 'Comment' } | (
+  ) | { __typename: 'Comment' } | (
     { __typename: 'Community' }
     & CommunityPreviewFragment
-    ) | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | (
+  ) | { __typename: 'Flag' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Like' } | { __typename: 'Organisation' } | (
     { __typename: 'Resource' }
     & ResourcePreviewFragment
-    ) | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | { __typename: 'User' }> }
-  );
+  ) | { __typename: 'SpatialThing' } | { __typename: 'Taggable' } | { __typename: 'User' }> }
+);
 
 export const CommentPreviewBaseFragmentDoc = gql`
-  fragment CommentPreviewBase on Comment {
-    id
-    isLocal
-    content
+    fragment CommentPreviewBase on Comment {
+  id
+  isLocal
+  content
+  canonicalUrl
+  createdAt
+  creator {
+    icon {
+      id
+      url
+    }
+    image {
+      id
+      url
+    }
+    userId: id
+    userName: name
     canonicalUrl
-    createdAt
-    creator {
-      icon {
-        id
-        url
-      }
-      image {
-        id
-        url
-      }
-      userId: id
-      userName: name
-      canonicalUrl
-    }
   }
-`;
+}
+    `;
 export const CommentPreviewFragmentDoc = gql`
-  fragment CommentPreview on Comment {
+    fragment CommentPreview on Comment {
+  ...CommentPreviewBase
+  id
+  inReplyTo {
     ...CommentPreviewBase
+  }
+  likerCount
+  myLike {
     id
-    inReplyTo {
-      ...CommentPreviewBase
-    }
-    likerCount
-    myLike {
-      id
-    }
-    myFlag {
-      id
-    }
-    thread {
-      id
-      comments(limit: 1) {
-        edges {
-          ...CommentPreviewBase
-        }
+  }
+  myFlag {
+    id
+  }
+  thread {
+    id
+    comments(limit: 1) {
+      edges {
+        ...CommentPreviewBase
       }
-      context {
-        ... on Flag {
-          id
-        }
-        ... on Community {
+    }
+    context {
+      ... on Flag {
+        id
+      }
+      ... on Community {
+        id
+        ...CommunityInfo
+      }
+      ... on Collection {
+        id
+        community {
           id
           ...CommunityInfo
         }
-        ... on Collection {
+      }
+      ... on Resource {
+        id
+        collection {
           id
           community {
             id
             ...CommunityInfo
           }
         }
-        ... on Resource {
-          id
-          collection {
-            id
-            community {
-              id
-              ...CommunityInfo
-            }
-          }
-        }
       }
     }
   }
-  ${CommentPreviewBaseFragmentDoc}
+}
+    ${CommentPreviewBaseFragmentDoc}
 ${CommunityInfoFragmentDoc}`;
 export const CommentPreviewThreadFragmentDoc = gql`
-  fragment CommentPreviewThread on Thread {
-    id
-    isLocal
-    canonicalUrl
-    context {
-      ... on Collection {
-        ...CollectionPreview
-      }
-      ... on Resource {
-        ...ResourcePreview
-      }
-      ... on Community {
-        ...CommunityPreview
-      }
+    fragment CommentPreviewThread on Thread {
+  id
+  isLocal
+  canonicalUrl
+  context {
+    ... on Collection {
+      ...CollectionPreview
+    }
+    ... on Resource {
+      ...ResourcePreview
+    }
+    ... on Community {
+      ...CommunityPreview
     }
   }
-  ${CollectionPreviewFragmentDoc}
-  ${ResourcePreviewFragmentDoc}
+}
+    ${CollectionPreviewFragmentDoc}
+${ResourcePreviewFragmentDoc}
 ${CommunityPreviewFragmentDoc}`;

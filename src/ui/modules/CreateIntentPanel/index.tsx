@@ -27,19 +27,6 @@ export type CreateIntentFormValues = {
   hasNumericalValue: number;
 };
 
-type UnitPage = {
-  id: string;
-  label: string;
-  symbol: string;
-};
-
-type SpatialThings = {
-  id: string;
-  name: string;
-  lat: number;
-  long: number;
-};
-
 export type TCreateIntentPanel = {
   communities?: Array<SelectOption>;
   cancel: () => void;

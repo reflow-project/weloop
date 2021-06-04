@@ -4,6 +4,7 @@ export interface Props {
   onSelect: (name: string, option: IntentActions) => void;
   onInputChange?: (name: string, value: string) => void;
   options?: IntentActions[];
+  disabled?: boolean;
   placeholder?: string;
   variant: string;
   id: string | number;

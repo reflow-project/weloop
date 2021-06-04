@@ -21,6 +21,10 @@ query economicResource($id: ID!) {
         }
         hasNumericalValue
       }
+      action {
+        id
+        label
+      }
       provider {
         id
         name

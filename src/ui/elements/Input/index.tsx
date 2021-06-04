@@ -74,6 +74,7 @@ const FieldWrapper = styled('div')<any>`
     color: #666666;
     letter-spacing: 1px;
     margin-bottom: 10px;
+    text-transform: uppercase;
   }
   textarea {
     padding: 10px;

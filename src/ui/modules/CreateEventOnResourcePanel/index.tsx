@@ -11,24 +11,32 @@ import DropzoneArea from '../DropzoneModal';
 import { IntentActions } from '../EconomicEventManager';
 import { FormGroup, FormLabel } from '../EconomicEventManager/styles';
 import Input, { CustomAlert } from '../../elements/Input';
-import { Actions, Container, CounterChars, Header } from 'ui/modules/Modal';
+import { Actions, AlertWrapper, Container, CounterChars, Header } from 'ui/modules/Modal';
 import { Hero, CollectionContainerForm, HeroInfo } from '../CreateCollectionPanel/style';
+import * as Types from '../../../graphql/types.generated';
 
-export type CreateIntentFormValues = {
+export type CreateEventOnResourceFormValues = {
   name: string;
   note?: string;
+  atLocation: { id: string; value: string; label: string };
+  eventNote?: string;
   action: IntentActions;
   provider: IntentActions;
   receiver: IntentActions;
   hasUnit: IntentActions;
   hasNumericalValue: number;
-  image: string | File | undefined;
+  image: string | File | undefined | any;
 };
 
 export type TCreateResourcePanel = {
   title: string;
   done: any;
-  formik: FormikHook<CreateIntentFormValues>;
+  formik: FormikHook<CreateEventOnResourceFormValues>;
+  spatialThings?:
+    | Types.Maybe<
+        { __typename: 'SpatialThing' } & Pick<Types.SpatialThing, 'name' | 'id' | 'lat' | 'long'>
+      >[]
+    | null;
   unitPages?: any;
   actionList?: any;
   providerList?: null | { id: string; name: string }[];
@@ -41,47 +49,28 @@ export type SelectOption = {
   id: string;
 };
 
-export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
+export const CreateEventOnResourcePanel: FC<TCreateResourcePanel> = ({
   title,
   formik,
   done,
-  unitPages,
   actionList,
   providerList,
   receiverList,
+  spatialThings,
   setAction = () => {}
 }) => {
   const [providerArr, setProviderArr] = React.useState<any>([]);
   const [receiverArr, setReceiverArr] = React.useState<any>([]);
-  const [unitLst, setUnitLst] = React.useState<any>([]);
   const onIconFileSelected = React.useCallback(
     (file: File) => formik.setValues({ ...formik.values, image: file }),
     [formik]
   );
-  React.useEffect(() => {
-    if (unitPages?.length) {
-      const unit = unitPages.map((el: { id: string; label: string; symbol: string }) => ({
-        id: el.id,
-        label: `${el.label} / ${el.symbol}`
-      }));
-
-      setUnitLst(unit);
-    }
-  }, [unitPages]);
 
   React.useEffect(() => {
     setProviderArr(setSelectOption(providerList, 'name'));
     setReceiverArr(setSelectOption(receiverList, 'name'));
   }, [providerList, receiverList]);
 
-  React.useEffect(() => {
-    setUnitLst(
-      setSelectOption(unitPages?.edges, {
-        variables: ['label', 'symbol'],
-        template: 'label / symbol'
-      })
-    );
-  }, [unitPages]);
   const initialIconUrl = 'string' === typeof formik.values.image ? formik.values.image : '';
   return (
     <Container>
@@ -101,6 +90,20 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                     initialUrl={initialIconUrl}
                     onFileSelect={onIconFileSelected}
                     filePattern="image/*"
+                  />
+                  <p></p>
+                  <FormLabel>Image URL</FormLabel>
+                  <Input
+                    type="text"
+                    id="image"
+                    name="image"
+                    onChange={formik.handleChange}
+                    placeholder={i18nMark('Image')}
+                    value={
+                      typeof formik.values.image !== 'object'
+                        ? formik.values.image
+                        : formik.values.image.path
+                    }
                   />
                 </Box>
                 <div className="item_info">
@@ -123,31 +126,73 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                     )}
                   </Box>
                   <Box>
-                    <FormGroup>
-                      <FormLabel>Actions</FormLabel>
-                      <Select
-                        onSelect={(name, option) => {
-                          setAction(option.id);
-                          formik.setValues({ ...formik.values, action: option });
-                        }}
-                        options={actionList}
-                        variant="primary"
-                        id="actions"
-                        name="actions"
-                        placeholder={i18nMark('Select action')}
-                        value={formik.values.action}
-                      />
-                    </FormGroup>
-                    {formik.errors.action && (
-                      <CustomAlert variant="negative">
-                        {formik.errors.action && 'Required'}
-                      </CustomAlert>
+                    <FormLabel>{i18nMark('location')}</FormLabel>
+                    <Select
+                      onSelect={(name, option) => {
+                        formik.setValues({ ...formik.values, [name]: option });
+                      }}
+                      options={spatialThings?.map((el: any) => ({
+                        id: el.id,
+                        value: el.id,
+                        label: el.name
+                      }))}
+                      placeholder={i18nMark('CustomSelect location')}
+                      value={formik.values.atLocation}
+                      variant="primary"
+                      id="atLocation"
+                      name="atLocation"
+                    />
+                    {formik.errors.hasUnit && (
+                      <AlertWrapper>
+                        <CustomAlert variant="negative">{formik.errors.atLocation}</CustomAlert>
+                      </AlertWrapper>
                     )}
                   </Box>
+
+                  <CollectionContainerForm>
+                    <FormGroup>
+                      <FormLabel>{i18nMark('Note')}</FormLabel>
+                      <Input
+                        type="textarea"
+                        id="eventNote"
+                        name="eventNote"
+                        onChange={formik.handleChange}
+                        placeholder={i18nMark('Note')}
+                        value={formik.values.eventNote}
+                      />
+                      <CounterChars>
+                        {formik.values.eventNote ? 500 - formik.values.eventNote.length : 500}
+                      </CounterChars>
+                    </FormGroup>
+                    {formik.errors.eventNote && (
+                      <CustomAlert variant="negative">{formik.errors.eventNote}</CustomAlert>
+                    )}
+                  </CollectionContainerForm>
                 </div>
               </div>
             </CollectionContainerForm>
             <CollectionContainerForm>
+              <Box>
+                <FormGroup>
+                  <FormLabel>Actions</FormLabel>
+                  <Select
+                    onSelect={(name, option) => {
+                      setAction(option.id);
+                      formik.setValues({ ...formik.values, action: option });
+                    }}
+                    options={actionList}
+                    variant="primary"
+                    id="actions"
+                    name="actions"
+                    placeholder={i18nMark('Select action')}
+                    value={formik.values.action}
+                  />
+                </FormGroup>
+                {formik.errors.action && (
+                  <CustomAlert variant="negative">{formik.errors.action && 'Required'}</CustomAlert>
+                )}
+              </Box>
+
               <div className="d-flex">
                 <div className="item_col-6">
                   <FormGroup>
@@ -199,16 +244,13 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                 <div className="item_col-6">
                   <FormGroup>
                     <FormLabel>unit</FormLabel>
-                    <Select
-                      onSelect={(name, option) => {
-                        formik.setValues({ ...formik.values, [name]: option });
-                      }}
-                      options={unitLst}
-                      variant="primary"
+                    <Input
+                      type="text"
                       id="hasUnit"
                       name="hasUnit"
-                      placeholder={i18nMark('Unit')}
-                      value={formik.values.hasUnit}
+                      disabled={true}
+                      onChange={formik.handleChange}
+                      value={formik.values.hasUnit.label}
                     />
                   </FormGroup>
                   {formik.errors.hasUnit && (
@@ -235,15 +277,16 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                 </div>
               </div>
             </CollectionContainerForm>
+
             <CollectionContainerForm>
               <FormGroup>
-                <FormLabel>note</FormLabel>
+                <FormLabel>Event Note</FormLabel>
                 <Input
                   id="note"
                   type="textarea"
                   name="note"
                   onChange={formik.handleChange}
-                  placeholder={i18nMark('Note')}
+                  placeholder={i18nMark('Event Note')}
                   value={formik.values.note}
                 />
               </FormGroup>
