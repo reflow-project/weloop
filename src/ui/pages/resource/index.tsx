@@ -23,17 +23,12 @@ export interface Props {
   loading: boolean;
 }
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-
 export const ResourceItem: React.FC<Props> = ({
   resource,
   openEditModal,
   openUpdateResourceModal
 }) => {
-  const [baseUrl, setBaseUrl] = React.useState(BASE_URL);
-  React.useEffect(() => {
-    setBaseUrl(BASE_URL);
-  }, []);
+  const URL = window.location.href;
 
   return (
     <MainContainer>
@@ -54,9 +49,7 @@ export const ResourceItem: React.FC<Props> = ({
                 <ImageWrapper>
                   {resource?.image && <img src={resource.image} alt={resource.name} />}
                 </ImageWrapper>
-                <QRCodeWrapper>
-                  {resource?.id && <QRCode value={`${baseUrl}/inventory/${resource?.id}`} />}
-                </QRCodeWrapper>
+                <QRCodeWrapper>{resource?.id && <QRCode value={URL} />}</QRCodeWrapper>
               </div>
               <InfoWrapper>
                 <Box mr={1} mb={2}>
@@ -232,6 +225,7 @@ export const InfoWrapper = styled('div')`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: flex-start;
 `;
 
 export const ImageWrapper = styled('div')`
