@@ -25,7 +25,7 @@ export const validationSchema: Yup.ObjectSchema<UpdateResourceVariables> = Yup.o
 
 export interface Props {
   done: () => void;
-  resource: EconomicResource;
+  resource: EconomicResource | any;
 }
 
 export const UpdateEconomicResourceHOC: FC<Props> = ({ done, resource, ...props }) => {
@@ -46,9 +46,9 @@ export const UpdateEconomicResourceHOC: FC<Props> = ({ done, resource, ...props 
       };
       if (resource) {
         values = {
+          //@ts-ignore
           name: resource.name || '',
           note: resource.note || '',
-          //@ts-ignore
           image: resource.image || undefined,
           atLocation: resource.currentLocation
             ? {
