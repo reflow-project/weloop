@@ -180,5 +180,3 @@ const Hero = styled(Flex)`
   display: block;
 `};
 `;
-
-export default CreateCommunityPanel;

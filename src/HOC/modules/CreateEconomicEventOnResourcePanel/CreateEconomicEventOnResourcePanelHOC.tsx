@@ -31,7 +31,7 @@ export const validationSchema: Yup.ObjectSchema<BasicCreateEventFormValues> = Yu
 
 export interface Props {
   done: () => void;
-  resource: EconomicResource;
+  resource: EconomicResource | any;
 }
 
 export const CreateEconomicEventOnResourcePanelHOC: FC<Props> = ({ done, resource, ...props }) => {
