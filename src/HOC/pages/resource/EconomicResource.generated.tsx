@@ -13,11 +13,83 @@ export type EconomicResourceQuery = (
   { __typename: 'RootQueryType' }
   & { economicResource: Types.Maybe<(
     { __typename: 'EconomicResource' }
-    & Pick<Types.EconomicResource, 'id' | 'name' | 'note' | 'image'>
-    & { currentLocation: Types.Maybe<(
+    & Pick<Types.EconomicResource, 'id' | 'trackingIdentifier' | 'name' | 'note' | 'image'>
+    & { primaryAccountable: Types.Maybe<(
+      { __typename: 'Organization' }
+      & Pick<Types.Organization, 'id' | 'name' | 'image'>
+      & { relationshipsAsObject: Types.Maybe<Array<(
+        { __typename: 'AgentRelationship' }
+        & Pick<Types.AgentRelationship, 'id'>
+        & { relationship: (
+          { __typename: 'AgentRelationshipRole' }
+          & Pick<Types.AgentRelationshipRole, 'id' | 'inverseRoleLabel'>
+        ) }
+      )>>, intents: Types.Maybe<Array<(
+        { __typename: 'Intent' }
+        & Pick<Types.Intent, 'id' | 'name' | 'note' | 'image'>
+      )>> }
+    ) | (
+      { __typename: 'Person' }
+      & Pick<Types.Person, 'id' | 'name' | 'image'>
+      & { relationshipsAsObject: Types.Maybe<Array<(
+        { __typename: 'AgentRelationship' }
+        & Pick<Types.AgentRelationship, 'id'>
+        & { relationship: (
+          { __typename: 'AgentRelationshipRole' }
+          & Pick<Types.AgentRelationshipRole, 'id' | 'inverseRoleLabel'>
+        ) }
+      )>>, intents: Types.Maybe<Array<(
+        { __typename: 'Intent' }
+        & Pick<Types.Intent, 'id' | 'name' | 'note' | 'image'>
+      )>> }
+    )>, stage: Types.Maybe<(
+      { __typename: 'ProcessSpecification' }
+      & Pick<Types.ProcessSpecification, 'id' | 'name' | 'note'>
+    )>, contains: Types.Maybe<Array<(
+      { __typename: 'EconomicResource' }
+      & Pick<Types.EconomicResource, 'image'>
+      & { track: Types.Maybe<Array<(
+        { __typename: 'EconomicEvent' }
+        & Pick<Types.EconomicEvent, 'id'>
+        & { action: (
+          { __typename: 'Action' }
+          & Pick<Types.Action, 'id'>
+        ), fulfills: Types.Maybe<Array<(
+          { __typename: 'Fulfillment' }
+          & { effortQuantity: Types.Maybe<(
+            { __typename: 'Measure' }
+            & Pick<Types.Measure, 'id'>
+            & { hasUnit: (
+              { __typename: 'Unit' }
+              & Pick<Types.Unit, 'id' | 'label' | 'symbol'>
+            ) }
+          )> }
+        )>> }
+      )>> }
+    )>>, containedIn: Types.Maybe<(
+      { __typename: 'EconomicResource' }
+      & Pick<Types.EconomicResource, 'id' | 'name'>
+      & { trace: Types.Maybe<Array<(
+        { __typename: 'EconomicEvent' }
+        & Pick<Types.EconomicEvent, 'id' | 'note'>
+      )>>, track: Types.Maybe<Array<(
+        { __typename: 'EconomicEvent' }
+        & Pick<Types.EconomicEvent, 'id' | 'note'>
+      )>> }
+    )>, currentLocation: Types.Maybe<(
       { __typename: 'SpatialThing' }
       & Pick<Types.SpatialThing, 'id' | 'name' | 'lat' | 'long'>
-    )>, track: Types.Maybe<Array<(
+    )>, lot: Types.Maybe<(
+      { __typename: 'ProductBatch' }
+      & Pick<Types.ProductBatch, 'id' | 'expiryDate' | 'batchNumber'>
+    )>, trace: Types.Maybe<Array<(
+      { __typename: 'EconomicEvent' }
+      & Pick<Types.EconomicEvent, 'id' | 'note'>
+      & { action: (
+        { __typename: 'Action' }
+        & Pick<Types.Action, 'id'>
+      ) }
+    )>>, track: Types.Maybe<Array<(
       { __typename: 'EconomicEvent' }
       & Pick<Types.EconomicEvent, 'id' | 'note'>
       & { resourceQuantity: Types.Maybe<(
@@ -43,7 +115,10 @@ export type EconomicResourceQuery = (
         { __typename: 'Person' }
         & Pick<Types.Person, 'id' | 'name'>
       ) }
-    )>>, onhandQuantity: Types.Maybe<(
+    )>>, unitOfEffort: Types.Maybe<(
+      { __typename: 'Unit' }
+      & Pick<Types.Unit, 'id' | 'label'>
+    )>, onhandQuantity: Types.Maybe<(
       { __typename: 'Measure' }
       & Pick<Types.Measure, 'id' | 'hasNumericalValue'>
       & { hasUnit: (
@@ -59,14 +134,86 @@ export const EconomicResourceDocument = gql`
     query economicResource($id: ID!) {
   economicResource(id: $id) {
     id
+    trackingIdentifier
+    primaryAccountable {
+      id
+      name
+      image
+      relationshipsAsObject {
+        id
+        relationship {
+          id
+          inverseRoleLabel
+        }
+      }
+      intents {
+        id
+        name
+        note
+        image
+      }
+    }
     name
     note
     image
+    stage {
+      id
+      name
+      note
+    }
+    contains {
+      image
+      track {
+        id
+        action {
+          id
+        }
+        fulfills {
+          effortQuantity {
+            id
+            hasUnit {
+              id
+              label
+              symbol
+            }
+          }
+        }
+      }
+    }
+    stage {
+      id
+      name
+      note
+    }
+    containedIn {
+      id
+      name
+      trace {
+        id
+        note
+      }
+      track {
+        id
+        note
+      }
+    }
     currentLocation {
       id
       name
       lat
       long
+    }
+    lot {
+      id
+      expiryDate
+      batchNumber
+    }
+    trace {
+      id
+      note
+      action {
+        id
+      }
     }
     track {
       id
@@ -91,6 +238,10 @@ export const EconomicResourceDocument = gql`
         id
         name
       }
+    }
+    unitOfEffort {
+      id
+      label
     }
     onhandQuantity {
       id

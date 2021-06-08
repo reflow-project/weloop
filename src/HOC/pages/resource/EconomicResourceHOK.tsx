@@ -15,7 +15,7 @@ export const EconomicResourceHOK: FC<ResourcePageProps> = ({ resourceId }) => {
     variables: { id: resourceId }
   });
 
-  const resource: any = data?.economicResource;
+  const resource = data?.economicResource;
 
   const notifiedMustLogin = useNotifyMustLogin();
   const [showCreateResource, toggleShowCreateResource] = useReducer(

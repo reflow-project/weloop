@@ -6,8 +6,13 @@ import { Box, Text } from 'rebass/styled-components';
 import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
 import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
 import Button from 'ui/elements/Button';
+import PrimaryAccountablePerson, {
+  PersonWrapper
+} from '../../modules/Resource/PrimaryAccountablePerson';
 import styled from '../../themes/styled';
 
+const ArrowDownIcon = require('react-feather/dist/icons/chevron-down').default;
+const ArrowUpIcon = require('react-feather/dist/icons/chevron-up').default;
 const MapIcon = require('react-feather/dist/icons/map').default;
 const BoxIcon = require('react-feather/dist/icons/box').default;
 const PenIcon = require('react-feather/dist/icons/edit').default;
@@ -18,7 +23,7 @@ const QRCode = require('qrcode.react');
 export interface Props {
   openEditModal: () => void;
   openUpdateResourceModal: () => void;
-  resource?: EconomicResource;
+  resource?: EconomicResource | any;
   error?: ApolloError | undefined;
   loading: boolean;
 }
@@ -30,6 +35,11 @@ export const ResourceItem: React.FC<Props> = ({
 }) => {
   const URL = window.location.href;
 
+  const [showList, setShowList] = React.useState({
+    first: false,
+    second: false
+  });
+
   return (
     <MainContainer>
       <HomeBox>
@@ -39,7 +49,6 @@ export const ResourceItem: React.FC<Props> = ({
               <Button mr={2} onClick={openEditModal} variant="button">
                 <Trans>Perform event</Trans>
               </Button>
-
               <Button ml={2} onClick={openUpdateResourceModal} variant="error">
                 <EditIcon size="20" /> <Trans>Edit</Trans>
               </Button>
@@ -52,13 +61,13 @@ export const ResourceItem: React.FC<Props> = ({
                 <QRCodeWrapper>{resource?.id && <QRCode value={URL} />}</QRCodeWrapper>
               </div>
               <InfoWrapper>
-                <Box mr={1} mb={2}>
+                <Box mb={2}>
                   <Title variant="heading">
                     {' '}
                     <Trans>{resource && resource.name}</Trans>
                   </Title>
                 </Box>
-                <Box mr={1}>
+                <Box>
                   <Text variant="text">
                     <Icon>
                       <PenIcon size="16" />
@@ -69,7 +78,7 @@ export const ResourceItem: React.FC<Props> = ({
                     <Trans>{resource?.note ? resource.note : 'Not provided'}</Trans>
                   </Text>
                 </Box>
-                <Box mr={1}>
+                <Box>
                   <Text variant="text">
                     <Icon>
                       <MapIcon size="16" />
@@ -82,7 +91,7 @@ export const ResourceItem: React.FC<Props> = ({
                       : 'Not provided'}
                   </Text>
                 </Box>
-                <Box mr={1}>
+                <Box>
                   <Text variant="text">
                     <Icon>
                       <BoxIcon size="16" />
@@ -96,65 +105,185 @@ export const ResourceItem: React.FC<Props> = ({
                             : 'inherit'
                       }}
                     >
-                      {`${resource?.onhandQuantity?.hasNumericalValue} ${resource?.onhandQuantity?.hasUnit.label}`}
+                      {resource?.onhandQuantity
+                        ? `${resource?.onhandQuantity?.hasNumericalValue} ${resource?.onhandQuantity?.hasUnit.label}`
+                        : 'Not provided'}
                     </span>
                   </Text>
                 </Box>
-                {resource?.track?.map(track => {
-                  return (
-                    <TrackWrapper>
-                      <Badge>
-                        {track.action ? (
-                          <Trans>{track.action.label}</Trans>
-                        ) : (
-                          <Trans>Not provided</Trans>
-                        )}
-                      </Badge>
-                      <Box mr={1}>
+
+                <PrimaryAccountablePerson data={resource?.primaryAccountable} />
+
+                <PersonWrapper>
+                  <div className="d-flex">
+                    <Text variant="heading">
+                      <Trans>Some data</Trans>
+                    </Text>
+                    <Button
+                      mr={2}
+                      onClick={() =>
+                        setShowList({
+                          ...showList,
+                          first: !showList.first
+                        })
+                      }
+                      variant="show-more"
+                    >
+                      {showList.first ? (
+                        <>
+                          <ArrowUpIcon size="16" />
+                          <Trans>Hide data</Trans>
+                        </>
+                      ) : (
+                        <>
+                          <ArrowDownIcon size="16" />
+                          <Trans>Show data</Trans>
+                        </>
+                      )}
+                    </Button>
+                  </div>
+
+                  {showList.first ? (
+                    <div>
+                      <div className="intent">
                         <Text variant="text">
-                          <Icon>
-                            <PenIcon size="16" />
-                          </Icon>
                           <b>
-                            <Trans>Track note: </Trans>
+                            <Trans>contained In:</Trans>
                           </b>{' '}
-                          {track.note ? track.note : 'Not provided'}
+                          {resource?.containedIn + ''}
                         </Text>
-                      </Box>
-                      <Box mr={1}>
+                      </div>
+                      <div className="intent">
                         <Text variant="text">
-                          <Icon>
-                            <BoxIcon size="16" />
-                          </Icon>
-                          <b>Quantity</b>{' '}
-                          {`${track.resourceQuantity?.hasNumericalValue} ${track.resourceQuantity?.hasUnit.label}`}
-                        </Text>
-                      </Box>
-                      <Box mr={1}>
-                        <Text variant="text">
-                          <Icon>
-                            <UserIcon size="16" />
-                          </Icon>
                           <b>
-                            <Trans>Provider:</Trans>
+                            <Trans>contains:</Trans>
                           </b>{' '}
-                          {track.provider ? track.provider.name : 'Not provided'}
+                          {resource?.contains + ''}
                         </Text>
-                      </Box>
-                      <Box mr={1}>
+                      </div>
+                      <div className="intent">
                         <Text variant="text">
-                          <Icon>
-                            <UserIcon size="16" />
-                          </Icon>
                           <b>
-                            <Trans>Receiver:</Trans>
-                          </b>
-                          {track.receiver ? track.receiver.name : 'Not provided'}
+                            <Trans>lot:</Trans>
+                          </b>{' '}
+                          {resource?.lot + ''}
                         </Text>
-                      </Box>
-                    </TrackWrapper>
-                  );
-                })}
+                      </div>
+                      <div className="intent">
+                        <Text variant="text">
+                          <b>
+                            <Trans>stage:</Trans>
+                          </b>{' '}
+                          {resource?.stage + ''}
+                        </Text>
+                      </div>
+                      <div className="intent">
+                        <Text variant="text">
+                          <b>
+                            <Trans>trace length:</Trans>
+                          </b>{' '}
+                          {resource?.trace.length}
+                        </Text>
+                      </div>
+                      <div className="intent">
+                        <Text variant="text">
+                          <b>
+                            <Trans>tracking Identifier:</Trans>
+                          </b>{' '}
+                          {resource?.trackingIdentifier + ''}
+                        </Text>
+                      </div>
+                      <div className="intent">
+                        <Text variant="text">
+                          <b>
+                            <Trans>unit Of Effort:</Trans>
+                          </b>{' '}
+                          {resource?.unitOfEffort + ''}
+                        </Text>
+                      </div>
+                    </div>
+                  ) : null}
+                </PersonWrapper>
+                {resource?.track && resource?.track.length > 0 && (
+                  <Button
+                    mr={2}
+                    onClick={() =>
+                      setShowList({
+                        ...showList,
+                        second: !showList.second
+                      })
+                    }
+                    variant="show-more"
+                  >
+                    {showList.second ? (
+                      <>
+                        <ArrowUpIcon size="16" />
+                        <Trans>Show less events</Trans>
+                      </>
+                    ) : (
+                      <>
+                        <ArrowDownIcon size="16" />
+                        <Trans>Show more events</Trans>
+                      </>
+                    )}
+                  </Button>
+                )}
+                {showList.second &&
+                  resource?.track.map((track: any) => {
+                    return (
+                      <TrackWrapper>
+                        <Badge>
+                          {track.action ? (
+                            <Trans>{track.action.label}</Trans>
+                          ) : (
+                            <Trans>Not provided</Trans>
+                          )}
+                        </Badge>
+                        <Box mr={1}>
+                          <Text variant="text">
+                            <Icon>
+                              <PenIcon size="16" />
+                            </Icon>
+                            <b>
+                              <Trans>Track note: </Trans>
+                            </b>{' '}
+                            {track.note ? track.note : 'Not provided'}
+                          </Text>
+                        </Box>
+                        <Box mr={1}>
+                          <Text variant="text">
+                            <Icon>
+                              <BoxIcon size="16" />
+                            </Icon>
+                            <b>Quantity</b>{' '}
+                            {`${track.resourceQuantity?.hasNumericalValue} ${track.resourceQuantity?.hasUnit.label}`}
+                          </Text>
+                        </Box>
+                        <Box mr={1}>
+                          <Text variant="text">
+                            <Icon>
+                              <UserIcon size="16" />
+                            </Icon>
+                            <b>
+                              <Trans>Provider:</Trans>
+                            </b>{' '}
+                            {track.provider ? track.provider.name : 'Not provided'}
+                          </Text>
+                        </Box>
+                        <Box mr={1}>
+                          <Text variant="text">
+                            <Icon>
+                              <UserIcon size="16" />
+                            </Icon>
+                            <b>
+                              <Trans>Receiver:</Trans>
+                            </b>
+                            {track.receiver ? track.receiver.name : 'Not provided'}
+                          </Text>
+                        </Box>
+                      </TrackWrapper>
+                    );
+                  })}
               </InfoWrapper>
             </InventoryWrapper>
           </Wrapper>
