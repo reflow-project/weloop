@@ -6,7 +6,6 @@ import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
 import { TestUrlOrFile } from 'HOC/lib/formik-validations';
 import { useCreateResource } from '../../../fe/resource/create/useCreateResource';
-import { useMe } from '../../../fe/session/useMe';
 import {
   CreateResourcePanel,
   TCreateResourcePanel,
@@ -32,7 +31,6 @@ export interface Props {
 }
 
 export const CreateResourcePanelHOC: FC<Props> = ({ done, resource, ...props }) => {
-  const { me } = useMe();
   const history = useHistory();
   const { create } = useCreateResource();
 
@@ -102,10 +100,14 @@ export const CreateResourcePanelHOC: FC<Props> = ({ done, resource, ...props }) 
         image: values.image
       })
         .then((response: any) => {
-          const redirect = `/inventory/user/${me?.user.id} `;
-          !response.errors && history.replace(redirect);
+          if (!response.errors) {
+            console.log(response?.data?.createEconomicEvent.economicEvent.resourceInventoriedAs);
+            const newId =
+              response?.data?.createEconomicEvent.economicEvent.resourceInventoriedAs.id;
+            const redirect = `/inventory/${newId} `;
+            done();
+            history.replace(redirect);
 
-          !response.errors &&
             toast.success('Resource was created', {
               position: 'top-right',
               transition: Slide,
@@ -114,6 +116,7 @@ export const CreateResourcePanelHOC: FC<Props> = ({ done, resource, ...props }) 
               closeOnClick: true,
               pauseOnHover: true
             });
+          }
         })
         .catch((error: any) => console.log(error));
     }
