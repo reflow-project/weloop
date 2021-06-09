@@ -85,9 +85,6 @@ const Menu: React.FC<{ tabPaths: Props['tabPaths'] }> = ({ tabPaths }) => (
       <NavLink exact to={tabPaths.communities}>
         <Trans>All communities</Trans>
       </NavLink>
-      <NavLink exact to={tabPaths.collections}>
-        <Trans>All collections</Trans>
-      </NavLink>
     </MenuList>
   </>
 );
