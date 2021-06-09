@@ -46,7 +46,6 @@ export const Discover: React.FC<Props> = ({
       <HomeBox>
         <WrapperCont>
           <WrapperFeatured>{FeaturedCommunitiesBox}</WrapperFeatured>
-          <WrapperFeatured mt={2}>{FeaturedCollectionsBox}</WrapperFeatured>
           <Wrapper>
             <Menu tabPaths={tabPaths} />
             <Switch>
