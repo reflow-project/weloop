@@ -67,6 +67,7 @@ const FieldWrapper = styled('div')<any>`
     height: 40px;
     display: block;
     width: 100%;
+    box-sizing: border-box;
     padding 0 10px;
     font-family: 'Arial', sans-serif;
     font-weight: 600;

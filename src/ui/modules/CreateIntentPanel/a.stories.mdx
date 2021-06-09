@@ -5,14 +5,14 @@ import { CreateIntentPanel } from 'ui/modules/CreateIntentPanel'
 import { action } from '@storybook/addon-actions'
 import Modal from 'ui/modules/Modal'
 
-<Meta title="Modules|Create an Intent" component={CreateIntentPanel} />
+<Meta title="Modules|Create Intent" component={CreateIntentPanel} />
 
 # CreateIntentPanel
 
-Let's define a story for the `Create Inent Panel preview` module
+Let's define a story for the `Create Intent Panel preview` module
 
 <Preview>
-  <Story name="Create an Intent">
+  <Story name="Create Intent">
     <Modal closeModal={action('close modal')}>
       <CreateIntentPanel {...useGetCreateIntentModalProps()} />
     </Modal>

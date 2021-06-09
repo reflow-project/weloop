@@ -12,7 +12,7 @@ type ResourcePageProps = {
 
 export const EconomicResourceHOK: FC<ResourcePageProps> = ({ resourceId }) => {
   const { data, loading, error } = GQL.useEconomicResourceQuery({
-    variables: { id: resourceId }
+    variables: { id: resourceId.trim() }
   });
 
   const resource = data?.economicResource;
