@@ -6,6 +6,7 @@ import { Box, Heading } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
 import { FormikHook } from 'ui/@types/types';
 import { CustomSelect as Select } from 'ui/elements/CustomSelect';
+import { useMe } from '../../../fe/session/useMe';
 import { setSelectOption } from '../../elements/CustomSelect/select';
 import DropzoneArea from '../DropzoneModal';
 import { IntentActions } from '../EconomicEventManager';
@@ -51,6 +52,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
   receiverList,
   setAction = () => {}
 }) => {
+  const [actionsArr, setActionsArr] = React.useState<any>([]);
   const [providerArr, setProviderArr] = React.useState<any>([]);
   const [receiverArr, setReceiverArr] = React.useState<any>([]);
   const [unitLst, setUnitLst] = React.useState<any>([]);
@@ -58,6 +60,20 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
     (file: File) => formik.setValues({ ...formik.values, image: file }),
     [formik]
   );
+  const { me } = useMe();
+
+  React.useEffect(() => {
+    if (actionList?.length) {
+      const arr = actionList.map((el: any) => {
+        return !['transfer', 'consume', 'produce'].includes(el.id)
+          ? { ...el, isDisabled: true }
+          : { ...el, isDisabled: false };
+      });
+
+      setActionsArr(arr);
+    }
+  }, [actionList]);
+
   React.useEffect(() => {
     if (unitPages?.length) {
       const unit = unitPages.map((el: { id: string; label: string; symbol: string }) => ({
@@ -72,7 +88,19 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
   React.useEffect(() => {
     setProviderArr(setSelectOption(providerList, 'name'));
     setReceiverArr(setSelectOption(receiverList, 'name'));
-  }, [providerList, receiverList]);
+
+    formik.setValues({
+      ...formik.values,
+      provider: {
+        id: providerList?.find((el: any) => el.id === me?.user?.id)?.id || '',
+        label: providerList?.find((el: any) => el.id === me?.user?.id)?.name || ''
+      },
+      receiver: {
+        id: receiverList?.find((el: any) => el.id === me?.user?.id)?.id || '',
+        label: receiverList?.find((el: any) => el.id === me?.user?.id)?.name || ''
+      }
+    });
+  }, [formik, providerList, receiverList, me]);
 
   React.useEffect(() => {
     setUnitLst(
@@ -130,7 +158,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                           setAction(option.id);
                           formik.setValues({ ...formik.values, action: option });
                         }}
-                        options={actionList}
+                        options={actionsArr}
                         variant="primary"
                         id="actions"
                         name="actions"

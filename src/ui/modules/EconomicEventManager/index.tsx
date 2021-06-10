@@ -12,6 +12,7 @@ export type IntentActions = {
   id: string;
   label: string;
   note?: string;
+  isDisabled?: boolean;
 };
 
 export type EconomicEventVariables = {
