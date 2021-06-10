@@ -84,29 +84,23 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
       setUnitLst(unit);
     }
   }, [unitPages]);
-
+  /* eslint-disable */
   React.useEffect(() => {
     setProviderArr(setSelectOption(providerList, 'name'));
     setReceiverArr(setSelectOption(receiverList, 'name'));
-  }, [providerList, receiverList]);
-  /*eslint-disable*/
-  React.useEffect(() => {
+
     formik.setValues({
       ...formik.values,
       provider: {
         id: providerList?.find((el: any) => el.id === me?.user?.id)?.id || '',
         label: providerList?.find((el: any) => el.id === me?.user?.id)?.name || ''
-      }
-    });
-
-    formik.setValues({
-      ...formik.values,
+      },
       receiver: {
         id: receiverList?.find((el: any) => el.id === me?.user?.id)?.id || '',
         label: receiverList?.find((el: any) => el.id === me?.user?.id)?.name || ''
       }
     });
-  }, [me]);
+  }, [providerList, receiverList, me]);
 
   React.useEffect(() => {
     setUnitLst(

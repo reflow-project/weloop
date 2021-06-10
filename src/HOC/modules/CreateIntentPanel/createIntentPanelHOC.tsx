@@ -98,6 +98,7 @@ export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done }) 
             response?.data?.createIntent?.intent && history.replace(redirect);
           }
 
+          !response.errors && done();
           !response.errors &&
             toast.success('Intent was created', {
               position: 'top-right',
