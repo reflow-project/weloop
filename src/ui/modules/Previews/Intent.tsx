@@ -59,7 +59,7 @@ export const Intent: React.FC<Props> = ({
           </TitleLink>
           {summary && (
             <Summary variant="text" mt={2}>
-              {summary} sum
+              {summary}
             </Summary>
           )}
         </Infos>
