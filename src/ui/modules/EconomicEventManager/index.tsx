@@ -137,7 +137,7 @@ export const EconomicEventManager: React.FC<any> = ({
             onSelect={actionHandler}
           />
         </FormGroup>
-        {providerArr.length ? (
+        {eventVariables.action.id ? (
           <div>
             <div className="d-flex">
               <FormGroup>

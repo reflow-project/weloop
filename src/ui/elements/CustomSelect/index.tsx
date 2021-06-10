@@ -51,7 +51,7 @@ const WrapperSelect = styled(Select)`
   }
   ${transitions('background, 0.2s')};
   margin: '0 10px 0 0 ';
-  opacity: ${props => (props.disabled === true ? '0.7' : '1')};
+
   cursor: 'pointer';
   .select__option--is-disabled {
     opacity: 0.5;
