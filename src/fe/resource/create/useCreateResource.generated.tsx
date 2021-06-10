@@ -102,7 +102,7 @@ export type CreateEconomicEventAndExistResourceMutation = (
 
 export const CreateEconomicEventAndNewResourceDocument = gql`
     mutation createEconomicEventAndNewResource($note: String, $atLocation: ID, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!, $name: String, $image: URI) {
-  createEconomicEvent(event: {note: $note, action: $action, atLocation: $atLocation, provider: $provider, receiver: $receiver, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}, newInventoriedResource: {name: $name, image: $image}) {
+  createEconomicEvent(event: {action: $action, atLocation: $atLocation, provider: $provider, receiver: $receiver, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}, newInventoriedResource: {note: $note, name: $name, image: $image, currentLocation: $atLocation}) {
     economicEvent {
       id
       note
