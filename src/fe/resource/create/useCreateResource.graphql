@@ -10,7 +10,6 @@ mutation createEconomicEventAndNewResource(
   $image: URI,
 ) {
   createEconomicEvent( event: {
-    note: $note,
     action: $action
     atLocation: $atLocation,
     provider: $provider,
@@ -18,8 +17,10 @@ mutation createEconomicEventAndNewResource(
     resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}
   },
     newInventoriedResource: {
+      note: $note,
       name: $name,
-      image: $image
+      image: $image,
+      currentLocation: $atLocation,
     }) {
     economicEvent {
       id
