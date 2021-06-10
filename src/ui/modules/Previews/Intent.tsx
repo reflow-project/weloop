@@ -59,13 +59,13 @@ export const Intent: React.FC<Props> = ({
           </TitleLink>
           {summary && (
             <Summary variant="text" mt={2}>
-              {summary}
+              {summary} sum
             </Summary>
           )}
         </Infos>
       </Wrapper>
       <Meta>
-        <Collection ml={2}>
+        <Collection ml={2} mb={2}>
           Added in <NavLink to={collectionLink}> +{collectionName}</NavLink>
         </Collection>
         {hideActions ? null : (
