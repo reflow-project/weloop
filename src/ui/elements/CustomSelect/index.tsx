@@ -51,8 +51,11 @@ const WrapperSelect = styled(Select)`
   }
   ${transitions('background, 0.2s')};
   margin: '0 10px 0 0 ';
-  opacity: ${props => (props.disabled === true ? '0.7' : '1')};
+
   cursor: 'pointer';
+  .select__option--is-disabled {
+    opacity: 0.5;
+  }
   &:hover && not:['disabled'] {
     background: ${props =>
       props.variant === 'primary' || props.variant === 'danger'
@@ -72,16 +75,30 @@ export const CustomSelect: FC<Props> = ({
   value
 }) => {
   const optionsList = options
-    ? options.map(el => ({
-        id: el.id,
-        value: el.label,
-        label: (
-          <span>
-            <b>{el.label}</b>
-            {el.note && <small>{el.note}</small>}
-          </span>
-        )
-      }))
+    ? options.map(el => {
+        return el.isDisabled
+          ? {
+              id: el.id,
+              value: el.label,
+              isDisabled: el.isDisabled,
+              label: (
+                <span>
+                  <b>{el.label}</b>
+                  {el.note && <small>{el.note}</small>}
+                </span>
+              )
+            }
+          : {
+              id: el.id,
+              value: el.label,
+              label: (
+                <span>
+                  <b>{el.label}</b>
+                  {el.note && <small>{el.note}</small>}
+                </span>
+              )
+            };
+      })
     : [];
 
   return (
@@ -90,6 +107,7 @@ export const CustomSelect: FC<Props> = ({
       variant={variant}
       placeholder={placeholder}
       disabled={disabled}
+      isOptionDisabled={(option: any) => option.isDisabled}
       // onInputChange={(value:string) => onInputChange(name, value)}
       className="basic-single"
       classNamePrefix="select"

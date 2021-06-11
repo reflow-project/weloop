@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
 import { TestUrlOrFile } from 'HOC/lib/formik-validations';
 import { useCreateResource } from '../../../fe/resource/create/useCreateResource';
+
 import {
   CreateResourcePanel,
   TCreateResourcePanel,
@@ -88,7 +89,6 @@ export const CreateResourcePanelHOC: FC<Props> = ({ done, resource, ...props }) 
     enableReinitialize: true,
 
     onSubmit: (values: CreateIntentFormValues) => {
-      //TODO: do validation and return proper data
       return create({
         name: values.name,
         action: values.action.id,
@@ -101,7 +101,6 @@ export const CreateResourcePanelHOC: FC<Props> = ({ done, resource, ...props }) 
       })
         .then((response: any) => {
           if (!response.errors) {
-            console.log(response?.data?.createEconomicEvent.economicEvent.resourceInventoriedAs);
             const newId =
               response?.data?.createEconomicEvent.economicEvent.resourceInventoriedAs.id;
             const redirect = `/inventory/${newId} `;

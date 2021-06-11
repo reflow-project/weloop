@@ -6,6 +6,8 @@ import { Box, Heading } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
 import { FormikHook } from 'ui/@types/types';
 import { CustomSelect as Select } from 'ui/elements/CustomSelect';
+import { useMe } from '../../../fe/session/useMe';
+import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
 import { setSelectOption } from '../../elements/CustomSelect/select';
 import DropzoneArea from '../DropzoneModal';
 import { IntentActions } from '../EconomicEventManager';
@@ -27,7 +29,8 @@ export type CreateIntentFormValues = {
 
 export type TCreateResourcePanel = {
   title: string;
-  done: any;
+  done: () => void;
+  resource?: EconomicResource;
   formik: FormikHook<CreateIntentFormValues>;
   unitPages?: any;
   actionList?: any;
@@ -58,6 +61,8 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
     (file: File) => formik.setValues({ ...formik.values, image: file }),
     [formik]
   );
+  const { me } = useMe();
+
   React.useEffect(() => {
     if (unitPages?.length) {
       const unit = unitPages.map((el: { id: string; label: string; symbol: string }) => ({
@@ -68,11 +73,23 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
       setUnitLst(unit);
     }
   }, [unitPages]);
-
+  /* eslint-disable */
   React.useEffect(() => {
     setProviderArr(setSelectOption(providerList, 'name'));
     setReceiverArr(setSelectOption(receiverList, 'name'));
-  }, [providerList, receiverList]);
+
+    formik.setValues({
+      ...formik.values,
+      provider: {
+        id: providerList?.find((el: any) => el.id === me?.user?.id)?.id || '',
+        label: providerList?.find((el: any) => el.id === me?.user?.id)?.name || ''
+      },
+      receiver: {
+        id: receiverList?.find((el: any) => el.id === me?.user?.id)?.id || '',
+        label: receiverList?.find((el: any) => el.id === me?.user?.id)?.name || ''
+      }
+    });
+  }, [providerList, receiverList, me]);
 
   React.useEffect(() => {
     setUnitLst(
@@ -82,7 +99,9 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
       })
     );
   }, [unitPages]);
+
   const initialIconUrl = 'string' === typeof formik.values.image ? formik.values.image : '';
+
   return (
     <Container>
       <form onSubmit={formik.handleSubmit}>

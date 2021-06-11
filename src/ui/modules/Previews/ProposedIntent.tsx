@@ -26,7 +26,7 @@ export interface IProposedIntent {
   collectionLink: string;
   collectionName: string;
   isOpenDropdown: boolean;
-  toggleDropdown(): unknown;
+  toggleDropdown?: () => unknown;
   toggleFlag: null | (() => unknown);
 }
 
