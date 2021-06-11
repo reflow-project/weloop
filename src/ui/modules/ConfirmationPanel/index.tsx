@@ -4,7 +4,7 @@ import { Heading, Text } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
 import styled from 'ui/themes/styled';
 // import { FormikHook } from 'ui/@types/types';
-import { Actions, Container, ContainerForm, Header, Row } from 'ui/modules/Modal';
+import { Actions, ModalContainer, ContainerForm, Header, Row } from 'ui/modules/Modal';
 
 // export interface Props {
 //   done(confirmed: boolean): unknown;
@@ -53,16 +53,16 @@ import { Actions, Container, ContainerForm, Header, Row } from 'ui/modules/Modal
 //   );
 // };
 
-export interface ConfirmationPanel {
+export interface ConfirmationPanelProps {
   confirm(): unknown;
   cancel(): unknown;
   title: string;
-  description: string;
+  description?: string;
   action: string;
   waiting: boolean;
 }
 
-export const ConfirmationPanel: React.FC<ConfirmationPanel> = ({
+export const ConfirmationPanel: React.FC<ConfirmationPanelProps> = ({
   title,
   description,
   action,
@@ -72,14 +72,12 @@ export const ConfirmationPanel: React.FC<ConfirmationPanel> = ({
 }) => {
   // const { i18n } = React.useContext(LocaleContext);
   return (
-    <Container>
+    <ModalContainer>
       <Header>
         <Heading m={2}>{title}</Heading>
       </Header>
       <Row>
-        <ContainerForm>
-          <Text>{description}</Text>
-        </ContainerForm>
+        <ContainerForm>{description && <Text>{description}</Text>}</ContainerForm>
       </Row>
       <Actions>
         <SubmitButton
@@ -90,13 +88,13 @@ export const ConfirmationPanel: React.FC<ConfirmationPanel> = ({
           style={{ marginLeft: '10px' }}
           onClick={confirm}
         >
-          {action}
+          <Trans>{action}</Trans>
         </SubmitButton>
         <Button variant="outline" onClick={cancel}>
           <Trans>Cancel</Trans>
         </Button>
       </Actions>
-    </Container>
+    </ModalContainer>
   );
 };
 

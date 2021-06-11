@@ -1,20 +1,20 @@
 import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
 import { PropsTable } from '@storybook/components'
 import { useGetCreateIntentModalProps } from 'ui/mock/createIntentModal'
-import { CreateIntentPanel } from 'ui/modules/CreateIntentPanel'
+import { UpdateResourcePanel } from 'ui/modules/UpdateResourcePanel'
 import { action } from '@storybook/addon-actions'
 import Modal from 'ui/modules/Modal'
 
-<Meta title="Modules|Create an Intent" component={CreateIntentPanel} />
+<Meta title="Modules|Update Resource" component={UpdateResourcePanel} />
 
-# CreateIntentPanel
+# UpdateResourcePanel
 
-Let's define a story for the `Create Inent Panel preview` module
+Let's define a story for the `Update Resource Panel preview` module
 
 <Preview>
   <Story name="Create an Intent">
     <Modal closeModal={action('close modal')}>
-      <CreateIntentPanel {...useGetCreateIntentModalProps()} />
+      <UpdateResourcePanel {...useGetCreateIntentModalProps()} />
     </Modal>
   </Story>
 </Preview>
