@@ -7,6 +7,7 @@ import Button from 'ui/elements/Button';
 import { FormikHook } from 'ui/@types/types';
 import { CustomSelect as Select } from 'ui/elements/CustomSelect';
 import { useMe } from '../../../fe/session/useMe';
+import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
 import { setSelectOption } from '../../elements/CustomSelect/select';
 import DropzoneArea from '../DropzoneModal';
 import { IntentActions } from '../EconomicEventManager';
@@ -28,7 +29,8 @@ export type CreateIntentFormValues = {
 
 export type TCreateResourcePanel = {
   title: string;
-  done: any;
+  done: () => void;
+  resource?: EconomicResource;
   formik: FormikHook<CreateIntentFormValues>;
   unitPages?: any;
   actionList?: any;
@@ -52,7 +54,6 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
   receiverList,
   setAction = () => {}
 }) => {
-  const [actionsArr, setActionsArr] = React.useState<any>([]);
   const [providerArr, setProviderArr] = React.useState<any>([]);
   const [receiverArr, setReceiverArr] = React.useState<any>([]);
   const [unitLst, setUnitLst] = React.useState<any>([]);
@@ -61,18 +62,6 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
     [formik]
   );
   const { me } = useMe();
-
-  React.useEffect(() => {
-    if (actionList?.length) {
-      const arr = actionList.map((el: any) => {
-        return !['transfer', 'consume', 'produce'].includes(el.id)
-          ? { ...el, isDisabled: true }
-          : { ...el, isDisabled: false };
-      });
-
-      setActionsArr(arr);
-    }
-  }, [actionList]);
 
   React.useEffect(() => {
     if (unitPages?.length) {
@@ -110,7 +99,9 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
       })
     );
   }, [unitPages]);
+
   const initialIconUrl = 'string' === typeof formik.values.image ? formik.values.image : '';
+
   return (
     <Container>
       <form onSubmit={formik.handleSubmit}>
@@ -158,7 +149,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                           setAction(option.id);
                           formik.setValues({ ...formik.values, action: option });
                         }}
-                        options={actionsArr}
+                        options={actionList}
                         variant="primary"
                         id="actions"
                         name="actions"

@@ -11,7 +11,7 @@ import {
   SelectOption,
   TCreateIntentPanel
 } from 'ui/modules/CreateIntentPanel';
-import { useHistory, useLocation } from 'react-router';
+import { useHistory } from 'react-router';
 import { useUnitsPagesQuery } from '../EconomicEventManager/EconomicEventManager.generated';
 import * as GQL from '../EconomicEventManager/EconomicEventManager.generated';
 
@@ -31,7 +31,6 @@ export interface CreateOfferFormValues {
 
 export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done }) => {
   const history = useHistory();
-  const location = useLocation();
   const { create } = useCreateIntent();
   const { myCommunityFollowsPage } = useMyFollowedCommunities();
   const communities = useMemo<SelectOption[]>(() => {
@@ -81,7 +80,6 @@ export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done }) 
     validationSchema: SignupSchema,
     enableReinitialize: true,
     onSubmit: (values: any) => {
-      //TODO: do validation and return proper data
       return create({
         name: values.name,
         communityId: values.communityId,
@@ -91,13 +89,9 @@ export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done }) 
         hasNumericalValue: values.hasNumericalValue
       })
         .then((response: any) => {
-          const redirect = `/communities/${values.communityId}/intents`;
-          if (redirect === location.pathname) {
-            window.location.reload();
-          } else {
-            response?.data?.createIntent?.intent && history.replace(redirect);
-          }
+          const redirect = `/communities/${values.communityId}`;
 
+          !response.errors && history.replace(redirect);
           !response.errors && done();
           !response.errors &&
             toast.success('Intent was created', {

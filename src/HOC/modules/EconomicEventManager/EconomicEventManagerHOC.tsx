@@ -46,7 +46,11 @@ export const EconomicEventManagerHOC: FC = ({ children }) => {
   const intentActions = intentActionsQ.data?.actions;
   const unitPages = unitPagesQ.data?.unitsPages;
   const economicEventManager: EconomicEventManagerProps = {
-    actionList: intentActions,
+    actionList: intentActions?.map((el: any) => {
+      return !['transfer', 'consume', 'produce'].includes(el.id)
+        ? { ...el, isDisabled: true }
+        : { ...el, isDisabled: false };
+    }),
     providerList: providerList,
     receiverList: receiverList,
     unitPages,
