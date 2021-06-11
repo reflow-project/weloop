@@ -73,9 +73,11 @@ const Content = styled.div`
   ${clearFix()};
   font-family: ${props => props.theme.fontFamily};
 `;
-
 export const Container = styled.div`
   font-family: ${props => props.theme.fontFamily};
+`;
+export const ModalContainer = styled(Container)`
+  padding-bottom: 20px;
 `;
 export const Actions = styled(Box)`
   ${clearFix()};

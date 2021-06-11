@@ -18,11 +18,13 @@ const BoxIcon = require('react-feather/dist/icons/box').default;
 const PenIcon = require('react-feather/dist/icons/edit').default;
 const EditIcon = require('react-feather/dist/icons/edit-3').default;
 const UserIcon = require('react-feather/dist/icons/user').default;
+const RemoveIcon = require('react-feather/dist/icons/trash-2').default;
 const QRCode = require('qrcode.react');
 
 export interface Props {
   openEditModal: () => void;
   openUpdateResourceModal: () => void;
+  openDeleteResourceModal: () => void;
   resource?: EconomicResource | any;
   error?: ApolloError | undefined;
   loading: boolean;
@@ -31,7 +33,8 @@ export interface Props {
 export const ResourceItem: React.FC<Props> = ({
   resource,
   openEditModal,
-  openUpdateResourceModal
+  openUpdateResourceModal,
+  openDeleteResourceModal
 }) => {
   const URL = window.location.href;
 
@@ -50,7 +53,10 @@ export const ResourceItem: React.FC<Props> = ({
                 <Trans>Perform event</Trans>
               </Button>
               <Button ml={2} onClick={openUpdateResourceModal} variant="error">
-                <EditIcon size="20" /> <Trans>Edit</Trans>
+                <EditIcon size="16" className="ml-2" /> <Trans>Edit</Trans>
+              </Button>
+              <Button ml={2} onClick={openDeleteResourceModal} variant="error">
+                <RemoveIcon size="16" className="ml-2" /> <Trans>Delete</Trans>
               </Button>
             </ActionsWrapper>
             <InventoryWrapper>

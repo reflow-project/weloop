@@ -1,7 +1,7 @@
-import { ConfirmationPanel } from 'ui/modules/ConfirmationPanel';
+import { ConfirmationPanelProps } from 'ui/modules/ConfirmationPanel';
 import { action } from '@storybook/addon-actions';
 
-export const useGetConfirmationPanelProps = (): ConfirmationPanel => {
+export const useGetConfirmationPanelProps = (): ConfirmationPanelProps => {
   return {
     confirm: action('confirm'),
     cancel: action('cancel'),

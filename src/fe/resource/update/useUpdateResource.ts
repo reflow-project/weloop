@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import { useCallOrNotifyMustLogin } from '../../../HOC/lib/notifyMustLogin';
 import { EconomicResourceQueryRefetch } from '../../../HOC/pages/resource/EconomicResource.generated';
 import { useUpdateEconomicResourceMutation } from './useUpdateResource.generated';
-// import { updateResourceVariables } from './useUpdateResource.generated';
 
 export interface UpdateResource {
   name: string;
