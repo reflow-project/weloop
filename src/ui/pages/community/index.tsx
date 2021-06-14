@@ -1,12 +1,13 @@
 import { Trans } from '@lingui/macro';
 import { SidePanelHOC } from 'HOC/modules/SidePanel/SidePanel';
 import * as React from 'react';
-import { ReactElement } from 'react';
+import { ReactElement, useReducer } from 'react';
+import { Plus } from 'react-feather';
 import { NavLink, Route, Switch } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { Box, Flex, Text } from 'rebass/styled-components';
-// import media from 'styled-media-query';
 import { FormikHook } from 'ui/@types/types';
-// import Button from 'ui/elements/Button';
+import { Button } from 'rebass/styled-components';
 import {
   HomeBox,
   List,
@@ -19,9 +20,15 @@ import {
 import { LoadMore } from 'ui/modules/Loadmore';
 import SocialText from 'ui/modules/SocialText';
 import styled from 'ui/themes/styled';
+import { i18n } from '../../../context/global/localizationCtx';
+import { useNotifyMustLogin } from '../../../HOC/lib/notifyMustLogin';
+import { CreateResourcePanelHOC } from '../../../HOC/modules/CreateResourcePanel/CreateResourcePanelHOC';
+import { CreateIntentPanelHOC } from 'HOC/modules/CreateIntentPanel/createIntentPanelHOC';
+import Modal from '../../modules/Modal';
 
 export interface Props {
   isJoined: boolean;
+  communityId: string;
   Activities: ReactElement[];
   Members: ReactElement[];
   Intents: ReactElement[];
@@ -53,26 +60,84 @@ export const Community: React.FC<Props> = ({
   Inventory,
   tabPaths,
   newThreadFormik,
-  // isJoined,
+  isJoined,
   Threads,
   loadMoreActivities,
+  communityId,
   // loadMoreCollections,
   loadMoreThreads
   // createCollection
 }) => {
+  const notifiedMustJoin = (msg: string) => {
+    if (!isJoined) {
+      toast(msg, { type: 'warning' });
+      return true;
+    }
+    return false;
+  };
+  const notifiedMustLogin = useNotifyMustLogin();
+  const [showCreateResource, toggleShowCreateResource] = useReducer(
+    is =>
+      !notifiedMustJoin(i18n._(`You should join this community to create new resource`)) &&
+      !notifiedMustLogin() &&
+      !is,
+    false
+  );
+
+  const [openIntent, setOpenIntent] = useReducer(
+    is =>
+      !notifiedMustJoin(i18n._(`You should join this community to create new intent`)) &&
+      !notifiedMustLogin() &&
+      !is,
+    false
+  );
+
+  const CreateResourceModal = showCreateResource ? (
+    <Modal closeModal={toggleShowCreateResource}>
+      <CreateResourcePanelHOC done={toggleShowCreateResource} />
+    </Modal>
+  ) : null;
+
+  const OpenIntentModal = openIntent ? (
+    <Modal
+      closeModal={() => {
+        setOpenIntent();
+      }}
+    >
+      <CreateIntentPanelHOC done={setOpenIntent} communityId={communityId} />
+    </Modal>
+  ) : null;
+
   return (
     <MainContainer>
+      {CreateResourceModal}
+      {OpenIntentModal}
       <HomeBox>
         <WrapperCont>
           <Wrapper>
-            {/* <Header name={communityName} /> */}
             {HeroCommunity}
             <Menu tabPaths={tabPaths} />
             <Switch>
               <Route exact path={tabPaths.intents}>
+                <ButtonWrapper>
+                  <CreateItemButton variant="primary" onClick={setOpenIntent}>
+                    <Plus size={16} color={'#fff'} />
+                    <Text variant="button">
+                      <Trans>Create a new intent</Trans>
+                    </Text>
+                  </CreateItemButton>
+                </ButtonWrapper>
                 <ObjectsList>{Intents}</ObjectsList>
               </Route>
               <Route exact path={tabPaths.inventory}>
+                <ButtonWrapper>
+                  <CreateItemButton variant="primary" onClick={() => toggleShowCreateResource()}>
+                    <Plus size={16} color={'#fff'} />
+                    <Text variant="button">
+                      <Trans>Create a new resource</Trans>
+                    </Text>
+                  </CreateItemButton>
+                </ButtonWrapper>
                 <ObjectsList>{Inventory}</ObjectsList>
               </Route>
               <Route exact path={tabPaths.timeline}>
@@ -130,18 +195,39 @@ export const Community: React.FC<Props> = ({
     </MainContainer>
   );
 };
-//
-// const CreateCollectionButton = styled(Button)`
-//   padding: 0;
-//   text-transform: capitalize;
-//   height: 34px;
-//   line-height: 34px;
-//   padding: 0 16px;
-//   &:hover {
-//     background: ${props => props.theme.colors.primary};
-//     color: ${props => props.theme.colors.appInverse};
-//   }
-// `;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px 0;
+`;
+export const CreateItemButton = styled(Button)`
+  padding: 0;
+  height: 34px;
+  text-transform: capitalize;
+  line-height: 34px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  &:not(:last-child) {
+    margin-right: 20px;
+  }
+
+  & > svg {
+    display: inline-block;
+    margin-right: 8px;
+  }
+  & > div {
+    color: #fff;
+    display: inline-block;
+  }
+
+  &:hover {
+    background: ${props => props.theme.colors.primary};
+    color: ${props => props.theme.colors.appInverse};
+  }
+`;
 //
 // const CollectionsBoxes = styled(Box)`
 //   display: grid;
@@ -194,10 +280,7 @@ const Title = styled(Flex)`
   background: ${props => props.theme.colors.appInverse};
   height: 50px;
   line-height: 50px;
-  align-items: center;}
-  </>
-);
-
+  align-items: center;
   border-bottom: ${props => props.theme.colors.border};
   button {
     width: 190px;

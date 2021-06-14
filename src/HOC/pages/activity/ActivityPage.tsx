@@ -10,18 +10,18 @@ export interface EconomicResource {
   image?: string;
 }
 
-export const ActivityPage: FC<ActivityProps> = ({ userId }) => {
+export const ActivityPage: FC<ActivityProps> = () => {
   const { me } = useMe();
-  const currentUser = me ? me.user.id : userId;
+  const currentUser = me?.user.id;
 
   const { error, data }: any = useUserQuery({
-    variables: { userId: currentUser }
+    variables: { userId: currentUser ? currentUser : '' }
   });
 
   console.log({ data });
   console.log('Error:', error);
   const props: ActivityProps = {
-    userId
+    userId: currentUser ? currentUser : ''
   };
 
   return <Activity {...props} />;

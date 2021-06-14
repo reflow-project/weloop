@@ -65,7 +65,6 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
       ? communityIntentsPageTitle
       : communityIntentsPageTitle; //never
   usePageTitle(!!community?.name && communityPageTitle, community);
-
   const { communityFollowersPage } = useCommunityFollowers(communityId);
   const { threadsPage } = useCommunityThreads(communityId);
   const [loadMoreThreads] = threadsPage.formiks;
@@ -74,7 +73,7 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
   const { activitiesPage } = useCommunityOutboxActivities(communityId);
   const [loadMoreActivities] = activitiesPage.formiks;
   const { communityIntents } = useCommunityIntents(communityId);
-  const { communityInventory } = useCommunityInventory('01F494QA0T31JTQGJ80QFHTFM0');
+  const { communityInventory } = useCommunityInventory();
 
   const isJoined = !!community?.myFollow;
   const notifiedMustJoin = (msg: string) => {
@@ -215,6 +214,7 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
       Threads,
       tabPaths,
       isJoined,
+      communityId,
       newThreadFormik: isJoined ? newThreadFormik : null,
       loadMoreActivities,
       loadMoreCollections,

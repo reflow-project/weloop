@@ -1,5 +1,7 @@
+import { Trans } from '@lingui/macro';
 import { SidePanelHOC } from 'HOC/modules/SidePanel/SidePanel';
 import * as React from 'react';
+import { Plus } from 'react-feather';
 import { NavLink } from 'react-router-dom';
 import { Box, Text } from 'rebass/styled-components';
 import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
@@ -8,16 +10,26 @@ import { InventoryWrapper, InfoWrapper, ImageWrapper } from '../../../ui/pages/r
 import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
 import { typography } from '../../../mn-constants';
 import styled from '../../themes/styled';
+import { ButtonWrapper, CreateItemButton } from '../community';
 
 export interface Props {
+  done: () => void;
   inventory: EconomicResourcesFilteredQuery['economicResourcesFiltered'];
 }
 
-export const Inventory: React.FC<Props> = ({ inventory }) => {
+export const Inventory: React.FC<Props> = ({ inventory, done }) => {
   return (
     <MainContainer>
       <HomeBox>
         <WrapperCont>
+          <ButtonWrapper>
+            <CreateItemButton variant="primary" onClick={done}>
+              <Plus size={16} color={'#fff'} />
+              <Text variant="button">
+                <Trans>Create a new resource</Trans>
+              </Text>
+            </CreateItemButton>
+          </ButtonWrapper>
           <Wrapper>
             {(inventory as any).map(({ id, name, note, image }: EconomicResource) => (
               <WrapperLink to={`/inventory/${id}`}>

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
 
 export interface Props {
-  userId: string;
+  userId: string | null;
 }
 
 export const Activity: React.FC<Props> = ({ userId }) => {
