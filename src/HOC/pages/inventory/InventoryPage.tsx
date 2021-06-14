@@ -1,6 +1,9 @@
-import React, { FC } from 'react';
+import React, { FC, useReducer } from 'react';
+import Modal from '../../../ui/modules/Modal';
 import { Inventory } from '../../../ui/pages/inventory';
 import { useMe } from 'fe/session/useMe';
+import { useNotifyMustLogin } from '../../lib/notifyMustLogin';
+import { CreateResourcePanelHOC } from '../../modules/CreateResourcePanel/CreateResourcePanelHOC';
 import { useEconomicResourcesFilteredQuery } from './InventoryPage.generated';
 
 export interface PrimaryAccountable {
@@ -85,9 +88,30 @@ export interface EconomicResource {
 export const InventoryPage: FC = () => {
   const { me } = useMe();
   const currentUser = me?.user?.id;
+
+  const notifiedMustLogin = useNotifyMustLogin();
+  const [showCreateResource, toggleShowCreateResource] = useReducer(
+    is => !notifiedMustLogin() && !is,
+    false
+  );
+
+  const CreateResourceModal = showCreateResource ? (
+    <Modal closeModal={toggleShowCreateResource}>
+      <CreateResourcePanelHOC done={toggleShowCreateResource} />
+    </Modal>
+  ) : null;
+
   const { data } = useEconomicResourcesFilteredQuery({
     variables: { agent: currentUser ? [currentUser] : [] }
   });
 
-  return <Inventory inventory={data?.economicResourcesFiltered || []} />;
+  return (
+    <>
+      {CreateResourceModal}
+      <Inventory
+        inventory={data?.economicResourcesFiltered || []}
+        done={toggleShowCreateResource}
+      />
+    </>
+  );
 };
