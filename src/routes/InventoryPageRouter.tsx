@@ -8,17 +8,10 @@ interface InventoryPageRouteProps {
   basePath: string;
 }
 
-const InventoryPageRoute: FC<RouteComponentProps<InventoryPageRouteProps>> = ({ match }) => {
-  const userId = match.params.userId;
-
-  const props = {
-    userId: userId,
-    basePath: `/inventory/user/${userId}`
-  };
-
+const InventoryPageRoute: FC<RouteComponentProps<InventoryPageRouteProps>> = () => {
   return (
     <WithSidebarTemplate>
-      <InventoryPage {...props} />
+      <InventoryPage />
     </WithSidebarTemplate>
   );
 };

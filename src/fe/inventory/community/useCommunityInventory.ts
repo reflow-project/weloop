@@ -1,9 +1,12 @@
 import { useMemo } from 'react';
 import * as GQL from '../../../HOC/pages/inventory/InventoryPage.generated';
+import { useMe } from '../../session/useMe';
 
-export const useCommunityInventory = (userId: string) => {
+export const useCommunityInventory = () => {
+  const { me } = useMe();
+  const currentUser = me?.user?.id;
   const { data } = GQL.useEconomicResourcesFilteredQuery({
-    variables: { agent: [userId] }
+    variables: { agent: currentUser ? [currentUser] : [] }
   });
 
   const communityInventory = data?.economicResourcesFiltered || [];

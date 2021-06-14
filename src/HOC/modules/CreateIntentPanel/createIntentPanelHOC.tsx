@@ -18,6 +18,7 @@ import * as GQL from '../EconomicEventManager/EconomicEventManager.generated';
 import * as Yup from 'yup';
 export type TCreateIntentPanelHOC = {
   done: () => void;
+  communityId?: string;
 };
 
 export interface CreateOfferFormValues {
@@ -29,7 +30,7 @@ export interface CreateOfferFormValues {
   hasNumericalValue: number;
 }
 
-export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done }) => {
+export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done, communityId }) => {
   const history = useHistory();
   const { create } = useCreateIntent();
   const { myCommunityFollowsPage } = useMyFollowedCommunities();
@@ -69,7 +70,7 @@ export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done }) 
   const formik = useFormik<CreateIntentFormValues>({
     initialValues: {
       name: '',
-      communityId: '',
+      communityId: communityId || '',
       note: '',
       atLocation: '',
       hasUnit: '',

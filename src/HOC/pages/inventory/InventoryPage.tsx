@@ -1,12 +1,7 @@
 import React, { FC } from 'react';
-import { useMe } from '../../../fe/session/useMe';
 import { Inventory } from '../../../ui/pages/inventory';
+import { useMe } from 'fe/session/useMe';
 import { useEconomicResourcesFilteredQuery } from './InventoryPage.generated';
-
-type InventoryPageProps = {
-  userId: string;
-  basePath: string;
-};
 
 export interface PrimaryAccountable {
   id: string;
@@ -87,11 +82,11 @@ export interface EconomicResource {
   }[];
 }
 
-export const InventoryPage: FC<InventoryPageProps> = ({ userId }) => {
+export const InventoryPage: FC = () => {
   const { me } = useMe();
-  const currentUser = me ? me.user.id : userId;
+  const currentUser = me?.user?.id;
   const { data } = useEconomicResourcesFilteredQuery({
-    variables: { agent: [currentUser] }
+    variables: { agent: currentUser ? [currentUser] : [] }
   });
 
   return <Inventory inventory={data?.economicResourcesFiltered || []} />;

@@ -36,13 +36,15 @@ const WrapperButton = styled(Button)<{
           return darken('0.1', props.theme.colors.primary);
         }
         case 'danger': {
-          return darken('0.1', props.theme.colors.primary);
+          return lighten('0.1', props.theme.colors.primary);
         }
         default: {
           lighten('0.3', props.theme.colors.primary);
         }
       }
     }}
+  }
+}}
 `;
 
 export interface Props extends ButtonProps {

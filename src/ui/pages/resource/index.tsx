@@ -237,7 +237,7 @@ export const ResourceItem: React.FC<Props> = ({
                 {showList.second &&
                   resource?.track.map((track: any) => {
                     return (
-                      <TrackWrapper>
+                      <TrackWrapper key={track.id}>
                         <Badge>
                           {track.action ? (
                             <Trans>{track.action.label}</Trans>
