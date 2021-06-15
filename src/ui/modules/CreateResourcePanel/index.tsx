@@ -170,7 +170,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
               <div className="d-flex">
                 <div className="item_col-6">
                   <FormGroup>
-                    <FormLabel>Receiver</FormLabel>
+                    <FormLabel>Provider</FormLabel>
                     <Select
                       onSelect={(name, option) => {
                         formik.setValues({ ...formik.values, [name]: option });
