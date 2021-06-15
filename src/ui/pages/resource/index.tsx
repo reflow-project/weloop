@@ -123,7 +123,7 @@ export const ResourceItem: React.FC<Props> = ({
                 <PersonWrapper>
                   <div className="d-flex">
                     <Text variant="heading">
-                      <Trans>Some data</Trans>
+                      <Trans>More info</Trans>
                     </Text>
                     <Button
                       mr={2}
