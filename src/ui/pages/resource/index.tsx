@@ -119,7 +119,6 @@ export const ResourceItem: React.FC<Props> = ({
                 </Box>
                 {resource?.track && resource?.track.length > 0 && (
                   <Button
-                    mr={2}
                     mt={3}
                     onClick={() =>
                       setShowList({
@@ -198,7 +197,6 @@ export const ResourceItem: React.FC<Props> = ({
                       </TrackWrapper>
                     );
                   })}
-
                 <PrimaryAccountablePerson data={resource?.primaryAccountable} />
 
                 <PersonWrapper>

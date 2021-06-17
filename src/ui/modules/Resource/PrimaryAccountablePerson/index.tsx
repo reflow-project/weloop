@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Box, Text } from 'rebass/styled-components';
 import { PrimaryAccountable } from 'HOC/pages/inventory/InventoryPage';
 import Avatar from '../../../elements/Avatar';
-import Button from '../../../elements/Button';
 import { Title } from '../../../pages/resource';
 import styled from '../../../themes/styled';
 
@@ -11,12 +10,7 @@ export interface Props {
   data?: PrimaryAccountable;
 }
 
-const ArrowDownIcon = require('react-feather/dist/icons/chevron-down').default;
-const ArrowUpIcon = require('react-feather/dist/icons/chevron-up').default;
-
 const PrimaryAccountablePerson: React.FC<Props> = ({ data }) => {
-  const [showList, setShowList] = React.useState(false);
-
   return (
     <PersonWrapper>
       <Box mb={2} style={{ display: 'flex' }}>
@@ -36,51 +30,6 @@ const PrimaryAccountablePerson: React.FC<Props> = ({ data }) => {
           </Trans>
         </div>
       </Box>
-      <Button mr={2} onClick={() => setShowList(!showList)} variant="show-more">
-        {showList ? (
-          <>
-            <ArrowUpIcon size="16" />
-            <Trans>Hide intents</Trans>
-          </>
-        ) : (
-          <>
-            <ArrowDownIcon size="16" />
-            <Trans>Show intents</Trans>
-          </>
-        )}
-      </Button>
-      {showList ? (
-        <div className={showList ? 'show' : 'hide'}>
-          {data?.intents?.map(el => {
-            return (
-              <div key={el.id} className="intent  d-flex">
-                <div>
-                  <Box>
-                    <Text variant="text">
-                      <b>
-                        <Trans>Name:</Trans>{' '}
-                      </b>{' '}
-                      <Trans>{el.name}</Trans>
-                    </Text>
-                  </Box>
-                  <Box>
-                    <Text variant="text">
-                      <b>
-                        <Trans>Note:</Trans>{' '}
-                      </b>{' '}
-                      <Trans>{el.note}</Trans>
-                    </Text>
-                  </Box>
-                </div>
-                <Avatar
-                  size="default"
-                  src={`${process.env.REACT_APP_UPLOADS}/${el?.image}` || 'some'}
-                />
-              </div>
-            );
-          })}
-        </div>
-      ) : null}
     </PersonWrapper>
   );
 };

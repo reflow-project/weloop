@@ -18,7 +18,7 @@ import {
   AnonResetPasswordMutationName,
   AnonResetPasswordRequestMutationName,
   AnonSignUpMutationName
-} from 'fe/session/anon.generated';
+} from '../fe/session/anon.generated';
 import { MeLogoutMutationName } from 'fe/session/me.generated';
 import { GraphQLError } from 'graphql';
 import HttpStatus from 'http-status-codes';

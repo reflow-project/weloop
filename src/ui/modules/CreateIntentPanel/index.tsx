@@ -171,11 +171,6 @@ export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
                 id="atLocation"
                 name="atLocation"
               />
-              {formik.errors.hasUnit && (
-                <AlertWrapper>
-                  <CustomAlert variant="negative">{formik.errors.atLocation}</CustomAlert>
-                </AlertWrapper>
-              )}
             </CollectionContainerForm>
             <CollectionContainerForm>
               <Description mt={2}>

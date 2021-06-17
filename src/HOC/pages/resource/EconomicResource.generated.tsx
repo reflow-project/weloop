@@ -24,9 +24,6 @@ export type EconomicResourceQuery = (
           { __typename: 'AgentRelationshipRole' }
           & Pick<Types.AgentRelationshipRole, 'id' | 'inverseRoleLabel'>
         ) }
-      )>>, intents: Types.Maybe<Array<(
-        { __typename: 'Intent' }
-        & Pick<Types.Intent, 'id' | 'name' | 'note' | 'image'>
       )>> }
     ) | (
       { __typename: 'Person' }
@@ -38,9 +35,6 @@ export type EconomicResourceQuery = (
           { __typename: 'AgentRelationshipRole' }
           & Pick<Types.AgentRelationshipRole, 'id' | 'inverseRoleLabel'>
         ) }
-      )>>, intents: Types.Maybe<Array<(
-        { __typename: 'Intent' }
-        & Pick<Types.Intent, 'id' | 'name' | 'note' | 'image'>
       )>> }
     )>, stage: Types.Maybe<(
       { __typename: 'ProcessSpecification' }
@@ -145,12 +139,6 @@ export const EconomicResourceDocument = gql`
           id
           inverseRoleLabel
         }
-      }
-      intents {
-        id
-        name
-        note
-        image
       }
     }
     name

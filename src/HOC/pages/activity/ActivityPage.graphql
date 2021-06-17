@@ -1,5 +1,5 @@
 query user($userId: String!) {
-    activity(userId: $userId) {
+    user(userId: $userId) {
         outbox(limit:15) {
             edges {
                 user {
@@ -50,53 +50,25 @@ query user($userId: String!) {
 }
 
 ##draft
-#query user($userId: String!) {
-#    user(userId: $userId) {
-#        lastActivity
-#        outbox {
-#            pageInfo {
-#                hasNextPage
-#                startCursor
-#                endCursor
-#                hasPreviousPage
-#            }
-#            totalCount
-#            edges {
-#                context {
-#                    ... on Community {
-#                        id
-#                    }
-#                    ... on Collection {
-#                        id
-#                        displayUsername
-#                    }
-#                    ... on Resource {
-#                        id
-#                        extraInfo
-#                        author
-#                    }
-#                    ... on User {
-#                        name
-#                    }
-#                    ... on Comment {
-#                        id
-#                    }
-#                    ... on Intent {
-#                        name
-#                        image
-#                        provider {
-#                            name
-#                        }
-#                        note
-#                    }
-#                    ... on Like {
-#                        id
-#                    }
-#                    ... on Follow {
-#                        id
-#                    }
-#                }
-#            }}
-#    }
-#
-#}
+query userActivity($userId: String!) {
+    user(userId: $userId) {
+        lastActivity
+        outbox {
+            pageInfo {
+                hasNextPage
+                startCursor
+                endCursor
+                hasPreviousPage
+            }
+            totalCount
+            edges {
+                context {
+                    ... on Community {
+                        id
+                        displayUsername
+                    }
+                }
+            }}
+    }
+
+}

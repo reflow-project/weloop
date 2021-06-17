@@ -13,12 +13,6 @@ query economicResource($id: ID!) {
           inverseRoleLabel
         }
       }
-      intents {
-        id
-        name
-        note
-        image
-      }
     }
     name
     note

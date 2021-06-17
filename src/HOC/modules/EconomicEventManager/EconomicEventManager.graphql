@@ -32,3 +32,11 @@ query unitsPages {unitsPages {
 }
 }
 
+
+query users {users {
+  edges {
+    id
+    name
+  }
+}
+}
