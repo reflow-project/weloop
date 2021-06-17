@@ -65,7 +65,7 @@ export const Intent: React.FC<Props> = ({
         </Infos>
       </Wrapper>
       <Meta>
-        <Collection ml={2}>
+        <Collection ml={2} mb={2}>
           Added in <NavLink to={collectionLink}> +{collectionName}</NavLink>
         </Collection>
         {hideActions ? null : (
