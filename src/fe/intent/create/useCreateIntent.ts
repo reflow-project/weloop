@@ -26,6 +26,7 @@ export const useCreateIntent = () => {
           note,
           communityId,
           action: 'produced',
+          atLocation,
           hasUnit,
           hasNumericalValue
         }

@@ -20,6 +20,7 @@ mutation createOffer(
   $note: String,
   $hasUnit: ID!,
   $hasNumericalValue: Float!,
+  $atLocation: ID
 ) {
   createOffer(intent: {
     action: $action,
@@ -28,6 +29,7 @@ mutation createOffer(
       hasUnit: $hasUnit,
       hasNumericalValue: $hasNumericalValue
     },
+    atLocation: $atLocation,
     inScopeOf: [$communityId],
     note: $note }) {
     intent {
