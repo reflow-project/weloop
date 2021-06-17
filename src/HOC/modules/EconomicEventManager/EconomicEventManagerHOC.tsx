@@ -1,14 +1,17 @@
 import * as React from 'react';
 import { FC } from 'react';
 import { useActionsQuery } from '../IntentPanel/Actions.generated';
-
 import { EconomicEventManagerProps } from '../../../ui/modules/EconomicEventManager';
 import {
   useEconomicEventsFilteredQuery,
   useUnitsPagesQuery
+  // useUsersQuery,
 } from './EconomicEventManager.generated';
 
 export const EconomicEventManagerHOC: FC = ({ children }) => {
+  // const [fulUserList, setFulUserList] = React.useState<
+  //   null | undefined | [] | { id: string; name: string }[] | any
+  //   >([]);
   const [providerList, setProviderList] = React.useState<
     null | undefined | [] | { id: string; name: string }[]
   >([]);
@@ -22,7 +25,10 @@ export const EconomicEventManagerHOC: FC = ({ children }) => {
     variables: { action }
   });
 
+  // const users = useUsersQuery();
+
   React.useEffect(() => {
+    // setFulUserList(users?.data?.users.edges || { id: '', name: '' })
     const providers = data?.economicEventsFiltered?.map(el => el.provider);
     const receivers = data?.economicEventsFiltered?.map(el => el.receiver);
 

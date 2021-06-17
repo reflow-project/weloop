@@ -25,7 +25,6 @@ export interface CreateOfferFormValues {
   name: string;
   communityId: string;
   note: string;
-  atLocation?: string;
   hasUnit: string;
   hasNumericalValue: number;
 }
@@ -72,7 +71,6 @@ export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done, co
       name: '',
       communityId: communityId || '',
       note: '',
-      atLocation: '',
       hasUnit: '',
       hasNumericalValue: 0
     },
@@ -85,7 +83,6 @@ export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done, co
         name: values.name,
         communityId: values.communityId,
         note: values.note,
-        atLocation: values.atLocation,
         hasUnit: values.hasUnit,
         hasNumericalValue: values.hasNumericalValue
       })

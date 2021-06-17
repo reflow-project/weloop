@@ -30,8 +30,7 @@ export type CreateOfferMutationVariables = {
   communityId: Types.Scalars['ID'],
   note?: Types.Maybe<Types.Scalars['String']>,
   hasUnit: Types.Scalars['ID'],
-  hasNumericalValue: Types.Scalars['Float'],
-  atLocation?: Types.Maybe<Types.Scalars['ID']>
+  hasNumericalValue: Types.Scalars['Float']
 };
 
 
@@ -101,8 +100,8 @@ export type CreateIntentMutationHookResult = ReturnType<typeof useCreateIntentMu
 export type CreateIntentMutationResult = ApolloReactCommon.MutationResult<CreateIntentMutation>;
 export type CreateIntentMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateIntentMutation, CreateIntentMutationVariables>;
 export const CreateOfferDocument = gql`
-    mutation createOffer($action: String!, $name: String!, $communityId: ID!, $note: String, $hasUnit: ID!, $hasNumericalValue: Float!, $atLocation: ID) {
-  createOffer(intent: {action: $action, name: $name, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}, atLocation: $atLocation, inScopeOf: [$communityId], note: $note}) {
+    mutation createOffer($action: String!, $name: String!, $communityId: ID!, $note: String, $hasUnit: ID!, $hasNumericalValue: Float!) {
+  createOffer(intent: {action: $action, name: $name, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}, inScopeOf: [$communityId], note: $note}) {
     intent {
       id
       inScopeOf {
@@ -147,7 +146,6 @@ export type CreateOfferMutationFn = ApolloReactCommon.MutationFunction<CreateOff
  *      note: // value for 'note'
  *      hasUnit: // value for 'hasUnit'
  *      hasNumericalValue: // value for 'hasNumericalValue'
- *      atLocation: // value for 'atLocation'
  *   },
  * });
  */

@@ -14,7 +14,6 @@ export const useGetCreateIntentModalProps = (): TCreateIntentPanel => {
       name: '',
       communityId: '',
       note: '',
-      atLocation: '',
       hasUnit: '',
       hasNumericalValue: 0
     },

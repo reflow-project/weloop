@@ -22,7 +22,6 @@ export type CreateIntentFormValues = {
   name: string;
   note?: string;
   communityId: string;
-  atLocation?: string;
   hasUnit: string;
   hasNumericalValue: number;
 };
@@ -153,30 +152,6 @@ export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
                 )}
               </FormGroup>
             </FlexBetweenContainer>
-
-            <CollectionContainerForm>
-              <FormLabel>{i18nMark('location')}</FormLabel>
-              <Select
-                onSelect={(name, option) => {
-                  formik.setValues({ ...formik.values, [name]: option.id });
-                }}
-                options={spatialThings?.map((el: any) => ({
-                  id: el.id,
-                  value: el.id,
-                  label: el.name
-                }))}
-                placeholder={i18nMark('CustomSelect location')}
-                value={{ id: formik.values.atLocation || '', label: '' }}
-                variant="primary"
-                id="atLocation"
-                name="atLocation"
-              />
-              {formik.errors.hasUnit && (
-                <AlertWrapper>
-                  <CustomAlert variant="negative">{formik.errors.atLocation}</CustomAlert>
-                </AlertWrapper>
-              )}
-            </CollectionContainerForm>
             <CollectionContainerForm>
               <Description mt={2}>
                 <FormGroup>

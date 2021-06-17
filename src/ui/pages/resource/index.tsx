@@ -117,13 +117,92 @@ export const ResourceItem: React.FC<Props> = ({
                     </span>
                   </Text>
                 </Box>
-
+                {resource?.track && resource?.track.length > 0 && (
+                  <Button
+                    mt={2}
+                    onClick={() =>
+                      setShowList({
+                        ...showList,
+                        second: !showList.second
+                      })
+                    }
+                    variant="show-more"
+                  >
+                    {showList.second ? (
+                      <>
+                        <ArrowUpIcon size="16" />
+                        <Trans>Show less events</Trans>
+                      </>
+                    ) : (
+                      <>
+                        <ArrowDownIcon size="16" />
+                        <Trans>Show more events</Trans>
+                      </>
+                    )}
+                  </Button>
+                )}
+                {showList.second &&
+                  resource?.track.map((track: any) => {
+                    return (
+                      <TrackWrapper key={track.id}>
+                        <Badge>
+                          {track.action ? (
+                            <Trans>{track.action.label}</Trans>
+                          ) : (
+                            <Trans>Not provided</Trans>
+                          )}
+                        </Badge>
+                        <Box mr={1}>
+                          <Text variant="text">
+                            <Icon>
+                              <PenIcon size="16" />
+                            </Icon>
+                            <b>
+                              <Trans>Track note: </Trans>
+                            </b>{' '}
+                            {track.note ? track.note : 'Not provided'}
+                          </Text>
+                        </Box>
+                        <Box mr={1}>
+                          <Text variant="text">
+                            <Icon>
+                              <BoxIcon size="16" />
+                            </Icon>
+                            <b>Quantity</b>{' '}
+                            {`${track.resourceQuantity?.hasNumericalValue} ${track.resourceQuantity?.hasUnit.label}`}
+                          </Text>
+                        </Box>
+                        <Box mr={1}>
+                          <Text variant="text">
+                            <Icon>
+                              <UserIcon size="16" />
+                            </Icon>
+                            <b>
+                              <Trans>Provider:</Trans>
+                            </b>{' '}
+                            {track.provider ? track.provider.name : 'Not provided'}
+                          </Text>
+                        </Box>
+                        <Box mr={1}>
+                          <Text variant="text">
+                            <Icon>
+                              <UserIcon size="16" />
+                            </Icon>
+                            <b>
+                              <Trans>Receiver:</Trans>
+                            </b>
+                            {track.receiver ? track.receiver.name : 'Not provided'}
+                          </Text>
+                        </Box>
+                      </TrackWrapper>
+                    );
+                  })}
                 <PrimaryAccountablePerson data={resource?.primaryAccountable} />
 
                 <PersonWrapper>
                   <div className="d-flex">
                     <Text variant="heading">
-                      <Trans>Some data</Trans>
+                      <Trans>More info</Trans>
                     </Text>
                     <Button
                       mr={2}
@@ -210,86 +289,6 @@ export const ResourceItem: React.FC<Props> = ({
                     </div>
                   ) : null}
                 </PersonWrapper>
-                {resource?.track && resource?.track.length > 0 && (
-                  <Button
-                    mr={2}
-                    onClick={() =>
-                      setShowList({
-                        ...showList,
-                        second: !showList.second
-                      })
-                    }
-                    variant="show-more"
-                  >
-                    {showList.second ? (
-                      <>
-                        <ArrowUpIcon size="16" />
-                        <Trans>Show less events</Trans>
-                      </>
-                    ) : (
-                      <>
-                        <ArrowDownIcon size="16" />
-                        <Trans>Show more events</Trans>
-                      </>
-                    )}
-                  </Button>
-                )}
-                {showList.second &&
-                  resource?.track.map((track: any) => {
-                    return (
-                      <TrackWrapper key={track.id}>
-                        <Badge>
-                          {track.action ? (
-                            <Trans>{track.action.label}</Trans>
-                          ) : (
-                            <Trans>Not provided</Trans>
-                          )}
-                        </Badge>
-                        <Box mr={1}>
-                          <Text variant="text">
-                            <Icon>
-                              <PenIcon size="16" />
-                            </Icon>
-                            <b>
-                              <Trans>Track note: </Trans>
-                            </b>{' '}
-                            {track.note ? track.note : 'Not provided'}
-                          </Text>
-                        </Box>
-                        <Box mr={1}>
-                          <Text variant="text">
-                            <Icon>
-                              <BoxIcon size="16" />
-                            </Icon>
-                            <b>Quantity</b>{' '}
-                            {`${track.resourceQuantity?.hasNumericalValue} ${track.resourceQuantity?.hasUnit.label}`}
-                          </Text>
-                        </Box>
-                        <Box mr={1}>
-                          <Text variant="text">
-                            <Icon>
-                              <UserIcon size="16" />
-                            </Icon>
-                            <b>
-                              <Trans>Provider:</Trans>
-                            </b>{' '}
-                            {track.provider ? track.provider.name : 'Not provided'}
-                          </Text>
-                        </Box>
-                        <Box mr={1}>
-                          <Text variant="text">
-                            <Icon>
-                              <UserIcon size="16" />
-                            </Icon>
-                            <b>
-                              <Trans>Receiver:</Trans>
-                            </b>
-                            {track.receiver ? track.receiver.name : 'Not provided'}
-                          </Text>
-                        </Box>
-                      </TrackWrapper>
-                    );
-                  })}
               </InfoWrapper>
             </InventoryWrapper>
           </Wrapper>
