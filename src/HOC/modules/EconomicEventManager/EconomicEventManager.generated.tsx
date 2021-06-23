@@ -75,7 +75,7 @@ export type UsersQuery = (
 
 export const SpatialThingsPagesDocument = gql`
     query spatialThingsPages {
-  spatialThingsPages {
+  spatialThingsPages(limit: 15) {
     edges {
       id
       name

@@ -9,6 +9,7 @@ export interface Props {
   onChange: any;
   placeholder?: string;
   label?: string;
+  readOnly?: boolean;
   value?: string | number;
   disabled?: boolean;
   hint?: {
@@ -21,6 +22,7 @@ const CustomInput: FC<Props> = ({
   id,
   name,
   type = 'text',
+  readOnly = false,
   onChange,
   placeholder = '',
   label,
@@ -35,6 +37,7 @@ const CustomInput: FC<Props> = ({
         id={id}
         type={type}
         name={name}
+        readOnly={readOnly}
         placeholder={placeholder}
         value={value}
         onChange={onChange}

@@ -10,6 +10,7 @@ import { Wrapper, WrapperCont, MainContainer, HomeBox, ObjectsList } from 'ui/el
 import { SidePanelHOC } from 'HOC/modules/SidePanel/SidePanel';
 import { useNotifyMustLogin } from '../../../HOC/lib/notifyMustLogin';
 import { CreateIntentPanelHOC } from '../../../HOC/modules/CreateIntentPanel/createIntentPanelHOC';
+import { CreateLocationPanelHOC } from '../../../HOC/modules/CreateLocationPanel/CreateLocationPanelHOK';
 import { CreateResourcePanelHOC } from '../../../HOC/modules/CreateResourcePanel/CreateResourcePanelHOC';
 import Modal from '../../modules/Modal';
 import { ButtonWrapper, CreateItemButton } from '../community';
@@ -18,18 +19,26 @@ export interface Props {
   CommunitiesBoxes: React.ReactElement;
   LoadMoreFormik: FormikHook;
 }
+
 export const AllCommunities: React.FC<Props> = ({ CommunitiesBoxes, LoadMoreFormik }) => {
   const notifiedMustLogin = useNotifyMustLogin();
   const [showCreateResource, toggleShowCreateResource] = useReducer(
     is => !notifiedMustLogin() && !is,
     false
   );
-
+  const [showCreateLocation, toggleShowCreateLocation] = React.useState(false);
   const [openIntent, setOpenIntent] = useReducer(is => !notifiedMustLogin() && !is, false);
 
   const CreateResourceModal = showCreateResource ? (
     <Modal closeModal={toggleShowCreateResource}>
-      <CreateResourcePanelHOC done={toggleShowCreateResource} />
+      {showCreateLocation ? (
+        <CreateLocationPanelHOC done={toggleShowCreateLocation} />
+      ) : (
+        <CreateResourcePanelHOC
+          done={toggleShowCreateResource}
+          toggleCreateLocation={toggleShowCreateLocation}
+        />
+      )}
     </Modal>
   ) : null;
 

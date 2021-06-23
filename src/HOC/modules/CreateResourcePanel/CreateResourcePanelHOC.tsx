@@ -13,6 +13,7 @@ import {
   CreateIntentFormValues
 } from '../../../ui/modules/CreateResourcePanel';
 import { EconomicResource } from '../../pages/inventory/InventoryPage';
+import { useSpatialThingsPagesQuery } from '../EconomicEventManager/EconomicEventManager.generated';
 import { EconomicEventManagerHOC } from '../EconomicEventManager/EconomicEventManagerHOC';
 
 export const validationSchema: Yup.ObjectSchema<BasicCreateCollectionFormValues> = Yup.object<
@@ -28,12 +29,21 @@ export const validationSchema: Yup.ObjectSchema<BasicCreateCollectionFormValues>
 
 export interface Props {
   done: () => void;
+  toggleCreateLocation: (isShow: boolean) => void;
   resource?: EconomicResource;
 }
 
-export const CreateResourcePanelHOC: FC<Props> = ({ done, resource, ...props }) => {
+export const CreateResourcePanelHOC: FC<Props> = ({
+  done,
+  resource,
+  toggleCreateLocation,
+  ...props
+}) => {
   const history = useHistory();
   const { create } = useCreateResource();
+
+  const spatialThingsQ = useSpatialThingsPagesQuery();
+  const spatialThings = spatialThingsQ.data?.spatialThingsPages;
 
   const SignupSchema = Yup.object().shape({
     name: Yup.string()
@@ -62,6 +72,10 @@ export const CreateResourcePanelHOC: FC<Props> = ({ done, resource, ...props }) 
       name: '',
       note: '',
       image: undefined,
+      atLocation: {
+        id: '',
+        label: ''
+      },
       action: {
         id: '',
         label: ''
@@ -93,6 +107,7 @@ export const CreateResourcePanelHOC: FC<Props> = ({ done, resource, ...props }) 
         name: values.name,
         action: values.action.id,
         note: values.note,
+        atLocation: values.atLocation?.id || '',
         provider: values.provider.id,
         receiver: values.receiver.id,
         hasUnit: values.hasUnit.id,
@@ -125,6 +140,8 @@ export const CreateResourcePanelHOC: FC<Props> = ({ done, resource, ...props }) 
     ...props,
     title: 'Create a new Resource',
     formik,
+    spatialThings: spatialThings?.edges || null,
+    toggleCreateLocation,
     done
   };
 

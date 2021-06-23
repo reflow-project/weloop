@@ -5,6 +5,7 @@ import { useCreateEconomicEventAndNewResourceMutation } from './useCreateResourc
 export interface CreateResource {
   name: string;
   note?: string;
+  atLocation: string;
   action: string;
   provider: string;
   receiver: string;
@@ -24,6 +25,7 @@ export const useCreateResource = () => {
       name,
       note,
       action,
+      atLocation,
       provider,
       receiver,
       hasUnit,
@@ -38,6 +40,7 @@ export const useCreateResource = () => {
         variables: {
           name,
           note,
+          atLocation,
           action,
           provider,
           receiver,

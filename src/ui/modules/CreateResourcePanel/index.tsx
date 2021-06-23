@@ -7,8 +7,10 @@ import Button from 'ui/elements/Button';
 import { FormikHook } from 'ui/@types/types';
 import { CustomSelect as Select } from 'ui/elements/CustomSelect';
 import { useMe } from '../../../fe/session/useMe';
+import * as Types from '../../../graphql/types.generated';
 import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
 import { setSelectOption } from '../../elements/CustomSelect/select';
+import styled from '../../themes/styled';
 import DropzoneArea from '../DropzoneModal';
 import { IntentActions } from '../EconomicEventManager';
 import { FormGroup, FormLabel } from '../EconomicEventManager/styles';
@@ -19,6 +21,7 @@ import { Hero, CollectionContainerForm, HeroInfo } from '../CreateCollectionPane
 export type CreateIntentFormValues = {
   name: string;
   note?: string;
+  atLocation: IntentActions;
   action: IntentActions;
   provider: IntentActions;
   receiver: IntentActions;
@@ -31,11 +34,17 @@ export type TCreateResourcePanel = {
   title: string;
   done: () => void;
   resource?: EconomicResource;
+  spatialThings?: Types.Maybe<
+    Types.Maybe<
+      { __typename: 'SpatialThing' } & Pick<Types.SpatialThing, 'name' | 'id' | 'lat' | 'long'>
+    >[]
+  > | null;
   formik: FormikHook<CreateIntentFormValues>;
   unitPages?: any;
   actionList?: any;
   providerList?: null | { id: string; name: string }[];
   receiverList?: null | { id: string; name: string }[];
+  toggleCreateLocation: (isShow: boolean) => void;
   setAction?: (name: string) => void;
 };
 
@@ -50,8 +59,10 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
   done,
   unitPages,
   actionList,
+  spatialThings,
   providerList,
   receiverList,
+  toggleCreateLocation,
   setAction = () => {}
 }) => {
   const [providerArr, setProviderArr] = React.useState<any>([]);
@@ -166,6 +177,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                 </div>
               </div>
             </CollectionContainerForm>
+
             <CollectionContainerForm>
               <div className="d-flex">
                 <div className="item_col-6">
@@ -213,6 +225,35 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                 </div>
               </div>
             </CollectionContainerForm>
+
+            <CollectionContainerForm>
+              <div>
+                <Select
+                  onSelect={(name, option) => {
+                    formik.setValues({ ...formik.values, [name]: option.id });
+                  }}
+                  options={spatialThings?.map((el: any) => ({
+                    id: el.id,
+                    value: el.id,
+                    label: el.name
+                  }))}
+                  placeholder={i18nMark('CustomSelect location')}
+                  value={formik.values.atLocation}
+                  variant="primary"
+                  id="atLocation"
+                  name="atLocation"
+                />
+                <LocationBlockStyle>
+                  <FormLabel>
+                    {i18nMark('If you did not find your locations in the list, you can create it')}
+                  </FormLabel>
+                  <Button variant="show-more" onClick={() => toggleCreateLocation(true)}>
+                    <Trans>Create Location</Trans>
+                  </Button>
+                </LocationBlockStyle>
+              </div>
+            </CollectionContainerForm>
+
             <CollectionContainerForm>
               <div className="d-flex">
                 <div className="item_col-6">
@@ -254,6 +295,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                 </div>
               </div>
             </CollectionContainerForm>
+
             <CollectionContainerForm>
               <FormGroup>
                 <FormLabel>note</FormLabel>
@@ -294,3 +336,16 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
     </Container>
   );
 };
+
+const LocationBlockStyle = styled('div')`
+  text-align: right;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+
+  & > * {
+    padding: 5px 0;
+  }
+`;

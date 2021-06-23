@@ -1,19 +1,35 @@
-import { FC } from 'react';
+import { Dispatch, FC } from 'react';
 import * as React from 'react';
 import GooglePlacesAutocomplete, { geocodeByAddress } from 'react-google-places-autocomplete';
-import { FormikHook } from '../../@types/types';
-import { CreateIntentFormValues } from '../../modules/CreateIntentPanel';
 import styled from '../../themes/styled';
 
 type LocationPikerProps = {
-  formik: FormikHook<CreateIntentFormValues>;
+  formik: any;
+  onSelect: Dispatch<any>;
 };
 
-export const LocationPiker: FC<LocationPikerProps> = ({ formik }) => {
+interface LatLng {
+  lat: number;
+  lng: number;
+}
+
+interface AutocompletionRequest {
+  bounds?: [LatLng, LatLng];
+  componentRestrictions?: { country: string | string[] };
+  location?: LatLng;
+  offset?: number;
+  radius?: number;
+  types?: string[];
+}
+
+export const LocationPiker: FC<LocationPikerProps> = ({ formik, onSelect }) => {
   const autocompleteSelect = (address: any) => {
     geocodeByAddress(address.label).then((results: any) => {
       if (!results[0]) return;
-      formik.handleChange({ target: { name: 'atLocation', value: results[0].place_id } } as any);
+      onSelect(true);
+      formik.handleChange({ target: { name: 'name', value: results[0].formatted_address } });
+      formik.handleChange({ target: { name: 'lat', value: results[0].geometry.location.lng() } });
+      formik.handleChange({ target: { name: 'long', value: results[0].geometry.location.lat() } });
     });
   };
 
@@ -25,19 +41,8 @@ export const LocationPiker: FC<LocationPikerProps> = ({ formik }) => {
           onChange: autocompleteSelect,
           classNamePrefix: 'zenpub'
         }}
+        onLoadFailed={error => console.error('Could not inject Google script', error)}
         apiKey="AIzaSyBlbsdiikbCINjPLwD7NNwtsA8-vTcrr0g"
-        autocompletionRequest={{
-          bounds: [
-            {
-              lat: 99,
-              lng: 99
-            },
-            {
-              lat: 100,
-              lng: 100
-            }
-          ]
-        }}
       />
     </WrapperSelect>
   );
@@ -45,6 +50,8 @@ export const LocationPiker: FC<LocationPikerProps> = ({ formik }) => {
 
 const WrapperSelect = styled('div')`
   margin-bottom: 10px;
+  position: relative;
+  z-index: 100;
   small {
     display: block;
     padding-top: 6px;
@@ -73,10 +80,13 @@ const WrapperSelect = styled('div')`
     }
   }
   
-  .zenpub__menuList {
+  .zenpub__menu > div {
+    display: block !important;
     background: #fff;
-    max-height: 200px;
-    padding: 20;
+    min-height: 120px;
+    min-width: 100%;
+    padding: 20px;
+    z-index: 200;
     box-shadow: 0px 2px 4px 0px #0000001f;
   }
   .zenpub__menuList > * ,
