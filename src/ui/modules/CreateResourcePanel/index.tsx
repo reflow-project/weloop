@@ -230,7 +230,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
               <div>
                 <Select
                   onSelect={(name, option) => {
-                    formik.setValues({ ...formik.values, [name]: option.id });
+                    formik.setValues({ ...formik.values, [name]: option });
                   }}
                   options={spatialThings?.map((el: any) => ({
                     id: el.id,
