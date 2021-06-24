@@ -3,6 +3,7 @@ import Modal from '../../../ui/modules/Modal';
 import { Inventory } from '../../../ui/pages/inventory';
 import { useMe } from 'fe/session/useMe';
 import { useNotifyMustLogin } from '../../lib/notifyMustLogin';
+import { CreateLocationPanelHOC } from '../../modules/CreateLocationPanel/CreateLocationPanelHOK';
 import { CreateResourcePanelHOC } from '../../modules/CreateResourcePanel/CreateResourcePanelHOC';
 import { useEconomicResourcesFilteredQuery } from './InventoryPage.generated';
 
@@ -88,6 +89,7 @@ export interface EconomicResource {
 export const InventoryPage: FC = () => {
   const { me } = useMe();
   const currentUser = me?.user?.id;
+  const [showCreateLocation, toggleShowCreateLocation] = React.useState(false);
 
   const notifiedMustLogin = useNotifyMustLogin();
   const [showCreateResource, toggleShowCreateResource] = useReducer(
@@ -97,7 +99,14 @@ export const InventoryPage: FC = () => {
 
   const CreateResourceModal = showCreateResource ? (
     <Modal closeModal={toggleShowCreateResource}>
-      <CreateResourcePanelHOC done={toggleShowCreateResource} />
+      {showCreateLocation ? (
+        <CreateLocationPanelHOC done={toggleShowCreateLocation} />
+      ) : (
+        <CreateResourcePanelHOC
+          done={toggleShowCreateResource}
+          toggleCreateLocation={toggleShowCreateLocation}
+        />
+      )}
     </Modal>
   ) : null;
 

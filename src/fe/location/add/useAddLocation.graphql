@@ -1,0 +1,20 @@
+mutation createSpatialThing ($lat: Float, $long:  Float, $name: String!, $note: String ){
+  createSpatialThing (
+    spatialThing: {
+      lat: $lat,
+      long: $long,
+      name: $name,
+      note: $note,
+    }
+  )
+  {
+    spatialThing {
+      id
+      lat
+      long
+      name
+      note
+    }
+
+  }
+}

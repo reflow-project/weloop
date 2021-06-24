@@ -67,6 +67,8 @@ export const Map: FC<MapProps> = ({
 const Wrapper = styled.div`
   width: 100%;
   height: 400px;
+  position: relative;
+  z-index: 0;
 `;
 
 export default Map;

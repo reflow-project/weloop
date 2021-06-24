@@ -22,6 +22,7 @@ import SocialText from 'ui/modules/SocialText';
 import styled from 'ui/themes/styled';
 import { i18n } from '../../../context/global/localizationCtx';
 import { useNotifyMustLogin } from '../../../HOC/lib/notifyMustLogin';
+import { CreateLocationPanelHOC } from '../../../HOC/modules/CreateLocationPanel/CreateLocationPanelHOK';
 import { CreateResourcePanelHOC } from '../../../HOC/modules/CreateResourcePanel/CreateResourcePanelHOC';
 import { CreateIntentPanelHOC } from 'HOC/modules/CreateIntentPanel/createIntentPanelHOC';
 import Modal from '../../modules/Modal';
@@ -83,7 +84,7 @@ export const Community: React.FC<Props> = ({
       !is,
     false
   );
-
+  const [showCreateLocation, toggleShowCreateLocation] = React.useState(false);
   const [openIntent, setOpenIntent] = useReducer(
     is =>
       !notifiedMustJoin(i18n._(`You should join this community to create new intent`)) &&
@@ -94,7 +95,14 @@ export const Community: React.FC<Props> = ({
 
   const CreateResourceModal = showCreateResource ? (
     <Modal closeModal={toggleShowCreateResource}>
-      <CreateResourcePanelHOC done={toggleShowCreateResource} />
+      {showCreateLocation ? (
+        <CreateLocationPanelHOC done={toggleShowCreateLocation} />
+      ) : (
+        <CreateResourcePanelHOC
+          done={toggleShowCreateResource}
+          toggleCreateLocation={toggleShowCreateLocation}
+        />
+      )}
     </Modal>
   ) : null;
 

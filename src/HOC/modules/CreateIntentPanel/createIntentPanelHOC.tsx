@@ -13,7 +13,7 @@ import {
 } from 'ui/modules/CreateIntentPanel';
 import { useHistory } from 'react-router';
 import { useUnitsPagesQuery } from '../EconomicEventManager/EconomicEventManager.generated';
-import * as GQL from '../EconomicEventManager/EconomicEventManager.generated';
+import { useSpatialThingsPagesQuery } from '../EconomicEventManager/EconomicEventManager.generated';
 
 import * as Yup from 'yup';
 export type TCreateIntentPanelHOC = {
@@ -52,7 +52,7 @@ export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done, co
   const unitPagesQ = useUnitsPagesQuery();
   const unitPages = unitPagesQ.data?.unitsPages;
 
-  const spatialThingsQ = GQL.useSpatialThingsPagesQuery();
+  const spatialThingsQ = useSpatialThingsPagesQuery();
   const spatialThings = spatialThingsQ.data?.spatialThingsPages;
 
   const SignupSchema = Yup.object().shape({

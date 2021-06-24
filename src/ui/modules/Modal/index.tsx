@@ -75,6 +75,7 @@ const Content = styled.div`
 `;
 export const Container = styled.div`
   font-family: ${props => props.theme.fontFamily};
+  min-height: 300px;
 `;
 export const ModalContainer = styled(Container)`
   padding-bottom: 20px;

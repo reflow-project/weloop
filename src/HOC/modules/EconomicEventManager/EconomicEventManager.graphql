@@ -1,5 +1,5 @@
 query spatialThingsPages {
-  spatialThingsPages {
+  spatialThingsPages(limit: 15) {
     edges {
       id
       name

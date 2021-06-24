@@ -17,17 +17,23 @@ const WrapperButton = styled(Button)<{
   opacity: ${props => (props.disabled === true ? '0.7' : '1')};
   cursor: ${props => (props.disabled === true ? 'default' : 'pointer')};
   &.show-more {
+    width: auto;
     padding: 3px 8px;
-    background: ${props => props.theme.colors.tertiary};
+    background: transparent;
     color: ${props => props.theme.colors.primary};
     display: flex;
     align-items: center;
     justify-content: space-between;
+    ${transitions('background, 0.2s')}
     
     svg {
       stroke: ${props => props.theme.colors.primary};
       margin-right: 10px;
     }
+    
+    &:hover {
+        background: #f3f3f3;
+      }
   }
   &:hover && not:['disabled'] {
     background: ${props => {
@@ -49,16 +55,18 @@ const WrapperButton = styled(Button)<{
 
 export interface Props extends ButtonProps {
   isSubmitting?: boolean;
-  variant: string;
+  variant?: string;
   isDisabled?: boolean;
   isIcon?: boolean;
   className?: string;
+  fullWidth?: boolean;
 }
 
 const MNButton: FC<Props> = props => (
   //@ts-ignore
   <WrapperButton
     {...props}
+    width={props.fullWidth ? '100%' : props.width || ''}
     className={props.variant === 'show-more' ? 'show-more' : ''}
     isSubmitting={props.isSubmitting}
     disabled={props.isDisabled}

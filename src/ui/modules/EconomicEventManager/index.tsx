@@ -38,7 +38,7 @@ export type EconomicEventManagerProps = {
   unitPages?: {
     edges: any;
   };
-  setAction: any;
+  setAction?: (name: string) => void;
 };
 
 export const validationSchema = Yup.object().shape({

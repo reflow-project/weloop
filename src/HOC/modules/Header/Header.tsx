@@ -6,6 +6,7 @@ import { SearchBox } from 'HOC/modules/SearchBox/SearchBox';
 import React, { FC, useContext, useMemo, useReducer } from 'react';
 import { MainHeader, Props as MainHeaderProps } from 'ui/modules/MainHeader';
 import Modal from 'ui/modules/Modal';
+import { CreateLocationPanelHOC } from '../CreateLocationPanel/CreateLocationPanelHOK';
 import { CreateResourcePanelHOC } from '../CreateResourcePanel/CreateResourcePanelHOC';
 import { CreateIntentPanelHOC } from '../CreateIntentPanel/createIntentPanelHOC';
 
@@ -14,6 +15,8 @@ export const MainHeaderHOC: FC<MainHeaderHOC> = () => {
   const meQ = useMe();
   const user = meQ.me?.user;
   const notifiedMustLogin = useNotifyMustLogin();
+
+  const [showCreateLocation, toggleShowCreateLocation] = React.useState(false);
 
   const [showCreateCommunity, toggleShowCreateCommunity] = useReducer(
     is => (notifiedMustLogin() ? false : !is),
@@ -44,7 +47,14 @@ export const MainHeaderHOC: FC<MainHeaderHOC> = () => {
 
   const CreateResourceModal = showCreateResource ? (
     <Modal closeModal={toggleShowCreateResource}>
-      <CreateResourcePanelHOC done={toggleShowCreateResource} />
+      {showCreateLocation ? (
+        <CreateLocationPanelHOC done={toggleShowCreateLocation} />
+      ) : (
+        <CreateResourcePanelHOC
+          done={toggleShowCreateResource}
+          toggleCreateLocation={toggleShowCreateLocation}
+        />
+      )}
     </Modal>
   ) : null;
 
