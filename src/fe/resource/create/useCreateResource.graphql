@@ -109,3 +109,27 @@ mutation createEconomicEventAndExistResource(
     }
   }
 }
+
+
+mutation createDefaultEconomicEvent(
+  $name: String,
+  $note: String,
+  $action: ID!,
+) {
+  createEconomicEvent (
+    event : {
+      action : $action ,
+      note : $note
+    } ,
+    newInventoriedResource : {
+      name : $name,
+      note : $note
+    }
+  )
+  {
+    economicEvent  {
+      id
+      note
+    }
+  }
+}

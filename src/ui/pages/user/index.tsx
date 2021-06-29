@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/macro';
 import { ellipsis } from 'polished';
 import * as React from 'react';
 import { Link } from 'react-feather';
@@ -141,13 +142,13 @@ const Menu = ({
 }) => (
   <MenuList p={3} pt={3}>
     <NavLink exact to={`${basePath}`}>
-      Recent activity
+      <Trans>Recent activity</Trans>
     </NavLink>
     <NavLink exact to={`${basePath}/starred`}>
-      Starred
+      <Trans>Starred</Trans>
     </NavLink>
     <NavLink exact to={`${basePath}/communities`}>
-      {totalCommunities} communities
+      <Trans>{totalCommunities} communities</Trans>
     </NavLink>
     {/* <NavLink exact to={`${basePath}/following`}>
       {totalUsers} following
