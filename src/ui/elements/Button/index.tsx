@@ -16,6 +16,8 @@ const WrapperButton = styled(Button)<{
   padding: ${props => (props.isIcon === true ? '0px' : 'auto')};
   opacity: ${props => (props.disabled === true ? '0.7' : '1')};
   cursor: ${props => (props.disabled === true ? 'default' : 'pointer')};
+  background:  ${props => props.variant === 'warning' && props.theme.colors.negative};
+        
   &.show-more {
     width: auto;
     padding: 3px 8px;

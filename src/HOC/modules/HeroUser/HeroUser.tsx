@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useUser } from 'fe/user/useUser';
 import { useFormik } from 'formik';
 import { User } from 'graphql/types.generated';
@@ -5,6 +6,8 @@ import { useNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
 import React, { FC, useMemo, useReducer } from 'react';
 import { HeroUser as HeroUserUI, Loaded, LoadedOther, Props, Status } from 'ui/modules/HeroUser';
 import Modal from 'ui/modules/Modal';
+import { useCreateDefaultEvent } from '../../../fe/resource/create/useCreateDefaultEvent';
+import { useEconomicEventsFilteredQuery } from '../EconomicEventManager/EconomicEventManager.generated';
 import { FlagModalHOC } from '../FlagModal/flagModalHOC';
 
 export interface HeroUser {
@@ -13,7 +16,13 @@ export interface HeroUser {
 export const HeroUser: FC<HeroUser> = ({ userId }) => {
   const { user, isAdmin, isMe, toggleFollow } = useUser(userId);
   const [isOpenDropdown, toggleDropdown] = useReducer(is => !is, false);
+  const { create } = useCreateDefaultEvent([userId]);
+  const { data } = useEconomicEventsFilteredQuery({ variables: { action: 'transfer' } });
+  const providers = data?.economicEventsFiltered?.map(el => el.provider);
+  const receivers = data?.economicEventsFiltered?.map(el => el.receiver);
 
+  const isProvider =
+    providers?.some(el => el.id === userId) || receivers?.some(el => el.id === userId);
   const toggleFollowFormik = useFormik({
     initialValues: {},
     onSubmit: toggleFollow
@@ -52,6 +61,9 @@ export const HeroUser: FC<HeroUser> = ({ userId }) => {
       const props: Props = {
         isAdmin: isAdmin,
         me: isMe,
+        createDefaultEvent: create,
+        isProvider,
+        userId,
         ...loadedProps
       };
 

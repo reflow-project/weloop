@@ -1,10 +1,13 @@
 import { Trans } from '@lingui/macro';
 import React, { FC } from 'react';
 import { Flag, MapPin, MoreVertical } from 'react-feather';
+import { useHistory } from 'react-router';
+import { Slide, toast } from 'react-toastify';
 import { Box, Flex, Text } from 'rebass/styled-components';
 import media from 'styled-media-query';
 import { FormikHook } from 'ui/@types/types';
 import Button from 'ui/elements/Button';
+import { CreateDefaultEvent } from '../../../fe/resource/create/useCreateDefaultEvent';
 // import { NavLink } from 'react-router-dom';
 import { MDComment } from 'ui/elements/Layout/comment';
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
@@ -18,6 +21,7 @@ export enum Status {
 export interface Loading {
   status: Status.Loading;
 }
+
 export interface Loaded {
   status: Status.Loaded;
   me: boolean;
@@ -28,11 +32,16 @@ export interface Loaded {
   displayUsername: string;
   location: string;
   summary: string;
+  isProvider?: boolean;
+  userId?: string;
 }
+
 export interface LoadedMe extends Loaded {
   me: true;
   isAdmin: boolean;
+  createDefaultEvent?: (__0: CreateDefaultEvent) => Promise<any | null | undefined>;
 }
+
 export interface LoadedOther extends Loaded {
   me: false;
   following: boolean;
@@ -41,12 +50,50 @@ export interface LoadedOther extends Loaded {
   toggleDropdown(): unknown;
   flag(): any;
 }
+
 export type Props = LoadedMe | LoadedOther | Loading;
 
 export const HeroUser: FC<Props> = props => {
+  const history = useHistory();
+  const [isButtonShow, setIsButtonShow] = React.useState(true);
   if (props.status === Status.Loading) {
     return null;
   }
+
+  const handleCreateDefaultEvent = () => {
+    if (props.me && props.createDefaultEvent) {
+      props
+        .createDefaultEvent({
+          name: 'My first inventory',
+          note: 'Created automatically',
+          action: 'transfer'
+        })
+        .then(() => {
+          const redirect = `/inventory/user/${props.userId}`;
+          history.replace(redirect);
+
+          setIsButtonShow(false);
+          toast.success(`You name added in providers list`, {
+            position: 'top-right',
+            transition: Slide,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true
+          });
+        })
+        .catch(error => {
+          toast.error(`Login Error: ${error}`, {
+            position: 'top-right',
+            transition: Slide,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true
+          });
+        });
+    }
+  };
 
   return (
     <ProfileBox p={1}>
@@ -119,6 +166,13 @@ export const HeroUser: FC<Props> = props => {
           ) : null}
         </HeroInfo>
       </Hero>
+      {!props.isProvider && isButtonShow && (
+        <AlignCenter>
+          <Button variant="warning" onClick={handleCreateDefaultEvent}>
+            <Trans>Create default Economic Event to become a provider</Trans>
+          </Button>
+        </AlignCenter>
+      )}
     </ProfileBox>
   );
 };
@@ -128,6 +182,11 @@ const RightDd = styled(Box)`
     right: 0;
     left: auto;
   }
+`;
+
+const AlignCenter = styled(Box)`
+  display: flex;
+  justify-content: center;
 `;
 
 const AdminBadge = styled(Box)`
