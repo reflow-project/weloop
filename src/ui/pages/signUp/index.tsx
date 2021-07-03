@@ -67,7 +67,7 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername, regist
               </Link>
             </Browse>
           </Wrapper>
-          >{/* <Alert variant="negative">{formik.errors.email}</Alert> */}
+          {/* <Alert variant="negative">{formik.errors.email}</Alert> */}
         </Box>
       ) : (
         <LoginWrapper>

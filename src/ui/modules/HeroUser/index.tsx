@@ -1,13 +1,11 @@
 import { Trans } from '@lingui/macro';
 import React, { FC } from 'react';
 import { Flag, MapPin, MoreVertical } from 'react-feather';
-import { useHistory } from 'react-router';
-import { Slide, toast } from 'react-toastify';
 import { Box, Flex, Text } from 'rebass/styled-components';
 import media from 'styled-media-query';
 import { FormikHook } from 'ui/@types/types';
 import Button from 'ui/elements/Button';
-import { CreateDefaultEvent } from '../../../fe/resource/create/useCreateDefaultEvent';
+import { TCreateDefaultResource } from '../../../fe/resourceDefault/useCreateDefaultResource';
 // import { NavLink } from 'react-router-dom';
 import { MDComment } from 'ui/elements/Layout/comment';
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
@@ -33,13 +31,12 @@ export interface Loaded {
   location: string;
   summary: string;
   isProvider?: boolean;
-  userId?: string;
+  createDefaultResource?: ((__0: TCreateDefaultResource) => Promise<any | null | undefined>) | null;
 }
 
 export interface LoadedMe extends Loaded {
   me: true;
   isAdmin: boolean;
-  createDefaultEvent?: (__0: CreateDefaultEvent) => Promise<any | null | undefined>;
 }
 
 export interface LoadedOther extends Loaded {
@@ -54,45 +51,19 @@ export interface LoadedOther extends Loaded {
 export type Props = LoadedMe | LoadedOther | Loading;
 
 export const HeroUser: FC<Props> = props => {
-  const history = useHistory();
   const [isButtonShow, setIsButtonShow] = React.useState(true);
   if (props.status === Status.Loading) {
     return null;
   }
 
   const handleCreateDefaultEvent = () => {
-    if (props.me && props.createDefaultEvent) {
-      props
-        .createDefaultEvent({
-          name: 'My first inventory',
-          note: 'Created automatically',
-          action: 'transfer'
-        })
-        .then(() => {
-          const redirect = `/inventory/user/${props.userId}`;
-          history.replace(redirect);
-
-          setIsButtonShow(false);
-          toast.success(`You name added in providers list`, {
-            position: 'top-right',
-            transition: Slide,
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true
-          });
-        })
-        .catch(error => {
-          toast.error(`Login Error: ${error}`, {
-            position: 'top-right',
-            transition: Slide,
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true
-          });
-        });
-    }
+    setIsButtonShow(false);
+    props.createDefaultResource &&
+      props.createDefaultResource({
+        name: 'My first inventory',
+        note: 'Created automatically',
+        action: 'transfer'
+      });
   };
 
   return (
