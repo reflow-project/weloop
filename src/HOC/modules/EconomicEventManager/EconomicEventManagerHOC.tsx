@@ -23,7 +23,7 @@ export const EconomicEventManagerHOC: FC = ({ children }) => {
 
   const intentActionsQ = useActionsQuery();
   const { data } = useEconomicEventsFilteredQuery({
-    variables: { action }
+    variables: { action: action ? action : '' }
   });
 
   const { createDefaultResource, isAgent } = useCreateDefaultResource();
