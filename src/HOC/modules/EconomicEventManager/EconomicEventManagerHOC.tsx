@@ -1,36 +1,45 @@
 import * as React from 'react';
 import { FC } from 'react';
+import { useCreateDefaultResource } from '../../../fe/resourceDefault/useCreateDefaultResource';
+import { useAgentsQuery } from '../../../fe/resourceDefault/useCreateResource.generated';
 import { useActionsQuery } from '../IntentPanel/Actions.generated';
 import { EconomicEventManagerProps } from '../../../ui/modules/EconomicEventManager';
 import {
-  useEconomicEventsFilteredQuery,
+  // useEconomicEventsFilteredQuery,
   useUnitsPagesQuery
-  // useUsersQuery,
 } from './EconomicEventManager.generated';
 
 export const EconomicEventManagerHOC: FC = ({ children }) => {
-  // const [fulUserList, setFulUserList] = React.useState<
-  //   null | undefined | [] | { id: string; name: string }[] | any
-  //   >([]);
   const [providerList, setProviderList] = React.useState<
     null | undefined | [] | { id: string; name: string }[]
   >([]);
   const [receiverList, setReceiverList] = React.useState<
     null | undefined | [] | { id: string; name: string }[]
   >([]);
-  const [action, setAction] = React.useState('');
+  // const [action, setAction] = React.useState('')
 
+  const agentList = useAgentsQuery();
   const intentActionsQ = useActionsQuery();
-  const { data } = useEconomicEventsFilteredQuery({
-    variables: { action }
-  });
+  // const {data} = useEconomicEventsFilteredQuery({
+  //   variables: {action},
+  // })
 
-  // const users = useUsersQuery();
+  const { createDefaultResource, isAgent } = useCreateDefaultResource();
+
+  React.useEffect(() => {
+    if (isAgent) return;
+
+    createDefaultResource &&
+      createDefaultResource({
+        name: 'My first inventory',
+        note: 'Created automatically',
+        action: 'transfer'
+      });
+  }, [isAgent, createDefaultResource]);
 
   React.useEffect(() => {
     // setFulUserList(users?.data?.users.edges || { id: '', name: '' })
-    const providers = data?.economicEventsFiltered?.map(el => el.provider);
-    const receivers = data?.economicEventsFiltered?.map(el => el.receiver);
+    const providers = agentList.data?.agents;
 
     const uniqueProviders: { id: string; name: string }[] = [];
     providers?.length &&
@@ -38,14 +47,14 @@ export const EconomicEventManagerHOC: FC = ({ children }) => {
         !uniqueProviders.some(arrItem => arrItem.id === el.id) && uniqueProviders.push(el);
       });
     const uniqueReceivers: { id: string; name: string }[] = [];
-    receivers?.length &&
-      receivers.forEach(el => {
+    providers?.length &&
+      providers.forEach(el => {
         !uniqueReceivers.some(arrItem => arrItem.id === el.id) && uniqueReceivers.push(el);
       });
 
     setProviderList(uniqueProviders);
     setReceiverList(uniqueReceivers);
-  }, [data]);
+  }, [agentList]);
 
   const unitPagesQ = useUnitsPagesQuery();
 
@@ -59,8 +68,7 @@ export const EconomicEventManagerHOC: FC = ({ children }) => {
     }),
     providerList: providerList,
     receiverList: receiverList,
-    unitPages,
-    setAction
+    unitPages
   };
 
   const childrenWithProps = React.Children.map(children, child => {

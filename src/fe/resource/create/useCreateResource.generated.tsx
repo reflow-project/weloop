@@ -99,24 +99,6 @@ export type CreateEconomicEventAndExistResourceMutation = (
   )> }
 );
 
-export type CreateDefaultEconomicEventMutationVariables = {
-  name?: Types.Maybe<Types.Scalars['String']>,
-  note?: Types.Maybe<Types.Scalars['String']>,
-  action: Types.Scalars['ID']
-};
-
-
-export type CreateDefaultEconomicEventMutation = (
-  { __typename: 'RootMutationType' }
-  & { createEconomicEvent: Types.Maybe<(
-    { __typename: 'EconomicEventResponse' }
-    & { economicEvent: (
-      { __typename: 'EconomicEvent' }
-      & Pick<Types.EconomicEvent, 'id' | 'note'>
-    ) }
-  )> }
-);
-
 
 export const CreateEconomicEventAndNewResourceDocument = gql`
     mutation createEconomicEventAndNewResource($note: String, $atLocation: ID, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!, $name: String, $image: URI) {
@@ -247,43 +229,6 @@ export function useCreateEconomicEventAndExistResourceMutation(baseOptions?: Apo
 export type CreateEconomicEventAndExistResourceMutationHookResult = ReturnType<typeof useCreateEconomicEventAndExistResourceMutation>;
 export type CreateEconomicEventAndExistResourceMutationResult = ApolloReactCommon.MutationResult<CreateEconomicEventAndExistResourceMutation>;
 export type CreateEconomicEventAndExistResourceMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateEconomicEventAndExistResourceMutation, CreateEconomicEventAndExistResourceMutationVariables>;
-export const CreateDefaultEconomicEventDocument = gql`
-    mutation createDefaultEconomicEvent($name: String, $note: String, $action: ID!) {
-  createEconomicEvent(event: {action: $action, note: $note}, newInventoriedResource: {name: $name, note: $note}) {
-    economicEvent {
-      id
-      note
-    }
-  }
-}
-    `;
-export type CreateDefaultEconomicEventMutationFn = ApolloReactCommon.MutationFunction<CreateDefaultEconomicEventMutation, CreateDefaultEconomicEventMutationVariables>;
-
-/**
- * __useCreateDefaultEconomicEventMutation__
- *
- * To run a mutation, you first call `useCreateDefaultEconomicEventMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateDefaultEconomicEventMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createDefaultEconomicEventMutation, { data, loading, error }] = useCreateDefaultEconomicEventMutation({
- *   variables: {
- *      name: // value for 'name'
- *      note: // value for 'note'
- *      action: // value for 'action'
- *   },
- * });
- */
-export function useCreateDefaultEconomicEventMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateDefaultEconomicEventMutation, CreateDefaultEconomicEventMutationVariables>) {
-        return ApolloReactHooks.useMutation<CreateDefaultEconomicEventMutation, CreateDefaultEconomicEventMutationVariables>(CreateDefaultEconomicEventDocument, baseOptions);
-      }
-export type CreateDefaultEconomicEventMutationHookResult = ReturnType<typeof useCreateDefaultEconomicEventMutation>;
-export type CreateDefaultEconomicEventMutationResult = ApolloReactCommon.MutationResult<CreateDefaultEconomicEventMutation>;
-export type CreateDefaultEconomicEventMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateDefaultEconomicEventMutation, CreateDefaultEconomicEventMutationVariables>;
 
 
 export interface CreateEconomicEventAndNewResourceMutationOperation {
@@ -318,25 +263,6 @@ export const CreateEconomicEventAndExistResourceMutationRefetch = (
   context?:any
 )=>({
   query:CreateEconomicEventAndExistResourceDocument,
-  variables,
-  context
-})
-      
-
-
-export interface CreateDefaultEconomicEventMutationOperation {
-  operationName: 'createDefaultEconomicEvent'
-  result: CreateDefaultEconomicEventMutation
-  variables: CreateDefaultEconomicEventMutationVariables
-  type: 'mutation'
-}
-export const CreateDefaultEconomicEventMutationName:CreateDefaultEconomicEventMutationOperation['operationName'] = 'createDefaultEconomicEvent'
-
-export const CreateDefaultEconomicEventMutationRefetch = (
-  variables:CreateDefaultEconomicEventMutationVariables, 
-  context?:any
-)=>({
-  query:CreateDefaultEconomicEventDocument,
   variables,
   context
 })
