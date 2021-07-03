@@ -2,13 +2,10 @@ import { useMemo, useState, useEffect } from 'react';
 import { Slide, toast } from 'react-toastify';
 
 import { useCallOrNotifyMustLogin } from '../../HOC/lib/notifyMustLogin';
-// import { useEconomicEventsFilteredQuery } from '../../HOC/modules/EconomicEventManager/EconomicEventManager.generated'
-import { EconomicResourcesFilteredQueryRefetch } from '../../HOC/pages/inventory/InventoryPage.generated';
+import { EconomicEventsFilteredQueryRefetch } from '../../HOC/modules/EconomicEventManager/EconomicEventManager.generated';
+import { useEconomicEventsFilteredQuery } from '../../HOC/modules/EconomicEventManager/EconomicEventManager.generated';
 import { useMe } from '../session/useMe';
-import {
-  useAgentsQuery,
-  useCreateDefaultEconomicEventMutation
-} from './useCreateResource.generated';
+import { useCreateDefaultEconomicEventMutation } from './useCreateResource.generated';
 
 // when user was sign in first his name is not displayed in provider list
 // https://github.com/reflow-project/weloop/issues/87
@@ -27,9 +24,10 @@ export const useCreateDefaultResource = () => {
   const [createResourceMut, createResourceMutStatus] = useCreateDefaultEconomicEventMutation();
   const { me } = useMe();
 
-  const { data } = useAgentsQuery();
-
-  const providers = data?.agents;
+  const { data } = useEconomicEventsFilteredQuery({
+    variables: { action: 'transfer' }
+  });
+  const providers = data?.economicEventsFiltered?.map(el => el.provider);
   const [isAgent, setIsAgent] = useState(true);
 
   useEffect(() => {
@@ -50,9 +48,7 @@ export const useCreateDefaultResource = () => {
           name,
           action
         },
-        refetchQueries: [
-          EconomicResourcesFilteredQueryRefetch({ agent: me?.user.id ? [me?.user.id] : [] })
-        ]
+        refetchQueries: [EconomicEventsFilteredQueryRefetch({ action: 'transfer' })]
       })
         .then(() => {
           setIsAgent(true);
