@@ -5,6 +5,8 @@ import { Box, Flex, Text } from 'rebass/styled-components';
 import media from 'styled-media-query';
 import { FormikHook } from 'ui/@types/types';
 import Button from 'ui/elements/Button';
+import { TCreateDefaultResource } from '../../../fe/resourceDefault/useCreateDefaultResource';
+// import { NavLink } from 'react-router-dom';
 import { MDComment } from 'ui/elements/Layout/comment';
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
 import styled from 'ui/themes/styled';
@@ -28,6 +30,8 @@ export interface Loaded {
   displayUsername: string;
   location: string;
   summary: string;
+  isProvider?: boolean;
+  createDefaultResource?: ((__0: TCreateDefaultResource) => Promise<any | null | undefined>) | null;
 }
 
 export interface LoadedMe extends Loaded {
@@ -47,9 +51,20 @@ export interface LoadedOther extends Loaded {
 export type Props = LoadedMe | LoadedOther | Loading;
 
 export const HeroUser: FC<Props> = props => {
+  const [isButtonShow, setIsButtonShow] = React.useState(true);
   if (props.status === Status.Loading) {
     return null;
   }
+
+  const handleCreateDefaultEvent = () => {
+    setIsButtonShow(false);
+    props.createDefaultResource &&
+      props.createDefaultResource({
+        name: 'My first inventory',
+        note: 'Created automatically',
+        action: 'transfer'
+      });
+  };
 
   return (
     <ProfileBox p={1}>
@@ -122,6 +137,13 @@ export const HeroUser: FC<Props> = props => {
           ) : null}
         </HeroInfo>
       </Hero>
+      {!props.isProvider && isButtonShow && (
+        <AlignCenter>
+          <Button variant="warning" onClick={handleCreateDefaultEvent}>
+            <Trans>Create default Economic Event to become a provider</Trans>
+          </Button>
+        </AlignCenter>
+      )}
     </ProfileBox>
   );
 };
@@ -131,6 +153,11 @@ const RightDd = styled(Box)`
     right: 0;
     left: auto;
   }
+`;
+
+const AlignCenter = styled(Box)`
+  display: flex;
+  justify-content: center;
 `;
 
 const AdminBadge = styled(Box)`

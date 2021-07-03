@@ -6,6 +6,7 @@ import { useNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
 import React, { FC, useMemo, useReducer } from 'react';
 import { HeroUser as HeroUserUI, Loaded, LoadedOther, Props, Status } from 'ui/modules/HeroUser';
 import Modal from 'ui/modules/Modal';
+import { useCreateDefaultResource } from '../../../fe/resourceDefault/useCreateDefaultResource';
 import { FlagModalHOC } from '../FlagModal/flagModalHOC';
 
 export interface HeroUser {
@@ -14,6 +15,7 @@ export interface HeroUser {
 export const HeroUser: FC<HeroUser> = ({ userId }) => {
   const { user, isAdmin, isMe, toggleFollow } = useUser(userId);
   const [isOpenDropdown, toggleDropdown] = useReducer(is => !is, false);
+  const { createDefaultResource, isAgent } = useCreateDefaultResource();
 
   const toggleFollowFormik = useFormik({
     initialValues: {},
@@ -53,6 +55,8 @@ export const HeroUser: FC<HeroUser> = ({ userId }) => {
       const props: Props = {
         isAdmin: isAdmin,
         me: isMe,
+        createDefaultResource: createDefaultResource,
+        isProvider: isAgent,
         ...loadedProps
       };
 

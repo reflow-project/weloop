@@ -17,7 +17,7 @@ import {
 // 2) if user is  - he is sign in
 // 3) else he is sign in and create default resource
 
-export interface CreateDefaultEvent {
+export interface TCreateDefaultResource {
   note: string;
   name: string;
   action: string;
@@ -39,7 +39,7 @@ export const useCreateDefaultResource = () => {
   }, [providers, me]);
 
   const create = useCallOrNotifyMustLogin(
-    async ({ note, name, action }: CreateDefaultEvent) => {
+    async ({ note, name, action }: TCreateDefaultResource) => {
       if (createResourceMutStatus.loading) {
         return;
       }
