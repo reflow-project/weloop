@@ -7,7 +7,6 @@ import { useEconomicEventsFilteredQuery } from '../../HOC/modules/EconomicEventM
 import { useMe } from '../session/useMe';
 import { useCreateDefaultEconomicEventMutation } from './useCreateResource.generated';
 
-// when user was sign in first his name is not displayed in provider list
 // https://github.com/reflow-project/weloop/issues/87
 // solution:
 // 1) get providers list and check - is User in this list?
