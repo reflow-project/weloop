@@ -24,12 +24,12 @@ import { communityLocation } from 'routes/CommunityPageRoute';
 import { useCommunityIntents } from 'fe/intent/community/useCommunityIntents';
 import { IntentPreviewHOC } from 'HOC/modules/previews/intent/IntentPreview';
 import { IntentPanelHOC } from 'HOC/modules/IntentPanel/IntentPanelHOC';
-import { useCommunityInventory } from 'fe/inventory/community/useCommunityInventory';
+// import { useCommunityInventory } from 'fe/inventory/community/useCommunityInventory';
 
 export enum CommunityPageTab {
   Activities,
   Intents,
-  Inventory,
+  // Inventory,
   // Collections,
   Discussions,
   Members
@@ -46,7 +46,7 @@ const communityActivitiesPageTitle = t`Community {name} - Activities`;
 // const communityCollectionsPageTitle = t`Community {name} - Collections`;
 const communityDiscussionsPageTitle = t`Community {name} - Discussions`;
 const communityMembersPageTitle = t`Community {name} - Members`;
-const communityInventoryPageTitle = t`Community {name} - Inventory`;
+// const communityInventoryPageTitle = t`Community {name} - Inventory`;
 
 export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab }) => {
   const { community, createThread } = useCommunity(communityId);
@@ -59,9 +59,9 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
       ? communityActivitiesPageTitle
       : tab === CommunityPageTab.Discussions
       ? communityDiscussionsPageTitle
-      : tab === CommunityPageTab.Inventory
-      ? communityInventoryPageTitle
-      : tab === CommunityPageTab.Intents
+      : // : tab === CommunityPageTab.Inventory
+      // ? communityInventoryPageTitle
+      tab === CommunityPageTab.Intents
       ? communityIntentsPageTitle
       : communityIntentsPageTitle; //never
   usePageTitle(!!community?.name && communityPageTitle, community);
@@ -73,7 +73,7 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
   const { activitiesPage } = useCommunityOutboxActivities(communityId);
   const [loadMoreActivities] = activitiesPage.formiks;
   const { communityIntents } = useCommunityIntents(communityId);
-  const { communityInventory } = useCommunityInventory();
+  // const { communityInventory } = useCommunityInventory();
 
   const isJoined = !!community?.myFollow;
   const notifiedMustJoin = (msg: string) => {
@@ -147,22 +147,22 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
     )
     .filter((_): _ is ReactElement => !!_);
 
-  const Inventory = communityInventory
-    .map(
-      (resource, i) =>
-        resource && (
-          <IntentPreviewHOC
-            key={i}
-            name={resource?.name ?? ''}
-            intentId={resource.id}
-            note={resource?.note ?? ''}
-            communityName={community?.name ?? ''}
-            communityLink={`/inventory/${resource.id}`}
-            onOpen={() => history.push(`/inventory/${resource.id}`)}
-          />
-        )
-    )
-    .filter((_): _ is ReactElement => !!_);
+  // const Inventory = communityInventory
+  //   .map(
+  //     (resource, i) =>
+  //       resource && (
+  //         <IntentPreviewHOC
+  //           key={i}
+  //           name={resource?.name ?? ''}
+  //           intentId={resource.id}
+  //           note={resource?.note ?? ''}
+  //           communityName={community?.name ?? ''}
+  //           communityLink={`/inventory/${resource.id}`}
+  //           onOpen={() => history.push(`/inventory/${resource.id}`)}
+  //         />
+  //       )
+  //   )
+  //   .filter((_): _ is ReactElement => !!_);
 
   const notifiedMustLogin = useNotifyMustLogin();
   const [showCreateCollectionModal, toggleShowCreateCollectionModal] = useReducer(
@@ -201,13 +201,13 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
       discussions: communityLocation.getPath({ communityId, tab: 'discussions' }, undefined),
       members: communityLocation.getPath({ communityId, tab: 'members' }, undefined),
       timeline: communityLocation.getPath({ communityId, tab: 'timeline' }, undefined),
-      inventory: communityLocation.getPath({ communityId, tab: 'inventory' }, undefined),
+      // inventory: communityLocation.getPath({ communityId, tab: 'inventory' }, undefined),
       intents: communityLocation.getPath({ communityId, tab: undefined }, undefined)
     };
     const props: CommunityProps = {
       Members,
       Intents,
-      Inventory,
+      // Inventory,
       Activities,
       // Collections,
       HeroCommunity: HeroCommunityBox,
@@ -228,7 +228,7 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath, tab })
     communityId,
     Members,
     Intents,
-    Inventory,
+    // Inventory,
     Activities,
     // Collections,
     HeroCommunityBox,

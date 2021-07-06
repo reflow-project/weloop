@@ -44,7 +44,7 @@ export const LocationPanel: FC<LocationPanelProps> = ({ formik }) => {
                 <div className="d-flex">
                   <div className="item_col-6">
                     <Map
-                      center={{ lat: formik.values.lat, lng: formik.values.long }}
+                      center={{ lat: formik.values.long, lng: formik.values.lat }}
                       zoom={12}
                     ></Map>
                   </div>
@@ -77,7 +77,7 @@ export const LocationPanel: FC<LocationPanelProps> = ({ formik }) => {
                             disabled={formik.isSubmitting}
                             onChange={formik.handleChange}
                             placeholder={i18nMark('Name')}
-                            value={formik.values.lat}
+                            value={formik.values.long}
                           />
                         </FormGroup>
                       </div>
@@ -92,7 +92,7 @@ export const LocationPanel: FC<LocationPanelProps> = ({ formik }) => {
                             readOnly={true}
                             disabled={formik.isSubmitting}
                             onChange={formik.handleChange}
-                            value={formik.values.long}
+                            value={formik.values.lat}
                           />
                         </FormGroup>
                       </div>
