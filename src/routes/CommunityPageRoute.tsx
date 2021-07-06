@@ -16,9 +16,9 @@ const CommunityPageRouter: FC<RouteComponentProps<CommunityPageRouter>> = ({ mat
   const tab =
     maybeTabStr === 'timeline'
       ? CommunityPageTab.Activities
-      : maybeTabStr === 'inventory'
-      ? CommunityPageTab.Inventory
-      : maybeTabStr === 'members'
+      : // : maybeTabStr === 'inventory'
+      // ? CommunityPageTab.Inventory
+      maybeTabStr === 'members'
       ? CommunityPageTab.Members
       : maybeTabStr === 'discussions'
       ? CommunityPageTab.Discussions
@@ -51,11 +51,11 @@ const CommunityPageRouter: FC<RouteComponentProps<CommunityPageRouter>> = ({ mat
 
 export const CommunityPageRoute: RouteProps = {
   exact: true,
-  path: '/communities/:communityId/:tab(inventory|timeline|members|discussions|intents)?',
+  path: '/communities/:communityId/:tab(timeline|members|discussions|intents)?',
   component: CommunityPageRouter
 };
 
-type Tab = undefined | 'timeline' | 'members' | 'discussions' | 'intents' | 'inventory';
+type Tab = undefined | 'timeline' | 'members' | 'discussions' | 'intents';
 export type CommunityPageRouterParams = {
   communityId: string;
   tab: Tab;

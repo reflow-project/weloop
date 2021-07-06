@@ -33,7 +33,7 @@ export interface Props {
   Activities: ReactElement[];
   Members: ReactElement[];
   Intents: ReactElement[];
-  Inventory: ReactElement[];
+  // Inventory: ReactElement[];
   // Collections: ReactElement[];
   HeroCommunity: ReactElement;
   Threads: ReactElement[];
@@ -48,7 +48,7 @@ export interface Props {
     discussions: string;
     // collections: string;
     intents: string;
-    inventory: string;
+    // inventory: string;
   };
 }
 
@@ -58,7 +58,7 @@ export const Community: React.FC<Props> = ({
   // Collections,
   Members,
   Intents,
-  Inventory,
+  // Inventory,
   tabPaths,
   newThreadFormik,
   isJoined,
@@ -137,17 +137,17 @@ export const Community: React.FC<Props> = ({
                 </ButtonWrapper>
                 <ObjectsList>{Intents}</ObjectsList>
               </Route>
-              <Route exact path={tabPaths.inventory}>
-                <ButtonWrapper>
-                  <CreateItemButton variant="primary" onClick={() => toggleShowCreateResource()}>
-                    <Plus size={16} color={'#fff'} />
-                    <Text variant="button">
-                      <Trans>Create a new resource</Trans>
-                    </Text>
-                  </CreateItemButton>
-                </ButtonWrapper>
-                <ObjectsList>{Inventory}</ObjectsList>
-              </Route>
+              {/*<Route exact path={tabPaths.inventory}>*/}
+              {/*  <ButtonWrapper>*/}
+              {/*    <CreateItemButton variant="primary" onClick={() => toggleShowCreateResource()}>*/}
+              {/*      <Plus size={16} color={'#fff'} />*/}
+              {/*      <Text variant="button">*/}
+              {/*        <Trans>Create a new resource</Trans>*/}
+              {/*      </Text>*/}
+              {/*    </CreateItemButton>*/}
+              {/*  </ButtonWrapper>*/}
+              {/*  <ObjectsList>{Inventory}</ObjectsList>*/}
+              {/*</Route>*/}
               <Route exact path={tabPaths.timeline}>
                 <>
                   <List mt={2}>{Activities}</List>
@@ -266,9 +266,9 @@ const Menu: React.FC<{ tabPaths: Props['tabPaths'] }> = ({ tabPaths }) => (
     <NavLink exact to={tabPaths.intents}>
       <Trans>Intents</Trans>
     </NavLink>
-    <NavLink exact to={tabPaths.inventory}>
-      <Trans>Recent Inventory</Trans>
-    </NavLink>
+    {/*<NavLink exact to={tabPaths.inventory}>*/}
+    {/*  <Trans>Recent Inventory</Trans>*/}
+    {/*</NavLink>*/}
     <NavLink to={tabPaths.timeline}>
       <Trans>Recent activity</Trans>
     </NavLink>

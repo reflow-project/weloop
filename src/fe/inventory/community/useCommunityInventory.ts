@@ -6,7 +6,7 @@ export const useCommunityInventory = () => {
   const { me } = useMe();
   const currentUser = me?.user?.id;
   const { data } = GQL.useEconomicResourcesFilteredQuery({
-    variables: { agent: currentUser ? [currentUser] : [] }
+    variables: { agent: [currentUser || ''] }
   });
 
   const communityInventory = data?.economicResourcesFiltered || [];
