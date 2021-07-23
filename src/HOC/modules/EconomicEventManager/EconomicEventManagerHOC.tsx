@@ -3,13 +3,11 @@
 import * as React from 'react';
 import { FC } from 'react';
 import { useCreateDefaultResource } from '../../../fe/resourceDefault/useCreateDefaultResource';
-// import { useAgentsQuery } from '../../../fe/resourceDefault/useCreateResource.generated';
+import { useAgentsQuery } from '../../../fe/resourceDefault/useCreateResource.generated';
 import { useActionsQuery } from '../IntentPanel/Actions.generated';
 import { EconomicEventManagerProps } from '../../../ui/modules/EconomicEventManager';
 import {
-  useEconomicEventsFilteredQuery,
-  useUnitsPagesQuery
-  // useUsersQuery,
+  useUnitsPagesQuery,
 } from './EconomicEventManager.generated';
 
 export const EconomicEventManagerHOC: FC = ({ children }) => {
@@ -22,9 +20,7 @@ export const EconomicEventManagerHOC: FC = ({ children }) => {
   const [action, setAction] = React.useState('');
 
   const intentActionsQ = useActionsQuery();
-  const { data } = useEconomicEventsFilteredQuery({
-    variables: { action: action ? action : '' }
-  });
+  const { data } = useAgentsQuery();
 
   const { createDefaultResource, isAgent } = useCreateDefaultResource();
 
@@ -42,8 +38,11 @@ export const EconomicEventManagerHOC: FC = ({ children }) => {
 
   React.useEffect(() => {
     // setFulUserList(users?.data?.users.edges || { id: '', name: '' })
-    const providers = data?.economicEventsFiltered?.map(el => el.provider);
-    const receivers = data?.economicEventsFiltered?.map(el => el.receiver);
+    // const providers = data?.economicEventsFiltered?.map(el => el.provider);
+    // const receivers = data?.economicEventsFiltered?.map(el => el.receiver);
+
+    const providers = data?.agents;
+    const receivers = data?.agents;
 
     const uniqueProviders: { id: string; name: string }[] = [];
     providers?.length &&
