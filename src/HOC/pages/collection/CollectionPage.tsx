@@ -16,7 +16,7 @@ import { collectionLocation } from 'routes/CollectionPageRoute';
 
 export enum CollectionPageTab {
   // Activities,
-  Resources,
+  Publications,
   Followers
 }
 export interface CollectionPage {
@@ -25,7 +25,7 @@ export interface CollectionPage {
   basePath: string;
 }
 const collectionPageFollowersTitle = t`Collection {name} - Followers`;
-const collectionPageResourcesTitle = t`Collection {name} - Resources`;
+const collectionPagePublicationTitle = t`Collection {name} - Publications`;
 
 type OpenPanel = 'share' | 'upload';
 
@@ -37,9 +37,9 @@ export const CollectionPage: FC<CollectionPage> = props => {
   const collectionPageTitle =
     tab === CollectionPageTab.Followers
       ? collectionPageFollowersTitle
-      : CollectionPageTab.Resources
-      ? collectionPageResourcesTitle
-      : collectionPageResourcesTitle; //never;
+      : CollectionPageTab.Publications
+      ? collectionPagePublicationTitle
+      : collectionPagePublicationTitle; //never;
 
   usePageTitle(!!collection?.name && collectionPageTitle, collection);
 

@@ -25,6 +25,6 @@ const InventoryResourceItemRoute: FC<RouteComponentProps<InventoryResourceItemRo
 
 export const InventoryResourceItemRouter: RouteProps = {
   exact: false,
-  path: '/inventory/:resourceId',
+  path: '/resource/:resourceId',
   component: InventoryResourceItemRoute
 };

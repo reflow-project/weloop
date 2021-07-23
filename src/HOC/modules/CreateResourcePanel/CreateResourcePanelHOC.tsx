@@ -118,7 +118,7 @@ export const CreateResourcePanelHOC: FC<Props> = ({
           if (!response.errors) {
             const newId =
               response?.data?.createEconomicEvent.economicEvent.resourceInventoriedAs.id;
-            const redirect = `/inventory/${newId} `;
+            const redirect = `/resource/${newId} `;
             done();
             history.replace(redirect);
 

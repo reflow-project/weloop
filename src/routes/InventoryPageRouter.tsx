@@ -18,6 +18,6 @@ const InventoryPageRoute: FC<RouteComponentProps<InventoryPageRouteProps>> = () 
 
 export const InventoryPageRouter: RouteProps = {
   exact: false,
-  path: '/inventory/user/:userId',
+  path: '/user/:userId/inventory/',
   component: InventoryPageRoute
 };

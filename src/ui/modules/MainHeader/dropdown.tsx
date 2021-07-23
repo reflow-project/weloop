@@ -91,7 +91,7 @@ export const DropdownSidebar: React.FC<Props> = ({ logout, userLink, toggleDropd
         </Item>
         <Item>
           <Text variant="text">
-            <a href={`/inventory${userLink}`}>
+            <a href={`${userLink}/inventory`}>
               <span>
                 <Package size={16} color={'#333'} />
               </span>

@@ -81,7 +81,7 @@ export const Collection: React.FC<Props> = ({
                         <Trans>Share link</Trans>
                       </Button>
                       <Button onClick={upload} variant="outline">
-                        <Trans>Add new resource</Trans>
+                        <Trans>Add new publication</Trans>
                       </Button>
                     </WrapButton>
                   ) : null}
@@ -135,7 +135,7 @@ const Menu: React.FC<{ tabPaths: Props['tabPaths'] }> = ({ tabPaths }) => (
       Recent activity
     </NavLink> */}
     <NavLink exact to={tabPaths.resources}>
-      <Trans>Resources</Trans>
+      <Trans>Publications</Trans>
     </NavLink>
     <NavLink exact to={tabPaths.followers}>
       <Trans>Followers</Trans>

@@ -32,7 +32,7 @@ export const Inventory: React.FC<Props> = ({ inventory, done }) => {
           </ButtonWrapper>
           <Wrapper>
             {(inventory as any).map(({ id, name, note, image }: EconomicResource) => (
-              <WrapperLink to={`/inventory/${id}`} key={id}>
+              <WrapperLink to={`/resource/${id}`} key={id}>
                 <InventoryWrapper key={id}>
                   <ImageWrapper>{image && <img src={image} alt={name} />}</ImageWrapper>
                   <InfoWrapper>

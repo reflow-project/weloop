@@ -16,7 +16,7 @@ const CollectionPageRouter: FC<RouteComponentProps<CollectionPageRouter>> = ({ m
     maybeTabStr === 'followers'
       ? CollectionPageTab.Followers
       : !maybeTabStr
-      ? CollectionPageTab.Resources
+      ? CollectionPageTab.Publications
       : null;
 
   const props = useMemo<CollectionPage | null>(
