@@ -18,6 +18,7 @@ const BoxIcon = require('react-feather/dist/icons/box').default;
 const PenIcon = require('react-feather/dist/icons/edit').default;
 const EditIcon = require('react-feather/dist/icons/edit-3').default;
 const UserIcon = require('react-feather/dist/icons/user').default;
+const ClockIcon = require('react-feather/dist/icons/clock').default;
 const RemoveIcon = require('react-feather/dist/icons/trash-2').default;
 const QRCode = require('qrcode.react');
 
@@ -117,32 +118,28 @@ export const ResourceItem: React.FC<Props> = ({
                     </span>
                   </Text>
                 </Box>
-                {resource?.track && resource?.track.length > 0 && (
-                  <Button
-                    mt={3}
-                    onClick={() =>
-                      setShowList({
-                        ...showList,
-                        second: !showList.second
-                      })
-                    }
-                    variant="show-more"
-                  >
-                    {showList.second ? (
-                      <>
-                        <ArrowUpIcon size="16" />
-                        <Trans>Show less events</Trans>
-                      </>
-                    ) : (
-                      <>
-                        <ArrowDownIcon size="16" />
-                        <Trans>Show more events</Trans>
-                      </>
-                    )}
-                  </Button>
-                )}
-                {showList.second &&
-                  resource?.track.map((track: any) => {
+                <Box>
+                  <Text variant="text">
+                    <Icon>
+                      <UserIcon size="16" />
+                    </Icon>
+                    <b>
+                      <Trans>Owner:</Trans>
+                    </b>{' '}
+                    {resource?.primaryAccountable
+                      ? resource?.primaryAccountable.name
+                      : 'Not provided'}
+                  </Text>
+                </Box>
+                <Box p={3}>
+                  <Text variant="subhead">
+                    <Icon>
+                      <ClockIcon size="16" />
+                    </Icon>
+                    <b>History:</b>
+                  </Text>
+                </Box>
+                {resource?.track.map((track: any) => {
                     return (
                       <TrackWrapper key={track.id}>
                         <Badge>
@@ -197,8 +194,61 @@ export const ResourceItem: React.FC<Props> = ({
                       </TrackWrapper>
                     );
                   })}
-                <PrimaryAccountablePerson data={resource?.primaryAccountable} />
-
+                {resource?.trace.map((trace: any) => {
+                    return (
+                      <TrackWrapper key={trace.id}>
+                        <Badge>
+                          {trace.action ? (
+                            <Trans>{trace.action.label}</Trans>
+                          ) : (
+                            <Trans>Not provided</Trans>
+                          )}
+                        </Badge>
+                        <Box mr={1}>
+                          <Text variant="text">
+                            <Icon>
+                              <PenIcon size="16" />
+                            </Icon>
+                            <b>
+                              <Trans>Trace note: </Trans>
+                            </b>{' '}
+                            {trace.note ? trace.note : 'Not provided'}
+                          </Text>
+                        </Box>
+                        <Box mr={1}>
+                          <Text variant="text">
+                            <Icon>
+                              <BoxIcon size="16" />
+                            </Icon>
+                            <b>Quantity</b>{' '}
+                            {`${trace.resourceQuantity?.hasNumericalValue} ${trace.resourceQuantity?.hasUnit.label}`}
+                          </Text>
+                        </Box>
+                        <Box mr={1}>
+                          <Text variant="text">
+                            <Icon>
+                              <UserIcon size="16" />
+                            </Icon>
+                            <b>
+                              <Trans>Provider:</Trans>
+                            </b>{' '}
+                            {trace.provider ? trace.provider.name : 'Not provided'}
+                          </Text>
+                        </Box>
+                        <Box mr={1}>
+                          <Text variant="text">
+                            <Icon>
+                              <UserIcon size="16" />
+                            </Icon>
+                            <b>
+                              <Trans>Receiver:</Trans>
+                            </b>
+                            {trace.receiver ? trace.receiver.name : 'Not provided'}
+                          </Text>
+                        </Box>
+                      </TrackWrapper>
+                    );
+                  })}
                 <PersonWrapper>
                   <div className="d-flex">
                     <Text variant="heading">

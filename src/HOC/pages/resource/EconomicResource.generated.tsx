@@ -81,7 +81,26 @@ export type EconomicResourceQuery = (
       & Pick<Types.EconomicEvent, 'id' | 'note'>
       & { action: (
         { __typename: 'Action' }
-        & Pick<Types.Action, 'id'>
+        & Pick<Types.Action, 'id' | 'label'>
+      ), resourceQuantity: Types.Maybe<(
+        { __typename: 'Measure' }
+        & Pick<Types.Measure, 'id' | 'hasNumericalValue'>
+        & { hasUnit: (
+          { __typename: 'Unit' }
+          & Pick<Types.Unit, 'id' | 'label'>
+        ) }
+      )>, provider: (
+        { __typename: 'Organization' }
+        & Pick<Types.Organization, 'id' | 'name'>
+      ) | (
+        { __typename: 'Person' }
+        & Pick<Types.Person, 'id' | 'name'>
+      ), receiver: (
+        { __typename: 'Organization' }
+        & Pick<Types.Organization, 'id' | 'name'>
+      ) | (
+        { __typename: 'Person' }
+        & Pick<Types.Person, 'id' | 'name'>
       ) }
     )>>, track: Types.Maybe<Array<(
       { __typename: 'EconomicEvent' }
@@ -201,6 +220,47 @@ export const EconomicResourceDocument = gql`
       note
       action {
         id
+        label
+      }
+      resourceQuantity {
+        id
+        hasUnit {
+          id
+          label
+        }
+        hasNumericalValue
+      }
+      provider {
+        id
+        name
+      }
+      receiver {
+        id
+        name
+      }
+    }
+    trace {
+      id
+      note
+      resourceQuantity {
+        id
+        hasUnit {
+          id
+          label
+        }
+        hasNumericalValue
+      }
+      action {
+        id
+        label
+      }
+      provider {
+        id
+        name
+      }
+      receiver {
+        id
+        name
       }
     }
     track {

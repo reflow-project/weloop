@@ -77,6 +77,30 @@ query economicResource($id: ID!) {
         id
       }
     }
+    trace {
+      id
+      note
+      resourceQuantity {
+        id
+        hasUnit {
+          id
+          label
+        }
+        hasNumericalValue
+      }
+      action {
+        id
+        label
+      }
+      provider {
+        id
+        name
+      }
+      receiver {
+        id
+        name
+      }
+    }
     track {
       id
       note
