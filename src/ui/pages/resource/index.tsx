@@ -3,6 +3,7 @@ import { ApolloError } from 'apollo-client';
 import { SidePanelHOC } from 'HOC/modules/SidePanel/SidePanel';
 import * as React from 'react';
 import { Box, Text } from 'rebass/styled-components';
+import { Link } from 'react-router-dom';
 import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
 import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
 import Button from 'ui/elements/Button';
@@ -20,6 +21,8 @@ const EditIcon = require('react-feather/dist/icons/edit-3').default;
 const UserIcon = require('react-feather/dist/icons/user').default;
 const ClockIcon = require('react-feather/dist/icons/clock').default;
 const RemoveIcon = require('react-feather/dist/icons/trash-2').default;
+const EyeIcon = require('react-feather/dist/icons/eye').default;
+
 const QRCode = require('qrcode.react');
 
 export interface Props {
@@ -136,7 +139,8 @@ export const ResourceItem: React.FC<Props> = ({
                     <Icon>
                       <ClockIcon size="16" />
                     </Icon>
-                    <b>History:</b>
+                    History: {' '}
+                    {resource?.track.length > 0 || resource?.trace.length > 0 ? '' : 'Not available'}
                   </Text>
                 </Box>
                 {resource?.track.map((track: any) => {
@@ -152,6 +156,17 @@ export const ResourceItem: React.FC<Props> = ({
                         <Box mr={1}>
                           <Text variant="text">
                             <Icon>
+                              <EyeIcon size="16" />
+                            </Icon>
+                            <b>
+                              <Trans>Result: </Trans>
+                            </b>{' '}
+                            {track.toResourceInventoriedAs ?  <Link to={`/resource/${track.toResourceInventoriedAs.id}`} key={track.toResourceInventoriedAs.id}>{track.toResourceInventoriedAs.name}</Link> : 'Not available'}
+                          </Text>
+                        </Box>
+                      <Box mr={1}>
+                          <Text variant="text">
+                            <Icon>
                               <PenIcon size="16" />
                             </Icon>
                             <b>
@@ -165,7 +180,7 @@ export const ResourceItem: React.FC<Props> = ({
                             <Icon>
                               <BoxIcon size="16" />
                             </Icon>
-                            <b>Quantity</b>{' '}
+                            <b>Quantity: </b>{' '}
                             {`${track.resourceQuantity?.hasNumericalValue} ${track.resourceQuantity?.hasUnit.label}`}
                           </Text>
                         </Box>
@@ -177,7 +192,7 @@ export const ResourceItem: React.FC<Props> = ({
                             <b>
                               <Trans>Provider:</Trans>
                             </b>{' '}
-                            {track.provider ? track.provider.name : 'Not provided'}
+                            {track.provider ?  <Link to={`/user/${track.provider.id}`} key={track.provider.id}>{track.provider.name}</Link> : 'Not available'}
                           </Text>
                         </Box>
                         <Box mr={1}>
@@ -187,14 +202,14 @@ export const ResourceItem: React.FC<Props> = ({
                             </Icon>
                             <b>
                               <Trans>Receiver:</Trans>
-                            </b>
-                            {track.receiver ? track.receiver.name : 'Not provided'}
+                            </b>{' '}
+                            {track.receiver ?  <Link to={`/user/${track.receiver.id}`} key={track.receiver.id}>{track.receiver.name}</Link> : 'Not available'}
                           </Text>
                         </Box>
                       </TrackWrapper>
                     );
                   })}
-                {resource?.trace.map((trace: any) => {
+                                {resource?.trace.map((trace: any) => {
                     return (
                       <TrackWrapper key={trace.id}>
                         <Badge>
@@ -207,10 +222,21 @@ export const ResourceItem: React.FC<Props> = ({
                         <Box mr={1}>
                           <Text variant="text">
                             <Icon>
+                              <EyeIcon size="16" />
+                            </Icon>
+                            <b>
+                              <Trans>Source: </Trans>
+                            </b>{' '}
+                            {trace.resourceInventoriedAs ?  <Link to={`/resource/${trace.resourceInventoriedAs.id}`} key={trace.resourceInventoriedAs.id}>{trace.resourceInventoriedAs.name}</Link> : 'Not available'}
+                          </Text>
+                        </Box>
+                      <Box mr={1}>
+                          <Text variant="text">
+                            <Icon>
                               <PenIcon size="16" />
                             </Icon>
                             <b>
-                              <Trans>Trace note: </Trans>
+                              <Trans>trace note: </Trans>
                             </b>{' '}
                             {trace.note ? trace.note : 'Not provided'}
                           </Text>
@@ -220,7 +246,7 @@ export const ResourceItem: React.FC<Props> = ({
                             <Icon>
                               <BoxIcon size="16" />
                             </Icon>
-                            <b>Quantity</b>{' '}
+                            <b>Quantity:</b>{' '}
                             {`${trace.resourceQuantity?.hasNumericalValue} ${trace.resourceQuantity?.hasUnit.label}`}
                           </Text>
                         </Box>
@@ -232,7 +258,7 @@ export const ResourceItem: React.FC<Props> = ({
                             <b>
                               <Trans>Provider:</Trans>
                             </b>{' '}
-                            {trace.provider ? trace.provider.name : 'Not provided'}
+                            {trace.provider ?  <Link to={`/user/${trace.provider.id}`} key={trace.provider.id}>{trace.provider.name}</Link> : 'Not available'}
                           </Text>
                         </Box>
                         <Box mr={1}>
@@ -242,8 +268,8 @@ export const ResourceItem: React.FC<Props> = ({
                             </Icon>
                             <b>
                               <Trans>Receiver:</Trans>
-                            </b>
-                            {trace.receiver ? trace.receiver.name : 'Not provided'}
+                            </b>{' '}
+                            {trace.receiver ?  <Link to={`/user/${trace.receiver.id}`} key={trace.receiver.id}>{trace.receiver.name}</Link> : 'Not available'}
                           </Text>
                         </Box>
                       </TrackWrapper>

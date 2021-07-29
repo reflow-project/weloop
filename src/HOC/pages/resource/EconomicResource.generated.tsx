@@ -89,6 +89,12 @@ export type EconomicResourceQuery = (
           { __typename: 'Unit' }
           & Pick<Types.Unit, 'id' | 'label'>
         ) }
+      )>, resourceInventoriedAs: Types.Maybe<(
+        { __typename: 'EconomicResource' }
+        & Pick<Types.EconomicResource, 'id' | 'name'>
+      )>, toResourceInventoriedAs: Types.Maybe<(
+        { __typename: 'EconomicResource' }
+        & Pick<Types.EconomicResource, 'id' | 'name'>
       )>, provider: (
         { __typename: 'Organization' }
         & Pick<Types.Organization, 'id' | 'name'>
@@ -112,6 +118,12 @@ export type EconomicResourceQuery = (
           { __typename: 'Unit' }
           & Pick<Types.Unit, 'id' | 'label'>
         ) }
+      )>, resourceInventoriedAs: Types.Maybe<(
+        { __typename: 'EconomicResource' }
+        & Pick<Types.EconomicResource, 'id' | 'name'>
+      )>, toResourceInventoriedAs: Types.Maybe<(
+        { __typename: 'EconomicResource' }
+        & Pick<Types.EconomicResource, 'id' | 'name'>
       )>, action: (
         { __typename: 'Action' }
         & Pick<Types.Action, 'id' | 'label'>
@@ -230,6 +242,14 @@ export const EconomicResourceDocument = gql`
         }
         hasNumericalValue
       }
+      resourceInventoriedAs {
+        id
+        name
+      }
+      toResourceInventoriedAs {
+        id
+        name
+      }
       provider {
         id
         name
@@ -249,6 +269,14 @@ export const EconomicResourceDocument = gql`
           label
         }
         hasNumericalValue
+      }
+      resourceInventoriedAs {
+        id
+        name
+      }
+      toResourceInventoriedAs {
+        id
+        name
       }
       action {
         id
@@ -273,6 +301,14 @@ export const EconomicResourceDocument = gql`
           label
         }
         hasNumericalValue
+      }
+      resourceInventoriedAs {
+        id
+        name
+      }
+      toResourceInventoriedAs {
+        id
+        name
       }
       action {
         id

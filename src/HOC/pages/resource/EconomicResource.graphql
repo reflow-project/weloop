@@ -88,6 +88,14 @@ query economicResource($id: ID!) {
         }
         hasNumericalValue
       }
+      resourceInventoriedAs {
+        id
+        name
+      }
+      toResourceInventoriedAs {
+        id
+        name
+      }
       action {
         id
         label
@@ -111,6 +119,14 @@ query economicResource($id: ID!) {
           label
         }
         hasNumericalValue
+      }
+      resourceInventoriedAs {
+        id
+        name
+      }
+      toResourceInventoriedAs {
+        id
+        name
       }
       action {
         id
