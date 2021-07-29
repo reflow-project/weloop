@@ -4,5 +4,8 @@ query economicResourcesFiltered($agent: [ID]) {
     name
     note
     image
+    onhandQuantity
+	currentLocation
+	primaryAccountable
   }
 }

@@ -31,14 +31,46 @@ export const Inventory: React.FC<Props> = ({ inventory, done }) => {
             </CreateItemButton>
           </ButtonWrapper>
           <Wrapper>
-            {(inventory as any).map(({ id, name, note, image }: EconomicResource) => (
+            {(inventory as any).map(({ id, name, note, image, onhandQuantity, currentLocation, primaryAccountable }: EconomicResource) => (
               <WrapperLink to={`/resource/${id}`} key={id}>
                 <InventoryWrapper key={id}>
                   <ImageWrapper>{image && <img src={image} alt={name} />}</ImageWrapper>
                   <InfoWrapper>
                     <Title variant="subhead">{name}</Title>
-                    <Box mr={1}>
-                      <Text variant="text">{note}</Text>
+                    <Box>
+                      <Text variant="text">
+                        <b>
+                          <Trans>Note:</Trans>{' '}
+                        </b>{' '}
+                        <Trans>{note ? note : 'Not provided'}</Trans>
+                      </Text>
+                    </Box>
+                    <Box>
+                      <Text variant="text">
+                        <b>Quantity in stock:</b>{' '}
+                        <span
+                          style={{
+                            color:
+                              onhandQuantity && onhandQuantity.hasNumericalValue < 0
+                                ? 'red'
+                                : 'inherit'
+                          }}
+                        >
+                          {onhandQuantity
+                            ? `${onhandQuantity.hasNumericalValue} ${onhandQuantity.hasUnit.label}`
+                            : 'Not provided'}
+                        </span>
+                      </Text>
+                    </Box>
+                    <Box>
+                      <Text variant="text">
+                        <b>
+                          <Trans>Owner:</Trans>
+                        </b>{' '}
+                        {primaryAccountable
+                          ? primaryAccountable.name
+                          : 'Not provided'}
+                      </Text>
                     </Box>
                   </InfoWrapper>
                 </InventoryWrapper>
