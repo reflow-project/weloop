@@ -150,6 +150,9 @@ const Menu = ({
     <NavLink exact to={`${basePath}/communities`}>
       <Trans>{totalCommunities} communities</Trans>
     </NavLink>
+    <NavLink exact to={`${basePath}/inventory`}>
+      <Trans>Inventory</Trans>
+    </NavLink>
     {/* <NavLink exact to={`${basePath}/following`}>
       {totalUsers} following
     </NavLink> */}
