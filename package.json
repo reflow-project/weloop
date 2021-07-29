@@ -1,8 +1,8 @@
 {
-  "name": "zenpub",
+  "name": "weloop",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://os.reflowproject.eu/",
+  "homepage": "http://weloop.reflowproject.eu/",
   "scripts": {
     "start": "cross-env NODE_ENV=development react-scripts start --incremental",
     "build": "lingui extract --clean ; lingui compile ; cross-env NODE_ENV=production react-scripts build",

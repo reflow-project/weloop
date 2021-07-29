@@ -5,7 +5,7 @@ export const PUBLIC_URL = process.env.PUBLIC_URL;
 export const SENTRY_KEY = process.env.REACT_APP_SENTRY_API_KEY;
 export const DEFAULT_PAGE_SIZE = parseInt(`${process.env.REACT_APP_DEFAULT_PAGE_SIZE}`) || 15;
 
-export const APP_NAME = 'Reflow';
+export const APP_NAME = 'WeLoop';
 export const INSTANCE_DESCRIPTION = 'Federated economic network for Reflow pilots';
 export const INVITE_ONLY_TEXT =
   process.env.REACT_APP_INVITE_ONLY_TEXT ||
@@ -18,9 +18,9 @@ export const my_timeline = 'My Timeline';
 export const instance_bg_img =
   'https://reflowproject.eu/wp-content/uploads/2019/08/reflow-cocreation-1.png';
 export const logo_large_url =
-  'https://raw.githubusercontent.com/reflow-project/zenpub-client/main/src/static/img/weloop_logo_1200x512.png';
+  'https://raw.githubusercontent.com/reflow-project/weloop/main/src/static/img/weloop_logo_1200x512.png';
 export const logo_small_url =
-  'https://raw.githubusercontent.com/reflow-project/zenpub-client/main/src/static/img/weloop_logo_128x128-01.png';
+  'https://raw.githubusercontent.com/reflow-project/weloop/main/src/static/img/weloop_logo_128x128-01.png';
 
 export const terms_markdown_text = {
   // replace the text as needed
@@ -33,16 +33,16 @@ export const terms_markdown_text = {
 export const terms_markdown_urls = {
   // replace the URLs as needed, or enable/disable to use `terms_markdown_text` instead
   enabled: false,
-  terms_users: 'https://moodle.net/terms/users.md',
-  terms_cookies: 'https://moodle.net/terms/cookies.md',
-  terms_indexing: 'https://moodle.net/terms/indexing.md'
+  terms_users: '',
+  terms_cookies: '',
+  terms_indexing: ''
 };
 
 export const terms_privacy = {
   // replace the URLs as needed, or enable/disable to use `text_markdown` instead
   enabled: true,
   // replace the URL with that of your instance's privacy policy (in markdown format)
-  url_markdown: 'https://moodle.net/terms/privacy.md',
+  url_markdown: 'https://reflowproject.eu/privacy-policy',
   // replace the text as needed (in markdown format as well)
   text_markdown:
     'This site uses cookies and follows GDPR rules. Contact the instance operators if you want your data exported or deleted.'
@@ -50,9 +50,9 @@ export const terms_privacy = {
 
 export const related_urls = {
   // replace the URLs as needed
-  project_homepage: 'https://os.reflowproject.eu',
-  code: 'https://github.com/reflowproject',
-  feedback: 'https://os.reflowproject.eu'
+  project_homepage: 'https://weloop.reflowproject.eu',
+  code: 'https://github.com/reflow-project/weloop/',
+  feedback: 'https://github.com/reflow-project/weloop/issues'
 };
 
 export const IS_DEV = NODE_ENV === 'development';
