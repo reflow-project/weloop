@@ -11,6 +11,7 @@ import PrimaryAccountablePerson, {
   PersonWrapper
 } from '../../modules/Resource/PrimaryAccountablePerson';
 import styled from '../../themes/styled';
+import { Map } from 'ui/elements/Map';
 
 const ArrowDownIcon = require('react-feather/dist/icons/chevron-down').default;
 const ArrowUpIcon = require('react-feather/dist/icons/chevron-up').default;
@@ -275,6 +276,15 @@ export const ResourceItem: React.FC<Props> = ({
                       </TrackWrapper>
                     );
                   })}
+                  <Box p={3}>
+                    <Text variant="subhead">
+                      <Icon>
+                        <MapIcon size="16" />
+                      </Icon>
+                      Location:
+                    </Text>
+                  </Box>
+                  <Map zoom={13} markers={[{position: { lat: 41.404014, lng: 2.12 }}]}></Map>
                 <PersonWrapper>
                   <div className="d-flex">
                     <Text variant="heading">
@@ -411,7 +421,6 @@ export const InventoryWrapper = styled('div')`
 `;
 
 export const TrackWrapper = styled('div')`
-  flex-basis: calc(100% - 100px);
   padding 10px 10px 10px 20px;
   border-bottom: 1px solid #ccc
 `;

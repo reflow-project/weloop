@@ -6,11 +6,23 @@ import { NavLink } from 'react-router-dom';
 import { Box, Text } from 'rebass/styled-components';
 import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
 import { EconomicResourcesFilteredQuery } from '../../../HOC/pages/inventory/InventoryPage.generated';
-import { InventoryWrapper, InfoWrapper, ImageWrapper } from '../../../ui/pages/resource';
+import { InventoryWrapper, InfoWrapper, ImageWrapper, Icon } from '../../../ui/pages/resource';
 import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
 import { typography } from '../../../mn-constants';
 import styled from '../../themes/styled';
 import { ButtonWrapper, CreateItemButton } from '../community';
+import { useMe } from 'fe/session/useMe';
+
+const ArrowDownIcon = require('react-feather/dist/icons/chevron-down').default;
+const ArrowUpIcon = require('react-feather/dist/icons/chevron-up').default;
+const MapIcon = require('react-feather/dist/icons/map').default;
+const BoxIcon = require('react-feather/dist/icons/box').default;
+const PenIcon = require('react-feather/dist/icons/edit').default;
+const EditIcon = require('react-feather/dist/icons/edit-3').default;
+const UserIcon = require('react-feather/dist/icons/user').default;
+const ClockIcon = require('react-feather/dist/icons/clock').default;
+const RemoveIcon = require('react-feather/dist/icons/trash-2').default;
+const EyeIcon = require('react-feather/dist/icons/eye').default;
 
 export interface Props {
   done: () => void;
@@ -18,6 +30,9 @@ export interface Props {
 }
 
 export const Inventory: React.FC<Props> = ({ inventory, done }) => {
+  const { me } = useMe();
+  const currentUser = me?.user?.id;
+
   return (
     <MainContainer>
       <HomeBox>
@@ -37,16 +52,22 @@ export const Inventory: React.FC<Props> = ({ inventory, done }) => {
                   <ImageWrapper>{image && <img src={image} alt={name} />}</ImageWrapper>
                   <InfoWrapper>
                     <Title variant="subhead">{name}</Title>
-                    <Box>
+                    <Box mr={1}>
                       <Text variant="text">
+                        <Icon>
+                          <PenIcon size="16" />
+                        </Icon>
                         <b>
                           <Trans>Note:</Trans>{' '}
                         </b>{' '}
                         <Trans>{note ? note : 'Not provided'}</Trans>
                       </Text>
                     </Box>
-                    <Box>
+                    <Box mr={1}>
                       <Text variant="text">
+                        <Icon>
+                          <BoxIcon size="16" />
+                        </Icon>
                         <b>Quantity in stock:</b>{' '}
                         <span
                           style={{
@@ -62,14 +83,17 @@ export const Inventory: React.FC<Props> = ({ inventory, done }) => {
                         </span>
                       </Text>
                     </Box>
-                    <Box>
+                    <Box mr={1}>
                       <Text variant="text">
+                        <Icon>
+                          <UserIcon size="16" />
+                        </Icon>
                         <b>
                           <Trans>Owner:</Trans>
                         </b>{' '}
-                        {primaryAccountable
-                          ? primaryAccountable.name
-                          : 'Not provided'}
+                        {primaryAccountable.id == currentUser
+                          ? 'Me'
+                          : primaryAccountable.name}
                       </Text>
                     </Box>
                   </InfoWrapper>
