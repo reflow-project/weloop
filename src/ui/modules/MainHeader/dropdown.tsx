@@ -81,9 +81,9 @@ export const DropdownSidebar: React.FC<Props> = ({ logout, userLink, toggleDropd
         </Item>
         <Item>
           <Text variant="text">
-            <a href="/communities/user">
+            <a href={`${userLink}/communities`}>
               <span>
-                <Users size={16} color={'red'} />
+                <Users size={16} color={'#333'} />
               </span>
               <Trans>My Communities</Trans>
             </a>
@@ -101,9 +101,9 @@ export const DropdownSidebar: React.FC<Props> = ({ logout, userLink, toggleDropd
         </Item>
         <Item>
           <Text variant="text">
-            <a href="/activity">
+            <a href={`${userLink}`}>
               <span>
-                <Activity size={16} color={'red'} />
+                <Activity size={16} color={'#333'} />
               </span>
               <Trans>My Activity</Trans>
             </a>
@@ -111,19 +111,9 @@ export const DropdownSidebar: React.FC<Props> = ({ logout, userLink, toggleDropd
         </Item>
         <Item>
           <Text variant="text">
-            <a href="/comments">
+            <a href={`${userLink}/starred`}>
               <span>
-                <MessageCircle size={16} color={'red'} />
-              </span>
-              <Trans>My comments</Trans>
-            </a>
-          </Text>
-        </Item>
-        <Item>
-          <Text variant="text">
-            <a href="/favorites">
-              <span>
-                <Star size={16} color={'red'} />
+                <Star size={16} color={'#333'} />
               </span>
               <Trans>My favorites</Trans>
             </a>

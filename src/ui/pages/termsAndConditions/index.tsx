@@ -42,7 +42,7 @@ const TermsAndConditionsPage: React.FC<Props> = ({
               </Box>
               <Text variant="suptitle">
                 {' '}
-                Please read the following. By using this instance of MoodleNet you are consenting to
+                Please read the following. By using this instance of WeLoop you are consenting to
                 these agreements.
               </Text>
             </Aware>
