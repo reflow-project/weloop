@@ -72,7 +72,7 @@ export const CreateEventOnResourcePanel: FC<TCreateResourcePanel> = ({
         <Hero>
           <HeroInfo>
             <CollectionContainerForm>
-              <div className="d-flex">
+              <div className="d-flex d-flex-image">
                 <Box sx={{ width: '140', height: '140' }} className="item_photo">
                   <ImageWrapper>
                     <img

@@ -55,7 +55,7 @@ export const UpdateResourcePanel: FC<TUpdateResourcePanel> = ({
         <Hero>
           <HeroInfo>
             <CollectionContainerForm>
-              <div className="d-flex">
+              <div className="d-flex d-flex-image">
                 <Box sx={{ width: '140', height: '140' }} className="item_photo">
                   <DropzoneArea
                     initialUrl={initialIconUrl}

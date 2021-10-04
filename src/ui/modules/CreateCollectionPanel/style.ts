@@ -6,6 +6,7 @@ import { ContainerForm } from '../Modal';
 
 export const CollectionContainerForm = styled(ContainerForm)`
   position: relative;
+  padding-top: 0;
 
   input {
     background: #fbfbfb;
@@ -14,6 +15,7 @@ export const CollectionContainerForm = styled(ContainerForm)`
   }
 
   textarea {
+    padding-top: 6px;
     background: #fbfbfb;
     border-radius: 2px;
     border: 0;
@@ -25,6 +27,10 @@ export const CollectionContainerForm = styled(ContainerForm)`
     display: flex;
     justify-content: space-between;
     align-items: stretch;
+
+    ${media.lessThan('medium')`    
+            flex-direction: column;
+        `};
 
     .item_col-6 {
       flex-basis: calc(50% - 5px);
@@ -38,14 +44,42 @@ export const CollectionContainerForm = styled(ContainerForm)`
       .bopsip {
         height: 140px !important;
       }
+
+      ${media.lessThan('medium')`    
+          flex-basis: 100%;
+          order: 2
+        `};
     }
     .item_info {
       margin-bottom: 10px;
       flex-basis: calc(100% - 160px);
+
+      ${media.lessThan('medium')`    
+          flex-basis: 100%;
+          order: 1
+        `};
     }
+  }
+  .d-flex-image.d-flex {
+    ${media.lessThan('medium')`
+      flex-direction: column;
+      align-items: unset;
+    `};
+  }
+  .dropzone {
+    ${media.lessThan('medium')`
+      min-Height: unset;
+      height: auto;
+    `};
   }
 `;
 
+export const MapWrapper = styled.div`
+  display: flex;
+  ${media.lessThan('medium')`
+      display: block;
+    `};
+`;
 export const FlexBetweenContainer = styled.div`
   display: flex;
   flex-wrap: wrap;

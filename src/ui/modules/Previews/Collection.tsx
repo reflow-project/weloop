@@ -8,6 +8,7 @@ import { SimpleLink } from 'ui/helpers/SimpleLink';
 import styled from 'ui/themes/styled';
 import { typography } from 'mn-constants';
 import { darken, ellipsis } from 'polished';
+import media from 'styled-media-query';
 
 export interface Props {
   link: SimpleLink;
@@ -112,6 +113,10 @@ const CollectionWrapper = styled(Box)`
   padding: 8px;
   border-radius: 4px;
   border: 1px solid #ececec;
+
+  ${media.lessThan('medium')`    
+            max-width: unset;
+        `};
 `;
 const Previews = styled(Box)`
   display: grid;

@@ -227,7 +227,8 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
             </CollectionContainerForm>
 
             <CollectionContainerForm>
-              <div>
+              <FormGroup>
+                <FormLabel>Location</FormLabel>
                 <Select
                   onSelect={(name, option) => {
                     formik.setValues({ ...formik.values, [name]: option });
@@ -251,7 +252,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                     <Trans>Create Location</Trans>
                   </Button>
                 </LocationBlockStyle>
-              </div>
+              </FormGroup>
             </CollectionContainerForm>
 
             <CollectionContainerForm>

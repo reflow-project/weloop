@@ -210,7 +210,7 @@ export const ButtonWrapper = styled.div`
   margin: 10px 0;
 `;
 export const CreateItemButton = styled(Button)`
-  padding: 0;
+  margin: 0 10px;
   height: 34px;
   text-transform: capitalize;
   line-height: 34px;

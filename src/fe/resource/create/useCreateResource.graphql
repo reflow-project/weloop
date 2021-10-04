@@ -25,6 +25,9 @@ mutation createEconomicEventAndNewResource(
     economicEvent {
       id
       note
+      atLocation {
+        id
+      }
       receiver {
         id
         name

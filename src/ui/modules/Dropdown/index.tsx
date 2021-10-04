@@ -26,8 +26,8 @@ const Wrapper = styled(Box)<{ orientation: string }>`
   position: absolute;
   top: ${props => (props.orientation === 'top' ? '8px' : 'auto')};
   bottom: ${props => (props.orientation === 'bottom' ? '4px' : 'auto')};
-  left: ${props => (props.orientation === 'top' ? '0px' : '0px')};
-  right: ${props => (props.orientation === 'bottom' ? '0px' : 'auto')};
+  left: ${props => (props.orientation === 'top' ? 'auto' : 'auto')};
+  right: ${props => (props.orientation === 'bottom' ? '0px' : '10px')};
   z-index: 9999999999999999999999999999;
 `;
 export const DropdownItem = styled(Flex)`

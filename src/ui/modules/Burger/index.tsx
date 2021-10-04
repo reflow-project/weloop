@@ -139,7 +139,7 @@ const Item = styled(Flex)`
 const Background = styled(Box)<{ open: boolean }>`
   z-index: 99998;
   background: rgba(0,0,0,.9);
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   bottom: 0;

@@ -6,6 +6,7 @@ import { theme } from 'ui/themes/default.theme';
 import { divIcon, LatLngBounds, LatLngLiteral } from 'leaflet';
 import { MapPin } from 'react-feather';
 import ReactDOMServer from 'react-dom/server';
+import media from 'styled-media-query';
 
 export interface MarkerProps {
   position: LatLngLiteral;
@@ -69,6 +70,10 @@ const Wrapper = styled.div`
   height: 400px;
   position: relative;
   z-index: 0;
+
+  ${media.lessThan('medium')`
+    height: 200px;
+  `};
 `;
 
 export default Map;

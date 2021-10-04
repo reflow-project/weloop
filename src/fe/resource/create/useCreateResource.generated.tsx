@@ -24,7 +24,10 @@ export type CreateEconomicEventAndNewResourceMutation = (
     & { economicEvent: (
       { __typename: 'EconomicEvent' }
       & Pick<Types.EconomicEvent, 'id' | 'note'>
-      & { receiver: (
+      & { atLocation: Types.Maybe<(
+        { __typename: 'SpatialThing' }
+        & Pick<Types.SpatialThing, 'id'>
+      )>, receiver: (
         { __typename: 'Organization' }
         & Pick<Types.Organization, 'id' | 'name' | 'note'>
       ) | (
@@ -106,6 +109,9 @@ export const CreateEconomicEventAndNewResourceDocument = gql`
     economicEvent {
       id
       note
+      atLocation {
+        id
+      }
       receiver {
         id
         name

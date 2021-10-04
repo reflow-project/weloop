@@ -159,6 +159,12 @@ const FootWrapper = styled(Box)`
   height: 75px;
   line-height: 75px;
   text-align: center;
+  ${media.lessThan('medium')`
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  `}
 `;
 
 const Footer = styled(Box)`

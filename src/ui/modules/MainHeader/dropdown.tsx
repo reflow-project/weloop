@@ -4,7 +4,6 @@ import {
   User,
   Power,
   Users,
-  MessageCircle,
   Star,
   Code,
   Activity,
