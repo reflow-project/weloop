@@ -239,7 +239,7 @@ export const CreateEventOnResourcePanel: FC<TCreateResourcePanel> = ({
             </CollectionContainerForm>
           </HeroInfo>
         </Hero>
-        <Actions mb={3}>
+        <Actions>
           <Button
             variant="primary"
             isSubmitting={formik.isSubmitting}

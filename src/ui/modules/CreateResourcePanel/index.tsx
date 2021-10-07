@@ -318,7 +318,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
             </CollectionContainerForm>
           </HeroInfo>
         </Hero>
-        <Actions mb={3}>
+        <Actions>
           <Button
             variant="primary"
             isSubmitting={formik.isSubmitting}

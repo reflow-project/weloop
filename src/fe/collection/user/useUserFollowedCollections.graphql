@@ -5,7 +5,7 @@ query userFollowedCollections($userId: String!, $limit:Int, $before:[Cursor!], $
       totalCount,
       pageInfo{ ...FullPageInfo }
       edges{
-        id 
+        id
         context{
           ... on Collection{
             ...UserFollowedCollection

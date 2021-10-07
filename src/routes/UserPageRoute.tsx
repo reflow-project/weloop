@@ -21,6 +21,8 @@ const UserPageRouter: FC<RouteComponentProps<UserPageRouter>> = ({ match }) => {
       ? UserPageTab.Collections
       : maybeTabStr === 'following'
       ? UserPageTab.Following
+      : maybeTabStr === 'inventory'
+      ? UserPageTab.Inventory
       : !maybeTabStr
       ? UserPageTab.Activities
       : null;
@@ -48,11 +50,11 @@ const UserPageRouter: FC<RouteComponentProps<UserPageRouter>> = ({ match }) => {
 
 export const UserPageRoute: RouteProps = {
   exact: true,
-  path: '/user/:userId/:tab(starred|communities|collections|following)?',
+  path: '/user/:userId/:tab(starred|communities|collections|inventory|following)?',
   component: UserPageRouter
 };
 
-type Tab = undefined | 'starred' | 'communities' | 'collections' | 'following';
+type Tab = undefined | 'starred' | 'communities' | 'collections' | 'inventory' | 'following';
 type Params = {
   userId: string;
   tab: Tab;

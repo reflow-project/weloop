@@ -120,11 +120,8 @@ const CollectionWrapper = styled(Box)`
 `;
 const Previews = styled(Box)`
   display: grid;
-  // grid-template-rows: 150px 90px;
   grid-template-rows: 150px;
   grid-template-areas: 'big big big';
-  // grid-template-areas: "big big big"
-  //                       "small small small ";
   column-gap: 4px;
   row-gap: 4px;
 `;

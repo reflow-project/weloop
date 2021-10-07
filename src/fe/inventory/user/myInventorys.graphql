@@ -1,0 +1,25 @@
+
+query myCommunityFollows($limit:Int, $before:[Cursor!], $after:[Cursor!]){
+    me @connection(key: "myCommunityFollows"){
+        ...MyCommunityFollowsData
+    }
+}
+
+fragment MyCommunityFollowsData on Me {
+    user{
+        id
+        communityFollows(limit:$limit, before:$before, after:$after) {
+            totalCount,
+            pageInfo{ ...FullPageInfo }
+            edges{
+                id
+                context
+            }
+        }
+    }
+}
+
+fragment MyFollowedCommunityData on Community{
+    ...SidebarFollowedCommunity,
+    ...CommunityPreview
+}

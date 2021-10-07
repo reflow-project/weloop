@@ -160,6 +160,7 @@ const FootWrapper = styled(Box)`
   line-height: 75px;
   text-align: center;
   ${media.lessThan('medium')`
+    background: #fff;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -168,6 +169,11 @@ const FootWrapper = styled(Box)`
 `;
 
 const Footer = styled(Box)`
+  position: fixed;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 500;
   background: ${props => props.theme.colors.appInverse}
   display: grid;
   border-top: ${props => props.theme.colors.border};
@@ -186,7 +192,7 @@ const Page = styled(Box)`
     row-gap: 8px;
   `}
   ${media.lessThan('medium')`
-    grid-template-rows: 75px 1fr 75px;
+    display: block;
   `}
 `;
 
@@ -198,10 +204,9 @@ const Wrapper = styled(Box)`
   ${media.greaterThan('medium')`
   grid-template-rows: auto;
   grid-template-columns:  1fr;
-  height: calc(100vh - 66px);
   `}
   ${media.lessThan('medium')`
-  height: calc(100vh - 150px);
+  // height: calc(100vh - 150px);
   overflow: overlay;
   grid-template-rows: auto;
   grid-template-columns:1fr;

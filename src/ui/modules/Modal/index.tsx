@@ -78,14 +78,12 @@ export const Container = styled.div`
   min-height: 300px;
   overflow-y: auto;
   max-height: 96vh;
-`;
-export const ModalContainer = styled(Container)`
   padding-bottom: 20px;
 `;
+
 export const Actions = styled(Box)`
   ${clearFix()};
-  padding-top: 10px;
-  padding-right: 10px;
+  padding: 0 16px;
   & button {
     float: right;
   }

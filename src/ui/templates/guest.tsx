@@ -3,7 +3,6 @@ import { Box } from 'rebass/styled-components';
 import styled from 'ui/themes/styled';
 import { useHistory } from 'react-router';
 import { ChevronLeft } from 'react-feather';
-// import Footer from 'ui/modules/Footer';
 import media from 'styled-media-query';
 import { Link } from 'react-router-dom';
 

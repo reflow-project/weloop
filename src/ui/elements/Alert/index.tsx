@@ -6,6 +6,7 @@ const Wrapper = styled(Box)`
   border-radius: 4px;
   line-height: 26px;
   padding: 8px 16px;
+  min-height: 58px;
   font-family: ${props => props.theme.fontFamily};
   font-weight: 600;
 `;
