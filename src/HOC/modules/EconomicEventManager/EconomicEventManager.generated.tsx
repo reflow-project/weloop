@@ -153,7 +153,7 @@ export type EconomicEventsFilteredLazyQueryHookResult = ReturnType<typeof useEco
 export type EconomicEventsFilteredQueryResult = ApolloReactCommon.QueryResult<EconomicEventsFilteredQuery, EconomicEventsFilteredQueryVariables>;
 export const UnitsPagesDocument = gql`
     query unitsPages {
-  unitsPages {
+  unitsPages(limit: 30) {
     edges {
       id
       symbol
