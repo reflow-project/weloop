@@ -187,10 +187,10 @@ const Panel = styled(Box)`
 
 const Page = styled(Box)`
   display: grid;
-  ${media.greaterThan('large')`
-    grid-template-rows: 50px auto;
-    row-gap: 8px;
-  `}
+  // ${media.greaterThan('large')`
+  //   grid-template-rows: 50px auto;
+  //   row-gap: 8px;
+  // `}
   ${media.lessThan('medium')`
     display: block;
   `}

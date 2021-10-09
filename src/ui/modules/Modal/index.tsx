@@ -89,6 +89,11 @@ export const Actions = styled(Box)`
   }
 `;
 
+export const ActionsSimple = styled(Actions)`
+  ${clearFix()};
+  padding: 20px 0;
+`;
+
 export const CounterChars = styled.div`
   position: absolute;
   top: 2px;

@@ -5,11 +5,10 @@ import { ToastContainer } from 'react-toastify';
 import { Box, Heading } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
 import { FormikHook } from 'ui/@types/types';
-import { CustomSelect as Select } from '../../elements/CustomSelect';
 import DropzoneArea from '../DropzoneModal';
 import { FormGroup, FormLabel } from '../EconomicEventManager/styles';
 import Input, { CustomAlert } from '../../elements/Input';
-import { Actions, AlertWrapper, Container, CounterChars, Header } from 'ui/modules/Modal';
+import { Actions, Container, CounterChars, Header } from 'ui/modules/Modal';
 import { Hero, CollectionContainerForm, HeroInfo } from '../CreateCollectionPanel/style';
 import * as Types from '../../../graphql/types.generated';
 
@@ -79,48 +78,6 @@ export const UpdateResourcePanel: FC<TUpdateResourcePanel> = ({
                 </Box>
 
                 <div className="item_info">
-                  <Box>
-                    <FormGroup>
-                      <FormLabel>{i18nMark('Resource')}</FormLabel>
-                      <Input
-                        type="text"
-                        id="name"
-                        name="name"
-                        disabled={formik.isSubmitting}
-                        onChange={formik.handleChange}
-                        placeholder={i18nMark('Name of your resource')}
-                        value={formik.values.name}
-                      />
-                      <CounterChars>{60 - formik.values.name.length}</CounterChars>
-                    </FormGroup>
-                    {formik.errors.name && (
-                      <CustomAlert variant="negative">{formik.errors.name}</CustomAlert>
-                    )}
-                  </Box>
-                  <Box>
-                    <FormLabel>{i18nMark('location')}</FormLabel>
-                    <Select
-                      onSelect={(name, option) => {
-                        formik.setValues({ ...formik.values, [name]: option });
-                      }}
-                      options={spatialThings?.map((el: any) => ({
-                        id: el.id,
-                        value: el.id,
-                        label: el.name
-                      }))}
-                      placeholder={i18nMark('CustomSelect location')}
-                      value={formik.values.atLocation || { id: '', value: '', label: '' }}
-                      variant="primary"
-                      id="atLocation"
-                      name="atLocation"
-                    />
-                    {formik.errors.atLocation && (
-                      <AlertWrapper>
-                        <CustomAlert variant="negative">{formik.errors.atLocation}</CustomAlert>
-                      </AlertWrapper>
-                    )}
-                  </Box>
-
                   <CollectionContainerForm>
                     <FormGroup>
                       <FormLabel>{i18nMark('Note')}</FormLabel>

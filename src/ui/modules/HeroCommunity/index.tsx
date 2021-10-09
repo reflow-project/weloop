@@ -143,7 +143,7 @@ const RightDd = styled(Box)`
     right: 0;
     left: auto;
 
-    ${media.greaterThan('medium')`
+    ${media.lessThan('medium')`
       right: initial;
       left: 10px;
   `}
