@@ -27,7 +27,7 @@ export type CreateEventOnResourceFormValues = {
   image: string | File | undefined | any;
 };
 
-export type TCreateResourcePanel = {
+export type TCreateEventOnResourcePanel = {
   title: string;
   done: any;
   formik: FormikHook<CreateEventOnResourceFormValues>;
@@ -43,7 +43,7 @@ export type SelectOption = {
   id: string;
 };
 
-export const CreateEventOnResourcePanel: FC<TCreateResourcePanel> = ({
+export const CreateEventOnResourcePanel: FC<TCreateEventOnResourcePanel> = ({
   title,
   formik,
   done,
@@ -136,7 +136,7 @@ export const CreateEventOnResourcePanel: FC<TCreateResourcePanel> = ({
               <div className="d-flex">
                 <div className="item_col-6">
                   <FormGroup>
-                    <FormLabel>Receiver</FormLabel>
+                    <FormLabel>Provider</FormLabel>
                     <Select
                       onSelect={(name, option) => {
                         formik.setValues({ ...formik.values, [name]: option });

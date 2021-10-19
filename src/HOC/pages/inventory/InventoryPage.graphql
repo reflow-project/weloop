@@ -1,11 +1,22 @@
 query economicResourcesFiltered($agent: [ID]) {
-  economicResourcesFiltered(agent: $agent) {
-    id
-    name
-    note
-    image
-    onhandQuantity
-	currentLocation
-	primaryAccountable
-  }
+    economicResourcesFiltered(agent: $agent) {
+        id
+        name
+        note
+        image
+        currentLocation {
+            name
+        }
+        onhandQuantity {
+            hasUnit {
+                id
+                label
+            }
+            hasNumericalValue
+        }
+        primaryAccountable {
+            id
+            name
+        }
+    }
 }

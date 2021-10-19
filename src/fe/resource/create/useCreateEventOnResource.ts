@@ -26,16 +26,12 @@ export const useCreateEventOnResource = () => {
   const create = useCallOrNotifyMustLogin(
     async ({
       id,
-      eventNote,
-      atLocation,
-      name,
-      note,
       action,
       provider,
       receiver,
       hasUnit,
       hasNumericalValue,
-      image
+      eventNote
     }: CreateResource) => {
       if (createResourceMutStatus.loading) {
         return;
@@ -44,16 +40,12 @@ export const useCreateEventOnResource = () => {
       return createResourceMut({
         variables: {
           id,
-          eventNote,
-          atLocation,
-          name,
-          note,
           action,
           provider,
           receiver,
           hasUnit,
           hasNumericalValue,
-          image
+          eventNote
         },
         refetchQueries: [EconomicResourceQueryRefetch({ id: id })]
       });

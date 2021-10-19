@@ -12,17 +12,9 @@ import { typography } from '../../../mn-constants';
 import styled from '../../themes/styled';
 import { ButtonWrapper, CreateItemButton } from '../community';
 import { useMe } from 'fe/session/useMe';
-
-const ArrowDownIcon = require('react-feather/dist/icons/chevron-down').default;
-const ArrowUpIcon = require('react-feather/dist/icons/chevron-up').default;
-const MapIcon = require('react-feather/dist/icons/map').default;
 const BoxIcon = require('react-feather/dist/icons/box').default;
 const PenIcon = require('react-feather/dist/icons/edit').default;
-const EditIcon = require('react-feather/dist/icons/edit-3').default;
 const UserIcon = require('react-feather/dist/icons/user').default;
-const ClockIcon = require('react-feather/dist/icons/clock').default;
-const RemoveIcon = require('react-feather/dist/icons/trash-2').default;
-const EyeIcon = require('react-feather/dist/icons/eye').default;
 
 export interface Props {
   done: () => void;
@@ -46,60 +38,70 @@ export const Inventory: React.FC<Props> = ({ inventory, done }) => {
             </CreateItemButton>
           </ButtonWrapper>
           <Wrapper>
-            {(inventory as any).map(({ id, name, note, image, onhandQuantity, currentLocation, primaryAccountable }: EconomicResource) => (
-              <WrapperLink to={`/resource/${id}`} key={id}>
-                <InventoryWrapper key={id}>
-                  <ImageWrapper>{image && <img src={image} alt={name} />}</ImageWrapper>
-                  <InfoWrapper>
-                    <Title variant="subhead">{name}</Title>
-                    <Box mr={1}>
-                      <Text variant="text">
-                        <Icon>
-                          <PenIcon size="16" />
-                        </Icon>
-                        <b>
-                          <Trans>Note:</Trans>{' '}
-                        </b>{' '}
-                        <Trans>{note ? note : 'Not provided'}</Trans>
-                      </Text>
-                    </Box>
-                    <Box mr={1}>
-                      <Text variant="text">
-                        <Icon>
-                          <BoxIcon size="16" />
-                        </Icon>
-                        <b>Quantity in stock:</b>{' '}
-                        <span
-                          style={{
-                            color:
-                              onhandQuantity && onhandQuantity.hasNumericalValue < 0
-                                ? 'red'
-                                : 'inherit'
-                          }}
-                        >
-                          {onhandQuantity
-                            ? `${onhandQuantity.hasNumericalValue} ${onhandQuantity.hasUnit.label}`
-                            : 'Not provided'}
-                        </span>
-                      </Text>
-                    </Box>
-                    <Box mr={1}>
-                      <Text variant="text">
-                        <Icon>
-                          <UserIcon size="16" />
-                        </Icon>
-                        <b>
-                          <Trans>Owner:</Trans>
-                        </b>{' '}
-                        {primaryAccountable.id == currentUser
-                          ? 'Me'
-                          : primaryAccountable.name}
-                      </Text>
-                    </Box>
-                  </InfoWrapper>
-                </InventoryWrapper>
-              </WrapperLink>
-            ))}
+            {!!inventory?.length &&
+              (inventory as any).map(
+                ({
+                  id,
+                  name,
+                  note,
+                  image,
+                  onhandQuantity,
+                  primaryAccountable
+                }: EconomicResource) => (
+                  <WrapperLink to={`/resource/${id}`} key={id}>
+                    <InventoryWrapper key={id}>
+                      <ImageWrapper>{image && <img src={image} alt={name} />}</ImageWrapper>
+                      <InfoWrapper>
+                        <Title variant="subhead">{name}</Title>
+                        <Box mr={1}>
+                          <Text variant="text">
+                            <Icon>
+                              <PenIcon size="16" />
+                            </Icon>
+                            <b>
+                              <Trans>Note:</Trans>{' '}
+                            </b>{' '}
+                            <Trans>{note ? note : 'Not provided'}</Trans>
+                          </Text>
+                        </Box>
+                        <Box mr={1}>
+                          <Text variant="text">
+                            <Icon>
+                              <BoxIcon size="16" />
+                            </Icon>
+                            <b>Quantity in stock:</b>{' '}
+                            <span
+                              style={{
+                                color:
+                                  onhandQuantity && onhandQuantity.hasNumericalValue < 0
+                                    ? 'red'
+                                    : 'inherit'
+                              }}
+                            >
+                              {onhandQuantity
+                                ? `${onhandQuantity.hasNumericalValue} ${onhandQuantity.hasUnit.label}`
+                                : 'Not provided'}
+                            </span>
+                          </Text>
+                        </Box>
+                        <Box mr={1}>
+                          <Text variant="text">
+                            <Icon>
+                              <UserIcon size="16" />
+                            </Icon>
+                            <b>
+                              <Trans>Owner:</Trans>
+                            </b>{' '}
+                            {primaryAccountable?.id === currentUser
+                              ? 'Me'
+                              : primaryAccountable?.name}
+                          </Text>
+                        </Box>
+                      </InfoWrapper>
+                    </InventoryWrapper>
+                  </WrapperLink>
+                )
+              )}
           </Wrapper>
         </WrapperCont>
       </HomeBox>

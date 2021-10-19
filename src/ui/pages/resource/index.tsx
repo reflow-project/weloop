@@ -7,9 +7,7 @@ import { Link } from 'react-router-dom';
 import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
 import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
 import Button from 'ui/elements/Button';
-import PrimaryAccountablePerson, {
-  PersonWrapper
-} from '../../modules/Resource/PrimaryAccountablePerson';
+import { PersonWrapper } from '../../modules/Resource/PrimaryAccountablePerson';
 import styled from '../../themes/styled';
 import { Map } from 'ui/elements/Map';
 
@@ -140,151 +138,195 @@ export const ResourceItem: React.FC<Props> = ({
                     <Icon>
                       <ClockIcon size="16" />
                     </Icon>
-                    History: {' '}
-                    {resource?.track.length > 0 || resource?.trace.length > 0 ? '' : 'Not available'}
+                    History:{' '}
+                    {resource?.track.length > 0 || resource?.trace.length > 0
+                      ? ''
+                      : 'Not available'}
                   </Text>
                 </Box>
                 {resource?.track.map((track: any) => {
-                    return (
-                      <TrackWrapper key={track.id}>
-                        <Badge>
-                          {track.action ? (
-                            <Trans>{track.action.label}</Trans>
-                          ) : (
-                            <Trans>Not provided</Trans>
-                          )}
-                        </Badge>
-                        <Box mr={1}>
-                          <Text variant="text">
-                            <Icon>
-                              <EyeIcon size="16" />
-                            </Icon>
-                            <b>
-                              <Trans>Result: </Trans>
-                            </b>{' '}
-                            {track.toResourceInventoriedAs ?  <Link to={`/resource/${track.toResourceInventoriedAs.id}`} key={track.toResourceInventoriedAs.id}>{track.toResourceInventoriedAs.name}</Link> : 'Not available'}
-                          </Text>
-                        </Box>
+                  return (
+                    <TrackWrapper key={track.id}>
+                      <Badge>
+                        {track.action ? (
+                          <Trans>{track.action.label}</Trans>
+                        ) : (
+                          <Trans>Not provided</Trans>
+                        )}
+                      </Badge>
                       <Box mr={1}>
-                          <Text variant="text">
-                            <Icon>
-                              <PenIcon size="16" />
-                            </Icon>
-                            <b>
-                              <Trans>Track note: </Trans>
-                            </b>{' '}
-                            {track.note ? track.note : 'Not provided'}
-                          </Text>
-                        </Box>
-                        <Box mr={1}>
-                          <Text variant="text">
-                            <Icon>
-                              <BoxIcon size="16" />
-                            </Icon>
-                            <b>Quantity: </b>{' '}
-                            {`${track.resourceQuantity?.hasNumericalValue} ${track.resourceQuantity?.hasUnit.label}`}
-                          </Text>
-                        </Box>
-                        <Box mr={1}>
-                          <Text variant="text">
-                            <Icon>
-                              <UserIcon size="16" />
-                            </Icon>
-                            <b>
-                              <Trans>Provider:</Trans>
-                            </b>{' '}
-                            {track.provider ?  <Link to={`/user/${track.provider.id}`} key={track.provider.id}>{track.provider.name}</Link> : 'Not available'}
-                          </Text>
-                        </Box>
-                        <Box mr={1}>
-                          <Text variant="text">
-                            <Icon>
-                              <UserIcon size="16" />
-                            </Icon>
-                            <b>
-                              <Trans>Receiver:</Trans>
-                            </b>{' '}
-                            {track.receiver ?  <Link to={`/user/${track.receiver.id}`} key={track.receiver.id}>{track.receiver.name}</Link> : 'Not available'}
-                          </Text>
-                        </Box>
-                      </TrackWrapper>
-                    );
-                  })}
-                                {resource?.trace.map((trace: any) => {
-                    return (
-                      <TrackWrapper key={trace.id}>
-                        <Badge>
-                          {trace.action ? (
-                            <Trans>{trace.action.label}</Trans>
+                        <Text variant="text">
+                          <Icon>
+                            <EyeIcon size="16" />
+                          </Icon>
+                          <b>
+                            <Trans>Result: </Trans>
+                          </b>{' '}
+                          {track.toResourceInventoriedAs ? (
+                            <Link
+                              to={`/resource/${track.toResourceInventoriedAs.id}`}
+                              key={track.toResourceInventoriedAs.id}
+                            >
+                              {track.toResourceInventoriedAs.name}
+                            </Link>
                           ) : (
-                            <Trans>Not provided</Trans>
+                            'Not available'
                           )}
-                        </Badge>
-                        <Box mr={1}>
-                          <Text variant="text">
-                            <Icon>
-                              <EyeIcon size="16" />
-                            </Icon>
-                            <b>
-                              <Trans>Source: </Trans>
-                            </b>{' '}
-                            {trace.resourceInventoriedAs ?  <Link to={`/resource/${trace.resourceInventoriedAs.id}`} key={trace.resourceInventoriedAs.id}>{trace.resourceInventoriedAs.name}</Link> : 'Not available'}
-                          </Text>
-                        </Box>
+                        </Text>
+                      </Box>
                       <Box mr={1}>
-                          <Text variant="text">
-                            <Icon>
-                              <PenIcon size="16" />
-                            </Icon>
-                            <b>
-                              <Trans>trace note: </Trans>
-                            </b>{' '}
-                            {trace.note ? trace.note : 'Not provided'}
-                          </Text>
-                        </Box>
-                        <Box mr={1}>
-                          <Text variant="text">
-                            <Icon>
-                              <BoxIcon size="16" />
-                            </Icon>
-                            <b>Quantity:</b>{' '}
-                            {`${trace.resourceQuantity?.hasNumericalValue} ${trace.resourceQuantity?.hasUnit.label}`}
-                          </Text>
-                        </Box>
-                        <Box mr={1}>
-                          <Text variant="text">
-                            <Icon>
-                              <UserIcon size="16" />
-                            </Icon>
-                            <b>
-                              <Trans>Provider:</Trans>
-                            </b>{' '}
-                            {trace.provider ?  <Link to={`/user/${trace.provider.id}`} key={trace.provider.id}>{trace.provider.name}</Link> : 'Not available'}
-                          </Text>
-                        </Box>
-                        <Box mr={1}>
-                          <Text variant="text">
-                            <Icon>
-                              <UserIcon size="16" />
-                            </Icon>
-                            <b>
-                              <Trans>Receiver:</Trans>
-                            </b>{' '}
-                            {trace.receiver ?  <Link to={`/user/${trace.receiver.id}`} key={trace.receiver.id}>{trace.receiver.name}</Link> : 'Not available'}
-                          </Text>
-                        </Box>
-                      </TrackWrapper>
-                    );
-                  })}
-                  <Box p={3}>
-                    <Text variant="subhead">
-                      <Icon>
-                        <MapIcon size="16" />
-                      </Icon>
-                      Location:
-                    </Text>
-                  </Box>
-                  <Map zoom={13} markers={[{position: { lat: 41.404014, lng: 2.12 }}]}></Map>
+                        <Text variant="text">
+                          <Icon>
+                            <PenIcon size="16" />
+                          </Icon>
+                          <b>
+                            <Trans>Track note: </Trans>
+                          </b>{' '}
+                          {track.note ? track.note : 'Not provided'}
+                        </Text>
+                      </Box>
+                      <Box mr={1}>
+                        <Text variant="text">
+                          <Icon>
+                            <BoxIcon size="16" />
+                          </Icon>
+                          <b>Quantity: </b>{' '}
+                          {`${track.resourceQuantity?.hasNumericalValue} ${track.resourceQuantity?.hasUnit.label}`}
+                        </Text>
+                      </Box>
+                      <Box mr={1}>
+                        <Text variant="text">
+                          <Icon>
+                            <UserIcon size="16" />
+                          </Icon>
+                          <b>
+                            <Trans>Provider:</Trans>
+                          </b>{' '}
+                          {track.provider ? (
+                            <Link to={`/user/${track.provider.id}`} key={track.provider.id}>
+                              {track.provider.name}
+                            </Link>
+                          ) : (
+                            'Not available'
+                          )}
+                        </Text>
+                      </Box>
+                      <Box mr={1}>
+                        <Text variant="text">
+                          <Icon>
+                            <UserIcon size="16" />
+                          </Icon>
+                          <b>
+                            <Trans>Receiver:</Trans>
+                          </b>{' '}
+                          {track.receiver ? (
+                            <Link to={`/user/${track.receiver.id}`} key={track.receiver.id}>
+                              {track.receiver.name}
+                            </Link>
+                          ) : (
+                            'Not available'
+                          )}
+                        </Text>
+                      </Box>
+                    </TrackWrapper>
+                  );
+                })}
+                {resource?.trace.map((trace: any) => {
+                  return (
+                    <TrackWrapper key={trace.id}>
+                      <Badge>
+                        {trace.action ? (
+                          <Trans>{trace.action.label}</Trans>
+                        ) : (
+                          <Trans>Not provided</Trans>
+                        )}
+                      </Badge>
+                      <Box mr={1}>
+                        <Text variant="text">
+                          <Icon>
+                            <EyeIcon size="16" />
+                          </Icon>
+                          <b>
+                            <Trans>Source: </Trans>
+                          </b>{' '}
+                          {trace.resourceInventoriedAs ? (
+                            <Link
+                              to={`/resource/${trace.resourceInventoriedAs.id}`}
+                              key={trace.resourceInventoriedAs.id}
+                            >
+                              {trace.resourceInventoriedAs.name}
+                            </Link>
+                          ) : (
+                            'Not available'
+                          )}
+                        </Text>
+                      </Box>
+                      <Box mr={1}>
+                        <Text variant="text">
+                          <Icon>
+                            <PenIcon size="16" />
+                          </Icon>
+                          <b>
+                            <Trans>trace note: </Trans>
+                          </b>{' '}
+                          {trace.note ? trace.note : 'Not provided'}
+                        </Text>
+                      </Box>
+                      <Box mr={1}>
+                        <Text variant="text">
+                          <Icon>
+                            <BoxIcon size="16" />
+                          </Icon>
+                          <b>Quantity:</b>{' '}
+                          {`${trace.resourceQuantity?.hasNumericalValue} ${trace.resourceQuantity?.hasUnit.label}`}
+                        </Text>
+                      </Box>
+                      <Box mr={1}>
+                        <Text variant="text">
+                          <Icon>
+                            <UserIcon size="16" />
+                          </Icon>
+                          <b>
+                            <Trans>Provider:</Trans>
+                          </b>{' '}
+                          {trace.provider ? (
+                            <Link to={`/user/${trace.provider.id}`} key={trace.provider.id}>
+                              {trace.provider.name}
+                            </Link>
+                          ) : (
+                            'Not available'
+                          )}
+                        </Text>
+                      </Box>
+                      <Box mr={1}>
+                        <Text variant="text">
+                          <Icon>
+                            <UserIcon size="16" />
+                          </Icon>
+                          <b>
+                            <Trans>Receiver:</Trans>
+                          </b>{' '}
+                          {trace.receiver ? (
+                            <Link to={`/user/${trace.receiver.id}`} key={trace.receiver.id}>
+                              {trace.receiver.name}
+                            </Link>
+                          ) : (
+                            'Not available'
+                          )}
+                        </Text>
+                      </Box>
+                    </TrackWrapper>
+                  );
+                })}
+                <Box p={3}>
+                  <Text variant="subhead">
+                    <Icon>
+                      <MapIcon size="16" />
+                    </Icon>
+                    Location:
+                  </Text>
+                </Box>
+                <Map zoom={13} markers={[{ position: { lat: 41.404014, lng: 2.12 } }]}></Map>
                 <PersonWrapper>
                   <div className="d-flex">
                     <Text variant="heading">
@@ -415,29 +457,29 @@ export const InventoryWrapper = styled('div')`
   justify-content: space-between;
   flex-grow: 0;
   background: #fff;
-  height: auto
+  height: auto;
   padding: 1em;
   margin-bottom: 10px;
 `;
 
 export const TrackWrapper = styled('div')`
-  padding 10px 10px 10px 20px;
-  border-bottom: 1px solid #ccc
+  padding: 10px 10px 10px 20px;
+  border-bottom: 1px solid #ccc;
 `;
 
 export const ActionsWrapper = styled('div')`
-  display: flex
+  display: flex;
   justify-content: flex-end;
   padding: 15px 0 0;
-  
+
   &:not(:last-child) {
     margin-bottom: 10px;
-    }
-  
+  }
+
   button {
     margin-right: 0;
   }
-  `;
+`;
 
 export const InfoWrapper = styled('div')`
   flex-basis: calc(100% - 160px);
