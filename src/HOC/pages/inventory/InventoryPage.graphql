@@ -4,8 +4,18 @@ query economicResourcesFiltered($agent: [ID]) {
     name
     note
     image
-    onhandQuantity
-	currentLocation
-	primaryAccountable
+    onhandQuantity {
+      id
+      hasUnit {
+        id
+      }
+      hasNumericalValue
+    }
+    currentLocation {
+      id
+    }
+    primaryAccountable {
+      id
+    }
   }
 }

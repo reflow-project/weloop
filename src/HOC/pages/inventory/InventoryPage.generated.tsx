@@ -19,17 +19,17 @@ export type EconomicResourcesFilteredQuery = (
       & Pick<Types.Measure, 'id' | 'hasNumericalValue'>
       & { hasUnit: (
         { __typename: 'Unit' }
-        & Pick<Types.Unit, 'id' | 'label'>
+        & Pick<Types.Unit, 'id'>
       ) }
     )>, currentLocation: Types.Maybe<(
       { __typename: 'SpatialThing' }
-      & Pick<Types.SpatialThing, 'id' | 'name' | 'lat' | 'long'>
+      & Pick<Types.SpatialThing, 'id'>
     )>, primaryAccountable: Types.Maybe<(
       { __typename: 'Organization' }
-      & Pick<Types.Organization, 'id' | 'name'>
+      & Pick<Types.Organization, 'id'>
     ) | (
       { __typename: 'Person' }
-      & Pick<Types.Person, 'id' | 'name'>
+      & Pick<Types.Person, 'id'>
     )> }
   )>>> }
 );
@@ -44,21 +44,16 @@ export const EconomicResourcesFilteredDocument = gql`
     image
     onhandQuantity {
       id
-      hasNumericalValue
       hasUnit {
         id
-        label
       }
+      hasNumericalValue
     }
     currentLocation {
       id
-      name
-      lat
-      long
     }
     primaryAccountable {
       id
-      name
     }
   }
 }

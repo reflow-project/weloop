@@ -23,7 +23,7 @@ query economicEventsFiltered($action: ID!) {
   }
 }
 
-query unitsPages {unitsPages {
+query unitsPages {unitsPages(limit: 30) {
   edges {
     id
     symbol
