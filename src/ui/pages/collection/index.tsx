@@ -1,14 +1,16 @@
 import { Trans } from '@lingui/macro';
 import * as React from 'react';
 import { ReactElement } from 'react';
-import { NavLink, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { Flex, Text } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
 import Button from 'ui/elements/Button';
 import {
+  ButtonIcon,
   HomeBox,
   // List,
   MainContainer,
+  MenuItem,
   MenuList,
   ObjectsList,
   Wrapper,
@@ -128,18 +130,32 @@ const TitleSection = styled(Text)`
 //     </NavLink>
 //   </MenuList>
 // );
+const UsersIcon = require('react-feather/dist/icons/users').default;
+const StartedIcon = require('react-feather/dist/icons/pie-chart').default;
 
 const Menu: React.FC<{ tabPaths: Props['tabPaths'] }> = ({ tabPaths }) => (
   <MenuList p={3} pt={3}>
     {/* <NavLink exact to={`${basePath}`}>
       Recent activity
     </NavLink> */}
-    <NavLink exact to={tabPaths.resources}>
-      <Trans>Publications</Trans>
-    </NavLink>
-    <NavLink exact to={tabPaths.followers}>
-      <Trans>Followers</Trans>
-    </NavLink>
+
+    <MenuItem exact to={tabPaths.resources}>
+      <div className="text-holder">
+        <Trans>Publications</Trans>
+      </div>
+      <ButtonIcon className="icon-holder">
+        <StartedIcon size="24" />
+      </ButtonIcon>
+    </MenuItem>
+
+    <MenuItem exact to={tabPaths.followers}>
+      <div className="text-holder">
+        <Trans>Followers</Trans>
+      </div>
+      <ButtonIcon className="icon-holder">
+        <UsersIcon size="24" />
+      </ButtonIcon>
+    </MenuItem>
   </MenuList>
 );
 

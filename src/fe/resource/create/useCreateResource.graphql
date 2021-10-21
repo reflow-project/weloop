@@ -1,70 +1,3 @@
-#mutation createEconomicEventAndNewResource(
-#  $note: String,
-#  $atLocation: ID,
-#  $action: ID!,
-#  $provider: ID!,
-#  $receiver: ID!,
-#  $hasUnit: ID!,
-#  $hasNumericalValue: Float!,
-#  $name: String,
-#  $image: URI,
-#) {
-#  createEconomicEvent( event: {
-#    action: $action
-#    atLocation: $atLocation,
-#    provider: $provider,
-#    receiver: $receiver,
-#    resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}
-#  },
-#    newInventoriedResource: {
-#      note: $note,
-#      name: $name,
-#      image: $image,
-#      currentLocation: $atLocation,
-#    }) {
-#    economicEvent {
-#      id
-#      note
-#      receiver {
-#        id
-#        name
-#        note
-#      }
-#      provider {
-#        id
-#        name
-#        note
-#      }
-#      resourceQuantity {
-#        hasNumericalValue
-#        hasUnit {
-#          label
-#          symbol
-#        }
-#      }
-#      resourceInventoriedAs { # the newly created resource
-#        id
-#        name
-#        image
-#        onhandQuantity {
-#          hasNumericalValue
-#          hasUnit {
-#            label
-#            symbol
-#          }
-#        }
-#        accountingQuantity {
-#          hasNumericalValue
-#          hasUnit {
-#            label
-#            symbol
-#          }
-#        }
-#      }
-#    }
-#  }
-#}
-
 mutation createEconomicEventAndNewResource(
   $note: String,
   $atLocation: ID,
@@ -90,6 +23,9 @@ mutation createEconomicEventAndNewResource(
       currentLocation: $atLocation,
     }) {
     economicEvent {
+      id
+    }
+    economicResource {
       id
     }
   }

@@ -11,13 +11,12 @@ export const WrapperPanel = styled(Flex)`
   flex-basis: auto;
   flex-direction: column;
   flex-shrink: 0;
-  margin: 0px;
-  min-height: 0px;
-  min-width: 0px;
-  padding: 0px;
+  margin: 0 0 0 8px;
+  min-height: 0;
+  min-width: 0;
+  padding: 0;
   position: relative;
   z-index: 0;
-  margin-left: 8px;
   font-family: ${props => props.theme.fontFamily};
   &.extra {
     width: 100%;
@@ -38,11 +37,10 @@ export const PanelInner = styled(Flex)`
   flex-basis: auto;
   flex-direction: column;
   flex-shrink: 0;
-  margin: 0px;
-  min-height: 0px;
-  min-width: 0px;
-  padding: 0px;
-  position: relative;
+  margin: 0;
+  min-height: 0;
+  min-width: 0;
+  padding: 0;
   z-index: 0;
 `;
 
@@ -55,10 +53,10 @@ export const Panel = styled(Box)`
   flex-basis: auto;
   flex-direction: column;
   flex-shrink: 0;
-  margin: 0px;
-  min-height: 0px;
-  min-width: 0px;
-  padding: 0px;
+  margin: 0;
+  min-height: 0;
+  min-width: 0;
+  padding: 0;
   position: relative;
   z-index: 0;
   margin-bottom: 8px !important;

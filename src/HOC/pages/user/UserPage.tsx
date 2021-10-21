@@ -24,6 +24,7 @@ import { ActivityPreview, Status, Props as ActivityPreviewProps } from 'ui/modul
 import { Props, User as UserPageUI } from 'ui/pages/user';
 import { t } from '@lingui/macro';
 import { usePageTitle } from 'context/global/pageCtx';
+import { InventoryPage } from '../inventory/InventoryPage';
 export interface UserPage {
   userId: User['id'];
   tab: UserPageTab;
@@ -34,7 +35,8 @@ export enum UserPageTab {
   Communities,
   Collections,
   Following,
-  Activities
+  Activities,
+  Inventory
 }
 
 const userStarredPageTitle = t`User {name} - Starred`;
@@ -42,6 +44,7 @@ const userCommunitiesPageTitle = t`User {name} - Communities`;
 const userCollectionsPageTitle = t`User {name} - Collections`;
 const userFollowingPageTitle = t`User {name} - Following`;
 const userActivitiesPageTitle = t`User {name} - Activities`;
+const userInventoryPageTitle = t`User {name} - Inventory`;
 
 export const UserPage: FC<UserPage> = ({ userId, basePath, tab }) => {
   const userInfo = useUser(userId);
@@ -57,7 +60,9 @@ export const UserPage: FC<UserPage> = ({ userId, basePath, tab }) => {
       ? userFollowingPageTitle
       : tab === UserPageTab.Activities
       ? userActivitiesPageTitle
-      : userActivitiesPageTitle; //never
+      : tab === UserPageTab.Inventory
+      ? userInventoryPageTitle
+      : userInventoryPageTitle; //never
   usePageTitle(!!userInfo?.user?.name && userPageTitle, userInfo.user);
 
   const { likesPage } = useUserLikes(userId);
@@ -154,6 +159,8 @@ export const UserPage: FC<UserPage> = ({ userId, basePath, tab }) => {
       </>
     );
 
+    const InventoryBoxes = <InventoryPage />;
+
     const UserBoxes = (
       <>
         {followedUsersPage.edges
@@ -174,6 +181,7 @@ export const UserPage: FC<UserPage> = ({ userId, basePath, tab }) => {
       HeroUserBox,
       CollectionsBoxes,
       CommunityBoxes,
+      InventoryBoxes,
       UserBoxes,
       userName: userInfo.user?.name || '',
       totalActivities: `${totalActivities || '0'}`,

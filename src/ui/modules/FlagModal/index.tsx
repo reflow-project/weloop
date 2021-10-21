@@ -18,11 +18,6 @@ import {
   Row
 } from 'ui/modules/Modal';
 
-// const TextWrapper = styled(Flex)`
-//   padding: 16px;
-//   align-items: center;
-// `;
-
 const tt = {
   placeholders: {
     flag: i18nMark('Please describe the reason for flagging the item')

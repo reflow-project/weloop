@@ -4,7 +4,7 @@ import { Heading, Text } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
 import styled from 'ui/themes/styled';
 // import { FormikHook } from 'ui/@types/types';
-import { Actions, ModalContainer, ContainerForm, Header, Row } from 'ui/modules/Modal';
+import { Actions, Container, ContainerForm, Header, Row } from 'ui/modules/Modal';
 
 // export interface Props {
 //   done(confirmed: boolean): unknown;
@@ -72,9 +72,9 @@ export const ConfirmationPanel: React.FC<ConfirmationPanelProps> = ({
 }) => {
   // const { i18n } = React.useContext(LocaleContext);
   return (
-    <ModalContainer>
+    <Container>
       <Header>
-        <Heading m={2}>{title}</Heading>
+        <Heading>{title}</Heading>
       </Header>
       <Row>
         <ContainerForm>{description && <Text>{description}</Text>}</ContainerForm>
@@ -94,7 +94,7 @@ export const ConfirmationPanel: React.FC<ConfirmationPanelProps> = ({
           <Trans>Cancel</Trans>
         </Button>
       </Actions>
-    </ModalContainer>
+    </Container>
   );
 };
 

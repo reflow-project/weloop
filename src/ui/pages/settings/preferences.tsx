@@ -1,14 +1,12 @@
 import { Trans } from '@lingui/macro';
-import { Input, Label } from '@rebass/forms';
 import * as React from 'react';
 import Select from 'react-select';
-import { Box, Text } from 'rebass/styled-components';
+import { Box } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
 import Button from 'ui/elements/Button';
-import { Actions, ContainerForm, Row } from 'ui/modules/Modal';
+import { ActionsSimple, ContainerForm, Row } from 'ui/modules/Modal';
 // import { ArrowLeft, ArrowRight } from 'react-feather';
 // import media from 'styled-media-query';
-import styled from '../../themes/styled';
 
 // const Header = styled(Flex)`
 //   border-bottom: ${props => props.theme.colors.border};
@@ -65,18 +63,18 @@ const Preferences: React.FC<Props> = props => (
           <Trans>Select language</Trans>
         </label>
         <LanguageSelect {...props} />
-        <Box width={1 / 2} mt={2}>
-          <Label htmlFor="moodleWebsite">Moodle LMS site location</Label>
-          <Input
-            id="moodleWebsite"
-            disabled={props.formik.isSubmitting}
-            value={props.formik.values.moodleWebsite}
-            onChange={props.formik.handleChange}
-            name="moodleWebsite"
-            placeholder={'Type your Moodle LMS instance'}
-          />
-        </Box>
-        <Actions sx={{ height: 'inherit !important' }}>
+        {/*<Box width={1 / 2} mt={2}>*/}
+        {/*  <Label htmlFor="moodleWebsite">Moodle LMS site location</Label>*/}
+        {/*  <Input*/}
+        {/*    id="moodleWebsite"*/}
+        {/*    disabled={props.formik.isSubmitting}*/}
+        {/*    value={props.formik.values.moodleWebsite}*/}
+        {/*    onChange={props.formik.handleChange}*/}
+        {/*    name="moodleWebsite"*/}
+        {/*    placeholder={'Type your Moodle LMS instance'}*/}
+        {/*  />*/}
+        {/*</Box>*/}
+        <ActionsSimple sx={{ height: 'inherit !important' }}>
           <Button
             variant="primary"
             isSubmitting={props.formik.isSubmitting}
@@ -87,32 +85,32 @@ const Preferences: React.FC<Props> = props => (
           >
             <Trans>Save</Trans>
           </Button>
-        </Actions>
+        </ActionsSimple>
       </ContainerForm>
     </Row>
-    <TransifexLink variant="text" my={3} mt={2}>
-      <a
-        href="https://www.transifex.com/moodlenet/moodlenet/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Trans>Want to contibute to MoodleNet translation?</Trans>
-      </a>
-    </TransifexLink>
+    {/*<TransifexLink variant="text" my={3} mt={2}>*/}
+    {/*  <a*/}
+    {/*    href="https://www.transifex.com/moodlenet/moodlenet/"*/}
+    {/*    target="_blank"*/}
+    {/*    rel="noopener noreferrer"*/}
+    {/*  >*/}
+    {/*    <Trans>Want to contibute to MoodleNet translation?</Trans>*/}
+    {/*  </a>*/}
+    {/*</TransifexLink>*/}
   </Box>
 );
 
 export default Preferences;
 
-const TransifexLink = styled(Text)`
-  text-align: right;
-  padding: 0px 20px;
-
-  a {
-    text-decoration: underline;
-    color: ${props => props.theme.colors.dark};
-    &:hover {
-      color: ${props => props.theme.colors.darkest};
-    }
-  }
-`;
+// const TransifexLink = styled(Text)`
+//   text-align: right;
+//   padding: 0px 20px;
+//
+//   a {
+//     text-decoration: underline;
+//     color: ${props => props.theme.colors.dark};
+//     &:hover {
+//       color: ${props => props.theme.colors.darkest};
+//     }
+//   }
+// `;

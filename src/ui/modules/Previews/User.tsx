@@ -18,7 +18,7 @@ export interface Props {
   hideActions?: boolean;
 }
 
-export const User: React.SFC<Props> = ({
+export const User: React.FC<Props> = ({
   image,
   name,
   username,
@@ -93,6 +93,9 @@ const Wrapper = styled(Box)`
   flex: 1;
 `;
 const Username = styled(Text)`
+  max-width: 50%;
+  text-overflow: ellipsis;
+  overflow: hidden;
   color: ${props => props.theme.colors.mediumdark};
   flex: 1;
 `;

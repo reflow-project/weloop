@@ -7,7 +7,6 @@ import { CommunityPageRoute } from 'routes/CommunityPageRoute';
 import { ConfirmEmailRoute } from 'routes/ConfirmEmailPageRoute';
 import { CreateNewPasswordPageRoute } from 'routes/CreateNewPasswordPageRoute';
 import { DiscoverPageRoute } from 'routes/DiscoverPageRoute';
-import { InventoryPageRouter } from 'routes/InventoryPageRouter';
 import { InventoryResourceItemRouter } from 'routes/InventoryResourceItemRouter';
 import { ActivityPageRouter } from 'routes/ActivityPageRoute';
 import { HomePageRoute } from 'routes/HomePageRoute';
@@ -33,7 +32,6 @@ export const Router: React.FC = () => {
       <Route {...AllCollectionsPageRoute} />
       <Route {...AllCommunitiesPageRoute} />
       <Route {...ThreadPageRoute} />
-      <Route {...InventoryPageRouter} />
       <Route {...InventoryResourceItemRouter} />
       <Route {...ActivityPageRouter} />
       <Route {...DiscoverPageRoute} />

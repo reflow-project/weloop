@@ -10,6 +10,7 @@ import Button from 'ui/elements/Button';
 import { PersonWrapper } from '../../modules/Resource/PrimaryAccountablePerson';
 import styled from '../../themes/styled';
 import { Map } from 'ui/elements/Map';
+import media from 'styled-media-query';
 
 const ArrowDownIcon = require('react-feather/dist/icons/chevron-down').default;
 const ArrowUpIcon = require('react-feather/dist/icons/chevron-up').default;
@@ -63,12 +64,12 @@ export const ResourceItem: React.FC<Props> = ({
               </Button>
             </ActionsWrapper>
             <InventoryWrapper>
-              <div>
+              <LeftColWrapper>
                 <ImageWrapper>
                   {resource?.image && <img src={resource.image} alt={resource.name} />}
                 </ImageWrapper>
                 <QRCodeWrapper>{resource?.id && <QRCode value={URL} />}</QRCodeWrapper>
-              </div>
+              </LeftColWrapper>
               <InfoWrapper>
                 <Box mb={2}>
                   <Title variant="heading">
@@ -326,7 +327,17 @@ export const ResourceItem: React.FC<Props> = ({
                     Location:
                   </Text>
                 </Box>
-                <Map zoom={13} markers={[{ position: { lat: 41.404014, lng: 2.12 } }]}></Map>
+                <Map
+                  zoom={13}
+                  markers={[
+                    {
+                      position: {
+                        lat: resource?.currentLocation?.long || 41.404014,
+                        lng: resource?.currentLocation?.lat || 2.12
+                      }
+                    }
+                  ]}
+                ></Map>
                 <PersonWrapper>
                   <div className="d-flex">
                     <Text variant="heading">
@@ -460,8 +471,18 @@ export const InventoryWrapper = styled('div')`
   height: auto;
   padding: 1em;
   margin-bottom: 10px;
+
+  ${media.lessThan('medium')`
+        display: block;
+      `};
 `;
 
+export const LeftColWrapper = styled('div')`
+  ${media.lessThan('medium')`
+        display: flex;
+        margin-bottom: 20px;
+      `};
+`;
 export const TrackWrapper = styled('div')`
   padding: 10px 10px 10px 20px;
   border-bottom: 1px solid #ccc;
@@ -479,6 +500,10 @@ export const ActionsWrapper = styled('div')`
   button {
     margin-right: 0;
   }
+
+  ${media.lessThan('medium')`
+        padding: 10px 20px 0;
+      `};
 `;
 
 export const InfoWrapper = styled('div')`
@@ -508,6 +533,11 @@ export const QRCodeWrapper = styled(ImageWrapper)`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${media.lessThan('medium')`
+        margin-top: 0;
+        margin-left: 20px;
+      `};
 `;
 
 export const IconWrapper = styled(ImageWrapper)`

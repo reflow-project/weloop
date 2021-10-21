@@ -175,13 +175,22 @@ export const CreateEconomicEventOnResourcePanelHOC: FC<Props> = ({ done, resourc
     formik,
     done
   };
+
+  const handlerCloseSecondTab = () => {
+    toggleTab(0);
+    done();
+  };
   const [showCreateLocation, toggleShowCreateLocation] = useState(false);
   const CreateResourceModal = (
     <>
       {showCreateLocation ? (
         <CreateLocationPanelHOC done={toggleShowCreateLocation} />
       ) : (
-        <CreateResourcePanelHOC done={done} toggleCreateLocation={toggleShowCreateLocation} />
+        <CreateResourcePanelHOC
+          done={handlerCloseSecondTab}
+          toggleCreateLocation={toggleShowCreateLocation}
+          resource={formik.values}
+        />
       )}
     </>
   );

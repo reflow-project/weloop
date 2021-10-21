@@ -13,7 +13,7 @@ import { setSelectOption } from '../../elements/CustomSelect/select';
 import { CollectionContainerForm } from '../CreateCollectionPanel/style';
 import { CreateIntentFormValues } from '../CreateResourcePanel';
 import { CounterChars } from '../Modal';
-import { FormLabel, FormGroup, FormStyled, ButtonWrap } from './styles';
+import { FormLabel, FormGroup, FormStyled, ButtonWrap, Container } from './styles';
 
 export type IntentActions = {
   id: string;
@@ -144,7 +144,7 @@ export const EconomicEventManager: React.FC<any> = ({
   });
 
   return (
-    <div style={{ margin: '0 10px 12px 0' }}>
+    <Container>
       <FormStyled onSubmit={formik.handleSubmit}>
         <Box>
           <FormGroup>
@@ -283,7 +283,7 @@ export const EconomicEventManager: React.FC<any> = ({
         ) : null}
       </FormStyled>
       <ToastContainer />
-    </div>
+    </Container>
   );
 };
 

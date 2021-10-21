@@ -72,7 +72,7 @@ export const CreateEventOnResourcePanel: FC<TCreateEventOnResourcePanel> = ({
         <Hero>
           <HeroInfo>
             <CollectionContainerForm>
-              <div className="d-flex">
+              <div className="d-flex d-flex-image">
                 <Box sx={{ width: '140', height: '140' }} className="item_photo">
                   <ImageWrapper>
                     <img
@@ -239,7 +239,7 @@ export const CreateEventOnResourcePanel: FC<TCreateEventOnResourcePanel> = ({
             </CollectionContainerForm>
           </HeroInfo>
         </Hero>
-        <Actions mb={3}>
+        <Actions>
           <Button
             variant="primary"
             isSubmitting={formik.isSubmitting}

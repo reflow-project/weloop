@@ -1,5 +1,9 @@
 import styled from '../../themes/styled';
 
+export const Container = styled('div')<any>`
+  margin: 0 10px 12px 0;
+`;
+
 export const FormGroup = styled('div')<any>`
   display: block;
   position: relative;
@@ -34,6 +38,7 @@ export const FormStyled = styled('form')<any>`
 export const ButtonWrap = styled.div`
   width: 100%;
   margin-bottom: 16px;
+
   > button {
     width: 100%;
   }

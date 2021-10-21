@@ -12,6 +12,7 @@ import Input from '../Input';
 import { Map } from '../Map';
 import { Container, CounterChars, Header } from 'ui/modules/Modal';
 import { Hero, HeroInfo } from 'ui/modules/CreateCollectionPanel/style';
+import media from 'styled-media-query';
 
 export type LocationPanelProps = {
   formik: any;
@@ -65,8 +66,8 @@ export const LocationPanel: FC<LocationPanelProps> = ({ formik }) => {
                     {formik.errors.name && (
                       <CustomAlert variant="negative">{formik.errors.name}</CustomAlert>
                     )}
-                    <div className="d-flex">
-                      <div className="item_col-6">
+                    <div className="coordinate-container">
+                      <div className="coordinate">
                         <FormGroup>
                           <FormLabel>{i18nMark('Lat')}</FormLabel>
                           <Input
@@ -82,7 +83,7 @@ export const LocationPanel: FC<LocationPanelProps> = ({ formik }) => {
                         </FormGroup>
                       </div>
 
-                      <div className="item_col-6">
+                      <div className="coordinate">
                         <FormGroup>
                           <FormLabel>{i18nMark('Long')}</FormLabel>
                           <Input
@@ -117,7 +118,7 @@ export const LocationPanel: FC<LocationPanelProps> = ({ formik }) => {
                       variant="primary"
                       type="submit"
                       onClick={formik.handleSubmit}
-                      fullWidth={true}
+                      style={{ width: '100%' }}
                     >
                       <Trans>Create Location</Trans>
                     </Button>
@@ -139,8 +140,23 @@ const WrapperSelect = styled('div')`
     display: flex;
     justify-content: space-between;
     align-items: stretch;
+    ${media.lessThan('medium')`
+        display: block;
+      `};
 
     .item_col-6 {
+      flex-basis: calc(50% - 5px);
+      ${media.lessThan('medium')`
+         flex-basis: unset;
+      `};
+    }
+    
+    .coordinate-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+    }
+    .coordinate {
       flex-basis: calc(50% - 5px);
     }
   }
