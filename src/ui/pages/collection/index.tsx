@@ -1,10 +1,10 @@
 import { Trans } from '@lingui/macro';
 import * as React from 'react';
 import { ReactElement } from 'react';
-import { NavLink, Route, Switch } from 'react-router-dom';
-import { Flex, Text } from 'rebass/styled-components';
+import { NavLink /* Route, Switch */ } from 'react-router-dom';
+import { /*Flex*/ Text } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
-import Button from 'ui/elements/Button';
+// import Button from 'ui/elements/Button';
 import {
   HomeBox,
   // List,
@@ -20,7 +20,7 @@ import { LoadMore } from 'ui/modules/Loadmore';
 // import { SidePanel } from 'ui/modules/SidePanel';
 import styled from 'ui/themes/styled';
 import { HeaderWrapper } from '../thread';
-import { Box } from 'rebass';
+// import { Box } from 'rebass';
 
 export interface Props {
   Resources: ReactElement[];
@@ -44,19 +44,19 @@ export interface Props {
 
 export const Collection: React.FC<Props> = ({
   HeroCollection,
-  ShareLink,
-  UploadResourcePanel,
+  // ShareLink,
+  // UploadResourcePanel,
   Followers,
-  Resources,
+  // Resources,
   tabPaths,
-  loadMoreResources,
+  // loadMoreResources,
   loadMoreFollowers,
-  isCommunityMember,
+  // isCommunityMember,
   communityId,
   communityName,
-  communityIcon,
-  shareLink,
-  upload
+  communityIcon
+  // shareLink,
+  // upload
 }) => {
   return (
     <MainContainer>
@@ -66,38 +66,42 @@ export const Collection: React.FC<Props> = ({
             {/* <Header name={collectionName} /> */}
             {HeroCollection}
             <Menu tabPaths={tabPaths} />
-            <Switch>
-              <Route path={tabPaths.followers}>
-                <>
-                  <ObjectsList>{Followers}</ObjectsList>
-                  {loadMoreFollowers && <LoadMore LoadMoreFormik={loadMoreFollowers} />}
-                </>
-              </Route>
-              <Route exact path={tabPaths.resources}>
-                <>
-                  {isCommunityMember ? (
-                    <WrapButton p={3}>
-                      <Button mr={2} onClick={shareLink} variant="outline">
-                        <Trans>Share link</Trans>
-                      </Button>
-                      <Button onClick={upload} variant="outline">
-                        <Trans>Add new publication</Trans>
-                      </Button>
-                    </WrapButton>
-                  ) : null}
-                  {ShareLink}
-                  {UploadResourcePanel}
-                  <ObjectsList>
-                    {Resources.map(Resource => (
-                      <Box mx={3} my={2} mb={3} key={Resource.key || ''}>
-                        {Resource}
-                      </Box>
-                    ))}
-                  </ObjectsList>
-                  {loadMoreResources && <LoadMore LoadMoreFormik={loadMoreResources} />}
-                </>
-              </Route>
-            </Switch>
+            <>
+              <ObjectsList>{Followers}</ObjectsList>
+              {loadMoreFollowers && <LoadMore LoadMoreFormik={loadMoreFollowers} />}
+            </>
+            {/*<Switch>*/}
+            {/*  <Route path={tabPaths.followers}>*/}
+            {/*    <>*/}
+            {/*      <ObjectsList>{Followers}</ObjectsList>*/}
+            {/*      {loadMoreFollowers && <LoadMore LoadMoreFormik={loadMoreFollowers} />}*/}
+            {/*    </>*/}
+            {/*  </Route>*/}
+            {/*  <Route exact path={tabPaths.resources}>*/}
+            {/*    <>*/}
+            {/*      {isCommunityMember ? (*/}
+            {/*        <WrapButton p={3}>*/}
+            {/*          <Button mr={2} onClick={shareLink} variant="outline">*/}
+            {/*            <Trans>Share link</Trans>*/}
+            {/*          </Button>*/}
+            {/*          <Button onClick={upload} variant="outline">*/}
+            {/*            <Trans>Add new publication</Trans>*/}
+            {/*          </Button>*/}
+            {/*        </WrapButton>*/}
+            {/*      ) : null}*/}
+            {/*      {ShareLink}*/}
+            {/*      {UploadResourcePanel}*/}
+            {/*      <ObjectsList>*/}
+            {/*        {Resources.map(Resource => (*/}
+            {/*          <Box mx={3} my={2} mb={3} key={Resource.key || ''}>*/}
+            {/*            {Resource}*/}
+            {/*          </Box>*/}
+            {/*        ))}*/}
+            {/*      </ObjectsList>*/}
+            {/*      {loadMoreResources && <LoadMore LoadMoreFormik={loadMoreResources} />}*/}
+            {/*    </>*/}
+            {/*  </Route>*/}
+            {/*</Switch>*/}
           </Wrapper>
         </WrapperCont>
       </HomeBox>
@@ -134,19 +138,19 @@ const Menu: React.FC<{ tabPaths: Props['tabPaths'] }> = ({ tabPaths }) => (
     {/* <NavLink exact to={`${basePath}`}>
       Recent activity
     </NavLink> */}
+    {/*<NavLink exact to={tabPaths.resources}>*/}
+    {/*  <Trans>Publications</Trans>*/}
+    {/*</NavLink>*/}
     <NavLink exact to={tabPaths.resources}>
-      <Trans>Publications</Trans>
-    </NavLink>
-    <NavLink exact to={tabPaths.followers}>
       <Trans>Followers</Trans>
     </NavLink>
   </MenuList>
 );
 
-const WrapButton = styled(Flex)`
-  background: ${props => props.theme.colors.appInverse};
-  button {
-    width: 100%;
-    height: 50px;
-  }
-`;
+// const WrapButton = styled(Flex)`
+//   background: ${props => props.theme.colors.appInverse};
+//   button {
+//     width: 100%;
+//     height: 50px;
+//   }
+// `;
