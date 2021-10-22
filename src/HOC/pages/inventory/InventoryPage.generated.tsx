@@ -14,22 +14,22 @@ export type EconomicResourcesFilteredQuery = (
   & { economicResourcesFiltered: Types.Maybe<Array<Types.Maybe<(
     { __typename: 'EconomicResource' }
     & Pick<Types.EconomicResource, 'id' | 'name' | 'note' | 'image'>
-    & { onhandQuantity: Types.Maybe<(
+    & { currentLocation: Types.Maybe<(
+      { __typename: 'SpatialThing' }
+      & Pick<Types.SpatialThing, 'name'>
+    )>, onhandQuantity: Types.Maybe<(
       { __typename: 'Measure' }
-      & Pick<Types.Measure, 'id' | 'hasNumericalValue'>
+      & Pick<Types.Measure, 'hasNumericalValue'>
       & { hasUnit: (
         { __typename: 'Unit' }
-        & Pick<Types.Unit, 'id'>
+        & Pick<Types.Unit, 'id' | 'label'>
       ) }
-    )>, currentLocation: Types.Maybe<(
-      { __typename: 'SpatialThing' }
-      & Pick<Types.SpatialThing, 'id'>
     )>, primaryAccountable: Types.Maybe<(
       { __typename: 'Organization' }
-      & Pick<Types.Organization, 'id'>
+      & Pick<Types.Organization, 'id' | 'name'>
     ) | (
       { __typename: 'Person' }
-      & Pick<Types.Person, 'id'>
+      & Pick<Types.Person, 'id' | 'name'>
     )> }
   )>>> }
 );
@@ -42,18 +42,19 @@ export const EconomicResourcesFilteredDocument = gql`
     name
     note
     image
+    currentLocation {
+      name
+    }
     onhandQuantity {
-      id
       hasUnit {
         id
+        label
       }
       hasNumericalValue
     }
-    currentLocation {
-      id
-    }
     primaryAccountable {
       id
+      name
     }
   }
 }

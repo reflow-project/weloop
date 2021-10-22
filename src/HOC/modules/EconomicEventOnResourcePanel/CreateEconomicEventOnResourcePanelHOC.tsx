@@ -1,16 +1,22 @@
 import { useFormik } from 'formik';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Slide, toast } from 'react-toastify';
 import { CreateEventOnResourcePanel } from '../../../ui/modules/CreateEventOnResourcePanel';
 import * as Yup from 'yup';
 import { TestUrlOrFile } from 'HOC/lib/formik-validations';
 import { useCreateEventOnResource } from '../../../fe/resource/create/useCreateEventOnResource';
 import {
-  TCreateResourcePanel,
+  TCreateEventOnResourcePanel,
   CreateEventOnResourceFormValues
 } from '../../../ui/modules/CreateEventOnResourcePanel';
 import { EconomicResource } from '../../pages/inventory/InventoryPage';
 import { EconomicEventManagerHOC } from '../EconomicEventManager/EconomicEventManagerHOC';
+
+import styled from 'ui/themes/styled';
+import { Flex } from 'rebass/styled-components';
+import { Trans } from '@lingui/macro';
+import { CreateLocationPanelHOC } from '../CreateLocationPanel/CreateLocationPanelHOK';
+import { CreateResourcePanelHOC } from '../CreateResourcePanel/CreateResourcePanelHOC';
 
 export interface BasicCreateEventFormValues {
   name: string;
@@ -163,16 +169,79 @@ export const CreateEconomicEventOnResourcePanelHOC: FC<Props> = ({ done, resourc
     }
   });
 
-  const CreateResourcePanelProps: TCreateResourcePanel = {
+  const CreateEventOnResourcePanelProps: TCreateEventOnResourcePanel = {
     ...props,
     title: `Create a new event on resource ${resource.name}`,
     formik,
     done
   };
 
+  const handlerCloseSecondTab = () => {
+    toggleTab(0);
+    done();
+  };
+  const [showCreateLocation, toggleShowCreateLocation] = useState(false);
+  const CreateResourceModal = (
+    <>
+      {showCreateLocation ? (
+        <CreateLocationPanelHOC done={toggleShowCreateLocation} />
+      ) : (
+        <CreateResourcePanelHOC
+          done={handlerCloseSecondTab}
+          toggleCreateLocation={toggleShowCreateLocation}
+          resource={formik.values}
+        />
+      )}
+    </>
+  );
+
+  const CreateEventOnExistResourceModal = (
+    <CreateEventOnResourcePanel {...CreateEventOnResourcePanelProps} />
+  );
+
+  const [tab, toggleTab] = useState(0);
   return (
     <EconomicEventManagerHOC>
-      <CreateEventOnResourcePanel {...CreateResourcePanelProps} />
+      <TabController>
+        <TabButton className={tab === 0 ? 'active button' : 'button'} onClick={() => toggleTab(0)}>
+          <Trans>Create a new event on exist resource</Trans>
+        </TabButton>
+        <TabButton className={tab === 1 ? 'active button' : 'button'} onClick={() => toggleTab(1)}>
+          <Trans>Create a new Resource</Trans>
+        </TabButton>
+      </TabController>
+      {tab ? CreateResourceModal : CreateEventOnExistResourceModal}
     </EconomicEventManagerHOC>
   );
 };
+
+export const TabButton = styled('button')`
+  padding: 10px 30px;
+  text-align: center;
+  outline: none;
+  border: none;
+  text-transform: uppercase;
+  margin: 10px 10px 0;
+  border-radius: 4px 4px 0 0;
+  transition: background-color 0.4s ease;
+  font-weight: bold;
+
+  &:hover {
+    background: #05244f;
+    color: #fff;
+  }
+
+  &.active {
+    background: #05244f;
+    color: #fff;
+  }
+`;
+
+export const TabController = styled(Flex)`
+  width: 100%;
+  justify-content: stretch;
+  align-items: stretch;
+  flex-grow: 1;
+  flex-direction: row;
+  border-bottom: 1px solid #05244f;
+`;

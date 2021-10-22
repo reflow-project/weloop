@@ -4,6 +4,7 @@ import Loader from '../Loader';
 import { darken, lighten, transitions } from 'polished';
 import { Button } from 'rebass/styled-components';
 import { ButtonProps } from 'rebass';
+import media from 'styled-media-query';
 
 const WrapperButton = styled(Button)<{
   variant: string;
@@ -17,7 +18,9 @@ const WrapperButton = styled(Button)<{
   opacity: ${props => (props.disabled === true ? '0.7' : '1')};
   cursor: ${props => (props.disabled === true ? 'default' : 'pointer')};
   background:  ${props => props.variant === 'warning' && props.theme.colors.negative};
-        
+  ${media.lessThan('medium')`
+    padding:  10px;
+  `};
   &.show-more {
     width: auto;
     padding: 3px 8px;
@@ -37,7 +40,7 @@ const WrapperButton = styled(Button)<{
         background: #f3f3f3;
       }
   }
-  &:hover && not:['disabled'] {
+  &:hover && not:['disabled\'] {
     background: ${props => {
       switch (props.variant) {
         case 'primary': {

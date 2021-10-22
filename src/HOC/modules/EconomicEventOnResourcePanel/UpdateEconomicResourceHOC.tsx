@@ -41,22 +41,13 @@ export const UpdateEconomicResourceHOC: FC<Props> = ({ done, resource, ...props 
     initialValues: React.useMemo(() => {
       let values = {
         note: '',
-        image: '' || undefined,
-        location: ''
+        image: '' || undefined
       };
       if (resource) {
         values = {
           //@ts-ignore
-          name: resource.name || '',
           note: resource.note || '',
-          image: resource.image || undefined,
-          atLocation: resource.currentLocation
-            ? {
-                id: resource.currentLocation.id,
-                value: resource.currentLocation.id,
-                label: resource.currentLocation.name
-              }
-            : { id: '', label: '', value: '' }
+          image: resource.image || undefined
         };
       }
       return values;
@@ -69,9 +60,7 @@ export const UpdateEconomicResourceHOC: FC<Props> = ({ done, resource, ...props 
     onSubmit: (values: UpdateResourceVariables) => {
       return update({
         id: resource.id,
-        name: values.name,
         note: values.note,
-        atLocation: values.atLocation?.id,
         image: values.image
       })
         .then((response: any) => {

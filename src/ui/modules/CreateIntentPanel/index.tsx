@@ -199,7 +199,7 @@ export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
             </CollectionContainerForm>
           </HeroInfo>
         </Hero>
-        <Actions mb={3}>
+        <Actions>
           <Button
             variant="primary"
             isSubmitting={formik.isSubmitting}

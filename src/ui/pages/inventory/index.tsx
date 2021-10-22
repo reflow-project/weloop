@@ -1,5 +1,4 @@
 import { Trans } from '@lingui/macro';
-import { SidePanelHOC } from 'HOC/modules/SidePanel/SidePanel';
 import * as React from 'react';
 import { Plus } from 'react-feather';
 import { NavLink } from 'react-router-dom';
@@ -7,22 +6,14 @@ import { Box, Text } from 'rebass/styled-components';
 import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
 import { EconomicResourcesFilteredQuery } from '../../../HOC/pages/inventory/InventoryPage.generated';
 import { InventoryWrapper, InfoWrapper, ImageWrapper, Icon } from '../../../ui/pages/resource';
-import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
+import { Wrapper } from 'ui/elements/Layout';
 import { typography } from '../../../mn-constants';
 import styled from '../../themes/styled';
 import { ButtonWrapper, CreateItemButton } from '../community';
 import { useMe } from 'fe/session/useMe';
-
-const ArrowDownIcon = require('react-feather/dist/icons/chevron-down').default;
-const ArrowUpIcon = require('react-feather/dist/icons/chevron-up').default;
-const MapIcon = require('react-feather/dist/icons/map').default;
 const BoxIcon = require('react-feather/dist/icons/box').default;
 const PenIcon = require('react-feather/dist/icons/edit').default;
-const EditIcon = require('react-feather/dist/icons/edit-3').default;
 const UserIcon = require('react-feather/dist/icons/user').default;
-const ClockIcon = require('react-feather/dist/icons/clock').default;
-const RemoveIcon = require('react-feather/dist/icons/trash-2').default;
-const EyeIcon = require('react-feather/dist/icons/eye').default;
 
 export interface Props {
   done: () => void;
@@ -34,19 +25,19 @@ export const Inventory: React.FC<Props> = ({ inventory, done }) => {
   const currentUser = me?.user?.id;
 
   return (
-    <MainContainer>
-      <HomeBox>
-        <WrapperCont>
-          <ButtonWrapper>
-            <CreateItemButton variant="primary" onClick={done}>
-              <Plus size={16} color={'#fff'} />
-              <Text variant="button">
-                <Trans>Create a new resource</Trans>
-              </Text>
-            </CreateItemButton>
-          </ButtonWrapper>
-          <Wrapper>
-            {(inventory as any).map(({ id, name, note, image, onhandQuantity, currentLocation, primaryAccountable }: EconomicResource) => (
+    <>
+      <ButtonWrapper>
+        <CreateItemButton variant="primary" onClick={done}>
+          <Plus size={16} color={'#fff'} />
+          <Text variant="button">
+            <Trans>Create a new resource</Trans>
+          </Text>
+        </CreateItemButton>
+      </ButtonWrapper>
+      <Wrapper>
+        {!!inventory?.length &&
+          (inventory as any).map(
+            ({ id, name, note, image, onhandQuantity, primaryAccountable }: EconomicResource) => (
               <WrapperLink to={`/resource/${id}`} key={id}>
                 <InventoryWrapper key={id}>
                   <ImageWrapper>{image && <img src={image} alt={name} />}</ImageWrapper>
@@ -91,20 +82,16 @@ export const Inventory: React.FC<Props> = ({ inventory, done }) => {
                         <b>
                           <Trans>Owner:</Trans>
                         </b>{' '}
-                        {primaryAccountable.id == currentUser
-                          ? 'Me'
-                          : primaryAccountable.name}
+                        {primaryAccountable?.id === currentUser ? 'Me' : primaryAccountable?.name}
                       </Text>
                     </Box>
                   </InfoWrapper>
                 </InventoryWrapper>
               </WrapperLink>
-            ))}
-          </Wrapper>
-        </WrapperCont>
-      </HomeBox>
-      <SidePanelHOC />
-    </MainContainer>
+            )
+          )}
+      </Wrapper>
+    </>
   );
 };
 

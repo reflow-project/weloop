@@ -6,9 +6,7 @@ import { useCreateDefaultResource } from '../../../fe/resourceDefault/useCreateD
 import { useAgentsQuery } from '../../../fe/resourceDefault/useCreateResource.generated';
 import { useActionsQuery } from '../IntentPanel/Actions.generated';
 import { EconomicEventManagerProps } from '../../../ui/modules/EconomicEventManager';
-import {
-  useUnitsPagesQuery,
-} from './EconomicEventManager.generated';
+import { useUnitsPagesQuery } from './EconomicEventManager.generated';
 
 export const EconomicEventManagerHOC: FC = ({ children }) => {
   const [providerList, setProviderList] = React.useState<
@@ -17,7 +15,6 @@ export const EconomicEventManagerHOC: FC = ({ children }) => {
   const [receiverList, setReceiverList] = React.useState<
     null | undefined | [] | { id: string; name: string }[]
   >([]);
-  const [action, setAction] = React.useState('');
 
   const intentActionsQ = useActionsQuery();
   const { data } = useAgentsQuery();
@@ -72,7 +69,7 @@ export const EconomicEventManagerHOC: FC = ({ children }) => {
     providerList: providerList,
     receiverList: receiverList,
     unitPages,
-    setAction
+    setAction: () => {}
   };
 
   const childrenWithProps = React.Children.map(children, child => {

@@ -131,6 +131,11 @@ const RightDd = styled(Box)`
   .dropdown {
     right: 0;
     left: auto;
+
+    ${media.lessThan('860px')`
+      right: initial;
+      left: 10px;
+    `};
   }
 `;
 

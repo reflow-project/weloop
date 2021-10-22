@@ -7,7 +7,7 @@ import { APP_NAME, related_urls } from 'mn-constants'; // + instance_bg_img
 
 const Footer = () => {
   return (
-    <FooterWrapper mt={3}>
+    <FooterWrapper>
       <ul>
         <li>
           <a href={related_urls.project_homepage} target="blank">
@@ -37,11 +37,12 @@ const Footer = () => {
 export default Footer;
 
 const FooterWrapper = styled(Box)`
-  grid-area: footer;
   border-top: 1px solid rgba(0, 0, 0, 0.2);
   padding-top: 24px;
-  position: absolute;
-  bottom: 0px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   max-width: 1100px;
   & ul {

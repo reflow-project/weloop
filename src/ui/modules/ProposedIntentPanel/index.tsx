@@ -4,7 +4,6 @@ import { EconomicEventManagerHOC } from '../../../HOC/modules/EconomicEventManag
 import EconomicEventManager from '../EconomicEventManager';
 import Button from 'ui/elements/Button';
 import { clearFix } from 'polished';
-import media from 'styled-media-query';
 import styled from 'ui/themes/styled';
 import { Flex, Text, Box, Heading } from 'rebass/styled-components';
 import { Container, Header } from 'ui/modules/Modal';
@@ -14,6 +13,7 @@ import { Actor } from '../ActivityPreview/types';
 import { Clock } from 'react-feather';
 import { theme } from 'ui/themes/default.theme';
 import { format } from 'date-fns';
+import media from 'styled-media-query';
 
 export type IProposedIntentHistoryItem = {
   date: string | null;
@@ -158,6 +158,9 @@ const ContentWrap = styled.div`
   grid-column-gap: 16px;
   grid-template-columns: 1fr 1fr;
   padding: 16px;
+  ${media.lessThan('medium')`
+    display: block;
+  `};
 `;
 
 const ImgWrwap = styled.div`

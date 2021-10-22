@@ -193,7 +193,7 @@ const Thumb = styled.div`
   width: 100%;
   box-sizing: border-box;
   position: relative;
-  height: 120px;
+  height: 140px;
   &:after {
     position: absolute;
     content: '';

@@ -43,9 +43,9 @@ const Dialog = styled.div`
 
   ${media.lessThan('medium')`
     width: auto;
-    margin: 0;
     left: 8px;
     right: 8px;
+    margin: 0;
   `};
 `;
 
@@ -76,17 +76,22 @@ const Content = styled.div`
 export const Container = styled.div`
   font-family: ${props => props.theme.fontFamily};
   min-height: 300px;
-`;
-export const ModalContainer = styled(Container)`
+  overflow-y: auto;
+  max-height: 96vh;
   padding-bottom: 20px;
 `;
+
 export const Actions = styled(Box)`
   ${clearFix()};
-  padding-top: 10px;
-  padding-right: 10px;
+  padding: 0 16px;
   & button {
     float: right;
   }
+`;
+
+export const ActionsSimple = styled(Actions)`
+  ${clearFix()};
+  padding: 20px 0;
 `;
 
 export const CounterChars = styled.div`
@@ -106,6 +111,8 @@ export const CounterChars = styled.div`
 export const ContainerForm = styled.div`
   flex: 1;
   ${clearFix()};
+  padding-top: 13px;
+  position: relative;
   input {
     height: 40px;
     background: white;
@@ -113,6 +120,7 @@ export const ContainerForm = styled.div`
     border: ${props => props.theme.colors.border};
   }
   textarea {
+    padding-top: 16px;
     line-height: 20px;
     background: white;
     border-radius: 2px;

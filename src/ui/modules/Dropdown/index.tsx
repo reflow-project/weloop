@@ -22,13 +22,13 @@ const Wrapper = styled(Box)<{ orientation: string }>`
   min-width: 210px;
   display: block;
   border-radius: 6px;
-  box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 15px, rgba(101, 119, 134, 0.15) 0px 0px 3px 1px;
+  box-shadow: rgba(101, 119, 134, 0.2) 0 0 15px, rgba(101, 119, 134, 0.15) 0 0 3px 1px;
   position: absolute;
   top: ${props => (props.orientation === 'top' ? '8px' : 'auto')};
   bottom: ${props => (props.orientation === 'bottom' ? '4px' : 'auto')};
-  left: ${props => (props.orientation === 'top' ? '0px' : '0px')};
-  right: ${props => (props.orientation === 'bottom' ? '0px' : 'auto')};
-  z-index: 9999999999999999999999999999;
+  left: auto;
+  right: ${props => (props.orientation === 'bottom' ? '0px' : '10px')};
+  z-index: 4050;
 `;
 export const DropdownItem = styled(Flex)`
   align-items: center;

@@ -69,11 +69,11 @@ export const CreateResourcePanelHOC: FC<Props> = ({
 
   const formik = useFormik<any>({
     initialValues: {
-      name: '',
-      note: '',
-      image: undefined,
+      name: resource?.name || '',
+      note: resource?.note || '',
+      image: resource?.image || '',
       atLocation: {
-        id: '',
+        id: resource?.currentLocation?.id || '',
         label: ''
       },
       action: {
@@ -116,8 +116,7 @@ export const CreateResourcePanelHOC: FC<Props> = ({
       })
         .then((response: any) => {
           if (!response.errors) {
-            const newId =
-              response?.data?.createEconomicEvent.economicEvent.resourceInventoriedAs.id;
+            const newId = response?.data?.createEconomicEvent?.economicResource?.id;
             const redirect = `/resource/${newId} `;
             done();
             history.replace(redirect);

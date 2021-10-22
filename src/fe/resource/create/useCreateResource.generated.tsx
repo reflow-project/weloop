@@ -23,61 +23,22 @@ export type CreateEconomicEventAndNewResourceMutation = (
     { __typename: 'EconomicEventResponse' }
     & { economicEvent: (
       { __typename: 'EconomicEvent' }
-      & Pick<Types.EconomicEvent, 'id' | 'note'>
-      & { receiver: (
-        { __typename: 'Organization' }
-        & Pick<Types.Organization, 'id' | 'name' | 'note'>
-      ) | (
-        { __typename: 'Person' }
-        & Pick<Types.Person, 'id' | 'name' | 'note'>
-      ), provider: (
-        { __typename: 'Organization' }
-        & Pick<Types.Organization, 'id' | 'name' | 'note'>
-      ) | (
-        { __typename: 'Person' }
-        & Pick<Types.Person, 'id' | 'name' | 'note'>
-      ), resourceQuantity: Types.Maybe<(
-        { __typename: 'Measure' }
-        & Pick<Types.Measure, 'hasNumericalValue'>
-        & { hasUnit: (
-          { __typename: 'Unit' }
-          & Pick<Types.Unit, 'label' | 'symbol'>
-        ) }
-      )>, resourceInventoriedAs: Types.Maybe<(
-        { __typename: 'EconomicResource' }
-        & Pick<Types.EconomicResource, 'id' | 'name' | 'image'>
-        & { onhandQuantity: Types.Maybe<(
-          { __typename: 'Measure' }
-          & Pick<Types.Measure, 'hasNumericalValue'>
-          & { hasUnit: (
-            { __typename: 'Unit' }
-            & Pick<Types.Unit, 'label' | 'symbol'>
-          ) }
-        )>, accountingQuantity: Types.Maybe<(
-          { __typename: 'Measure' }
-          & Pick<Types.Measure, 'hasNumericalValue'>
-          & { hasUnit: (
-            { __typename: 'Unit' }
-            & Pick<Types.Unit, 'label' | 'symbol'>
-          ) }
-        )> }
-      )> }
-    ) }
+      & Pick<Types.EconomicEvent, 'id'>
+    ), economicResource: Types.Maybe<(
+      { __typename: 'EconomicResource' }
+      & Pick<Types.EconomicResource, 'id'>
+    )> }
   )> }
 );
 
 export type CreateEconomicEventAndExistResourceMutationVariables = {
   id: Types.Scalars['ID'],
-  note?: Types.Maybe<Types.Scalars['String']>,
   action: Types.Scalars['ID'],
   provider: Types.Scalars['ID'],
   receiver: Types.Scalars['ID'],
   hasUnit: Types.Scalars['ID'],
   hasNumericalValue: Types.Scalars['Float'],
-  atLocation?: Types.Maybe<Types.Scalars['ID']>,
-  name?: Types.Maybe<Types.Scalars['String']>,
-  eventNote?: Types.Maybe<Types.Scalars['String']>,
-  image?: Types.Maybe<Types.Scalars['URI']>
+  eventNote?: Types.Maybe<Types.Scalars['String']>
 };
 
 
@@ -88,10 +49,6 @@ export type CreateEconomicEventAndExistResourceMutation = (
     & { economicEvent: (
       { __typename: 'EconomicEvent' }
       & Pick<Types.EconomicEvent, 'id'>
-      & { action: (
-        { __typename: 'Action' }
-        & Pick<Types.Action, 'id'>
-      ) }
     ), economicResource: Types.Maybe<(
       { __typename: 'EconomicResource' }
       & Pick<Types.EconomicResource, 'id'>
@@ -105,43 +62,9 @@ export const CreateEconomicEventAndNewResourceDocument = gql`
   createEconomicEvent(event: {action: $action, atLocation: $atLocation, provider: $provider, receiver: $receiver, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}, newInventoriedResource: {note: $note, name: $name, image: $image, currentLocation: $atLocation}) {
     economicEvent {
       id
-      note
-      receiver {
-        id
-        name
-        note
-      }
-      provider {
-        id
-        name
-        note
-      }
-      resourceQuantity {
-        hasNumericalValue
-        hasUnit {
-          label
-          symbol
-        }
-      }
-      resourceInventoriedAs {
-        id
-        name
-        image
-        onhandQuantity {
-          hasNumericalValue
-          hasUnit {
-            label
-            symbol
-          }
-        }
-        accountingQuantity {
-          hasNumericalValue
-          hasUnit {
-            label
-            symbol
-          }
-        }
-      }
+    }
+    economicResource {
+      id
     }
   }
 }
@@ -180,13 +103,10 @@ export type CreateEconomicEventAndNewResourceMutationHookResult = ReturnType<typ
 export type CreateEconomicEventAndNewResourceMutationResult = ApolloReactCommon.MutationResult<CreateEconomicEventAndNewResourceMutation>;
 export type CreateEconomicEventAndNewResourceMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateEconomicEventAndNewResourceMutation, CreateEconomicEventAndNewResourceMutationVariables>;
 export const CreateEconomicEventAndExistResourceDocument = gql`
-    mutation createEconomicEventAndExistResource($id: ID!, $note: String, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!, $atLocation: ID, $name: String, $eventNote: String, $image: URI) {
-  createEconomicEvent(event: {resourceInventoriedAs: $id, note: $eventNote, action: $action, provider: $provider, receiver: $receiver, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}, newInventoriedResource: {name: $name, note: $note, image: $image, currentLocation: $atLocation}) {
+    mutation createEconomicEventAndExistResource($id: ID!, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!, $eventNote: String) {
+  createEconomicEvent(event: {resourceInventoriedAs: $id, note: $eventNote, action: $action, provider: $provider, receiver: $receiver, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}) {
     economicEvent {
       id
-      action {
-        id
-      }
     }
     economicResource {
       id
@@ -210,16 +130,12 @@ export type CreateEconomicEventAndExistResourceMutationFn = ApolloReactCommon.Mu
  * const [createEconomicEventAndExistResourceMutation, { data, loading, error }] = useCreateEconomicEventAndExistResourceMutation({
  *   variables: {
  *      id: // value for 'id'
- *      note: // value for 'note'
  *      action: // value for 'action'
  *      provider: // value for 'provider'
  *      receiver: // value for 'receiver'
  *      hasUnit: // value for 'hasUnit'
  *      hasNumericalValue: // value for 'hasNumericalValue'
- *      atLocation: // value for 'atLocation'
- *      name: // value for 'name'
  *      eventNote: // value for 'eventNote'
- *      image: // value for 'image'
  *   },
  * });
  */

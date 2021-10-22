@@ -3,15 +3,17 @@ import { SidePanelHOC } from 'HOC/modules/SidePanel/SidePanel';
 import * as React from 'react';
 import { ReactElement, useReducer } from 'react';
 import { Plus } from 'react-feather';
-import { NavLink, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Box, Flex, Text } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
 import { Button } from 'rebass/styled-components';
 import {
+  ButtonIcon,
   HomeBox,
   List,
   MainContainer,
+  MenuItem,
   MenuList,
   ObjectsList,
   Wrapper,
@@ -26,6 +28,7 @@ import { CreateLocationPanelHOC } from '../../../HOC/modules/CreateLocationPanel
 import { CreateResourcePanelHOC } from '../../../HOC/modules/CreateResourcePanel/CreateResourcePanelHOC';
 import { CreateIntentPanelHOC } from 'HOC/modules/CreateIntentPanel/createIntentPanelHOC';
 import Modal from '../../modules/Modal';
+import media from 'styled-media-query';
 
 export interface Props {
   isJoined: boolean;
@@ -208,9 +211,13 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   margin: 10px 0;
+
+  ${media.lessThan('medium')`
+      justify-content: space-between;
+  `};
 `;
 export const CreateItemButton = styled(Button)`
-  padding: 0;
+  margin: 0 10px;
   height: 34px;
   text-transform: capitalize;
   line-height: 34px;
@@ -231,6 +238,9 @@ export const CreateItemButton = styled(Button)`
     display: inline-block;
   }
 
+  ${media.lessThan('medium')`
+      margin: 0 10px;
+  `};
   &:hover {
     background: ${props => props.theme.colors.primary};
     color: ${props => props.theme.colors.appInverse};
@@ -261,26 +271,45 @@ export const CreateItemButton = styled(Button)`
 //   </MenuList>
 // );
 
+const UsersIcon = require('react-feather/dist/icons/users').default;
+const InboxIcon = require('react-feather/dist/icons/inbox').default;
+const ActivityIcon = require('react-feather/dist/icons/activity').default;
+const MessageIcon = require('react-feather/dist/icons/message-circle').default;
+
 const Menu: React.FC<{ tabPaths: Props['tabPaths'] }> = ({ tabPaths }) => (
   <MenuList p={3} pt={0}>
-    <NavLink exact to={tabPaths.intents}>
-      <Trans>Intents</Trans>
-    </NavLink>
-    {/*<NavLink exact to={tabPaths.inventory}>*/}
-    {/*  <Trans>Recent Inventory</Trans>*/}
-    {/*</NavLink>*/}
-    <NavLink to={tabPaths.timeline}>
-      <Trans>Recent activity</Trans>
-    </NavLink>
-    {/*<NavLink exact to={tabPaths.collections}>*/}
-    {/*  <Trans>Collections</Trans>*/}
-    {/*</NavLink>*/}
-    <NavLink to={tabPaths.discussions}>
-      <Trans>Discussions</Trans>
-    </NavLink>
-    <NavLink to={tabPaths.members}>
-      <Trans>Members</Trans>
-    </NavLink>
+    <MenuItem exact to={tabPaths.intents}>
+      <div className="text-holder">
+        <Trans>Intents</Trans>
+      </div>
+      <ButtonIcon className="icon-holder">
+        <InboxIcon size="24" />
+      </ButtonIcon>
+    </MenuItem>
+    <MenuItem exact to={tabPaths.timeline}>
+      <div className="text-holder">
+        <Trans>Recent activity</Trans>
+      </div>
+      <ButtonIcon className="icon-holder">
+        <ActivityIcon size="24" />
+      </ButtonIcon>
+    </MenuItem>
+    <MenuItem exact to={tabPaths.discussions}>
+      <div className="text-holder">
+        <Trans>Discussions</Trans>
+      </div>
+      <ButtonIcon className="icon-holder">
+        <MessageIcon size="24" />
+      </ButtonIcon>
+    </MenuItem>
+    <MenuItem exact to={`${tabPaths.members}`}>
+      <div className="text-holder">
+        <Trans>Members</Trans>
+      </div>
+      <ButtonIcon className="icon-holder">
+        <UsersIcon size="24" />
+      </ButtonIcon>
+    </MenuItem>
   </MenuList>
 );
 
