@@ -207,7 +207,6 @@ export const CreateEconomicEventOnResourcePanelHOC: FC<Props> = ({ done, resourc
         <Switcher>
           <input
             type="checkbox"
-            className="toggle-switch-checkbox"
             name="toggleSwitch"
             id="toggleSwitch"
             checked={switchOn}
