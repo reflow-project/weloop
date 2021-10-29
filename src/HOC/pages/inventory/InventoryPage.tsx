@@ -38,6 +38,7 @@ export interface EconomicResource {
   id: string;
   name: string;
   note: string;
+  eventNote?: string;
   image?: string;
   primaryAccountable: PrimaryAccountable;
   currentLocation?: {
