@@ -14,7 +14,8 @@ export type CreateEconomicEventAndNewResourceMutationVariables = {
   hasNumericalValue: Types.Scalars['Float'],
   name?: Types.Maybe<Types.Scalars['String']>,
   image?: Types.Maybe<Types.Scalars['URI']>,
-  eventNote?: Types.Maybe<Types.Scalars['String']>
+  eventNote?: Types.Maybe<Types.Scalars['String']>,
+  hasPointInTime?: Types.Maybe<Types.Scalars['DateTime']>
 };
 
 
@@ -24,7 +25,7 @@ export type CreateEconomicEventAndNewResourceMutation = (
     { __typename: 'EconomicEventResponse' }
     & { economicEvent: (
       { __typename: 'EconomicEvent' }
-      & Pick<Types.EconomicEvent, 'id'>
+      & Pick<Types.EconomicEvent, 'id' | 'hasPointInTime'>
       & { track: Types.Maybe<Array<{ __typename: 'EconomicResource' } | { __typename: 'Process' }>> }
     ), economicResource: Types.Maybe<(
       { __typename: 'EconomicResource' }
@@ -60,10 +61,11 @@ export type CreateEconomicEventAndExistResourceMutation = (
 
 
 export const CreateEconomicEventAndNewResourceDocument = gql`
-    mutation createEconomicEventAndNewResource($note: String, $atLocation: ID, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!, $name: String, $image: URI, $eventNote: String) {
-  createEconomicEvent(event: {action: $action, atLocation: $atLocation, provider: $provider, receiver: $receiver, note: $eventNote, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}, newInventoriedResource: {note: $note, name: $name, image: $image, currentLocation: $atLocation}) {
+    mutation createEconomicEventAndNewResource($note: String, $atLocation: ID, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!, $name: String, $image: URI, $eventNote: String, $hasPointInTime: DateTime) {
+  createEconomicEvent(event: {action: $action, atLocation: $atLocation, provider: $provider, receiver: $receiver, note: $eventNote, hasPointInTime: $hasPointInTime, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}, newInventoriedResource: {note: $note, name: $name, image: $image, currentLocation: $atLocation}) {
     economicEvent {
       id
+      hasPointInTime
       track {
         __typename
       }
@@ -99,6 +101,7 @@ export type CreateEconomicEventAndNewResourceMutationFn = ApolloReactCommon.Muta
  *      name: // value for 'name'
  *      image: // value for 'image'
  *      eventNote: // value for 'eventNote'
+ *      hasPointInTime: // value for 'hasPointInTime'
  *   },
  * });
  */

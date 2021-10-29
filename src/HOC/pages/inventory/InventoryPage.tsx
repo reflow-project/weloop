@@ -39,6 +39,7 @@ export interface EconomicResource {
   name: string;
   note: string;
   eventNote?: string;
+  hasPointInTime?: string;
   image?: string;
   primaryAccountable: PrimaryAccountable;
   currentLocation?: {
@@ -65,6 +66,7 @@ export interface EconomicResource {
   track: {
     id: string;
     note: string;
+    hasPointInTime: string;
     resourceQuantity: {
       hasNumericalValue: number;
       hasUnit: {
