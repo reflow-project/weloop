@@ -43,6 +43,7 @@ export interface EconomicResource {
   id: string;
   name: string;
   note: string;
+  eventNote?: string;
   image?: string;
   primaryAccountable: PrimaryAccountable;
   currentLocation?: {
@@ -56,7 +57,6 @@ export interface EconomicResource {
   contains: any;
   lot: any;
   stage: any;
-  trace: any[];
   trackingIdentifier?: string | null;
   onhandQuantity?: {
     id: string;
@@ -66,9 +66,14 @@ export interface EconomicResource {
       label: string;
     };
   };
-  track: {
+  trace?: {
+    id: string;
+    hasTimePoint?: string;
+  };
+  track?: {
     id: string;
     note: string;
+    hasTimePoint?: string;
     resourceQuantity: {
       hasNumericalValue: number;
       hasUnit: {
@@ -113,15 +118,18 @@ export const InventoryPage: FC = () => {
   const currentUser = location.pathname.split('/')[2];
   const [showCreateLocation, toggleShowCreateLocation] = React.useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [filteredInventory, setFilteredInventory] = useState<any>([]);
+  const [filteredInventory, setFilteredInventory] = useState<Array<any>>([]);
   const [filter, setFilter] = useState(INITIAL_FILTER);
+
   useEffect(() => {
     const query = location.search;
     const queryStringGetter = queryString.parse(query);
 
+    query?.length && setIsOpen(true);
     setFilter(queryStringGetter);
     // eslint-disable-next-line
   }, []);
+
   const notifiedMustLogin = useNotifyMustLogin();
   const [showCreateResource, toggleShowCreateResource] = useReducer(
     is => !notifiedMustLogin() && !is,
@@ -144,10 +152,49 @@ export const InventoryPage: FC = () => {
     variables: { agent: currentUser ? [currentUser] : [] }
   });
   const inventory = data?.economicResourcesFiltered || [];
+
   useEffect(() => {
     if (inventory.length) {
-      setFilteredInventory(inventory);
+      const query = location.search;
+
+      if (query.length) {
+        let newList = [...inventory];
+        if (filter.trace === true) {
+          newList = newList.filter((item: any) => item.trace.length);
+        }
+        if (filter.track === true) {
+          newList = newList.filter((item: any) => item.track.length);
+        }
+        if (filter.search) {
+          newList = newList.filter(item =>
+            item?.name?.toLowerCase().includes(filter.search.toLowerCase())
+          );
+        }
+        if (filter.order) {
+          newList = newList.sort(function(a: any, b: any) {
+            if (a[filter.sort] > b[filter.sort]) {
+              return 1;
+            }
+            if (a[filter.sort] < b[filter.sort]) {
+              return -1;
+            }
+
+            return 0;
+          });
+        }
+
+        if (filter.order && filter.order !== ASC) {
+          setFilteredInventory(newList);
+        } else {
+          setFilteredInventory(newList.reverse());
+        }
+
+        setFilteredInventory(newList);
+      } else {
+        setFilteredInventory(inventory);
+      }
     }
+    // eslint-disable-next-line
   }, [inventory]);
 
   const triggerOpen = (value: boolean) => {
@@ -155,53 +202,52 @@ export const InventoryPage: FC = () => {
   };
 
   useEffect(() => {
-    let newInventory = [...inventory];
-
-    if (inventory.length) {
-      if (filter.search) {
-        newInventory = newInventory.filter((item: any) => {
-          return item?.name?.toLowerCase().includes(filter.search.toLowerCase());
-        });
-
-        console.log(newInventory, 'NAMWE');
-      }
-
-      if (filter.sort) {
-        newInventory = newInventory.sort(function(a: any, b: any) {
-          if (a[filter.sort] > b[filter.sort]) {
-            return 1;
-          }
-          if (a[filter.sort] < b[filter.sort]) {
-            return -1;
-          }
-
-          return 0;
-        });
-      }
-
-      if (filter.trace) {
-        newInventory = newInventory.filter((item: any) => {
-          console.log(item.trace);
-          return item.trace.length;
-        });
-      }
-
-      if (filter.track) {
-        newInventory = newInventory.filter((item: any) => {
-          console.log(item.track);
-          return item.track.length;
-        });
-      } else {
-        setFilteredInventory(newInventory);
-      }
-
-      if (filter.order !== ASC) {
-        setFilteredInventory(newInventory);
-      } else {
-        setFilteredInventory(newInventory.reverse());
-      }
+    if (filter.trace === true) {
+      setFilteredInventory(inventory.filter((item: any) => item.trace.length));
+    } else {
+      setFilteredInventory(inventory.filter((item: any) => !item.trace.length));
     }
+    // eslint-disable-next-line
+  }, [filter.trace]);
 
+  useEffect(() => {
+    if (filter.track === true) {
+      setFilteredInventory(inventory.filter((item: any) => item.track.length));
+    } else {
+      setFilteredInventory(inventory.filter((item: any) => !item.track.length));
+    }
+    // eslint-disable-next-line
+  }, [filter.track]);
+
+  useEffect(() => {
+    setFilteredInventory(
+      inventory.filter(item => item?.name?.toLowerCase().includes(filter.search.toLowerCase()))
+    );
+    // eslint-disable-next-line
+  }, [filter.search]);
+
+  useEffect(() => {
+    let newInventory = [...filteredInventory];
+    newInventory = newInventory.sort(function(a: any, b: any) {
+      if (a[filter.sort] > b[filter.sort]) {
+        return 1;
+      }
+      if (a[filter.sort] < b[filter.sort]) {
+        return -1;
+      }
+
+      return 0;
+    });
+
+    if (filter.order !== ASC) {
+      setFilteredInventory(newInventory);
+    } else {
+      setFilteredInventory(newInventory.reverse());
+    }
+    // eslint-disable-next-line
+  }, [filter.order]);
+
+  useEffect(() => {
     const queryStringSetter = queryString.stringify(notEmptyValue(filter));
     history.push({
       search: queryStringSetter

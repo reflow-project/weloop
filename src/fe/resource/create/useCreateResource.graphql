@@ -8,12 +8,14 @@ mutation createEconomicEventAndNewResource(
   $hasNumericalValue: Float!,
   $name: String,
   $image: URI,
+  $eventNote: String,
 ) {
   createEconomicEvent( event: {
     action: $action
     atLocation: $atLocation,
     provider: $provider,
     receiver: $receiver,
+    note: $eventNote,
     resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}
   },
     newInventoriedResource: {
@@ -24,6 +26,9 @@ mutation createEconomicEventAndNewResource(
     }) {
     economicEvent {
       id
+      track {
+        __typename
+      }
     }
     economicResource {
       id

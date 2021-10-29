@@ -8,7 +8,7 @@ import Input from '../../elements/Input';
 import { FilterType } from 'HOC/pages/inventory/InventoryPage';
 import { CollectionContainerForm } from '../CreateCollectionPanel/style';
 import { FormGroup, FormLabel } from '../EconomicEventManager/styles';
-import { ASC, DES, NAME, CREATE } from '../../../util/constants/pagination';
+import { ASC, DES, NAME } from '../../../util/constants/pagination';
 
 type Props = {
   isOpen: boolean;
@@ -58,26 +58,6 @@ export const Filter: React.FC<Props> = ({ isOpen, filterSet, triggerOpen, onChan
                   )}
                 </SortButton>
               </div>
-              <div className="item_col-6 align-center">
-                <SortButton
-                  onClick={handleSorting}
-                  name={CREATE}
-                  className={filterSet.sort === CREATE && 'active'}
-                >
-                  Sort by Creation:
-                  {filterSet.sort === CREATE && filterSet.order === ASC ? (
-                    <SortButtonInner>
-                      {' '}
-                      <ArrowUp size={16} /> {ASC}
-                    </SortButtonInner>
-                  ) : (
-                    <SortButtonInner>
-                      {' '}
-                      <ArrowDown size={16} /> {DES}
-                    </SortButtonInner>
-                  )}
-                </SortButton>
-              </div>
             </div>
             <FormGroup>
               <FormLabel>Name</FormLabel>
@@ -98,7 +78,7 @@ export const Filter: React.FC<Props> = ({ isOpen, filterSet, triggerOpen, onChan
                       name="trace"
                       id="trace"
                       type="checkbox"
-                      checked={filterSet.trace}
+                      checked={filterSet.trace || false}
                       onChange={() => onChange({ trace: !filterSet.trace })}
                     />
                     <span>Resulted from a previous resource</span>
@@ -112,7 +92,7 @@ export const Filter: React.FC<Props> = ({ isOpen, filterSet, triggerOpen, onChan
                       name="track"
                       id="track"
                       type="checkbox"
-                      checked={filterSet.track}
+                      checked={filterSet.track || false}
                       onChange={() => onChange({ track: !filterSet.track })}
                     />
                     <span>Created further resources</span>
@@ -234,20 +214,3 @@ const FilterButton = styled(Button)`
      margin: 0 15px 0 0;
   `};
 `;
-
-// const FilterClearButton = styled(Button)`
-//   background-color: transparent;
-//   border: 1px solid transparent;
-//   border-radius: 4px;
-//   color: #05244f;
-//   margin: 0;
-//   height: 34px;
-//   padding: 0 15px;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//
-//   svg {
-//     margin-right: 6px;
-//   }
-// `;

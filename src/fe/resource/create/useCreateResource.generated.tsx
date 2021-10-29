@@ -13,7 +13,8 @@ export type CreateEconomicEventAndNewResourceMutationVariables = {
   hasUnit: Types.Scalars['ID'],
   hasNumericalValue: Types.Scalars['Float'],
   name?: Types.Maybe<Types.Scalars['String']>,
-  image?: Types.Maybe<Types.Scalars['URI']>
+  image?: Types.Maybe<Types.Scalars['URI']>,
+  eventNote?: Types.Maybe<Types.Scalars['String']>
 };
 
 
@@ -24,6 +25,7 @@ export type CreateEconomicEventAndNewResourceMutation = (
     & { economicEvent: (
       { __typename: 'EconomicEvent' }
       & Pick<Types.EconomicEvent, 'id'>
+      & { track: Types.Maybe<Array<{ __typename: 'EconomicResource' } | { __typename: 'Process' }>> }
     ), economicResource: Types.Maybe<(
       { __typename: 'EconomicResource' }
       & Pick<Types.EconomicResource, 'id'>
@@ -58,10 +60,13 @@ export type CreateEconomicEventAndExistResourceMutation = (
 
 
 export const CreateEconomicEventAndNewResourceDocument = gql`
-    mutation createEconomicEventAndNewResource($note: String, $atLocation: ID, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!, $name: String, $image: URI) {
-  createEconomicEvent(event: {action: $action, atLocation: $atLocation, provider: $provider, receiver: $receiver, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}, newInventoriedResource: {note: $note, name: $name, image: $image, currentLocation: $atLocation}) {
+    mutation createEconomicEventAndNewResource($note: String, $atLocation: ID, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!, $name: String, $image: URI, $eventNote: String) {
+  createEconomicEvent(event: {action: $action, atLocation: $atLocation, provider: $provider, receiver: $receiver, note: $eventNote, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}, newInventoriedResource: {note: $note, name: $name, image: $image, currentLocation: $atLocation}) {
     economicEvent {
       id
+      track {
+        __typename
+      }
     }
     economicResource {
       id
@@ -93,6 +98,7 @@ export type CreateEconomicEventAndNewResourceMutationFn = ApolloReactCommon.Muta
  *      hasNumericalValue: // value for 'hasNumericalValue'
  *      name: // value for 'name'
  *      image: // value for 'image'
+ *      eventNote: // value for 'eventNote'
  *   },
  * });
  */
