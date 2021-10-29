@@ -17,7 +17,13 @@ export type EconomicResourcesFilteredQuery = (
     & { currentLocation: Types.Maybe<(
       { __typename: 'SpatialThing' }
       & Pick<Types.SpatialThing, 'name'>
-    )>, onhandQuantity: Types.Maybe<(
+    )>, trace: Types.Maybe<Array<(
+      { __typename: 'EconomicEvent' }
+      & Pick<Types.EconomicEvent, 'id' | 'note' | 'hasPointInTime'>
+    )>>, track: Types.Maybe<Array<(
+      { __typename: 'EconomicEvent' }
+      & Pick<Types.EconomicEvent, 'id' | 'note' | 'hasPointInTime'>
+    )>>, onhandQuantity: Types.Maybe<(
       { __typename: 'Measure' }
       & Pick<Types.Measure, 'hasNumericalValue'>
       & { hasUnit: (
@@ -44,6 +50,16 @@ export const EconomicResourcesFilteredDocument = gql`
     image
     currentLocation {
       name
+    }
+    trace {
+      id
+      note
+      hasPointInTime
+    }
+    track {
+      id
+      note
+      hasPointInTime
     }
     onhandQuantity {
       hasUnit {
