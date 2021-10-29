@@ -21,6 +21,7 @@ import { Hero, CollectionContainerForm, HeroInfo } from '../CreateCollectionPane
 export type CreateIntentFormValues = {
   name: string;
   note?: string;
+  eventNote?: string;
   atLocation: IntentActions;
   action: IntentActions;
   provider: IntentActions;
@@ -154,24 +155,21 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                   </Box>
                   <Box>
                     <FormGroup>
-                      <FormLabel>Actions</FormLabel>
-                      <Select
-                        onSelect={(name, option) => {
-                          setAction(option.id);
-                          formik.setValues({ ...formik.values, action: option });
-                        }}
-                        options={actionList}
-                        variant="primary"
-                        id="actions"
-                        name="actions"
-                        placeholder={i18nMark('Select action')}
-                        value={formik.values.action}
+                      <FormLabel>Event note</FormLabel>
+                      <Input
+                        id="eventNote"
+                        type="textarea"
+                        name="eventNote"
+                        onChange={formik.handleChange}
+                        placeholder={i18nMark('Event Note')}
+                        value={formik.values.eventNote}
                       />
                     </FormGroup>
-                    {formik.errors.action && (
-                      <CustomAlert variant="negative">
-                        {formik.errors.action && 'Required'}
-                      </CustomAlert>
+                    <CounterChars>
+                      {formik.values.eventNote ? 500 - formik.values.eventNote.length : 500}
+                    </CounterChars>
+                    {formik.errors.eventNote && (
+                      <CustomAlert variant="negative">{formik.errors.eventNote}</CustomAlert>
                     )}
                   </Box>
                 </div>
@@ -227,32 +225,62 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
             </CollectionContainerForm>
 
             <CollectionContainerForm>
-              <FormGroup>
-                <FormLabel>Location</FormLabel>
-                <Select
-                  onSelect={(name, option) => {
-                    formik.setValues({ ...formik.values, [name]: option });
-                  }}
-                  options={spatialThings?.map((el: any) => ({
-                    id: el.id,
-                    value: el.id,
-                    label: el.name
-                  }))}
-                  placeholder={i18nMark('CustomSelect location')}
-                  value={formik.values.atLocation}
-                  variant="primary"
-                  id="atLocation"
-                  name="atLocation"
-                />
-                <LocationBlockStyle>
-                  <FormLabel>
-                    {i18nMark('If you did not find your locations in the list, you can create it')}
-                  </FormLabel>
-                  <Button variant="show-more" onClick={() => toggleCreateLocation(true)}>
-                    <Trans>Create Location</Trans>
-                  </Button>
-                </LocationBlockStyle>
-              </FormGroup>
+              <div className="d-flex">
+                <div className="item_col-6">
+                  <Box>
+                    <FormGroup>
+                      <FormLabel>Actions</FormLabel>
+                      <Select
+                        onSelect={(name, option) => {
+                          setAction(option.id);
+                          formik.setValues({ ...formik.values, action: option });
+                        }}
+                        options={actionList}
+                        variant="primary"
+                        id="actions"
+                        name="actions"
+                        placeholder={i18nMark('Select action')}
+                        value={formik.values.action}
+                      />
+                    </FormGroup>
+                    {formik.errors.action && (
+                      <CustomAlert variant="negative">
+                        {formik.errors.action && 'Required'}
+                      </CustomAlert>
+                    )}
+                  </Box>
+                </div>
+                <div className="item_col-6">
+                  <FormGroup>
+                    <FormLabel>Location</FormLabel>
+                    <Select
+                      onSelect={(name, option) => {
+                        formik.setValues({ ...formik.values, [name]: option });
+                      }}
+                      options={spatialThings?.map((el: any) => ({
+                        id: el.id,
+                        value: el.id,
+                        label: el.name
+                      }))}
+                      placeholder={i18nMark('CustomSelect location')}
+                      value={formik.values.atLocation}
+                      variant="primary"
+                      id="atLocation"
+                      name="atLocation"
+                    />
+                    <LocationBlockStyle>
+                      <FormLabel>
+                        {i18nMark(
+                          'If you did not find your locations in the list, you can create it'
+                        )}
+                      </FormLabel>
+                      <Button variant="show-more" onClick={() => toggleCreateLocation(true)}>
+                        <Trans>Create Location</Trans>
+                      </Button>
+                    </LocationBlockStyle>
+                  </FormGroup>
+                </div>
+              </div>
             </CollectionContainerForm>
 
             <CollectionContainerForm>
@@ -299,13 +327,13 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
 
             <CollectionContainerForm>
               <FormGroup>
-                <FormLabel>note</FormLabel>
+                <FormLabel>Resource note</FormLabel>
                 <Input
                   id="note"
                   type="textarea"
                   name="note"
                   onChange={formik.handleChange}
-                  placeholder={i18nMark('Note')}
+                  placeholder={i18nMark('Resource note')}
                   value={formik.values.note}
                 />
               </FormGroup>

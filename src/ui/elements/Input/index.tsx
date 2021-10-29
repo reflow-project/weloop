@@ -71,7 +71,7 @@ const FieldWrapper = styled('div')<any>`
     display: block;
     width: 100%;
     box-sizing: border-box;
-    padding 0 10px;
+    padding: 0 10px;
     font-family: 'Arial', sans-serif;
     font-weight: 600;
     font-size: 14px;
@@ -82,6 +82,10 @@ const FieldWrapper = styled('div')<any>`
   textarea {
     padding: 10px;
     height: 120px;
+
+    &#eventNote {
+      height: 60px;
+    }
   }
 `;
 

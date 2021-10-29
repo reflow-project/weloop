@@ -1,8 +1,8 @@
 import { Textarea } from '@rebass/forms';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Flex } from 'rebass/styled-components';
-// import { dropEmoji } from '../../lib/emoji';
-// import EmojiPicker from 'emoji-picker-react';
+// import { dropEmoji } from '../../lib/pagination';
+// import EmojiPicker from 'pagination-picker-react';
 // import OutsideClickHandler from 'react-outside-click-handler';
 import Button from 'ui/elements/Button';
 import styled from 'ui/themes/styled';
@@ -81,7 +81,7 @@ export const SocialText: React.FC<Props> = ({
   //     const textarea = ref.current as HTMLTextAreaElement;
   //     const selectionStart = textarea.selectionStart;
   //     // const selectionEnd = textarea.selectionEnd
-  //     const offset = dropEmoji(textarea, obj.emoji);
+  //     const offset = dropEmoji(textarea, obj.pagination);
   //     const pos = selectionStart + offset;
   //     textarea.focus();
   //     // console.log([selectionStart,selectionEnd], offset, pos, [textarea.selectionStart, textarea.selectionEnd] )
