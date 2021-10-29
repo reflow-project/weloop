@@ -28,8 +28,8 @@ export const LocationPiker: FC<LocationPikerProps> = ({ formik, onSelect }) => {
       if (!results[0]) return;
       onSelect(true);
       formik.handleChange({ target: { name: 'name', value: results[0].formatted_address } });
-      formik.handleChange({ target: { name: 'lat', value: results[0].geometry.location.lng() } });
-      formik.handleChange({ target: { name: 'long', value: results[0].geometry.location.lat() } });
+      formik.handleChange({ target: { name: 'lat', value: results[0].geometry.location.lat() } });
+      formik.handleChange({ target: { name: 'long', value: results[0].geometry.location.lng() } });
     });
   };
 

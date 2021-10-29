@@ -8,39 +8,39 @@ const emoji = new EmojiConvertor();
  * https://github.com/iamcal/js-emoji#usage
  */
 // force text output mode
-// emoji.text_mode = true
+// pagination.text_mode = true
 
-// show the short-name as a `title` attribute for css/img emoji
-// emoji.include_title = true
+// show the short-name as a `title` attribute for css/img pagination
+// pagination.include_title = true
 
-// change the path to your emoji images (requires trailing slash)
-// you can grab the images from the emoji-data link here:
+// change the path to your pagination images (requires trailing slash)
+// you can grab the images from the pagination-data link here:
 // https://github.com/iamcal/js-emoji/tree/master/build
-// emoji.img_sets.apple.path = 'http://my-cdn.com/emoji-apple-64/';
-// emoji.img_sets.apple.sheet = 'http://my-cdn.com/emoji-apple-sheet-64.png';
+// pagination.img_sets.apple.path = 'http://my-cdn.com/emoji-apple-64/';
+// pagination.img_sets.apple.sheet = 'http://my-cdn.com/emoji-apple-sheet-64.png';
 
 // Configure this library to use the sheets defined in `img_sets` (see above)
-// emoji.use_sheet = true
+// pagination.use_sheet = true
 
 // find out the auto-detected mode
-// alert(emoji.replace_mode);
+// alert(pagination.replace_mode);
 
 // add some aliases of your own - you can override builtins too
-// emoji.addAliases({
+// pagination.addAliases({
 //   'doge' : '1f415',
 //   'cat'  : '1f346'
 // });
 
 // remove your custom aliases - this will reset builtins
-// emoji.removeAliases([
+// pagination.removeAliases([
 //   'doge',
 //   'cat',
 // ]);
 
 // convert colons to unicode
-// emoji.init_env(); // else auto-detection will trigger when we first convert
-// emoji.replace_mode = 'unified'
-// emoji.allow_native = true;
+// pagination.init_env(); // else auto-detection will trigger when we first convert
+// pagination.replace_mode = 'unified'
+// pagination.allow_native = true;
 
 /**
  * https://github.com/ealush/emoji-picker-react#integrating-with-your-app
@@ -48,7 +48,7 @@ const emoji = new EmojiConvertor();
 // set the style to emojione (default - apple)
 emoji.img_set = 'apple';
 // set the storage location for all emojis
-// emoji.img_sets.emojione.path = 'https://cdn.jsdelivr.net/gh/iamcal/emoji-data@19299c91bc87374118f06b2760f1ced69d714ab1/img-emojione-64/';
+// pagination.img_sets.emojione.path = 'https://cdn.jsdelivr.net/gh/iamcal/emoji-data@19299c91bc87374118f06b2760f1ced69d714ab1/img-emojione-64/';
 
 // // some more settings...
 //@ts-ignore
@@ -58,12 +58,8 @@ emoji.replace_mode = 'unified';
 
 export default emoji;
 
-export const getEmoji = (emojiName: string) =>
-  emoji.replace_colons(`:${emojiName}:`);
-export const dropEmoji = (
-  elem: HTMLTextAreaElement | HTMLInputElement,
-  emojiName: string
-) => {
+export const getEmoji = (emojiName: string) => emoji.replace_colons(`:${emojiName}:`);
+export const dropEmoji = (elem: HTMLTextAreaElement | HTMLInputElement, emojiName: string) => {
   // const emojiStr = getEmoji(emojiName);
   setNativeValue(elem, getWithNewTextAtCursor(elem, emojiName));
   return emojiName.length;
@@ -93,10 +89,7 @@ export const getWithNewTextAtCursor = (
 function setNativeValue(element: any, value: any) {
   const valueSetter = Object.getOwnPropertyDescriptor(element, 'value')!.set;
   const prototype = Object.getPrototypeOf(element);
-  const prototypeValueSetter = Object.getOwnPropertyDescriptor(
-    prototype,
-    'value'
-  )!.set;
+  const prototypeValueSetter = Object.getOwnPropertyDescriptor(prototype, 'value')!.set;
 
   if (valueSetter && valueSetter !== prototypeValueSetter) {
     prototypeValueSetter!.call(element, value);

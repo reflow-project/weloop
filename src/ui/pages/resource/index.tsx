@@ -332,8 +332,8 @@ export const ResourceItem: React.FC<Props> = ({
                   markers={[
                     {
                       position: {
-                        lat: resource?.currentLocation?.long || 41.404014,
-                        lng: resource?.currentLocation?.lat || 2.12
+                        lng: resource?.currentLocation?.long || 2.2,
+                        lat: resource?.currentLocation?.lat || 41.4
                       }
                     }
                   ]}
@@ -502,7 +502,7 @@ export const ActionsWrapper = styled('div')`
   }
 
   ${media.lessThan('medium')`
-        padding: 10px 20px 0;
+        padding: 10px 15px 0;
       `};
 `;
 

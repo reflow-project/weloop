@@ -53,6 +53,7 @@ export const Wrapper = styled(Flex)`
   display: flex;
   flex-direction: column;
   flex: 1;
+  position: relative;
   ${media.lessThan('medium')`
        padding-bottom: 75px;
   `};

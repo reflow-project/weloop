@@ -2,7 +2,7 @@ import styled from 'ui/themes/styled';
 import React, { FC, ReactElement, useState } from 'react';
 import media from 'styled-media-query';
 import { Box, Flex } from 'rebass/styled-components';
-import { Settings, LogOut, MoreVertical } from 'react-feather';
+import { Settings, LogOut, PlusSquare } from 'react-feather';
 import Avatar from 'ui/elements/Avatar';
 import { NavLink } from 'react-router-dom';
 import { CreateMenuHOK } from '../../../HOC/modules/CreateMenuHOK/CreateMenuHOK';
@@ -53,9 +53,10 @@ export const Menu: FC<MenuProps> = ({
               <Span to={'/settings'}>
                 <Settings size="24" strokeWidth={1} color={'#333'} />
               </Span>
-              <span role="button" onClick={() => toggleCreate(!isCreateOpen)}>
-                <MoreVertical size="24" strokeWidth={1} color={'#333'} />
-              </span>
+              <CreateMenuSpan role="button" onClick={() => toggleCreate(!isCreateOpen)}>
+                <PlusSquare size={16} color={'#333'} />
+                <span>Create</span>
+              </CreateMenuSpan>
             </RightMenuWrapper>
           </User>
           {/* <Button variant="primary">Create a new community</Button> */}
@@ -96,7 +97,27 @@ const RightMenuWrapper = styled('div')`
   top: 0;
   right: 0;
   line-height: initial;
+  ${media.lessThan('small')`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 120px;
+  `}
 `;
+const CreateMenuSpan = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  padding: 4px;
+  border-radius: 4px;
+  border: 1px solid #333;
+
+  svg {
+    margin-right: 10px;
+  }
+`;
+
 const Span = styled(NavLink)`
   display: inline-block;
   margin-right: 12px;

@@ -17,7 +17,13 @@ export type EconomicResourcesFilteredQuery = (
     & { currentLocation: Types.Maybe<(
       { __typename: 'SpatialThing' }
       & Pick<Types.SpatialThing, 'name'>
-    )>, onhandQuantity: Types.Maybe<(
+    )>, trace: Types.Maybe<Array<(
+      { __typename: 'EconomicEvent' }
+      & Pick<Types.EconomicEvent, 'id' | 'note' | 'hasPointInTime'>
+    )>>, track: Types.Maybe<Array<(
+      { __typename: 'EconomicEvent' }
+      & Pick<Types.EconomicEvent, 'id' | 'note' | 'hasPointInTime'>
+    )>>, onhandQuantity: Types.Maybe<(
       { __typename: 'Measure' }
       & Pick<Types.Measure, 'hasNumericalValue'>
       & { hasUnit: (
@@ -31,7 +37,14 @@ export type EconomicResourcesFilteredQuery = (
       { __typename: 'Person' }
       & Pick<Types.Person, 'id' | 'name'>
     )> }
-  )>>> }
+  )>>>, economicResourcesPages: (
+    { __typename: 'EconomicResourcePage' }
+    & Pick<Types.EconomicResourcePage, 'totalCount'>
+    & { pageInfo: (
+      { __typename: 'PageInfo' }
+      & Pick<Types.PageInfo, 'hasPreviousPage' | 'startCursor' | 'endCursor' | 'hasNextPage'>
+    ) }
+  ) }
 );
 
 
@@ -45,6 +58,16 @@ export const EconomicResourcesFilteredDocument = gql`
     currentLocation {
       name
     }
+    trace {
+      id
+      note
+      hasPointInTime
+    }
+    track {
+      id
+      note
+      hasPointInTime
+    }
     onhandQuantity {
       hasUnit {
         id
@@ -56,6 +79,16 @@ export const EconomicResourcesFilteredDocument = gql`
       id
       name
     }
+  }
+  economicResourcesPages {
+    pageInfo {
+      hasPreviousPage
+      startCursor
+      endCursor
+      hasNextPage
+      endCursor
+    }
+    totalCount
   }
 }
     `;
