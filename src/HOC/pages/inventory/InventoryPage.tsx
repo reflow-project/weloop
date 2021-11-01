@@ -1,11 +1,16 @@
-import React, { FC, useReducer } from 'react';
-import Modal from '../../../ui/modules/Modal';
-import { Inventory } from '../../../ui/pages/inventory';
-import { useMe } from 'fe/session/useMe';
+import React, { FC, useEffect, useReducer, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import Modal from 'ui/modules/Modal';
+import { Inventory } from 'ui/pages/inventory';
+import { Filter } from 'ui/modules/Filter';
 import { useNotifyMustLogin } from '../../lib/notifyMustLogin';
 import { CreateLocationPanelHOC } from '../../modules/CreateLocationPanel/CreateLocationPanelHOK';
 import { CreateResourcePanelHOC } from '../../modules/CreateResourcePanel/CreateResourcePanelHOC';
 import { useEconomicResourcesFilteredQuery } from './InventoryPage.generated';
+import { ASC } from 'util/constants/pagination';
+import { notEmptyValue } from 'util/main';
+
+const queryString = require('query-string');
 
 export interface PrimaryAccountable {
   id: string;
@@ -53,7 +58,6 @@ export interface EconomicResource {
   contains: any;
   lot: any;
   stage: any;
-  trace: any[];
   trackingIdentifier?: string | null;
   onhandQuantity?: {
     id: string;
@@ -63,10 +67,14 @@ export interface EconomicResource {
       label: string;
     };
   };
-  track: {
+  trace?: {
+    id: string;
+    hasTimePoint?: string;
+  };
+  track?: {
     id: string;
     note: string;
-    hasPointInTime: string;
+    hasTimePoint?: string;
     resourceQuantity: {
       hasNumericalValue: number;
       hasUnit: {
@@ -89,17 +97,45 @@ export interface EconomicResource {
   }[];
 }
 
+const INITIAL_FILTER = {
+  sort: '',
+  order: '',
+  search: '',
+  trace: false,
+  track: false
+};
+
+export type FilterType = {
+  sort?: string;
+  order?: string;
+  search?: string;
+  trace?: boolean;
+  track?: boolean;
+};
+
 export const InventoryPage: FC = () => {
-  const { me } = useMe();
-  const currentUser = me?.user?.id;
+  const location = useLocation();
+  let history = useHistory();
+  const currentUser = location.pathname.split('/')[2];
   const [showCreateLocation, toggleShowCreateLocation] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [filteredInventory, setFilteredInventory] = useState<Array<any>>([]);
+  const [filter, setFilter] = useState(INITIAL_FILTER);
+
+  useEffect(() => {
+    const query = location.search;
+    const queryStringGetter = queryString.parse(query);
+
+    query?.length && setIsOpen(true);
+    setFilter(queryStringGetter);
+    // eslint-disable-next-line
+  }, []);
 
   const notifiedMustLogin = useNotifyMustLogin();
   const [showCreateResource, toggleShowCreateResource] = useReducer(
     is => !notifiedMustLogin() && !is,
     false
   );
-
   const CreateResourceModal = showCreateResource ? (
     <Modal closeModal={toggleShowCreateResource}>
       {showCreateLocation ? (
@@ -116,14 +152,138 @@ export const InventoryPage: FC = () => {
   const { data } = useEconomicResourcesFilteredQuery({
     variables: { agent: currentUser ? [currentUser] : [] }
   });
+  const inventory = data?.economicResourcesFiltered || [];
+
+  useEffect(() => {
+    if (inventory.length) {
+      const query = location.search;
+
+      if (query.length) {
+        let newList = [...inventory];
+        if (filter.trace === true) {
+          newList = newList.filter((item: any) => item.trace.length);
+        }
+        if (filter.track === true) {
+          newList = newList.filter((item: any) => item.track.length);
+        }
+        if (filter.search) {
+          newList = newList.filter(item =>
+            item?.name?.toLowerCase().includes(filter.search.toLowerCase())
+          );
+        }
+        if (filter.order) {
+          newList = newList.sort(function(a: any, b: any) {
+            if (a[filter.sort] > b[filter.sort]) {
+              return 1;
+            }
+            if (a[filter.sort] < b[filter.sort]) {
+              return -1;
+            }
+
+            return 0;
+          });
+        }
+
+        if (filter.order && filter.order !== ASC) {
+          setFilteredInventory(newList);
+        } else {
+          setFilteredInventory(newList.reverse());
+        }
+
+        setFilteredInventory(newList);
+      } else {
+        setFilteredInventory(inventory);
+      }
+    }
+    // eslint-disable-next-line
+  }, [inventory]);
+
+  const triggerOpen = (value: boolean) => {
+    setIsOpen(value);
+  };
+
+  useEffect(() => {
+    if (filter.trace === true) {
+      setFilteredInventory(inventory.filter((item: any) => item.trace.length));
+    } else {
+      setFilteredInventory(inventory.filter((item: any) => !item.trace.length));
+    }
+    // eslint-disable-next-line
+  }, [filter.trace]);
+
+  useEffect(() => {
+    if (filter.track === true) {
+      setFilteredInventory(inventory.filter((item: any) => item.track.length));
+    } else {
+      setFilteredInventory(inventory.filter((item: any) => !item.track.length));
+    }
+    // eslint-disable-next-line
+  }, [filter.track]);
+
+  useEffect(() => {
+    setFilteredInventory(
+      inventory.filter(item => item?.name?.toLowerCase().includes(filter.search.toLowerCase()))
+    );
+    // eslint-disable-next-line
+  }, [filter.search]);
+
+  useEffect(() => {
+    let newInventory = [...filteredInventory];
+    newInventory = newInventory.sort(function(a: any, b: any) {
+      if (a[filter.sort] > b[filter.sort]) {
+        return 1;
+      }
+      if (a[filter.sort] < b[filter.sort]) {
+        return -1;
+      }
+
+      return 0;
+    });
+
+    if (filter.order !== ASC) {
+      setFilteredInventory(newInventory);
+    } else {
+      setFilteredInventory(newInventory.reverse());
+    }
+    // eslint-disable-next-line
+  }, [filter.order]);
+
+  useEffect(() => {
+    const queryStringSetter = queryString.stringify(notEmptyValue(filter));
+    history.push({
+      search: queryStringSetter
+    });
+    // eslint-disable-next-line
+  }, [filter]);
+
+  const handleFilterChange = (prop: FilterType, isClear?: boolean) => {
+    if (isClear) {
+      setFilter(INITIAL_FILTER);
+      return;
+    }
+    setFilter(prev => ({
+      ...prev,
+      ...prop
+    }));
+  };
+
+  const handleClear = () => {
+    setFilter(INITIAL_FILTER);
+    setFilteredInventory(inventory);
+  };
 
   return (
     <>
       {CreateResourceModal}
-      <Inventory
-        inventory={data?.economicResourcesFiltered || []}
-        done={toggleShowCreateResource}
-      />
+      <Inventory inventory={filteredInventory} done={toggleShowCreateResource}>
+        <Filter
+          isOpen={isOpen}
+          triggerOpen={triggerOpen}
+          onChange={handleFilterChange}
+          onClear={handleClear}
+          filterSet={filter}
+        />
+      </Inventory>
     </>
   );
 };

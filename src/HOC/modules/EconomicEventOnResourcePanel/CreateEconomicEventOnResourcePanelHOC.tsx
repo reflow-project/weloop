@@ -200,40 +200,85 @@ export const CreateEconomicEventOnResourcePanelHOC: FC<Props> = ({ done, resourc
   );
 
   const [tab, toggleTab] = useState(0);
+  const [switchOn, toggleSwitch] = useState(true);
   return (
     <EconomicEventManagerHOC>
       <TabController>
-        <TabButton className={tab === 0 ? 'active button' : 'button'} onClick={() => toggleTab(0)}>
-          <Trans>Create a new event on exist resource</Trans>
-        </TabButton>
-        <TabButton className={tab === 1 ? 'active button' : 'button'} onClick={() => toggleTab(1)}>
-          <Trans>Create a new Resource</Trans>
-        </TabButton>
+        <Switcher>
+          <input
+            type="checkbox"
+            name="toggleSwitch"
+            id="toggleSwitch"
+            checked={switchOn}
+            onChange={() => {
+              toggleSwitch(!switchOn);
+              toggleTab(tab === 0 ? 1 : 0);
+            }}
+          />
+          <span className="slider round"></span>
+          <Trans>
+            {switchOn
+              ? 'Create a new event on exist resource'
+              : 'Create an event that results in a new resource'}
+          </Trans>
+        </Switcher>
       </TabController>
       {tab ? CreateResourceModal : CreateEventOnExistResourceModal}
     </EconomicEventManagerHOC>
   );
 };
 
-export const TabButton = styled('button')`
-  padding: 10px 30px;
-  text-align: center;
-  outline: none;
-  border: none;
-  text-transform: uppercase;
-  margin: 10px 10px 0;
-  border-radius: 4px 4px 0 0;
-  transition: background-color 0.4s ease;
+export const Switcher = styled('label')`
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  font-size: 16px;
   font-weight: bold;
+  color: #666666;
+  cursor: pointer;
 
-  &:hover {
-    background: #05244f;
-    color: #fff;
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
   }
 
-  &.active {
-    background: #05244f;
-    color: #fff;
+  .slider {
+    position: relative;
+    cursor: pointer;
+    width: 60px;
+    height: 30px;
+    margin-right: 16px;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    box-shadow: 0 3px 22px -6px #c5bcbc;
+    border-radius: 34px;
+  }
+
+  .slider:before {
+    position: absolute;
+    border-radius: 50%;
+    content: '';
+    height: 30px;
+    width: 30px;
+    left: 30px;
+    bottom: 0;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+  }
+
+  input:checked + .slider {
+    background-color: #05244f;
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196f3;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(-30px);
   }
 `;
 

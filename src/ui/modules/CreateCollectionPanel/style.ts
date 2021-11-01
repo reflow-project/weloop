@@ -36,6 +36,12 @@ export const CollectionContainerForm = styled(ContainerForm)`
       flex-basis: calc(50% - 5px);
     }
 
+    .align-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     .item_photo {
       margin-bottom: 10px;
       flex-basis: 140px;

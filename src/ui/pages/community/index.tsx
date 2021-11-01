@@ -140,17 +140,6 @@ export const Community: React.FC<Props> = ({
                 </ButtonWrapper>
                 <ObjectsList>{Intents}</ObjectsList>
               </Route>
-              {/*<Route exact path={tabPaths.inventory}>*/}
-              {/*  <ButtonWrapper>*/}
-              {/*    <CreateItemButton variant="primary" onClick={() => toggleShowCreateResource()}>*/}
-              {/*      <Plus size={16} color={'#fff'} />*/}
-              {/*      <Text variant="button">*/}
-              {/*        <Trans>Create a new resource</Trans>*/}
-              {/*      </Text>*/}
-              {/*    </CreateItemButton>*/}
-              {/*  </ButtonWrapper>*/}
-              {/*  <ObjectsList>{Inventory}</ObjectsList>*/}
-              {/*</Route>*/}
               <Route exact path={tabPaths.timeline}>
                 <>
                   <List mt={2}>{Activities}</List>
@@ -194,9 +183,7 @@ export const Community: React.FC<Props> = ({
                 </>
               </Route>
               <Route path={tabPaths.members}>
-                <>
-                  <ObjectsList>{Members}</ObjectsList>
-                </>
+                <ObjectsList>{Members}</ObjectsList>
               </Route>
             </Switch>
           </Wrapper>
@@ -211,6 +198,7 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   margin: 10px 0;
+  position: relative;
 
   ${media.lessThan('medium')`
       justify-content: space-between;

@@ -1,28 +1,52 @@
 import { Trans } from '@lingui/macro';
 import * as React from 'react';
+import PaginationComponent from 'react-reactstrap-pagination';
 import { Plus } from 'react-feather';
 import { NavLink } from 'react-router-dom';
 import { Box, Text } from 'rebass/styled-components';
-import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
-import { EconomicResourcesFilteredQuery } from '../../../HOC/pages/inventory/InventoryPage.generated';
-import { InventoryWrapper, InfoWrapper, ImageWrapper, Icon } from '../../../ui/pages/resource';
+import { EconomicResource } from 'HOC/pages/inventory/InventoryPage';
+import { EconomicResourcesFilteredQuery } from 'HOC/pages/inventory/InventoryPage.generated';
+import { InventoryWrapper, InfoWrapper, ImageWrapper, Icon } from 'ui/pages/resource';
 import { Wrapper } from 'ui/elements/Layout';
+import { PAGE_LIMIT, PAGE_START, MAX_PAGINATION_NUMBERS } from 'util/constants/pagination';
 import { typography } from '../../../mn-constants';
 import styled from '../../themes/styled';
 import { ButtonWrapper, CreateItemButton } from '../community';
 import { useMe } from 'fe/session/useMe';
+import { useEffect, useState } from 'react';
+
 const BoxIcon = require('react-feather/dist/icons/box').default;
 const PenIcon = require('react-feather/dist/icons/edit').default;
 const UserIcon = require('react-feather/dist/icons/user').default;
 
 export interface Props {
   done: () => void;
-  inventory: EconomicResourcesFilteredQuery['economicResourcesFiltered'];
+  inventory: EconomicResourcesFilteredQuery['economicResourcesFiltered'] | any;
 }
 
-export const Inventory: React.FC<Props> = ({ inventory, done }) => {
+export const Inventory: React.FC<Props> = ({ inventory, done, children }) => {
   const { me } = useMe();
   const currentUser = me?.user?.id;
+  const [currentList, setCurrentList] = useState<any>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handlePagination = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  useEffect(() => {
+    if (inventory.length) {
+      const newList = inventory.slice(
+        (currentPage - 1) * PAGE_LIMIT,
+        (currentPage - 1) * PAGE_LIMIT + PAGE_LIMIT
+      );
+      setCurrentList(newList);
+    }
+  }, [inventory, currentPage]);
+
+  useEffect(() => {
+    setCurrentPage(PAGE_START);
+  }, [inventory.length]);
 
   return (
     <>
@@ -34,9 +58,10 @@ export const Inventory: React.FC<Props> = ({ inventory, done }) => {
           </Text>
         </CreateItemButton>
       </ButtonWrapper>
+      <Wrapper>{children}</Wrapper>
       <Wrapper>
-        {!!inventory?.length &&
-          (inventory as any).map(
+        {!!currentList.length &&
+          currentList.map(
             ({ id, name, note, image, onhandQuantity, primaryAccountable }: EconomicResource) => (
               <WrapperLink to={`/resource/${id}`} key={id}>
                 <InventoryWrapper key={id}>
@@ -90,6 +115,19 @@ export const Inventory: React.FC<Props> = ({ inventory, done }) => {
               </WrapperLink>
             )
           )}
+        {!!currentList.length && (
+          <PaginationWrapper>
+            <PaginationComponent
+              size="sm"
+              totalItems={inventory.length}
+              pageSize={PAGE_LIMIT}
+              onSelect={handlePagination}
+              maxPaginationNumbers={MAX_PAGINATION_NUMBERS}
+              defaultActivePage={PAGE_START}
+              previousPageText="Prev"
+            />
+          </PaginationWrapper>
+        )}
       </Wrapper>
     </>
   );
@@ -97,8 +135,32 @@ export const Inventory: React.FC<Props> = ({ inventory, done }) => {
 
 export default Inventory;
 
+const PaginationWrapper = styled('div')`
+  text-align: center;
+
+  ul {
+    padding: 10px 0 20px;
+    margin: 0;
+  }
+
+  .page-link {
+    line-height: 30px;
+    border: 1px solid #999;
+    color: #999;
+    background-color: #fff;
+    border-radius: 4px;
+    margin: 2px;
+  }
+
+  .page-item.active .page-link {
+    border: 1px solid #02e379;
+    color: #02e379;
+  }
+`;
+
 const WrapperLink = styled(NavLink)`
   text-decoration: none !important;
+
   * {
     text-decoration: none !important;
   }
