@@ -72,6 +72,7 @@ export const CreateResourcePanelHOC: FC<Props> = ({
       name: resource?.name || '',
       note: resource?.note || '',
       eventNote: resource?.eventNote || '',
+      hasPointInTime: resource?.hasPointInTime || '',
       image: resource?.image || '',
       atLocation: {
         id: resource?.currentLocation?.id || '',
@@ -109,6 +110,7 @@ export const CreateResourcePanelHOC: FC<Props> = ({
         action: values.action.id,
         note: values.note,
         eventNote: values.eventNote,
+        hasPointInTime: values.hasPointInTime,
         atLocation: values.atLocation?.id || '',
         provider: values.provider.id,
         receiver: values.receiver.id,

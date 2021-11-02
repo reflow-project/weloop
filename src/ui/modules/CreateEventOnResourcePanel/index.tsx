@@ -13,12 +13,15 @@ import { FormGroup, FormLabel } from '../EconomicEventManager/styles';
 import Input, { CustomAlert } from '../../elements/Input';
 import { Actions, Container, CounterChars, Header } from 'ui/modules/Modal';
 import { Hero, CollectionContainerForm, HeroInfo } from '../CreateCollectionPanel/style';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export type CreateEventOnResourceFormValues = {
   name: string;
   note?: string;
   atLocation: { id: string; value: string; label: string };
   eventNote?: string;
+  hasPointInTime: string | null;
   action: IntentActions;
   provider: IntentActions;
   receiver: IntentActions;
@@ -54,10 +57,17 @@ export const CreateEventOnResourcePanel: FC<TCreateEventOnResourcePanel> = ({
 }) => {
   const [providerArr, setProviderArr] = React.useState<any>([]);
   const [receiverArr, setReceiverArr] = React.useState<any>([]);
+  const [startDate, setStartDate] = React.useState<any>(new Date());
 
   React.useEffect(() => {
     setProviderArr(setSelectOption(providerList, 'name'));
     setReceiverArr(setSelectOption(receiverList, 'name'));
+
+    formik.setValues({
+      ...formik.values,
+      hasPointInTime: new Date().toISOString()
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [providerList, receiverList]);
 
   return (
@@ -218,6 +228,27 @@ export const CreateEventOnResourcePanel: FC<TCreateEventOnResourcePanel> = ({
               </div>
             </CollectionContainerForm>
 
+            <CollectionContainerForm>
+              <FormLabel>Event date</FormLabel>
+              <div
+                style={{
+                  width: '100%',
+                  border: '1px solid #05244f',
+                  padding: '0 10px',
+                  marginBottom: 10
+                }}
+              >
+                <DatePicker
+                  selected={startDate}
+                  onChange={date => {
+                    setStartDate(date);
+                    // @ts-ignore
+                    formik.setValues({ ...formik.values, hasPointInTime: date.toISOString() });
+                  }}
+                  dateFormat="dd/MM/yyyy"
+                />
+              </div>
+            </CollectionContainerForm>
             <CollectionContainerForm>
               <FormGroup>
                 <FormLabel>Event Note</FormLabel>

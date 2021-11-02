@@ -9,6 +9,7 @@ mutation createEconomicEventAndNewResource(
   $name: String,
   $image: URI,
   $eventNote: String,
+  $hasPointInTime: DateTime
 ) {
   createEconomicEvent( event: {
     action: $action
@@ -16,6 +17,7 @@ mutation createEconomicEventAndNewResource(
     provider: $provider,
     receiver: $receiver,
     note: $eventNote,
+    hasPointInTime: $hasPointInTime,
     resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}
   },
     newInventoriedResource: {
@@ -26,6 +28,7 @@ mutation createEconomicEventAndNewResource(
     }) {
     economicEvent {
       id
+      hasPointInTime
       track {
         __typename
       }
@@ -44,6 +47,7 @@ mutation createEconomicEventAndExistResource(
   $hasUnit: ID!,
   $hasNumericalValue: Float!,
   $eventNote: String,
+  $hasPointInTime: DateTime
 ) {
   createEconomicEvent (
     event: {
@@ -55,11 +59,13 @@ mutation createEconomicEventAndExistResource(
       resourceQuantity: {
         hasUnit: $hasUnit,
         hasNumericalValue: $hasNumericalValue
-      }
+      },
+      hasPointInTime: $hasPointInTime
     },
   ) {
     economicEvent {
       id,
+      hasPointInTime
     },
     economicResource {
       id

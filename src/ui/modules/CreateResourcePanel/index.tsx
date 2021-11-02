@@ -17,11 +17,14 @@ import { FormGroup, FormLabel } from '../EconomicEventManager/styles';
 import Input, { CustomAlert } from '../../elements/Input';
 import { Actions, Container, CounterChars, Header } from 'ui/modules/Modal';
 import { Hero, CollectionContainerForm, HeroInfo } from '../CreateCollectionPanel/style';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export type CreateIntentFormValues = {
   name: string;
   note?: string;
   eventNote?: string;
+  hasPointInTime: string | null;
   atLocation: IntentActions;
   action: IntentActions;
   provider: IntentActions;
@@ -69,6 +72,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
   const [providerArr, setProviderArr] = React.useState<any>([]);
   const [receiverArr, setReceiverArr] = React.useState<any>([]);
   const [unitLst, setUnitLst] = React.useState<any>([]);
+  const [startDate, setStartDate] = React.useState<any>(new Date());
   const onIconFileSelected = React.useCallback(
     (file: File) => formik.setValues({ ...formik.values, image: file }),
     [formik]
@@ -92,6 +96,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
 
     formik.setValues({
       ...formik.values,
+      hasPointInTime: new Date().toISOString(),
       provider: {
         id: providerList?.find((el: any) => el.id === me?.user?.id)?.id || '',
         label: providerList?.find((el: any) => el.id === me?.user?.id)?.name || ''
@@ -248,6 +253,23 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                         {formik.errors.action && 'Required'}
                       </CustomAlert>
                     )}
+                  </Box>
+                  <Box>
+                    <FormLabel>Event date</FormLabel>
+                    <div style={{ width: '100%', border: '1px solid #05244f', padding: '0 10px' }}>
+                      <DatePicker
+                        selected={startDate}
+                        onChange={date => {
+                          setStartDate(date);
+                          // @ts-ignore
+                          formik.setValues({
+                            ...formik.values,
+                            hasPointInTime: date.toISOString()
+                          });
+                        }}
+                        dateFormat="dd/MM/yyyy"
+                      />
+                    </div>
                   </Box>
                 </div>
                 <div className="item_col-6">

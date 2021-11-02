@@ -94,12 +94,14 @@ export const CreateEconomicEventOnResourcePanelHOC: FC<Props> = ({ done, resourc
           label: ''
         },
         hasNumericalValue: 0,
-        eventNote: ''
+        eventNote: '',
+        hasPointInTime: ''
       };
       if (resource) {
         values = {
           name: resource.name || '',
           note: resource.note || '',
+          hasPointInTime: resource?.hasPointInTime || '',
           //@ts-ignore
           image: resource.image || undefined,
           action: {
@@ -148,7 +150,8 @@ export const CreateEconomicEventOnResourcePanelHOC: FC<Props> = ({ done, resourc
         receiver: values.receiver.id,
         hasUnit: values.hasUnit.id,
         hasNumericalValue: values.hasNumericalValue,
-        image: values.image
+        image: values.image,
+        hasPointInTime: values.hasPointInTime
       })
         .then((response: any) => {
           if (!response.errors) {

@@ -44,6 +44,7 @@ export interface EconomicResource {
   name: string;
   note: string;
   eventNote?: string;
+  hasPointInTime?: string;
   image?: string;
   primaryAccountable: PrimaryAccountable;
   currentLocation?: {

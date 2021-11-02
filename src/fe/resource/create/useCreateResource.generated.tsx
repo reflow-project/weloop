@@ -14,7 +14,8 @@ export type CreateEconomicEventAndNewResourceMutationVariables = {
   hasNumericalValue: Types.Scalars['Float'],
   name?: Types.Maybe<Types.Scalars['String']>,
   image?: Types.Maybe<Types.Scalars['URI']>,
-  eventNote?: Types.Maybe<Types.Scalars['String']>
+  eventNote?: Types.Maybe<Types.Scalars['String']>,
+  hasPointInTime?: Types.Maybe<Types.Scalars['DateTime']>
 };
 
 
@@ -24,7 +25,7 @@ export type CreateEconomicEventAndNewResourceMutation = (
     { __typename: 'EconomicEventResponse' }
     & { economicEvent: (
       { __typename: 'EconomicEvent' }
-      & Pick<Types.EconomicEvent, 'id'>
+      & Pick<Types.EconomicEvent, 'id' | 'hasPointInTime'>
       & { track: Types.Maybe<Array<{ __typename: 'EconomicResource' } | { __typename: 'Process' }>> }
     ), economicResource: Types.Maybe<(
       { __typename: 'EconomicResource' }
@@ -40,7 +41,8 @@ export type CreateEconomicEventAndExistResourceMutationVariables = {
   receiver: Types.Scalars['ID'],
   hasUnit: Types.Scalars['ID'],
   hasNumericalValue: Types.Scalars['Float'],
-  eventNote?: Types.Maybe<Types.Scalars['String']>
+  eventNote?: Types.Maybe<Types.Scalars['String']>,
+  hasPointInTime?: Types.Maybe<Types.Scalars['DateTime']>
 };
 
 
@@ -50,7 +52,7 @@ export type CreateEconomicEventAndExistResourceMutation = (
     { __typename: 'EconomicEventResponse' }
     & { economicEvent: (
       { __typename: 'EconomicEvent' }
-      & Pick<Types.EconomicEvent, 'id'>
+      & Pick<Types.EconomicEvent, 'id' | 'hasPointInTime'>
     ), economicResource: Types.Maybe<(
       { __typename: 'EconomicResource' }
       & Pick<Types.EconomicResource, 'id'>
@@ -60,10 +62,11 @@ export type CreateEconomicEventAndExistResourceMutation = (
 
 
 export const CreateEconomicEventAndNewResourceDocument = gql`
-    mutation createEconomicEventAndNewResource($note: String, $atLocation: ID, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!, $name: String, $image: URI, $eventNote: String) {
-  createEconomicEvent(event: {action: $action, atLocation: $atLocation, provider: $provider, receiver: $receiver, note: $eventNote, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}, newInventoriedResource: {note: $note, name: $name, image: $image, currentLocation: $atLocation}) {
+    mutation createEconomicEventAndNewResource($note: String, $atLocation: ID, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!, $name: String, $image: URI, $eventNote: String, $hasPointInTime: DateTime) {
+  createEconomicEvent(event: {action: $action, atLocation: $atLocation, provider: $provider, receiver: $receiver, note: $eventNote, hasPointInTime: $hasPointInTime, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}, newInventoriedResource: {note: $note, name: $name, image: $image, currentLocation: $atLocation}) {
     economicEvent {
       id
+      hasPointInTime
       track {
         __typename
       }
@@ -99,6 +102,7 @@ export type CreateEconomicEventAndNewResourceMutationFn = ApolloReactCommon.Muta
  *      name: // value for 'name'
  *      image: // value for 'image'
  *      eventNote: // value for 'eventNote'
+ *      hasPointInTime: // value for 'hasPointInTime'
  *   },
  * });
  */
@@ -109,10 +113,11 @@ export type CreateEconomicEventAndNewResourceMutationHookResult = ReturnType<typ
 export type CreateEconomicEventAndNewResourceMutationResult = ApolloReactCommon.MutationResult<CreateEconomicEventAndNewResourceMutation>;
 export type CreateEconomicEventAndNewResourceMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateEconomicEventAndNewResourceMutation, CreateEconomicEventAndNewResourceMutationVariables>;
 export const CreateEconomicEventAndExistResourceDocument = gql`
-    mutation createEconomicEventAndExistResource($id: ID!, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!, $eventNote: String) {
-  createEconomicEvent(event: {resourceInventoriedAs: $id, note: $eventNote, action: $action, provider: $provider, receiver: $receiver, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}) {
+    mutation createEconomicEventAndExistResource($id: ID!, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!, $eventNote: String, $hasPointInTime: DateTime) {
+  createEconomicEvent(event: {resourceInventoriedAs: $id, note: $eventNote, action: $action, provider: $provider, receiver: $receiver, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}, hasPointInTime: $hasPointInTime}) {
     economicEvent {
       id
+      hasPointInTime
     }
     economicResource {
       id
@@ -142,6 +147,7 @@ export type CreateEconomicEventAndExistResourceMutationFn = ApolloReactCommon.Mu
  *      hasUnit: // value for 'hasUnit'
  *      hasNumericalValue: // value for 'hasNumericalValue'
  *      eventNote: // value for 'eventNote'
+ *      hasPointInTime: // value for 'hasPointInTime'
  *   },
  * });
  */
