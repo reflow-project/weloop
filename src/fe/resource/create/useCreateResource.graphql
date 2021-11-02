@@ -9,7 +9,7 @@ mutation createEconomicEventAndNewResource(
   $name: String,
   $image: URI,
   $eventNote: String,
-  $hasPointInTime: Date
+  $hasPointInTime: DateTime
 ) {
   createEconomicEvent( event: {
     action: $action
@@ -47,6 +47,7 @@ mutation createEconomicEventAndExistResource(
   $hasUnit: ID!,
   $hasNumericalValue: Float!,
   $eventNote: String,
+  $hasPointInTime: DateTime
 ) {
   createEconomicEvent (
     event: {
@@ -58,11 +59,13 @@ mutation createEconomicEventAndExistResource(
       resourceQuantity: {
         hasUnit: $hasUnit,
         hasNumericalValue: $hasNumericalValue
-      }
+      },
+      hasPointInTime: $hasPointInTime
     },
   ) {
     economicEvent {
       id,
+      hasPointInTime
     },
     economicResource {
       id

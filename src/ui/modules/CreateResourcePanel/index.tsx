@@ -24,7 +24,7 @@ export type CreateIntentFormValues = {
   name: string;
   note?: string;
   eventNote?: string;
-  hasPointInTime: Date;
+  hasPointInTime: string | null;
   atLocation: IntentActions;
   action: IntentActions;
   provider: IntentActions;
@@ -96,6 +96,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
 
     formik.setValues({
       ...formik.values,
+      hasPointInTime: new Date().toISOString(),
       provider: {
         id: providerList?.find((el: any) => el.id === me?.user?.id)?.id || '',
         label: providerList?.find((el: any) => el.id === me?.user?.id)?.name || ''
@@ -255,14 +256,20 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                   </Box>
                   <Box>
                     <FormLabel>Event date</FormLabel>
-                    <DatePicker
-                      selected={startDate}
-                      onChange={date => {
-                        setStartDate(date);
-                        formik.setValues({ ...formik.values, hasPointInTime: date?.toISOString() });
-                      }}
-                      dateFormat="dd/MM/yyyy"
-                    />
+                    <div style={{ width: '100%', border: '1px solid #05244f', padding: '0 10px' }}>
+                      <DatePicker
+                        selected={startDate}
+                        onChange={date => {
+                          setStartDate(date);
+                          // @ts-ignore
+                          formik.setValues({
+                            ...formik.values,
+                            hasPointInTime: date.toISOString()
+                          });
+                        }}
+                        dateFormat="dd/MM/yyyy"
+                      />
+                    </div>
                   </Box>
                 </div>
                 <div className="item_col-6">

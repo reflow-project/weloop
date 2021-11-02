@@ -12,6 +12,11 @@ export const CollectionContainerForm = styled(ContainerForm)`
     background: #fbfbfb;
     border: 0;
     font-weight: 700;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   textarea {

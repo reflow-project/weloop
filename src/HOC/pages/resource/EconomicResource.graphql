@@ -112,6 +112,7 @@ query economicResource($id: ID!) {
     track {
       id
       note
+      hasPointInTime
       resourceQuantity {
         id
         hasUnit {
