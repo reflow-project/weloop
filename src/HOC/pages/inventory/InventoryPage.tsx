@@ -156,44 +156,7 @@ export const InventoryPage: FC = () => {
 
   useEffect(() => {
     if (inventory.length) {
-      const query = location.search;
-
-      if (query.length) {
-        let newList = [...inventory];
-        if (filter.trace === true) {
-          newList = newList.filter((item: any) => item.trace.length);
-        }
-        if (filter.track === true) {
-          newList = newList.filter((item: any) => item.track.length);
-        }
-        if (filter.search) {
-          newList = newList.filter(item =>
-            item?.name?.toLowerCase().includes(filter.search.toLowerCase())
-          );
-        }
-        if (filter.order) {
-          newList = newList.sort(function(a: any, b: any) {
-            if (a[filter.sort] > b[filter.sort]) {
-              return 1;
-            }
-            if (a[filter.sort] < b[filter.sort]) {
-              return -1;
-            }
-
-            return 0;
-          });
-        }
-
-        if (filter.order && filter.order !== ASC) {
-          setFilteredInventory(newList);
-        } else {
-          setFilteredInventory(newList.reverse());
-        }
-
-        setFilteredInventory(newList);
-      } else {
-        setFilteredInventory(inventory);
-      }
+      checkFilter(true);
     }
     // eslint-disable-next-line
   }, [inventory]);
@@ -203,27 +166,17 @@ export const InventoryPage: FC = () => {
   };
 
   useEffect(() => {
-    if (filter.trace === true) {
-      setFilteredInventory(inventory.filter((item: any) => item.trace.length));
-    } else {
-      setFilteredInventory(inventory.filter((item: any) => !item.trace.length));
-    }
+    checkFilter(filter.trace);
     // eslint-disable-next-line
   }, [filter.trace]);
 
   useEffect(() => {
-    if (filter.track === true) {
-      setFilteredInventory(inventory.filter((item: any) => item.track.length));
-    } else {
-      setFilteredInventory(inventory.filter((item: any) => !item.track.length));
-    }
+    checkFilter(filter.track);
     // eslint-disable-next-line
   }, [filter.track]);
 
   useEffect(() => {
-    setFilteredInventory(
-      inventory.filter(item => item?.name?.toLowerCase().includes(filter.search.toLowerCase()))
-    );
+    checkFilter(filter.search);
     // eslint-disable-next-line
   }, [filter.search]);
 
@@ -270,6 +223,47 @@ export const InventoryPage: FC = () => {
   const handleClear = () => {
     setFilter(INITIAL_FILTER);
     setFilteredInventory(inventory);
+  };
+
+  const checkFilter = (data: any) => {
+    const query = location.search;
+
+    if (query.length || data) {
+      let newList = [...inventory];
+      if (filter.trace === true) {
+        newList = newList.filter((item: any) => item.trace.length);
+      }
+      if (filter.track === true) {
+        newList = newList.filter((item: any) => item.track.length);
+      }
+      if (filter.search) {
+        newList = newList.filter(item =>
+          item?.name?.toLowerCase().includes(filter.search.toLowerCase())
+        );
+      }
+      if (filter.order) {
+        newList = newList.sort(function(a: any, b: any) {
+          if (a[filter.sort] > b[filter.sort]) {
+            return 1;
+          }
+          if (a[filter.sort] < b[filter.sort]) {
+            return -1;
+          }
+
+          return 0;
+        });
+      }
+
+      if (filter.order && filter.order !== ASC) {
+        setFilteredInventory(newList);
+      } else {
+        setFilteredInventory(newList.reverse());
+      }
+
+      setFilteredInventory(newList);
+    } else {
+      setFilteredInventory(inventory);
+    }
   };
 
   return (

@@ -21,7 +21,7 @@ export type CreateEventOnResourceFormValues = {
   note?: string;
   atLocation: { id: string; value: string; label: string };
   eventNote?: string;
-  hasPointInTime: string | null;
+  hasPointInTime: string;
   action: IntentActions;
   provider: IntentActions;
   receiver: IntentActions;

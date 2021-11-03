@@ -41,6 +41,8 @@ export const Inventory: React.FC<Props> = ({ inventory, done, children }) => {
         (currentPage - 1) * PAGE_LIMIT + PAGE_LIMIT
       );
       setCurrentList(newList);
+    } else {
+      setCurrentList([]);
     }
   }, [inventory, currentPage]);
 
@@ -127,6 +129,11 @@ export const Inventory: React.FC<Props> = ({ inventory, done, children }) => {
               previousPageText="Prev"
             />
           </PaginationWrapper>
+        )}
+        {!currentList.length && (
+          <p style={{ textAlign: 'center', fontWeight: 600, color: '#444444', paddingBottom: 40 }}>
+            No results
+          </p>
         )}
       </Wrapper>
     </>
