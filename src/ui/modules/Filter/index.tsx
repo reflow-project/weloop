@@ -75,6 +75,7 @@ export const Filter: React.FC<Props> = ({ isOpen, filterSet, triggerOpen, onChan
                 <FormGroupChek>
                   <LabelCustom>
                     <InputStrap
+                      style={{ width: 'auto' }}
                       name="trace"
                       id="trace"
                       type="checkbox"
@@ -89,6 +90,7 @@ export const Filter: React.FC<Props> = ({ isOpen, filterSet, triggerOpen, onChan
                 <FormGroupChek>
                   <LabelCustom>
                     <InputStrap
+                      style={{ width: 'auto' }}
                       name="track"
                       id="track"
                       type="checkbox"

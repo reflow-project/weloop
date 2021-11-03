@@ -24,7 +24,7 @@ export type CreateIntentFormValues = {
   name: string;
   note?: string;
   eventNote?: string;
-  hasPointInTime: string | null;
+  hasPointInTime: string;
   atLocation: IntentActions;
   action: IntentActions;
   provider: IntentActions;
@@ -261,9 +261,9 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                         selected={startDate}
                         onChange={date => {
                           setStartDate(date);
-                          // @ts-ignore
                           formik.setValues({
                             ...formik.values,
+                            // @ts-ignore
                             hasPointInTime: date.toISOString()
                           });
                         }}
