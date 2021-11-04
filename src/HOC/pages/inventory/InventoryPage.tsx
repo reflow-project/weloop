@@ -176,7 +176,7 @@ export const InventoryPage: FC = () => {
   }, [filter.track]);
 
   useEffect(() => {
-    checkFilter(filter.search);
+    filter.search && checkFilter(filter.search);
     // eslint-disable-next-line
   }, [filter.search]);
 
@@ -206,6 +206,7 @@ export const InventoryPage: FC = () => {
     history.push({
       search: queryStringSetter
     });
+    checkFilter(true);
     // eslint-disable-next-line
   }, [filter]);
 
@@ -230,10 +231,10 @@ export const InventoryPage: FC = () => {
 
     if (query.length || data) {
       let newList = [...inventory];
-      if (filter.trace === true) {
+      if (filter.trace) {
         newList = newList.filter((item: any) => item.trace.length);
       }
-      if (filter.track === true) {
+      if (filter.track) {
         newList = newList.filter((item: any) => item.track.length);
       }
       if (filter.search) {
