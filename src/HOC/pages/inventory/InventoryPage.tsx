@@ -270,7 +270,7 @@ export const InventoryPage: FC = () => {
   return (
     <>
       {CreateResourceModal}
-      <Inventory inventory={filteredInventory} done={toggleShowCreateResource}>
+      <Inventory inventory={filteredInventory} done={toggleShowCreateResource} owner={currentUser}>
         <Filter
           isOpen={isOpen}
           triggerOpen={triggerOpen}

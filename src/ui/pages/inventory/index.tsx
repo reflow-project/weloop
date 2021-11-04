@@ -22,9 +22,10 @@ const UserIcon = require('react-feather/dist/icons/user').default;
 export interface Props {
   done: () => void;
   inventory: EconomicResourcesFilteredQuery['economicResourcesFiltered'] | any;
+  owner: string;
 }
 
-export const Inventory: React.FC<Props> = ({ inventory, done, children }) => {
+export const Inventory: React.FC<Props> = ({ inventory, done, children, owner }) => {
   const { me } = useMe();
   const currentUser = me?.user?.id;
   const [currentList, setCurrentList] = useState<any>([]);
@@ -53,12 +54,14 @@ export const Inventory: React.FC<Props> = ({ inventory, done, children }) => {
   return (
     <>
       <ButtonWrapper>
-        <CreateItemButton variant="primary" onClick={done}>
-          <Plus size={16} color={'#fff'} />
-          <Text variant="button">
-            <Trans>Create a new resource</Trans>
-          </Text>
-        </CreateItemButton>
+        {me?.user.id === owner && (
+          <CreateItemButton variant="primary" onClick={done}>
+            <Plus size={16} color={'#fff'} />
+            <Text variant="button">
+              <Trans>Create a new resource</Trans>
+            </Text>
+          </CreateItemButton>
+        )}
       </ButtonWrapper>
       <Wrapper>{children}</Wrapper>
       <Wrapper>
