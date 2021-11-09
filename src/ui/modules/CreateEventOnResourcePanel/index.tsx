@@ -201,7 +201,7 @@ export const CreateEventOnResourcePanel: FC<TCreateEventOnResourcePanel> = ({
                           item?.displayUsername?.toLowerCase().includes(value.toLowerCase())
                         );
 
-                        setSelectOption(newList, 'name');
+                        setReceiverArr(setSelectOption(newList, 'name'));
                       }}
                     />
                   </FormGroup>

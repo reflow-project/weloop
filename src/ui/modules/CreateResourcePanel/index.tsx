@@ -55,6 +55,7 @@ export type TCreateResourcePanel = {
 export type SelectOption = {
   label: string;
   id: string;
+  displayUsername: string;
 };
 
 export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
@@ -196,6 +197,13 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                       value={formik.values.provider}
                       id="provider"
                       name="provider"
+                      onInputChange={(name: string, value: string) => {
+                        let newList = providerList?.filter(item =>
+                          item?.displayUsername?.toLowerCase().includes(value.toLowerCase())
+                        );
+
+                        setProviderArr(setSelectOption(newList, 'name'));
+                      }}
                     />
                   </FormGroup>
                   {formik.errors.provider && (
@@ -218,6 +226,13 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                       value={formik.values.receiver}
                       id="receiver"
                       name="receiver"
+                      onInputChange={(name: string, value: string) => {
+                        let newList = receiverList?.filter(item =>
+                          item?.displayUsername?.toLowerCase().includes(value.toLowerCase())
+                        );
+
+                        setReceiverArr(setSelectOption(newList, 'name'));
+                      }}
                     />
                   </FormGroup>
                   {formik.errors.receiver && (
