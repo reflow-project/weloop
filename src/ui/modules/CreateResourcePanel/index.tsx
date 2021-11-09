@@ -92,8 +92,18 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
   }, [unitPages]);
   /* eslint-disable */
   React.useEffect(() => {
-    setProviderArr(setSelectOption(providerList, 'name'));
-    setReceiverArr(setSelectOption(receiverList, 'name'));
+    setProviderArr(
+      setSelectOption(providerList, {
+        variables: ['name', 'displayUsername'],
+        template: 'name / displayUsername'
+      })
+    );
+    setReceiverArr(
+      setSelectOption(receiverList, {
+        variables: ['name', 'displayUsername'],
+        template: 'name / displayUsername'
+      })
+    );
 
     formik.setValues({
       ...formik.values,
@@ -202,7 +212,12 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                           item?.displayUsername?.toLowerCase().includes(value.toLowerCase())
                         );
 
-                        setProviderArr(setSelectOption(newList, 'name'));
+                        setProviderArr(
+                          setSelectOption(newList, {
+                            variables: ['name', 'displayUsername'],
+                            template: 'name / displayUsername'
+                          })
+                        );
                       }}
                     />
                   </FormGroup>
@@ -231,7 +246,12 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                           item?.displayUsername?.toLowerCase().includes(value.toLowerCase())
                         );
 
-                        setReceiverArr(setSelectOption(newList, 'name'));
+                        setReceiverArr(
+                          setSelectOption(newList, {
+                            variables: ['name', 'displayUsername'],
+                            template: 'name / displayUsername'
+                          })
+                        );
                       }}
                     />
                   </FormGroup>

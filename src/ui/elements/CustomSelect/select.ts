@@ -42,8 +42,7 @@ export const setSelectOption = (
     ? arr.map((el: any) => {
         return {
           id: el.id,
-          label: getLabel(el),
-          displayUsername: el.displayUsername
+          label: getLabel(el)
         };
       })
     : [];

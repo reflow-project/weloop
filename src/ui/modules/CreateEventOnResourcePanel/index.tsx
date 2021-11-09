@@ -62,8 +62,18 @@ export const CreateEventOnResourcePanel: FC<TCreateEventOnResourcePanel> = ({
   const { me } = useMe();
 
   React.useEffect(() => {
-    setProviderArr(setSelectOption(providerList, 'name'));
-    setReceiverArr(setSelectOption(receiverList, 'name'));
+    setProviderArr(
+      setSelectOption(providerList, {
+        variables: ['name', 'displayUsername'],
+        template: 'name / displayUsername'
+      })
+    );
+    setReceiverArr(
+      setSelectOption(receiverList, {
+        variables: ['name', 'displayUsername'],
+        template: 'name / displayUsername'
+      })
+    );
 
     formik.setValues({
       ...formik.values,
@@ -172,7 +182,12 @@ export const CreateEventOnResourcePanel: FC<TCreateEventOnResourcePanel> = ({
                           item?.displayUsername?.toLowerCase().includes(value.toLowerCase())
                         );
 
-                        setProviderArr(setSelectOption(newList, 'name'));
+                        setProviderArr(
+                          setSelectOption(newList, {
+                            variables: ['name', 'displayUsername'],
+                            template: 'name / displayUsername'
+                          })
+                        );
                       }}
                     />
                   </FormGroup>
@@ -201,7 +216,12 @@ export const CreateEventOnResourcePanel: FC<TCreateEventOnResourcePanel> = ({
                           item?.displayUsername?.toLowerCase().includes(value.toLowerCase())
                         );
 
-                        setReceiverArr(setSelectOption(newList, 'name'));
+                        setReceiverArr(
+                          setSelectOption(newList, {
+                            variables: ['name', 'displayUsername'],
+                            template: 'name / displayUsername'
+                          })
+                        );
                       }}
                     />
                   </FormGroup>
