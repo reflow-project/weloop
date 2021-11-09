@@ -20,6 +20,7 @@ export type IntentActions = {
   label: string;
   note?: string;
   isDisabled?: boolean;
+  displayUsername?: string;
 };
 
 export type EconomicEventVariables = {
@@ -99,12 +100,14 @@ export const EconomicEventManager: React.FC<any> = ({
       provider: {
         id: '',
         label: '',
-        note: ''
+        note: '',
+        displayUsername: ''
       },
       receiver: {
         id: '',
         label: '',
-        note: ''
+        note: '',
+        displayUsername: ''
       },
       hasUnit: {
         id: '',

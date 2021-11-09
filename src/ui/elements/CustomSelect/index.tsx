@@ -65,6 +65,7 @@ const WrapperSelect = styled(Select)`
 `;
 
 export const CustomSelect: FC<Props> = ({
+  onInputChange,
   onSelect,
   disabled = false,
   variant,
@@ -95,6 +96,7 @@ export const CustomSelect: FC<Props> = ({
                 <span>
                   <b>{el.label}</b>
                   {el.note && <small>{el.note}</small>}
+                  {el.displayUsername && el.id === value.id && <small>{el.displayUsername}</small>}
                 </span>
               )
             };
@@ -103,12 +105,18 @@ export const CustomSelect: FC<Props> = ({
 
   return (
     <WrapperSelect
-      onChange={(option: any) => onSelect(name, { id: option?.id, label: option?.value })}
+      onChange={(option: any) =>
+        onSelect(name, {
+          id: option?.id,
+          label: option?.value,
+          displayUsername: option?.displayUsername
+        })
+      }
       variant={variant}
       placeholder={placeholder}
       disabled={disabled}
       isOptionDisabled={(option: any) => option.isDisabled}
-      // onInputChange={(value:string) => onInputChange(name, value)}
+      onInputChange={(value: string) => onInputChange(name, value)}
       className="basic-single"
       classNamePrefix="select"
       value={optionsList.find(el => el.id === value?.id) || null}

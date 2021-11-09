@@ -29,10 +29,10 @@ export type AgentsQuery = (
   { __typename: 'RootQueryType' }
   & { agents: Types.Maybe<Array<(
     { __typename: 'Organization' }
-    & Pick<Types.Organization, 'id' | 'name'>
+    & Pick<Types.Organization, 'id' | 'name' | 'displayUsername'>
   ) | (
     { __typename: 'Person' }
-    & Pick<Types.Person, 'id' | 'name'>
+    & Pick<Types.Person, 'id' | 'name' | 'displayUsername'>
   )>> }
 );
 
@@ -79,6 +79,7 @@ export const AgentsDocument = gql`
   agents {
     id
     name
+    displayUsername
   }
 }
     `;
