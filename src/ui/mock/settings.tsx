@@ -130,6 +130,7 @@ export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
                 return new Promise(resolve =>
                   setTimeout(() => {
                     action('submitted...')();
+                    // @ts-ignore
                     resolve();
                   }, 2000)
                 );
@@ -167,6 +168,7 @@ export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
                   return new Promise(resolve =>
                     setTimeout(() => {
                       action('submitted...')();
+                      // @ts-ignore
                       resolve();
                     }, 2000)
                   );
@@ -223,6 +225,7 @@ export const useGetEditProfilePropsAdmin = (): EditProfileProps => {
                 return new Promise(resolve =>
                   setTimeout(() => {
                     action('submitted...')();
+                    // @ts-ignore
                     resolve();
                   }, 2000)
                 );
