@@ -80,6 +80,7 @@
     "@types/lingui__react": "2.8.1",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
+    "@types/react-datepicker": "4.1.7",
     "@types/react-dom": "^16.9.0",
     "@types/react-instantsearch-dom": "6.3.0",
     "@types/react-leaflet": "2.5.2",
@@ -183,7 +184,7 @@
     "tributejs": "3.7.3",
     "tslib": "1.9.3",
     "typedoc": "0.15.5",
-    "typescript": "3.7.3",
+    "typescript": "4.4.4",
     "url-loader": "1.1.1",
     "whatwg-fetch": "2.0.3",
     "yup": "0.26.6"
