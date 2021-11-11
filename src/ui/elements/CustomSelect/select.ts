@@ -10,6 +10,9 @@ export interface Props {
   id: string | number;
   name: string;
   value: IntentActions;
+  components?: any;
+  noChange?: boolean;
+  openMenuOnClick?: boolean;
 }
 
 // You may pass variables as a string and get this string in option label

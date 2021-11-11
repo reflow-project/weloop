@@ -156,6 +156,9 @@ export const CreateEventOnResourcePanel: FC<TCreateEventOnResourcePanel> = ({
                     name="actions"
                     placeholder={i18nMark('Select action')}
                     value={formik.values.action}
+                    noChange={true}
+                    onInputChange={() => {}}
+                    openMenuOnClick={true}
                   />
                 </FormGroup>
                 {formik.errors.action && (
@@ -177,6 +180,7 @@ export const CreateEventOnResourcePanel: FC<TCreateEventOnResourcePanel> = ({
                       value={formik.values.provider}
                       id="provider"
                       name="provider"
+                      components={{ DropdownIndicator: () => null }}
                       onInputChange={(name: string, value: string) => {
                         let newList = providerList?.filter(item =>
                           item?.displayUsername?.toLowerCase().includes(value.toLowerCase())
@@ -189,6 +193,7 @@ export const CreateEventOnResourcePanel: FC<TCreateEventOnResourcePanel> = ({
                           })
                         );
                       }}
+                      openMenuOnClick={false}
                     />
                   </FormGroup>
                   {formik.errors.provider && (
@@ -211,6 +216,7 @@ export const CreateEventOnResourcePanel: FC<TCreateEventOnResourcePanel> = ({
                       value={formik.values.receiver}
                       id="receiver"
                       name="receiver"
+                      components={{ DropdownIndicator: () => null }}
                       onInputChange={(name: string, value: string) => {
                         let newList = receiverList?.filter(item =>
                           item?.displayUsername?.toLowerCase().includes(value.toLowerCase())
@@ -223,6 +229,7 @@ export const CreateEventOnResourcePanel: FC<TCreateEventOnResourcePanel> = ({
                           })
                         );
                       }}
+                      openMenuOnClick={false}
                     />
                   </FormGroup>
                   {formik.errors.receiver && (

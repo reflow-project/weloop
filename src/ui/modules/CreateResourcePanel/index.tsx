@@ -207,8 +207,10 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                       value={formik.values.provider}
                       id="provider"
                       name="provider"
+                      components={{ DropdownIndicator: () => null }}
                       onInputChange={(name: string, value: string) => {
                         let newList = providerList?.filter(item =>
+                          // @ts-ignore
                           item?.displayUsername?.toLowerCase().includes(value.toLowerCase())
                         );
 
@@ -219,6 +221,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                           })
                         );
                       }}
+                      openMenuOnClick={false}
                     />
                   </FormGroup>
                   {formik.errors.provider && (
@@ -241,8 +244,10 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                       value={formik.values.receiver}
                       id="receiver"
                       name="receiver"
+                      components={{ DropdownIndicator: () => null }}
                       onInputChange={(name: string, value: string) => {
                         let newList = receiverList?.filter(item =>
+                          // @ts-ignore
                           item?.displayUsername?.toLowerCase().includes(value.toLowerCase())
                         );
 
@@ -253,6 +258,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                           })
                         );
                       }}
+                      openMenuOnClick={false}
                     />
                   </FormGroup>
                   {formik.errors.receiver && (
@@ -281,6 +287,9 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                         name="actions"
                         placeholder={i18nMark('Select action')}
                         value={formik.values.action}
+                        noChange={true}
+                        onInputChange={() => {}}
+                        openMenuOnClick={true}
                       />
                     </FormGroup>
                     {formik.errors.action && (
@@ -324,6 +333,9 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                       variant="primary"
                       id="atLocation"
                       name="atLocation"
+                      noChange={true}
+                      onInputChange={() => {}}
+                      openMenuOnClick={true}
                     />
                     <LocationBlockStyle>
                       <FormLabel>
@@ -355,6 +367,9 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                       name="hasUnit"
                       placeholder={i18nMark('Unit')}
                       value={formik.values.hasUnit}
+                      noChange={true}
+                      onInputChange={() => {}}
+                      openMenuOnClick={true}
                     />
                   </FormGroup>
                   {formik.errors.hasUnit && (
