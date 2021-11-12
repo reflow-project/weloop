@@ -123,7 +123,9 @@ export const CustomSelect: FC<Props> = ({
       isOptionDisabled={(option: any) => option.isDisabled}
       onInputChange={(value: string) => {
         if (!noChange && value.length > 2) {
-          onInputChange(name, value);
+          if (onInputChange) {
+            onInputChange(name, value);
+          }
           setIsOpen(true);
         } else if (!noChange && value.length < 3) {
           setIsOpen(false);
