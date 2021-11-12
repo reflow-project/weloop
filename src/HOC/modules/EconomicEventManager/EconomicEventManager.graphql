@@ -15,10 +15,12 @@ query economicEventsFiltered($action: ID!) {
     provider {
       id
       name
+      displayUsername
     }
     receiver {
       id
       name
+      displayUsername
     }
   }
 }

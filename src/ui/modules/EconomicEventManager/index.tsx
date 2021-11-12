@@ -20,6 +20,7 @@ export type IntentActions = {
   label: string;
   note?: string;
   isDisabled?: boolean;
+  displayUsername?: string;
 };
 
 export type EconomicEventVariables = {
@@ -99,12 +100,14 @@ export const EconomicEventManager: React.FC<any> = ({
       provider: {
         id: '',
         label: '',
-        note: ''
+        note: '',
+        displayUsername: ''
       },
       receiver: {
         id: '',
         label: '',
-        note: ''
+        note: '',
+        displayUsername: ''
       },
       hasUnit: {
         id: '',
@@ -171,7 +174,7 @@ export const EconomicEventManager: React.FC<any> = ({
               <div className="d-flex">
                 <div className="item_col-6">
                   <FormGroup>
-                    <FormLabel>Receiver</FormLabel>
+                    <FormLabel>Provider</FormLabel>
                     <Select
                       onSelect={(name, option) => {
                         formik.setValues({ ...formik.values, [name]: option });
@@ -182,6 +185,13 @@ export const EconomicEventManager: React.FC<any> = ({
                       value={formik.values.provider}
                       id="provider"
                       name="provider"
+                      onInputChange={(name: string, value: string) => {
+                        let newList = providerList?.filter((item: { displayUsername: string }) =>
+                          item?.displayUsername?.toLowerCase().includes(value.toLowerCase())
+                        );
+
+                        setProviderArr(setSelectOption(newList, 'name'));
+                      }}
                     />
                   </FormGroup>
                   {formik.errors.provider && (
@@ -204,6 +214,13 @@ export const EconomicEventManager: React.FC<any> = ({
                       value={formik.values.receiver}
                       id="receiver"
                       name="receiver"
+                      onInputChange={(name: string, value: string) => {
+                        let newList = receiverList?.filter((item: { displayUsername: string }) =>
+                          item?.displayUsername?.toLowerCase().includes(value.toLowerCase())
+                        );
+
+                        setReceiverArr(setSelectOption(newList, 'name'));
+                      }}
                     />
                   </FormGroup>
                   {formik.errors.receiver && (

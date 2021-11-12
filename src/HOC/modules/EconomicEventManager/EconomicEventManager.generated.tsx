@@ -30,16 +30,16 @@ export type EconomicEventsFilteredQuery = (
     & Pick<Types.EconomicEvent, 'id'>
     & { provider: (
       { __typename: 'Organization' }
-      & Pick<Types.Organization, 'id' | 'name'>
+      & Pick<Types.Organization, 'id' | 'name' | 'displayUsername'>
     ) | (
       { __typename: 'Person' }
-      & Pick<Types.Person, 'id' | 'name'>
+      & Pick<Types.Person, 'id' | 'name' | 'displayUsername'>
     ), receiver: (
       { __typename: 'Organization' }
-      & Pick<Types.Organization, 'id' | 'name'>
+      & Pick<Types.Organization, 'id' | 'name' | 'displayUsername'>
     ) | (
       { __typename: 'Person' }
-      & Pick<Types.Person, 'id' | 'name'>
+      & Pick<Types.Person, 'id' | 'name' | 'displayUsername'>
     ) }
   )>> }
 );
@@ -117,10 +117,12 @@ export const EconomicEventsFilteredDocument = gql`
     provider {
       id
       name
+      displayUsername
     }
     receiver {
       id
       name
+      displayUsername
     }
   }
 }
