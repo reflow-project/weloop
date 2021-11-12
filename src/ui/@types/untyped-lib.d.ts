@@ -7,3 +7,4 @@ declare module 'styled-media-query';
 declare module 'markdown-to-jsx';
 declare module 'react-outside-click-handler';
 declare module 'dompurify';
+declare module 'react-datepicker';
