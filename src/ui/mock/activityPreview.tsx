@@ -17,7 +17,6 @@ export const useGetActions = () => ({
         return new Promise(resolve =>
           setTimeout(() => {
             action('submitted...')();
-            // @ts-ignore
             resolve();
           }, 2000)
         );
@@ -33,7 +32,6 @@ export const useGetActions = () => ({
         return new Promise(resolve =>
           setTimeout(() => {
             action(`submitted: ${vals.replyMessage}`)();
-            // @ts-ignore
             resolve();
           }, 2000)
         );

@@ -114,11 +114,9 @@ const updateMe = (proxy: DataProxy, me: Maybe<UseMeDataFragment>) => {
       __typename: 'RootQueryType',
       me: me
         ? {
-            // @ts-ignore
             __typename: 'Me' as 'Me',
             ...me,
             user: {
-              // @ts-ignore
               __typename: 'User' as 'User',
               ...me.user
             }

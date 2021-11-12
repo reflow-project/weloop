@@ -9,7 +9,6 @@ export function useToggleFormik() {
       return new Promise(resolve =>
         setTimeout(() => {
           action('submitted...')();
-          // @ts-ignore
           resolve();
         }, 2000)
       );
