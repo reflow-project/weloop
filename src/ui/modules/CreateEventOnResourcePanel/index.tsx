@@ -291,7 +291,7 @@ export const CreateEventOnResourcePanel: FC<TCreateEventOnResourcePanel> = ({
               >
                 <DatePicker
                   selected={startDate}
-                  onChange={date => {
+                  onChange={(date: any) => {
                     setStartDate(date);
                     // @ts-ignore
                     formik.setValues({ ...formik.values, hasPointInTime: date.toISOString() });

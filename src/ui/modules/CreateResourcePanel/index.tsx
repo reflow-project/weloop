@@ -303,7 +303,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                     <div style={{ width: '100%', border: '1px solid #05244f', padding: '0 10px' }}>
                       <DatePicker
                         selected={startDate}
-                        onChange={date => {
+                        onChange={(date: any) => {
                           setStartDate(date);
                           formik.setValues({
                             ...formik.values,
