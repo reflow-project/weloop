@@ -112,13 +112,16 @@ export type FilterType = {
   track?: boolean;
 };
 
-export const InventoryPage: FC = () => {
+export const InventoryPage: FC<{ triggerTab?: boolean }> = ({
+  triggerTab
+}: {
+  triggerTab?: boolean;
+}) => {
   const location = useLocation();
   let history = useHistory();
   const currentUser = location.pathname.split('/')[2];
   const [showCreateLocation, toggleShowCreateLocation] = React.useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [filteredInventory, setFilteredInventory] = useState<Array<any>>([]);
   const [filter, setFilter] = useState(INITIAL_FILTER);
 
   useEffect(() => {
@@ -152,11 +155,10 @@ export const InventoryPage: FC = () => {
     variables: { agent: currentUser ? [currentUser] : [] }
   });
   const inventory = data?.economicResourcesFiltered || [];
-
+  const [filteredInventory, setFilteredInventory] = useState<Array<any>>([...inventory]);
   useEffect(() => {
     if (inventory.length) {
       const query = location.search;
-
       if (query.length) {
         let newList = [...inventory];
         if (filter.trace === true) {
@@ -178,7 +180,6 @@ export const InventoryPage: FC = () => {
             if (a[filter.sort] < b[filter.sort]) {
               return -1;
             }
-
             return 0;
           });
         }
@@ -188,7 +189,6 @@ export const InventoryPage: FC = () => {
         } else {
           setFilteredInventory(newList.reverse());
         }
-
         setFilteredInventory(newList);
       } else {
         setFilteredInventory(inventory);
@@ -221,10 +221,12 @@ export const InventoryPage: FC = () => {
 
   useEffect(() => {
     setFilteredInventory(
-      inventory.filter(item => item?.name?.toLowerCase().includes(filter.search.toLowerCase()))
+      inventory.filter(item =>
+        item?.name?.toLowerCase()?.includes(filter?.search?.toLowerCase() || '')
+      )
     );
     // eslint-disable-next-line
-  }, [filter.search]);
+  }, [filter.search, inventory]);
 
   useEffect(() => {
     let newInventory = [...filteredInventory];

@@ -206,7 +206,7 @@ const FeedItem = styled(Box)`
   word-wrap: break-word;
   ${clearFix()};
   transition: background 0.5s ease;
-  margin-top: 0
+  margin-top: 0;
   z-index: 10;
   position: relative;
   border-radius: 4px;
@@ -215,8 +215,7 @@ const FeedItem = styled(Box)`
   a {
     text-decoration: none;
     &:hover {
-      text-decoration: underline
+      text-decoration: underline;
     }
   }
-
 `;

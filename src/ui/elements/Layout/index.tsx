@@ -47,6 +47,7 @@ export const WrapperCont = styled(Flex)`
   padding: 0;
   position: relative;
   z-index: 0;
+  margin-bottom: 80px;
 `;
 
 export const Wrapper = styled(Flex)`
