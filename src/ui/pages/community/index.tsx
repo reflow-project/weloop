@@ -203,6 +203,7 @@ export const ButtonWrapper = styled.div`
 
   ${media.lessThan('medium')`
       justify-content: space-between;
+      margin: 10px;
   `};
 `;
 export const CreateItemButton = styled(Button)`
@@ -221,6 +222,7 @@ export const CreateItemButton = styled(Button)`
   & > svg {
     display: inline-block;
     margin-right: 8px;
+    margin-left: 16px;
   }
   & > div {
     color: #fff;

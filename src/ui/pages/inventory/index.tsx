@@ -63,7 +63,7 @@ export const Inventory: React.FC<Props> = ({ inventory, done, children, owner })
           </CreateItemButton>
         )}
       </ButtonWrapper>
-      <Wrapper>{children}</Wrapper>
+      <div style={{ position: 'relative' }}>{children}</div>
       <Wrapper>
         {!!currentList.length &&
           currentList.map(

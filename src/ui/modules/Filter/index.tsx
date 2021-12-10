@@ -214,5 +214,6 @@ const FilterButton = styled(Button)`
 
   ${media.lessThan('medium')`
      margin: 0 15px 0 0;
+     left: 15px;
   `};
 `;
