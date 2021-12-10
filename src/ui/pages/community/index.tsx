@@ -197,6 +197,7 @@ export const Community: React.FC<Props> = ({
 export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+  height: 34px;
   margin: 10px 0;
   position: relative;
 

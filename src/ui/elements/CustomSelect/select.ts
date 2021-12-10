@@ -10,6 +10,9 @@ export interface Props {
   id: string | number;
   name: string;
   value: IntentActions;
+  components?: any;
+  noChange?: boolean;
+  openMenuOnClick?: boolean;
 }
 
 // You may pass variables as a string and get this string in option label
@@ -23,7 +26,8 @@ export const setSelectOption = (
     return arr?.length
       ? arr.map((el: any) => ({
           id: el.id,
-          label: el[variables]
+          label: el[variables],
+          displayUsername: el.displayUsername
         }))
       : [];
   }

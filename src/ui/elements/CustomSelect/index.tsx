@@ -1,5 +1,5 @@
 import Select from 'react-select';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import styled from 'ui/themes/styled';
 import { darken, lighten, transitions } from 'polished';
 import { Props } from './select';
@@ -65,6 +65,7 @@ const WrapperSelect = styled(Select)`
 `;
 
 export const CustomSelect: FC<Props> = ({
+  onInputChange,
   onSelect,
   disabled = false,
   variant,
@@ -72,8 +73,12 @@ export const CustomSelect: FC<Props> = ({
   name,
   options,
   id,
-  value
+  value,
+  components,
+  noChange,
+  openMenuOnClick
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const optionsList = options
     ? options.map(el => {
         return el.isDisabled
@@ -95,6 +100,7 @@ export const CustomSelect: FC<Props> = ({
                 <span>
                   <b>{el.label}</b>
                   {el.note && <small>{el.note}</small>}
+                  {el.displayUsername && el.id === value.id && <small>{el.displayUsername}</small>}
                 </span>
               )
             };
@@ -103,12 +109,28 @@ export const CustomSelect: FC<Props> = ({
 
   return (
     <WrapperSelect
-      onChange={(option: any) => onSelect(name, { id: option?.id, label: option?.value })}
+      onChange={(option: any) => {
+        onSelect(name, {
+          id: option?.id,
+          label: option?.value,
+          displayUsername: option?.displayUsername
+        });
+        setIsOpen(false);
+      }}
       variant={variant}
       placeholder={placeholder}
       disabled={disabled}
       isOptionDisabled={(option: any) => option.isDisabled}
-      // onInputChange={(value:string) => onInputChange(name, value)}
+      onInputChange={(value: string) => {
+        if (!noChange && value.length > 2) {
+          if (onInputChange) {
+            onInputChange(name, value);
+          }
+          setIsOpen(true);
+        } else if (!noChange && value.length < 3) {
+          setIsOpen(false);
+        }
+      }}
       className="basic-single"
       classNamePrefix="select"
       value={optionsList.find(el => el.id === value?.id) || null}
@@ -120,6 +142,15 @@ export const CustomSelect: FC<Props> = ({
       name={name}
       id={id}
       options={optionsList}
+      components={components}
+      openMenuOnClick={openMenuOnClick}
+      menuIsOpen={isOpen}
+      onFocus={() => {
+        noChange && setIsOpen(true);
+      }}
+      onBlur={() => {
+        setIsOpen(false);
+      }}
     />
   );
 };

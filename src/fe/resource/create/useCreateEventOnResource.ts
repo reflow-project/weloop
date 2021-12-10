@@ -6,6 +6,7 @@ import { useCreateEconomicEventAndExistResourceMutation } from './useCreateResou
 export interface CreateResource {
   id: string;
   eventNote: string;
+  hasPointInTime: string;
   atLocation: string;
   name: string;
   note?: string;
@@ -31,7 +32,8 @@ export const useCreateEventOnResource = () => {
       receiver,
       hasUnit,
       hasNumericalValue,
-      eventNote
+      eventNote,
+      hasPointInTime
     }: CreateResource) => {
       if (createResourceMutStatus.loading) {
         return;
@@ -45,7 +47,8 @@ export const useCreateEventOnResource = () => {
           receiver,
           hasUnit,
           hasNumericalValue,
-          eventNote
+          eventNote,
+          hasPointInTime
         },
         refetchQueries: [EconomicResourceQueryRefetch({ id: id })]
       });

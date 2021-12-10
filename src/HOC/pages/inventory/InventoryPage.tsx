@@ -44,6 +44,7 @@ export interface EconomicResource {
   name: string;
   note: string;
   eventNote?: string;
+  hasPointInTime?: string;
   image?: string;
   primaryAccountable: PrimaryAccountable;
   currentLocation?: {
@@ -202,20 +203,12 @@ export const InventoryPage: FC<{ triggerTab?: boolean }> = ({
   };
 
   useEffect(() => {
-    if (filter.trace === true) {
-      setFilteredInventory(inventory.filter((item: any) => item.trace.length));
-    } else {
-      setFilteredInventory(inventory.filter((item: any) => !item.trace.length));
-    }
+    checkFilter(filter.trace);
     // eslint-disable-next-line
   }, [filter.trace]);
 
   useEffect(() => {
-    if (filter.track === true) {
-      setFilteredInventory(inventory.filter((item: any) => item.track.length));
-    } else {
-      setFilteredInventory(inventory.filter((item: any) => !item.track.length));
-    }
+    checkFilter(filter.track);
     // eslint-disable-next-line
   }, [filter.track]);
 
@@ -254,6 +247,7 @@ export const InventoryPage: FC<{ triggerTab?: boolean }> = ({
     history.push({
       search: queryStringSetter
     });
+    checkFilter(true);
     // eslint-disable-next-line
   }, [filter]);
 
@@ -273,10 +267,51 @@ export const InventoryPage: FC<{ triggerTab?: boolean }> = ({
     setFilteredInventory(inventory);
   };
 
+  const checkFilter = (data: any) => {
+    const query = location.search;
+
+    if (query.length || data) {
+      let newList = [...inventory];
+      if (filter.trace) {
+        newList = newList.filter((item: any) => item.trace.length);
+      }
+      if (filter.track) {
+        newList = newList.filter((item: any) => item.track.length);
+      }
+      if (filter.search) {
+        newList = newList.filter(item =>
+          item?.name?.toLowerCase().includes(filter.search.toLowerCase())
+        );
+      }
+      if (filter.order) {
+        newList = newList.sort(function(a: any, b: any) {
+          if (a[filter.sort] > b[filter.sort]) {
+            return 1;
+          }
+          if (a[filter.sort] < b[filter.sort]) {
+            return -1;
+          }
+
+          return 0;
+        });
+      }
+
+      if (filter.order && filter.order !== ASC) {
+        setFilteredInventory(newList);
+      } else {
+        setFilteredInventory(newList.reverse());
+      }
+
+      setFilteredInventory(newList);
+    } else {
+      setFilteredInventory(inventory);
+    }
+  };
+
   return (
     <>
       {CreateResourceModal}
-      <Inventory inventory={filteredInventory} done={toggleShowCreateResource}>
+      <Inventory inventory={filteredInventory} done={toggleShowCreateResource} owner={currentUser}>
         <Filter
           isOpen={isOpen}
           triggerOpen={triggerOpen}

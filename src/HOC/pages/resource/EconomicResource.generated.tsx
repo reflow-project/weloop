@@ -110,7 +110,7 @@ export type EconomicResourceQuery = (
       ) }
     )>>, track: Types.Maybe<Array<(
       { __typename: 'EconomicEvent' }
-      & Pick<Types.EconomicEvent, 'id' | 'note'>
+      & Pick<Types.EconomicEvent, 'id' | 'note' | 'hasPointInTime'>
       & { resourceQuantity: Types.Maybe<(
         { __typename: 'Measure' }
         & Pick<Types.Measure, 'id' | 'hasNumericalValue'>
@@ -294,6 +294,7 @@ export const EconomicResourceDocument = gql`
     track {
       id
       note
+      hasPointInTime
       resourceQuantity {
         id
         hasUnit {

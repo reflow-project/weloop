@@ -11,6 +11,7 @@ import { PersonWrapper } from '../../modules/Resource/PrimaryAccountablePerson';
 import styled from '../../themes/styled';
 import { Map } from 'ui/elements/Map';
 import media from 'styled-media-query';
+import { format } from 'date-fns';
 
 const ArrowDownIcon = require('react-feather/dist/icons/chevron-down').default;
 const ArrowUpIcon = require('react-feather/dist/icons/chevron-up').default;
@@ -22,6 +23,7 @@ const UserIcon = require('react-feather/dist/icons/user').default;
 const ClockIcon = require('react-feather/dist/icons/clock').default;
 const RemoveIcon = require('react-feather/dist/icons/trash-2').default;
 const EyeIcon = require('react-feather/dist/icons/eye').default;
+const Calendar = require('react-feather/dist/icons/calendar').default;
 
 const QRCode = require('qrcode.react');
 
@@ -184,6 +186,19 @@ export const ResourceItem: React.FC<Props> = ({
                             <Trans>Track note: </Trans>
                           </b>{' '}
                           {track.note ? track.note : 'Not provided'}
+                        </Text>
+                      </Box>
+                      <Box mr={1}>
+                        <Text variant="text">
+                          <Icon>
+                            <Calendar size="16" />
+                          </Icon>
+                          <b>
+                            <Trans>Event Date: </Trans>
+                          </b>{' '}
+                          {track.hasPointInTime
+                            ? format(new Date(track.hasPointInTime), 'dd.MM.yyyy')
+                            : 'Not provided'}
                         </Text>
                       </Box>
                       <Box mr={1}>

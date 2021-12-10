@@ -8,3 +8,4 @@ declare module 'react-helmet';
 declare module 'qs';
 declare module 'phoenix';
 declare module '@jumpn/utils-graphql';
+declare module 'react-datepicker';

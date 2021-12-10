@@ -6,6 +6,7 @@ export interface CreateResource {
   name: string;
   note?: string;
   eventNote?: string;
+  hasPointInTime?: string;
   atLocation: string;
   action: string;
   provider: string;
@@ -26,6 +27,7 @@ export const useCreateResource = () => {
       name,
       note,
       eventNote,
+      hasPointInTime,
       action,
       atLocation,
       provider,
@@ -43,6 +45,7 @@ export const useCreateResource = () => {
           name,
           note,
           eventNote,
+          hasPointInTime,
           atLocation,
           action,
           provider,
