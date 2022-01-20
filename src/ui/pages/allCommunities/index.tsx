@@ -8,7 +8,6 @@ import { LoadMore } from 'ui/modules/Loadmore';
 import { FormikHook } from 'ui/@types/types';
 import { Container } from 'ui/modules/Modal';
 import { Wrapper, MainContainer, HomeBox, ObjectsList } from 'ui/elements/Layout';
-import { SidePanelHOC } from 'HOC/modules/SidePanel/SidePanel';
 import { useNotifyMustLogin } from '../../../HOC/lib/notifyMustLogin';
 import { CreateIntentPanelHOC } from '../../../HOC/modules/CreateIntentPanel/createIntentPanelHOC';
 import { CreateLocationPanelHOC } from '../../../HOC/modules/CreateLocationPanel/CreateLocationPanelHOK';
@@ -85,7 +84,6 @@ export const AllCommunities: React.FC<Props> = ({ CommunitiesBoxes, LoadMoreForm
           </Wrapper>
         </Container>
       </HomeBox>
-      <SidePanelHOC />
     </MainContainer>
   );
 };

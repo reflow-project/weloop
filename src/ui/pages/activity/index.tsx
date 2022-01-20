@@ -1,4 +1,3 @@
-import { SidePanelHOC } from 'HOC/modules/SidePanel/SidePanel';
 import * as React from 'react';
 import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
 
@@ -14,7 +13,6 @@ export const Activity: React.FC<Props> = ({ userId }) => {
           <Wrapper>hi {userId}</Wrapper>
         </WrapperCont>
       </HomeBox>
-      <SidePanelHOC />
     </MainContainer>
   );
 };

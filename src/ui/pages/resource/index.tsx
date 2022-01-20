@@ -1,6 +1,5 @@
 import { Trans } from '@lingui/macro';
 import { ApolloError } from 'apollo-client';
-import { SidePanelHOC } from 'HOC/modules/SidePanel/SidePanel';
 import * as React from 'react';
 import { Box, Text } from 'rebass/styled-components';
 import { Link } from 'react-router-dom';
@@ -448,7 +447,6 @@ export const ResourceItem: React.FC<Props> = ({
           </Wrapper>
         </WrapperCont>
       </HomeBox>
-      <SidePanelHOC />
     </MainContainer>
   );
 };

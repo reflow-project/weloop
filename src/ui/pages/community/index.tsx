@@ -1,5 +1,4 @@
 import { Trans } from '@lingui/macro';
-import { SidePanelHOC } from 'HOC/modules/SidePanel/SidePanel';
 import * as React from 'react';
 import { ReactElement, useReducer } from 'react';
 import { Plus } from 'react-feather';
@@ -189,7 +188,6 @@ export const Community: React.FC<Props> = ({
           </Wrapper>
         </WrapperCont>
       </HomeBox>
-      <SidePanelHOC />
     </MainContainer>
   );
 };
