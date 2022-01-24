@@ -94,11 +94,11 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.
 
-## Production deployment
+## Production deployment
 
 Complete deployment of the full bundle will be described as part of the overall Reflow OS installation guide:
 
-### Self-hosted
+### Self-hosted
 
 Manually use yarn build to generate the `./build` folder including the index.html file and all the static dependencies. Host the resulting website on any static web server such as NGINX or Apache Web Server. 
 
