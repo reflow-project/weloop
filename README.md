@@ -4,19 +4,9 @@
 
 ![Deployment](https://github.com/reflow-project/weloop/workflows/Deployment/badge.svg)
 
-**NOTE**: Since this project is a fork of a fork, this README (and other parts of the project) might be out of date.
-
-To quickly start the REFLOW version of the project, we should only need to create an `.env` file pointing to the REFLOW GraphQL API.
-
-Example part of an `.env` file (see `.env.example` for the whole file):
-
-```
-BASE_URL=https://api.reflowproject.eu
-REACT_APP_GRAPHQL_ENDPOINT=https://api.reflowproject.eu/api/graphql
-```
-
 ## About the project
-This app is based on [CommonsPub](http://commonspub.org), a project to create a generic federated server, based on the `ActivityPub` and `ActivityStreams` web standards). 
+
+This app is based on [CommonsPub](http://commonspub.org), a project to create a generic federated server, based on the `ActivityPub` and `ActivityStreams` web standards and originally developed as part of [moodle.net](https://moodle.net/).
 
 ## Structure
 
@@ -49,36 +39,78 @@ This app is based on [CommonsPub](http://commonspub.org), a project to create a 
 | `/src/types` | application typescript types, enums, & interfaces |
 | `/src/util` | application utility functions |
 
-## Development Scripts
+## Development Environment
 
 In the project directory, you can run:
+
+### Before you start
+
+We recommend using `nvm` to ensure you are running the right [node](https://nodejs.org/en/) version specified in `.nvmrc`. Install `nvm` [here](https://github.com/nvm-sh/nvm#install--update-script). 
+
+Then run `nvm use` every time before `yarn` to ensure you are using the right version.
+
+You might also need to install `yarn` the first time by doing `npm install --global yarn`.
+
+### Customize your instance
+
+Before we start we need to create an `.env` file pointing to the REFLOW OS GraphQL API:
+Example part of an `.env` file (see `.env.example` for the whole file):
+
+```
+REACT_APP_GRAPHQL_ENDPOINT=https://api.reflowproject.eu/api/graphql
+```
+### `nvm use`
+
+Sets the right node version.
+
+### `yarn`
+
+Installs the app dependencies. 
 
 ### `yarn start`
 
 Runs the app in the development mode.
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.
-You will also see any lint errors in the console.
+Open [http://localhost:4000](http://localhost:4000) to view it in the browser.
+
+The page will reload if you make edits. You will also see any lint errors in the console.
 
 ### `yarn add-locale`
 
-Adds a locale for localisation, with [lingui library](https://lingui.js.org/ref/react.html).<br>
+Adds a locale for localisation, with [lingui library](https://lingui.js.org/ref/react.html).
 
 ### `yarn extract`
 
-Extracts new/updated strings from the codebase into JSON files for localisation (they need to be encapsulated with [lingui library](https://lingui.js.org/ref/react.html)'s <Trans>).<br>
+Extracts new/updated strings from the codebase into JSON files for localisation (they need to be encapsulated with [lingui library](https://lingui.js.org/ref/react.html)'s <Trans>).
 
 ### `yarn compile`
 
-Compiles localisation files for production.<br>
+Compiles localisation files for production.
 
 ### `yarn build`
 
-Builds the app for production to the `build` folder.<br>
+Builds the app for production to the `build` folder.
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br>
+The build is minified and the filenames include the hashes.
+
+## Production deployment
+
+Complete deployment of the full bundle will be described as part of the overall Reflow OS installation guide:
+
+### Self-hosted
+
+Manually use yarn build to generate the `./build` folder including the index.html file and all the static dependencies. Host the resulting website on any static web server such as NGINX or Apache Web Server. 
+
+### Github Pages
+
+WeLoop main repository uses **Github Actions** to automatically deploy the repository default branch as a public website using **Github Pages** every time changes are pushed. Anyone can **fork** the existing repository and deploy their own version quickly. Custom domains are defined via a `./build/CNAME` following the standard Github pages workflow. Two **Github Secrets** can be defined to customize the app `REACT_APP_GRAPHQL_ENDPOINT` and `REACT_APP_SENTRY_API_KEY`. Learn more about them in the Customize your instance basic settings and Remote monitorings sections.
+
+## Remote monitoring
+
+WeLoop integrates with Sentry, a cross-platform application monitoring. It allows you to remotely detect JavaScript performance issues before they become downtime. Sentry is fully open source and instances can be locally deployed together with the other Reflow OS tools. 
+
+Sentry can also be used as a SAAS from [sentry.io](https://sentry.io/) without any installation required. To use it you need to provide a valid **Sentry Key** in your `.env` file under `REACT_APP_SENTRY_API_KEY. When deploying via Github Pages that can be set via  **Github Secrets**.
 
 ## Libraries
 
@@ -90,7 +122,7 @@ This section mentions notable libraries and tools used within the application an
 - React Apollo, GraphQL client (https://www.apollographql.com/docs/react/)
 - Phoenix.js, Phoenix channels JS client (https://hexdocs.pm/phoenix/js/index.html)
 
-### Browser testing
+## Browser testing
 
 We're using [BrowserStack](https://www.browserstack.com/open-source) for testing the front-end in various browsers.
 ![BrowserStack](docs/assets/images/Browserstack-logo.svg)
@@ -224,75 +256,8 @@ live in `locales`.
 All changes to the language within the application, including changes to the files within `locales`, should
 be committed alongside other changes.    
 
-## Dependencies
+### Licensing
 
-**Please note that the project is undergoing some refactoring, and some of these may be changing...**
 
-| Development Only | Package | Description |
-|---|------|---|
-| | `@absinthe/*` | the JS Absinthe toolkit used to interface with the Elixir Phoenix backend with GraphQL |
-| X | `@babel/*` | compiles down ESNext syntax and functionality & includes runtime polyfills |
-| | `@fortawesome/*` | a collection of react components and pre-packaged FontAwesome icon SVGs |
-| | `@jumpn/utils-graphql` | a collection of utilities used to interrogate GraphQL links, such as is it a subscription, which determines what channel to communicate on (WebSocket if yes, HTTP if no) |
-| | `@lingui/*` | lib for localisation of react applications, includes scripts for parsing the app code and pulling out language into locale files (which lives in `/locales/`), and react components such as localisation provider which sets up the react tree to get the correct language data depending on chosen locale | 
-| | `@types/*` | the `@types` package namespace contains type definitions for some of packages we use, as TypeScript is opt-in an they are not included by default in some packages |
-| | `apollo-cache-inmemory` | standalone cache for apollo, it caches responses from the graphql backend |
-| | `apollo-client` | a client for graphql |
-| | `apollo-link-context` | allows setting the _context_ of apollo operations, used for example to set the Auth Bearer token in HTTP request headers |
-| | `apollo-link-http` | allows the application to make graphql requests over HTTP |
-| | `apollo-link-logger` | logs apollo operations as they happen, used in development for debugging apollo queries |
-| | `apollo-link-retry` | allows apollo to automatically retry failed requests to the graphql backend |
-| | `apollo-link-state` | like Redux but is queryable through graphql queries |
-|X| `autoprefixer` | used to automatically apply vendor prefixes to styles output by webpack (via postcss) |
-|X| `awesome-typescript-loader` | a webpack loader that compiles TypeScript files |
-|X| `babel-core` | this is necessary even though we have `@babel/core` because some older libs depend on it (it is actually just the "bridge" which is installed) |
-|X| `babel-plugin-async-import` | allows Babel to compile the async import syntax (`import()`) |
-|X| `babel-plugin-macros` | allows us to use Babel macros, such as the one included with `linguijs` that pulls out language data to create the locales
-|X| `case-sensitive-paths-webpack-plugin` | see `webpack.config.dev.js` |
-|X| `chalk` | used to create colour in terminal logs using ascii escape codes |
-|X| `cross-env` | allows us to apply environment variables in yarn scripts that run across all platforms |
-|X| `css-loader` | allows webpack to process CSS files |
-| | `dotenv` | loads and processes `.env` files and applies contents to the environment (`process.env`) |
-| | `dotenv-expand`  | allows interpolation of environment variables within the `.env` files themselves |
-|X| `eslint` | used for linting application code |
-|X| `eslint-config-react-app` | an ESLint config that CRA applications come bundles with |
-|X| `eslint-loader` | allows webpack to run application files through ESLint |
-|X| `file-loader` | allows webpack to copy files into the build directory |
-| | `flag-icon-css` | used to generate flag icons |
-|X| `fs-extra` | a better FS lib that comes with extra filesystem operations and is promisied |
-| | `graphql` | the JS implementation of graphql, used by other graphql libs |
-| | `graphql-tag` | a template literal tag that processes graphql query strings into their object representations |
-|X| `html-webpack-plugin` | used in webpack to produce an `index.html` file, that includes script and style tags for all application stuff that is generated via webpack |
-|X| `husky` | used by `lint-staged` to configure git hooks |
-|X| `interpolate-html-plugin` | see `webpack.config.dev.js` |
-|X| `lint-staged` | used to lint staged code before it is committed |
-|X| `mini-css-extract-plugin` | pulls out CSS styles from application bundles into their own stylesheet files |
-| | `object-assign` | `Object.assign` polyfill for older browsers (<=IE8) |
-| | `phoenix` | JavaScript toolkit for interfacing with an Elixir Phoenix backend |
-|X| `postcss-flexbugs-fixes` | fixes flexbox issues to make flexbox use cross-browser compatible |
-|X| `postcss-loader` | allows webpack to make use of the postcss toolkit and plugin ecosystem |
-|X| `prettier` | code formatter that automatically fixes linting problems and keeps the code looking according to a default code style |
-| | `promise` | simple implementation of promises |
-|X| `raf` | requestAnimationFrame polyfill for node and the browser |
-| | `react` | used to build the user-interface of the application |
-| | `react-apollo` | react components for connecting apollo and react, e.g. a provider that gives all components a context with which to make request to graphql backend |
-| | `react-click-outside` | HOC used for catching clicks outside of a component, for example in order to close a menu when the user clicks off the menu |
-|X| `react-dev-utils` | webpack utilities used by CRA |
-|X| `react-docgen-typescript` | used by `react-styleguidist` to generate propType docs for react components from TypeScript prop definitions |
-| | `react-dom` | react lib to render react trees into the browser's DOM |
-| | `react-loadable` | makes loading components async and code-splitting easy in react-land |
-| | `react-router-dom` | react router DOM-specific renderer |
-|X| `react-styleguidist` | used to produce and display a styleguide for the application components |
-| | `recompose` | utilities for react, such as HOC compose function to make multiple HOCs more readable |
-|X| `style-loader` | webpack loader used in development to insert CSS as style tags |
-| | `styled-components` | used to write CSS-in-JS |
-|X| `sw-precache-webpack-plugin` | produces a service worker for the application via webpack that caches application files and makes the web app load offline |
-|X| `terser-webpack-plugin` | minifier for webpack |
-| | `time-ago` | produces readable strings for how long ago something happened from a timestamp, e.g. "5 minutes ago" |
-| | `tslib` | TypeScript runtime |
-| | `typescript` | TypeScript |
-|X| `url-loader` | allows webpack to inline files (e.g. images) into base64 strings if they are below a certain byte limit |
-|X| `webpack` | application build tool, bundles the application into compiled and servable files |
-|X| `webpack-dev-server` | used to create a development server that reacts to changes in app files and serves them on-the-fly |
-|X| `webpack-manifest-plugin` | see `webpack.config.dev.js` |
-| | `whatwg-fetch` | `window.fetch` polyfill |
+The present software is released under a copyleft license (GNU Affero General Public License v3.0) to promote use, customization and contribution inside and outside the consortium. The license conditions developers to make available the complete source code and any modifications. It fosters an open ecosystem and protects rights users
+by granting them access to the source code.
