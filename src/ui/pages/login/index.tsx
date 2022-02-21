@@ -64,7 +64,7 @@ export const Login: React.FC<Props> = ({ formik }) => {
                       isDisabled={formik.isSubmitting}
                       type="submit"
                       style={{ width: '100%' }}
-                      // onClick={formik.submitForm}
+                      onClick={formik.submitForm}
                     >
                       <Trans>Sign in</Trans>
                     </Button>

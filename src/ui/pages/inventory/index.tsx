@@ -4,8 +4,8 @@ import PaginationComponent from 'react-reactstrap-pagination';
 import { Plus } from 'react-feather';
 import { NavLink } from 'react-router-dom';
 import { Box, Text } from 'rebass/styled-components';
-import { EconomicResource } from 'HOC/pages/inventory/InventoryPage';
-import { EconomicResourcesFilteredQuery } from 'HOC/pages/inventory/InventoryPage.generated';
+// import { EconomicResource } from 'HOC/pages/inventory/InventoryPage';
+// import { EconomicResourcesFilteredQuery } from 'HOC/pages/inventory/InventoryPage.generated';
 import { InventoryWrapper, InfoWrapper, ImageWrapper, Icon } from 'ui/pages/resource';
 import { Wrapper } from 'ui/elements/Layout';
 import { PAGE_LIMIT, PAGE_START, MAX_PAGINATION_NUMBERS } from 'util/constants/pagination';
@@ -21,7 +21,7 @@ const UserIcon = require('react-feather/dist/icons/user').default;
 
 export interface Props {
   done: () => void;
-  inventory: EconomicResourcesFilteredQuery['economicResourcesFiltered'] | any;
+  inventory: any;
   owner: string;
 }
 
@@ -34,7 +34,6 @@ export const Inventory: React.FC<Props> = ({ inventory, done, children, owner })
   const handlePagination = (page: number) => {
     setCurrentPage(page);
   };
-
   useEffect(() => {
     if (inventory.length) {
       const newList = inventory.slice(
@@ -54,7 +53,7 @@ export const Inventory: React.FC<Props> = ({ inventory, done, children, owner })
   return (
     <>
       <ButtonWrapper>
-        {me?.user.id === owner && (
+        {me?.user?.id === owner && (
           <CreateItemButton variant="primary" onClick={done}>
             <Plus size={16} color={'#fff'} />
             <Text variant="button">
@@ -66,65 +65,63 @@ export const Inventory: React.FC<Props> = ({ inventory, done, children, owner })
       <div style={{ position: 'relative' }}>{children}</div>
       <Wrapper>
         {!!currentList.length &&
-          currentList.map(
-            ({ id, name, note, image, onhandQuantity, primaryAccountable }: EconomicResource) => (
-              <WrapperLink to={`/resource/${id}`} key={id}>
-                <InventoryWrapper key={id}>
-                  <ImageWrapper>{image && <img src={image} alt={name} />}</ImageWrapper>
-                  <InfoWrapper>
-                    <Title variant="subhead">{name}</Title>
-                    <Box mr={1}>
-                      <Text variant="text">
-                        <Icon>
-                          <PenIcon size="16" />
-                        </Icon>
-                        <b>
-                          <Trans>Note:</Trans>{' '}
-                        </b>{' '}
-                        <Trans>{note ? note : 'Not provided'}</Trans>
-                      </Text>
-                    </Box>
-                    <Box mr={1}>
-                      <Text variant="text">
-                        <Icon>
-                          <BoxIcon size="16" />
-                        </Icon>
-                        <b>Quantity in stock:</b>{' '}
-                        <span
-                          style={{
-                            color:
-                              onhandQuantity && onhandQuantity.hasNumericalValue < 0
-                                ? 'red'
-                                : 'inherit'
-                          }}
-                        >
-                          {onhandQuantity
-                            ? `${onhandQuantity.hasNumericalValue} ${onhandQuantity.hasUnit.label}`
-                            : 'Not provided'}
-                        </span>
-                      </Text>
-                    </Box>
-                    <Box mr={1}>
-                      <Text variant="text">
-                        <Icon>
-                          <UserIcon size="16" />
-                        </Icon>
-                        <b>
-                          <Trans>Owner:</Trans>
-                        </b>{' '}
-                        {primaryAccountable?.id === currentUser ? 'Me' : primaryAccountable?.name}
-                      </Text>
-                    </Box>
-                  </InfoWrapper>
-                </InventoryWrapper>
-              </WrapperLink>
-            )
-          )}
+          currentList.map(({ id, name, note, image, onhandQuantity, primaryAccountable }: any) => (
+            <WrapperLink to={`/resource/${id}`} key={id}>
+              <InventoryWrapper key={id}>
+                <ImageWrapper>{image && <img src={image} alt={name} />}</ImageWrapper>
+                <InfoWrapper>
+                  <Title variant="subhead">{name}</Title>
+                  <Box mr={1}>
+                    <Text variant="text">
+                      <Icon>
+                        <PenIcon size="16" />
+                      </Icon>
+                      <b>
+                        <Trans>Note:</Trans>{' '}
+                      </b>{' '}
+                      <Trans>{note ? note : 'Not provided'}</Trans>
+                    </Text>
+                  </Box>
+                  <Box mr={1}>
+                    <Text variant="text">
+                      <Icon>
+                        <BoxIcon size="16" />
+                      </Icon>
+                      <b>Quantity in stock:</b>{' '}
+                      <span
+                        style={{
+                          color:
+                            onhandQuantity && onhandQuantity.hasNumericalValue < 0
+                              ? 'red'
+                              : 'inherit'
+                        }}
+                      >
+                        {onhandQuantity
+                          ? `${onhandQuantity.hasNumericalValue} ${onhandQuantity.hasUnit.label}`
+                          : 'Not provided'}
+                      </span>
+                    </Text>
+                  </Box>
+                  <Box mr={1}>
+                    <Text variant="text">
+                      <Icon>
+                        <UserIcon size="16" />
+                      </Icon>
+                      <b>
+                        <Trans>Owner:</Trans>
+                      </b>{' '}
+                      {primaryAccountable?.id === currentUser ? 'Me' : primaryAccountable?.name}
+                    </Text>
+                  </Box>
+                </InfoWrapper>
+              </InventoryWrapper>
+            </WrapperLink>
+          ))}
         {!!currentList.length && (
           <PaginationWrapper>
             <PaginationComponent
               size="sm"
-              totalItems={inventory.length}
+              totalItems={0}
               pageSize={PAGE_LIMIT}
               onSelect={handlePagination}
               maxPaginationNumbers={MAX_PAGINATION_NUMBERS}

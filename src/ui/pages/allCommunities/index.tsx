@@ -9,9 +9,9 @@ import { FormikHook } from 'ui/@types/types';
 import { Container } from 'ui/modules/Modal';
 import { Wrapper, MainContainer, HomeBox, ObjectsList } from 'ui/elements/Layout';
 import { useNotifyMustLogin } from '../../../HOC/lib/notifyMustLogin';
-import { CreateIntentPanelHOC } from '../../../HOC/modules/CreateIntentPanel/createIntentPanelHOC';
+// import { CreateIntentPanelHOC } from '../../../HOC/modules/CreateIntentPanel/createIntentPanelHOC';
 import { CreateLocationPanelHOC } from '../../../HOC/modules/CreateLocationPanel/CreateLocationPanelHOK';
-import { CreateResourcePanelHOC } from '../../../HOC/modules/CreateResourcePanel/CreateResourcePanelHOC';
+// import { CreateResourcePanelHOC } from '../../../HOC/modules/CreateResourcePanel/CreateResourcePanelHOC';
 import Modal from '../../modules/Modal';
 import { ButtonWrapper, CreateItemButton } from '../community';
 
@@ -39,10 +39,11 @@ export const AllCommunities: React.FC<Props> = ({ CommunitiesBoxes, LoadMoreForm
       {showCreateLocation ? (
         <CreateLocationPanelHOC done={toggleShowCreateLocation} />
       ) : (
-        <CreateResourcePanelHOC
-          done={toggleShowCreateResource}
-          toggleCreateLocation={toggleShowCreateLocation}
-        />
+        <div>CreateResourcePanelHOC</div>
+        // <CreateResourcePanelHOC
+        //   done={toggleShowCreateResource}
+        //   toggleCreateLocation={toggleShowCreateLocation}
+        // />
       )}
     </Modal>
   ) : null;
@@ -53,7 +54,8 @@ export const AllCommunities: React.FC<Props> = ({ CommunitiesBoxes, LoadMoreForm
         setOpenIntent();
       }}
     >
-      <CreateIntentPanelHOC done={setOpenIntent} />
+      <div>CreateIntentPanelHOC</div>
+      {/*<CreateIntentPanelHOC done={setOpenIntent} />*/}
     </Modal>
   ) : null;
 

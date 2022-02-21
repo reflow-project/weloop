@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro';
 import { i18nMark } from '@lingui/react';
 import { FormikHook } from 'ui/@types/types';
 import Alert from '../../elements/Alert';
-import { Input, Label, Checkbox } from '@rebass/forms';
+import { Input } from '@rebass/forms';
 import Button from 'ui/elements/Button';
 import { Box, Text, Flex } from 'rebass/styled-components';
 import styled from '../../themes/styled';
@@ -11,15 +11,13 @@ import { AlertCircle } from 'react-feather';
 import { AlertWrapper } from 'ui/modules/Modal';
 import { INVITE_ONLY_TEXT } from 'mn-constants';
 import media from 'styled-media-query';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import LogoContainer from 'ui/elements/Logo';
 
 let tt = {
   login: i18nMark('Sign in'),
   placeholders: {
     email: i18nMark('eg. mary@moodlers.org'),
-    preferredUsername: i18nMark('eg. moodlerMary'),
-    name: i18nMark('eg. Moodler Mary'),
     password: i18nMark('Choose your password'),
     passwordConfirm: i18nMark('Confirm your password')
   }
@@ -27,29 +25,26 @@ let tt = {
 
 export interface Props {
   formik: FormikHook<SignUpFormValues>;
-  registeredUsername?: string;
+  registeredUserID?: string;
   registeredEmail?: string;
 }
 
 export interface SignUpFormValues {
-  name: string;
   email: string;
   password: string;
-  username: string;
   passwordConfirm: string;
-  terms: boolean;
 }
 
-export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername, registeredEmail }) => {
+export const SignUpPage: React.FC<Props> = ({ formik, registeredUserID, registeredEmail }) => {
   return (
     <Container>
-      {!formik.isSubmitting && formik.submitCount && registeredUsername && registeredEmail ? (
+      {!formik.isSubmitting && formik.submitCount && registeredUserID ? (
         <Box mt={3}>
           <LogoContainer />
           <Wrapper>
             <Box>
               <Text variant="suptitle">
-                <Trans>Welcome</Trans> <b>{registeredUsername}</b>
+                <Trans>Welcome</Trans> <b>{registeredUserID}</b>
               </Text>
               <Text mt={2} variant="text">
                 <Trans>Please confirm your email address</Trans>
@@ -100,38 +95,6 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername, regist
               </Box>
               <Box mt={3}>
                 <label>
-                  <Trans>Full name</Trans>
-                </label>
-                <Input
-                  placeholder={tt.placeholders.name}
-                  name="name"
-                  value={formik.values.name}
-                  onChange={formik.handleChange}
-                />
-                {formik.errors.name && (
-                  <AlertWrapper>
-                    <Alert variant="negative">{formik.errors.name}</Alert>
-                  </AlertWrapper>
-                )}
-              </Box>
-              <Box mt={3}>
-                <label>
-                  <Trans>Preferred username</Trans>
-                </label>
-                <Input
-                  placeholder={tt.placeholders.preferredUsername}
-                  name="username"
-                  value={formik.values.username}
-                  onChange={formik.handleChange}
-                />
-                {formik.errors.username && (
-                  <AlertWrapper>
-                    <Alert variant="negative">{formik.errors.username}</Alert>
-                  </AlertWrapper>
-                )}
-              </Box>
-              <Box mt={3}>
-                <label>
                   <Trans>Password</Trans>
                 </label>
                 <Input
@@ -164,32 +127,12 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername, regist
                   </AlertWrapper>
                 )}
               </Box>
-              <Box mt={3} mb={3}>
-                <Label alignItems="center">
-                  <Checkbox
-                    name="terms"
-                    id="remember"
-                    value={formik.values.terms}
-                    onChange={formik.handleChange}
-                  />
-                  <Text mr={1}>I have read and agreed the</Text>
-                  <NavLink to="/terms" target="_blank">
-                    Terms and Conditions
-                  </NavLink>
-                </Label>
-                {formik.errors.terms && (
-                  <AlertWrapper>
-                    <Alert variant="negative">{formik.errors.terms}</Alert>
-                  </AlertWrapper>
-                )}
-              </Box>
               <Box mt={3}>
                 <Button
                   variant="primary"
                   isSubmitting={formik.isSubmitting}
                   isDisabled={formik.isSubmitting}
                   type="submit"
-                  // onClick={formik.submitForm}
                 >
                   <Trans>Sign up</Trans>
                 </Button>

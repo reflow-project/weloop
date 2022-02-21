@@ -20,8 +20,6 @@ export interface Props {
     icon: string;
     name: string;
     link: string;
-    isAdmin: boolean;
-    logout(): unknown;
   };
   Search: ReactElement;
   toggleSideBar(): unknown;
@@ -105,12 +103,7 @@ export const MainHeader: React.FC<Props> = props => {
                 <ChevronDown size="20" />
               </Right>
               {props.isOpenDropdown && (
-                <DropdownSidebar
-                  isAdmin={props.user.isAdmin}
-                  logout={props.user.logout}
-                  userLink={props.user.link}
-                  toggleDropdown={props.toggleDropdown}
-                />
+                <DropdownSidebar userLink={props.user.link} toggleDropdown={props.toggleDropdown} />
               )}
             </NavItem>
           ) : (

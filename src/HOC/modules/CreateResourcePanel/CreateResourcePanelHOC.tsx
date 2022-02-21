@@ -1,20 +1,18 @@
 import { useFormik } from 'formik';
 import React, { FC } from 'react';
-import { Slide, toast } from 'react-toastify';
 import { BasicCreateCollectionFormValues } from 'ui/modules/CreateCollectionPanel';
 import * as Yup from 'yup';
-import { useHistory } from 'react-router-dom';
 import { TestUrlOrFile } from 'HOC/lib/formik-validations';
-import { useCreateResource } from '../../../fe/resource/create/useCreateResource';
+// import { useCreateResource } from '../../../fe/resource/create/useCreateResource';
 
 import {
   CreateResourcePanel,
   TCreateResourcePanel,
   CreateIntentFormValues
 } from '../../../ui/modules/CreateResourcePanel';
-import { EconomicResource } from '../../pages/inventory/InventoryPage';
-import { useSpatialThingsPagesQuery } from '../EconomicEventManager/EconomicEventManager.generated';
-import { EconomicEventManagerHOC } from '../EconomicEventManager/EconomicEventManagerHOC';
+// import { EconomicResource } from '../../pages/inventory/InventoryPage';
+// import { useSpatialThingsPagesQuery } from '../EconomicEventManager/EconomicEventManager.generated';
+// import { EconomicEventManagerHOC } from '../EconomicEventManager/EconomicEventManagerHOC';
 
 export const validationSchema: Yup.ObjectSchema<BasicCreateCollectionFormValues> = Yup.object<
   BasicCreateCollectionFormValues
@@ -30,7 +28,7 @@ export const validationSchema: Yup.ObjectSchema<BasicCreateCollectionFormValues>
 export interface Props {
   done: () => void;
   toggleCreateLocation: (isShow: boolean) => void;
-  resource?: EconomicResource;
+  resource?: any;
 }
 
 export const CreateResourcePanelHOC: FC<Props> = ({
@@ -39,11 +37,8 @@ export const CreateResourcePanelHOC: FC<Props> = ({
   toggleCreateLocation,
   ...props
 }) => {
-  const history = useHistory();
-  const { create } = useCreateResource();
-
-  const spatialThingsQ = useSpatialThingsPagesQuery();
-  const spatialThings = spatialThingsQ.data?.spatialThingsPages;
+  // const spatialThingsQ = useSpatialThingsPagesQuery();
+  // const spatialThings = spatialThingsQ.data?.spatialThingsPages;
 
   const SignupSchema = Yup.object().shape({
     name: Yup.string()
@@ -105,37 +100,37 @@ export const CreateResourcePanelHOC: FC<Props> = ({
     enableReinitialize: true,
 
     onSubmit: (values: CreateIntentFormValues) => {
-      return create({
-        name: values.name,
-        action: values.action.id,
-        note: values.note,
-        eventNote: values.eventNote,
-        hasPointInTime: values.hasPointInTime,
-        atLocation: values.atLocation?.id || '',
-        provider: values.provider.id,
-        receiver: values.receiver.id,
-        hasUnit: values.hasUnit.id,
-        hasNumericalValue: values.hasNumericalValue,
-        image: values.image
-      })
-        .then((response: any) => {
-          if (!response.errors) {
-            const newId = response?.data?.createEconomicEvent?.economicResource?.id;
-            const redirect = `/resource/${newId} `;
-            done();
-            history.replace(redirect);
-
-            toast.success('Resource was created', {
-              position: 'top-right',
-              transition: Slide,
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true
-            });
-          }
-        })
-        .catch((error: any) => console.log(error));
+      //   return create({
+      //     name: values.name,
+      //     action: values.action.id,
+      //     note: values.note,
+      //     eventNote: values.eventNote,
+      //     hasPointInTime: values.hasPointInTime,
+      //     atLocation: values.atLocation?.id || '',
+      //     provider: values.provider.id,
+      //     receiver: values.receiver.id,
+      //     hasUnit: values.hasUnit.id,
+      //     hasNumericalValue: values.hasNumericalValue,
+      //     image: values.image
+      //   })
+      //     .then((response: any) => {
+      //       if (!response.errors) {
+      //         const newId = response?.data?.createEconomicEvent?.economicResource?.id;
+      //         const redirect = `/resource/${newId} `;
+      //         done();
+      //         history.replace(redirect);
+      //
+      //         toast.success('Resource was created', {
+      //           position: 'top-right',
+      //           transition: Slide,
+      //           autoClose: 3000,
+      //           hideProgressBar: false,
+      //           closeOnClick: true,
+      //           pauseOnHover: true
+      //         });
+      //       }
+      //     })
+      //     .catch((error: any) => console.log(error));
     }
   });
 
@@ -143,14 +138,14 @@ export const CreateResourcePanelHOC: FC<Props> = ({
     ...props,
     title: 'Create a new Resource',
     formik,
-    spatialThings: spatialThings?.edges || null,
+    // spatialThings: spatialThings?.edges || null,
     toggleCreateLocation,
     done
   };
 
   return (
-    <EconomicEventManagerHOC>
-      <CreateResourcePanel {...CreateResourcePanelProps} />
-    </EconomicEventManagerHOC>
+    // <EconomicEventManagerHOC>
+    <CreateResourcePanel {...CreateResourcePanelProps} />
+    // </EconomicEventManagerHOC>
   );
 };

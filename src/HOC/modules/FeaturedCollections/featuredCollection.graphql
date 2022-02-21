@@ -1,6 +1,0 @@
-fragment CollectionFeature on Feature {
-  id
-  context {
-    ...DiscoverPageFeaturedCollectionInfo
-  }
-}

@@ -3,7 +3,7 @@ import { ApolloError } from 'apollo-client';
 import * as React from 'react';
 import { Box, Text } from 'rebass/styled-components';
 import { Link } from 'react-router-dom';
-import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
+// import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
 import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
 import Button from 'ui/elements/Button';
 import { PersonWrapper } from '../../modules/Resource/PrimaryAccountablePerson';
@@ -30,7 +30,7 @@ export interface Props {
   openEditModal: () => void;
   openUpdateResourceModal: () => void;
   openDeleteResourceModal: () => void;
-  resource?: EconomicResource | any;
+  resource?: any;
   error?: ApolloError | undefined;
   loading: boolean;
 }
@@ -141,12 +141,12 @@ export const ResourceItem: React.FC<Props> = ({
                       <ClockIcon size="16" />
                     </Icon>
                     History:{' '}
-                    {resource?.track.length > 0 || resource?.trace.length > 0
+                    {resource?.track?.length > 0 || resource?.trace?.length > 0
                       ? ''
                       : 'Not available'}
                   </Text>
                 </Box>
-                {resource?.track.map((track: any) => {
+                {resource?.track?.map((track: any) => {
                   return (
                     <TrackWrapper key={track.id}>
                       <Badge>
@@ -206,7 +206,9 @@ export const ResourceItem: React.FC<Props> = ({
                             <BoxIcon size="16" />
                           </Icon>
                           <b>Quantity: </b>{' '}
-                          {`${track.resourceQuantity?.hasNumericalValue} ${track.resourceQuantity?.hasUnit.label}`}
+                          {track.resourceQuantity?.hasNumericalValue
+                            ? `${track.resourceQuantity?.hasNumericalValue} ${track.resourceQuantity?.hasUnit.label}`
+                            : 'Not provided'}
                         </Text>
                       </Box>
                       <Box mr={1}>
@@ -246,7 +248,7 @@ export const ResourceItem: React.FC<Props> = ({
                     </TrackWrapper>
                   );
                 })}
-                {resource?.trace.map((trace: any) => {
+                {resource?.trace?.map((trace: any) => {
                   return (
                     <TrackWrapper key={trace.id}>
                       <Badge>
@@ -282,7 +284,7 @@ export const ResourceItem: React.FC<Props> = ({
                             <PenIcon size="16" />
                           </Icon>
                           <b>
-                            <Trans>trace note: </Trans>
+                            <Trans>Trace note: </Trans>
                           </b>{' '}
                           {trace.note ? trace.note : 'Not provided'}
                         </Text>
@@ -293,7 +295,22 @@ export const ResourceItem: React.FC<Props> = ({
                             <BoxIcon size="16" />
                           </Icon>
                           <b>Quantity:</b>{' '}
-                          {`${trace.resourceQuantity?.hasNumericalValue} ${trace.resourceQuantity?.hasUnit.label}`}
+                          {trace.resourceQuantity?.hasNumericalValue
+                            ? `${trace.resourceQuantity?.hasNumericalValue} ${trace.resourceQuantity?.hasUnit.label}`
+                            : 'Not provided'}
+                        </Text>
+                      </Box>
+                      <Box mr={1}>
+                        <Text variant="text">
+                          <Icon>
+                            <Calendar size="16" />
+                          </Icon>
+                          <b>
+                            <Trans>Event Date: </Trans>
+                          </b>{' '}
+                          {trace.hasPointInTime
+                            ? format(new Date(trace.hasPointInTime), 'dd.MM.yyyy')
+                            : 'Not provided'}
                         </Text>
                       </Box>
                       <Box mr={1}>

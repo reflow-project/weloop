@@ -25,7 +25,7 @@ import { i18n } from '../../../context/global/localizationCtx';
 import { useNotifyMustLogin } from '../../../HOC/lib/notifyMustLogin';
 import { CreateLocationPanelHOC } from '../../../HOC/modules/CreateLocationPanel/CreateLocationPanelHOK';
 import { CreateResourcePanelHOC } from '../../../HOC/modules/CreateResourcePanel/CreateResourcePanelHOC';
-import { CreateIntentPanelHOC } from 'HOC/modules/CreateIntentPanel/createIntentPanelHOC';
+// import { CreateIntentPanelHOC } from 'HOC/modules/CreateIntentPanel/createIntentPanelHOC';
 import Modal from '../../modules/Modal';
 import media from 'styled-media-query';
 
@@ -114,7 +114,8 @@ export const Community: React.FC<Props> = ({
         setOpenIntent();
       }}
     >
-      <CreateIntentPanelHOC done={setOpenIntent} communityId={communityId} />
+      <div>CreateIntentPanelHOC</div>
+      {/*<CreateIntentPanelHOC done={setOpenIntent} communityId={communityId} />*/}
     </Modal>
   ) : null;
 

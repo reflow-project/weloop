@@ -1,7 +1,0 @@
-query actions {
-  actions {
-    label
-    id
-    note
-  }
-}

@@ -6,9 +6,9 @@ import { Box, Heading } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
 import { FormikHook } from 'ui/@types/types';
 import { CustomSelect as Select } from 'ui/elements/CustomSelect';
-import { useMe } from '../../../fe/session/useMe';
+// import { useMe } from '../../../fe/session/useMe';
 import * as Types from '../../../graphql/types.generated';
-import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
+// import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
 import { setSelectOption } from '../../elements/CustomSelect/select';
 import styled from '../../themes/styled';
 import DropzoneArea from '../DropzoneModal';
@@ -37,7 +37,7 @@ export type CreateIntentFormValues = {
 export type TCreateResourcePanel = {
   title: string;
   done: () => void;
-  resource?: EconomicResource;
+  resource?: any;
   spatialThings?: Types.Maybe<
     Types.Maybe<
       { __typename: 'SpatialThing' } & Pick<Types.SpatialThing, 'name' | 'id' | 'lat' | 'long'>
@@ -78,7 +78,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
     (file: File) => formik.setValues({ ...formik.values, image: file }),
     [formik]
   );
-  const { me } = useMe();
+  // const { me } = useMe();
 
   React.useEffect(() => {
     if (unitPages?.length) {
@@ -107,17 +107,17 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
 
     formik.setValues({
       ...formik.values,
-      hasPointInTime: new Date().toISOString(),
-      provider: {
-        id: providerList?.find((el: any) => el.id === me?.user?.id)?.id || '',
-        label: providerList?.find((el: any) => el.id === me?.user?.id)?.name || ''
-      },
-      receiver: {
-        id: receiverList?.find((el: any) => el.id === me?.user?.id)?.id || '',
-        label: receiverList?.find((el: any) => el.id === me?.user?.id)?.name || ''
-      }
+      hasPointInTime: new Date().toISOString()
+      // provider: {
+      //   id: providerList?.find((el: any) => el.id === me?.user?.id)?.id || '',
+      //   label: providerList?.find((el: any) => el.id === me?.user?.id)?.name || ''
+      // },
+      // receiver: {
+      //   id: receiverList?.find((el: any) => el.id === me?.user?.id)?.id || '',
+      //   label: receiverList?.find((el: any) => el.id === me?.user?.id)?.name || ''
+      // }
     });
-  }, [providerList, receiverList, me]);
+  }, [providerList, receiverList]);
 
   React.useEffect(() => {
     setUnitLst(

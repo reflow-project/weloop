@@ -1,23 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useUser } from 'fe/user/useUser';
 import { useFormik } from 'formik';
-import { User } from 'graphql/types.generated';
 import { useNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
 import React, { FC, useMemo, useReducer } from 'react';
-import { HeroUser as HeroUserUI, Loaded, LoadedOther, Props, Status } from 'ui/modules/HeroUser';
+import { HeroUser as HeroUserUI, Props, Status } from 'ui/modules/HeroUser';
 import Modal from 'ui/modules/Modal';
-import { FlagModalHOC } from '../FlagModal/flagModalHOC';
 
 export interface HeroUser {
-  userId: User['id'];
+  userName: string;
 }
-export const HeroUser: FC<HeroUser> = ({ userId }) => {
-  const { user, isAdmin, isMe, toggleFollow } = useUser(userId);
+export const HeroUser: FC<HeroUser> = ({ userName }) => {
+  const { user, isMe } = useUser(userName);
   const [isOpenDropdown, toggleDropdown] = useReducer(is => !is, false);
 
   const toggleFollowFormik = useFormik({
     initialValues: {},
-    onSubmit: toggleFollow
+    onSubmit: () => {}
   });
   const notifiedMustLogin = useNotifyMustLogin();
 
@@ -26,11 +24,7 @@ export const HeroUser: FC<HeroUser> = ({ userId }) => {
   }, false);
 
   const FlagModal =
-    user && isFlagging ? (
-      <Modal closeModal={toggleFlagging}>
-        <FlagModalHOC done={toggleFlagging} ctx={user} />
-      </Modal>
-    ) : null;
+    user && isFlagging ? <Modal closeModal={toggleFlagging}>FlagModal</Modal> : null;
   const userHeroProps = useMemo<Props>(() => {
     if (!user) {
       return {
@@ -38,30 +32,21 @@ export const HeroUser: FC<HeroUser> = ({ userId }) => {
       };
     }
 
-    const loadedProps: Omit<Loaded, 'me'> = {
-      status: Status.Loaded,
-      displayUsername: user.displayUsername,
-      icon: user.icon?.url || '',
-      image: user.image?.url || '',
-      location: user.location || '',
-      name: user.name || '',
-      summary: user.summary || '',
-      isFlagged: !!user.myFlag
+    const loadedProps: any = {
+      user
     };
 
     if (isMe) {
-      const props: Props = {
-        isAdmin: isAdmin,
+      const props: any = {
         me: isMe,
         ...loadedProps
       };
 
       return props;
     } else {
-      const props: LoadedOther = {
+      const props: any = {
         flag: toggleFlagging,
         me: isMe,
-        following: !!user.myFollow,
         isOpenDropdown,
         toggleDropdown,
         toggleFollowFormik,
@@ -70,7 +55,7 @@ export const HeroUser: FC<HeroUser> = ({ userId }) => {
 
       return props;
     }
-  }, [isMe, user, toggleFollowFormik, isAdmin, isOpenDropdown]);
+  }, [isMe, user, toggleFollowFormik, isOpenDropdown]);
 
   return (
     <>

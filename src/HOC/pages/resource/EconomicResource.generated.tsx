@@ -13,152 +13,112 @@ export type EconomicResourceQuery = (
   { __typename: 'RootQueryType' }
   & { economicResource: Types.Maybe<(
     { __typename: 'EconomicResource' }
-    & Pick<Types.EconomicResource, 'id' | 'trackingIdentifier' | 'name' | 'note' | 'image'>
-    & { primaryAccountable: Types.Maybe<(
-      { __typename: 'Organization' }
-      & Pick<Types.Organization, 'id' | 'name' | 'image'>
-      & { relationshipsAsObject: Types.Maybe<Array<(
-        { __typename: 'AgentRelationship' }
-        & Pick<Types.AgentRelationship, 'id'>
-        & { relationship: (
-          { __typename: 'AgentRelationshipRole' }
-          & Pick<Types.AgentRelationshipRole, 'id' | 'inverseRoleLabel'>
-        ) }
-      )>> }
-    ) | (
-      { __typename: 'Person' }
-      & Pick<Types.Person, 'id' | 'name' | 'image'>
-      & { relationshipsAsObject: Types.Maybe<Array<(
-        { __typename: 'AgentRelationship' }
-        & Pick<Types.AgentRelationship, 'id'>
-        & { relationship: (
-          { __typename: 'AgentRelationshipRole' }
-          & Pick<Types.AgentRelationshipRole, 'id' | 'inverseRoleLabel'>
-        ) }
-      )>> }
-    )>, stage: Types.Maybe<(
+    & Pick<Types.EconomicResource, 'id' | 'image' | 'trackingIdentifier' | 'name' | 'note'>
+    & { primaryAccountable: Types.Maybe<any>, stage: Types.Maybe<(
       { __typename: 'ProcessSpecification' }
       & Pick<Types.ProcessSpecification, 'id' | 'name' | 'note'>
     )>, contains: Types.Maybe<Array<(
       { __typename: 'EconomicResource' }
       & Pick<Types.EconomicResource, 'image'>
-      & { track: Types.Maybe<Array<(
-        { __typename: 'EconomicEvent' }
-        & Pick<Types.EconomicEvent, 'id'>
-        & { action: (
-          { __typename: 'Action' }
-          & Pick<Types.Action, 'id'>
-        ), fulfills: Types.Maybe<Array<(
-          { __typename: 'Fulfillment' }
-          & { effortQuantity: Types.Maybe<(
-            { __typename: 'Measure' }
-            & Pick<Types.Measure, 'id'>
-            & { hasUnit: (
-              { __typename: 'Unit' }
-              & Pick<Types.Unit, 'id' | 'label' | 'symbol'>
-            ) }
-          )> }
-        )>> }
-      )>> }
     )>>, containedIn: Types.Maybe<(
       { __typename: 'EconomicResource' }
       & Pick<Types.EconomicResource, 'id' | 'name'>
-      & { trace: Types.Maybe<Array<(
-        { __typename: 'EconomicEvent' }
-        & Pick<Types.EconomicEvent, 'id' | 'note'>
-      )>>, track: Types.Maybe<Array<(
-        { __typename: 'EconomicEvent' }
-        & Pick<Types.EconomicEvent, 'id' | 'note'>
-      )>> }
     )>, currentLocation: Types.Maybe<(
       { __typename: 'SpatialThing' }
       & Pick<Types.SpatialThing, 'id' | 'name' | 'lat' | 'long'>
     )>, lot: Types.Maybe<(
       { __typename: 'ProductBatch' }
       & Pick<Types.ProductBatch, 'id' | 'expiryDate' | 'batchNumber'>
-    )>, trace: Types.Maybe<Array<(
+    )>, track: Types.Maybe<Array<(
       { __typename: 'EconomicEvent' }
-      & Pick<Types.EconomicEvent, 'id' | 'note'>
+      & Pick<Types.EconomicEvent, 'id' | 'note' | 'hasPointInTime'>
       & { action: (
         { __typename: 'Action' }
         & Pick<Types.Action, 'id' | 'label'>
-      ), resourceQuantity: Types.Maybe<(
-        { __typename: 'Measure' }
-        & Pick<Types.Measure, 'id' | 'hasNumericalValue'>
-        & { hasUnit: (
-          { __typename: 'Unit' }
-          & Pick<Types.Unit, 'id' | 'label'>
-        ) }
-      )>, resourceInventoriedAs: Types.Maybe<(
+      ), toResourceInventoriedAs: Types.Maybe<(
         { __typename: 'EconomicResource' }
         & Pick<Types.EconomicResource, 'id' | 'name'>
-      )>, toResourceInventoriedAs: Types.Maybe<(
-        { __typename: 'EconomicResource' }
-        & Pick<Types.EconomicResource, 'id' | 'name'>
-      )>, provider: (
-        { __typename: 'Organization' }
-        & Pick<Types.Organization, 'id' | 'name'>
-      ) | (
-        { __typename: 'Person' }
-        & Pick<Types.Person, 'id' | 'name'>
-      ), receiver: (
-        { __typename: 'Organization' }
-        & Pick<Types.Organization, 'id' | 'name'>
-      ) | (
-        { __typename: 'Person' }
-        & Pick<Types.Person, 'id' | 'name'>
-      ) }
-    )>>, track: Types.Maybe<Array<(
+      )>, provider: any, receiver: any, atLocation: Types.Maybe<(
+        { __typename: 'SpatialThing' }
+        & Pick<Types.SpatialThing, 'id' | 'name'>
+      )> }
+      & ResourceQuantityFragment
+    ) | { __typename: 'EconomicResource' } | { __typename: 'Process' }>>, trace: Types.Maybe<Array<(
       { __typename: 'EconomicEvent' }
       & Pick<Types.EconomicEvent, 'id' | 'note' | 'hasPointInTime'>
-      & { resourceQuantity: Types.Maybe<(
-        { __typename: 'Measure' }
-        & Pick<Types.Measure, 'id' | 'hasNumericalValue'>
-        & { hasUnit: (
-          { __typename: 'Unit' }
-          & Pick<Types.Unit, 'id' | 'label'>
-        ) }
-      )>, resourceInventoriedAs: Types.Maybe<(
-        { __typename: 'EconomicResource' }
-        & Pick<Types.EconomicResource, 'id' | 'name'>
-      )>, toResourceInventoriedAs: Types.Maybe<(
+      & { toResourceInventoriedAs: Types.Maybe<(
         { __typename: 'EconomicResource' }
         & Pick<Types.EconomicResource, 'id' | 'name'>
       )>, action: (
         { __typename: 'Action' }
         & Pick<Types.Action, 'id' | 'label'>
-      ), provider: (
-        { __typename: 'Organization' }
-        & Pick<Types.Organization, 'id' | 'name'>
-      ) | (
-        { __typename: 'Person' }
-        & Pick<Types.Person, 'id' | 'name'>
-      ), receiver: (
-        { __typename: 'Organization' }
-        & Pick<Types.Organization, 'id' | 'name'>
-      ) | (
-        { __typename: 'Person' }
-        & Pick<Types.Person, 'id' | 'name'>
-      ) }
-    )>>, unitOfEffort: Types.Maybe<(
+      ), provider: any, receiver: any, atLocation: Types.Maybe<(
+        { __typename: 'SpatialThing' }
+        & Pick<Types.SpatialThing, 'id' | 'name'>
+      )> }
+      & ResourceQuantityFragment
+    ) | { __typename: 'EconomicResource' } | { __typename: 'Process' }>>, unitOfEffort: Types.Maybe<(
       { __typename: 'Unit' }
       & Pick<Types.Unit, 'id' | 'label'>
-    )>, onhandQuantity: Types.Maybe<(
-      { __typename: 'Measure' }
-      & Pick<Types.Measure, 'id' | 'hasNumericalValue'>
-      & { hasUnit: (
-        { __typename: 'Unit' }
-        & Pick<Types.Unit, 'id' | 'label'>
-      ) }
     )> }
+    & OnhandQuantityFragment
   )> }
 );
 
+export type OnhandQuantityFragment = (
+  { __typename: 'EconomicResource' }
+  & { onhandQuantity: Types.Maybe<(
+    { __typename: 'Measure' }
+    & Pick<Types.Measure, 'id' | 'hasNumericalValue'>
+    & { hasUnit: (
+      { __typename: 'Unit' }
+      & Pick<Types.Unit, 'id' | 'label'>
+    ) }
+  )> }
+);
 
+export type ResourceQuantityFragment = (
+  { __typename: 'EconomicEvent' }
+  & { resourceQuantity: Types.Maybe<(
+    { __typename: 'Measure' }
+    & Pick<Types.Measure, 'hasNumericalValue' | 'canonicalUrl'>
+    & { hasUnit: (
+      { __typename: 'Unit' }
+      & Pick<Types.Unit, 'id' | 'label' | 'symbol'>
+    ) }
+  )> }
+);
+
+export const OnhandQuantityFragmentDoc = gql`
+    fragment OnhandQuantity on EconomicResource {
+  onhandQuantity {
+    id
+    hasNumericalValue
+    hasUnit {
+      id
+      label
+    }
+  }
+}
+    `;
+export const ResourceQuantityFragmentDoc = gql`
+    fragment ResourceQuantity on EconomicEvent {
+  resourceQuantity {
+    hasNumericalValue
+    canonicalUrl
+    hasUnit {
+      id
+      label
+      symbol
+    }
+  }
+}
+    `;
 export const EconomicResourceDocument = gql`
     query economicResource($id: ID!) {
   economicResource(id: $id) {
     id
+    image
     trackingIdentifier
     primaryAccountable {
       id
@@ -182,22 +142,6 @@ export const EconomicResourceDocument = gql`
     }
     contains {
       image
-      track {
-        id
-        action {
-          id
-        }
-        fulfills {
-          effortQuantity {
-            id
-            hasUnit {
-              id
-              label
-              symbol
-            }
-          }
-        }
-      }
     }
     stage {
       id
@@ -207,14 +151,6 @@ export const EconomicResourceDocument = gql`
     containedIn {
       id
       name
-      trace {
-        id
-        note
-      }
-      track {
-        id
-        note
-      }
     }
     currentLocation {
       id
@@ -227,124 +163,79 @@ export const EconomicResourceDocument = gql`
       expiryDate
       batchNumber
     }
-    trace {
-      id
-      note
-      action {
-        id
-        label
-      }
-      resourceQuantity {
-        id
-        hasUnit {
-          id
-          label
-        }
-        hasNumericalValue
-      }
-      resourceInventoriedAs {
-        id
-        name
-      }
-      toResourceInventoriedAs {
-        id
-        name
-      }
-      provider {
-        id
-        name
-      }
-      receiver {
-        id
-        name
-      }
-    }
-    trace {
-      id
-      note
-      resourceQuantity {
-        id
-        hasUnit {
-          id
-          label
-        }
-        hasNumericalValue
-      }
-      resourceInventoriedAs {
-        id
-        name
-      }
-      toResourceInventoriedAs {
-        id
-        name
-      }
-      action {
-        id
-        label
-      }
-      provider {
-        id
-        name
-      }
-      receiver {
-        id
-        name
-      }
-    }
     track {
-      id
-      note
-      hasPointInTime
-      resourceQuantity {
+      __typename
+      ... on EconomicEvent {
         id
-        hasUnit {
+        note
+        action {
           id
           label
         }
-        hasNumericalValue
+        toResourceInventoriedAs {
+          id
+          name
+        }
+        hasPointInTime
+        ...ResourceQuantity
+        provider {
+          id
+          name
+        }
+        receiver {
+          id
+          name
+        }
+        atLocation {
+          id
+          name
+        }
       }
-      resourceInventoriedAs {
+    }
+    trace {
+      __typename
+      ... on EconomicEvent {
         id
-        name
-      }
-      toResourceInventoriedAs {
-        id
-        name
-      }
-      action {
-        id
-        label
-      }
-      provider {
-        id
-        name
-      }
-      receiver {
-        id
-        name
+        note
+        toResourceInventoriedAs {
+          id
+          name
+        }
+        hasPointInTime
+        action {
+          id
+          label
+        }
+        provider {
+          id
+          name
+        }
+        receiver {
+          id
+          name
+        }
+        ...ResourceQuantity
+        atLocation {
+          id
+          name
+        }
       }
     }
     unitOfEffort {
       id
       label
     }
-    onhandQuantity {
-      id
-      hasNumericalValue
-      hasUnit {
-        id
-        label
-      }
-    }
+    ...OnhandQuantity
   }
 }
-    `;
+    ${ResourceQuantityFragmentDoc}
+${OnhandQuantityFragmentDoc}`;
 
 /**
  * __useEconomicResourceQuery__
  *
  * To run a query within a React component, call `useEconomicResourceQuery` and pass it any options that fit your needs.
- * When your component renders, `useEconomicResourceQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useEconomicResourceQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -376,11 +267,11 @@ export interface EconomicResourceQueryOperation {
 export const EconomicResourceQueryName:EconomicResourceQueryOperation['operationName'] = 'economicResource'
 
 export const EconomicResourceQueryRefetch = (
-  variables:EconomicResourceQueryVariables, 
+  variables:EconomicResourceQueryVariables,
   context?:any
 )=>({
   query:EconomicResourceDocument,
   variables,
   context
 })
-      
+
