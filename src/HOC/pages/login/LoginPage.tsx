@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { useAnon } from 'fe/session/useAnon';
 import { t } from '@lingui/macro';
 import { usePageTitle } from 'context/global/pageCtx';
+import { useHistory } from 'react-router';
 
 export const validationSchema: Yup.ObjectSchema<LoginFormValues> = Yup.object<LoginFormValues>({
   email: Yup.string()
@@ -20,6 +21,7 @@ const loginPageTitle = t`Login`;
 
 export const LoginPageHOC: FC<Props> = () => {
   usePageTitle(loginPageTitle);
+  const history = useHistory();
   const { login } = useAnon();
   const formik = useFormik<LoginFormValues>({
     initialValues: {
@@ -27,7 +29,12 @@ export const LoginPageHOC: FC<Props> = () => {
       password: ''
     },
     enableReinitialize: true,
-    onSubmit: ({ email, password }) => login(email, password),
+    onSubmit: ({ email, password }) =>
+      login(email, password)?.then(
+        resp =>
+          resp.data?.login?.currentUser?.id &&
+          history.push(`/user/${resp.data?.login?.currentUser?.id}`)
+      ),
     validationSchema
   });
   return <Login formik={formik} />;

@@ -1,3 +1,0 @@
-mutation deleteEconomicResource($id: ID!) {
-  deleteEconomicResource( id: $id)
-}

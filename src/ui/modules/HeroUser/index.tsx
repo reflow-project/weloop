@@ -45,7 +45,7 @@ export interface LoadedOther extends Loaded {
   flag(): any;
 }
 
-export type Props = LoadedMe | LoadedOther | Loading;
+export type Props = LoadedMe | LoadedOther | Loading | any;
 
 export const HeroUser: FC<Props> = props => {
   if (props.status === Status.Loading) {
@@ -103,10 +103,10 @@ export const HeroUser: FC<Props> = props => {
         </FlexProfile>
         <HeroInfo ml={3}>
           <HeroTitle sx={{ fontSize: '18px' }} mt={2} variant="heading" fontWeight={'bold'}>
-            {props.name}
+            {props.user?.profile?.name}
           </HeroTitle>
           <Username mt={1}>
-            @{props.displayUsername}
+            @{props.user?.character?.username}
             {props.me && props.isAdmin && <AdminBadge ml={2}>Admin</AdminBadge>}
           </Username>
 

@@ -1,20 +1,19 @@
-import { useMe } from 'fe/session/useMe';
+// import { useMe } from 'fe/session/useMe';
 import React, { FC } from 'react';
-import { Redirect } from 'react-router-dom';
 interface Props {
   to: string;
 }
 
 export const RedirectAuthenticated: FC<Props> = ({ children, to }) => {
-  const { me, loading } = useMe();
+  // const { me, loading } = useMe();
 
-  if (loading) {
-    return null;
-  }
-
-  if (me) {
-    return <Redirect to={to} />;
-  }
+  // if (loading) {
+  //   return null;
+  // }
+  //
+  // if (me) {
+  //   return <Redirect to={to} />;
+  // }
 
   return <>{children}</>;
 };
@@ -23,14 +22,14 @@ export const RedirectAuthenticatedToHome: FC = ({ children }) => (
 );
 
 export const RedirectAnonymous: FC<Props> = ({ children, to }) => {
-  const { me, loading } = useMe();
-  if (loading) {
-    return null;
-  }
-
-  if (!me) {
-    return <Redirect to={to} />;
-  }
+  // const { me, loading } = useMe();
+  // if (loading) {
+  //   return null;
+  // }
+  //
+  // if (!me) {
+  //   return <Redirect to={to} />;
+  // }
 
   return <>{children}</>;
 };

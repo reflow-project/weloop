@@ -155,6 +155,7 @@ export const InventoryPage: FC<{ triggerTab?: boolean }> = ({
   const { data } = useEconomicResourcesFilteredQuery({
     variables: { agent: currentUser ? [currentUser] : [] }
   });
+
   const inventory = data?.economicResourcesFiltered || [];
   const [filteredInventory, setFilteredInventory] = useState<Array<any>>([...inventory]);
   useEffect(() => {

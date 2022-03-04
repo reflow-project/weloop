@@ -1,6 +1,0 @@
-query collectionPreview($collectionId: String!) {
-  collection(collectionId:$collectionId){
-    id
-  ...CollectionPreview
-  }
-}

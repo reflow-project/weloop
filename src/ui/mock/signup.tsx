@@ -6,11 +6,8 @@ export const useGetSignUpProps = (): SignUpProps => {
   const formik = useFormik<SignUpFormValues>({
     initialValues: {
       email: 'mary@moodlers.org',
-      username: 'moodlerMary',
-      name: 'Moodler Mary',
       password: '',
-      passwordConfirm: '',
-      terms: false
+      passwordConfirm: ''
     },
     onSubmit: () => {
       action('submit')();
@@ -19,5 +16,5 @@ export const useGetSignUpProps = (): SignUpProps => {
       });
     }
   });
-  return { formik, registeredUsername: 'moodlerMary' };
+  return { formik };
 };

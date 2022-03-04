@@ -1,10 +1,9 @@
 import { useFormik } from 'formik';
 import React, { Dispatch, FC } from 'react';
-import { Slide, toast } from 'react-toastify';
 import { BasicCreateCollectionFormValues } from 'ui/modules/CreateCollectionPanel';
 import * as Yup from 'yup';
 import { TestUrlOrFile } from 'HOC/lib/formik-validations';
-import { useAddLocation } from '../../../fe/location/add/useAddLocation';
+// import { useAddLocation } from '../../../fe/location/add/useAddLocation';
 
 import { LocationPanel, LocationPanelProps } from '../../../ui/elements/LocationPanel';
 
@@ -31,7 +30,7 @@ export interface Props {
 }
 
 export const CreateLocationPanelHOC: FC<Props> = ({ done }) => {
-  const { createLocation } = useAddLocation();
+  // const { createLocation } = useAddLocation();
 
   const SignupSchema = Yup.object().shape({
     name: Yup.string()
@@ -53,26 +52,26 @@ export const CreateLocationPanelHOC: FC<Props> = ({ done }) => {
     enableReinitialize: true,
 
     onSubmit: (values: CreateLocationValues) => {
-      return createLocation({
-        name: values.name,
-        lat: values.lat,
-        long: values.long,
-        note: values.note
-      })
-        .then((response: any) => {
-          if (!response.errors) {
-            done(false);
-            toast.success('Location was created', {
-              position: 'top-right',
-              transition: Slide,
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true
-            });
-          }
-        })
-        .catch((error: any) => console.log(error));
+      // return createLocation({
+      //   name: values.name,
+      //   lat: values.lat,
+      //   long: values.long,
+      //   note: values.note
+      // })
+      //   .then((response: any) => {
+      //     if (!response.errors) {
+      //       done(false);
+      //       toast.success('Location was created', {
+      //         position: 'top-right',
+      //         transition: Slide,
+      //         autoClose: 3000,
+      //         hideProgressBar: false,
+      //         closeOnClick: true,
+      //         pauseOnHover: true
+      //       });
+      //     }
+      //   })
+      //   .catch((error: any) => console.log(error));
     }
   });
 

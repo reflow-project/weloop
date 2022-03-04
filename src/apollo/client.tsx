@@ -13,13 +13,12 @@ import { onError } from 'apollo-link-error';
 // import { createHttpLink } from 'apollo-link-http';
 import apolloLogger from 'apollo-link-logger';
 import {
-  AnonConfirmEmailMutationName,
-  AnonLoginMutationName,
-  AnonResetPasswordMutationName,
-  AnonResetPasswordRequestMutationName,
-  AnonSignUpMutationName
+  AnonLoginMutationName
+  // AnonResetPasswordMutationName,
+  // AnonResetPasswordRequestMutationName,
+  // AnonSignUpMutationName
 } from '../fe/session/anon.generated';
-import { MeLogoutMutationName } from 'fe/session/me.generated';
+// import { MeLogoutMutationName } from 'fe/session/me.generated';
 import { GraphQLError } from 'graphql';
 import HttpStatus from 'http-status-codes';
 import { Socket as PhoenixSocket } from 'phoenix';
@@ -98,20 +97,20 @@ export default async function initialise({ localKVStore, appLinks }: Cfg) {
   const setTokenLink = new ApolloLink((operation, nextLink) => {
     const { operationName } = operation;
 
-    if (operationName === MeLogoutMutationName) {
-      delToken();
-    }
-
+    // if (operationName === MeLogoutMutationName) {
+    //   delToken();
+    // }
+    console.log(nextLink(operation), '__________________________');
     return nextLink(operation).map(resp => {
       if (
-        operationName === AnonLoginMutationName ||
-        operationName === AnonResetPasswordMutationName ||
-        operationName === AnonConfirmEmailMutationName
+        operationName === AnonLoginMutationName
+        // operationName === AnonResetPasswordMutationName ||
+        // operationName === AnonConfirmEmailMutationName
       ) {
         setToken(
-          resp.data?.createSession?.token ||
-            resp.data?.confirmEmail?.token ||
-            resp.data?.resetPassword?.token
+          resp.data?.login?.token
+          // resp.data?.confirmEmail?.token ||
+          // resp.data?.resetPassword?.token
         );
       }
       return resp;
@@ -185,11 +184,11 @@ export default async function initialise({ localKVStore, appLinks }: Cfg) {
   });
 
   const ALLOWED_ANONYMOUS_MUTATIONS = [
-    AnonSignUpMutationName,
-    AnonLoginMutationName,
-    AnonConfirmEmailMutationName,
-    AnonResetPasswordMutationName,
-    AnonResetPasswordRequestMutationName
+    // AnonSignUpMutationName,
+    AnonLoginMutationName
+    // AnonConfirmEmailMutationName,
+    // AnonResetPasswordMutationName,
+    // AnonResetPasswordRequestMutationName
   ];
   const alertBlockMutationsForAnonymousLink = new ApolloLink((operation, nextLink) => {
     if (!authToken) {

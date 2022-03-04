@@ -1,6 +1,0 @@
-
-query collectionData($collectionId:String!){
-  collection(collectionId:$collectionId){
-    ...CollectionPageData
-  }
-}

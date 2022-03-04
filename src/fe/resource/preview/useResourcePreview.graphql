@@ -1,6 +1,0 @@
-query resourcePreview($resourceId: String!) {
-  resource(resourceId:$resourceId){
-    id
-  ...ResourcePreview
-  }
-}
