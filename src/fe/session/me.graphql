@@ -4,28 +4,64 @@ query me {
     ...UseMeData
   }
 }
-
-mutation meLogout {
-  deleteSession
-}
+#
+#mutation meLogout {
+#  deleteSession
+#}
 
 fragment UseMeData on Me {
-  isInstanceAdmin
-  email
-  isConfirmed
-  wantsEmailDigest
-  wantsNotifications 
-  user{
+  accountId
+  user {
     id
-    ...SettingsPageMeUser
-    ...SidebarMeUser
+    profile {
+      name
+      summary
+    }
+    character {
+      username
+    }
   }
-}
+  users {
+    id
+    profile {
+      name
+      summary
+    }
+    character {
+      username
+    }
+  }
+  flagsForModeration {
+    id
+    verb {
+      verb
+      verbDisplay
+    }
+    subject {
+      __typename
+    }
+    object {
+      __typename
+    }
+  }
+  userFeed {
+    id
 
-mutation meUpdateMyProfile($profile:UpdateProfileInput!, $icon: UploadInput, $image: UploadInput) {
-  updateProfile(profile:$profile, icon: $icon, image: $image){
-    user {
-      ...SettingsPageMeUser
+    verb {
+      verb
+      verbDisplay
+    }
+    object {
+      __typename
+
     }
   }
 }
+
+#mutation meUpdateMyProfile($profile:UpdateProfileInput!, $icon: UploadInput, $image: UploadInput) {
+#  updateProfile(profile:$profile, icon: $icon, image: $image){
+#    user {
+#      ...SettingsPageMeUser
+#    }
+#  }
+#}

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { WithSidebarTemplate } from 'HOC/templates/WithSidebar/WithSidebar';
-import { InventoryPage } from 'HOC/pages/inventory/InventoryPage';
+// import { InventoryPage } from 'HOC/pages/inventory/InventoryPage';
 
 interface InventoryPageRouteProps {
   userId: string;
@@ -9,11 +9,7 @@ interface InventoryPageRouteProps {
 }
 
 const InventoryPageRoute: FC<RouteComponentProps<InventoryPageRouteProps>> = () => {
-  return (
-    <WithSidebarTemplate>
-      <InventoryPage />
-    </WithSidebarTemplate>
-  );
+  return <WithSidebarTemplate>{/*<InventoryPage />*/}</WithSidebarTemplate>;
 };
 
 export const InventoryPageRouter: RouteProps = {

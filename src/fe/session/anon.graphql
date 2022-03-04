@@ -1,39 +1,45 @@
-mutation anonResetPassword ($password: String!, $token: String!){
-  resetPassword(token: $token, password: $password){
-    ...AuthData
-  }
-}
+#mutation anonResetPassword ($email: String!){
+#    requestResetPassword(password: $email){
+#    ...AuthData
+#  }
+#}
+#
 
+# request an email to be sent to reset my password if I forgot it
 mutation anonResetPasswordRequest($email: String!){
-  resetPasswordRequest(email: $email)
+    requestResetPassword(email: $email)
 }
-
 
 mutation anonLogin ($email: String!, $password: String!){
-  createSession(email: $email, password: $password){
-    ...AuthData
-  }
+    login(
+        emailOrUsername: $email
+        password: $password
+    ) {
+        token
+        currentUsername
+        currentAccountId
+        currentUser {
+            id
+            profile {
+                name
+                summary
+            }
+        }
+    }
 }
 
-mutation anonConfirmEmail($token: String!){ 
-  confirmEmail(token: $token){
-    ...AuthData
-  }
+# request another email confirmation to be sent
+mutation requestConfirmEmail($email: String!) {
+    requestConfirmEmail(email: $email)
 }
 
-mutation anonSignUp($registration: RegistrationInput!){
-  createUser(user: $registration){
-    ...UseMeData
-  }
+# confirm my email address with the token that was emailed
+mutation confirmEmail($token: String!) {
+    confirmEmail(token: $token) {
+        accountId
+    }
 }
 
-query anonUsernameAvailable($username: String!){
-  usernameAvailable(username: $username)
-}
-
-fragment AuthData on AuthPayload {
-  me{
-    ...UseMeData
-  }
-  token
+mutation anonSignUp($email: String!, $password: String!) {
+    signup(email: $email, password: $password)
 }

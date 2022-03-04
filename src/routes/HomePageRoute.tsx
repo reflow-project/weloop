@@ -10,7 +10,7 @@ interface HomePageRouter {
   tab?: string;
 }
 const HomePageRouter: FC<RouteComponentProps<HomePageRouter>> = ({ match }) => {
-  const homeProps: HomePageHOC | null = useMemo(
+  const homeProps: any | null = useMemo(
     () => ({
       basePath: ''
     }),

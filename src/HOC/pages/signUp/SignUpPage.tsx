@@ -3,49 +3,31 @@ import React, { FC, useMemo } from 'react';
 import SignUpPage, { SignUpFormValues, Props } from 'ui/pages/signUp';
 import * as Yup from 'yup';
 import { useAnon } from 'fe/session/useAnon';
-import { USERNAME_REGEX } from 'mn-constants';
 import { t } from '@lingui/macro';
 import { usePageTitle } from 'context/global/pageCtx';
 
 const initialValues: SignUpFormValues = {
-  name: '',
   email: '',
   password: '',
-  username: '',
-  passwordConfirm: '',
-  terms: false
+  passwordConfirm: ''
 };
 export interface SignUpPageHOC {}
 const signUpPageTitle = t`Sign Up`;
 
 export const SignUpPageHOC: FC<SignUpPageHOC> = () => {
   usePageTitle(signUpPageTitle);
-  const { signUp, signUpStatus, usernameAvailable } = useAnon();
+  const { signUp, signUpStatus } = useAnon();
   const validationSchema: Yup.ObjectSchema<SignUpFormValues> = Yup.object<SignUpFormValues>({
-    username: Yup.string()
-      .min(3)
-      .max(16)
-      .matches(USERNAME_REGEX)
-      .required()
-      .test(
-        'checkDuplUsername',
-        'username already exists',
-        username => username && usernameAvailable(username)
-      ),
     email: Yup.string()
       .max(50)
       .required(),
-    name: Yup.string()
-      .max(50)
-      .required(),
     password: Yup.string()
-      .min(6)
+      .min(10)
       .max(50)
       .required(),
     passwordConfirm: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Passwords must match')
-      .required(),
-    terms: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions')
+      .required()
   });
 
   const formik = useFormik<SignUpFormValues>({
@@ -57,26 +39,23 @@ export const SignUpPageHOC: FC<SignUpPageHOC> = () => {
     onSubmit: regInput =>
       signUp({
         email: regInput.email,
-        name: regInput.name,
-        password: regInput.password,
-        preferredUsername: regInput.username,
-        wantsEmailDigest: false,
-        wantsNotifications: false
+        password: regInput.password
       })
   });
 
   const props = useMemo<Props>(
     () =>
-      signUpStatus.called && signUpStatus.data?.createUser?.user.name
+      // @ts-ignore
+      signUpStatus.called && signUpStatus.data?.signup
         ? {
             formik,
-            registeredUsername: signUpStatus.data.createUser.user.name,
-            registeredEmail: signUpStatus.data.createUser.email
+            registeredUserID: signUpStatus.data?.signup,
+            registeredEmail: formik.values.email
           }
         : {
             formik
           },
-    [signUpStatus, formik]
+    [formik, signUpStatus.called, signUpStatus.data]
   );
 
   return <SignUpPage {...props} />;

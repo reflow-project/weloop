@@ -1,9 +1,0 @@
-query allCommunities($limit:Int, $before:[Cursor!], $after:[Cursor!]){
-  communities(limit:$limit, before:$before, after:$after) @connection(key: "allCommunities"){
-    edges{
-      ...CommunityPreview
-    }
-    totalCount,
-    pageInfo{ ...FullPageInfo }
-  }
-}

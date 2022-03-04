@@ -1,5 +1,0 @@
-mutation shareLinkFetchWebMeta($url: String!) {
-  fetchWebMetadata(url: $url){
-    ...ShareLinkWebMeta
-  }
-}

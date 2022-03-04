@@ -2,10 +2,10 @@ import { Trans } from '@lingui/macro';
 import { i18nMark } from '@lingui/react';
 import { useFormik } from 'formik';
 import * as React from 'react';
-import { ToastContainer, Slide, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { Box } from 'rebass/styled-components';
 import * as Yup from 'yup';
-import { useCreateEvent } from '../../../fe/intent/createEvent/useCreateEvent';
+// import { useCreateEvent } from '../../../fe/intent/createEvent/useCreateEvent';
 import Button from '../../elements/Button';
 import Input, { CustomAlert } from '../../elements/Input';
 import { CustomSelect as Select } from 'ui/elements/CustomSelect';
@@ -86,7 +86,7 @@ export const EconomicEventManager: React.FC<any> = ({
     );
   }, [unitPages]);
 
-  const { create } = useCreateEvent();
+  // const { create } = useCreateEvent();
 
   const formik = useFormik<any>({
     initialValues: {
@@ -122,27 +122,28 @@ export const EconomicEventManager: React.FC<any> = ({
     enableReinitialize: true,
 
     onSubmit: (values: CreateIntentFormValues) => {
-      return create({
-        action: values.action.id,
-        note: values.note,
-        provider: values.provider.id,
-        receiver: values.receiver.id,
-        hasUnit: values.hasUnit.id,
-        hasNumericalValue: values.hasNumericalValue
-      })
-        .then((response: any) => {
-          if (!response.errors) {
-            toast.success('Event was created', {
-              position: 'top-right',
-              transition: Slide,
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true
-            });
-          }
-        })
-        .catch((error: any) => console.log(error));
+      console.log(values);
+      // return create({
+      //   action: values.action.id,
+      //   note: values.note,
+      //   provider: values.provider.id,
+      //   receiver: values.receiver.id,
+      //   hasUnit: values.hasUnit.id,
+      //   hasNumericalValue: values.hasNumericalValue
+      // })
+      //   .then((response: any) => {
+      //     if (!response.errors) {
+      //       toast.success('Event was created', {
+      //         position: 'top-right',
+      //         transition: Slide,
+      //         autoClose: 3000,
+      //         hideProgressBar: false,
+      //         closeOnClick: true,
+      //         pauseOnHover: true
+      //       });
+      //     }
+      //   })
+      //   .catch((error: any) => console.log(error));
     }
   });
 

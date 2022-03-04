@@ -2,7 +2,6 @@ import { useFormik } from 'formik';
 import React, { FC } from 'react';
 import ResetPasswordRequestPage, { ResetPasswordFormValues } from 'ui/pages/resetPassword';
 import * as Yup from 'yup';
-import { useAnon } from 'fe/session/useAnon';
 import { t } from '@lingui/macro';
 import { usePageTitle } from 'context/global/pageCtx';
 
@@ -22,9 +21,9 @@ const resetPasswordPageTitle = t`Reset Password`;
 
 export const ResetPasswordPageHOC: FC<Props> = () => {
   usePageTitle(resetPasswordPageTitle);
-  const { resetPwdReq } = useAnon();
+  // const { resetPwdReq } = useAnon();
   const formik = useFormik<ResetPasswordFormValues>({
-    onSubmit: ({ email }) => resetPwdReq(email),
+    onSubmit: ({ email }) => console.log(email),
     initialValues,
     validationSchema
   });

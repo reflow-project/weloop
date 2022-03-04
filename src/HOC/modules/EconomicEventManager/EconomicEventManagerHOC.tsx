@@ -2,11 +2,11 @@
 
 import * as React from 'react';
 import { FC } from 'react';
-import { useCreateDefaultResource } from '../../../fe/resourceDefault/useCreateDefaultResource';
-import { useAgentsQuery } from '../../../fe/resourceDefault/useCreateResource.generated';
-import { useActionsQuery } from '../IntentPanel/Actions.generated';
+// import { useCreateDefaultResource } from '../../../fe/resourceDefault/useCreateDefaultResource';
+// import { useAgentsQuery } from '../../../fe/resourceDefault/useCreateResource.generated';
+// import { useActionsQuery } from '../IntentPanel/Actions.generated';
 import { EconomicEventManagerProps } from '../../../ui/modules/EconomicEventManager';
-import { useUnitsPagesQuery } from './EconomicEventManager.generated';
+// import { useUnitsPagesQuery } from './EconomicEventManager.generated';
 
 export const EconomicEventManagerHOC: FC = ({ children }) => {
   const [providerList, setProviderList] = React.useState<
@@ -16,59 +16,59 @@ export const EconomicEventManagerHOC: FC = ({ children }) => {
     null | undefined | [] | { id: string; name: string }[]
   >([]);
 
-  const intentActionsQ = useActionsQuery();
-  const { data } = useAgentsQuery();
+  // const intentActionsQ = useActionsQuery();
+  // const { data } = useAgentsQuery();
 
-  const { createDefaultResource, isAgent } = useCreateDefaultResource();
+  // const { createDefaultResource, isAgent } = useCreateDefaultResource();
 
-  React.useEffect(() => {
-    if (isAgent) return;
-
-    createDefaultResource &&
-      createDefaultResource({
-        name: 'My first inventory',
-        note: 'Created automatically',
-        action: 'transfer'
-      });
-    // eslint-disable-line react-hooks/exhaustive-deps
-  }, [isAgent]);
+  // React.useEffect(() => {
+  //   // if (isAgent) return;
+  //
+  //   // createDefaultResource &&
+  //     createDefaultResource({
+  //       name: 'My first inventory',
+  //       note: 'Created automatically',
+  //       action: 'transfer'
+  //     });
+  //   // eslint-disable-line react-hooks/exhaustive-deps
+  // }, [isAgent]);
 
   React.useEffect(() => {
     // setFulUserList(users?.data?.users.edges || { id: '', name: '' })
     // const providers = data?.economicEventsFiltered?.map(el => el.provider);
     // const receivers = data?.economicEventsFiltered?.map(el => el.receiver);
-
-    const providers = data?.agents;
-    const receivers = data?.agents;
+    //
+    // const providers = data?.agents;
+    // const receivers = data?.agents;
 
     const uniqueProviders: { id: string; name: string }[] = [];
-    providers?.length &&
-      providers.forEach(el => {
-        !uniqueProviders.some(arrItem => arrItem.id === el.id) && uniqueProviders.push(el);
-      });
+    // providers?.length &&
+    //   providers.forEach(el => {
+    //     !uniqueProviders.some(arrItem => arrItem.id === el.id) && uniqueProviders.push(el);
+    //   });
     const uniqueReceivers: { id: string; name: string }[] = [];
-    receivers?.length &&
-      receivers.forEach(el => {
-        !uniqueReceivers.some(arrItem => arrItem.id === el.id) && uniqueReceivers.push(el);
-      });
+    // receivers?.length &&
+    //   receivers.forEach(el => {
+    //     !uniqueReceivers.some(arrItem => arrItem.id === el.id) && uniqueReceivers.push(el);
+    //   });
 
     setProviderList(uniqueProviders);
     setReceiverList(uniqueReceivers);
-  }, [data]);
+  }, []);
 
-  const unitPagesQ = useUnitsPagesQuery();
+  // const unitPagesQ = useUnitsPagesQuery();
 
-  const intentActions = intentActionsQ.data?.actions;
-  const unitPages = unitPagesQ.data?.unitsPages;
+  // const intentActions = intentActionsQ.data?.actions;
+  // const unitPages = unitPagesQ.data?.unitsPages;
   const economicEventManager: EconomicEventManagerProps = {
-    actionList: intentActions?.map((el: any) => {
+    actionList: []?.map((el: any) => {
       return !['transfer', 'consume', 'produce'].includes(el.id)
         ? { ...el, isDisabled: true }
         : { ...el, isDisabled: false };
     }),
     providerList: providerList,
     receiverList: receiverList,
-    unitPages,
+    // unitPages,
     setAction: () => {}
   };
 

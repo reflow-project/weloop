@@ -27,7 +27,7 @@ const UserPageRouter: FC<RouteComponentProps<UserPageRouter>> = ({ match }) => {
       ? UserPageTab.Activities
       : null;
 
-  const props = useMemo<UserPage | null>(
+  const props = useMemo<any | null>(
     () =>
       tab === null
         ? null

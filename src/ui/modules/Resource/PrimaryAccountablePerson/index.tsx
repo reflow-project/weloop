@@ -1,16 +1,16 @@
 import { Trans } from '@lingui/macro';
 import * as React from 'react';
 import { Box, Text } from 'rebass/styled-components';
-import { PrimaryAccountable } from 'HOC/pages/inventory/InventoryPage';
+// import { PrimaryAccountable } from 'HOC/pages/inventory/InventoryPage';
 import Avatar from '../../../elements/Avatar';
 import { Title } from '../../../pages/resource';
 import styled from '../../../themes/styled';
 
-export interface Props {
-  data?: PrimaryAccountable;
-}
+// export interface Props {
+//   data?: PrimaryAccountable;
+// }
 
-const PrimaryAccountablePerson: React.FC<Props> = ({ data }) => {
+const PrimaryAccountablePerson: React.FC<any> = ({ data }) => {
   return (
     <PersonWrapper>
       <Box mb={2} style={{ display: 'flex' }}>

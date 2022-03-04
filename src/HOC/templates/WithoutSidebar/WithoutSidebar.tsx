@@ -8,26 +8,26 @@ import { SearchBox } from 'HOC/modules/SearchBox/SearchBox';
 
 export interface WithoutSidebarTemplate {}
 export const WithoutSidebarTemplate: FC<WithoutSidebarTemplate> = ({ children }) => {
-  const { me, logout } = useMe();
+  const { me } = useMe();
   const withoutSidebarProps = useMemo<null | Props>(() => {
     const user = me?.user;
     if (!user) {
       return null;
     }
-    const userImage = user.icon?.url || '';
-    const userLink = `/user/${user.id}`;
-    const props: Props = {
+    // const userImage = user.icon?.url || '';
+    // const userLink = `/user/${user.id}`;
+    const props: any = {
       SidebarBox: <SidebarHOC />,
       HeaderBox: <MainHeaderHOC />,
-      SearchBox: <SearchBox />,
-      userImage,
-      userLink,
-      signout: logout,
-      username: user.displayUsername || '',
-      name: user.preferredUsername || ''
+      SearchBox: <SearchBox />
+      // userImage,
+      // userLink,
+      // signout: logout,
+      // username: user.displayUsername || '',
+      // name: user.preferredUsername || ''
     };
     return props;
-  }, [logout, me]);
+  }, [me]);
 
   return withoutSidebarProps ? (
     <WithoutSidebar {...withoutSidebarProps}>{children}</WithoutSidebar>

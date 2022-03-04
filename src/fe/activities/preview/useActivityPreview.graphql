@@ -1,8 +1,0 @@
-
-
-query activityPreview($activityId: String!) {
-  activity(activityId:$activityId){
-    id
-  ...ActivityPreview
-  }
-}

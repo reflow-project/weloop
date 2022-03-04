@@ -46,26 +46,24 @@ const Item = styled(Flex)`
   }
 `;
 
-const ItemButton = styled(Item)`
-  border: 1px solid ${props => props.theme.colors.medium};
-  border-radius: 4px;
-  height: 34px;
-  &:hover {
-    background: ${props => props.theme.colors.light};
-  }
-  div {
-    letter-spacing: 0;
-  }
-`;
+// const ItemButton = styled(Item)`
+//   border: 1px solid ${props => props.theme.colors.medium};
+//   border-radius: 4px;
+//   height: 34px;
+//   &:hover {
+//     background: ${props => props.theme.colors.light};
+//   }
+//   div {
+//     letter-spacing: 0;
+//   }
+// `;
 
 export interface Props {
-  logout(): void;
   toggleDropdown: any;
   userLink: string;
-  isAdmin: boolean;
 }
 
-export const DropdownSidebar: React.FC<Props> = ({ logout, userLink, toggleDropdown, isAdmin }) => {
+export const DropdownSidebar: React.FC<Props> = ({ userLink, toggleDropdown }) => {
   const { push } = useHistory();
   return (
     <Dropdown orientation={'top'} close={toggleDropdown}>
@@ -128,13 +126,6 @@ export const DropdownSidebar: React.FC<Props> = ({ logout, userLink, toggleDropd
             <Trans>Settings</Trans>
           </Text>
         </Item>
-        {isAdmin && (
-          <ItemButton variant="link" onClick={() => push('/settings/instance')}>
-            <Text variant="text" sx={{ flex: 1, textAlign: 'center' }}>
-              <Trans>Admin dashboard</Trans>
-            </Text>
-          </ItemButton>
-        )}
         <Item variant="link">
           <Text variant="text">
             <a href="/terms" target="_blank">
@@ -145,7 +136,7 @@ export const DropdownSidebar: React.FC<Props> = ({ logout, userLink, toggleDropd
             </a>
           </Text>
         </Item>
-        <Item variant="link" onClick={logout}>
+        <Item variant="link" onClick={() => {}}>
           <span>
             <Power size={16} strokeWidth={1} color={'#333'} />
           </span>
