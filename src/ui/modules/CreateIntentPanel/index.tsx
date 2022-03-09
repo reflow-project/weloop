@@ -28,7 +28,6 @@ export type CreateIntentFormValues = {
 };
 
 export type TCreateIntentPanel = {
-  communities?: Array<SelectOption>;
   cancel: () => void;
   formik: FormikHook<CreateIntentFormValues>;
   unitPages?: ({ __typename: 'Unit' } & Pick<Types.Unit, 'symbol' | 'label' | 'id'>)[] | null;
@@ -47,7 +46,6 @@ export type SelectOption = {
 export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
   formik,
   cancel,
-  communities,
   unitPages,
   spatialThings
 }) => {
@@ -98,16 +96,6 @@ export const CreateIntentPanel: FC<TCreateIntentPanel> = ({
             </CollectionContainerForm>
             <CollectionContainerForm>
               <FormLabel>{i18nMark('community name')}</FormLabel>
-              <Select
-                onSelect={(name, option) => {
-                  formik.setValues({ ...formik.values, [name]: option.id });
-                }}
-                value={{ id: formik.values.communityId, label: '' }}
-                variant="primary"
-                id="communityId"
-                name="communityId"
-                options={communities as any}
-              />
               {formik.errors.communityId && (
                 <AlertWrapper>
                   <CustomAlert variant="negative">{formik.errors.communityId}</CustomAlert>

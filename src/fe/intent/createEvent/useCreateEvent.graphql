@@ -1,0 +1,37 @@
+mutation createEconomicEvent (
+  $note: String,
+  $action: ID!,
+  $provider: ID!,
+  $receiver: ID!,
+  $hasUnit: ID!,
+  $hasPointInTime: DateTime!,
+  $hasNumericalValue: Float!,
+) {
+  createEconomicEvent (
+    event: {
+      note: $note,
+      action: $action,
+      provider: $provider,
+      receiver: $receiver,
+      resourceQuantity: {
+        hasUnit: $hasUnit,
+        hasNumericalValue: $hasNumericalValue
+      }
+    },
+  ) {
+    economicEvent {
+      id
+    },
+    economicResource {
+      id
+    }
+  }
+}
+
+query intentPanel($intentId: ID) {
+  intent(id: $intentId) {
+    resourceInventoriedAs {
+      id
+    }
+  }
+}

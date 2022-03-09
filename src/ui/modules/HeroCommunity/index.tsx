@@ -21,7 +21,6 @@ export interface CommunityLoaded {
   status: Status.Loaded;
   isAdmin: boolean;
   isCreator: boolean;
-  // isFeatured: boolean;
   basePath: string;
   icon: string;
   name: string;
@@ -112,13 +111,7 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
                         <AdminDropdownItem onClick={c.addToFeatured}>
                           <Star size={20} color={'rgb(211, 103, 5)'} />
                           <Text sx={{ flex: 1 }} ml={2}>
-                            {
-                              /* c.isFeatured ? (
-                            <Trans>Remove from featured list</Trans>
-                          ) :  */ <Trans>
-                                Add to featured list
-                              </Trans>
-                            }
+                            <Trans>Add to featured list</Trans>
                           </Text>
                         </AdminDropdownItem>
                       ) : null}

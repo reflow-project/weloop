@@ -8,7 +8,7 @@ import { MainHeader, Props as MainHeaderProps } from 'ui/modules/MainHeader';
 import Modal from 'ui/modules/Modal';
 import { CreateLocationPanelHOC } from '../CreateLocationPanel/CreateLocationPanelHOK';
 import { CreateResourcePanelHOC } from '../CreateResourcePanel/CreateResourcePanelHOC';
-// import { CreateIntentPanelHOC } from '../CreateIntentPanel/createIntentPanelHOC';
+import { CreateIntentPanelHOC } from '../CreateIntentPanel/createIntentPanelHOC';
 
 export interface MainHeaderHOC {}
 export const MainHeaderHOC: FC<MainHeaderHOC> = () => {
@@ -17,11 +17,6 @@ export const MainHeaderHOC: FC<MainHeaderHOC> = () => {
   const user = meQ.me?.user;
   const notifiedMustLogin = useNotifyMustLogin();
   const [showCreateLocation, toggleShowCreateLocation] = React.useState(false);
-
-  const [showCreateCommunity, toggleShowCreateCommunity] = useReducer(
-    is => (notifiedMustLogin() ? false : !is),
-    false
-  );
 
   const [showCreateIntent, toggleShowCreateIntent] = useReducer(
     is => (notifiedMustLogin() ? false : !is),
@@ -33,15 +28,9 @@ export const MainHeaderHOC: FC<MainHeaderHOC> = () => {
     false
   );
 
-  const CreateCommunityModal = showCreateCommunity ? (
-    <Modal closeModal={toggleShowCreateCommunity}>
-      {/*<CreateCommunityPanelHOC done={toggleShowCreateCommunity} />*/}
-    </Modal>
-  ) : null;
-
   const CreateIntentModal = showCreateIntent ? (
     <Modal closeModal={toggleShowCreateIntent}>
-      {/*<CreateIntentPanelHOC done={toggleShowCreateIntent} />*/}
+      <CreateIntentPanelHOC done={toggleShowCreateIntent} />
     </Modal>
   ) : null;
 
@@ -66,13 +55,12 @@ export const MainHeaderHOC: FC<MainHeaderHOC> = () => {
       Search: <SearchBox key="search" />,
       user: user
         ? {
-            icon: '',
-            link: `/user/${user.id}`,
-            name: user.character?.username || ''
+            icon: `${user.character}`,
+            name: `${user.character?.username}`,
+            link: `/user/${user.id}`
           }
         : null,
       toggleSideBar,
-      createCommunity: toggleShowCreateCommunity,
       createIntent: toggleShowCreateIntent,
       createResource: toggleShowCreateResource,
       isOpenDropdown,
@@ -82,7 +70,6 @@ export const MainHeaderHOC: FC<MainHeaderHOC> = () => {
   }, [user, toggleSideBar, isOpenDropdown]);
   return (
     <>
-      {CreateCommunityModal}
       {CreateIntentModal}
       {CreateResourceModal}
       <MainHeader {...headerProps} />

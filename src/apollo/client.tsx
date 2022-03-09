@@ -100,7 +100,6 @@ export default async function initialise({ localKVStore, appLinks }: Cfg) {
     // if (operationName === MeLogoutMutationName) {
     //   delToken();
     // }
-    console.log(nextLink(operation), '__________________________');
     return nextLink(operation).map(resp => {
       if (
         operationName === AnonLoginMutationName

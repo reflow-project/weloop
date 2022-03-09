@@ -2909,8 +2909,8 @@ export type RootMutationType = {
   /** 
  * Share the current user identity with a team member. This will give them full
    * access to the currently authenticated user identity. Warning: anyone you add
-   * will have admin-level access over this user identity, meaning they can post as
-   * this user, read private messages, etc.
+   * will have full access over this user identity, meaning they can post as this
+   * user, read private messages, etc.
  **/
   addTeamMember?: Maybe<Scalars['String']>,
   boost?: Maybe<Activity>,
@@ -3003,8 +3003,6 @@ export type RootMutationType = {
   like?: Maybe<Activity>,
   /** Authenticate an account and/or user */
   login?: Maybe<LoginResponse>,
-  /** Create a Tag out of something else. You can also directly use the tag() mutation with a pointer ID instead. */
-  makeTag?: Maybe<Tag>,
   /** 
  * Include an existing intent as part of a proposal.
    * @param publishedIn the (`Proposal`) to include the intent in
@@ -3470,11 +3468,6 @@ export type RootMutationTypeLikeArgs = {
 export type RootMutationTypeLoginArgs = {
   emailOrUsername: Scalars['String'],
   password: Scalars['String']
-};
-
-
-export type RootMutationTypeMakeTagArgs = {
-  contextId?: Maybe<Scalars['String']>
 };
 
 
@@ -4686,14 +4679,10 @@ export type Tag = {
   context?: Maybe<AnyContext>,
   /** Unique URL (on original instance) */
   displayUsername?: Maybe<Scalars['String']>,
-  /** Type of tag (i.e. context) */
-  facet?: Maybe<Scalars['String']>,
   /** The primary key of the tag */
   id?: Maybe<Scalars['ID']>,
   /** Name of the tag (derived from its context) */
   name?: Maybe<Scalars['String']>,
-  /** What character is used to trigger this tag (eg. @, #, +) */
-  prefix?: Maybe<Scalars['String']>,
   /** Description of the tag (derived from its context) */
   summary?: Maybe<Scalars['String']>,
   /** Objects that were tagged with this tag */
@@ -4759,17 +4748,12 @@ export type UnitUpdateParams = {
 
 export type User = {
    __typename?: 'User',
-  boostActivities?: Maybe<Array<Maybe<Activity>>>,
   character?: Maybe<Character>,
   id?: Maybe<Scalars['ID']>,
+  isInstanceAdmin?: Maybe<Scalars['Boolean']>,
   posts?: Maybe<Array<Maybe<Post>>>,
   profile?: Maybe<Profile>,
   userActivities?: Maybe<Array<Maybe<Activity>>>,
-};
-
-
-export type UserBoostActivitiesArgs = {
-  paginate?: Maybe<Paginate>
 };
 
 
@@ -6308,7 +6292,6 @@ export type RootMutationTypeResolvers<ContextType = any, ParentType extends Reso
   follow?: Resolver<Maybe<ResolversTypes['Activity']>, ParentType, ContextType, RequireFields<RootMutationTypeFollowArgs, 'id' | 'username'>>,
   like?: Resolver<Maybe<ResolversTypes['Activity']>, ParentType, ContextType, RequireFields<RootMutationTypeLikeArgs, 'id'>>,
   login?: Resolver<Maybe<ResolversTypes['LoginResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeLoginArgs, 'emailOrUsername' | 'password'>>,
-  makeTag?: Resolver<Maybe<ResolversTypes['Tag']>, ParentType, ContextType, RootMutationTypeMakeTagArgs>,
   proposeIntent?: Resolver<Maybe<ResolversTypes['ProposedIntentResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeProposeIntentArgs, 'publishedIn' | 'publishes'>>,
   proposeTo?: Resolver<Maybe<ResolversTypes['ProposedToResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeProposeToArgs, 'proposed' | 'proposedTo'>>,
   requestConfirmEmail?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<RootMutationTypeRequestConfirmEmailArgs, 'email'>>,
@@ -6536,10 +6519,8 @@ export type TagResolvers<ContextType = any, ParentType extends ResolversParentTy
   canonicalUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   context?: Resolver<Maybe<ResolversTypes['AnyContext']>, ParentType, ContextType>,
   displayUsername?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  facet?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>,
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  prefix?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   summary?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   tagged?: Resolver<Maybe<Array<Maybe<ResolversTypes['AnyContext']>>>, ParentType, ContextType>,
 };
@@ -6567,9 +6548,9 @@ export interface UriScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes[
 }
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  boostActivities?: Resolver<Maybe<Array<Maybe<ResolversTypes['Activity']>>>, ParentType, ContextType, UserBoostActivitiesArgs>,
   character?: Resolver<Maybe<ResolversTypes['Character']>, ParentType, ContextType>,
   id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>,
+  isInstanceAdmin?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
   posts?: Resolver<Maybe<Array<Maybe<ResolversTypes['Post']>>>, ParentType, ContextType, UserPostsArgs>,
   profile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType>,
   userActivities?: Resolver<Maybe<Array<Maybe<ResolversTypes['Activity']>>>, ParentType, ContextType, UserUserActivitiesArgs>,
