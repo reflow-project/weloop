@@ -114,12 +114,7 @@ export const LocationPanel: FC<LocationPanelProps> = ({ formik }) => {
                       <CustomAlert variant="negative">{formik.errors.note}</CustomAlert>
                     )}
 
-                    <Button
-                      variant="primary"
-                      type="submit"
-                      onClick={formik.handleSubmit}
-                      style={{ width: '100%' }}
-                    >
+                    <Button variant="primary" type="submit" style={{ width: '100%' }}>
                       <Trans>Create Location</Trans>
                     </Button>
                   </div>

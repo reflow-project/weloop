@@ -1,13 +1,6 @@
-import {
-  CreateIntentFormValues,
-  TCreateIntentPanel,
-  SelectOption
-} from 'ui/modules/CreateIntentPanel';
+import { CreateIntentFormValues, TCreateIntentPanel } from 'ui/modules/CreateIntentPanel';
 import { action } from '@storybook/addon-actions';
 import { useFormik } from 'formik';
-
-const communities: Array<SelectOption> = [{ label: 'Community name', id: 'community id' }];
-
 export const useGetCreateIntentModalProps = (): TCreateIntentPanel => {
   const formik = useFormik<CreateIntentFormValues>({
     initialValues: {
@@ -24,5 +17,5 @@ export const useGetCreateIntentModalProps = (): TCreateIntentPanel => {
       });
     }
   });
-  return { formik, cancel: action('cancel'), communities };
+  return { formik, cancel: action('cancel') };
 };

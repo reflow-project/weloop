@@ -20,7 +20,6 @@ const PenIcon = require('react-feather/dist/icons/edit').default;
 const EditIcon = require('react-feather/dist/icons/edit-3').default;
 const UserIcon = require('react-feather/dist/icons/user').default;
 const ClockIcon = require('react-feather/dist/icons/clock').default;
-const RemoveIcon = require('react-feather/dist/icons/trash-2').default;
 const EyeIcon = require('react-feather/dist/icons/eye').default;
 const Calendar = require('react-feather/dist/icons/calendar').default;
 
@@ -59,9 +58,6 @@ export const ResourceItem: React.FC<Props> = ({
               </Button>
               <Button ml={2} onClick={openUpdateResourceModal} variant="error">
                 <EditIcon size="16" className="ml-2" /> <Trans>Edit</Trans>
-              </Button>
-              <Button ml={2} onClick={openDeleteResourceModal} variant="error">
-                <RemoveIcon size="16" className="ml-2" /> <Trans>Delete</Trans>
               </Button>
             </ActionsWrapper>
             <InventoryWrapper>

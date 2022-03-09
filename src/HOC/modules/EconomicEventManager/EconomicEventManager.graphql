@@ -1,0 +1,43 @@
+query spatialThingsPages {
+  spatialThingsPages(limit: 15) {
+    edges {
+      id
+      name
+      lat
+      long
+    }
+  }
+}
+
+query economicEventsFiltered($action: ID!) {
+  economicEventsFiltered(action: $action){
+    id
+    provider {
+      id
+      name
+      displayUsername
+    }
+    receiver {
+      id
+      name
+      displayUsername
+    }
+  }
+}
+
+query unitsPages {unitsPages(limit: 30) {
+  edges {
+    id
+    symbol
+    label
+  }
+}
+}
+#
+#query users {users {
+#  edges {
+#    id
+#    name
+#  }
+#}
+#}

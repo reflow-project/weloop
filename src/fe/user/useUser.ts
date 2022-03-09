@@ -4,7 +4,7 @@ import { useMe } from 'fe/session/useMe';
 // import { useFollowContext } from 'fe/context/follow/useFollowContext';
 
 export const useUser = (userId: string) => {
-  const userQ = GQL.useUserDataQuery({ variables: { username: 'pral2a' } });
+  const userQ = GQL.useUserDataQuery({ variables: { username: userId } });
   const { me } = useMe();
 
   const user = userQ.data?.user;

@@ -3,7 +3,7 @@ import * as React from 'react';
 import PaginationComponent from 'react-reactstrap-pagination';
 import { Plus } from 'react-feather';
 import { NavLink } from 'react-router-dom';
-import { Box, Text } from 'rebass/styled-components';
+import { Box, Button, Text } from 'rebass/styled-components';
 // import { EconomicResource } from 'HOC/pages/inventory/InventoryPage';
 // import { EconomicResourcesFilteredQuery } from 'HOC/pages/inventory/InventoryPage.generated';
 import { InventoryWrapper, InfoWrapper, ImageWrapper, Icon } from 'ui/pages/resource';
@@ -11,9 +11,9 @@ import { Wrapper } from 'ui/elements/Layout';
 import { PAGE_LIMIT, PAGE_START, MAX_PAGINATION_NUMBERS } from 'util/constants/pagination';
 import { typography } from '../../../mn-constants';
 import styled from '../../themes/styled';
-import { ButtonWrapper, CreateItemButton } from '../community';
 import { useMe } from 'fe/session/useMe';
 import { useEffect, useState } from 'react';
+import media from 'styled-media-query';
 
 const BoxIcon = require('react-feather/dist/icons/box').default;
 const PenIcon = require('react-feather/dist/icons/edit').default;
@@ -141,6 +141,50 @@ export const Inventory: React.FC<Props> = ({ inventory, done, children, owner })
 };
 
 export default Inventory;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  height: 34px;
+  margin: 10px 0;
+  position: relative;
+
+  ${media.lessThan('medium')`
+      justify-content: space-between;
+      margin: 10px;
+  `};
+`;
+export const CreateItemButton = styled(Button)`
+  margin: 0 10px;
+  height: 34px;
+  text-transform: capitalize;
+  line-height: 34px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  &:not(:last-child) {
+    margin-right: 20px;
+  }
+
+  & > svg {
+    display: inline-block;
+    margin-right: 8px;
+    margin-left: 16px;
+  }
+  & > div {
+    color: #fff;
+    display: inline-block;
+  }
+
+  ${media.lessThan('medium')`
+      margin: 0 10px;
+  `};
+  &:hover {
+    background: ${props => props.theme.colors.primary};
+    color: ${props => props.theme.colors.appInverse};
+  }
+`;
 
 const PaginationWrapper = styled('div')`
   text-align: center;

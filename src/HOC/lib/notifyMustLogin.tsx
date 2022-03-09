@@ -40,6 +40,6 @@ export const useNotifyMustLogin = (options?: Opts) => {
   return useCallback(() => {
     const { content, opts } = { ...defaultOpts, ...options };
     !loggedIn && toast(content, opts);
-    return true;
-  }, [options, loggedIn]);
+    return !loggedIn;
+  }, [loggedIn, options]);
 };

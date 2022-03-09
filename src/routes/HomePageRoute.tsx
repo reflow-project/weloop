@@ -20,6 +20,10 @@ const HomePageRouter: FC<RouteComponentProps<HomePageRouter>> = ({ match }) => {
   if (!homeProps) {
     return <NotFoundHOC />;
   }
+
+  if (!homeProps) {
+    return <NotFoundHOC />;
+  }
   return (
     <RedirectAnonymousToLogin>
       <WithSidebarTemplate>
