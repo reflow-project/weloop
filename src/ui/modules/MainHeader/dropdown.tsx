@@ -3,7 +3,6 @@ import {
   Settings,
   User,
   Power,
-  Users,
   Star,
   Code,
   Activity,
@@ -46,18 +45,6 @@ const Item = styled(Flex)`
   }
 `;
 
-// const ItemButton = styled(Item)`
-//   border: 1px solid ${props => props.theme.colors.medium};
-//   border-radius: 4px;
-//   height: 34px;
-//   &:hover {
-//     background: ${props => props.theme.colors.light};
-//   }
-//   div {
-//     letter-spacing: 0;
-//   }
-// `;
-
 export interface Props {
   toggleDropdown: any;
   userLink: string;
@@ -74,16 +61,6 @@ export const DropdownSidebar: React.FC<Props> = ({ userLink, toggleDropdown }) =
           </span>
           <Text variant="text">
             <Trans>My Profile</Trans>
-          </Text>
-        </Item>
-        <Item>
-          <Text variant="text">
-            <a href={`${userLink}/communities`}>
-              <span>
-                <Users size={16} color={'#333'} />
-              </span>
-              <Trans>My Communities</Trans>
-            </a>
           </Text>
         </Item>
         <Item>
@@ -151,28 +128,18 @@ export const DropdownSidebar: React.FC<Props> = ({ userLink, toggleDropdown }) =
 
 type TCreateDropdown = {
   toggleDropdown: () => void;
-  createCommunity: any;
   createIntent: () => void;
   createResource: () => void;
 };
 
 export const CreateDropdown: React.FC<TCreateDropdown> = ({
   toggleDropdown,
-  createCommunity,
   createIntent,
   createResource
 }) => {
   return (
     <Dropdown orientation={'top'} close={toggleDropdown}>
       <List lined>
-        <Item variant="link" onClick={() => createCommunity()}>
-          <span>
-            <Users size={16} color={'#333'} />
-          </span>
-          <Text variant="text">
-            <Trans>New Community</Trans>
-          </Text>
-        </Item>
         <Item variant="link" onClick={() => createIntent()}>
           <span>
             <PlusSquare size={16} color={'#333'} />

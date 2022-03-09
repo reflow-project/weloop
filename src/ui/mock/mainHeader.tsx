@@ -13,7 +13,6 @@ export const getMainHeaderProps = (): Props => {
     toggleSideBar: () => console.log(true),
     Search: <Input placeholder="Search..." />,
     toggleDropdown: action('toggle Dropdown'),
-    createCommunity: action('create Community'),
     createResource: action('create Resource'),
     createIntent: action('create Intent'),
     isOpenDropdown: false

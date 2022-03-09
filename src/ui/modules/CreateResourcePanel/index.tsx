@@ -6,7 +6,7 @@ import { Box, Heading } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
 import { FormikHook } from 'ui/@types/types';
 import { CustomSelect as Select } from 'ui/elements/CustomSelect';
-// import { useMe } from '../../../fe/session/useMe';
+import { useMe } from '../../../fe/session/useMe';
 import * as Types from '../../../graphql/types.generated';
 // import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
 import { setSelectOption } from '../../elements/CustomSelect/select';
@@ -78,7 +78,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
     (file: File) => formik.setValues({ ...formik.values, image: file }),
     [formik]
   );
-  // const { me } = useMe();
+  const { me } = useMe();
 
   React.useEffect(() => {
     if (unitPages?.length) {
@@ -107,15 +107,15 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
 
     formik.setValues({
       ...formik.values,
-      hasPointInTime: new Date().toISOString()
-      // provider: {
-      //   id: providerList?.find((el: any) => el.id === me?.user?.id)?.id || '',
-      //   label: providerList?.find((el: any) => el.id === me?.user?.id)?.name || ''
-      // },
-      // receiver: {
-      //   id: receiverList?.find((el: any) => el.id === me?.user?.id)?.id || '',
-      //   label: receiverList?.find((el: any) => el.id === me?.user?.id)?.name || ''
-      // }
+      hasPointInTime: new Date().toISOString(),
+      provider: {
+        id: providerList?.find((el: any) => el.id === me?.user?.id)?.id || '',
+        label: providerList?.find((el: any) => el.id === me?.user?.id)?.name || ''
+      },
+      receiver: {
+        id: receiverList?.find((el: any) => el.id === me?.user?.id)?.id || '',
+        label: receiverList?.find((el: any) => el.id === me?.user?.id)?.name || ''
+      }
     });
   }, [providerList, receiverList]);
 
@@ -129,7 +129,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
   }, [unitPages]);
 
   const initialIconUrl = 'string' === typeof formik.values.image ? formik.values.image : '';
-
+  console.log({ formik });
   return (
     <Container>
       <form onSubmit={formik.handleSubmit}>
@@ -302,6 +302,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                     <FormLabel>Event date</FormLabel>
                     <div style={{ width: '100%', border: '1px solid #05244f', padding: '0 10px' }}>
                       <DatePicker
+                        className="date-picker"
                         selected={startDate}
                         onChange={(date: any) => {
                           setStartDate(date);
