@@ -4,15 +4,15 @@ import { Route, Switch } from 'react-router-dom';
 // import { AllCommunitiesPageRoute } from 'routes/AllCommunitiesPageRoute';
 // import { CollectionPageRoute } from 'routes/CollectionPageRoute';
 // import { CommunityPageRoute } from 'routes/CommunityPageRoute';
-// import { ConfirmEmailRoute } from 'routes/ConfirmEmailPageRoute';
-// import { CreateNewPasswordPageRoute } from 'routes/CreateNewPasswordPageRoute';
+import { ConfirmEmailRoute } from 'routes/ConfirmEmailPageRoute';
+import { CreateNewPasswordPageRoute } from 'routes/CreateNewPasswordPageRoute';
 import { DiscoverPageRoute } from 'routes/DiscoverPageRoute';
 import { InventoryResourceItemRouter } from 'routes/InventoryResourceItemRouter';
 // import { ActivityPageRouter } from 'routes/ActivityPageRoute';
 import { HomePageRoute } from 'routes/HomePageRoute';
 import { LoginPageRoute } from 'routes/LoginPageRoute';
 import { MapsPageRoute } from 'routes/MapsPageRoute';
-// import { ResetPasswordPageRoute } from 'routes/ResetPasswordPageRoute';
+import { ResetPasswordPageRoute } from 'routes/ResetPasswordPageRoute';
 // import { SearchPageRoute } from 'routes/SearchPageRoute';
 // import { SettingsPageRoute } from 'routes/SettingsPageRoute';
 import { SignupPageRoute } from 'routes/SignupPageRoute';
@@ -36,11 +36,11 @@ export const Router: React.FC = () => {
       {/*<Route {...ActivityPageRouter} />*/}
       <Route {...DiscoverPageRoute} />
       {/*<Route {...SearchPageRoute} />*/}
-      {/*<Route {...CreateNewPasswordPageRoute} />*/}
-      {/*<Route {...ResetPasswordPageRoute} />*/}
+      <Route {...CreateNewPasswordPageRoute} />
+      <Route {...ResetPasswordPageRoute} />
       <Route {...LoginPageRoute} />
       <Route {...SignupPageRoute} />
-      {/*<Route {...ConfirmEmailRoute} />*/}
+      <Route {...ConfirmEmailRoute} />
       {/*<Route {...TermsAndConditionsPageRoute} />*/}
       {/*<Route {...LMSMoodleSearchRoute} />*/}
       <Route {...HomePageRoute} />

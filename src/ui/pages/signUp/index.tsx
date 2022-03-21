@@ -55,7 +55,7 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUserID, register
               </Text>
             </Box>
             <Browse>
-              <Link to={'/'}>
+              <Link to={'/login'}>
                 <Button mt={3} variant="primary">
                   <Trans>Sign in</Trans>
                 </Button>
@@ -127,7 +127,10 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUserID, register
                   </AlertWrapper>
                 )}
               </Box>
-              <Box mt={3}>
+              <Box
+                mt={3}
+                css={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+              >
                 <Button
                   variant="primary"
                   isSubmitting={formik.isSubmitting}
@@ -136,6 +139,12 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUserID, register
                 >
                   <Trans>Sign up</Trans>
                 </Button>
+                <LinkWrapper>
+                  <Trans>You have account </Trans>
+                  <Link to={'/login'} className={'ml-3'}>
+                    <Trans>Sign in</Trans>
+                  </Link>
+                </LinkWrapper>
               </Box>
             </FormWrapper>
           </Flex>
@@ -150,11 +159,14 @@ const Browse = styled(Box)`
   text-align: center;
   margin-top: 10px;
 `;
-
+const LinkWrapper = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  min-width: 180px;
+`;
 const Wrapper = styled.div`
   background: #fff;
   border-radius: 4px;
-  height: inherit;
   padding: 30px 20px;
   text-align: center;
   height: fit-content;

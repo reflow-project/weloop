@@ -1,11 +1,12 @@
 import { useFormik } from 'formik';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import Login, { LoginFormValues } from 'ui/pages/login';
 import * as Yup from 'yup';
 import { useAnon } from 'fe/session/useAnon';
 import { t } from '@lingui/macro';
 import { usePageTitle } from 'context/global/pageCtx';
 import { useHistory } from 'react-router';
+import { toast } from 'react-toastify';
 
 export const validationSchema: Yup.ObjectSchema<LoginFormValues> = Yup.object<LoginFormValues>({
   email: Yup.string()
@@ -22,7 +23,7 @@ const loginPageTitle = t`Login`;
 export const LoginPageHOC: FC<Props> = () => {
   usePageTitle(loginPageTitle);
   const history = useHistory();
-  const { login } = useAnon();
+  const { login, loginStatus } = useAnon();
   const formik = useFormik<LoginFormValues>({
     initialValues: {
       email: '',
@@ -37,5 +38,11 @@ export const LoginPageHOC: FC<Props> = () => {
       ),
     validationSchema
   });
+
+  useEffect(() => {
+    if (loginStatus.error?.message) {
+      toast.error(loginStatus.error.graphQLErrors[0].message);
+    }
+  }, [loginStatus.error]);
   return <Login formik={formik} />;
 };

@@ -120,8 +120,8 @@ const Container = styled.div`
     margin-top: 16px;
     width: 100%;
     color: #fff !important;
-    text-transform: uppercase
-      &:hover {
+    text-transform: uppercase;
+    &:hover {
       background: #d67218 !important;
     }
   }

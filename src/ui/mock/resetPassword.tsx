@@ -9,7 +9,7 @@ export const useGetResetPasswordProps = (): NewPasswordProps => {
     },
     onSubmit: () => {
       action('submit')();
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         setTimeout(resolve, 3000);
       });
     }

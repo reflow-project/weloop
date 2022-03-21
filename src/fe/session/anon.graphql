@@ -1,9 +1,20 @@
-#mutation anonResetPassword ($email: String!){
-#    requestResetPassword(password: $email){
-#    ...AuthData
-#  }
-#}
-#
+mutation resetPwd ($email: String!, $url: String!){
+    requestResetPassword(email: $email, url: $url)
+}
+
+# change my password
+mutation changePassword($oldPassword: String!, $password: String!, $passwordConfirmation: String!){
+    changePassword(oldPassword: $oldPassword, password: $password, passwordConfirmation: $passwordConfirmation) {
+        accountId
+    }
+}
+
+# change my password
+mutation updateLostPassword($token: String!, $password: String!, $passwordConfirmation: String!){
+    changePassword(token: $token, password: $password, passwordConfirmation: $passwordConfirmation) {
+        accountId
+    }
+}
 
 # request an email to be sent to reset my password if I forgot it
 mutation anonResetPasswordRequest($email: String!){
@@ -29,8 +40,8 @@ mutation anonLogin ($email: String!, $password: String!){
 }
 
 # request another email confirmation to be sent
-mutation requestConfirmEmail($email: String!) {
-    requestConfirmEmail(email: $email)
+mutation requestConfirmEmail($email: String!, $url: String!,) {
+    requestConfirmEmail(email: $email, url: $url)
 }
 
 # confirm my email address with the token that was emailed
@@ -40,6 +51,6 @@ mutation confirmEmail($token: String!) {
     }
 }
 
-mutation anonSignUp($email: String!, $password: String!) {
-    signup(email: $email, password: $password)
+mutation anonSignUp($email: String!, $password: String!, $url: String!) {
+    signup(email: $email, password: $password, url: $url)
 }
