@@ -93,7 +93,7 @@ export const MainHeader: React.FC<Props> = props => {
           ) : (
             <Box>
               <Signin>
-                <Link to="/">
+                <Link to="/login">
                   <Text variant="link">{i18n._(prompt_signin)}</Text>
                 </Link>
               </Signin>

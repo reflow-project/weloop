@@ -2909,8 +2909,8 @@ export type RootMutationType = {
   /** 
  * Share the current user identity with a team member. This will give them full
    * access to the currently authenticated user identity. Warning: anyone you add
-   * will have full access over this user identity, meaning they can post as this
-   * user, read private messages, etc.
+   * will have admin-level access over this user identity, meaning they can post as
+   * this user, read private messages, etc.
  **/
   addTeamMember?: Maybe<Scalars['String']>,
   boost?: Maybe<Activity>,
@@ -3078,9 +3078,10 @@ export type RootMutationTypeBoostArgs = {
 
 
 export type RootMutationTypeChangePasswordArgs = {
-  oldPassword: Scalars['String'],
+  oldPassword?: Maybe<Scalars['String']>,
   password: Scalars['String'],
-  passwordConfirmation: Scalars['String']
+  passwordConfirmation: Scalars['String'],
+  token?: Maybe<Scalars['String']>
 };
 
 
@@ -3485,12 +3486,14 @@ export type RootMutationTypeProposeToArgs = {
 
 
 export type RootMutationTypeRequestConfirmEmailArgs = {
-  email: Scalars['String']
+  email: Scalars['String'],
+  url?: Maybe<Scalars['String']>
 };
 
 
 export type RootMutationTypeRequestResetPasswordArgs = {
-  email: Scalars['String']
+  email: Scalars['String'],
+  url?: Maybe<Scalars['String']>
 };
 
 
@@ -3502,7 +3505,8 @@ export type RootMutationTypeSelectUserArgs = {
 export type RootMutationTypeSignupArgs = {
   email: Scalars['String'],
   inviteCode?: Maybe<Scalars['String']>,
-  password: Scalars['String']
+  password: Scalars['String'],
+  url?: Maybe<Scalars['String']>
 };
 
 
@@ -4750,7 +4754,6 @@ export type User = {
    __typename?: 'User',
   character?: Maybe<Character>,
   id?: Maybe<Scalars['ID']>,
-  isInstanceAdmin?: Maybe<Scalars['Boolean']>,
   posts?: Maybe<Array<Maybe<Post>>>,
   profile?: Maybe<Profile>,
   userActivities?: Maybe<Array<Maybe<Activity>>>,
@@ -6215,7 +6218,7 @@ export type ResourceSpecificationResponseResolvers<ContextType = any, ParentType
 export type RootMutationTypeResolvers<ContextType = any, ParentType extends ResolversParentTypes['RootMutationType'] = ResolversParentTypes['RootMutationType']> = {
   addTeamMember?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<RootMutationTypeAddTeamMemberArgs, 'label' | 'usernameOrEmail'>>,
   boost?: Resolver<Maybe<ResolversTypes['Activity']>, ParentType, ContextType, RequireFields<RootMutationTypeBoostArgs, 'id'>>,
-  changePassword?: Resolver<Maybe<ResolversTypes['Me']>, ParentType, ContextType, RequireFields<RootMutationTypeChangePasswordArgs, 'oldPassword' | 'password' | 'passwordConfirmation'>>,
+  changePassword?: Resolver<Maybe<ResolversTypes['Me']>, ParentType, ContextType, RequireFields<RootMutationTypeChangePasswordArgs, 'password' | 'passwordConfirmation'>>,
   confirmEmail?: Resolver<Maybe<ResolversTypes['Me']>, ParentType, ContextType, RequireFields<RootMutationTypeConfirmEmailArgs, 'token'>>,
   createAgentRelationship?: Resolver<Maybe<ResolversTypes['AgentRelationshipResponse']>, ParentType, ContextType, RequireFields<RootMutationTypeCreateAgentRelationshipArgs, 'relationship'>>,
   createAgentRelationshipRole?: Resolver<Maybe<ResolversTypes['AgentRelationshipRoleResponse']>, ParentType, ContextType, RootMutationTypeCreateAgentRelationshipRoleArgs>,
@@ -6550,7 +6553,6 @@ export interface UriScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes[
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   character?: Resolver<Maybe<ResolversTypes['Character']>, ParentType, ContextType>,
   id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>,
-  isInstanceAdmin?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
   posts?: Resolver<Maybe<Array<Maybe<ResolversTypes['Post']>>>, ParentType, ContextType, UserPostsArgs>,
   profile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType>,
   userActivities?: Resolver<Maybe<Array<Maybe<ResolversTypes['Activity']>>>, ParentType, ContextType, UserUserActivitiesArgs>,

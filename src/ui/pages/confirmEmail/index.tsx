@@ -64,7 +64,7 @@ export const ConfirmEmail: React.FC<Props> = ({ result }) => {
                 )}
               </Box>
               <Browse>
-                <Link to={'/'}>
+                <Link to={'/login'}>
                   <Button mt={3} variant="primary">
                     <Trans>Sign in</Trans>
                   </Button>
