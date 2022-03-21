@@ -1,10 +1,11 @@
 import { useFormik } from 'formik';
-import React, { FC, useMemo } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import SignUpPage, { SignUpFormValues, Props } from 'ui/pages/signUp';
 import * as Yup from 'yup';
 import { useAnon } from 'fe/session/useAnon';
 import { t } from '@lingui/macro';
 import { usePageTitle } from 'context/global/pageCtx';
+import { toast } from 'react-toastify';
 
 const initialValues: SignUpFormValues = {
   email: '',
@@ -43,9 +44,14 @@ export const SignUpPageHOC: FC<SignUpPageHOC> = () => {
       })
   });
 
+  useEffect(() => {
+    if (signUpStatus.error?.graphQLErrors.length) {
+      toast.error(signUpStatus.error?.graphQLErrors[0].message);
+    }
+  }, [signUpStatus.error]);
+
   const props = useMemo<Props>(
     () =>
-      // @ts-ignore
       signUpStatus.called && signUpStatus.data?.signup
         ? {
             formik,

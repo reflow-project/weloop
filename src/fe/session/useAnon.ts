@@ -1,7 +1,10 @@
 import { DataProxy } from 'apollo-cache';
+import { useMemo } from 'react';
 import * as GQL from './anon.generated';
 import { MeDocument, MeQuery } from './me.generated';
 import { mnCtx } from 'fe/lib/graphql/ctx';
+
+const hostname = process.env.REACT_APP_FRONTEND_HOSTNAME;
 
 export const useAnon = () => {
   const updateMe = (proxy: DataProxy, me: any) => {
@@ -23,105 +26,124 @@ export const useAnon = () => {
       }
     });
   };
-
+  const url = process.env.REACT_APP_FRONTEND_HOSTNAME || '';
   const [loginMut, loginStatus] = GQL.useAnonLoginMutation();
-  // const [resetPwdMut, resetPwdStatus] = GQL.useAnonResetPasswordMutation();
   const [confirmEmailMut, confirmEmailStatus] = GQL.useConfirmEmailMutation();
-  // const [requestConfirmEmailMut, requestConfirmEmailStatus] = GQL.useRequestConfirmEmailMutation();
+  const [requestConfirmEmailMut, requestConfirmEmailStatus] = GQL.useRequestConfirmEmailMutation();
+  const [resetPwd, resetPwdStatus] = GQL.useResetPwdMutation();
+  const [changePwd, changePwdStatus] = GQL.useChangePasswordMutation();
   const [signUpMut, signUpStatus] = GQL.useAnonSignUpMutation();
-  //  const [usernameAvailableQ, usernameAvailableStatus] = GQL.useAnonUsernameAvailableLazyQuery();
-  // const [resetPwdReqMut, resetPwdReqStatus] = GQL.useAnonResetPasswordRequestMutation();
-  // return useMemo(() => {
-  // const resetPwd = ({ password, token }: { token: string; password: string }) => {
-  //     if (resetPwdStatus.loading) {
-  //         return;
-  //     }
-  //     return resetPwdMut({
-  //         variables: { password, token },
-  //         update: (proxy, resp) => updateMe(proxy, resp.data?.resetPassword?.me)
-  //     });
-  // };
+  const [updateLostPassword, updateLostPasswordStatus] = GQL.useUpdateLostPasswordMutation();
 
-  const confirmEmail = (token: string) => {
-    if (confirmEmailStatus.loading) {
-      return;
-    }
-    return confirmEmailMut({
-      variables: { token },
-      update: (proxy, resp) => updateMe(proxy, resp.data)
-    });
-  };
+  return useMemo(() => {
+    const confirmEmail = (token: string) => {
+      if (confirmEmailStatus.loading) {
+        return;
+      }
+      if (confirmEmailStatus.called) {
+        return;
+      }
 
-  const signUp = (registration: { email: string; password: string }) => {
-    if (signUpStatus.loading) {
-      return;
-    }
+      return confirmEmailMut({
+        variables: { token },
+        update: (proxy, resp) =>
+          // @ts-ignore
+          console.log(resp.data, 'confirm') || updateMe(proxy, resp.data)
+      });
+    };
 
-    return signUpMut({
-      variables: { email: registration.email, password: registration.password },
-      update: (proxy, resp) => updateMe(proxy, resp.data)
-    });
-  };
+    const signUp = (registration: { email: string; password: string }) => {
+      if (signUpStatus.loading) {
+        return;
+      }
 
-  // const resetPwdReq = (email: string) => {
-  //     if (resetPwdReqStatus.loading) {
-  //         return;
-  //     }
-  //     return resetPwdReqMut({
-  //         variables: { email }
-  //     });
-  // };
+      return signUpMut({
+        variables: {
+          email: registration.email,
+          password: registration.password,
+          url: `${hostname}/confirm-email/:token`
+        },
+        update: (proxy, resp) =>
+          // @ts-ignore
+          console.log(resp.data, 'sign') || updateMe(proxy, resp.data)
+      });
+    };
 
-  const login = (email: string, password: string) => {
-    if (loginStatus.loading) {
-      return;
-    }
-    return loginMut({
-      variables: { email, password },
-      context: mnCtx({ ctx: 'Login' }),
-      update: (proxy, resp) => updateMe(proxy, resp.data?.login)
-    });
-  };
+    const login = (email: string, password: string) => {
+      if (loginStatus.loading) {
+        return;
+      }
+      return loginMut({
+        variables: { email, password },
+        context: mnCtx({ ctx: 'Login' }),
+        update: (proxy, resp) => updateMe(proxy, resp.data?.login)
+      });
+    };
 
-  // const usernameAvailable = (username: string) => {
-  //     return client=
-  //         .query<GQL.AnonUsernameAvailableQuery, GQL.AnonUsernameAvailableQueryVariables>({
-  //             query: GQL.AnonUsernameAvailableDocument,
-  //             variables: { username }
-  //         })
-  //         .then(_ => _.data.usernameAvailable);
-  // };
+    const changePwdRequest = (
+      oldPassword: string,
+      password: string,
+      passwordConfirmation: string
+    ) => {
+      if (changePwdStatus.loading) {
+        return;
+      }
+      return changePwd({
+        variables: { oldPassword, password, passwordConfirmation }
+      });
+    };
 
-  return {
-    login,
-    loginStatus,
+    const updatePassword = (token: string, password: string, passwordConfirmation: string) => {
+      if (updateLostPasswordStatus.loading) {
+        return;
+      }
+      return updateLostPassword({
+        variables: { token, password, passwordConfirmation }
+      });
+    };
 
-    // resetPwdReq,
-    // resetPwdReqStatus,
+    const resetPwdRequest = (email: string) => {
+      if (resetPwdStatus.loading) {
+        return;
+      }
+      return resetPwd({
+        variables: { email, url: `${url}/reset/:token` }
+      });
+    };
 
-    confirmEmail,
+    return {
+      login,
+      loginStatus,
+
+      confirmEmail,
+      confirmEmailStatus,
+
+      requestConfirmEmailMut,
+      requestConfirmEmailStatus,
+      resetPwdRequest,
+      resetPwdStatus,
+      updatePassword,
+      updateLostPasswordStatus,
+      changePwdRequest,
+      changePwdStatus,
+      signUp,
+      signUpStatus
+    };
+  }, [
+    url,
+    signUpStatus,
+    signUpMut,
+    confirmEmailMut,
     confirmEmailStatus,
-
-    signUp,
-    signUpStatus
-
-    // resetPwd,
-    // resetPwdStatus,
-
-    // usernameAvailable
-  };
-  //     }, [
-  //     signUpStatus,
-  //     signUpMut,
-  //     confirmEmailMut,
-  //     confirmEmailStatus,
-  //     loginMut,
-  //     loginStatus,
-  //     // resetPwdMut,
-  //     // resetPwdStatus,
-  //     // resetPwdReqMut,
-  //     // resetPwdReqStatus,
-  //     client
-  //     ]);
-  // };
+    requestConfirmEmailMut,
+    requestConfirmEmailStatus,
+    updateLostPassword,
+    updateLostPasswordStatus,
+    resetPwd,
+    resetPwdStatus,
+    changePwd,
+    changePwdStatus,
+    loginMut,
+    loginStatus
+  ]);
 };
