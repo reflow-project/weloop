@@ -1,6 +1,6 @@
-// import { CreateNewPasswordPageHOC } from 'HOC/pages/createNewPassword/CreateNewPassword';
+import { CreateNewPasswordPageHOC } from 'HOC/pages/createNewPassword/CreateNewPassword';
 import { GuestTemplate } from 'HOC/templates/Guest/Guest';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { RedirectAuthenticatedToHome } from './wrappers/RedirectBySession';
 
@@ -12,15 +12,17 @@ const CreateNewPasswordPageRouter: FC<RouteComponentProps<CreateNewPasswordPageR
     params: { token }
   }
 }) => {
-  // const props = useMemo<any>(() => {
-  //   return {
-  //     token
-  //   };
-  // }, [token]);
+  const props = useMemo<any>(() => {
+    return {
+      token
+    };
+  }, [token]);
 
   return (
     <RedirectAuthenticatedToHome>
-      <GuestTemplate withoutHeader>{/*<CreateNewPasswordPageHOC {...props} />*/}</GuestTemplate>
+      <GuestTemplate withoutHeader>
+        <CreateNewPasswordPageHOC {...props} />
+      </GuestTemplate>
     </RedirectAuthenticatedToHome>
   );
 };

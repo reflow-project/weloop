@@ -4,6 +4,7 @@ import ResetPasswordRequestPage, { ResetPasswordFormValues } from 'ui/pages/rese
 import * as Yup from 'yup';
 import { t } from '@lingui/macro';
 import { usePageTitle } from 'context/global/pageCtx';
+import { useAnon } from 'fe/session/useAnon';
 
 export const validationSchema: Yup.ObjectSchema<ResetPasswordFormValues> = Yup.object<
   ResetPasswordFormValues
@@ -21,9 +22,9 @@ const resetPasswordPageTitle = t`Reset Password`;
 
 export const ResetPasswordPageHOC: FC<Props> = () => {
   usePageTitle(resetPasswordPageTitle);
-  // const { resetPwdReq } = useAnon();
+  const { resetPwdRequest } = useAnon();
   const formik = useFormik<ResetPasswordFormValues>({
-    onSubmit: ({ email }) => console.log(email),
+    onSubmit: ({ email }) => resetPwdRequest(email),
     initialValues,
     validationSchema
   });

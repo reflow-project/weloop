@@ -1,4 +1,4 @@
-// import { ConfirmEmailPage } from 'HOC/pages/confirmEmail/ConfirmEmailPage';
+import { ConfirmEmailPage } from 'HOC/pages/confirmEmail/ConfirmEmailPage';
 import { GuestTemplate } from 'HOC/templates/Guest/Guest';
 import React, { FC } from 'react';
 import { RouteComponentProps, RouteProps } from 'react-router-dom';
@@ -10,7 +10,9 @@ interface ConfirmEmailRouter {
 const ConfirmEmailRouter: FC<RouteComponentProps<ConfirmEmailRouter>> = ({ match }) => {
   return (
     <RedirectAuthenticated to="/#welcome">
-      <GuestTemplate>{/*<ConfirmEmailPage token={match.params.token} />*/}</GuestTemplate>
+      <GuestTemplate>
+        <ConfirmEmailPage token={match.params.token} />
+      </GuestTemplate>
     </RedirectAuthenticated>
   );
 };
