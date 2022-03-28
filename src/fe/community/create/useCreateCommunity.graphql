@@ -1,0 +1,6 @@
+mutation createCommunity($community: CommunityInput!, $icon:UploadInput) {
+  createCommunity(community: $community, icon:$icon) {
+    ...CommunityPageData
+  }
+}
+

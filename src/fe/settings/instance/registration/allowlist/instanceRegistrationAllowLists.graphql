@@ -1,0 +1,51 @@
+mutation addEmailDomainToAllowList($domain: String!){
+  createRegisterEmailDomainAccess(domain:$domain){
+    domain
+    id
+  }
+}
+mutation removeEmailDomainFromAllowList($id: String!){
+  deleteRegisterEmailDomainAccess(id:$id){
+    id
+  }
+}
+
+
+mutation addEmailToAllowList($email: String!){
+  createRegisterEmailAccess(email:$email){
+    email
+    id
+  }
+}
+
+mutation removeEmailFromAllowList($id: String!){
+  deleteRegisterEmailAccess(id:$id){
+    id
+  }
+}
+
+mutation sendInviteEmail($email: String!){
+  sendInvite(email:$email)
+}
+
+query instanceRegisterEmailAccesses($limit:Int, $before:[Cursor!], $after:[Cursor!]) {
+  registerEmailAccesses(limit:$limit, before:$before, after:$after) @connection(key: "instanceRegisterEmailAccesses"){
+    totalCount,
+    pageInfo{ ...FullPageInfo }
+    edges{
+      id
+      email
+    }
+  }
+}
+
+query instanceRegisterEmailDomainAccesses($limit:Int, $before:[Cursor!], $after:[Cursor!]) {
+  registerEmailDomainAccesses(limit:$limit, before:$before, after:$after) @connection(key: "instanceRegisterEmailDomainAccesses"){
+    totalCount,
+    pageInfo{ ...FullPageInfo }
+    edges{
+      id
+      domain
+    }
+  }
+}

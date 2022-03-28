@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/browser';
-// import { MngErrorLink } from 'fe/lib/graphql/ctx';
+import { MngErrorLink } from 'fe/lib/graphql/ctx';
 import * as React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import ReactDOM from 'react-dom';
@@ -104,7 +104,7 @@ async function run() {
 
   const apolloClient = await getApolloClient({
     localKVStore: createLocalKVStore('APOLLO#'),
-    appLinks: []
+    appLinks: [MngErrorLink]
   });
 
   const ApolloApp = () => (

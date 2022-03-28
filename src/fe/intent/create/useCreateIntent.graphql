@@ -14,13 +14,13 @@ mutation createIntent($name: String!, $action: String!, $communityId: ID!, $note
 }
 
 mutation createOffer(
-    $action: String!
-    $name: String!,
-    $communityId: ID!,
-    $note: String,
-    $hasUnit: ID!,
-    $hasNumericalValue: Float!,
-    $atLocation: ID
+	$action: String!
+  $name: String!,
+  $communityId: ID!,
+  $note: String,
+  $hasUnit: ID!,
+  $hasNumericalValue: Float!,
+  $atLocation: ID
 ) {
   createOffer(intent: {
     action: $action,

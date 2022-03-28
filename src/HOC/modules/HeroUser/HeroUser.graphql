@@ -1,0 +1,12 @@
+fragment HeroUserUserData on User {
+  id
+  image{ id, url }
+  icon{ id, url }
+  displayUsername
+  location
+  summary
+  name
+  myFollow{ id }
+  myFlag { id }
+  followerCount
+}

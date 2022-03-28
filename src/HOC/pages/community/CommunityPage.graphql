@@ -1,0 +1,23 @@
+
+
+
+fragment CommunityPageData on Community{
+  id
+  myFollow{id}
+  ...HeroCommunityData
+}
+
+fragment CommunityPageThread on Thread {
+  id
+  ...ThreadPreview
+}
+
+fragment CommunityPageCollectionBase on Collection{
+  id
+  ...CollectionPreview
+}
+
+fragment CommunityPageActivityBase on Activity{
+  id
+  ...ActivityPreview
+}

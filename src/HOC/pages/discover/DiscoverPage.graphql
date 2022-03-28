@@ -1,0 +1,16 @@
+
+fragment DiscoverPageFeaturedCommunityInfo on Community{
+  id
+  icon{
+ id, url }
+
+  name
+}
+
+fragment DiscoverPageFeaturedCollectionInfo on Collection{
+  id
+  icon{
+ id, url }
+
+  name
+}

@@ -1,0 +1,21 @@
+query userFollowedCollections($userId: String!, $limit:Int, $before:[Cursor!], $after:[Cursor!]) {
+  user(userId:$userId) @connection(key: "userFollowedCollections", filter: ["userId"]){
+    id
+    collectionFollows(limit:$limit, before:$before, after:$after){
+      totalCount,
+      pageInfo{ ...FullPageInfo }
+      edges{
+        id
+        context{
+          ... on Collection{
+            ...UserFollowedCollection
+          }
+        }
+      }
+    }
+  }
+}
+
+fragment UserFollowedCollection on Collection {
+  ...CollectionPreview
+}

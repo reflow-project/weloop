@@ -1,0 +1,32 @@
+mutation addFeatured($contextId: String!) {
+    createFeature(contextId: $contextId){
+      context{
+        ...on Collection{
+          id
+          # feature{ id }
+        }
+        ...on Community{
+          id
+          # feature{ id }
+        }
+      }
+    }
+}
+
+# mutation removeFeatured($contextId: String!) {
+#   delete(contextId: $contextId){
+#     ... on Feature {
+#       context{
+#         ...on Collection{
+#           id
+#           # featured{ id }
+#         }
+#         ...on Community{
+#           id
+#           # featured{ id }
+#         }
+#       }
+#     }
+#   }
+# }
+

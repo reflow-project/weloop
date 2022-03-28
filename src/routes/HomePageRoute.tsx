@@ -10,16 +10,12 @@ interface HomePageRouter {
   tab?: string;
 }
 const HomePageRouter: FC<RouteComponentProps<HomePageRouter>> = ({ match }) => {
-  const homeProps: any | null = useMemo(
+  const homeProps: HomePageHOC | null = useMemo(
     () => ({
       basePath: ''
     }),
     []
   );
-
-  if (!homeProps) {
-    return <NotFoundHOC />;
-  }
 
   if (!homeProps) {
     return <NotFoundHOC />;

@@ -5,7 +5,7 @@ import { Box, Flex } from 'rebass/styled-components';
 import { Settings, LogOut, PlusSquare } from 'react-feather';
 import Avatar from 'ui/elements/Avatar';
 import { NavLink } from 'react-router-dom';
-// import { CreateMenuHOK } from '../../../HOC/modules/CreateMenuHOK/CreateMenuHOK';
+import { CreateMenuHOK } from '../../../HOC/modules/CreateMenuHOK/CreateMenuHOK';
 
 export const Burger: FC<{ open: boolean; setOpen: (_: boolean) => unknown }> = ({
   open,
@@ -49,7 +49,7 @@ export const Menu: FC<MenuProps> = ({
             <Title>{name}</Title>
             <Username>{username}</Username>
             <RightMenuWrapper>
-              {/*<CreateMenuHOK open={isCreateOpen} openHandler={toggleCreate} />*/}
+              <CreateMenuHOK open={isCreateOpen} openHandler={toggleCreate} />
               <Span to={'/settings'}>
                 <Settings size="24" strokeWidth={1} color={'#333'} />
               </Span>

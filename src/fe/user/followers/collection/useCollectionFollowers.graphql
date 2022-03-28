@@ -1,0 +1,19 @@
+query collectionFollowers($collectionId: String!, $limit:Int, $before:[Cursor!], $after:[Cursor!]) {
+  collection(collectionId:$collectionId) @connection(key: "collectionFollowers", filter: ["collectionId"]){
+    id
+    followers(limit:$limit, before:$before, after:$after){
+      totalCount,
+      pageInfo{ ...FullPageInfo }
+      edges{
+        id
+        creator{
+          ...CollectionFollower
+        }
+      }
+    }
+  }
+}
+
+fragment CollectionFollower on User {
+  ...UserPreview
+}

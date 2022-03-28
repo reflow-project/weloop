@@ -1,0 +1,7 @@
+
+query communityData($communityId:String!){
+  community(communityId:$communityId){
+    id
+    ...CommunityPageData
+  }
+}

@@ -1,0 +1,27 @@
+fragment ThreadPreview on Thread {
+  id
+  lastActivity
+  createdAt
+  context{
+    ...on Community {
+      ...CommunityPreview
+    }
+    ...on Collection {
+      ...CollectionPreview
+    }
+    ...on Resource {
+      ...ResourcePreview
+    }
+    ...on Flag {
+      ...FlagPreview
+    }
+  }
+  comments(limit:1){
+    totalCount
+    edges{
+     ...on Comment {
+          ...CommentPreview
+        }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+mutation createCollection($collection: CollectionInput!, $contextId: String!, $icon: UploadInput) {
+  createCollection(collection: $collection, contextId: $contextId, icon: $icon) {
+    ...CollectionPageData
+  }
+}

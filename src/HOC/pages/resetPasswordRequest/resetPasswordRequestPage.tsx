@@ -2,9 +2,9 @@ import { useFormik } from 'formik';
 import React, { FC } from 'react';
 import ResetPasswordRequestPage, { ResetPasswordFormValues } from 'ui/pages/resetPassword';
 import * as Yup from 'yup';
+import { useAnon } from 'fe/session/useAnon';
 import { t } from '@lingui/macro';
 import { usePageTitle } from 'context/global/pageCtx';
-import { useAnon } from 'fe/session/useAnon';
 
 export const validationSchema: Yup.ObjectSchema<ResetPasswordFormValues> = Yup.object<
   ResetPasswordFormValues
@@ -22,9 +22,9 @@ const resetPasswordPageTitle = t`Reset Password`;
 
 export const ResetPasswordPageHOC: FC<Props> = () => {
   usePageTitle(resetPasswordPageTitle);
-  const { resetPwdRequest } = useAnon();
+  const { resetPwdReq } = useAnon();
   const formik = useFormik<ResetPasswordFormValues>({
-    onSubmit: ({ email }) => resetPwdRequest(email),
+    onSubmit: ({ email }) => resetPwdReq(email),
     initialValues,
     validationSchema
   });

@@ -1,0 +1,55 @@
+mutation flag($contextId: String!,$message: String!) {
+    createFlag(contextId: $contextId, message: $message){
+      context{
+        ...on Collection{
+          id
+          myFlag{ id }
+        }
+        ...on Comment{
+          id
+          myFlag{ id }
+        }
+        ...on Community{
+          id
+          myFlag{ id }
+        }
+        ...on Resource{
+          id
+          myFlag{ id }
+        }
+        ...on User{
+          userId: id
+          myFlag{ id }
+        }
+      }
+    }
+}
+
+mutation unflag($contextId: String!) {
+  delete(contextId: $contextId){
+    ... on Flag {
+      context{
+        ...on Collection{
+          id
+          myFlag{ id }
+        }
+        ...on Comment{
+          id
+          myFlag{ id }
+        }
+        ...on Community{
+          id
+          myFlag{ id }
+        }
+        ...on Resource{
+          id
+          myFlag{ id }
+        }
+        ...on User{
+          userId: id
+          myFlag{ id }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+query SearchHostIndexAndMyFollows {
+  instance {
+    ...SearchInstance
+  }
+}
+
+fragment SearchInstance on Instance {
+  hostname
+}
+
+mutation searchFollow($url: String!) {
+  createFollowByUrl(url: $url) {
+    id
+  }
+}
+
+mutation searchUnfollow($contextId: String!) {
+  delete(contextId: $contextId) {
+    __typename
+  }
+}

@@ -12,6 +12,7 @@ import { FormikHook } from 'ui/@types/types';
 import Avatar from 'ui/elements/Avatar';
 // import Loader from "../../components/elements/Loader/Loader";
 import styled from '../../themes/styled';
+import { LoadMore } from '../Loadmore';
 
 export enum Status {
   Loading,
@@ -68,23 +69,23 @@ const Nav = styled(Box)`
     text-decoration: none;
   }
 `;
-//
-// const CommunityLink = styled(NavLink)`
-//   margin-bottom: 0px;
-//   img {
-//     width: 36px;
-//     height: 36px;
-//   }
-//   &.active {
-//     > div {
-//       background: ${props => props.theme.colors.primary};
-//     }
-//     div {
-//       color: ${props => props.theme.colors.appInverse} !important;
-//     }
-//     position: relative;
-//   }
-// `;
+
+const CommunityLink = styled(NavLink)`
+  margin-bottom: 0px;
+  img {
+    width: 36px;
+    height: 36px;
+  }
+  &.active {
+    > div {
+      background: ${props => props.theme.colors.primary};
+    }
+    div {
+      color: ${props => props.theme.colors.appInverse} !important;
+    }
+    position: relative;
+  }
+`;
 
 const SidebarLink = styled(NavLink)`
   position: relative;
@@ -202,6 +203,21 @@ export const Sidebar: React.FC<Props> = props => {
                           <ItemTitleDir variant="link">{i18n._(my_timeline)}</ItemTitleDir>
                         </NavItem>
                       </SidebarLink>
+                    </Nav>
+                    <Nav>
+                      {props.communities.map((community: CommunityPreview, i) => (
+                        <CommunityLink key={community.link} to={community.link}>
+                          <NavItem alignItems={'center'} mb={2}>
+                            <Avatar
+                              size="s"
+                              initials={community.name.substr(0, 2)}
+                              src={community.icon}
+                            />
+                            <ItemTitleDir variant="link">{community.name}</ItemTitleDir>
+                          </NavItem>
+                        </CommunityLink>
+                      ))}
+                      {props.LoadMoreFormik && <LoadMore LoadMoreFormik={props.LoadMoreFormik} />}
                     </Nav>
                   </>
                 </SidebarOverflow>

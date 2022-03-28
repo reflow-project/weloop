@@ -2,26 +2,19 @@ mutation createDefaultEconomicEvent(
   $name: String,
   $note: String,
   $action: ID!,
-  $hasBeginning: DateTime!,
-  $hasEnd: DateTime!,
 ) {
   createEconomicEvent (
     event : {
-      action: $action ,
-      note: $note,
-      hasBeginning: $hasBeginning,
-      hasEnd: $hasEnd,
+      action : $action ,
+      note : $note
     } ,
     newInventoriedResource : {
       name : $name,
-      note : $note,
+      note : $note
     }
   )
   {
     economicEvent  {
-      hasPointInTime
-      hasBeginning
-      hasEnd
       id
       note
     }

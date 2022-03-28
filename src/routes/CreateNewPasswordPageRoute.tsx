@@ -7,12 +7,14 @@ import { RedirectAuthenticatedToHome } from './wrappers/RedirectBySession';
 interface CreateNewPasswordPageRouter {
   token: string;
 }
-const CreateNewPasswordPageRouter: FC<RouteComponentProps<CreateNewPasswordPageRouter>> = ({
+const CreateNewPasswordPageRouter: FC<RouteComponentProps<
+  CreateNewPasswordPageRouter
+>> = ({
   match: {
     params: { token }
   }
 }) => {
-  const props = useMemo<any>(() => {
+  const props = useMemo<CreateNewPasswordPageHOC>(() => {
     return {
       token
     };

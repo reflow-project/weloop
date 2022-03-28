@@ -5,14 +5,14 @@ import { Button } from 'rebass/styled-components';
 import media from 'styled-media-query';
 import { i18nMark } from '@lingui/react';
 import Input from '../../elements/Input';
-// import { FilterType } from 'HOC/pages/inventory/InventoryPage';
+import { FilterType } from 'HOC/pages/inventory/InventoryPage';
 import { CollectionContainerForm } from '../CreateCollectionPanel/style';
 import { FormGroup, FormLabel } from '../EconomicEventManager/styles';
 import { ASC, DES, NAME } from '../../../util/constants/pagination';
 
 type Props = {
   isOpen: boolean;
-  filterSet: any;
+  filterSet: FilterType;
   triggerOpen: (value: boolean) => void;
   onChange: (props: { [field: string]: string | boolean }, isClear?: boolean) => void;
   onClear: () => void;

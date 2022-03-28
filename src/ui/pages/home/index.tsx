@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro';
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Box, Text } from 'rebass/styled-components';
-// import { FormikHook } from 'ui/@types/types';
+import { FormikHook } from 'ui/@types/types';
 import {
   HomeBox,
   // MenuList
@@ -12,13 +12,14 @@ import {
   Wrapper,
   WrapperCont
 } from 'ui/elements/Layout';
+import { LoadMore } from 'ui/modules/Loadmore';
 import styled from 'ui/themes/styled';
 import { ReactElement } from 'react';
 
 export interface Props {
   // nextCommunitiesFormik?: FormikHook;
   // nextCollectionsFormik?: FormikHook;
-  // nextInboxFormik: FormikHook | null;
+  nextInboxFormik: FormikHook | null;
   // FollowedCommunitiesElements: ReactElement;
   // FollowedCollectionsElements: ReactElement;
   InboxElements: ReactElement;
@@ -27,9 +28,9 @@ export interface Props {
 
 export const Home: React.FC<Props> = ({
   basePath,
-  InboxElements
-}: // nextInboxFormik
-// nextCommunitiesFormik,
+  InboxElements,
+  nextInboxFormik
+}: // nextCommunitiesFormik,
 // nextCollectionsFormik,
 // FollowedCommunitiesElements,
 // FollowedCollectionsElements
@@ -60,7 +61,7 @@ Props) => {
               </Route> */}
               <Route path={`${basePath}`}>
                 <List>{InboxElements}</List>
-                {/*{nextInboxFormik && <LoadMore LoadMoreFormik={nextInboxFormik} />}*/}
+                {nextInboxFormik && <LoadMore LoadMoreFormik={nextInboxFormik} />}
               </Route>
             </Switch>
           </Wrapper>

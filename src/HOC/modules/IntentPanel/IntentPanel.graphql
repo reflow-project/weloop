@@ -1,0 +1,38 @@
+query intentItem($intentId: ID) {
+  intent(id: $intentId) {
+    hasBeginning
+    hasPointInTime
+    name
+    note
+    image
+
+    tags {
+      ... on Taggable {
+        name
+      }
+    }
+
+    resourceQuantity {
+      hasUnit {
+        label
+      }
+      hasNumericalValue
+    }
+
+    resourceInventoriedAs {
+      id
+      trace {
+        hasPointInTime
+        action {
+          label
+        }
+      }
+    }
+
+    provider {
+      name
+      image
+      id
+    }
+  }
+}

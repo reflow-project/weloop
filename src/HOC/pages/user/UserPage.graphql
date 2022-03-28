@@ -1,21 +1,26 @@
-mutation createUser($profileName: String!, $userName: String, $summary: String) {
-    createUser(profile: {
-      name: $profileName
-      summary: $summary
-    }
-      character: {
-        username: $userName
-      }
-    ) {
-      accountId
-      user {
-        character {
-          username
-        }
-        profile {
-          name
-          summary
-        }
-      }
-    }
+
+
+fragment UserPageActivities on Activity {
+  id
+}
+
+fragment UserPageUserData on User {
+  id
+  userId:id
+  collectionFollows{
+    totalCount
+  }
+  communityFollows{
+    totalCount
+  }
+  userFollows{
+    totalCount
+  }
+  outbox{
+    totalCount
+  }
+  website
+  userName:name
+  
+  ...HeroUserUserData
 }

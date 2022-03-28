@@ -8,11 +8,14 @@ export const getMainHeaderProps = (): Props => {
     user: {
       name: 'Estrella',
       icon: 'https://docs.moodle.org/dev/images_dev/thumb/2/2b/estrella.jpg/100px-estrella.jpg',
-      link: '/'
+      link: '/',
+      isAdmin: false,
+      logout: () => console.log(false)
     },
     toggleSideBar: () => console.log(true),
     Search: <Input placeholder="Search..." />,
     toggleDropdown: action('toggle Dropdown'),
+    createCommunity: action('create Community'),
     createResource: action('create Resource'),
     createIntent: action('create Intent'),
     isOpenDropdown: false

@@ -1,0 +1,8 @@
+
+
+mutation reply( $comment: CommentInput!, $inReplyToCommentId: String!, $threadId: String!) {
+    createReply(comment: $comment, inReplyToId: $inReplyToCommentId, threadId: $threadId){
+        ...CommentPreview
+    }
+}
+

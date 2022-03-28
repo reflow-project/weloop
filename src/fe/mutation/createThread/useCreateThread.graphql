@@ -1,0 +1,7 @@
+mutation createThread($contextId: String!, $comment: CommentInput!) {
+    createThread(comment:$comment, contextId: $contextId){
+        thread{
+          id
+        }
+    }
+}

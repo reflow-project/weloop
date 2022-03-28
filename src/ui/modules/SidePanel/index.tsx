@@ -3,10 +3,10 @@ import { Nav, NavItem, Panel, PanelTitle, WrapperPanel } from 'ui/elements/Panel
 import { Trans } from '@lingui/macro';
 import { Text } from 'rebass/styled-components';
 import styled from 'ui/themes/styled';
-// import { Community } from 'graphql/types.generated';
+import { Community } from 'graphql/types.generated';
 
 export type Props = {
-  communities?: Array<any>;
+  communities?: Array<Community>;
 };
 
 export const SidePanel: React.FC<Props> = props => {

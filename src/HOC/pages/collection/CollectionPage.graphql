@@ -1,0 +1,19 @@
+
+
+
+fragment CollectionPageData on Collection {
+  name
+  ...HeroCollectionData
+}
+
+fragment CollectionPageResource on Resource {
+  id
+  createdAt
+  ...ResourcePreview
+}
+
+fragment CollectionPageActivity on Activity {
+  id
+  ...ActivityPreview
+}
+

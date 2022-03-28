@@ -7,6 +7,8 @@ import {
   List,
   MainContainer,
   HomeBox,
+  ObjectsList,
+  CollectionsWrapper,
   MenuList,
   ButtonIcon,
   MenuItem
@@ -21,6 +23,8 @@ import { ReactElement } from 'react';
 export interface Props {
   tabPaths: {
     timeline: string;
+    communities: string;
+    collections: string;
   };
   FeaturedCommunitiesBox: ReactElement;
   FeaturedCollectionsBox: ReactElement;
@@ -46,6 +50,16 @@ export const Discover: React.FC<Props> = ({
           <Wrapper>
             <Menu tabPaths={tabPaths} />
             <Switch>
+              <Route exact path={tabPaths.communities}>
+                <ObjectsList>{CommunitiesBoxes}</ObjectsList>
+                {LoadMoreFormik && <LoadMore LoadMoreFormik={LoadMoreFormik} />}
+              </Route>
+              <Route exact path={tabPaths.collections}>
+                <ObjectsList>
+                  <CollectionsWrapper>{CollectionsBoxes}</CollectionsWrapper>
+                </ObjectsList>
+                {LoadMoreFormik && <LoadMore LoadMoreFormik={LoadMoreFormik} />}
+              </Route>
               <Route exact path={tabPaths.timeline}>
                 <List>{ActivitiesBox}</List>
                 {LoadMoreFormik && <LoadMore LoadMoreFormik={LoadMoreFormik} />}
@@ -58,6 +72,7 @@ export const Discover: React.FC<Props> = ({
   );
 };
 const UsersIcon = require('react-feather/dist/icons/users').default;
+const ActivityIcon = require('react-feather/dist/icons/activity').default;
 
 const Menu: React.FC<{ tabPaths: Props['tabPaths'] }> = ({ tabPaths }) => (
   <>
@@ -74,6 +89,14 @@ const Menu: React.FC<{ tabPaths: Props['tabPaths'] }> = ({ tabPaths }) => (
         <ButtonIcon className="icon-holder">
           <UsersIcon size="24" />
         </ButtonIcon>
+      </MenuItem>
+      <MenuItem exact to={tabPaths.communities}>
+        <div className="text-holder">
+          <Trans>All communities</Trans>
+        </div>
+        <ActivityIcon className="icon-holder">
+          <UsersIcon size="24" />
+        </ActivityIcon>
       </MenuItem>
     </MenuList>
   </>
