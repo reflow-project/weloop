@@ -1,0 +1,21 @@
+mutation createUser($profileName: String!, $userName: String, $summary: String) {
+    createUser(profile: {
+      name: $profileName
+      summary: $summary
+    }
+      character: {
+        username: $userName
+      }
+    ) {
+      accountId
+      user {
+        character {
+          username
+        }
+        profile {
+          name
+          summary
+        }
+      }
+    }
+}
