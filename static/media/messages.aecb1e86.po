@@ -1,0 +1,1168 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2022-03-28 09:28+0000\n"
+"Mime-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en_GB\n"
+
+#: src/ui/modules/Resource/PrimaryAccountablePerson/index.tsx:19
+msgid "<0><1>Relationships As Object: </1>{0}</0>"
+msgstr ""
+
+#: src/ui/modules/CreateIntentPanel/index.tsx:88
+msgid "A description of your intent"
+msgstr ""
+
+#: src/ui/modules/ShareLink/index.tsx:15
+msgid "A name or title for the resource"
+msgstr ""
+
+#: src/ui/modules/AddResource/UploadResource.tsx:20
+msgid "A title for the resource"
+msgstr ""
+
+#: src/ui/modules/Footer/index.tsx:12
+msgid "About"
+msgstr ""
+
+#: src/ui/modules/FeaturedModal/index.tsx:25
+#: src/ui/pages/settings/instance.tsx:36
+#: src/ui/pages/settings/invites.tsx:29
+msgid "Add"
+msgstr ""
+
+#: src/ui/pages/settings/instance.tsx:30
+msgid "Add Domain to allowlist"
+msgstr ""
+
+#: src/ui/modules/FeaturedModal/index.tsx:12
+msgid "Add To Featured List"
+msgstr ""
+
+#: src/ui/pages/settings/invites.tsx:13
+msgid "Add email addresses (comma-separated) to invite to instance"
+msgstr ""
+
+#: src/ui/pages/collection/index.tsx:38
+msgid "Add new publication"
+msgstr ""
+
+#: src/ui/modules/HeroCollection/index.tsx:64
+#: src/ui/modules/HeroCommunity/index.tsx:60
+msgid "Add to featured list"
+msgstr ""
+
+#: src/ui/modules/MainHeader/dropdown.tsx:111
+msgid "Admin dashboard"
+msgstr ""
+
+#: src/HOC/pages/all-collections/AllCollection.tsx:8
+msgid "All Collections"
+msgstr ""
+
+#: src/HOC/pages/all-communities/AllCommunities.tsx:9
+msgid "All Communities"
+msgstr ""
+
+#: src/ui/pages/discover/index.tsx:55
+msgid "All communities"
+msgstr ""
+
+#: src/ui/pages/settings/instance.tsx:43
+msgid "Allowed Domains"
+msgstr ""
+
+#: src/ui/modules/FlagModal/index.tsx:49
+msgid "Are you sure you want to unflag this item?"
+msgstr ""
+
+#: src/ui/modules/Previews/FlaggedItem.tsx:22
+msgid "Block"
+msgstr ""
+
+#: src/ui/pages/login/index.tsx:59
+msgid "Browse"
+msgstr ""
+
+#: src/ui/pages/login/index.tsx:52
+msgid "Browse this instance"
+msgstr ""
+
+#: src/ui/modules/AddResource/UploadResource.tsx:87
+msgid "CC License"
+msgstr ""
+
+#: src/ui/modules/AddResource/UploadResource.tsx:107
+#: src/ui/modules/ConfirmationPanel/index.tsx:22
+#: src/ui/modules/CreateCollectionPanel/index.tsx:61
+#: src/ui/modules/CreateCommunityPanel/index.tsx:63
+#: src/ui/modules/CreateEventOnResourcePanel/index.tsx:192
+#: src/ui/modules/CreateIntentPanel/index.tsx:105
+#: src/ui/modules/CreateResourcePanel/index.tsx:237
+#: src/ui/modules/EditCollectionPanel/index.tsx:58
+#: src/ui/modules/EditCommunityPanel/index.tsx:58
+#: src/ui/modules/EditResourcePanel/index.tsx:71
+#: src/ui/modules/FeaturedModal/index.tsx:28
+#: src/ui/modules/FeaturedModal/index.tsx:50
+#: src/ui/modules/FlagModal/index.tsx:38
+#: src/ui/modules/FlagModal/index.tsx:57
+#: src/ui/modules/MoodlePanel/index.tsx:43
+#: src/ui/modules/ShareLink/fetched.tsx:58
+#: src/ui/modules/UpdateResourcePanel/index.tsx:57
+msgid "Cancel"
+msgstr ""
+
+#: src/ui/pages/settings/index.tsx:21
+msgid "Choose a location"
+msgstr ""
+
+#: src/ui/modules/CreateCollectionPanel/index.tsx:13
+msgid "Choose a name for the collection"
+msgstr ""
+
+#: src/ui/modules/CreateCommunityPanel/index.tsx:15
+#: src/ui/modules/EditCommunityPanel/index.tsx:15
+#: src/ui/modules/EditResourcePanel/index.tsx:12
+msgid "Choose a name for the community"
+msgstr ""
+
+#: src/ui/pages/signUp/index.tsx:21
+msgid "Choose your password"
+msgstr ""
+
+#: src/ui/modules/MainHeader/dropdown.tsx:120
+msgid "Code of Conduct"
+msgstr ""
+
+#: src/ui/modules/Footer/index.tsx:27
+msgid "Code of Conduct & Privacy Policy"
+msgstr ""
+
+#: src/ui/modules/Previews/Collection.tsx:14
+msgid "Collection"
+msgstr ""
+
+#: src/HOC/pages/collection/CollectionPage.tsx:21
+msgid "Collection {name} - Followers"
+msgstr ""
+
+#: src/HOC/pages/collection/CollectionPage.tsx:22
+msgid "Collection {name} - Publications"
+msgstr ""
+
+#: src/ui/modules/Previews/Community.tsx:51
+msgid "Collections"
+msgstr ""
+
+#: src/ui/modules/ProposedIntentPanel/index.tsx:40
+msgid "Comment"
+msgstr ""
+
+#: src/ui/modules/Previews/Community.tsx:15
+#: src/ui/pages/collection/index.tsx:57
+#: src/ui/pages/thread/index.tsx:42
+msgid "Community"
+msgstr ""
+
+#: src/HOC/pages/community/CommunityPage.tsx:37
+msgid "Community {name} - Activities"
+msgstr ""
+
+#: src/HOC/pages/community/CommunityPage.tsx:39
+msgid "Community {name} - Discussions"
+msgstr ""
+
+#: src/HOC/pages/community/CommunityPage.tsx:36
+msgid "Community {name} - Intents"
+msgstr ""
+
+#: src/HOC/pages/community/CommunityPage.tsx:40
+msgid "Community {name} - Members"
+msgstr ""
+
+#: src/ui/pages/signUp/index.tsx:101
+msgid "Confirm password"
+msgstr ""
+
+#: src/HOC/pages/confirmEmail/ConfirmEmailPage.tsx:7
+msgid "Confirm your email"
+msgstr ""
+
+#: src/ui/pages/createNewPassword/index.tsx:13
+msgid "Confirm your new password"
+msgstr ""
+
+#: src/ui/pages/signUp/index.tsx:22
+msgid "Confirm your password"
+msgstr ""
+
+#: src/ui/modules/AddResource/UploadResource.tsx:90
+msgid "Confused? Read this!"
+msgstr ""
+
+#: src/ui/modules/EditResourcePanel/index.tsx:68
+msgid "Create"
+msgstr ""
+
+#: src/ui/modules/EconomicEventManager/index.tsx:187
+msgid "Create Event"
+msgstr ""
+
+#: src/ui/elements/LocationPanel/index.tsx:25
+#: src/ui/elements/LocationPanel/index.tsx:69
+#: src/ui/modules/CreateResourcePanel/index.tsx:189
+msgid "Create Location"
+msgstr ""
+
+#: src/ui/modules/CreateCollectionPanel/index.tsx:25
+msgid "Create a new collection"
+msgstr ""
+
+#: src/ui/modules/CreateCommunityPanel/index.tsx:27
+msgid "Create a new community"
+msgstr ""
+
+#: src/HOC/modules/CreateMenuHOK/CreateDropdown.tsx:28
+#: src/ui/modules/MainHeader/dropdown.tsx:151
+#: src/ui/pages/community/index.tsx:66
+msgid "Create a new intent"
+msgstr ""
+
+#: src/HOC/modules/CreateMenuHOK/CreateDropdown.tsx:36
+#: src/ui/modules/MainHeader/dropdown.tsx:159
+#: src/ui/pages/inventory/index.tsx:44
+msgid "Create a new resource"
+msgstr ""
+
+#: src/ui/modules/CreateIntentPanel/index.tsx:29
+msgid "Create an intent"
+msgstr ""
+
+#: src/ui/modules/CreateIntentPanel/index.tsx:82
+#: src/ui/modules/CreateResourcePanel/index.tsx:183
+msgid "CustomSelect location"
+msgstr ""
+
+#: src/ui/modules/Previews/FlaggedItem.tsx:29
+#: src/ui/pages/resource/index.tsx:43
+msgid "Delete"
+msgstr ""
+
+#: src/ui/modules/AddResource/UploadResource.tsx:64
+#: src/ui/modules/EditResourcePanel/index.tsx:45
+msgid "Description"
+msgstr ""
+
+#: src/ui/modules/Sidebar/index.tsx:150
+msgid "Discover"
+msgstr ""
+
+#: src/HOC/pages/discover/DiscoverPage.tsx:21
+msgid "Discover Activities"
+msgstr ""
+
+#: src/HOC/pages/discover/DiscoverPage.tsx:22
+msgid "Discover Collections"
+msgstr ""
+
+#: src/HOC/pages/discover/DiscoverPage.tsx:23
+msgid "Discover Communities"
+msgstr ""
+
+#: src/HOC/pages/thread/ThreadPage.tsx:15
+msgid "Discussion: {excerpt}"
+msgstr ""
+
+#: src/ui/pages/community/index.tsx:207
+msgid "Discussions"
+msgstr ""
+
+#: src/ui/pages/settings/index.tsx:19
+msgid "Display Name"
+msgstr ""
+
+#: src/ui/modules/FeaturedCollections/index.tsx:79
+#: src/ui/modules/FeaturedCommunities/index.tsx:78
+msgid "Done"
+msgstr ""
+
+#: src/ui/modules/FeaturedCollections/index.tsx:77
+#: src/ui/modules/FeaturedCommunities/index.tsx:76
+#: src/ui/pages/resource/index.tsx:40
+msgid "Edit"
+msgstr ""
+
+#: src/ui/modules/HeroCollection/index.tsx:49
+msgid "Edit the collection"
+msgstr ""
+
+#: src/ui/modules/HeroCommunity/index.tsx:45
+msgid "Edit the community"
+msgstr ""
+
+#: src/ui/modules/EditCollectionPanel/index.tsx:15
+msgid "Edit the name of the collection"
+msgstr ""
+
+#: src/ui/modules/EditResourcePanel/index.tsx:21
+msgid "Edit the resource details"
+msgstr ""
+
+#: src/ui/pages/settings/invites.tsx:23
+#: src/ui/pages/signUp/index.tsx:65
+msgid "Email"
+msgstr ""
+
+#: src/ui/pages/settings/index.tsx:22
+msgid "Enter a URL to share more info about you"
+msgstr ""
+
+#: src/ui/pages/settings/instance.tsx:14
+msgid "Enter domain (e.g. moodle.com)"
+msgstr ""
+
+#: src/ui/modules/EditCollectionPanel/index.tsx:17
+msgid "Enter the URL of an icon to represent the collection"
+msgstr ""
+
+#: src/ui/modules/ShareLink/fetched.tsx:17
+msgid "Enter the URL of an icon to represent the resource"
+msgstr ""
+
+#: src/ui/modules/CreateCollectionPanel/index.tsx:15
+msgid "Enter the URL of an image to represent the collection"
+msgstr ""
+
+#: src/ui/modules/CreateCommunityPanel/index.tsx:17
+#: src/ui/modules/EditCommunityPanel/index.tsx:17
+msgid "Enter the URL of an image to represent the community"
+msgstr ""
+
+#: src/ui/modules/EditResourcePanel/index.tsx:14
+#: src/ui/modules/ShareLink/index.tsx:18
+msgid "Enter the URL of an image to represent the resource"
+msgstr ""
+
+#: src/ui/modules/ShareLink/index.tsx:14
+msgid "Enter the URL of the resource"
+msgstr ""
+
+#: src/ui/pages/login/index.tsx:17
+#: src/ui/pages/resetPassword/index.tsx:14
+msgid "Enter your email"
+msgstr ""
+
+#: src/ui/pages/createNewPassword/index.tsx:12
+msgid "Enter your new password"
+msgstr ""
+
+#: src/ui/pages/login/index.tsx:18
+msgid "Enter your password"
+msgstr ""
+
+#: src/ui/pages/resource/index.tsx:157
+msgid "Event Date:"
+msgstr ""
+
+#: src/ui/modules/CreateEventOnResourcePanel/index.tsx:178
+#: src/ui/modules/CreateResourcePanel/index.tsx:90
+msgid "Event Note"
+msgstr ""
+
+#: src/ui/modules/FeaturedCollections/index.tsx:70
+msgid "Featured collections"
+msgstr ""
+
+#: src/ui/modules/FeaturedCommunities/index.tsx:70
+msgid "Featured communities"
+msgstr ""
+
+#: src/ui/modules/Footer/index.tsx:22
+msgid "Feedback & Suggestions"
+msgstr ""
+
+#: src/ui/modules/ShareLink/index.tsx:17
+msgid "Fetch the resource"
+msgstr ""
+
+#: src/ui/pages/search/index.tsx:30
+msgid "Filters"
+msgstr ""
+
+#: src/ui/modules/HeroCollection/index.tsx:55
+msgid "Flag this collection"
+msgstr ""
+
+#: src/ui/modules/Previews/Comment.tsx:39
+#: src/ui/modules/Previews/Comment.tsx:79
+#: src/ui/modules/Previews/MainComment.tsx:36
+msgid "Flag this comment"
+msgstr ""
+
+#: src/ui/modules/HeroCommunity/index.tsx:51
+msgid "Flag this community"
+msgstr ""
+
+#: src/ui/modules/Previews/Resource.tsx:71
+msgid "Flag this resource"
+msgstr ""
+
+#: src/ui/modules/HeroUser/index.tsx:41
+msgid "Flag this user"
+msgstr ""
+
+#: src/ui/pages/settings/flags.tsx:10
+#: src/ui/pages/settings/index.tsx:187
+msgid "Flags"
+msgstr ""
+
+#: src/ui/modules/HeroUser/index.tsx:32
+#: src/ui/modules/ProposedIntentPanel/index.tsx:35
+msgid "Follow"
+msgstr ""
+
+#: src/ui/pages/collection/index.tsx:94
+msgid "Followers"
+msgstr ""
+
+#: src/ui/modules/Previews/Collection.tsx:33
+msgid "Following"
+msgstr ""
+
+#: src/ui/pages/signUp/index.tsx:74
+msgid "Full name"
+msgstr ""
+
+#: src/ui/pages/settings/index.tsx:131
+msgid "General information"
+msgstr ""
+
+#: src/ui/pages/resource/index.tsx:292
+msgid "Hide data"
+msgstr ""
+
+#: src/ui/modules/ProposedIntentPanel/index.tsx:62
+msgid "History"
+msgstr ""
+
+#: src/ui/modules/CreateResourcePanel/index.tsx:186
+msgid "If you did not find your locations in the list, you can create it"
+msgstr ""
+
+#: src/ui/pages/resetPassword/index.tsx:24
+msgid "If your email is linked to an account in our database, we have sent you an email with which you can reset your password. It may take a few minutes to arrive depending on your mail provider."
+msgstr ""
+
+#: src/ui/modules/Previews/FlaggedItem.tsx:37
+msgid "Ignore"
+msgstr ""
+
+#: src/ui/modules/AddResource/UploadResource.tsx:75
+#: src/ui/modules/EditResourcePanel/index.tsx:57
+#: src/ui/modules/UpdateResourcePanel/index.tsx:31
+msgid "Image"
+msgstr ""
+
+#: src/ui/pages/settings/index.tsx:162
+msgid "Instance"
+msgstr ""
+
+#: src/ui/pages/login/index.tsx:76
+msgid "Instance description"
+msgstr ""
+
+#: src/ui/modules/Previews/Intent.tsx:13
+msgid "Intent"
+msgstr ""
+
+#: src/ui/pages/community/index.tsx:191
+msgid "Intents"
+msgstr ""
+
+#: src/ui/pages/user/index.tsx:97
+msgid "Inventory"
+msgstr ""
+
+#: src/ui/pages/settings/index.tsx:174
+msgid "Invites"
+msgstr ""
+
+#: src/ui/modules/HeroCommunity/index.tsx:36
+#: src/ui/modules/Previews/Community.tsx:60
+msgid "Join"
+msgstr ""
+
+#: src/ui/modules/Previews/Thread.tsx:18
+msgid "Last activity"
+msgstr ""
+
+#: src/ui/elements/LocationPanel/index.tsx:49
+msgid "Lat"
+msgstr ""
+
+#: src/ui/modules/HeroCommunity/index.tsx:36
+#: src/ui/modules/Previews/Community.tsx:60
+msgid "Leave"
+msgstr ""
+
+#: src/ui/modules/Loadmore/index.tsx:9
+msgid "Load more"
+msgstr ""
+
+#: src/ui/elements/LocationPanel/index.tsx:42
+msgid "Location name"
+msgstr ""
+
+#: src/ui/modules/CreateEventOnResourcePanel/index.tsx:71
+#: src/ui/pages/resource/index.tsx:77
+msgid "Location:"
+msgstr ""
+
+#: src/HOC/pages/login/LoginPage.tsx:16
+#: src/ui/pages/resetPassword/index.tsx:31
+msgid "Login"
+msgstr ""
+
+#: src/ui/pages/settings/logs.tsx:11
+msgid "Logs will be available soon"
+msgstr ""
+
+#: src/ui/elements/LocationPanel/index.tsx:56
+msgid "Long"
+msgstr ""
+
+#: src/HOC/pages/map/MapPage.tsx:47
+msgid "Map"
+msgstr ""
+
+#: src/ui/modules/AddResource/UploadResource.tsx:43
+msgid "Max filesize: 20MB"
+msgstr ""
+
+#: src/ui/pages/community/index.tsx:215
+msgid "Members"
+msgstr ""
+
+#: src/ui/pages/settings/logs.tsx:7
+msgid "Moderation Log"
+msgstr ""
+
+#: src/ui/pages/settings/index.tsx:199
+msgid "Moderation log"
+msgstr ""
+
+#: src/HOC/pages/lmsMoodleSearch/lmsMoodleSearch.tsx:4
+msgid "Moodle LMS"
+msgstr ""
+
+#: src/ui/modules/Previews/Comment.tsx:33
+#: src/ui/modules/Previews/Comment.tsx:73
+#: src/ui/modules/Previews/MainComment.tsx:30
+msgid "More"
+msgstr ""
+
+#: src/ui/pages/resource/index.tsx:287
+msgid "More info"
+msgstr ""
+
+#: src/ui/pages/settings/instance.tsx:56
+msgid "More options will be available soon"
+msgstr ""
+
+#: src/HOC/pages/home/HomeHoc.tsx:11
+msgid "My Activities"
+msgstr ""
+
+#: src/ui/modules/MainHeader/dropdown.tsx:85
+msgid "My Activity"
+msgstr ""
+
+#: src/ui/modules/MainHeader/dropdown.tsx:65
+msgid "My Communities"
+msgstr ""
+
+#: src/ui/modules/MainHeader/dropdown.tsx:75
+msgid "My Inventory"
+msgstr ""
+
+#: src/ui/modules/MainHeader/dropdown.tsx:56
+msgid "My Profile"
+msgstr ""
+
+#: src/ui/modules/MainHeader/dropdown.tsx:95
+msgid "My favorites"
+msgstr ""
+
+#: src/ui/pages/home/index.tsx:19
+msgid "My timeline"
+msgstr ""
+
+#: src/ui/elements/LocationPanel/index.tsx:41
+#: src/ui/elements/LocationPanel/index.tsx:50
+msgid "Name"
+msgstr ""
+
+#: src/ui/modules/CreateIntentPanel/index.tsx:38
+#: src/ui/modules/CreateResourcePanel/index.tsx:82
+msgid "Name of your resource"
+msgstr ""
+
+#: src/HOC/modules/CreateMenuHOK/CreateDropdown.tsx:20
+#: src/ui/modules/MainHeader/dropdown.tsx:143
+msgid "New Community"
+msgstr ""
+
+#: src/ui/pages/settings/flags.tsx:17
+msgid "No flags yet"
+msgstr ""
+
+#: src/ui/pages/resource/index.tsx:125
+#: src/ui/pages/resource/index.tsx:205
+msgid "Not provided"
+msgstr ""
+
+#: src/ui/elements/LocationPanel/index.tsx:64
+#: src/ui/modules/EconomicEventManager/index.tsx:178
+#: src/ui/modules/UpdateResourcePanel/index.tsx:39
+#: src/ui/modules/UpdateResourcePanel/index.tsx:40
+msgid "Note"
+msgstr ""
+
+#: src/ui/modules/CreateEventOnResourcePanel/index.tsx:79
+#: src/ui/pages/inventory/index.tsx:64
+#: src/ui/pages/resource/index.tsx:66
+msgid "Note:"
+msgstr ""
+
+#: src/ui/modules/CreateEventOnResourcePanel/index.tsx:153
+#: src/ui/modules/CreateIntentPanel/index.tsx:66
+#: src/ui/modules/CreateIntentPanel/index.tsx:67
+#: src/ui/modules/CreateResourcePanel/index.tsx:213
+#: src/ui/modules/EconomicEventManager/index.tsx:169
+msgid "Numerical Value"
+msgstr ""
+
+#: src/ui/modules/Footer/index.tsx:17
+msgid "Open Source Code"
+msgstr ""
+
+#: src/ui/pages/login/index.tsx:48
+msgid "Or"
+msgstr ""
+
+#: src/ui/pages/inventory/index.tsx:92
+#: src/ui/pages/resource/index.tsx:105
+msgid "Owner:"
+msgstr ""
+
+#: src/HOC/pages/not-found/NotFound.tsx:5
+msgid "Page Not Found"
+msgstr ""
+
+#: src/ui/pages/notFound/index.tsx:31
+msgid "Page not found"
+msgstr ""
+
+#: src/ui/pages/signUp/index.tsx:92
+msgid "Password"
+msgstr ""
+
+#: src/ui/pages/resource/index.tsx:37
+msgid "Perform event"
+msgstr ""
+
+#: src/ui/pages/signUp/index.tsx:35
+msgid "Please confirm your email address"
+msgstr ""
+
+#: src/ui/modules/FlagModal/index.tsx:13
+msgid "Please describe the reason for flagging the item"
+msgstr ""
+
+#: src/ui/modules/CreateCollectionPanel/index.tsx:14
+#: src/ui/modules/EditCollectionPanel/index.tsx:16
+msgid "Please describe what the collection is for and what kind of resources it is likely to contain..."
+msgstr ""
+
+#: src/ui/modules/ShareLink/fetched.tsx:16
+msgid "Please describe what the resource is about..."
+msgstr ""
+
+#: src/ui/modules/CreateCommunityPanel/index.tsx:16
+#: src/ui/modules/EditCommunityPanel/index.tsx:16
+msgid "Please describe who might be interested in this community and what kind of collections it is likely to contain..."
+msgstr ""
+
+#: src/ui/modules/EditResourcePanel/index.tsx:13
+msgid "Please describe who might be interested in this resource..."
+msgstr ""
+
+#: src/ui/pages/settings/index.tsx:20
+msgid "Please tell us a little bit about yourself..."
+msgstr ""
+
+#: src/ui/modules/AddResource/UploadResource.tsx:21
+#: src/ui/modules/ShareLink/index.tsx:16
+msgid "Please type or copy/paste a summary about the resource..."
+msgstr ""
+
+#: src/ui/modules/MoodlePanel/index.tsx:18
+msgid "Please write the Moodle LMS instance"
+msgstr ""
+
+#: src/ui/pages/thread/index.tsx:15
+msgid "Post a reply"
+msgstr ""
+
+#: src/ui/pages/settings/index.tsx:143
+msgid "Preferences"
+msgstr ""
+
+#: src/ui/pages/signUp/index.tsx:83
+msgid "Preferred username"
+msgstr ""
+
+#: src/ui/modules/Resource/PrimaryAccountablePerson/index.tsx:14
+msgid "Primary Accountable:"
+msgstr ""
+
+#: src/ui/modules/CreateEventOnResourcePanel/index.tsx:105
+#: src/ui/modules/CreateResourcePanel/index.tsx:108
+#: src/ui/modules/EconomicEventManager/index.tsx:125
+msgid "Provider"
+msgstr ""
+
+#: src/ui/pages/resource/index.tsx:179
+#: src/ui/pages/resource/index.tsx:246
+msgid "Provider:"
+msgstr ""
+
+#: src/ui/pages/collection/index.tsx:85
+msgid "Publications"
+msgstr ""
+
+#: src/ui/modules/AddResource/UploadResource.tsx:104
+#: src/ui/modules/SocialText/index.tsx:111
+msgid "Publish"
+msgstr ""
+
+#: src/ui/modules/CreateEventOnResourcePanel/index.tsx:124
+#: src/ui/modules/CreateResourcePanel/index.tsx:129
+#: src/ui/modules/EconomicEventManager/index.tsx:141
+msgid "Receiver"
+msgstr ""
+
+#: src/ui/pages/resource/index.tsx:192
+#: src/ui/pages/resource/index.tsx:259
+msgid "Receiver:"
+msgstr ""
+
+#: src/ui/pages/community/index.tsx:199
+#: src/ui/pages/user/index.tsx:73
+msgid "Recent activity"
+msgstr ""
+
+#: src/ui/modules/ProposedIntentPanel/index.tsx:45
+msgid "Remaining"
+msgstr ""
+
+#: src/ui/modules/FeaturedModal/index.tsx:47
+msgid "Remove"
+msgstr ""
+
+#: src/ui/modules/FeaturedModal/index.tsx:34
+msgid "Remove from Featured List"
+msgstr ""
+
+#: src/ui/modules/Previews/Comment.tsx:56
+#: src/ui/modules/Previews/LikedComment.tsx:23
+msgid "Reply"
+msgstr ""
+
+#: src/ui/modules/FlagModal/index.tsx:21
+msgid "Report as inappropriate"
+msgstr ""
+
+#: src/HOC/pages/resetPasswordRequest/resetPasswordRequestPage.tsx:16
+msgid "Reset Password"
+msgstr ""
+
+#: src/ui/pages/resetPassword/index.tsx:39
+msgid "Reset the password"
+msgstr ""
+
+#: src/ui/modules/AddResource/UploadResource.tsx:38
+#: src/ui/modules/CreateIntentPanel/index.tsx:37
+#: src/ui/modules/CreateResourcePanel/index.tsx:81
+#: src/ui/modules/Previews/ProposedIntent.tsx:13
+#: src/ui/modules/Previews/Resource.tsx:23
+msgid "Resource"
+msgstr ""
+
+#: src/ui/modules/CreateResourcePanel/index.tsx:223
+msgid "Resource note"
+msgstr ""
+
+#: src/ui/modules/Previews/Collection.tsx:25
+#: src/ui/modules/Previews/Collection.tsx:134
+msgid "Resources"
+msgstr ""
+
+#: src/ui/pages/resource/index.tsx:133
+msgid "Result:"
+msgstr ""
+
+#: src/ui/modules/CreateCollectionPanel/index.tsx:58
+#: src/ui/modules/CreateCommunityPanel/index.tsx:60
+#: src/ui/modules/CreateEventOnResourcePanel/index.tsx:189
+#: src/ui/modules/CreateIntentPanel/index.tsx:102
+#: src/ui/modules/CreateResourcePanel/index.tsx:234
+#: src/ui/modules/EditCollectionPanel/index.tsx:55
+#: src/ui/modules/EditCommunityPanel/index.tsx:55
+#: src/ui/pages/settings/index.tsx:93
+#: src/ui/pages/settings/preferences.tsx:36
+msgid "Save"
+msgstr ""
+
+#: src/ui/pages/createNewPassword/index.tsx:32
+msgid "Save the new password"
+msgstr ""
+
+#: src/ui/modules/Filter/index.tsx:51
+msgid "Search query"
+msgstr ""
+
+#: src/ui/modules/CreateEventOnResourcePanel/index.tsx:94
+#: src/ui/modules/CreateResourcePanel/index.tsx:156
+#: src/ui/modules/EconomicEventManager/index.tsx:113
+msgid "Select action"
+msgstr ""
+
+#: src/ui/pages/settings/preferences.tsx:20
+msgid "Select language"
+msgstr ""
+
+#: src/ui/modules/FlagModal/index.tsx:35
+#: src/ui/modules/MoodlePanel/index.tsx:40
+msgid "Send"
+msgstr ""
+
+#: src/ui/pages/settings/invites.tsx:42
+msgid "Send again"
+msgstr ""
+
+#: src/ui/modules/MoodlePanel/index.tsx:26
+msgid "Send to Moodle"
+msgstr ""
+
+#: src/ui/pages/settings/invites.tsx:36
+msgid "Sent invitations"
+msgstr ""
+
+#: src/ui/modules/MainHeader/dropdown.tsx:106
+msgid "Settings"
+msgstr ""
+
+#: src/HOC/pages/settings/SettingsPage.tsx:36
+msgid "Settings - Flags"
+msgstr ""
+
+#: src/HOC/pages/settings/SettingsPage.tsx:38
+msgid "Settings - General"
+msgstr ""
+
+#: src/HOC/pages/settings/SettingsPage.tsx:35
+msgid "Settings - Instance"
+msgstr ""
+
+#: src/HOC/pages/settings/SettingsPage.tsx:34
+msgid "Settings - Invites"
+msgstr ""
+
+#: src/HOC/pages/settings/SettingsPage.tsx:37
+msgid "Settings - Moderation"
+msgstr ""
+
+#: src/HOC/pages/settings/SettingsPage.tsx:33
+msgid "Settings - Preferences"
+msgstr ""
+
+#: src/ui/modules/ShareLink/fetched.tsx:55
+msgid "Share"
+msgstr ""
+
+#: src/ui/pages/collection/index.tsx:35
+msgid "Share link"
+msgstr ""
+
+#: src/ui/pages/resource/index.tsx:295
+msgid "Show data"
+msgstr ""
+
+#: src/HOC/pages/signUp/SignUpPage.tsx:17
+msgid "Sign Up"
+msgstr ""
+
+#: src/ui/pages/confirmEmail/index.tsx:46
+#: src/ui/pages/login/index.tsx:15
+#: src/ui/pages/login/index.tsx:36
+#: src/ui/pages/signUp/index.tsx:16
+#: src/ui/pages/signUp/index.tsx:45
+msgid "Sign in"
+msgstr ""
+
+#: src/ui/modules/MainHeader/dropdown.tsx:129
+msgid "Sign out"
+msgstr ""
+
+#: src/ui/pages/login/index.tsx:67
+#: src/ui/pages/signUp/index.tsx:122
+msgid "Sign up"
+msgstr ""
+
+#: src/ui/pages/resource/index.tsx:213
+msgid "Source:"
+msgstr ""
+
+#: src/ui/modules/Previews/Comment.tsx:25
+#: src/ui/modules/Previews/Comment.tsx:65
+#: src/ui/modules/Previews/LikedComment.tsx:32
+#: src/ui/modules/Previews/MainComment.tsx:22
+msgid "Star"
+msgstr ""
+
+#: src/ui/pages/user/index.tsx:81
+msgid "Starred"
+msgstr ""
+
+#: src/HOC/pages/termsAndConditions/TermsAndConditionsPage.tsx:8
+msgid "Terms and Conditions"
+msgstr ""
+
+#: src/ui/modules/EditResourcePanel/index.tsx:11
+msgid "The url of the resource"
+msgstr ""
+
+#: src/ui/modules/SidePanel/index.tsx:36
+#: src/ui/modules/SidePanel/index.tsx:56
+msgid "This feature is coming soon!"
+msgstr ""
+
+#: src/ui/pages/discover/index.tsx:45
+msgid "Timeline"
+msgstr ""
+
+#: src/ui/modules/AddResource/UploadResource.tsx:49
+msgid "Title"
+msgstr ""
+
+#: src/ui/pages/resource/index.tsx:146
+msgid "Track note:"
+msgstr ""
+
+#: src/ui/pages/login/index.tsx:43
+msgid "Trouble logging in?"
+msgstr ""
+
+#: src/ui/modules/ShareLink/fetched.tsx:15
+msgid "Type the name of the resource"
+msgstr ""
+
+#: src/ui/modules/FlagModal/index.tsx:44
+#: src/ui/modules/FlagModal/index.tsx:54
+msgid "Unflag"
+msgstr ""
+
+#: src/ui/modules/HeroCollection/index.tsx:55
+msgid "Unflag this collection"
+msgstr ""
+
+#: src/ui/modules/Previews/Comment.tsx:39
+#: src/ui/modules/Previews/Comment.tsx:79
+#: src/ui/modules/Previews/MainComment.tsx:36
+msgid "Unflag this comment"
+msgstr ""
+
+#: src/ui/modules/HeroCommunity/index.tsx:51
+msgid "Unflag this community"
+msgstr ""
+
+#: src/ui/modules/Previews/Resource.tsx:71
+msgid "Unflag this resource"
+msgstr ""
+
+#: src/ui/modules/HeroUser/index.tsx:41
+msgid "Unflag this user"
+msgstr ""
+
+#: src/ui/modules/HeroUser/index.tsx:32
+#: src/ui/modules/Previews/Collection.tsx:141
+msgid "Unfollow"
+msgstr ""
+
+#: src/ui/modules/CreateResourcePanel/index.tsx:204
+#: src/ui/modules/EconomicEventManager/index.tsx:160
+msgid "Unit"
+msgstr ""
+
+#: src/ui/modules/UpdateResourcePanel/index.tsx:54
+msgid "Update"
+msgstr ""
+
+#: src/ui/modules/AddResource/UploadResource.tsx:23
+msgid "Uploading the resource"
+msgstr ""
+
+#: src/HOC/pages/user/UserPage.tsx:38
+msgid "User {name} - Activities"
+msgstr ""
+
+#: src/HOC/pages/user/UserPage.tsx:36
+msgid "User {name} - Collections"
+msgstr ""
+
+#: src/HOC/pages/user/UserPage.tsx:35
+msgid "User {name} - Communities"
+msgstr ""
+
+#: src/HOC/pages/user/UserPage.tsx:37
+msgid "User {name} - Following"
+msgstr ""
+
+#: src/HOC/pages/user/UserPage.tsx:39
+msgid "User {name} - Inventory"
+msgstr ""
+
+#: src/HOC/pages/user/UserPage.tsx:34
+msgid "User {name} - Starred"
+msgstr ""
+
+#: src/ui/modules/Previews/Community.tsx:44
+msgid "Users"
+msgstr ""
+
+#: src/ui/modules/MoodlePanel/index.tsx:17
+msgid "Website"
+msgstr ""
+
+#: src/ui/pages/signUp/index.tsx:32
+msgid "Welcome"
+msgstr ""
+
+#: src/HOC/lib/notifyMustLogin.tsx:17
+msgid "You need to <0>login</0> for that"
+msgstr ""
+
+#: src/ui/pages/signUp/index.tsx:37
+msgid "by clicking on the link we emailed you (check your spam folder if necessary)."
+msgstr ""
+
+#: src/ui/modules/CreateIntentPanel/index.tsx:46
+msgid "community name"
+msgstr ""
+
+#: src/ui/pages/resource/index.tsx:304
+msgid "contained In:"
+msgstr ""
+
+#: src/ui/pages/resource/index.tsx:312
+msgid "contains:"
+msgstr ""
+
+#: src/ui/modules/CreateIntentPanel/index.tsx:87
+msgid "description"
+msgstr ""
+
+#: src/ui/pages/signUp/index.tsx:20
+msgid "eg. Moodler Mary"
+msgstr ""
+
+#: src/ui/pages/signUp/index.tsx:18
+msgid "eg. mary@moodlers.org"
+msgstr ""
+
+#: src/ui/pages/signUp/index.tsx:19
+msgid "eg. moodlerMary"
+msgstr ""
+
+#: src/ui/modules/Previews/Collection.tsx:33
+#: src/ui/modules/Previews/Collection.tsx:141
+msgid "follow"
+msgstr ""
+
+#: src/ui/modules/ActivityPreview/index.tsx:17
+msgid "loading..."
+msgstr ""
+
+#: src/ui/modules/CreateIntentPanel/index.tsx:75
+msgid "location"
+msgstr ""
+
+#: src/ui/pages/resource/index.tsx:320
+msgid "lot:"
+msgstr ""
+
+#: src/HOC/pages/createNewPassword/CreateNewPassword.tsx:18
+msgid "reate new Password"
+msgstr ""
+
+#: src/ui/pages/resource/index.tsx:328
+msgid "stage:"
+msgstr ""
+
+#: src/ui/pages/resource/index.tsx:336
+msgid "trace length:"
+msgstr ""
+
+#: src/ui/pages/resource/index.tsx:226
+msgid "trace note:"
+msgstr ""
+
+#: src/ui/pages/resource/index.tsx:344
+msgid "tracking Identifier:"
+msgstr ""
+
+#: src/ui/modules/CreateIntentPanel/index.tsx:57
+#: src/ui/modules/CreateIntentPanel/index.tsx:60
+msgid "unit"
+msgstr ""
+
+#: src/ui/pages/resource/index.tsx:352
+msgid "unit Of Effort:"
+msgstr ""
+
+#: src/HOC/modules/ShareLink/shareLinkHOC.tsx:32
+msgid "url is required"
+msgstr ""
+
+#: src/HOC/modules/EconomicEventOnResourcePanel/CreateEconomicEventOnResourcePanelHOC.tsx:185
+#: src/ui/elements/LocationPanel/index.tsx:25
+#: src/ui/modules/CreateEventOnResourcePanel/index.tsx:65
+#: src/ui/modules/CreateEventOnResourcePanel/index.tsx:73
+#: src/ui/modules/CreateEventOnResourcePanel/index.tsx:81
+#: src/ui/modules/Resource/PrimaryAccountablePerson/index.tsx:17
+#: src/ui/pages/allCommunities/index.tsx:44
+#: src/ui/pages/allCommunities/index.tsx:50
+#: src/ui/pages/inventory/index.tsx:66
+#: src/ui/pages/resource/index.tsx:57
+#: src/ui/pages/resource/index.tsx:68
+#: src/ui/pages/resource/index.tsx:125
+#: src/ui/pages/resource/index.tsx:205
+msgid "{0}"
+msgstr ""
+
+#: src/ui/modules/ConfirmationPanel/index.tsx:19
+msgid "{action}"
+msgstr ""
+
+#: src/ui/modules/CreateEventOnResourcePanel/index.tsx:46
+#: src/ui/modules/CreateResourcePanel/index.tsx:67
+#: src/ui/modules/UpdateResourcePanel/index.tsx:19
+msgid "{title}"
+msgstr ""
+
+#: src/ui/pages/user/index.tsx:89
+msgid "{totalCommunities} communities"
+msgstr ""
