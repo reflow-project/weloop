@@ -1,0 +1,22 @@
+fragment LikePreview on Like{
+  id
+  createdAt
+  
+  context{
+    ...on Community {
+      ...CommunityPreview
+    }
+    ...on Collection {
+      ...CollectionPreview
+    }
+    ...on Resource {
+      ...ResourcePreview
+    }
+    ...on User {
+      ...UserPreview
+    }
+    ...on Comment {
+      ...CommentPreview
+    }
+  }
+}

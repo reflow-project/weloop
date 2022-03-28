@@ -1,0 +1,19 @@
+query communityFollowers($communityId: String!, $limit:Int, $before:[Cursor!], $after:[Cursor!]) {
+  community(communityId:$communityId) @connection(key: "communityFollowers", filter: ["communityId"]){
+    id
+    followers(limit:$limit, before:$before, after:$after){
+      totalCount,
+      pageInfo{ ...FullPageInfo }
+      edges{
+        id
+        creator{
+          ...CommunityFollower
+        }
+      }
+    }
+  }
+}
+
+fragment CommunityFollower on User {
+  ...UserPreview
+}

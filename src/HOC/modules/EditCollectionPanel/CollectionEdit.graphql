@@ -1,0 +1,7 @@
+
+fragment EditCollectionPanelData on Collection{
+    id
+    name
+    summary
+    icon{ id, url }
+}

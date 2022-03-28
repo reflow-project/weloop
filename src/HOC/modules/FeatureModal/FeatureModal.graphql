@@ -1,0 +1,10 @@
+fragment FeaturedCommunityData on Community  {
+    id
+    name
+}
+
+fragment FeaturedCollection on Collection  {
+    id
+    name
+}
+

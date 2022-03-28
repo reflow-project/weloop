@@ -1,114 +1,32 @@
 query economicResourcesFiltered($agent: [ID]) {
     economicResourcesFiltered(agent: $agent) {
-            id
-            image
-            trackingIdentifier
-            primaryAccountable {
-                id
-                name
-                image
-                relationshipsAsObject {
-                    id
-                    relationship {
-                        id
-                        inverseRoleLabel
-                    }
-                }
-            }
+        id
+        name
+        note
+        image
+        currentLocation {
             name
+        }
+        trace {
+            id
             note
-            image
-            stage {
-                id
-                name
-                note
-            }
-            contains {
-                image
-            }
-            stage {
-                id
-                name
-                note
-            }
-            containedIn{
-                id
-                name
-            }
-            currentLocation {
-                id
-                name
-                lat
-                long
-            }
-            lot {
-                id
-                expiryDate
-                batchNumber
-            }
-            track {
-                __typename
-                ... on EconomicEvent {
-                    id
-                    note
-                    action {
-                        id
-                        label
-                    }
-                    toResourceInventoriedAs {
-                        id
-                        name
-                    }
-                    hasPointInTime
-                    ...ResourceQuantity
-                    provider {
-                        id
-                        name
-                    }
-                    receiver {
-                        id
-                        name
-                    }
-                    atLocation {
-                        id
-                        name
-                    }
-                }
-            }
-            trace {
-                __typename
-                ... on EconomicEvent {
-                    id
-                    note
-                    toResourceInventoriedAs {
-                        id
-                        name
-                    }
-                    hasPointInTime
-                    action {
-                        id
-                        label
-                    }
-                    provider {
-                        id
-                        name
-                    }
-                    receiver {
-                        id
-                        name
-                    }
-                    ...ResourceQuantity
-                    atLocation {
-                        id
-                        name
-                    }
-                }
-            }
-
-            unitOfEffort {
+            hasPointInTime
+        }
+        track {
+            id
+            note
+            hasPointInTime
+        }
+        onhandQuantity {
+            hasUnit {
                 id
                 label
-            },
-            ...OnhandQuantity
+            }
+            hasNumericalValue
         }
+        primaryAccountable {
+            id
+            name
+        }
+    }
 }

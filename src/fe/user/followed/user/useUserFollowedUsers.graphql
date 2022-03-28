@@ -1,0 +1,21 @@
+query userFollowedUsers($userId: String!, $limit:Int, $before:[Cursor!], $after:[Cursor!]) {
+  user(userId:$userId) @connection(key: "userFollowedUsers", filter: ["userId"]){
+    id
+    userFollows(limit:$limit, before:$before, after:$after){
+      totalCount,
+      pageInfo{ ...FullPageInfo }
+      edges{
+        id 
+        context{
+          ... on User{
+            ...UserFollowedUser
+          }
+        }        
+      }
+    }
+  }
+}
+
+fragment UserFollowedUser on User {
+  ...UserPreview
+}

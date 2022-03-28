@@ -32,7 +32,7 @@ export const useCreateDefaultResource = () => {
   useEffect(() => {
     if (providers === undefined || me === undefined) return;
 
-    setIsAgent(!!providers?.some(agent => agent.id === me?.user?.id));
+    setIsAgent(!!providers?.some(agent => agent.id === me?.user.id));
   }, [providers, me]);
 
   const create = useCallOrNotifyMustLogin(
@@ -45,9 +45,7 @@ export const useCreateDefaultResource = () => {
         variables: {
           note,
           name,
-          action,
-          hasBeginning: new Date(),
-          hasEnd: new Date()
+          action
         },
         refetchQueries: [EconomicEventsFilteredQueryRefetch({ action: 'transfer' })]
       })

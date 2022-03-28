@@ -1,0 +1,11 @@
+fragment SettingsPageMeUser on User{
+  id
+  name
+  icon{ id, url },
+  image{ id, url },
+  location,
+  summary,
+  displayUsername,
+  website,
+  extraInfo
+}

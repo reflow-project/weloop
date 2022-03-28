@@ -1,0 +1,19 @@
+fragment CollectionPreview on Collection {
+  id
+  icon{ id, url }
+  isLocal
+  canonicalUrl
+  name
+  summary
+  resourceCount
+  displayUsername
+  myFlag { id }
+  myFollow { id }
+  preferredUsername
+  # myLike { id }
+  # likerCount
+  community {
+    id
+    ...CommunityInfo
+  }
+}

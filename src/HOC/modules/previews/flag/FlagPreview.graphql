@@ -1,0 +1,26 @@
+fragment FlagPreview on Flag{
+  id
+  message
+  isResolved
+  creator{
+    ...UserPreview
+  }
+  createdAt
+  context{
+    ...on Community {
+      ...CommunityPreview
+    }
+    ...on Collection {
+      ...CollectionPreview
+    }
+    ...on Resource {
+      ...ResourcePreview
+    }
+    ...on User {
+      ...UserPreview
+    }
+    ...on Comment {
+      ...CommentPreview
+    }
+  }
+}

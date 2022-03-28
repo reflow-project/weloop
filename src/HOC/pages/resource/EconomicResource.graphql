@@ -1,7 +1,6 @@
 query economicResource($id: ID!) {
   economicResource(id: $id) {
     id
-    image
     trackingIdentifier
     primaryAccountable {
       id
@@ -25,6 +24,23 @@ query economicResource($id: ID!) {
     }
     contains {
       image
+      track {
+        id
+        action {
+          id
+        }
+        fulfills {
+          effortQuantity {
+            id
+            hasUnit {
+              id
+              label
+              symbol
+            }
+          }
+        }
+
+      }
     }
     stage {
       id
@@ -34,6 +50,14 @@ query economicResource($id: ID!) {
     containedIn{
       id
       name
+      trace {
+        id
+        note
+      }
+      track {
+        id
+        note
+      }
     }
     currentLocation {
       id
@@ -46,95 +70,89 @@ query economicResource($id: ID!) {
       expiryDate
       batchNumber
     }
-    track {
-      __typename
-      ... on EconomicEvent {
+    trace {
+      id
+      note
+      action {
         id
-        note
-        action {
-          id
-          label
-        }
-        toResourceInventoriedAs {
-          id
-          name
-        }
-        hasPointInTime
-        ...ResourceQuantity
-        provider {
-          id
-          name
-        }
-        receiver {
-          id
-          name
-        }
-        atLocation {
-          id
-          name
-        }
       }
     }
     trace {
-      __typename
-      ... on EconomicEvent {
+      id
+      note
+      resourceQuantity {
         id
-        note
-        toResourceInventoriedAs {
-          id
-          name
-        }
-        hasPointInTime
-        action {
+        hasUnit {
           id
           label
         }
-        provider {
-          id
-          name
-        }
-        receiver {
-          id
-          name
-        }
-        ...ResourceQuantity
-        atLocation {
-          id
-          name
-        }
+        hasNumericalValue
+      }
+      resourceInventoriedAs {
+        id
+        name
+      }
+      toResourceInventoriedAs {
+        id
+        name
+      }
+      action {
+        id
+        label
+      }
+      provider {
+        id
+        name
+      }
+      receiver {
+        id
+        name
       }
     }
-
+    track {
+      id
+      note
+      hasPointInTime
+      resourceQuantity {
+        id
+        hasUnit {
+          id
+          label
+        }
+        hasNumericalValue
+      }
+      resourceInventoriedAs {
+        id
+        name
+      }
+      toResourceInventoriedAs {
+        id
+        name
+      }
+      action {
+        id
+        label
+      }
+      provider {
+        id
+        name
+      }
+      receiver {
+        id
+        name
+      }
+    }
     unitOfEffort {
       id
       label
     },
-   ...OnhandQuantity
-  }
-}
-
-
-fragment OnhandQuantity on EconomicResource {
-  onhandQuantity {
-    id
-    hasNumericalValue
-    hasUnit {
-      id
-      label
-    }
-  }
-}
-
-
-
-fragment ResourceQuantity on EconomicEvent {
-  resourceQuantity {
-    hasNumericalValue
-    canonicalUrl
-    hasUnit {
-      id
-      label
-      symbol
+    onhandQuantity {
+      id,
+      hasNumericalValue
+      hasUnit {
+        id
+        label
+      }
     }
   }
 }

@@ -1,9 +1,10 @@
 import React, { FC, useReducer } from 'react';
-import { ResourceItem } from 'ui/pages/resource';
+import { ResourceItem, Props as ResourceItemProps } from 'ui/pages/resource';
 import Modal from '../../../ui/modules/Modal';
 import { useNotifyMustLogin } from '../../lib/notifyMustLogin';
 import { CreateEconomicEventOnResourcePanelHOC } from '../../modules/EconomicEventOnResourcePanel/CreateEconomicEventOnResourcePanelHOC';
 import { UpdateEconomicResourceHOC } from '../../modules/EconomicEventOnResourcePanel/UpdateEconomicResourceHOC';
+import { DeleteEconomicResourceHOC } from '../../modules/EconomicEventOnResourcePanel/DeleteEconomicResourceHOC';
 import * as GQL from './EconomicResource.generated';
 
 type ResourcePageProps = {
@@ -14,7 +15,9 @@ export const EconomicResourceHOK: FC<ResourcePageProps> = ({ resourceId }) => {
   const { data, loading, error } = GQL.useEconomicResourceQuery({
     variables: { id: resourceId.trim() }
   });
+
   const resource = data?.economicResource;
+
   const notifiedMustLogin = useNotifyMustLogin();
   const [showCreateResource, toggleShowCreateResource] = useReducer(
     is => (notifiedMustLogin() ? false : !is),
@@ -22,6 +25,11 @@ export const EconomicResourceHOK: FC<ResourcePageProps> = ({ resourceId }) => {
   );
 
   const [showUpdateResource, toggleShowUpdateResource] = useReducer(
+    is => (notifiedMustLogin() ? false : !is),
+    false
+  );
+
+  const [showDeleteResource, toggleShowDeleteResource] = useReducer(
     is => (notifiedMustLogin() ? false : !is),
     false
   );
@@ -38,9 +46,16 @@ export const EconomicResourceHOK: FC<ResourcePageProps> = ({ resourceId }) => {
     </Modal>
   ) : null;
 
-  const props: any = {
+  const DeleteResourceModal = showDeleteResource ? (
+    <Modal closeModal={toggleShowDeleteResource}>
+      <DeleteEconomicResourceHOC done={toggleShowDeleteResource} resource={resource} />
+    </Modal>
+  ) : null;
+
+  const props: ResourceItemProps = {
     openEditModal: toggleShowCreateResource,
     openUpdateResourceModal: toggleShowUpdateResource,
+    openDeleteResourceModal: toggleShowDeleteResource,
     resource,
     loading,
     error
@@ -48,6 +63,7 @@ export const EconomicResourceHOK: FC<ResourcePageProps> = ({ resourceId }) => {
 
   return (
     <>
+      {DeleteResourceModal}
       {EditResourceModal}
       {PerformEventModal}
       <ResourceItem {...props} />

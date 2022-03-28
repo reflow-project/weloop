@@ -1,0 +1,22 @@
+
+
+
+query myInboxActivities($after:[Cursor!], $before:[Cursor!], $limit:Int){
+  me @connection(key: "myInboxActivities"){
+    user{
+
+      id
+      inbox(after:$after, before:$before, limit:$limit){
+        totalCount,
+        pageInfo{ ...FullPageInfo }
+        edges{
+          ...MyInboxActivity
+        }
+      }
+    }
+  }
+}
+
+fragment MyInboxActivity on Activity {
+  ...ActivityPreview
+}

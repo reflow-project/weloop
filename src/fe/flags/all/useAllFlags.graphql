@@ -1,0 +1,9 @@
+query allFlags($limit:Int, $before:[Cursor!], $after:[Cursor!]){
+  flags(limit:$limit, before:$before, after:$after) @connection(key: "allFlags"){
+    edges{
+      ...FlagPreview
+    }
+    totalCount,
+    pageInfo{ ...FullPageInfo }
+  }
+}

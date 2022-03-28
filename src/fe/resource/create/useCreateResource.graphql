@@ -28,6 +28,10 @@ mutation createEconomicEventAndNewResource(
     }) {
     economicEvent {
       id
+      hasPointInTime
+      track {
+        __typename
+      }
     }
     economicResource {
       id

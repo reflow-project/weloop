@@ -1,0 +1,18 @@
+
+
+
+query instanceOutboxActivities( $after:[Cursor!], $before:[Cursor!], $limit:Int){
+  instance @connection(key: "instanceOutboxActivities"){
+    outbox(after:$after, before:$before, limit:$limit){
+      totalCount,
+      pageInfo{ ...FullPageInfo }
+      edges{
+        ...InstanceOutboxActivity
+      }
+    }
+  }
+}
+
+fragment InstanceOutboxActivity on Activity {
+  ...ActivityPreview
+}

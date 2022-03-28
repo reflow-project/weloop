@@ -1,34 +1,51 @@
 import { useFormik } from 'formik';
-import React, { FC, useEffect, useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 import SignUpPage, { SignUpFormValues, Props } from 'ui/pages/signUp';
 import * as Yup from 'yup';
 import { useAnon } from 'fe/session/useAnon';
+import { USERNAME_REGEX } from 'mn-constants';
 import { t } from '@lingui/macro';
 import { usePageTitle } from 'context/global/pageCtx';
-import { toast } from 'react-toastify';
 
 const initialValues: SignUpFormValues = {
+  name: '',
   email: '',
   password: '',
-  passwordConfirm: ''
+  username: '',
+  passwordConfirm: '',
+  terms: false
 };
 export interface SignUpPageHOC {}
 const signUpPageTitle = t`Sign Up`;
 
 export const SignUpPageHOC: FC<SignUpPageHOC> = () => {
   usePageTitle(signUpPageTitle);
-  const { signUp, signUpStatus } = useAnon();
+  const { signUp, signUpStatus, usernameAvailable } = useAnon();
   const validationSchema: Yup.ObjectSchema<SignUpFormValues> = Yup.object<SignUpFormValues>({
+    username: Yup.string()
+      .min(3)
+      .max(16)
+      .matches(USERNAME_REGEX)
+      .required()
+      .test(
+        'checkDuplUsername',
+        'username already exists',
+        username => username && usernameAvailable(username)
+      ),
     email: Yup.string()
       .max(50)
       .required(),
+    name: Yup.string()
+      .max(50)
+      .required(),
     password: Yup.string()
-      .min(10)
+      .min(6)
       .max(50)
       .required(),
     passwordConfirm: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Passwords must match')
-      .required()
+      .required(),
+    terms: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions')
   });
 
   const formik = useFormik<SignUpFormValues>({
@@ -40,28 +57,26 @@ export const SignUpPageHOC: FC<SignUpPageHOC> = () => {
     onSubmit: regInput =>
       signUp({
         email: regInput.email,
-        password: regInput.password
+        name: regInput.name,
+        password: regInput.password,
+        preferredUsername: regInput.username,
+        wantsEmailDigest: false,
+        wantsNotifications: false
       })
   });
 
-  useEffect(() => {
-    if (signUpStatus.error?.graphQLErrors.length) {
-      toast.error(signUpStatus.error?.graphQLErrors[0].message);
-    }
-  }, [signUpStatus.error]);
-
   const props = useMemo<Props>(
     () =>
-      signUpStatus.called && signUpStatus.data?.signup
+      signUpStatus.called && signUpStatus.data?.createUser?.user.name
         ? {
             formik,
-            registeredUserID: signUpStatus.data?.signup,
-            registeredEmail: formik.values.email
+            registeredUsername: signUpStatus.data.createUser.user.name,
+            registeredEmail: signUpStatus.data.createUser.email
           }
         : {
             formik
           },
-    [formik, signUpStatus.called, signUpStatus.data]
+    [signUpStatus, formik]
   );
 
   return <SignUpPage {...props} />;

@@ -7,9 +7,7 @@ import * as ApolloReactHooks from '@apollo/react-hooks';
 export type CreateDefaultEconomicEventMutationVariables = {
   name?: Types.Maybe<Types.Scalars['String']>,
   note?: Types.Maybe<Types.Scalars['String']>,
-  action: Types.Scalars['ID'],
-  hasBeginning: Types.Scalars['DateTime'],
-  hasEnd: Types.Scalars['DateTime']
+  action: Types.Scalars['ID']
 };
 
 
@@ -19,7 +17,7 @@ export type CreateDefaultEconomicEventMutation = (
     { __typename: 'EconomicEventResponse' }
     & { economicEvent: (
       { __typename: 'EconomicEvent' }
-      & Pick<Types.EconomicEvent, 'hasPointInTime' | 'hasBeginning' | 'hasEnd' | 'id' | 'note'>
+      & Pick<Types.EconomicEvent, 'id' | 'note'>
     ) }
   )> }
 );
@@ -29,17 +27,20 @@ export type AgentsQueryVariables = {};
 
 export type AgentsQuery = (
   { __typename: 'RootQueryType' }
-  & { agents: Types.Maybe<Array<any>> }
+  & { agents: Types.Maybe<Array<(
+    { __typename: 'Organization' }
+    & Pick<Types.Organization, 'id' | 'name' | 'displayUsername'>
+  ) | (
+    { __typename: 'Person' }
+    & Pick<Types.Person, 'id' | 'name' | 'displayUsername'>
+  )>> }
 );
 
 
 export const CreateDefaultEconomicEventDocument = gql`
-    mutation createDefaultEconomicEvent($name: String, $note: String, $action: ID!, $hasBeginning: DateTime!, $hasEnd: DateTime!) {
-  createEconomicEvent(event: {action: $action, note: $note, hasBeginning: $hasBeginning, hasEnd: $hasEnd}, newInventoriedResource: {name: $name, note: $note}) {
+    mutation createDefaultEconomicEvent($name: String, $note: String, $action: ID!) {
+  createEconomicEvent(event: {action: $action, note: $note}, newInventoriedResource: {name: $name, note: $note}) {
     economicEvent {
-      hasPointInTime
-      hasBeginning
-      hasEnd
       id
       note
     }
@@ -64,8 +65,6 @@ export type CreateDefaultEconomicEventMutationFn = ApolloReactCommon.MutationFun
  *      name: // value for 'name'
  *      note: // value for 'note'
  *      action: // value for 'action'
- *      hasBeginning: // value for 'hasBeginning'
- *      hasEnd: // value for 'hasEnd'
  *   },
  * });
  */
@@ -89,7 +88,7 @@ export const AgentsDocument = gql`
  * __useAgentsQuery__
  *
  * To run a query within a React component, call `useAgentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useAgentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useAgentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -120,14 +119,14 @@ export interface CreateDefaultEconomicEventMutationOperation {
 export const CreateDefaultEconomicEventMutationName:CreateDefaultEconomicEventMutationOperation['operationName'] = 'createDefaultEconomicEvent'
 
 export const CreateDefaultEconomicEventMutationRefetch = (
-  variables:CreateDefaultEconomicEventMutationVariables,
+  variables:CreateDefaultEconomicEventMutationVariables, 
   context?:any
 )=>({
   query:CreateDefaultEconomicEventDocument,
   variables,
   context
 })
-
+      
 
 
 export interface AgentsQueryOperation {
@@ -139,11 +138,11 @@ export interface AgentsQueryOperation {
 export const AgentsQueryName:AgentsQueryOperation['operationName'] = 'agents'
 
 export const AgentsQueryRefetch = (
-  variables:AgentsQueryVariables,
+  variables:AgentsQueryVariables, 
   context?:any
 )=>({
   query:AgentsDocument,
   variables,
   context
 })
-
+      

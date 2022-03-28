@@ -1,0 +1,9 @@
+query allCollections($limit:Int, $before:[Cursor!], $after:[Cursor!]){
+  collections(limit:$limit, before:$before, after:$after) @connection(key: "allCollections"){
+    edges{
+      ...CollectionPreview
+    }
+    totalCount,
+    pageInfo{ ...FullPageInfo }
+  }
+}

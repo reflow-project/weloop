@@ -1,0 +1,4 @@
+fragment AddResourceCreateResourceMutationResult on Resource {
+    id
+    ...ResourcePreview
+}

@@ -1,0 +1,6 @@
+query communityPreview($communityId: String!) {
+  community(communityId:$communityId){
+    id
+  ...CommunityPreview
+  }
+}

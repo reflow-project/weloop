@@ -15,7 +15,7 @@ import { Actions, Container, CounterChars, Header } from 'ui/modules/Modal';
 import { Hero, CollectionContainerForm, HeroInfo } from '../CreateCollectionPanel/style';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-// import { useMe } from '../../../fe/session/useMe';
+import { useMe } from '../../../fe/session/useMe';
 
 export type CreateEventOnResourceFormValues = {
   name: string;
@@ -59,7 +59,7 @@ export const CreateEventOnResourcePanel: FC<TCreateEventOnResourcePanel> = ({
   const [providerArr, setProviderArr] = React.useState<any>([]);
   const [receiverArr, setReceiverArr] = React.useState<any>([]);
   const [startDate, setStartDate] = React.useState<any>(new Date());
-  // const { me } = useMe();
+  const { me } = useMe();
 
   React.useEffect(() => {
     setProviderArr(
@@ -77,15 +77,15 @@ export const CreateEventOnResourcePanel: FC<TCreateEventOnResourcePanel> = ({
 
     formik.setValues({
       ...formik.values,
-      hasPointInTime: new Date().toISOString()
-      // provider: {
-      //   // id: providerList?.find((el: any) => el.id === me?.user?.id)?.id || '',
-      //   // label: providerList?.find((el: any) => el.id === me?.user?.id)?.name || ''
-      // },
-      // receiver: {
-      //   // id: receiverList?.find((el: any) => el.id === me?.user?.id)?.id || '',
-      //   // label: receiverList?.find((el: any) => el.id === me?.user?.id)?.name || ''
-      // }
+      hasPointInTime: new Date().toISOString(),
+      provider: {
+        id: providerList?.find((el: any) => el.id === me?.user?.id)?.id || '',
+        label: providerList?.find((el: any) => el.id === me?.user?.id)?.name || ''
+      },
+      receiver: {
+        id: receiverList?.find((el: any) => el.id === me?.user?.id)?.id || '',
+        label: receiverList?.find((el: any) => el.id === me?.user?.id)?.name || ''
+      }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [providerList, receiverList]);

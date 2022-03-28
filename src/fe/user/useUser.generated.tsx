@@ -1,11 +1,14 @@
 import * as Types from '../../graphql/types.generated';
 
+import { UserPageUserDataFragment } from '../../HOC/pages/user/UserPage.generated';
 import gql from 'graphql-tag';
+import { UserPageUserDataFragmentDoc } from '../../HOC/pages/user/UserPage.generated';
 import * as ApolloReactCommon from '@apollo/react-common';
 import * as ApolloReactHooks from '@apollo/react-hooks';
 
+
 export type UserDataQueryVariables = {
-  username: Types.Scalars['String']
+  userId: Types.Scalars['String']
 };
 
 
@@ -13,71 +16,18 @@ export type UserDataQuery = (
   { __typename: 'RootQueryType' }
   & { user: Types.Maybe<(
     { __typename: 'User' }
-    & { userActivities: Types.Maybe<Array<Types.Maybe<(
-      { __typename: 'Activity' }
-      & Pick<Types.Activity, 'id'>
-      & { verb: Types.Maybe<(
-        { __typename: 'Verb' }
-        & Pick<Types.Verb, 'verb' | 'verbDisplay'>
-      )> }
-    )>>>, posts: Types.Maybe<Array<Types.Maybe<(
-      { __typename: 'Post' }
-      & Pick<Types.Post, 'id'>
-      & { postContent: Types.Maybe<(
-        { __typename: 'PostContent' }
-        & Pick<Types.PostContent, 'htmlBody' | 'summary' | 'title'>
-      )> }
-    )>>> }
-    & HeroUserUserDataFragment
+    & UserPageUserDataFragment
   )> }
 );
 
-export type HeroUserUserDataFragment = (
-  { __typename: 'User' }
-  & Pick<Types.User, 'id'>
-  & { profile: Types.Maybe<(
-    { __typename: 'Profile' }
-    & Pick<Types.Profile, 'name' | 'summary'>
-  )>, character: Types.Maybe<(
-    { __typename: 'Character' }
-    & Pick<Types.Character, 'username'>
-  )> }
-);
 
-export const HeroUserUserDataFragmentDoc = gql`
-    fragment HeroUserUserData on User {
-  id
-  profile {
-    name
-    summary
-  }
-  character {
-    username
-  }
-}
-    `;
 export const UserDataDocument = gql`
-    query userData($username: String!) {
-  user(filter: {username: $username}) {
-    ...HeroUserUserData
-    userActivities {
-      id
-      verb {
-        verb
-        verbDisplay
-      }
-    }
-    posts {
-      id
-      postContent {
-        htmlBody
-        summary
-        title
-      }
-    }
+    query userData($userId: String!) {
+  user(userId: $userId) {
+    ...UserPageUserData
   }
 }
-    ${HeroUserUserDataFragmentDoc}`;
+    ${UserPageUserDataFragmentDoc}`;
 
 /**
  * __useUserDataQuery__
@@ -91,7 +41,7 @@ export const UserDataDocument = gql`
  * @example
  * const { data, loading, error } = useUserDataQuery({
  *   variables: {
- *      username: // value for 'username'
+ *      userId: // value for 'userId'
  *   },
  * });
  */

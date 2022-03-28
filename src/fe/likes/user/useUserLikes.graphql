@@ -1,0 +1,12 @@
+query userLikes($userId:String!,$limit:Int, $before:[Cursor!], $after:[Cursor!]){
+  user(userId:$userId){
+    id
+    likes(limit:$limit, before:$before, after:$after) @connection(key: "userLikes"){
+      edges{
+        ...LikePreview
+      }
+      totalCount,
+      pageInfo{ ...FullPageInfo }
+    }
+  }
+}

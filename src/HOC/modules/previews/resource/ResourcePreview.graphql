@@ -1,0 +1,31 @@
+fragment ResourcePreview on Resource {
+    id
+    icon{ id, url }
+    name
+    summary
+    canonicalUrl
+    payload:content{
+      id
+      mediaType
+      mirror {url}
+      upload {size}
+      url
+    }
+    myLike { id }
+    myFlag { id }
+    likers { totalCount }
+    collection {
+      id
+      name
+      preferredUsername
+      canonicalUrl
+      icon{ id, url }
+      summary
+      community {
+        id
+        ...CommunityInfo
+      }
+    }
+    license
+    # likerCount
+}

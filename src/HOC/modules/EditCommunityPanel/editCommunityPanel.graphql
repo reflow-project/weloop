@@ -1,0 +1,6 @@
+fragment EditCommunityPanelData on Community {
+        id
+        name
+        summary
+        icon{ id, url }
+}

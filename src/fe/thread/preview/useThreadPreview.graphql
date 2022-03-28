@@ -1,0 +1,6 @@
+query threadPreview($threadId: String!) {
+  thread(threadId:$threadId){
+    id
+  ...ThreadPreview
+  }
+}

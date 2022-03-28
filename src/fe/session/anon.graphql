@@ -1,56 +1,39 @@
-mutation resetPwd ($email: String!, $url: String!){
-    requestResetPassword(email: $email, url: $url)
+mutation anonResetPassword ($password: String!, $token: String!){
+  resetPassword(token: $token, password: $password){
+    ...AuthData
+  }
 }
 
-# change my password
-mutation changePassword($oldPassword: String!, $password: String!, $passwordConfirmation: String!){
-    changePassword(oldPassword: $oldPassword, password: $password, passwordConfirmation: $passwordConfirmation) {
-        accountId
-    }
-}
-
-# change my password
-mutation updateLostPassword($token: String!, $password: String!, $passwordConfirmation: String!){
-    changePassword(token: $token, password: $password, passwordConfirmation: $passwordConfirmation) {
-        accountId
-    }
-}
-
-# request an email to be sent to reset my password if I forgot it
 mutation anonResetPasswordRequest($email: String!){
-    requestResetPassword(email: $email)
+  resetPasswordRequest(email: $email)
 }
+
 
 mutation anonLogin ($email: String!, $password: String!){
-    login(
-        emailOrUsername: $email
-        password: $password
-    ) {
-        token
-        currentUsername
-        currentAccountId
-        currentUser {
-            id
-            profile {
-                name
-                summary
-            }
-        }
-    }
+  createSession(email: $email, password: $password){
+    ...AuthData
+  }
 }
 
-# request another email confirmation to be sent
-mutation requestConfirmEmail($email: String!, $url: String!,) {
-    requestConfirmEmail(email: $email, url: $url)
+mutation anonConfirmEmail($token: String!){ 
+  confirmEmail(token: $token){
+    ...AuthData
+  }
 }
 
-# confirm my email address with the token that was emailed
-mutation confirmEmail($token: String!) {
-    confirmEmail(token: $token) {
-        accountId
-    }
+mutation anonSignUp($registration: RegistrationInput!){
+  createUser(user: $registration){
+    ...UseMeData
+  }
 }
 
-mutation anonSignUp($email: String!, $password: String!, $url: String!) {
-    signup(email: $email, password: $password, url: $url)
+query anonUsernameAvailable($username: String!){
+  usernameAvailable(username: $username)
+}
+
+fragment AuthData on AuthPayload {
+  me{
+    ...UseMeData
+  }
+  token
 }

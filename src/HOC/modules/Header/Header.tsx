@@ -1,7 +1,7 @@
 import { useMe } from 'fe/session/useMe';
 import { SideBarContext } from 'HOC/context/SideBar';
 import { useNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
-// import { CreateCommunityPanelHOC } from 'HOC/modules/CreateCommunityPanel/createCommunityPanelHOC';
+import { CreateCommunityPanelHOC } from 'HOC/modules/CreateCommunityPanel/createCommunityPanelHOC';
 import { SearchBox } from 'HOC/modules/SearchBox/SearchBox';
 import React, { FC, useContext, useMemo, useReducer } from 'react';
 import { MainHeader, Props as MainHeaderProps } from 'ui/modules/MainHeader';
@@ -13,10 +13,15 @@ import { CreateIntentPanelHOC } from '../CreateIntentPanel/createIntentPanelHOC'
 export interface MainHeaderHOC {}
 export const MainHeaderHOC: FC<MainHeaderHOC> = () => {
   const meQ = useMe();
-
   const user = meQ.me?.user;
   const notifiedMustLogin = useNotifyMustLogin();
+
   const [showCreateLocation, toggleShowCreateLocation] = React.useState(false);
+
+  const [showCreateCommunity, toggleShowCreateCommunity] = useReducer(
+    is => (notifiedMustLogin() ? false : !is),
+    false
+  );
 
   const [showCreateIntent, toggleShowCreateIntent] = useReducer(
     is => (notifiedMustLogin() ? false : !is),
@@ -27,6 +32,12 @@ export const MainHeaderHOC: FC<MainHeaderHOC> = () => {
     is => (notifiedMustLogin() ? false : !is),
     false
   );
+
+  const CreateCommunityModal = showCreateCommunity ? (
+    <Modal closeModal={toggleShowCreateCommunity}>
+      <CreateCommunityPanelHOC done={toggleShowCreateCommunity} />
+    </Modal>
+  ) : null;
 
   const CreateIntentModal = showCreateIntent ? (
     <Modal closeModal={toggleShowCreateIntent}>
@@ -55,21 +66,25 @@ export const MainHeaderHOC: FC<MainHeaderHOC> = () => {
       Search: <SearchBox key="search" />,
       user: user
         ? {
-            icon: `${user.character}`,
-            name: `${user.character?.username}`,
-            link: `/user/${user.id}`
+            isAdmin: meQ.isAdmin,
+            logout: meQ.logout,
+            icon: user.icon?.url || '',
+            link: `/user/${user.id}`,
+            name: user.name || ''
           }
         : null,
       toggleSideBar,
+      createCommunity: toggleShowCreateCommunity,
       createIntent: toggleShowCreateIntent,
       createResource: toggleShowCreateResource,
       isOpenDropdown,
       toggleDropdown
     };
     return props;
-  }, [user, toggleSideBar, isOpenDropdown]);
+  }, [user, meQ.isAdmin, meQ.logout, toggleSideBar, isOpenDropdown]);
   return (
     <>
+      {CreateCommunityModal}
       {CreateIntentModal}
       {CreateResourceModal}
       <MainHeader {...headerProps} />

@@ -1,0 +1,8 @@
+
+
+query userPreview($userId: String!) {
+  user(userId:$userId){
+    id
+  ...UserPreview
+  }
+}

@@ -1,47 +1,23 @@
 import * as Types from '../../graphql/types.generated';
 
+import { UseMeDataFragment } from './me.generated';
 import gql from 'graphql-tag';
+import { UseMeDataFragmentDoc } from './me.generated';
 import * as ApolloReactCommon from '@apollo/react-common';
 import * as ApolloReactHooks from '@apollo/react-hooks';
 
-export type ResetPwdMutationVariables = {
-  email: Types.Scalars['String'],
-  url: Types.Scalars['String']
-};
 
-
-export type ResetPwdMutation = (
-  { __typename: 'RootMutationType' }
-  & Pick<Types.RootMutationType, 'requestResetPassword'>
-);
-
-export type ChangePasswordMutationVariables = {
-  oldPassword: Types.Scalars['String'],
+export type AnonResetPasswordMutationVariables = {
   password: Types.Scalars['String'],
-  passwordConfirmation: Types.Scalars['String']
+  token: Types.Scalars['String']
 };
 
 
-export type ChangePasswordMutation = (
+export type AnonResetPasswordMutation = (
   { __typename: 'RootMutationType' }
-  & { changePassword: Types.Maybe<(
-    { __typename: 'Me' }
-    & Pick<Types.Me, 'accountId'>
-  )> }
-);
-
-export type UpdateLostPasswordMutationVariables = {
-  token: Types.Scalars['String'],
-  password: Types.Scalars['String'],
-  passwordConfirmation: Types.Scalars['String']
-};
-
-
-export type UpdateLostPasswordMutation = (
-  { __typename: 'RootMutationType' }
-  & { changePassword: Types.Maybe<(
-    { __typename: 'Me' }
-    & Pick<Types.Me, 'accountId'>
+  & { resetPassword: Types.Maybe<(
+    { __typename: 'AuthPayload' }
+    & AuthDataFragment
   )> }
 );
 
@@ -52,7 +28,7 @@ export type AnonResetPasswordRequestMutationVariables = {
 
 export type AnonResetPasswordRequestMutation = (
   { __typename: 'RootMutationType' }
-  & Pick<Types.RootMutationType, 'requestResetPassword'>
+  & Pick<Types.RootMutationType, 'resetPasswordRequest'>
 );
 
 export type AnonLoginMutationVariables = {
@@ -63,159 +39,101 @@ export type AnonLoginMutationVariables = {
 
 export type AnonLoginMutation = (
   { __typename: 'RootMutationType' }
-  & { login: Types.Maybe<(
-    { __typename: 'LoginResponse' }
-    & Pick<Types.LoginResponse, 'token' | 'currentUsername' | 'currentAccountId'>
-    & { currentUser: Types.Maybe<(
-      { __typename: 'User' }
-      & Pick<Types.User, 'id'>
-      & { profile: Types.Maybe<(
-        { __typename: 'Profile' }
-        & Pick<Types.Profile, 'name' | 'summary'>
-      )> }
-    )> }
+  & { createSession: Types.Maybe<(
+    { __typename: 'AuthPayload' }
+    & AuthDataFragment
   )> }
 );
 
-export type RequestConfirmEmailMutationVariables = {
-  email: Types.Scalars['String'],
-  url: Types.Scalars['String']
-};
-
-
-export type RequestConfirmEmailMutation = (
-  { __typename: 'RootMutationType' }
-  & Pick<Types.RootMutationType, 'requestConfirmEmail'>
-);
-
-export type ConfirmEmailMutationVariables = {
+export type AnonConfirmEmailMutationVariables = {
   token: Types.Scalars['String']
 };
 
 
-export type ConfirmEmailMutation = (
+export type AnonConfirmEmailMutation = (
   { __typename: 'RootMutationType' }
   & { confirmEmail: Types.Maybe<(
-    { __typename: 'Me' }
-    & Pick<Types.Me, 'accountId'>
+    { __typename: 'AuthPayload' }
+    & AuthDataFragment
   )> }
 );
 
 export type AnonSignUpMutationVariables = {
-  email: Types.Scalars['String'],
-  password: Types.Scalars['String'],
-  url: Types.Scalars['String']
+  registration: Types.RegistrationInput
 };
 
 
 export type AnonSignUpMutation = (
   { __typename: 'RootMutationType' }
-  & Pick<Types.RootMutationType, 'signup'>
+  & { createUser: Types.Maybe<(
+    { __typename: 'Me' }
+    & UseMeDataFragment
+  )> }
 );
 
+export type AnonUsernameAvailableQueryVariables = {
+  username: Types.Scalars['String']
+};
 
-export const ResetPwdDocument = gql`
-    mutation resetPwd($email: String!, $url: String!) {
-  requestResetPassword(email: $email, url: $url)
+
+export type AnonUsernameAvailableQuery = (
+  { __typename: 'RootQueryType' }
+  & Pick<Types.RootQueryType, 'usernameAvailable'>
+);
+
+export type AuthDataFragment = (
+  { __typename: 'AuthPayload' }
+  & Pick<Types.AuthPayload, 'token'>
+  & { me: (
+    { __typename: 'Me' }
+    & UseMeDataFragment
+  ) }
+);
+
+export const AuthDataFragmentDoc = gql`
+    fragment AuthData on AuthPayload {
+  me {
+    ...UseMeData
+  }
+  token
 }
-    `;
-export type ResetPwdMutationFn = ApolloReactCommon.MutationFunction<ResetPwdMutation, ResetPwdMutationVariables>;
-
-/**
- * __useResetPwdMutation__
- *
- * To run a mutation, you first call `useResetPwdMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useResetPwdMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [resetPwdMutation, { data, loading, error }] = useResetPwdMutation({
- *   variables: {
- *      email: // value for 'email'
- *      url: // value for 'url'
- *   },
- * });
- */
-export function useResetPwdMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ResetPwdMutation, ResetPwdMutationVariables>) {
-        return ApolloReactHooks.useMutation<ResetPwdMutation, ResetPwdMutationVariables>(ResetPwdDocument, baseOptions);
-      }
-export type ResetPwdMutationHookResult = ReturnType<typeof useResetPwdMutation>;
-export type ResetPwdMutationResult = ApolloReactCommon.MutationResult<ResetPwdMutation>;
-export type ResetPwdMutationOptions = ApolloReactCommon.BaseMutationOptions<ResetPwdMutation, ResetPwdMutationVariables>;
-export const ChangePasswordDocument = gql`
-    mutation changePassword($oldPassword: String!, $password: String!, $passwordConfirmation: String!) {
-  changePassword(oldPassword: $oldPassword, password: $password, passwordConfirmation: $passwordConfirmation) {
-    accountId
+    ${UseMeDataFragmentDoc}`;
+export const AnonResetPasswordDocument = gql`
+    mutation anonResetPassword($password: String!, $token: String!) {
+  resetPassword(token: $token, password: $password) {
+    ...AuthData
   }
 }
-    `;
-export type ChangePasswordMutationFn = ApolloReactCommon.MutationFunction<ChangePasswordMutation, ChangePasswordMutationVariables>;
+    ${AuthDataFragmentDoc}`;
+export type AnonResetPasswordMutationFn = ApolloReactCommon.MutationFunction<AnonResetPasswordMutation, AnonResetPasswordMutationVariables>;
 
 /**
- * __useChangePasswordMutation__
+ * __useAnonResetPasswordMutation__
  *
- * To run a mutation, you first call `useChangePasswordMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useChangePasswordMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useAnonResetPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAnonResetPasswordMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [changePasswordMutation, { data, loading, error }] = useChangePasswordMutation({
+ * const [anonResetPasswordMutation, { data, loading, error }] = useAnonResetPasswordMutation({
  *   variables: {
- *      oldPassword: // value for 'oldPassword'
  *      password: // value for 'password'
- *      passwordConfirmation: // value for 'passwordConfirmation'
- *   },
- * });
- */
-export function useChangePasswordMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ChangePasswordMutation, ChangePasswordMutationVariables>) {
-        return ApolloReactHooks.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument, baseOptions);
-      }
-export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
-export type ChangePasswordMutationResult = ApolloReactCommon.MutationResult<ChangePasswordMutation>;
-export type ChangePasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
-export const UpdateLostPasswordDocument = gql`
-    mutation updateLostPassword($token: String!, $password: String!, $passwordConfirmation: String!) {
-  changePassword(token: $token, password: $password, passwordConfirmation: $passwordConfirmation) {
-    accountId
-  }
-}
-    `;
-export type UpdateLostPasswordMutationFn = ApolloReactCommon.MutationFunction<UpdateLostPasswordMutation, UpdateLostPasswordMutationVariables>;
-
-/**
- * __useUpdateLostPasswordMutation__
- *
- * To run a mutation, you first call `useUpdateLostPasswordMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateLostPasswordMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateLostPasswordMutation, { data, loading, error }] = useUpdateLostPasswordMutation({
- *   variables: {
  *      token: // value for 'token'
- *      password: // value for 'password'
- *      passwordConfirmation: // value for 'passwordConfirmation'
  *   },
  * });
  */
-export function useUpdateLostPasswordMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateLostPasswordMutation, UpdateLostPasswordMutationVariables>) {
-        return ApolloReactHooks.useMutation<UpdateLostPasswordMutation, UpdateLostPasswordMutationVariables>(UpdateLostPasswordDocument, baseOptions);
+export function useAnonResetPasswordMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AnonResetPasswordMutation, AnonResetPasswordMutationVariables>) {
+        return ApolloReactHooks.useMutation<AnonResetPasswordMutation, AnonResetPasswordMutationVariables>(AnonResetPasswordDocument, baseOptions);
       }
-export type UpdateLostPasswordMutationHookResult = ReturnType<typeof useUpdateLostPasswordMutation>;
-export type UpdateLostPasswordMutationResult = ApolloReactCommon.MutationResult<UpdateLostPasswordMutation>;
-export type UpdateLostPasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateLostPasswordMutation, UpdateLostPasswordMutationVariables>;
+export type AnonResetPasswordMutationHookResult = ReturnType<typeof useAnonResetPasswordMutation>;
+export type AnonResetPasswordMutationResult = ApolloReactCommon.MutationResult<AnonResetPasswordMutation>;
+export type AnonResetPasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<AnonResetPasswordMutation, AnonResetPasswordMutationVariables>;
 export const AnonResetPasswordRequestDocument = gql`
     mutation anonResetPasswordRequest($email: String!) {
-  requestResetPassword(email: $email)
+  resetPasswordRequest(email: $email)
 }
     `;
 export type AnonResetPasswordRequestMutationFn = ApolloReactCommon.MutationFunction<AnonResetPasswordRequestMutation, AnonResetPasswordRequestMutationVariables>;
@@ -245,20 +163,11 @@ export type AnonResetPasswordRequestMutationResult = ApolloReactCommon.MutationR
 export type AnonResetPasswordRequestMutationOptions = ApolloReactCommon.BaseMutationOptions<AnonResetPasswordRequestMutation, AnonResetPasswordRequestMutationVariables>;
 export const AnonLoginDocument = gql`
     mutation anonLogin($email: String!, $password: String!) {
-  login(emailOrUsername: $email, password: $password) {
-    token
-    currentUsername
-    currentAccountId
-    currentUser {
-      id
-      profile {
-        name
-        summary
-      }
-    }
+  createSession(email: $email, password: $password) {
+    ...AuthData
   }
 }
-    `;
+    ${AuthDataFragmentDoc}`;
 export type AnonLoginMutationFn = ApolloReactCommon.MutationFunction<AnonLoginMutation, AnonLoginMutationVariables>;
 
 /**
@@ -276,7 +185,6 @@ export type AnonLoginMutationFn = ApolloReactCommon.MutationFunction<AnonLoginMu
  *   variables: {
  *      email: // value for 'email'
  *      password: // value for 'password'
- *      url: // value for 'url'
  *   },
  * });
  */
@@ -286,74 +194,45 @@ export function useAnonLoginMutation(baseOptions?: ApolloReactHooks.MutationHook
 export type AnonLoginMutationHookResult = ReturnType<typeof useAnonLoginMutation>;
 export type AnonLoginMutationResult = ApolloReactCommon.MutationResult<AnonLoginMutation>;
 export type AnonLoginMutationOptions = ApolloReactCommon.BaseMutationOptions<AnonLoginMutation, AnonLoginMutationVariables>;
-export const RequestConfirmEmailDocument = gql`
-    mutation requestConfirmEmail($email: String!, $url: String!) {
-  requestConfirmEmail(email: $email, url: $url)
-}
-    `;
-export type RequestConfirmEmailMutationFn = ApolloReactCommon.MutationFunction<RequestConfirmEmailMutation, RequestConfirmEmailMutationVariables>;
-
-/**
- * __useRequestConfirmEmailMutation__
- *
- * To run a mutation, you first call `useRequestConfirmEmailMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useRequestConfirmEmailMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [requestConfirmEmailMutation, { data, loading, error }] = useRequestConfirmEmailMutation({
- *   variables: {
- *      email: // value for 'email'
- *      url: // value for 'url'
- *   },
- * });
- */
-export function useRequestConfirmEmailMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RequestConfirmEmailMutation, RequestConfirmEmailMutationVariables>) {
-        return ApolloReactHooks.useMutation<RequestConfirmEmailMutation, RequestConfirmEmailMutationVariables>(RequestConfirmEmailDocument, baseOptions);
-      }
-export type RequestConfirmEmailMutationHookResult = ReturnType<typeof useRequestConfirmEmailMutation>;
-export type RequestConfirmEmailMutationResult = ApolloReactCommon.MutationResult<RequestConfirmEmailMutation>;
-export type RequestConfirmEmailMutationOptions = ApolloReactCommon.BaseMutationOptions<RequestConfirmEmailMutation, RequestConfirmEmailMutationVariables>;
-export const ConfirmEmailDocument = gql`
-    mutation confirmEmail($token: String!) {
+export const AnonConfirmEmailDocument = gql`
+    mutation anonConfirmEmail($token: String!) {
   confirmEmail(token: $token) {
-    accountId
+    ...AuthData
   }
 }
-    `;
-export type ConfirmEmailMutationFn = ApolloReactCommon.MutationFunction<ConfirmEmailMutation, ConfirmEmailMutationVariables>;
+    ${AuthDataFragmentDoc}`;
+export type AnonConfirmEmailMutationFn = ApolloReactCommon.MutationFunction<AnonConfirmEmailMutation, AnonConfirmEmailMutationVariables>;
 
 /**
- * __useConfirmEmailMutation__
+ * __useAnonConfirmEmailMutation__
  *
- * To run a mutation, you first call `useConfirmEmailMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useConfirmEmailMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useAnonConfirmEmailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAnonConfirmEmailMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [confirmEmailMutation, { data, loading, error }] = useConfirmEmailMutation({
+ * const [anonConfirmEmailMutation, { data, loading, error }] = useAnonConfirmEmailMutation({
  *   variables: {
  *      token: // value for 'token'
  *   },
  * });
  */
-export function useConfirmEmailMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ConfirmEmailMutation, ConfirmEmailMutationVariables>) {
-        return ApolloReactHooks.useMutation<ConfirmEmailMutation, ConfirmEmailMutationVariables>(ConfirmEmailDocument, baseOptions);
+export function useAnonConfirmEmailMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AnonConfirmEmailMutation, AnonConfirmEmailMutationVariables>) {
+        return ApolloReactHooks.useMutation<AnonConfirmEmailMutation, AnonConfirmEmailMutationVariables>(AnonConfirmEmailDocument, baseOptions);
       }
-export type ConfirmEmailMutationHookResult = ReturnType<typeof useConfirmEmailMutation>;
-export type ConfirmEmailMutationResult = ApolloReactCommon.MutationResult<ConfirmEmailMutation>;
-export type ConfirmEmailMutationOptions = ApolloReactCommon.BaseMutationOptions<ConfirmEmailMutation, ConfirmEmailMutationVariables>;
+export type AnonConfirmEmailMutationHookResult = ReturnType<typeof useAnonConfirmEmailMutation>;
+export type AnonConfirmEmailMutationResult = ApolloReactCommon.MutationResult<AnonConfirmEmailMutation>;
+export type AnonConfirmEmailMutationOptions = ApolloReactCommon.BaseMutationOptions<AnonConfirmEmailMutation, AnonConfirmEmailMutationVariables>;
 export const AnonSignUpDocument = gql`
-    mutation anonSignUp($email: String!, $password: String!, $url: String!) {
-  signup(email: $email, password: $password, url: $url)
+    mutation anonSignUp($registration: RegistrationInput!) {
+  createUser(user: $registration) {
+    ...UseMeData
+  }
 }
-    `;
+    ${UseMeDataFragmentDoc}`;
 export type AnonSignUpMutationFn = ApolloReactCommon.MutationFunction<AnonSignUpMutation, AnonSignUpMutationVariables>;
 
 /**
@@ -369,9 +248,7 @@ export type AnonSignUpMutationFn = ApolloReactCommon.MutationFunction<AnonSignUp
  * @example
  * const [anonSignUpMutation, { data, loading, error }] = useAnonSignUpMutation({
  *   variables: {
- *      email: // value for 'email'
- *      password: // value for 'password'
- *      url: // value for 'url'
+ *      registration: // value for 'registration'
  *   },
  * });
  */
@@ -381,59 +258,52 @@ export function useAnonSignUpMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type AnonSignUpMutationHookResult = ReturnType<typeof useAnonSignUpMutation>;
 export type AnonSignUpMutationResult = ApolloReactCommon.MutationResult<AnonSignUpMutation>;
 export type AnonSignUpMutationOptions = ApolloReactCommon.BaseMutationOptions<AnonSignUpMutation, AnonSignUpMutationVariables>;
+export const AnonUsernameAvailableDocument = gql`
+    query anonUsernameAvailable($username: String!) {
+  usernameAvailable(username: $username)
+}
+    `;
+
+/**
+ * __useAnonUsernameAvailableQuery__
+ *
+ * To run a query within a React component, call `useAnonUsernameAvailableQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAnonUsernameAvailableQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAnonUsernameAvailableQuery({
+ *   variables: {
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useAnonUsernameAvailableQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<AnonUsernameAvailableQuery, AnonUsernameAvailableQueryVariables>) {
+        return ApolloReactHooks.useQuery<AnonUsernameAvailableQuery, AnonUsernameAvailableQueryVariables>(AnonUsernameAvailableDocument, baseOptions);
+      }
+export function useAnonUsernameAvailableLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<AnonUsernameAvailableQuery, AnonUsernameAvailableQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<AnonUsernameAvailableQuery, AnonUsernameAvailableQueryVariables>(AnonUsernameAvailableDocument, baseOptions);
+        }
+export type AnonUsernameAvailableQueryHookResult = ReturnType<typeof useAnonUsernameAvailableQuery>;
+export type AnonUsernameAvailableLazyQueryHookResult = ReturnType<typeof useAnonUsernameAvailableLazyQuery>;
+export type AnonUsernameAvailableQueryResult = ApolloReactCommon.QueryResult<AnonUsernameAvailableQuery, AnonUsernameAvailableQueryVariables>;
 
 
-export interface ResetPwdMutationOperation {
-  operationName: 'resetPwd'
-  result: ResetPwdMutation
-  variables: ResetPwdMutationVariables
+export interface AnonResetPasswordMutationOperation {
+  operationName: 'anonResetPassword'
+  result: AnonResetPasswordMutation
+  variables: AnonResetPasswordMutationVariables
   type: 'mutation'
 }
-export const ResetPwdMutationName:ResetPwdMutationOperation['operationName'] = 'resetPwd'
+export const AnonResetPasswordMutationName:AnonResetPasswordMutationOperation['operationName'] = 'anonResetPassword'
 
-export const ResetPwdMutationRefetch = (
-  variables:ResetPwdMutationVariables, 
+export const AnonResetPasswordMutationRefetch = (
+  variables:AnonResetPasswordMutationVariables, 
   context?:any
 )=>({
-  query:ResetPwdDocument,
-  variables,
-  context
-})
-      
-
-
-export interface ChangePasswordMutationOperation {
-  operationName: 'changePassword'
-  result: ChangePasswordMutation
-  variables: ChangePasswordMutationVariables
-  type: 'mutation'
-}
-export const ChangePasswordMutationName:ChangePasswordMutationOperation['operationName'] = 'changePassword'
-
-export const ChangePasswordMutationRefetch = (
-  variables:ChangePasswordMutationVariables, 
-  context?:any
-)=>({
-  query:ChangePasswordDocument,
-  variables,
-  context
-})
-      
-
-
-export interface UpdateLostPasswordMutationOperation {
-  operationName: 'updateLostPassword'
-  result: UpdateLostPasswordMutation
-  variables: UpdateLostPasswordMutationVariables
-  type: 'mutation'
-}
-export const UpdateLostPasswordMutationName:UpdateLostPasswordMutationOperation['operationName'] = 'updateLostPassword'
-
-export const UpdateLostPasswordMutationRefetch = (
-  variables:UpdateLostPasswordMutationVariables, 
-  context?:any
-)=>({
-  query:UpdateLostPasswordDocument,
+  query:AnonResetPasswordDocument,
   variables,
   context
 })
@@ -478,38 +348,19 @@ export const AnonLoginMutationRefetch = (
       
 
 
-export interface RequestConfirmEmailMutationOperation {
-  operationName: 'requestConfirmEmail'
-  result: RequestConfirmEmailMutation
-  variables: RequestConfirmEmailMutationVariables
+export interface AnonConfirmEmailMutationOperation {
+  operationName: 'anonConfirmEmail'
+  result: AnonConfirmEmailMutation
+  variables: AnonConfirmEmailMutationVariables
   type: 'mutation'
 }
-export const RequestConfirmEmailMutationName:RequestConfirmEmailMutationOperation['operationName'] = 'requestConfirmEmail'
+export const AnonConfirmEmailMutationName:AnonConfirmEmailMutationOperation['operationName'] = 'anonConfirmEmail'
 
-export const RequestConfirmEmailMutationRefetch = (
-  variables:RequestConfirmEmailMutationVariables, 
+export const AnonConfirmEmailMutationRefetch = (
+  variables:AnonConfirmEmailMutationVariables, 
   context?:any
 )=>({
-  query:RequestConfirmEmailDocument,
-  variables,
-  context
-})
-      
-
-
-export interface ConfirmEmailMutationOperation {
-  operationName: 'confirmEmail'
-  result: ConfirmEmailMutation
-  variables: ConfirmEmailMutationVariables
-  type: 'mutation'
-}
-export const ConfirmEmailMutationName:ConfirmEmailMutationOperation['operationName'] = 'confirmEmail'
-
-export const ConfirmEmailMutationRefetch = (
-  variables:ConfirmEmailMutationVariables, 
-  context?:any
-)=>({
-  query:ConfirmEmailDocument,
+  query:AnonConfirmEmailDocument,
   variables,
   context
 })
@@ -529,6 +380,25 @@ export const AnonSignUpMutationRefetch = (
   context?:any
 )=>({
   query:AnonSignUpDocument,
+  variables,
+  context
+})
+      
+
+
+export interface AnonUsernameAvailableQueryOperation {
+  operationName: 'anonUsernameAvailable'
+  result: AnonUsernameAvailableQuery
+  variables: AnonUsernameAvailableQueryVariables
+  type: 'query'
+}
+export const AnonUsernameAvailableQueryName:AnonUsernameAvailableQueryOperation['operationName'] = 'anonUsernameAvailable'
+
+export const AnonUsernameAvailableQueryRefetch = (
+  variables:AnonUsernameAvailableQueryVariables, 
+  context?:any
+)=>({
+  query:AnonUsernameAvailableDocument,
   variables,
   context
 })

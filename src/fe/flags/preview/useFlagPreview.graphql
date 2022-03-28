@@ -1,0 +1,33 @@
+query flagPreviewData($flagId:String!) {
+  flag(flagId:$flagId){
+    ...FlagPreview
+  }
+}
+
+mutation deleteFlag($flagId:String!){
+  delete(contextId:$flagId){
+    ...on Flag { id }
+  }
+}
+
+
+mutation deleteFlagContext($contextId:String!){
+  delete(contextId:$contextId){
+    ...on Collection { id }
+    ...on Comment { id }
+    ...on Community { id }
+    # ...on Feature { id }
+    ...on Flag { id }
+    ...on Follow { id }
+    ...on Like { id }
+    ...on Resource { id }
+    # ...on Thread { id }
+  }
+}
+
+mutation deactivateFlaggedUser($userId:String!){
+  delete(contextId:$userId){
+    ...on User { id }
+  }
+}
+

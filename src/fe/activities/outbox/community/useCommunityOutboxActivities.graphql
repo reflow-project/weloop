@@ -1,0 +1,18 @@
+
+
+query communityOutboxActivities($communityId: String!, $limit:Int, $before:[Cursor!], $after:[Cursor!]) {
+  community(communityId:$communityId) @connection(key: "communityOutboxActivities", filter: ["communityId"]){
+    id
+    outbox(limit:$limit, before:$before, after:$after){
+      totalCount,
+      pageInfo{ ...FullPageInfo }
+      edges{
+        ...CommunityOutboxActivity
+      }
+    }
+  }
+}
+
+fragment CommunityOutboxActivity on Activity {
+  ...ActivityPreview
+}

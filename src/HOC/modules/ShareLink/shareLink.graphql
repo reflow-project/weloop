@@ -1,0 +1,6 @@
+fragment ShareLinkWebMeta on WebMetadata {
+  image
+  summary
+  title
+  url
+}

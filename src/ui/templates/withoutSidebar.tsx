@@ -3,7 +3,7 @@ import { Box } from 'rebass/styled-components';
 import styled from 'ui/themes/styled';
 import media from 'styled-media-query';
 import { Burger, Menu } from 'ui/modules/Burger';
-import { useHistory } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { ChevronLeft } from 'react-feather';
 import Avatar from 'ui/elements/Avatar';
 import { Image } from 'rebass';
@@ -46,7 +46,6 @@ export const WithoutSidebar: React.FC<Props> = ({
         <CenteredWrapper>{children}</CenteredWrapper>
       </Wrapper>
       <Footer>
-        mnn
         <FootWrapper>
           <Burger open={open} setOpen={setOpen} />
           <Menu
@@ -60,13 +59,17 @@ export const WithoutSidebar: React.FC<Props> = ({
           />
         </FootWrapper>
         <FootWrapper>
-          <Logo>
-            <Image src={logo_small_url} />
-          </Logo>
+          <NavLink to="/">
+            <Logo>
+              <Image src={logo_small_url} />
+            </Logo>
+          </NavLink>
         </FootWrapper>
         <FootWrapper>
           <Bavatar>
-            <Avatar src={userImage} size="m" />
+            <NavLink to={userLink}>
+              <Avatar src={userImage} size="m" />
+            </NavLink>
           </Bavatar>
         </FootWrapper>
       </Footer>

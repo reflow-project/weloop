@@ -9,7 +9,6 @@ import { locationHelper } from './lib/helper';
 interface SettingsPageRouter {
   tab?: string;
 }
-
 const SettingsPageRouter: FC<RouteComponentProps<SettingsPageRouter>> = ({ match }) => {
   const maybeTabStr = match.params.tab;
   const tab =
@@ -61,5 +60,4 @@ type Tab = undefined | 'preferences' | 'logs' | 'invites' | 'instance' | 'flags'
 type Params = {
   tab: Tab;
 };
-// @ts-ignore
 export const settingsLocation = locationHelper<Params, undefined>(SettingsPageRoute);
