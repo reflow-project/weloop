@@ -14,7 +14,7 @@ import { LoginPageRoute } from 'routes/LoginPageRoute';
 import { MapsPageRoute } from 'routes/MapsPageRoute';
 import { ResetPasswordPageRoute } from 'routes/ResetPasswordPageRoute';
 // import { SearchPageRoute } from 'routes/SearchPageRoute';
-// import { SettingsPageRoute } from 'routes/SettingsPageRoute';
+import { SettingsPageRoute } from 'routes/SettingsPageRoute';
 import { SignupPageRoute } from 'routes/SignupPageRoute';
 // import { ThreadPageRoute } from 'routes/ThreadPageRoute';
 import { UserPageRoute } from 'routes/UserPageRoute';
@@ -28,7 +28,7 @@ export const Router: React.FC = () => {
       <Route {...UserPageRoute} />
       {/*<Route {...CommunityPageRoute} />*/}
       {/*<Route {...CollectionPageRoute} />*/}
-      {/*<Route {...SettingsPageRoute} />*/}
+      <Route {...SettingsPageRoute} />
       {/*<Route {...AllCollectionsPageRoute} />*/}
       {/*<Route {...AllCommunitiesPageRoute} />*/}
       {/*<Route {...ThreadPageRoute} />*/}
