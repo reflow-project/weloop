@@ -1,6 +1,0 @@
-fragment CommunityFeature on Feature {
-  id
-  context {
-    ...DiscoverPageFeaturedCommunityInfo
-  }
-}

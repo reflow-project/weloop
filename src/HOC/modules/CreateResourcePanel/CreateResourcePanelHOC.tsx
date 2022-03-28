@@ -12,7 +12,6 @@ import {
   TCreateResourcePanel,
   CreateIntentFormValues
 } from '../../../ui/modules/CreateResourcePanel';
-import { EconomicResource } from '../../pages/inventory/InventoryPage';
 import { useSpatialThingsPagesQuery } from '../EconomicEventManager/EconomicEventManager.generated';
 import { EconomicEventManagerHOC } from '../EconomicEventManager/EconomicEventManagerHOC';
 
@@ -30,7 +29,7 @@ export const validationSchema: Yup.ObjectSchema<BasicCreateCollectionFormValues>
 export interface Props {
   done: () => void;
   toggleCreateLocation: (isShow: boolean) => void;
-  resource?: EconomicResource;
+  resource?: any;
 }
 
 export const CreateResourcePanelHOC: FC<Props> = ({
@@ -41,7 +40,6 @@ export const CreateResourcePanelHOC: FC<Props> = ({
 }) => {
   const history = useHistory();
   const { create } = useCreateResource();
-
   const spatialThingsQ = useSpatialThingsPagesQuery();
   const spatialThings = spatialThingsQ.data?.spatialThingsPages;
 
@@ -119,6 +117,7 @@ export const CreateResourcePanelHOC: FC<Props> = ({
         image: values.image
       })
         .then((response: any) => {
+          console.log({ response });
           if (!response.errors) {
             const newId = response?.data?.createEconomicEvent?.economicResource?.id;
             const redirect = `/resource/${newId} `;
@@ -139,14 +138,17 @@ export const CreateResourcePanelHOC: FC<Props> = ({
     }
   });
 
-  const CreateResourcePanelProps: TCreateResourcePanel = {
-    ...props,
-    title: 'Create a new Resource',
-    formik,
-    spatialThings: spatialThings?.edges || null,
-    toggleCreateLocation,
-    done
-  };
+  const CreateResourcePanelProps: TCreateResourcePanel = React.useMemo(
+    () => ({
+      ...props,
+      title: 'Create a new Resource',
+      formik,
+      spatialThings: spatialThings?.edges || null,
+      toggleCreateLocation,
+      done
+    }),
+    [formik, spatialThings, toggleCreateLocation, done, props]
+  );
 
   return (
     <EconomicEventManagerHOC>

@@ -13,12 +13,13 @@ const confirmEmailPageTitle = t`Confirm your email`;
 
 export const ConfirmEmailPage: FC<ConfirmEmailPage> = ({ token }) => {
   usePageTitle(confirmEmailPageTitle);
-  const { push } = useHistory();
   const { confirmEmail, confirmEmailStatus } = useAnon();
-  const welcomeUsername = confirmEmailStatus.data?.confirmEmail?.me.user.name;
+  const welcomeUsername = confirmEmailStatus.data?.confirmEmail?.accountId;
+  const { push } = useHistory();
+
   useEffect(() => {
     if (welcomeUsername) {
-      setTimeout(() => push('/'), 2000);
+      // setTimeout(() => push('/'), 2000);
     }
   }, [welcomeUsername, push]);
 

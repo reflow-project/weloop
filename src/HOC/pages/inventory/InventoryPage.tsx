@@ -136,9 +136,10 @@ export const InventoryPage: FC<{ triggerTab?: boolean }> = ({
 
   const notifiedMustLogin = useNotifyMustLogin();
   const [showCreateResource, toggleShowCreateResource] = useReducer(
-    is => !notifiedMustLogin() && !is,
+    is => !notifiedMustLogin() || !is,
     false
   );
+
   const CreateResourceModal = showCreateResource ? (
     <Modal closeModal={toggleShowCreateResource}>
       {showCreateLocation ? (
@@ -155,6 +156,7 @@ export const InventoryPage: FC<{ triggerTab?: boolean }> = ({
   const { data } = useEconomicResourcesFilteredQuery({
     variables: { agent: currentUser ? [currentUser] : [] }
   });
+
   const inventory = data?.economicResourcesFiltered || [];
   const [filteredInventory, setFilteredInventory] = useState<Array<any>>([...inventory]);
   useEffect(() => {

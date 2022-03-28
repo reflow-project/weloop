@@ -33,11 +33,11 @@ query unitsPages {unitsPages(limit: 30) {
   }
 }
 }
-
-query users {users {
-  edges {
-    id
-    name
-  }
-}
-}
+#
+#query users {users {
+#  edges {
+#    id
+#    name
+#  }
+#}
+#}

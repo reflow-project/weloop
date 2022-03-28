@@ -10,6 +10,7 @@ export type CreateEconomicEventMutationVariables = {
   provider: Types.Scalars['ID'],
   receiver: Types.Scalars['ID'],
   hasUnit: Types.Scalars['ID'],
+  hasPointInTime: Types.Scalars['DateTime'],
   hasNumericalValue: Types.Scalars['Float']
 };
 
@@ -40,21 +41,13 @@ export type IntentPanelQuery = (
     & { resourceInventoriedAs: Types.Maybe<(
       { __typename: 'EconomicResource' }
       & Pick<Types.EconomicResource, 'id'>
-      & { trace: Types.Maybe<Array<(
-        { __typename: 'EconomicEvent' }
-        & Pick<Types.EconomicEvent, 'hasPointInTime'>
-        & { action: (
-          { __typename: 'Action' }
-          & Pick<Types.Action, 'label'>
-        ) }
-      )>> }
     )> }
   )> }
 );
 
 
 export const CreateEconomicEventDocument = gql`
-    mutation createEconomicEvent($note: String, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasNumericalValue: Float!) {
+    mutation createEconomicEvent($note: String, $action: ID!, $provider: ID!, $receiver: ID!, $hasUnit: ID!, $hasPointInTime: DateTime!, $hasNumericalValue: Float!) {
   createEconomicEvent(event: {note: $note, action: $action, provider: $provider, receiver: $receiver, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}) {
     economicEvent {
       id
@@ -85,6 +78,7 @@ export type CreateEconomicEventMutationFn = ApolloReactCommon.MutationFunction<C
  *      provider: // value for 'provider'
  *      receiver: // value for 'receiver'
  *      hasUnit: // value for 'hasUnit'
+ *      hasPointInTime: // value for 'hasPointInTime'
  *      hasNumericalValue: // value for 'hasNumericalValue'
  *   },
  * });
@@ -100,12 +94,6 @@ export const IntentPanelDocument = gql`
   intent(id: $intentId) {
     resourceInventoriedAs {
       id
-      trace {
-        hasPointInTime
-        action {
-          label
-        }
-      }
     }
   }
 }

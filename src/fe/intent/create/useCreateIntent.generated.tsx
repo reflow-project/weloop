@@ -19,7 +19,7 @@ export type CreateIntentMutation = (
     & { intent: (
       { __typename: 'Intent' }
       & Pick<Types.Intent, 'id' | 'name' | 'note'>
-      & { inScopeOf: Types.Maybe<Array<{ __typename: 'Category' } | { __typename: 'Collection' } | { __typename: 'Community' } | { __typename: 'Organisation' } | { __typename: 'Organization' } | { __typename: 'Person' } | { __typename: 'Taggable' } | { __typename: 'User' }>> }
+      & { inScopeOf: Types.Maybe<Array<{ __typename: 'Category' } | { __typename: 'Organization' } | { __typename: 'Person' } | { __typename: 'Tag' }>> }
     ) }
   )> }
 );
@@ -42,7 +42,7 @@ export type CreateOfferMutation = (
     & { intent: (
       { __typename: 'Intent' }
       & Pick<Types.Intent, 'id' | 'name' | 'note'>
-      & { inScopeOf: Types.Maybe<Array<{ __typename: 'Category' } | { __typename: 'Collection' } | { __typename: 'Community' } | { __typename: 'Organisation' } | { __typename: 'Organization' } | { __typename: 'Person' } | { __typename: 'Taggable' } | { __typename: 'User' }>>, atLocation: Types.Maybe<(
+      & { inScopeOf: Types.Maybe<Array<{ __typename: 'Category' } | { __typename: 'Organization' } | { __typename: 'Person' } | { __typename: 'Tag' }>>, atLocation: Types.Maybe<(
         { __typename: 'SpatialThing' }
         & Pick<Types.SpatialThing, 'lat' | 'long' | 'alt'>
       )>, resourceQuantity: Types.Maybe<(

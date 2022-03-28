@@ -36,6 +36,20 @@ export const useCreateResource = () => {
       hasNumericalValue,
       image
     }: CreateResource) => {
+      console.log({ createResourceMutStatus });
+      console.log({
+        name,
+        note,
+        eventNote,
+        hasPointInTime,
+        atLocation,
+        action,
+        provider,
+        receiver,
+        hasUnit,
+        hasNumericalValue,
+        image
+      });
       if (createResourceMutStatus.loading) {
         return;
       }
@@ -56,9 +70,10 @@ export const useCreateResource = () => {
         }
       });
     },
-    [createResourceMutStatus, createResourceMut]
+    [createResourceMut]
   );
   return useMemo(() => {
+    console.log('some');
     return {
       create
     };

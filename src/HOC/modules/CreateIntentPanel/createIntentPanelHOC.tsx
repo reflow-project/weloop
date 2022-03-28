@@ -1,14 +1,10 @@
-import { MyFollowedCommunityDataFragment } from 'fe/community/myFollowed/myFollowedCommunities.generated';
 import { useCreateIntent } from 'fe/intent/create/useCreateIntent';
 import { useFormik } from 'formik';
 import * as React from 'react';
-import { useMemo } from 'react';
-import { useMyFollowedCommunities } from 'fe/community/myFollowed/myFollowedCommunities';
 import { Slide, toast } from 'react-toastify';
 import {
   CreateIntentPanel,
   CreateIntentFormValues,
-  SelectOption,
   TCreateIntentPanel
 } from 'ui/modules/CreateIntentPanel';
 import { useHistory } from 'react-router';
@@ -33,21 +29,6 @@ export interface CreateOfferFormValues {
 export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done, communityId }) => {
   const history = useHistory();
   const { create } = useCreateIntent();
-  const { myCommunityFollowsPage } = useMyFollowedCommunities();
-  const communities = useMemo<SelectOption[]>(() => {
-    return myCommunityFollowsPage.edges
-      .map((follow: any) => follow.context)
-      .filter(
-        (context: any): context is MyFollowedCommunityDataFragment =>
-          context.__typename === 'Community'
-      )
-      .map<{ id: string; label: string }>(community => {
-        return {
-          id: community.id,
-          label: community.name
-        };
-      });
-  }, [myCommunityFollowsPage]);
 
   const unitPagesQ = useUnitsPagesQuery();
   const unitPages = unitPagesQ.data?.unitsPages;
@@ -109,7 +90,6 @@ export const CreateIntentPanelHOC: React.FC<TCreateIntentPanelHOC> = ({ done, co
   });
 
   const createIntentPanelProps: TCreateIntentPanel = {
-    communities: communities,
     formik: formik,
     unitPages: unitPages?.edges,
     spatialThings: spatialThings?.edges || null,

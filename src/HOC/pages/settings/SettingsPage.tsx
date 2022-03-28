@@ -6,10 +6,6 @@ import {
   Props as SettingsUIProps,
   Settings as SettingsPageUI
 } from 'ui/pages/settings';
-import { InstanceFlagsSection } from './flags/InstanceFlagsSection';
-import { InstanceSettingsSection } from './instance/InstanceSettingsSection';
-import { InstanceInvitesSection } from './invites/InstanceInvitesSection';
-import { InstanceModerationLogSection } from './moderationLog/InstanceModerationLogSection';
 import { PreferencesSettingsSection } from './preferences/PreferencesSettingsSection';
 import { t } from '@lingui/macro';
 import { usePageTitle } from 'context/global/pageCtx';
@@ -24,79 +20,52 @@ export enum SettingsPageTab {
   General
 }
 export interface SettingsPage {
-  tab: SettingsPageTab;
-  basePath: string;
+  tab?: SettingsPageTab;
+  basePath?: string;
 }
 
 const settingsPreferencesPageTitle = t`Settings - Preferences`;
-const settingsInvitesPageTitle = t`Settings - Invites`;
-const settingsInstancePageTitle = t`Settings - Instance`;
-const settingsFlagsPageTitle = t`Settings - Flags`;
-const settingsModerationLogsPageTitle = t`Settings - Moderation`;
 const settingsGeneralPageTitle = t`Settings - General`;
 
 export const SettingsPage: FC<SettingsPage> = ({ basePath, tab }) => {
   const settingsPageTitle =
-    tab === SettingsPageTab.Preferences
-      ? settingsPreferencesPageTitle
-      : tab === SettingsPageTab.Invites
-      ? settingsInvitesPageTitle
-      : tab === SettingsPageTab.Instance
-      ? settingsInstancePageTitle
-      : tab === SettingsPageTab.Flags
-      ? settingsFlagsPageTitle
-      : tab === SettingsPageTab.ModerationLogs
-      ? settingsModerationLogsPageTitle
-      : tab === SettingsPageTab.General
-      ? settingsGeneralPageTitle
-      : settingsGeneralPageTitle; //never
+    tab === SettingsPageTab.Preferences ? settingsPreferencesPageTitle : settingsGeneralPageTitle;
   usePageTitle(settingsPageTitle);
 
-  const { me, updateProfile } = useMe();
+  const { me } = useMe();
   const profile = me?.user;
-
+  console.log({ profile });
   const initialValues = useMemo<EditProfile>(
     () => ({
-      icon: profile?.icon?.url || undefined,
-      image: profile?.image?.url || undefined,
-      location: profile?.location || '',
-      name: profile?.name || '',
-      website: profile?.website || '',
-      summary: profile?.summary || ''
+      icon: '',
+      image: '',
+      location: '',
+      name: '',
+      website: '',
+      summary: ''
     }),
-    [profile]
+    []
   );
 
   const updateProfileFormik = useFormik<EditProfile>({
     initialValues,
     enableReinitialize: true,
-    onSubmit: ({ icon, image, ...profile }) => updateProfile({ profile, icon, image })
+    onSubmit: ({ icon, image, ...profile }) => console.log({ icon, image, profile })
   });
-  const sectionPaths: SettingsUIProps['sectionPaths'] = useMemo(
-    () => ({
-      preferences: settingsLocation.getPath({ tab: 'preferences' }, undefined),
-      instance: settingsLocation.getPath({ tab: 'instance' }, undefined),
-      invites: settingsLocation.getPath({ tab: 'invites' }, undefined),
-      flags: settingsLocation.getPath({ tab: 'flags' }, undefined),
-      logs: settingsLocation.getPath({ tab: 'logs' }, undefined),
-      general: settingsLocation.getPath({ tab: undefined }, undefined)
-    }),
-    []
-  );
+
   const settingsPageProps = useMemo<SettingsUIProps | null>(() => {
     const props: SettingsUIProps = {
-      sectionPaths,
-      displayUsername: profile?.displayUsername || '',
-      isAdmin: !!me?.isInstanceAdmin,
+      sectionPaths: {
+        preferences: settingsLocation.getPath({ tab: 'preferences' }, undefined),
+        general: settingsLocation.getPath({ tab: undefined }, undefined)
+      },
+      displayUsername: '',
+      isAdmin: false,
       formik: updateProfileFormik,
-      Preferences: <PreferencesSettingsSection />,
-      Instance: <InstanceSettingsSection />,
-      Invites: <InstanceInvitesSection />,
-      Flags: <InstanceFlagsSection />,
-      ModerationLog: <InstanceModerationLogSection />
+      Preferences: <PreferencesSettingsSection />
     };
     return props;
-  }, [me, profile, sectionPaths, updateProfileFormik]);
+  }, [updateProfileFormik]);
 
   return settingsPageProps && <SettingsPageUI {...settingsPageProps} />;
 };

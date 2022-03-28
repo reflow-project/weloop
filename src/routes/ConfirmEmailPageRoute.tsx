@@ -7,9 +7,7 @@ import { RedirectAuthenticated } from './wrappers/RedirectBySession';
 interface ConfirmEmailRouter {
   token: string;
 }
-const ConfirmEmailRouter: FC<RouteComponentProps<ConfirmEmailRouter>> = ({
-  match
-}) => {
+const ConfirmEmailRouter: FC<RouteComponentProps<ConfirmEmailRouter>> = ({ match }) => {
   return (
     <RedirectAuthenticated to="/#welcome">
       <GuestTemplate>

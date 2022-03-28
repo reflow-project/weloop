@@ -1,5 +1,31 @@
-query userData($userId: String!) {
-  user(userId: $userId) {
-    ...UserPageUserData
+query userData($username: String!) {
+user(filter: {username: $username}) {
+    ...HeroUserUserData
+    userActivities {
+      id
+      verb {
+        verb
+        verbDisplay
+      }
+    }
+    posts {
+      id
+      postContent {
+        htmlBody
+        summary
+        title
+      }
+    }
+  }
+}
+
+fragment HeroUserUserData on User {
+  id
+  profile {
+    name
+    summary
+  }
+  character {
+    username
   }
 }

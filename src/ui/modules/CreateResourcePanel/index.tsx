@@ -8,7 +8,7 @@ import { FormikHook } from 'ui/@types/types';
 import { CustomSelect as Select } from 'ui/elements/CustomSelect';
 import { useMe } from '../../../fe/session/useMe';
 import * as Types from '../../../graphql/types.generated';
-import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
+// import { EconomicResource } from '../../../HOC/pages/inventory/InventoryPage';
 import { setSelectOption } from '../../elements/CustomSelect/select';
 import styled from '../../themes/styled';
 import DropzoneArea from '../DropzoneModal';
@@ -37,7 +37,7 @@ export type CreateIntentFormValues = {
 export type TCreateResourcePanel = {
   title: string;
   done: () => void;
-  resource?: EconomicResource;
+  resource?: any;
   spatialThings?: Types.Maybe<
     Types.Maybe<
       { __typename: 'SpatialThing' } & Pick<Types.SpatialThing, 'name' | 'id' | 'lat' | 'long'>
@@ -117,7 +117,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
         label: receiverList?.find((el: any) => el.id === me?.user?.id)?.name || ''
       }
     });
-  }, [providerList, receiverList, me]);
+  }, [providerList, receiverList]);
 
   React.useEffect(() => {
     setUnitLst(
@@ -129,7 +129,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
   }, [unitPages]);
 
   const initialIconUrl = 'string' === typeof formik.values.image ? formik.values.image : '';
-
+  console.log({ formik });
   return (
     <Container>
       <form onSubmit={formik.handleSubmit}>
@@ -302,6 +302,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
                     <FormLabel>Event date</FormLabel>
                     <div style={{ width: '100%', border: '1px solid #05244f', padding: '0 10px' }}>
                       <DatePicker
+                        className="date-picker"
                         selected={startDate}
                         onChange={(date: any) => {
                           setStartDate(date);

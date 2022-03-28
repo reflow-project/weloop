@@ -24,6 +24,7 @@ export const useCreateEvent = () => {
           provider,
           receiver,
           hasUnit,
+          hasPointInTime: new Date(),
           hasNumericalValue
         }
       });

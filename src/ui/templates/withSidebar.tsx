@@ -68,7 +68,6 @@ export const WithSidebar: React.FC<SidebarProps> = ({
             <Logo>
               <Image src={logo_small_url} />
             </Logo>
-            {/* <Home size="18" /> */}
           </NavLink>
         </FootWrapper>
         <FootWrapper>

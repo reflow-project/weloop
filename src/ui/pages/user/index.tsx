@@ -4,16 +4,13 @@ import * as React from 'react';
 import { Link } from 'react-feather';
 import { Route, Switch } from 'react-router-dom';
 import { Box, Flex, Text } from 'rebass/styled-components';
-// import { Header } from 'ui/modules/Header';
 import { FormikHook } from 'ui/@types/types';
 import {
-  CollectionsWrapper,
   HomeBox,
   List,
   MainContainer,
   MenuList,
   MenuItem,
-  ObjectsList,
   WrapperCont,
   ButtonIcon
 } from 'ui/elements/Layout';
@@ -23,6 +20,7 @@ import styled from 'ui/themes/styled';
 import { ReactElement } from 'react';
 
 export interface Props {
+  userInfo: any;
   ActivityBoxes: ReactElement;
   LikesBoxes: ReactElement; // FIX ME remove ? after add LikesBoxes at HOC
   HeroUserBox: ReactElement;
@@ -44,34 +42,28 @@ export interface Props {
   loadMoreFollowing: FormikHook | null;
 }
 
-const UsersIcon = require('react-feather/dist/icons/users').default;
-const StartedIcon = require('react-feather/dist/icons/pie-chart').default;
+// const UsersIcon = require('react-feather/dist/icons/users').default;
+// const StartedIcon = require('react-feather/dist/icons/pie-chart').default;
 const ActivityIcon = require('react-feather/dist/icons/activity').default;
 const PackageIcon = require('react-feather/dist/icons/package').default;
 
 export const User: React.FC<Props> = ({
+  userInfo,
   HeroUserBox,
-  LikesBoxes,
   ActivityBoxes,
-  CommunityBoxes,
-  CollectionsBoxes,
   InventoryBoxes,
   basePath,
   totalCommunities,
   userLink,
   totalCollections,
   totalUsers,
-  loadMoreActivities,
-  loadMoreLikes,
-  loadMoreCommunities,
-  loadMoreCollections
+  loadMoreActivities
 }) => {
   return (
     <MainContainer>
       <HomeBox>
         <WrapperCont>
           <Box mb={2}>
-            {/* <Header name={userName} /> */}
             {HeroUserBox}
             <Menu
               basePath={basePath}
@@ -86,32 +78,11 @@ export const User: React.FC<Props> = ({
               <List>{ActivityBoxes}</List>
               {loadMoreActivities && <LoadMore LoadMoreFormik={loadMoreActivities} />}
             </Route>
-            <Route exact path={`${basePath}/starred`}>
-              <List>{LikesBoxes}</List>
-              {loadMoreLikes && <LoadMore LoadMoreFormik={loadMoreLikes} />}
-            </Route>
-            <Route path={`${basePath}/communities`}>
-              <ObjectsList>{CommunityBoxes}</ObjectsList>
-              {loadMoreCommunities && <LoadMore LoadMoreFormik={loadMoreCommunities} />}
-            </Route>
-            <Route path={`${basePath}/collections`}>
-              <ObjectsList>
-                <CollectionsWrapper>{CollectionsBoxes}</CollectionsWrapper>
-              </ObjectsList>
-              {loadMoreCollections && <LoadMore LoadMoreFormik={loadMoreCollections} />}
-            </Route>
-            {/* <Route path={`${basePath}/following`}>
-                {UserBoxes}
-                {loadMoreFollowing ? (
-                  <LoadMore LoadMoreFormik={loadMoreFollowing} />
-                ) : null}{' '} */}
-            {/* FIX ME after add LoadMoreFormik */}
-            {/* </Route> */}
           </Switch>
         </WrapperCont>
       </HomeBox>
       <WrapperPanel>
-        {userLink.length > 0 ? (
+        {userLink?.length > 0 ? (
           <Panel>
             <PanelTitle fontWeight={'bold'}>Relevant links</PanelTitle>
             <Nav>
@@ -150,22 +121,6 @@ const Menu = ({
         </div>
         <ButtonIcon className="icon-holder">
           <ActivityIcon size="24" />
-        </ButtonIcon>
-      </MenuItem>
-      <MenuItem exact to={`${basePath}/starred`}>
-        <div className="text-holder">
-          <Trans>Starred</Trans>
-        </div>
-        <ButtonIcon className="icon-holder">
-          <StartedIcon size="24" />
-        </ButtonIcon>
-      </MenuItem>
-      <MenuItem exact to={`${basePath}/communities`}>
-        <div className="text-holder">
-          <Trans>{totalCommunities} communities</Trans>
-        </div>
-        <ButtonIcon className="icon-holder">
-          <UsersIcon size="24" />
         </ButtonIcon>
       </MenuItem>
       <MenuItem exact to={`${basePath}/inventory`}>

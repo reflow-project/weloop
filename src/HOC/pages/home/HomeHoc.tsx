@@ -1,7 +1,7 @@
 import { useMyInboxActivities } from 'fe/activities/inbox/my/useMyInboxActivities';
 // import { useMyFollowedCollections } from 'fe/collection/myFollowed/myFollowedCollections';
 // import { useMyFollowedCommunities } from 'fe/community/myFollowed/myFollowedCommunities';
-import { ActivityPreviewHOC } from 'HOC/modules/previews/activity/ActivityPreview';
+// import { ActivityPreviewHOC } from 'HOC/modules/previews/activity/ActivityPreview';
 // import { CollectionPreviewHOC } from 'HOC/modules/previews/collection/CollectionPreview';
 // import { CommunityPreviewHOC } from 'HOC/modules/previews/community/CommunityPreview';
 import React, { FC, useMemo } from 'react';
@@ -68,14 +68,14 @@ export const HomePageHOC: FC<HomePageHOC> = ({ basePath }) => {
   usePageTitle(homeMyTimelinePageTitle);
 
   const { activitiesPage } = useMyInboxActivities();
-  const [nextInboxFormik] = activitiesPage.formiks;
   const InboxElements = useMemo<Props['InboxElements']>(() => {
     return (
       <>
         {activitiesPage.edges!.map(
           userActivityEdge =>
             userActivityEdge && (
-              <ActivityPreviewHOC activityId={userActivityEdge.id} key={userActivityEdge.id} />
+              <div>ActivityPreviewHOC</div>
+              // <ActivityPreviewHOC activityId={userActivityEdge?.id} key={userActivityEdge?.id} />
             )
         )}
       </>
@@ -89,7 +89,7 @@ export const HomePageHOC: FC<HomePageHOC> = ({ basePath }) => {
       // FollowedCommunitiesElements,
       // nextCollectionsFormik,
       // nextCommunitiesFormik,
-      nextInboxFormik,
+      // nextInboxFormik,
       basePath
     };
     return props;
@@ -99,7 +99,6 @@ export const HomePageHOC: FC<HomePageHOC> = ({ basePath }) => {
     // FollowedCommunitiesElements,
     // nextCollectionsFormik,
     // nextCommunitiesFormik,
-    nextInboxFormik,
     basePath
   ]);
   return <Home {...homeProps} />;

@@ -1,21 +1,17 @@
 import React, { FC } from 'react';
 import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { WithSidebarTemplate } from 'HOC/templates/WithSidebar/WithSidebar';
-import { ActivityPage } from 'HOC/pages/activity/ActivityPage';
+// import { ActivityPage } from 'HOC/pages/activity/ActivityPage';
 
 const ActivityPageRoute: FC<RouteComponentProps<any>> = ({ match }) => {
-  const userId = match.params.userId;
+  // const userId = match.params.userId;
+  //
+  // const props = {
+  //   userId: userId,
+  //   basePath: `/activity`
+  // };
 
-  const props = {
-    userId: userId,
-    basePath: `/activity`
-  };
-
-  return (
-    <WithSidebarTemplate>
-      <ActivityPage {...props} />
-    </WithSidebarTemplate>
-  );
+  return <WithSidebarTemplate>{/*<ActivityPage {...props} />*/}</WithSidebarTemplate>;
 };
 
 export const ActivityPageRouter: RouteProps = {

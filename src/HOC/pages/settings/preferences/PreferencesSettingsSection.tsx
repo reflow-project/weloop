@@ -13,10 +13,16 @@ const validationSchema = Yup.object<EditPreferences>({
 export const PreferencesSettingsSection: FC = () => {
   const { available, current, set } = React.useContext(LocaleContext);
 
-  const { me, updateProfile } = useMe();
+  const { me } = useMe();
+  const updateProfile = (data: any) => {
+    console.log(data);
+  };
   const profile = me?.user;
+
+  console.log(profile);
   const formik = useFormik<EditPreferences>({
     enableReinitialize: true,
+    // @ts-ignore
     initialValues: { moodleWebsite: profile?.extraInfo?.LMS?.site || '' },
     validationSchema,
     onSubmit: ({ moodleWebsite }) => {

@@ -1,57 +1,71 @@
 import { DataProxy } from 'apollo-cache';
-import Maybe from 'graphql/tsutils/Maybe';
-import { RegistrationInput } from 'graphql/types.generated';
 import { useMemo } from 'react';
-import { useApolloClient } from 'react-apollo';
 import * as GQL from './anon.generated';
-import { MeDocument, MeQuery, UseMeDataFragment } from './me.generated';
+import { MeDocument, MeQuery } from './me.generated';
 import { mnCtx } from 'fe/lib/graphql/ctx';
 
-export const useAnon = () => {
-  const client = useApolloClient();
-  const [loginMut, loginStatus] = GQL.useAnonLoginMutation();
-  const [resetPwdMut, resetPwdStatus] = GQL.useAnonResetPasswordMutation();
-  const [confirmEmailMut, confirmEmailStatus] = GQL.useAnonConfirmEmailMutation();
-  const [signUpMut, signUpStatus] = GQL.useAnonSignUpMutation();
-  //  const [usernameAvailableQ, usernameAvailableStatus] = GQL.useAnonUsernameAvailableLazyQuery();
-  const [resetPwdReqMut, resetPwdReqStatus] = GQL.useAnonResetPasswordRequestMutation();
-  return useMemo(() => {
-    const resetPwd = ({ password, token }: { token: string; password: string }) => {
-      if (resetPwdStatus.loading) {
-        return;
-      }
-      return resetPwdMut({
-        variables: { password, token },
-        update: (proxy, resp) => updateMe(proxy, resp.data?.resetPassword?.me)
-      });
-    };
+const hostname = process.env.REACT_APP_FRONTEND_HOSTNAME;
 
+export const useAnon = () => {
+  const updateMe = (proxy: DataProxy, me: any) => {
+    proxy.writeQuery<MeQuery>({
+      query: MeDocument,
+      data: {
+        __typename: 'RootQueryType',
+        me: me
+          ? {
+              __typename: 'Me' as 'Me',
+              ...me,
+              token: me.token,
+              user: {
+                __typename: 'User' as 'User',
+                ...me.user
+              }
+            }
+          : null
+      }
+    });
+  };
+  const url = process.env.REACT_APP_FRONTEND_HOSTNAME || '';
+  const [loginMut, loginStatus] = GQL.useAnonLoginMutation();
+  const [confirmEmailMut, confirmEmailStatus] = GQL.useConfirmEmailMutation();
+  const [requestConfirmEmailMut, requestConfirmEmailStatus] = GQL.useRequestConfirmEmailMutation();
+  const [resetPwd, resetPwdStatus] = GQL.useResetPwdMutation();
+  const [changePwd, changePwdStatus] = GQL.useChangePasswordMutation();
+  const [signUpMut, signUpStatus] = GQL.useAnonSignUpMutation();
+  const [updateLostPassword, updateLostPasswordStatus] = GQL.useUpdateLostPasswordMutation();
+
+  return useMemo(() => {
     const confirmEmail = (token: string) => {
       if (confirmEmailStatus.loading) {
         return;
       }
+      if (confirmEmailStatus.called) {
+        return;
+      }
+
       return confirmEmailMut({
         variables: { token },
-        update: (proxy, resp) => updateMe(proxy, resp.data?.confirmEmail?.me)
+        update: (proxy, resp) =>
+          // @ts-ignore
+          console.log(resp.data, 'confirm') || updateMe(proxy, resp.data)
       });
     };
 
-    const signUp = (registration: RegistrationInput) => {
+    const signUp = (registration: { email: string; password: string }) => {
       if (signUpStatus.loading) {
         return;
       }
-      return signUpMut({
-        variables: { registration },
-        update: (proxy, resp) => updateMe(proxy, resp.data?.createUser)
-      });
-    };
 
-    const resetPwdReq = (email: string) => {
-      if (resetPwdReqStatus.loading) {
-        return;
-      }
-      return resetPwdReqMut({
-        variables: { email }
+      return signUpMut({
+        variables: {
+          email: registration.email,
+          password: registration.password,
+          url: `${hostname}/confirm-email/:token`
+        },
+        update: (proxy, resp) =>
+          // @ts-ignore
+          console.log(resp.data, 'sign') || updateMe(proxy, resp.data)
       });
     };
 
@@ -62,66 +76,74 @@ export const useAnon = () => {
       return loginMut({
         variables: { email, password },
         context: mnCtx({ ctx: 'Login' }),
-        update: (proxy, resp) => updateMe(proxy, resp.data?.createSession?.me)
+        update: (proxy, resp) => updateMe(proxy, resp.data?.login)
       });
     };
-    const usernameAvailable = (username: string) => {
-      return client
-        .query<GQL.AnonUsernameAvailableQuery, GQL.AnonUsernameAvailableQueryVariables>({
-          query: GQL.AnonUsernameAvailableDocument,
-          variables: { username }
-        })
-        .then(_ => _.data.usernameAvailable);
+
+    const changePwdRequest = (
+      oldPassword: string,
+      password: string,
+      passwordConfirmation: string
+    ) => {
+      if (changePwdStatus.loading) {
+        return;
+      }
+      return changePwd({
+        variables: { oldPassword, password, passwordConfirmation }
+      });
+    };
+
+    const updatePassword = (token: string, password: string, passwordConfirmation: string) => {
+      if (updateLostPasswordStatus.loading) {
+        return;
+      }
+      return updateLostPassword({
+        variables: { token, password, passwordConfirmation }
+      });
+    };
+
+    const resetPwdRequest = (email: string) => {
+      if (resetPwdStatus.loading) {
+        return;
+      }
+      return resetPwd({
+        variables: { email, url: `${url}/reset/:token` }
+      });
     };
 
     return {
       login,
       loginStatus,
 
-      resetPwdReq,
-      resetPwdReqStatus,
-
       confirmEmail,
       confirmEmailStatus,
 
-      signUp,
-      signUpStatus,
-
-      resetPwd,
+      requestConfirmEmailMut,
+      requestConfirmEmailStatus,
+      resetPwdRequest,
       resetPwdStatus,
-
-      usernameAvailable
+      updatePassword,
+      updateLostPasswordStatus,
+      changePwdRequest,
+      changePwdStatus,
+      signUp,
+      signUpStatus
     };
   }, [
+    url,
     signUpStatus,
     signUpMut,
     confirmEmailMut,
     confirmEmailStatus,
-    loginMut,
-    loginStatus,
-    resetPwdMut,
+    requestConfirmEmailMut,
+    requestConfirmEmailStatus,
+    updateLostPassword,
+    updateLostPasswordStatus,
+    resetPwd,
     resetPwdStatus,
-    resetPwdReqMut,
-    resetPwdReqStatus,
-    client
+    changePwd,
+    changePwdStatus,
+    loginMut,
+    loginStatus
   ]);
-};
-
-const updateMe = (proxy: DataProxy, me: Maybe<UseMeDataFragment>) => {
-  proxy.writeQuery<MeQuery>({
-    query: MeDocument,
-    data: {
-      __typename: 'RootQueryType',
-      me: me
-        ? {
-            __typename: 'Me' as 'Me',
-            ...me,
-            user: {
-              __typename: 'User' as 'User',
-              ...me.user
-            }
-          }
-        : null
-    }
-  });
 };

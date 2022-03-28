@@ -1,6 +1,0 @@
-query commentPreview($commentId: String!) {
-  comment(commentId:$commentId){
-    id
-  ...CommentPreview
-  }
-}

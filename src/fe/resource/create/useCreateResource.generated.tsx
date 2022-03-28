@@ -25,8 +25,7 @@ export type CreateEconomicEventAndNewResourceMutation = (
     { __typename: 'EconomicEventResponse' }
     & { economicEvent: (
       { __typename: 'EconomicEvent' }
-      & Pick<Types.EconomicEvent, 'id' | 'hasPointInTime'>
-      & { track: Types.Maybe<Array<{ __typename: 'EconomicResource' } | { __typename: 'Process' }>> }
+      & Pick<Types.EconomicEvent, 'id'>
     ), economicResource: Types.Maybe<(
       { __typename: 'EconomicResource' }
       & Pick<Types.EconomicResource, 'id'>
@@ -66,10 +65,6 @@ export const CreateEconomicEventAndNewResourceDocument = gql`
   createEconomicEvent(event: {action: $action, atLocation: $atLocation, provider: $provider, receiver: $receiver, note: $eventNote, hasPointInTime: $hasPointInTime, resourceQuantity: {hasUnit: $hasUnit, hasNumericalValue: $hasNumericalValue}}, newInventoriedResource: {note: $note, name: $name, image: $image, currentLocation: $atLocation}) {
     economicEvent {
       id
-      hasPointInTime
-      track {
-        __typename
-      }
     }
     economicResource {
       id

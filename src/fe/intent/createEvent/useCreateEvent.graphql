@@ -4,6 +4,7 @@ mutation createEconomicEvent (
   $provider: ID!,
   $receiver: ID!,
   $hasUnit: ID!,
+  $hasPointInTime: DateTime!,
   $hasNumericalValue: Float!,
 ) {
   createEconomicEvent (
@@ -31,12 +32,6 @@ query intentPanel($intentId: ID) {
   intent(id: $intentId) {
     resourceInventoriedAs {
       id
-      trace {
-        hasPointInTime
-        action {
-          label
-        }
-      }
     }
   }
 }

@@ -25,9 +25,9 @@ const createNewPasswordPageTitle = t`reate new Password`;
 
 export const CreateNewPasswordPageHOC: FC<CreateNewPasswordPageHOC> = ({ token }) => {
   usePageTitle(createNewPasswordPageTitle);
-  const { resetPwd } = useAnon();
+  const { updatePassword } = useAnon();
   const formik = useFormik<NewPasswordFormValues>({
-    onSubmit: ({ password }) => resetPwd({ password, token }),
+    onSubmit: ({ password, passwordConfirm }) => updatePassword(token, password, passwordConfirm),
     initialValues,
     validationSchema
   });

@@ -10,28 +10,27 @@ import { userLocation } from 'routes/UserPageRoute';
 
 export interface WithSidebarTemplate {}
 export const WithSidebarTemplate: FC<WithSidebarTemplate> = ({ children }) => {
-  const { loading, me, logout } = useMe();
+  const { loading, me } = useMe();
 
   const withSidebarProps = useMemo<null | SidebarProps>(() => {
     const user = me?.user;
     if (!user || loading) {
       return null;
     }
-    const userImage = user.icon?.url || '';
-    const userLink = userLocation.getPath({ tab: undefined, userId: user.id }, undefined);
-    const props: SidebarProps = {
+    const userLink = userLocation.getPath({ tab: undefined, userId: user.id || '' }, undefined);
+    const props: any = {
       SidebarBox: <SidebarHOC />,
       HeaderBox: <MainHeaderHOC />,
       SearchBox: <SearchBox />,
-      userImage,
-      userLink,
-      signout: logout,
-      username: user.displayUsername || '',
-      name: user.preferredUsername || ''
+      // userImage,
+      userLink
+      // signout: logout,
+      // username: user.displayUsername || '',
+      // name: user.preferredUsername || ''
     };
     return props;
-  }, [loading, logout, me]);
-  // console.log('withSidebarProps', withSidebarProps);
+  }, [loading, me]);
+
   return withSidebarProps ? (
     <ProvideSideBarContext>
       <WithSidebar {...withSidebarProps}>{children}</WithSidebar>
