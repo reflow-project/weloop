@@ -59,6 +59,13 @@ Example part of an `.env` file (see `.env.example` for the whole file):
 ```
 REACT_APP_GRAPHQL_ENDPOINT=https://api.reflowproject.eu/api/graphql
 ```
+
+We also need to add the app root end-point for the sign up email confirmation to work
+
+```
+REACT_APP_FRONTEND_HOSTNAME=https://your-weloop-instance.org
+```
+
 ### `nvm use`
 
 Sets the right node version.
