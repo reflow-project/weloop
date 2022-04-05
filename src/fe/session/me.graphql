@@ -4,10 +4,6 @@ query me {
     ...UseMeData
   }
 }
-#
-#mutation meLogout {
-#  deleteSession
-#}
 
 fragment UseMeData on Me {
   accountId

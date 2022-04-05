@@ -2909,8 +2909,8 @@ export type RootMutationType = {
   /** 
  * Share the current user identity with a team member. This will give them full
    * access to the currently authenticated user identity. Warning: anyone you add
-   * will have admin-level access over this user identity, meaning they can post as
-   * this user, read private messages, etc.
+   * will have full access over this user identity, meaning they can post as this
+   * user, read private messages, etc.
  **/
   addTeamMember?: Maybe<Scalars['String']>,
   boost?: Maybe<Activity>,
@@ -4754,6 +4754,7 @@ export type User = {
    __typename?: 'User',
   character?: Maybe<Character>,
   id?: Maybe<Scalars['ID']>,
+  isInstanceAdmin?: Maybe<Scalars['Boolean']>,
   posts?: Maybe<Array<Maybe<Post>>>,
   profile?: Maybe<Profile>,
   userActivities?: Maybe<Array<Maybe<Activity>>>,
@@ -6553,6 +6554,7 @@ export interface UriScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes[
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   character?: Resolver<Maybe<ResolversTypes['Character']>, ParentType, ContextType>,
   id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>,
+  isInstanceAdmin?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
   posts?: Resolver<Maybe<Array<Maybe<ResolversTypes['Post']>>>, ParentType, ContextType, UserPostsArgs>,
   profile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType>,
   userActivities?: Resolver<Maybe<Array<Maybe<ResolversTypes['Activity']>>>, ParentType, ContextType, UserUserActivitiesArgs>,

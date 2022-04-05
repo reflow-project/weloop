@@ -2,24 +2,12 @@ import { Trans } from '@lingui/macro';
 import { i18nMark } from '@lingui/react';
 import { Input, Textarea } from '@rebass/forms';
 import * as React from 'react';
-import {
-  Droplet,
-
-  // Zap,
-  Flag,
-  Link,
-  Mail,
-  MapPin,
-  Monitor,
-  Settings as Sett,
-  Sliders
-} from 'react-feather';
+import { Droplet, Flag, Mail, Monitor, Settings as Sett, Sliders } from 'react-feather';
 import { Route, Switch, NavLink } from 'react-router-dom';
 import { Box, Flex, Text } from 'rebass/styled-components';
 import media from 'styled-media-query';
 import { FormikHook } from 'ui/@types/types';
 import Button from 'ui/elements/Button';
-// import { useHistory } from 'react-router';
 import { HomeBox, MainContainer, Wrapper, WrapperCont } from 'ui/elements/Layout';
 import DropzoneArea from 'ui/modules/DropzoneModal';
 import { Actions, ContainerForm } from 'ui/modules/Modal';
@@ -29,10 +17,8 @@ import { ReactElement } from 'react';
 const tt = {
   placeholders: {
     name: i18nMark('Display Name'),
-    email: i18nMark('User Email'),
-    summary: i18nMark('Please tell us a little bit about yourself...'),
-    location: i18nMark('Choose a location'),
-    website: i18nMark('Enter a URL to share more info about you')
+    displayName: i18nMark('User Name'),
+    summary: i18nMark('Please tell us a little bit about yourself...')
   }
 };
 export enum Status {
@@ -46,7 +32,7 @@ export interface SettingsLoading {
 
 export interface Props {
   status?: Status.Loaded;
-  formik: FormikHook<EditProfile>;
+  formik: FormikHook<TEditProfile>;
   sectionPaths: {
     preferences: string;
     general: string;
@@ -54,15 +40,15 @@ export interface Props {
   displayUsername: string;
   isAdmin: boolean;
   Preferences: ReactElement;
+  toggleUpdatePasswordModal: () => void;
 }
 
-export interface EditProfile {
+export interface TEditProfile {
   name: string;
+  displayName: string;
   summary: string;
   icon: string | File | undefined;
   image: string | File | undefined;
-  location: string;
-  website: string;
 }
 
 export interface AddEmail {
@@ -78,7 +64,8 @@ export const Settings: React.FC<Props> = ({
   Preferences,
   displayUsername,
   isAdmin,
-  sectionPaths
+  sectionPaths,
+  toggleUpdatePasswordModal
 }) => {
   const onIconFileSelected = React.useCallback(
     (file: File) => formik.setValues({ ...formik.values, icon: file }),
@@ -123,12 +110,7 @@ export const Settings: React.FC<Props> = ({
                           </Img>
                         </WrapperHero>
                       </FlexProfile>
-                      <HeroInfo mt={2} ml={3}>
-                        <CollectionContainerForm>
-                          <Button onClick={() => alert('Create new user modal')}>
-                            + Add new user
-                          </Button>
-                        </CollectionContainerForm>
+                      <HeroInfo mt={2} ml={3} mr={3}>
                         <CollectionContainerForm>
                           <Input
                             placeholder={tt.placeholders.name}
@@ -140,17 +122,12 @@ export const Settings: React.FC<Props> = ({
                         </CollectionContainerForm>
                         <CollectionContainerForm>
                           <Input
-                            placeholder={tt.placeholders.email}
+                            placeholder={tt.placeholders.displayName}
                             disabled={formik.isSubmitting}
-                            name="email"
-                            value={formik.values.name}
+                            name="displayName"
+                            value={formik.values.displayName}
                             onChange={formik.handleChange}
                           />
-                        </CollectionContainerForm>
-                        <CollectionContainerForm>
-                          <Button onClick={() => alert('Update password modal')}>
-                            Update password
-                          </Button>
                         </CollectionContainerForm>
                         <Username mt={1} p={2}>
                           {displayUsername}
@@ -164,37 +141,12 @@ export const Settings: React.FC<Props> = ({
                             onChange={formik.handleChange}
                           />
                         </CollectionContainerForm>
-                        <Location mt={2}>
-                          <span>
-                            <MapPin strokeWidth={1} size={20} />
-                          </span>
-                          <CollectionContainerForm>
-                            <Input
-                              placeholder={tt.placeholders.location}
-                              disabled={formik.isSubmitting}
-                              name="location"
-                              value={formik.values.location}
-                              onChange={formik.handleChange}
-                            />
-                          </CollectionContainerForm>
-                        </Location>
-                        <RelevantLink mt={2}>
-                          <span>
-                            <Link strokeWidth={1} size={20} />
-                          </span>
-                          <CollectionContainerForm>
-                            <Input
-                              placeholder={tt.placeholders.website}
-                              disabled={formik.isSubmitting}
-                              name="website"
-                              value={formik.values.website}
-                              onChange={formik.handleChange}
-                            />
-                          </CollectionContainerForm>
-                        </RelevantLink>
                       </HeroInfo>
                     </Hero>
-                    <Actions sx={{ height: 'inherit !important' }}>
+                    <ActionsWrapper mt={3} mr={3} sx={{ height: 'inherit !important' }}>
+                      <Button variant="primary" onClick={toggleUpdatePasswordModal}>
+                        Update password
+                      </Button>
                       <Button
                         variant="primary"
                         isSubmitting={formik.isSubmitting}
@@ -205,7 +157,7 @@ export const Settings: React.FC<Props> = ({
                       >
                         <Trans>Save</Trans>
                       </Button>
-                    </Actions>
+                    </ActionsWrapper>
                   </ProfileBox>
                 </Route>
               </Switch>
@@ -228,6 +180,14 @@ export const Settings: React.FC<Props> = ({
 
 const SettingsWrapper = styled(Box)`
   background: ${props => props.theme.colors.appInverse};
+`;
+
+const ActionsWrapper = styled(Actions)`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  padding: 18px 18px 12px;
 `;
 
 const RepoLink = styled(Text)`
@@ -282,14 +242,10 @@ const Sidebar: React.FC<{ sectionPaths: Props['sectionPaths']; isAdmin: boolean 
                   p={3}
                   sx={{ textTransform: 'capitalize', fontSize: '14px' }}
                 >
-                  {/* <Icon className="icon" mr={1}>
-                <Key size={20} />
-              </Icon> */}
                   <Text variant="suptitle">Admin</Text>
                 </Flex>
               </SectionTitle>
               <NavItem p={3}>
-                {/*<NavLink to={sectionPaths.instance}>*/}
                 <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                   <Icon className="icon" mr={1}>
                     <Droplet size={20} />
@@ -298,10 +254,8 @@ const Sidebar: React.FC<{ sectionPaths: Props['sectionPaths']; isAdmin: boolean 
                     <Trans>Instance</Trans>
                   </Name>
                 </Flex>
-                {/*</NavLink>*/}
               </NavItem>
               <NavItem p={3}>
-                {/*<NavLink to={sectionPaths.invites}>*/}
                 <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                   <Icon className="icon" mr={1}>
                     <Mail size={20} />
@@ -310,11 +264,8 @@ const Sidebar: React.FC<{ sectionPaths: Props['sectionPaths']; isAdmin: boolean 
                     <Trans>Invites</Trans>
                   </Name>
                 </Flex>
-                {/*</NavLink>*/}
               </NavItem>
               <NavItem p={3}>
-                {/* <NavLink to={`${basePath}/reports`}> */}
-                {/*<NavLink to={sectionPaths.flags}>*/}
                 <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                   <Icon className="icon" mr={1}>
                     <Flag size={20} />
@@ -323,10 +274,8 @@ const Sidebar: React.FC<{ sectionPaths: Props['sectionPaths']; isAdmin: boolean 
                     <Trans>Flags</Trans>
                   </Name>
                 </Flex>
-                {/*</NavLink>*/}
               </NavItem>
               <NavItem p={3}>
-                {/*<NavLink to={sectionPaths.logs}>*/}
                 <Flex alignItems="center" sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
                   <Icon className="icon" mr={1}>
                     <Monitor size={20} />
@@ -335,7 +284,6 @@ const Sidebar: React.FC<{ sectionPaths: Props['sectionPaths']; isAdmin: boolean 
                     <Trans>Moderation log</Trans>
                   </Name>
                 </Flex>
-                {/*</NavLink>*/}
               </NavItem>
             </>
           ) : null}
@@ -410,36 +358,6 @@ const ProfileBox = styled(Box)``;
 const Username = styled(Text)`
   color: ${props => props.theme.colors.mediumdark};
   font-weight: 500;
-`;
-
-const Location = styled(Flex)`
-  color: ${props => props.theme.colors.medium};
-  font-weight: 500;
-  line-height: 26px;
-  border-radius: 100px;
-  align-items: center;
-  span {
-    margin-right: 8px;
-    & svg {
-      stroke: ${props => props.theme.colors.medium};
-      vertical-align: text-bottom;
-    }
-  }
-`;
-
-const RelevantLink = styled(Flex)`
-  color: ${props => props.theme.colors.medium};
-  font-weight: 500;
-  line-height: 26px;
-  border-radius: 100px;
-  align-items: center;
-  span {
-    margin-right: 8px;
-    & svg {
-      stroke: ${props => props.theme.colors.medium};
-      vertical-align: text-bottom;
-    }
-  }
 `;
 
 const WrapperHero = styled.div`

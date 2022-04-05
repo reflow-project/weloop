@@ -129,7 +129,7 @@ export const CreateResourcePanel: FC<TCreateResourcePanel> = ({
   }, [unitPages]);
 
   const initialIconUrl = 'string' === typeof formik.values.image ? formik.values.image : '';
-  console.log({ formik });
+
   return (
     <Container>
       <form onSubmit={formik.handleSubmit}>

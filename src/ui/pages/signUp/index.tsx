@@ -78,9 +78,9 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUserID, register
           <Flex mt={2}>
             <FormWrapper onSubmit={formik.handleSubmit}>
               <Box>
-                <label>
+                <LabelStyled>
                   <Trans>Email</Trans>
-                </label>
+                </LabelStyled>
                 <Input
                   placeholder={tt.placeholders.email}
                   name="email"
@@ -94,9 +94,9 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUserID, register
                 )}
               </Box>
               <Box mt={3}>
-                <label>
+                <LabelStyled>
                   <Trans>Password</Trans>
-                </label>
+                </LabelStyled>
                 <Input
                   placeholder={tt.placeholders.password}
                   name="password"
@@ -111,9 +111,9 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUserID, register
                 )}
               </Box>
               <Box mt={3}>
-                <label>
+                <LabelStyled>
                   <Trans>Confirm password</Trans>
-                </label>
+                </LabelStyled>
                 <Input
                   placeholder={tt.placeholders.passwordConfirm}
                   name="passwordConfirm"
@@ -184,6 +184,11 @@ const Container = styled.div`
   margin: 0 auto;
   max-width: 900px;
   padding-bottom: 50px;
+`;
+
+const LabelStyled = styled.label`
+  display: block;
+  margin-bottom: 6px;
 `;
 
 const Header = styled.div`
