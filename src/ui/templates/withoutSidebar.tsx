@@ -17,7 +17,7 @@ export interface Props {
   userLink: string;
   username: string;
   name: string;
-  signout(): any;
+  signOut(): () => void;
 }
 export const WithoutSidebar: React.FC<Props> = ({
   SidebarBox,
@@ -28,7 +28,7 @@ export const WithoutSidebar: React.FC<Props> = ({
   userLink,
   username,
   name,
-  signout
+  signOut
 }) => {
   const [open, setOpen] = React.useState(false);
   const history = useHistory();
@@ -53,7 +53,7 @@ export const WithoutSidebar: React.FC<Props> = ({
             username={username}
             name={name}
             userImage={userImage}
-            signout={signout}
+            signOut={signOut}
             open={open}
             setOpen={setOpen}
             Side={SidebarBox}

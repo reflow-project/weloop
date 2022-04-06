@@ -29,6 +29,7 @@ import { getOpType } from '../util/apollo/operation';
 import { KVStore } from '../util/keyvaluestore/types';
 import { createUploadLink } from './uploadLink.js';
 import introspectionQueryResultData from 'graphql/types.generated';
+import { CreateUserMutationName } from '../HOC/pages/user/UserPage.generated';
 
 export type MutationName = keyof RootMutationType;
 export type QueryName = keyof RootQueryType;
@@ -82,7 +83,6 @@ export default async function initialise({ localKVStore, appLinks }: Cfg) {
   });
 
   const setToken = (token?: string | null | undefined) => {
-    console.log({ token }, 'setToken');
     if (!token) {
       delToken();
     } else {
@@ -111,12 +111,15 @@ export default async function initialise({ localKVStore, appLinks }: Cfg) {
     }
 
     return nextLink(operation).map(resp => {
-      console.log(resp, 'nextLink');
       if (
         operationName === AnonLoginMutationName ||
-        // operationName === ResetPwdMutationName ||
-        operationName === ConfirmEmailMutationName
+        operationName === ConfirmEmailMutationName ||
+        operationName === CreateUserMutationName
       ) {
+        if (operationName === CreateUserMutationName && !resp.data?.login?.token) {
+          return resp;
+        }
+
         setToken(
           resp.data?.login?.token ||
             resp.data?.confirmEmail?.accountId ||
@@ -242,7 +245,6 @@ export default async function initialise({ localKVStore, appLinks }: Cfg) {
     absintheSocket,
     httpLink
   );
-  console.log({ link });
   const client = new ApolloClient({
     cache,
     link,

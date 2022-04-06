@@ -15,6 +15,7 @@ import { Trans } from '@lingui/macro';
 import { useHistory } from 'react-router';
 import { Text, Flex } from 'rebass/styled-components';
 import { Dropdown } from '../Dropdown';
+import { useAnon } from '../../../fe/session/useAnon';
 
 const List = styled.div<{ lined?: boolean }>`
   padding: 8px;
@@ -52,6 +53,7 @@ export interface Props {
 
 export const DropdownSidebar: React.FC<Props> = ({ userLink, toggleDropdown }) => {
   const { push } = useHistory();
+  const { logout } = useAnon();
   return (
     <Dropdown orientation={'top'} close={toggleDropdown}>
       <List lined>
@@ -113,7 +115,7 @@ export const DropdownSidebar: React.FC<Props> = ({ userLink, toggleDropdown }) =
             </a>
           </Text>
         </Item>
-        <Item variant="link" onClick={() => {}}>
+        <Item variant="link" onClick={logout}>
           <span>
             <Power size={16} strokeWidth={1} color={'#333'} />
           </span>

@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 // import { AllCommunitiesPageRoute } from 'routes/AllCommunitiesPageRoute';
 // import { CollectionPageRoute } from 'routes/CollectionPageRoute';
 // import { CommunityPageRoute } from 'routes/CommunityPageRoute';
+import { CreateNewUserRoute } from 'routes/CreateNewUserRoute';
 import { ConfirmEmailRoute } from 'routes/ConfirmEmailPageRoute';
 import { CreateNewPasswordPageRoute } from 'routes/CreateNewPasswordPageRoute';
 import { DiscoverPageRoute } from 'routes/DiscoverPageRoute';
@@ -29,6 +30,7 @@ export const Router: React.FC = () => {
       {/*<Route {...CommunityPageRoute} />*/}
       {/*<Route {...CollectionPageRoute} />*/}
       <Route {...SettingsPageRoute} />
+      <Route {...CreateNewUserRoute} />
       {/*<Route {...AllCollectionsPageRoute} />*/}
       {/*<Route {...AllCommunitiesPageRoute} />*/}
       {/*<Route {...ThreadPageRoute} />*/}

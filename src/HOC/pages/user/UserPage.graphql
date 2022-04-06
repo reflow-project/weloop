@@ -19,3 +19,18 @@ mutation createUser($profileName: String!, $userName: String, $summary: String) 
       }
     }
 }
+
+
+mutation updateUser($userName: String, $summary: String) {
+        updateUser(profile: {
+            summary: $summary
+            name: $userName
+        }){
+            accountId
+            user {
+                character {
+                    username
+                }
+            }
+        }
+    }
