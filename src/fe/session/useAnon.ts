@@ -1,12 +1,14 @@
 import { DataProxy } from 'apollo-cache';
 import { useMemo } from 'react';
 import * as GQL from './anon.generated';
-import { MeDocument, MeQuery } from './me.generated';
+import { MeDocument, MeQuery, MeQueryRefetch } from './me.generated';
 import { mnCtx } from 'fe/lib/graphql/ctx';
+import { useHistory } from 'react-router';
 
 const hostname = process.env.REACT_APP_FRONTEND_HOSTNAME;
 
 export const useAnon = () => {
+  const history = useHistory();
   const updateMe = (proxy: DataProxy, me: any) => {
     proxy.writeQuery<MeQuery>({
       query: MeDocument,
@@ -46,9 +48,7 @@ export const useAnon = () => {
 
       return confirmEmailMut({
         variables: { token },
-        update: (proxy, resp) =>
-          // @ts-ignore
-          console.log(resp.data, 'confirm') || updateMe(proxy, resp.data)
+        update: (proxy, resp) => updateMe(proxy, resp.data)
       });
     };
 
@@ -63,20 +63,25 @@ export const useAnon = () => {
           password: registration.password,
           url: `${hostname}/confirm-email/:token`
         },
-        update: (proxy, resp) =>
-          // @ts-ignore
-          console.log(resp.data, 'sign') || updateMe(proxy, resp.data)
+        update: (proxy, resp) => updateMe(proxy, resp.data)
       });
     };
-
+    const logout = () => {
+      localStorage.clear();
+      history.push('/login');
+    };
     const login = (email: string, password: string) => {
       if (loginStatus.loading) {
         return;
       }
+
       return loginMut({
         variables: { email, password },
         context: mnCtx({ ctx: 'Login' }),
-        update: (proxy, resp) => updateMe(proxy, resp.data?.login)
+        refetchQueries: [MeQueryRefetch({})],
+        update: (proxy, resp) => {
+          return updateMe(proxy, resp.data?.login);
+        }
       });
     };
 
@@ -114,6 +119,7 @@ export const useAnon = () => {
     return {
       login,
       loginStatus,
+      logout,
 
       confirmEmail,
       confirmEmailStatus,
@@ -131,6 +137,7 @@ export const useAnon = () => {
     };
   }, [
     url,
+    history,
     signUpStatus,
     signUpMut,
     confirmEmailMut,

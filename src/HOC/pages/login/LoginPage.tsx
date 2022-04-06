@@ -7,6 +7,7 @@ import { t } from '@lingui/macro';
 import { usePageTitle } from 'context/global/pageCtx';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
+import { useRouteMatch } from 'react-router-dom';
 
 export const validationSchema: Yup.ObjectSchema<LoginFormValues> = Yup.object<LoginFormValues>({
   email: Yup.string()
@@ -21,6 +22,7 @@ export interface Props {}
 const loginPageTitle = t`Login`;
 
 export const LoginPageHOC: FC<Props> = () => {
+  const { params } = useRouteMatch();
   usePageTitle(loginPageTitle);
   const history = useHistory();
   const { login, loginStatus } = useAnon();
@@ -31,11 +33,15 @@ export const LoginPageHOC: FC<Props> = () => {
     },
     enableReinitialize: true,
     onSubmit: ({ email, password }) =>
-      login(email, password)?.then(
-        resp =>
-          resp.data?.login?.currentUser?.id &&
-          history.push(`/user/${resp.data?.login?.currentUser?.id}`)
-      ),
+      login(email, password)?.then(resp => {
+        if (resp.errors?.length) {
+          return;
+        } else {
+          resp.data?.login?.currentUser?.id
+            ? history.push(`/user/${resp.data?.login?.currentUser?.id}`)
+            : history.push(`/create-user/${params?.token || resp.data?.login?.currentAccountId}`);
+        }
+      }),
     validationSchema
   });
 

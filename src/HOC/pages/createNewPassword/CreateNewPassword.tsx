@@ -17,13 +17,13 @@ const validationSchema = Yup.object().shape({
 });
 const initialValues = { password: '', passwordConfirm: '' };
 
-export interface CreateNewPasswordPageHOC {
+export interface TCreateNewPasswordPageHOC {
   token: string;
 }
 
 const createNewPasswordPageTitle = t`reate new Password`;
 
-export const CreateNewPasswordPageHOC: FC<CreateNewPasswordPageHOC> = ({ token }) => {
+export const CreateNewPasswordPageHOC: FC<TCreateNewPasswordPageHOC> = ({ token }) => {
   usePageTitle(createNewPasswordPageTitle);
   const { updatePassword } = useAnon();
   const formik = useFormik<NewPasswordFormValues>({

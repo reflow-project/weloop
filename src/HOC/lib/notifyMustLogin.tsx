@@ -35,7 +35,7 @@ export function useCallOrNotifyMustLogin<T, Args extends any[]>(
 
 export const useNotifyMustLogin = (options?: Opts) => {
   const { me } = useMe();
-  const loggedIn = !!me?.user?.id;
+  const loggedIn = !!me?.user?.id || localStorage.getItem('APOLLO#AUTH_TOKEN');
 
   return useCallback(() => {
     const { content, opts } = { ...defaultOpts, ...options };

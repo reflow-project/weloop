@@ -26,7 +26,7 @@ export interface MenuProps {
   userImage: string;
   name: string;
   username: string;
-  signout(): any;
+  signOut(): any;
 }
 export const Menu: FC<MenuProps> = ({
   open,
@@ -35,7 +35,7 @@ export const Menu: FC<MenuProps> = ({
   userImage,
   name,
   username,
-  signout
+  signOut
 }) => {
   const [isCreateOpen, toggleCreate] = useState(false);
 
@@ -66,7 +66,7 @@ export const Menu: FC<MenuProps> = ({
 
         <Bottom>
           <List>
-            <Item onClick={signout}>
+            <Item onClick={signOut}>
               <LogOut size={18} />
               <Box ml={2}>Sign out</Box>
             </Item>

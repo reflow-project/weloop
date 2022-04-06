@@ -1,26 +1,13 @@
-// import { withEncodedExtraInfo, WithExtraInfo } from 'fe/lib/extraInfo/extraInfo';
 import { mnCtx } from 'fe/lib/graphql/ctx';
-// import { LMSPrefs } from 'fe/lib/moodleLMS/LMSintegration';
-// import { getMaybeUploadInput } from 'fe/mutation/upload/getUploadInput';
-// import Maybe from 'graphql/tsutils/Maybe';
-// import { UpdateProfileInput } from 'graphql/types.generated';
 import { useMemo } from 'react';
 import * as GQL from './me.generated';
-// type UserProfileExtraInfo = {
-//   LMS?: LMSPrefs;
-// };
-//
-// export type UpdateProfileInputWithEI = WithExtraInfo<UpdateProfileInput, UserProfileExtraInfo>;
+import { useApolloClient } from 'react-apollo';
 
-// export interface UpdateProfile {
-//   profile: UpdateProfileInputWithEI;
-//   icon?: Maybe<File | string>;
-//   image?: Maybe<File | string>;
-// }
 export const useMe = () => {
-  // const client = useApolloClient();
+  const client = useApolloClient();
   const meQ = GQL.useMeQuery({ context: mnCtx({ noShowError: true }) });
 
+  console.log(client.link);
   // const [logoutMut, logoutStatus] = GQL.useMeLogoutMutation();
   // const [updateProfileMutation, updateProfileMutationStatus] = GQL.useMeUpdateMyProfileMutation();
 

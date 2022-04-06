@@ -15,6 +15,7 @@ export const MainHeaderHOC: FC<MainHeaderHOC> = () => {
   const meQ = useMe();
 
   const user = meQ.me?.user;
+  console.log({ user });
   const notifiedMustLogin = useNotifyMustLogin();
   const [showCreateLocation, toggleShowCreateLocation] = React.useState(false);
 

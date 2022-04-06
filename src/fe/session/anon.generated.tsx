@@ -276,7 +276,6 @@ export type AnonLoginMutationFn = ApolloReactCommon.MutationFunction<AnonLoginMu
  *   variables: {
  *      email: // value for 'email'
  *      password: // value for 'password'
- *      url: // value for 'url'
  *   },
  * });
  */

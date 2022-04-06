@@ -17,7 +17,7 @@ export interface SidebarProps {
   userLink: string;
   username: string;
   name: string;
-  signout(): any;
+  signOut(): () => void;
 }
 
 export const WithSidebar: React.FC<SidebarProps> = ({
@@ -29,7 +29,7 @@ export const WithSidebar: React.FC<SidebarProps> = ({
   userLink,
   username,
   name,
-  signout
+  signOut
 }) => {
   const [open, setOpen] = React.useState(false);
   const history = useHistory();
@@ -39,7 +39,7 @@ export const WithSidebar: React.FC<SidebarProps> = ({
         username={username}
         name={name}
         userImage={userImage}
-        signout={signout}
+        signOut={signOut}
         open={open}
         setOpen={setOpen}
         Side={SidebarBox}
