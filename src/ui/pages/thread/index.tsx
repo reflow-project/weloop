@@ -46,7 +46,6 @@ export const Thread: React.FC<Props> = ({
   loadMoreComments,
   reply
 }) => {
-  // console.log(Context);
   const { i18n } = React.useContext(LocaleContext);
   return (
     <MainContainer>

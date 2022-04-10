@@ -14,6 +14,7 @@ import {
 } from '../../../ui/modules/CreateResourcePanel';
 import { useSpatialThingsPagesQuery } from '../EconomicEventManager/EconomicEventManager.generated';
 import { EconomicEventManagerHOC } from '../EconomicEventManager/EconomicEventManagerHOC';
+import { notify } from '../../../fe/lib/graphql/ctx';
 
 export const validationSchema: Yup.ObjectSchema<BasicCreateCollectionFormValues> = Yup.object<
   BasicCreateCollectionFormValues
@@ -117,7 +118,6 @@ export const CreateResourcePanelHOC: FC<Props> = ({
         image: values.image
       })
         .then((response: any) => {
-          console.log({ response });
           if (!response.errors) {
             const newId = response?.data?.createEconomicEvent?.economicResource?.id;
             const redirect = `/resource/${newId} `;
@@ -134,7 +134,9 @@ export const CreateResourcePanelHOC: FC<Props> = ({
             });
           }
         })
-        .catch((error: any) => console.log(error));
+        .catch((error: { message: string }) => {
+          notify(error.message, { type: 'error' });
+        });
     }
   });
 

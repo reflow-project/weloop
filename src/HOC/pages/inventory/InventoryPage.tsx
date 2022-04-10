@@ -1,9 +1,8 @@
-import React, { FC, useEffect, useReducer, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import Modal from 'ui/modules/Modal';
 import { Inventory } from 'ui/pages/inventory';
 import { Filter } from 'ui/modules/Filter';
-import { useNotifyMustLogin } from '../../lib/notifyMustLogin';
 import { CreateLocationPanelHOC } from '../../modules/CreateLocationPanel/CreateLocationPanelHOK';
 import { CreateResourcePanelHOC } from '../../modules/CreateResourcePanel/CreateResourcePanelHOC';
 import { useEconomicResourcesFilteredQuery } from './InventoryPage.generated';
@@ -134,21 +133,18 @@ export const InventoryPage: FC<{ triggerTab?: boolean }> = ({
     // eslint-disable-next-line
   }, []);
 
-  const notifiedMustLogin = useNotifyMustLogin();
-  const [showCreateResource, toggleShowCreateResource] = useReducer(
-    is => !notifiedMustLogin() || !is,
-    false
-  );
+  const [showCreateResource, toggleShowCreateResource] = useState(false);
+
+  const done = () => {
+    toggleShowCreateResource(false);
+  };
 
   const CreateResourceModal = showCreateResource ? (
-    <Modal closeModal={toggleShowCreateResource}>
+    <Modal closeModal={done}>
       {showCreateLocation ? (
         <CreateLocationPanelHOC done={toggleShowCreateLocation} />
       ) : (
-        <CreateResourcePanelHOC
-          done={toggleShowCreateResource}
-          toggleCreateLocation={toggleShowCreateLocation}
-        />
+        <CreateResourcePanelHOC done={done} toggleCreateLocation={toggleShowCreateLocation} />
       )}
     </Modal>
   ) : null;
@@ -310,10 +306,14 @@ export const InventoryPage: FC<{ triggerTab?: boolean }> = ({
     }
   };
 
+  const handleOpenModal = () => {
+    toggleShowCreateResource(true);
+  };
+
   return (
     <>
       {CreateResourceModal}
-      <Inventory inventory={filteredInventory} done={toggleShowCreateResource} owner={currentUser}>
+      <Inventory inventory={filteredInventory} done={handleOpenModal} owner={currentUser}>
         <Filter
           isOpen={isOpen}
           triggerOpen={triggerOpen}

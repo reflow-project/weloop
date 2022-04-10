@@ -147,8 +147,6 @@ export default async function initialise({ localKVStore, appLinks }: Cfg) {
 
   const errorLink = onError(errorResponse => {
     const { operation, response, graphQLErrors, networkError } = errorResponse;
-    console.error(`errorLink on operation`, errorResponse);
-
     if (networkError) {
       // NETWORK ERROR
       const message =

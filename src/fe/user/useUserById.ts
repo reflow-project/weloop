@@ -2,8 +2,8 @@ import * as GQL from './useUser.generated';
 import { useMe } from 'fe/session/useMe';
 import { useMemo } from 'react';
 
-export const useUser = (userName: string) => {
-  const userQ = GQL.useUserDataQuery({ variables: { username: userName } });
+export const useUserById = (userId: string) => {
+  const userQ = GQL.useUserDataBiIdQuery({ variables: { id: userId } });
   const { me } = useMe();
 
   const user = userQ.data?.user;

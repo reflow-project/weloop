@@ -15,7 +15,6 @@ export const MainHeaderHOC: FC<MainHeaderHOC> = () => {
   const meQ = useMe();
 
   const user = meQ.me?.user;
-  console.log({ user });
   const notifiedMustLogin = useNotifyMustLogin();
   const [showCreateLocation, toggleShowCreateLocation] = React.useState(false);
 
@@ -56,7 +55,7 @@ export const MainHeaderHOC: FC<MainHeaderHOC> = () => {
       Search: <SearchBox key="search" />,
       user: user
         ? {
-            icon: `${user.character}`,
+            icon: `${process.env.REACT_APP_GRAPHQL_IMG_LINK}${user?.profile?.icon}`,
             name: `${user.character?.username}`,
             link: `/user/${user.id}`
           }

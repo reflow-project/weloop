@@ -7,6 +7,8 @@ import { usePageTitle } from 'context/global/pageCtx';
 import { toast } from 'react-toastify';
 import CreateNewUserPage, { CreateUserFormValues, Props } from 'ui/pages/createNewUser';
 import { useHistory } from 'react-router';
+import { useAnon } from 'fe/session/useAnon';
+import { useNotifyMustLogin } from '../../lib/notifyMustLogin';
 
 const initialValues: CreateUserFormValues = {
   profileName: '',
@@ -16,6 +18,10 @@ const initialValues: CreateUserFormValues = {
 const createUserPageTitle = t`Create New User`;
 
 export const CreateNewUserHOC: FC = () => {
+  const { logout } = useAnon();
+  const notifyNotLogged = useNotifyMustLogin();
+  notifyNotLogged() && logout();
+
   usePageTitle(createUserPageTitle);
   const { create, createStatus } = useCreateUser();
   const validationSchema: Yup.ObjectSchema<CreateUserFormValues> = Yup.object<CreateUserFormValues>(
