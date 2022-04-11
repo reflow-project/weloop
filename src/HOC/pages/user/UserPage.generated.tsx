@@ -31,7 +31,9 @@ export type CreateUserMutation = (
 
 export type UpdateUserMutationVariables = {
   userName?: Types.Maybe<Types.Scalars['String']>,
-  summary?: Types.Maybe<Types.Scalars['String']>
+  summary?: Types.Maybe<Types.Scalars['String']>,
+  icon?: Types.Maybe<Types.Scalars['Upload']>,
+  image?: Types.Maybe<Types.Scalars['Upload']>
 };
 
 
@@ -39,12 +41,11 @@ export type UpdateUserMutation = (
   { __typename: 'RootMutationType' }
   & { updateUser: Types.Maybe<(
     { __typename: 'Me' }
-    & Pick<Types.Me, 'accountId'>
     & { user: Types.Maybe<(
       { __typename: 'User' }
-      & { character: Types.Maybe<(
-        { __typename: 'Character' }
-        & Pick<Types.Character, 'username'>
+      & { profile: Types.Maybe<(
+        { __typename: 'Profile' }
+        & Pick<Types.Profile, 'name' | 'summary' | 'icon' | 'image'>
       )> }
     )> }
   )> }
@@ -95,12 +96,14 @@ export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutati
 export type CreateUserMutationResult = ApolloReactCommon.MutationResult<CreateUserMutation>;
 export type CreateUserMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
 export const UpdateUserDocument = gql`
-    mutation updateUser($userName: String, $summary: String) {
-  updateUser(profile: {summary: $summary, name: $userName}) {
-    accountId
+    mutation updateUser($userName: String, $summary: String, $icon: Upload, $image: Upload) {
+  updateUser(images: {icon: $icon, image: $image}, profile: {summary: $summary, name: $userName}) {
     user {
-      character {
-        username
+      profile {
+        name
+        summary
+        icon
+        image
       }
     }
   }
@@ -123,6 +126,8 @@ export type UpdateUserMutationFn = ApolloReactCommon.MutationFunction<UpdateUser
  *   variables: {
  *      userName: // value for 'userName'
  *      summary: // value for 'summary'
+ *      icon: // value for 'icon'
+ *      image: // value for 'image'
  *   },
  * });
  */

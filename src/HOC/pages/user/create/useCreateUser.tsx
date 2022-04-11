@@ -1,6 +1,8 @@
 import { useMemo } from 'react';
 import { useCreateUserMutation } from '../UserPage.generated';
 import { useCallOrNotifyMustLogin } from '../../../lib/notifyMustLogin';
+import { MeQueryRefetch } from 'fe/session/me.generated';
+
 export interface AddUser {
   profileName: string;
   userName?: string;
@@ -20,7 +22,7 @@ export const useCreateUser = () => {
           userName,
           summary
         },
-        refetchQueries: []
+        refetchQueries: [MeQueryRefetch({})]
       });
     },
     [createUserQ, createStatus]

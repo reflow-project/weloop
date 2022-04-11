@@ -12,6 +12,8 @@ import { usePageTitle } from 'context/global/pageCtx';
 import { settingsLocation } from 'routes/SettingsPageRoute';
 import { UpdatePasswordPanelHOK } from '../../modules/UpdatePasswordPanel/UpdatePasswordPanelHOK';
 import { useUpdateUser } from '../user/update/useUpdateUser';
+import { useNotifyMustLogin } from '../../lib/notifyMustLogin';
+import { useAnon } from '../../../fe/session/useAnon';
 
 export enum SettingsPageTab {
   Preferences,
@@ -21,10 +23,12 @@ export enum SettingsPageTab {
   ModerationLogs,
   General
 }
+
 export interface SettingsPage {
   tab?: SettingsPageTab;
   basePath?: string;
 }
+
 const settingsPreferencesPageTitle = t`Settings - Preferences`;
 const settingsGeneralPageTitle = t`Settings - General`;
 
@@ -32,19 +36,22 @@ export const SettingsPage: FC<SettingsPage> = ({ basePath, tab }) => {
   const settingsPageTitle =
     tab === SettingsPageTab.Preferences ? settingsPreferencesPageTitle : settingsGeneralPageTitle;
   usePageTitle(settingsPageTitle);
-
   const { me } = useMe();
-  const profile = me?.user;
   const { update } = useUpdateUser();
+  const { logout } = useAnon();
+  const notifyNotLogged = useNotifyMustLogin();
+  notifyNotLogged() && logout();
+
+  let userData = useMemo(() => me?.users && me?.users[0], [me]);
   const initialValues = useMemo<TEditProfile>(
     () => ({
-      icon: '',
-      image: '',
-      displayName: profile?.profile?.name || '',
-      name: profile?.character?.username || '',
-      summary: profile?.profile?.summary || ''
+      icon: userData?.profile?.icon || '',
+      image: userData?.profile?.image || '',
+      displayName: userData?.profile?.name || '',
+      name: userData?.character?.username || '',
+      summary: userData?.profile?.summary || ''
     }),
-    [profile]
+    [userData]
   );
 
   const updateProfileFormik = useFormik<TEditProfile>({
@@ -57,6 +64,8 @@ export const SettingsPage: FC<SettingsPage> = ({ basePath, tab }) => {
         icon,
         image,
         name
+      }).then(resp => {
+        userData = resp?.data?.updateUser?.user;
       })
   });
 
@@ -73,10 +82,11 @@ export const SettingsPage: FC<SettingsPage> = ({ basePath, tab }) => {
       displayUsername: '',
       isAdmin: false,
       formik: updateProfileFormik,
-      Preferences: <PreferencesSettingsSection />
+      Preferences: <PreferencesSettingsSection />,
+      userProfile: userData?.profile
     };
     return props;
-  }, [updateProfileFormik]);
+  }, [updateProfileFormik, userData]);
 
   return (
     settingsPageProps && (

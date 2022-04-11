@@ -10,6 +10,8 @@ fragment UseMeData on Me {
   user {
     id
     profile {
+      image
+      icon
       name
       summary
     }
@@ -22,6 +24,8 @@ fragment UseMeData on Me {
     profile {
       name
       summary
+      icon
+      image
     }
     character {
       username
@@ -53,11 +57,3 @@ fragment UseMeData on Me {
     }
   }
 }
-
-#mutation meUpdateMyProfile($profile:UpdateProfileInput!, $icon: UploadInput, $image: UploadInput) {
-#  updateProfile(profile:$profile, icon: $icon, image: $image){
-#    user {
-#      ...SettingsPageMeUser
-#    }
-#  }
-#}

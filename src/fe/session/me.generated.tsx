@@ -23,7 +23,7 @@ export type UseMeDataFragment = (
     & Pick<Types.User, 'id'>
     & { profile: Types.Maybe<(
       { __typename: 'Profile' }
-      & Pick<Types.Profile, 'name' | 'summary'>
+      & Pick<Types.Profile, 'image' | 'icon' | 'name' | 'summary'>
     )>, character: Types.Maybe<(
       { __typename: 'Character' }
       & Pick<Types.Character, 'username'>
@@ -33,7 +33,7 @@ export type UseMeDataFragment = (
     & Pick<Types.User, 'id'>
     & { profile: Types.Maybe<(
       { __typename: 'Profile' }
-      & Pick<Types.Profile, 'name' | 'summary'>
+      & Pick<Types.Profile, 'name' | 'summary' | 'icon' | 'image'>
     )>, character: Types.Maybe<(
       { __typename: 'Character' }
       & Pick<Types.Character, 'username'>
@@ -61,6 +61,8 @@ export const UseMeDataFragmentDoc = gql`
   user {
     id
     profile {
+      image
+      icon
       name
       summary
     }
@@ -73,6 +75,8 @@ export const UseMeDataFragmentDoc = gql`
     profile {
       name
       summary
+      icon
+      image
     }
     character {
       username

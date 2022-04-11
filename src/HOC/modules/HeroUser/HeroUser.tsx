@@ -1,16 +1,15 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useUser } from 'fe/user/useUser';
 import { useFormik } from 'formik';
 import { useNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
 import React, { FC, useMemo, useReducer } from 'react';
 import { HeroUser as HeroUserUI, Props, Status } from 'ui/modules/HeroUser';
 import Modal from 'ui/modules/Modal';
+import { useUserById } from '../../../fe/user/useUserById';
 
 export interface HeroUser {
-  userName: string;
+  userId: string;
 }
-export const HeroUser: FC<HeroUser> = ({ userName }) => {
-  const { user, isMe } = useUser(userName);
+export const HeroUser: FC<HeroUser> = ({ userId }) => {
+  const { user, isMe } = useUserById(userId);
   const [isOpenDropdown, toggleDropdown] = useReducer(is => !is, false);
 
   const toggleFollowFormik = useFormik({

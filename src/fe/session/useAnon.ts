@@ -66,10 +66,12 @@ export const useAnon = () => {
         update: (proxy, resp) => updateMe(proxy, resp.data)
       });
     };
+
     const logout = () => {
       localStorage.clear();
       history.push('/login');
     };
+
     const login = (email: string, password: string) => {
       if (loginStatus.loading) {
         return;
