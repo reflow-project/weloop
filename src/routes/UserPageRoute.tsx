@@ -4,11 +4,13 @@ import { NotFoundHOC } from 'HOC/pages/not-found/NotFound';
 import { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { WithSidebarTemplate } from 'HOC/templates/WithSidebar/WithSidebar';
 import { locationHelper } from './lib/helper';
+import { useMe } from '../fe/session/useMe';
 
 interface UserPageRouter {
   userId: string;
   tab?: string;
 }
+
 const UserPageRouter: FC<RouteComponentProps<UserPageRouter>> = ({ match }) => {
   const userId = match.params.userId;
   const maybeTabStr = match.params.tab as Tab;
@@ -27,16 +29,22 @@ const UserPageRouter: FC<RouteComponentProps<UserPageRouter>> = ({ match }) => {
       ? UserPageTab.Activities
       : null;
 
+  const { me } = useMe();
+  const userIdentificatior = useMemo(
+    () => (userId ? userId : me?.users && me?.users[0] && me?.users[0]?.character?.username),
+    [me, userId]
+  );
+
   const props = useMemo<any | null>(
     () =>
       tab === null
         ? null
         : {
             tab,
-            userId,
+            userId: userIdentificatior,
             basePath: userLocation.getPath({ tab: undefined, userId }, undefined)
           },
-    [tab, userId]
+    [tab, userId, userIdentificatior]
   );
   if (!props) {
     return <NotFoundHOC />;

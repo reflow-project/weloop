@@ -13,6 +13,7 @@ import DropzoneArea from 'ui/modules/DropzoneModal';
 import { Actions, ContainerForm } from 'ui/modules/Modal';
 import styled from 'ui/themes/styled';
 import { ReactElement } from 'react';
+import { Profile } from '../../../graphql/types.generated';
 
 const tt = {
   placeholders: {
@@ -41,6 +42,10 @@ export interface Props {
   isAdmin: boolean;
   Preferences: ReactElement;
   toggleUpdatePasswordModal: () => void;
+  userProfile:
+    | ({ __typename: 'Profile' } & Pick<Profile, 'summary' | 'image' | 'icon' | 'name'>)
+    | null
+    | undefined;
 }
 
 export interface TEditProfile {
@@ -65,18 +70,26 @@ export const Settings: React.FC<Props> = ({
   displayUsername,
   isAdmin,
   sectionPaths,
-  toggleUpdatePasswordModal
+  toggleUpdatePasswordModal,
+  userProfile
 }) => {
   const onIconFileSelected = React.useCallback(
     (file: File) => formik.setValues({ ...formik.values, icon: file }),
     [formik]
   );
-  const initialIconUrl = 'string' === typeof formik.values.icon ? formik.values.icon : '';
+
+  const initialIconUrl =
+    'string' === typeof formik.values.icon
+      ? `${process.env.REACT_APP_GRAPHQL_IMG_LINK}${formik.values.icon}`
+      : '';
   const onImageFileSelected = React.useCallback(
     (file: File) => formik.setValues({ ...formik.values, image: file }),
     [formik]
   );
-  const initialImageUrl = 'string' === typeof formik.values.image ? formik.values.image : '';
+  const initialImageUrl =
+    'string' === typeof formik.values.image
+      ? `${process.env.REACT_APP_GRAPHQL_IMG_LINK}${formik.values.image}`
+      : '';
 
   return (
     <MainContainer>
@@ -112,13 +125,7 @@ export const Settings: React.FC<Props> = ({
                       </FlexProfile>
                       <HeroInfo mt={2} ml={3} mr={3}>
                         <CollectionContainerForm>
-                          <Input
-                            placeholder={tt.placeholders.name}
-                            disabled={formik.isSubmitting}
-                            name="name"
-                            value={formik.values.name}
-                            onChange={formik.handleChange}
-                          />
+                          <h2>{formik.values.name}</h2>
                         </CollectionContainerForm>
                         <CollectionContainerForm>
                           <Input

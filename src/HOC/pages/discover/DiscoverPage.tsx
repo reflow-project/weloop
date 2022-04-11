@@ -1,7 +1,5 @@
 import React, { FC, useMemo } from 'react';
 import { Discover, Props } from 'ui/pages/discover';
-// import { useInstanceOutboxActivities } from 'fe/activities/outbox/instance/useInstanceOutboxActivities';
-// import { ActivityPreviewHOC } from 'HOC/modules/previews/activity/ActivityPreview';
 import { Box } from 'rebass';
 import { t } from '@lingui/macro';
 import { usePageTitle } from 'context/global/pageCtx';
@@ -24,7 +22,6 @@ export const DiscoverPage: FC<DiscoverPage> = ({ basePath, tab }) => {
   const discovberPageTitle =
     tab === DiscoverPageTabs.Activities ? discoverActivitiesPageTitle : discoverActivitiesPageTitle; //never
   usePageTitle(discovberPageTitle);
-
   // const { activitiesPage } = useInstanceOutboxActivities();
   // const [activitiesPageNext /* , activitiesPagePrevious */] = activitiesPage.formiks;
 

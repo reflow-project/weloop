@@ -8,8 +8,6 @@ import React, { FC, useMemo } from 'react';
 import { Home, Props } from 'ui/pages/home';
 import { t } from '@lingui/macro';
 import { usePageTitle } from 'context/global/pageCtx';
-// import { MyFollowedCommunityDataFragment } from 'fe/community/myFollowed/myFollowedCommunities.generated';
-// import { MyFollowedCollectionDataFragment } from 'fe/collection/myFollowed/myFollowedCollections.generated';
 
 export interface HomePageHOC {
   basePath: string;

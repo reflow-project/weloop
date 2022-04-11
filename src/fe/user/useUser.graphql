@@ -1,21 +1,12 @@
 query userData($username: String!) {
 user(filter: {username: $username}) {
     ...HeroUserUserData
-    userActivities {
-      id
-      verb {
-        verb
-        verbDisplay
-      }
-    }
-    posts {
-      id
-      postContent {
-        htmlBody
-        summary
-        title
-      }
-    }
+  }
+}
+
+query userDataBiID($id: ID!) {
+  user(filter: {id: $id}) {
+    ...HeroUserUserData
   }
 }
 
@@ -24,6 +15,8 @@ fragment HeroUserUserData on User {
   profile {
     name
     summary
+    image
+    icon
   }
   character {
     username

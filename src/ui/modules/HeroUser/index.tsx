@@ -49,16 +49,16 @@ export const HeroUser: FC<Props> = props => {
   if (props.status === Status.Loading) {
     return null;
   }
-
+  const baseUrl = process.env.REACT_APP_GRAPHQL_IMG_LINK;
   return (
     <ProfileBox p={1}>
       <Hero>
-        <HeroBg src={props.image} />
+        <HeroBg src={`${baseUrl}${props.user.profile.image}`} />
         <FlexProfile>
           <WrapperHero>
             <Img
               style={{
-                backgroundImage: `url("${props.icon}")`
+                backgroundImage: `url("${baseUrl}${props.user.profile.icon}")`
               }}
             />
           </WrapperHero>

@@ -1,20 +1,19 @@
 import { useFormik } from 'formik';
 import React, { FC, useState } from 'react';
+import styled from 'ui/themes/styled';
+import { Flex } from 'rebass/styled-components';
+import { Trans } from '@lingui/macro';
 import { Slide, toast } from 'react-toastify';
-import { CreateEventOnResourcePanel } from '../../../ui/modules/CreateEventOnResourcePanel';
 import * as Yup from 'yup';
 import { TestUrlOrFile } from 'HOC/lib/formik-validations';
 import { useCreateEventOnResource } from '../../../fe/resource/create/useCreateEventOnResource';
 import {
+  CreateEventOnResourcePanel,
   TCreateEventOnResourcePanel,
   CreateEventOnResourceFormValues
-} from '../../../ui/modules/CreateEventOnResourcePanel';
+} from 'ui/modules/CreateEventOnResourcePanel';
 import { EconomicResource } from '../../pages/inventory/InventoryPage';
 import { EconomicEventManagerHOC } from '../EconomicEventManager/EconomicEventManagerHOC';
-
-import styled from 'ui/themes/styled';
-import { Flex } from 'rebass/styled-components';
-import { Trans } from '@lingui/macro';
 import { CreateLocationPanelHOC } from '../CreateLocationPanel/CreateLocationPanelHOK';
 import { CreateResourcePanelHOC } from '../CreateResourcePanel/CreateResourcePanelHOC';
 

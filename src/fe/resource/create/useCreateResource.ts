@@ -73,7 +73,6 @@ export const useCreateResource = () => {
     [createResourceMut]
   );
   return useMemo(() => {
-    console.log('some');
     return {
       create
     };
