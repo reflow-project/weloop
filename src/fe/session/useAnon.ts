@@ -5,7 +5,9 @@ import { MeDocument, MeQuery, MeQueryRefetch } from './me.generated';
 import { mnCtx } from 'fe/lib/graphql/ctx';
 import { useHistory } from 'react-router';
 
-const hostname = process.env.REACT_APP_FRONTEND_HOSTNAME;
+const hostname = process.env.REACT_APP_FRONTEND_HOSTNAME || '';
+
+console.log({ hostname: process.env.REACT_APP_FRONTEND_HOSTNAME }, '______________');
 
 export const useAnon = () => {
   const history = useHistory();
@@ -28,7 +30,7 @@ export const useAnon = () => {
       }
     });
   };
-  const url = process.env.REACT_APP_FRONTEND_HOSTNAME || '';
+
   const [loginMut, loginStatus] = GQL.useAnonLoginMutation();
   const [confirmEmailMut, confirmEmailStatus] = GQL.useConfirmEmailMutation();
   const [requestConfirmEmailMut, requestConfirmEmailStatus] = GQL.useRequestConfirmEmailMutation();
@@ -114,7 +116,7 @@ export const useAnon = () => {
         return;
       }
       return resetPwd({
-        variables: { email, url: `${url}/reset/:token` }
+        variables: { email, url: `${hostname}/reset/:token` }
       });
     };
 
@@ -138,7 +140,6 @@ export const useAnon = () => {
       signUpStatus
     };
   }, [
-    url,
     history,
     signUpStatus,
     signUpMut,
