@@ -29,6 +29,8 @@ jobs:
         env:
           REACT_APP_GRAPHQL_ENDPOINT: ${{ secrets.REACT_APP_GRAPHQL_ENDPOINT }}
           REACT_APP_SENTRY_API_KEY: ${{ secrets.REACT_APP_SENTRY_API_KEY }}
+          REACT_APP_GRAPHQL_IMG_LINK: ${{ secrets.REACT_APP_GRAPHQL_IMG_LINK }}
+          REACT_APP_FRONTEND_HOSTNAME: ${{ secrets.REACT_APP_FRONTEND_HOSTNAME }}
           CI: false
 
       - name: Deploy to gh-pages
