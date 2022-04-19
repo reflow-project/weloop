@@ -1,6 +1,6 @@
 import { action } from '@storybook/addon-actions';
 import { useFormik } from 'formik';
-import { Props, Status } from 'ui/modules/ActivityPreview';
+import { Status } from 'ui/modules/ActivityPreview';
 import { getActor } from './actor';
 import { ReactElement } from 'react';
 
@@ -40,7 +40,7 @@ export const useGetActions = () => ({
   }
 });
 
-export function activityPreviewProps(event: string, preview: ReactElement): Props {
+export function activityPreviewProps(event: string, preview: ReactElement): any {
   return {
     communityLink: 'communityLink',
     communityName: 'communityName',

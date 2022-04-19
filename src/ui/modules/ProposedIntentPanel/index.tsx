@@ -8,7 +8,7 @@ import styled from 'ui/themes/styled';
 import { Flex, Text, Box, Heading } from 'rebass/styled-components';
 import { Container, Header } from 'ui/modules/Modal';
 import { IProposedIntent } from '../Previews/ProposedIntent';
-import { ActorComp } from '../ActivityPreview';
+// import { ActorComp } from '../ActivityPreview';
 import { Actor } from '../ActivityPreview/types';
 import { Clock } from 'react-feather';
 import { theme } from 'ui/themes/default.theme';
@@ -43,13 +43,13 @@ export const ProposedIntentPanel: React.FC<IProposedIntentPanel> = ({
     <Container>
       <Header>
         <Heading m={2}>{name}</Heading>
-        <ActorComp
-          actor={actor ?? undefined}
-          createdAt={createdAt ?? ''}
-          event={'Created a resource'}
-          communityLink={link}
-          communityName={collectionName}
-        />
+        {/*<ActorComp*/}
+        {/*  actor={actor ?? undefined}*/}
+        {/*  createdAt={createdAt ?? ''}*/}
+        {/*  event={'Created a resource'}*/}
+        {/*  communityLink={link}*/}
+        {/*  communityName={collectionName}*/}
+        {/*/>*/}
       </Header>
       <Hero>
         <HeroInfo>

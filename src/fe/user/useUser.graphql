@@ -4,7 +4,7 @@ user(filter: {username: $username}) {
   }
 }
 
-query userDataBiID($id: ID!) {
+query userDataBiId($id: ID!) {
   user(filter: {id: $id}) {
     ...HeroUserUserData
   }
@@ -20,5 +20,14 @@ fragment HeroUserUserData on User {
   }
   character {
     username
+  }
+  userActivities {
+    id
+    subjectId
+    objectId
+    verb {
+      verb
+      verbDisplay
+    }
   }
 }

@@ -4,16 +4,14 @@ import PaginationComponent from 'react-reactstrap-pagination';
 import { Plus } from 'react-feather';
 import { NavLink } from 'react-router-dom';
 import { Box, Button, Text } from 'rebass/styled-components';
-// import { EconomicResource } from 'HOC/pages/inventory/InventoryPage';
-// import { EconomicResourcesFilteredQuery } from 'HOC/pages/inventory/InventoryPage.generated';
 import { InventoryWrapper, InfoWrapper, ImageWrapper, Icon } from 'ui/pages/resource';
 import { Wrapper } from 'ui/elements/Layout';
 import { PAGE_LIMIT, PAGE_START, MAX_PAGINATION_NUMBERS } from 'util/constants/pagination';
 import { typography } from '../../../mn-constants';
 import styled from '../../themes/styled';
-import { useMe } from 'fe/session/useMe';
 import { useEffect, useState } from 'react';
 import media from 'styled-media-query';
+import { useUserById } from '../../../fe/user/useUserById';
 
 const BoxIcon = require('react-feather/dist/icons/box').default;
 const PenIcon = require('react-feather/dist/icons/edit').default;
@@ -23,11 +21,11 @@ export interface Props {
   done: () => void;
   inventory: any;
   owner: string;
+  userId?: string;
 }
 
-export const Inventory: React.FC<Props> = ({ inventory, done, children, owner }) => {
-  const { me } = useMe();
-  const currentUser = me?.user?.id;
+export const Inventory: React.FC<Props> = ({ userId, inventory, done, children, owner }) => {
+  const { isMe } = useUserById(userId || '');
   const [currentList, setCurrentList] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -53,7 +51,7 @@ export const Inventory: React.FC<Props> = ({ inventory, done, children, owner })
   return (
     <>
       <ButtonWrapper>
-        {me?.user?.id === owner && (
+        {isMe && (
           <CreateItemButton variant="primary" onClick={done}>
             <Plus size={16} color={'#fff'} />
             <Text variant="button">
@@ -110,7 +108,7 @@ export const Inventory: React.FC<Props> = ({ inventory, done, children, owner })
                       <b>
                         <Trans>Owner:</Trans>
                       </b>{' '}
-                      {primaryAccountable?.id === currentUser ? 'Me' : primaryAccountable?.name}
+                      {isMe ? 'Me' : primaryAccountable?.name}
                     </Text>
                   </Box>
                 </InfoWrapper>
@@ -209,7 +207,7 @@ const PaginationWrapper = styled('div')`
   }
 `;
 
-const WrapperLink = styled(NavLink)`
+export const WrapperLink = styled(NavLink)`
   text-decoration: none !important;
 
   * {
@@ -217,7 +215,8 @@ const WrapperLink = styled(NavLink)`
   }
 `;
 
-const Title = styled(Text)`
+export const Title = styled(Text)`
+  display: inline-block;
   font-size: ${typography.size.m1};
   color: ${props => props.theme.colors.dark};
   text-decoration: none !important;
