@@ -7,7 +7,6 @@ import { NavLink } from 'react-router-dom';
 import { Box, Flex, Text } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
 import styled from 'ui/themes/styled';
-import { ActorComp } from '../ActivityPreview';
 import { Actor } from '../ActivityPreview/types';
 
 export interface LikeActions {
@@ -41,13 +40,13 @@ export const LikedComment: React.SFC<CommentProps> = ({
 }) => {
   return (
     <Wrapper pl={2}>
-      <ActorComp
-        actor={actor}
-        createdAt={createdAt}
-        event={''}
-        communityName={communityName}
-        communityLink={communityLink}
-      />
+      {/*<ActorComp*/}
+      {/*  actor={actor}*/}
+      {/*  createdAt={createdAt}*/}
+      {/*  event={''}*/}
+      {/*  communityName={communityName}*/}
+      {/*  communityLink={communityLink}*/}
+      {/*/>*/}
       <Summary
         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
         sx={{ textDecoration: 'none' }}

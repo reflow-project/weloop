@@ -112,11 +112,12 @@ export type FilterType = {
   track?: boolean;
 };
 
-export const InventoryPage: FC<{ triggerTab?: boolean }> = ({
-  triggerTab
-}: {
-  triggerTab?: boolean;
-}) => {
+export type Props = {
+  userId?: string;
+  triggerTab?: string;
+};
+
+export const InventoryPage: FC<Props> = ({ triggerTab, userId }) => {
   const location = useLocation();
   let history = useHistory();
   const currentUser = location.pathname.split('/')[2];
@@ -313,7 +314,12 @@ export const InventoryPage: FC<{ triggerTab?: boolean }> = ({
   return (
     <>
       {CreateResourceModal}
-      <Inventory inventory={filteredInventory} done={handleOpenModal} owner={currentUser}>
+      <Inventory
+        inventory={filteredInventory}
+        done={handleOpenModal}
+        owner={currentUser}
+        userId={userId}
+      >
         <Filter
           isOpen={isOpen}
           triggerOpen={triggerOpen}

@@ -36,20 +36,6 @@ export const useCreateResource = () => {
       hasNumericalValue,
       image
     }: CreateResource) => {
-      console.log({ createResourceMutStatus });
-      console.log({
-        name,
-        note,
-        eventNote,
-        hasPointInTime,
-        atLocation,
-        action,
-        provider,
-        receiver,
-        hasUnit,
-        hasNumericalValue,
-        image
-      });
       if (createResourceMutStatus.loading) {
         return;
       }

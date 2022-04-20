@@ -65,6 +65,19 @@ export type EconomicResourceQuery = (
   )> }
 );
 
+export type GetEconomicResourceNameQueryVariables = {
+  id: Types.Scalars['ID']
+};
+
+
+export type GetEconomicResourceNameQuery = (
+  { __typename: 'RootQueryType' }
+  & { economicResource: Types.Maybe<(
+    { __typename: 'EconomicResource' }
+    & Pick<Types.EconomicResource, 'name'>
+  )> }
+);
+
 export type OnhandQuantityFragment = (
   { __typename: 'EconomicResource' }
   & { onhandQuantity: Types.Maybe<(
@@ -256,6 +269,39 @@ export function useEconomicResourceLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type EconomicResourceQueryHookResult = ReturnType<typeof useEconomicResourceQuery>;
 export type EconomicResourceLazyQueryHookResult = ReturnType<typeof useEconomicResourceLazyQuery>;
 export type EconomicResourceQueryResult = ApolloReactCommon.QueryResult<EconomicResourceQuery, EconomicResourceQueryVariables>;
+export const GetEconomicResourceNameDocument = gql`
+    query getEconomicResourceName($id: ID!) {
+  economicResource(id: $id) {
+    name
+  }
+}
+    `;
+
+/**
+ * __useGetEconomicResourceNameQuery__
+ *
+ * To run a query within a React component, call `useGetEconomicResourceNameQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEconomicResourceNameQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEconomicResourceNameQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetEconomicResourceNameQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetEconomicResourceNameQuery, GetEconomicResourceNameQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetEconomicResourceNameQuery, GetEconomicResourceNameQueryVariables>(GetEconomicResourceNameDocument, baseOptions);
+      }
+export function useGetEconomicResourceNameLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetEconomicResourceNameQuery, GetEconomicResourceNameQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetEconomicResourceNameQuery, GetEconomicResourceNameQueryVariables>(GetEconomicResourceNameDocument, baseOptions);
+        }
+export type GetEconomicResourceNameQueryHookResult = ReturnType<typeof useGetEconomicResourceNameQuery>;
+export type GetEconomicResourceNameLazyQueryHookResult = ReturnType<typeof useGetEconomicResourceNameLazyQuery>;
+export type GetEconomicResourceNameQueryResult = ApolloReactCommon.QueryResult<GetEconomicResourceNameQuery, GetEconomicResourceNameQueryVariables>;
 
 
 export interface EconomicResourceQueryOperation {
@@ -271,6 +317,25 @@ export const EconomicResourceQueryRefetch = (
   context?:any
 )=>({
   query:EconomicResourceDocument,
+  variables,
+  context
+})
+
+
+
+export interface GetEconomicResourceNameQueryOperation {
+  operationName: 'getEconomicResourceName'
+  result: GetEconomicResourceNameQuery
+  variables: GetEconomicResourceNameQueryVariables
+  type: 'query'
+}
+export const GetEconomicResourceNameQueryName:GetEconomicResourceNameQueryOperation['operationName'] = 'getEconomicResourceName'
+
+export const GetEconomicResourceNameQueryRefetch = (
+  variables:GetEconomicResourceNameQueryVariables,
+  context?:any
+)=>({
+  query:GetEconomicResourceNameDocument,
   variables,
   context
 })

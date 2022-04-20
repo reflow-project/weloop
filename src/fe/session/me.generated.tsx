@@ -44,14 +44,14 @@ export type UseMeDataFragment = (
     & { verb: Types.Maybe<(
       { __typename: 'Verb' }
       & Pick<Types.Verb, 'verb' | 'verbDisplay'>
-    )>, subject: Types.Maybe<{ __typename: 'Category' } | { __typename: 'SpatialThing' } | { __typename: 'User' }>, object: Types.Maybe<{ __typename: 'Activity' } | { __typename: 'Category' } | { __typename: 'EconomicEvent' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Post' } | { __typename: 'Process' } | { __typename: 'SpatialThing' } | { __typename: 'Tag' } | { __typename: 'User' }> }
+    )>, subject: Types.Maybe<{ __typename: 'Category' } | { __typename: 'SpatialThing' } | { __typename: 'User' }>, object: Types.Maybe<{ __typename: 'Activity' } | { __typename: 'Category' } | { __typename: 'EconomicEvent' } | { __typename: 'Intent' } | { __typename: 'Post' } | { __typename: 'Process' } | { __typename: 'SpatialThing' } | { __typename: 'Tag' } | { __typename: 'User' }> }
   )>>>, userFeed: Types.Maybe<Array<Types.Maybe<(
     { __typename: 'Activity' }
     & Pick<Types.Activity, 'id'>
     & { verb: Types.Maybe<(
       { __typename: 'Verb' }
       & Pick<Types.Verb, 'verb' | 'verbDisplay'>
-    )>, object: Types.Maybe<{ __typename: 'Activity' } | { __typename: 'Category' } | { __typename: 'EconomicEvent' } | { __typename: 'Follow' } | { __typename: 'Intent' } | { __typename: 'Post' } | { __typename: 'Process' } | { __typename: 'SpatialThing' } | { __typename: 'Tag' } | { __typename: 'User' }> }
+    )>, object: Types.Maybe<{ __typename: 'Activity' } | { __typename: 'Category' } | { __typename: 'EconomicEvent' } | { __typename: 'Intent' } | { __typename: 'Post' } | { __typename: 'Process' } | { __typename: 'SpatialThing' } | { __typename: 'Tag' } | { __typename: 'User' }> }
   )>>> }
 );
 

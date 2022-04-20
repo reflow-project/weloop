@@ -398,7 +398,7 @@ export type AgreementUpdateParams = {
 export type AnyCharacter = Category | SpatialThing | User;
 
 /** Any type of known object */
-export type AnyContext = Activity | Category | EconomicEvent | Follow | Intent | Post | Process | SpatialThing | Tag | User;
+export type AnyContext = Activity | Category | EconomicEvent | Intent | Post | Process | SpatialThing | Tag | User;
 
 /** 
  * A way to tie an economic event that is given in loose fulfilment for another
@@ -1249,14 +1249,6 @@ export type FeedFilters = {
   feedName?: Maybe<Scalars['String']>,
 };
 
-export type Follow = {
-   __typename?: 'Follow',
-  followedCharacter?: Maybe<Character>,
-  followedProfile?: Maybe<Profile>,
-  followerCharacter?: Maybe<Character>,
-  followerProfile?: Maybe<Profile>,
-};
-
 /** 
  * Represents many-to-many relationships between commitments and economic events
  * that fully or partially satisfy one or more commitments.
@@ -1622,8 +1614,8 @@ export type Me = {
    __typename?: 'Me',
   accountId?: Maybe<Scalars['ID']>,
   flagsForModeration?: Maybe<Array<Maybe<Activity>>>,
-  followed?: Maybe<Array<Maybe<Follow>>>,
-  followers?: Maybe<Array<Maybe<Follow>>>,
+  followed?: Maybe<Array<Maybe<Activity>>>,
+  followers?: Maybe<Array<Maybe<Activity>>>,
   likeActivities?: Maybe<Array<Maybe<Activity>>>,
   /** a bearer token used for authentication */
   token?: Maybe<Scalars['String']>,
@@ -4770,12 +4762,18 @@ export type UnitUpdateParams = {
 
 export type User = {
    __typename?: 'User',
+  boostActivities?: Maybe<Array<Maybe<Activity>>>,
   character?: Maybe<Character>,
   id?: Maybe<Scalars['ID']>,
   isInstanceAdmin?: Maybe<Scalars['Boolean']>,
   posts?: Maybe<Array<Maybe<Post>>>,
   profile?: Maybe<Profile>,
   userActivities?: Maybe<Array<Maybe<Activity>>>,
+};
+
+
+export type UserBoostActivitiesArgs = {
+  paginate?: Maybe<Paginate>
 };
 
 
@@ -4886,9 +4884,6 @@ export type Verb = {
           },
           {
             "name": "EconomicEvent"
-          },
-          {
-            "name": "Follow"
           },
           {
             "name": "Intent"
@@ -5109,7 +5104,7 @@ export type ResolversTypes = {
   Replied: ResolverTypeWrapper<Replied>,
   Post: ResolverTypeWrapper<Post>,
   PostContent: ResolverTypeWrapper<PostContent>,
-  AnyContext: ResolversTypes['Activity'] | ResolversTypes['Category'] | ResolversTypes['EconomicEvent'] | ResolversTypes['Follow'] | ResolversTypes['Intent'] | ResolversTypes['Post'] | ResolversTypes['Process'] | ResolversTypes['SpatialThing'] | ResolversTypes['Tag'] | ResolversTypes['User'],
+  AnyContext: ResolversTypes['Activity'] | ResolversTypes['Category'] | ResolversTypes['EconomicEvent'] | ResolversTypes['Intent'] | ResolversTypes['Post'] | ResolversTypes['Process'] | ResolversTypes['SpatialThing'] | ResolversTypes['Tag'] | ResolversTypes['User'],
   Category: ResolverTypeWrapper<Omit<Category, 'caretaker'> & { caretaker?: Maybe<ResolversTypes['AnyContext']> }>,
   Json: ResolverTypeWrapper<Scalars['Json']>,
   CategoriesPage: ResolverTypeWrapper<CategoriesPage>,
@@ -5162,10 +5157,9 @@ export type ResolversTypes = {
   Fulfillment: ResolverTypeWrapper<Fulfillment>,
   Person: ResolverTypeWrapper<Person>,
   Tag: ResolverTypeWrapper<Omit<Tag, 'context' | 'tagged'> & { context?: Maybe<ResolversTypes['AnyContext']>, tagged?: Maybe<Array<Maybe<ResolversTypes['AnyContext']>>> }>,
-  Follow: ResolverTypeWrapper<Follow>,
+  User: ResolverTypeWrapper<User>,
   Character: ResolverTypeWrapper<Character>,
   Profile: ResolverTypeWrapper<Profile>,
-  User: ResolverTypeWrapper<User>,
   AnyCharacter: ResolversTypes['Category'] | ResolversTypes['SpatialThing'] | ResolversTypes['User'],
   Verb: ResolverTypeWrapper<Verb>,
   Claim: ResolverTypeWrapper<Omit<Claim, 'inScopeOf'> & { inScopeOf?: Maybe<Array<ResolversTypes['AccountingScope']>> }>,
@@ -5315,7 +5309,7 @@ export type ResolversParentTypes = {
   Replied: Replied,
   Post: Post,
   PostContent: PostContent,
-  AnyContext: ResolversParentTypes['Activity'] | ResolversParentTypes['Category'] | ResolversParentTypes['EconomicEvent'] | ResolversParentTypes['Follow'] | ResolversParentTypes['Intent'] | ResolversParentTypes['Post'] | ResolversParentTypes['Process'] | ResolversParentTypes['SpatialThing'] | ResolversParentTypes['Tag'] | ResolversParentTypes['User'],
+  AnyContext: ResolversParentTypes['Activity'] | ResolversParentTypes['Category'] | ResolversParentTypes['EconomicEvent'] | ResolversParentTypes['Intent'] | ResolversParentTypes['Post'] | ResolversParentTypes['Process'] | ResolversParentTypes['SpatialThing'] | ResolversParentTypes['Tag'] | ResolversParentTypes['User'],
   Category: Omit<Category, 'caretaker'> & { caretaker?: Maybe<ResolversParentTypes['AnyContext']> },
   Json: Scalars['Json'],
   CategoriesPage: CategoriesPage,
@@ -5368,10 +5362,9 @@ export type ResolversParentTypes = {
   Fulfillment: Fulfillment,
   Person: Person,
   Tag: Omit<Tag, 'context' | 'tagged'> & { context?: Maybe<ResolversParentTypes['AnyContext']>, tagged?: Maybe<Array<Maybe<ResolversParentTypes['AnyContext']>>> },
-  Follow: Follow,
+  User: User,
   Character: Character,
   Profile: Profile,
-  User: User,
   AnyCharacter: ResolversParentTypes['Category'] | ResolversParentTypes['SpatialThing'] | ResolversParentTypes['User'],
   Verb: Verb,
   Claim: Omit<Claim, 'inScopeOf'> & { inScopeOf?: Maybe<Array<ResolversParentTypes['AccountingScope']>> },
@@ -5603,7 +5596,7 @@ export type AnyCharacterResolvers<ContextType = any, ParentType extends Resolver
 };
 
 export type AnyContextResolvers<ContextType = any, ParentType extends ResolversParentTypes['AnyContext'] = ResolversParentTypes['AnyContext']> = {
-  __resolveType: TypeResolveFn<'Activity' | 'Category' | 'EconomicEvent' | 'Follow' | 'Intent' | 'Post' | 'Process' | 'SpatialThing' | 'Tag' | 'User', ParentType, ContextType>
+  __resolveType: TypeResolveFn<'Activity' | 'Category' | 'EconomicEvent' | 'Intent' | 'Post' | 'Process' | 'SpatialThing' | 'Tag' | 'User', ParentType, ContextType>
 };
 
 export type AppreciationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Appreciation'] = ResolversParentTypes['Appreciation']> = {
@@ -5792,13 +5785,6 @@ export type EventOrCommitmentResolvers<ContextType = any, ParentType extends Res
   __resolveType: TypeResolveFn<'Commitment' | 'EconomicEvent', ParentType, ContextType>
 };
 
-export type FollowResolvers<ContextType = any, ParentType extends ResolversParentTypes['Follow'] = ResolversParentTypes['Follow']> = {
-  followedCharacter?: Resolver<Maybe<ResolversTypes['Character']>, ParentType, ContextType>,
-  followedProfile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType>,
-  followerCharacter?: Resolver<Maybe<ResolversTypes['Character']>, ParentType, ContextType>,
-  followerProfile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType>,
-};
-
 export type FulfillmentResolvers<ContextType = any, ParentType extends ResolversParentTypes['Fulfillment'] = ResolversParentTypes['Fulfillment']> = {
   effortQuantity?: Resolver<Maybe<ResolversTypes['Measure']>, ParentType, ContextType>,
   fulfilledBy?: Resolver<ResolversTypes['EconomicEvent'], ParentType, ContextType>,
@@ -5867,8 +5853,8 @@ export type LoginResponseResolvers<ContextType = any, ParentType extends Resolve
 export type MeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Me'] = ResolversParentTypes['Me']> = {
   accountId?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>,
   flagsForModeration?: Resolver<Maybe<Array<Maybe<ResolversTypes['Activity']>>>, ParentType, ContextType, MeFlagsForModerationArgs>,
-  followed?: Resolver<Maybe<Array<Maybe<ResolversTypes['Follow']>>>, ParentType, ContextType, MeFollowedArgs>,
-  followers?: Resolver<Maybe<Array<Maybe<ResolversTypes['Follow']>>>, ParentType, ContextType, MeFollowersArgs>,
+  followed?: Resolver<Maybe<Array<Maybe<ResolversTypes['Activity']>>>, ParentType, ContextType, MeFollowedArgs>,
+  followers?: Resolver<Maybe<Array<Maybe<ResolversTypes['Activity']>>>, ParentType, ContextType, MeFollowersArgs>,
   likeActivities?: Resolver<Maybe<Array<Maybe<ResolversTypes['Activity']>>>, ParentType, ContextType, MeLikeActivitiesArgs>,
   token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>,
@@ -6583,6 +6569,7 @@ export interface UriScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes[
 }
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  boostActivities?: Resolver<Maybe<Array<Maybe<ResolversTypes['Activity']>>>, ParentType, ContextType, UserBoostActivitiesArgs>,
   character?: Resolver<Maybe<ResolversTypes['Character']>, ParentType, ContextType>,
   id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>,
   isInstanceAdmin?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
@@ -6653,7 +6640,6 @@ export type Resolvers<ContextType = any> = {
   EconomicResourcePage?: EconomicResourcePageResolvers<ContextType>,
   EconomicResourceResponse?: EconomicResourceResponseResolvers<ContextType>,
   EventOrCommitment?: EventOrCommitmentResolvers,
-  Follow?: FollowResolvers<ContextType>,
   Fulfillment?: FulfillmentResolvers<ContextType>,
   FulfillmentResponse?: FulfillmentResponseResolvers<ContextType>,
   Intent?: IntentResolvers<ContextType>,

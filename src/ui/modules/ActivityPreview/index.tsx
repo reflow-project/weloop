@@ -1,71 +1,85 @@
 import { Trans } from '@lingui/macro';
 import { DateTime } from 'luxon';
 import { clearFix } from 'polished';
-import React, { FC, ReactElement } from 'react';
-import { Link } from 'react-router-dom';
+import React, { FC, useMemo } from 'react';
+import { Link, BrowserRouter } from 'react-router-dom';
 import { Box, Flex, Text } from 'rebass/styled-components';
 import Avatar from 'ui/elements/Avatar';
 import styled from 'ui/themes/styled';
 import { Actor } from './types';
 import { typography } from 'mn-constants';
+import { useUserById } from '../../../fe/user/useUserById';
 
 export enum Status {
   Loading,
   Loaded
 }
-export interface ActivityLoaded extends Activity {
+
+export interface ActivityLoaded {
   status: Status.Loaded; // FIX ME after fix flags story in settings page
+  userActivity: Array<Activity>;
 }
+
 export interface ActivityLoading {
   status: Status.Loading; // FIX ME after fix flags story in settings page
 }
 
 export interface Activity {
-  createdAt: string;
-  actor: Actor | null;
-  commentActor?: Actor;
-  event: string;
-  threadUrl?: string;
-  preview: ReactElement;
-  communityLink: string;
-  communityName: string;
+  id: string;
+  objectId: string;
+  subjectId: string;
+  verb: {
+    verbDisplay: string;
+    verb: string;
+  };
 }
 
 export type Props = ActivityLoaded | ActivityLoading;
 
-export const ActivityPreview: FC<Props> = activity => {
-  if (activity.status === Status.Loading) {
+export const ActivityPreview: FC<any> = ({ userActivity }) => {
+  if (userActivity?.status === Status.Loading) {
     return <Trans>loading...</Trans>;
   }
 
-  const eventLowerCase = activity.event.toLowerCase();
-  const smallOrBig = eventLowerCase.includes('like') || eventLowerCase.includes('flag');
-  const SmallOrBigActor = smallOrBig ? SmallActorComp : ActorComp;
-  const addThreadUrl =
-    (smallOrBig && eventLowerCase.includes('commented')) ||
-    eventLowerCase.includes('discussion') ||
-    eventLowerCase.includes('comment');
-  const threadUrl = addThreadUrl ? activity.threadUrl : undefined;
-
   return (
-    <FeedItem mb={2}>
-      {activity.actor && (
-        <SmallOrBigActor
-          actor={activity.actor}
-          createdAt={activity.createdAt}
-          threadUrl={threadUrl}
-          event={activity.event}
-          commentActor={eventLowerCase.includes('commented') ? activity.commentActor : undefined}
-          communityLink={activity.communityLink}
-          communityName={activity.communityName}
-        />
-      )}
-      <Contents mt={2}>
-        <Wrapper>{activity.preview}</Wrapper>
-      </Contents>
-    </FeedItem>
+    <>
+      {userActivity?.map((item: Activity) => (
+        <FeedItem mb={2} key={item.id}>
+          <SmallActorComp activityItem={item} />
+          <Contents mt={2}>
+            Activity ID: <Title>{item && item.id}</Title>
+          </Contents>
+
+          <Link to={item.subjectId}>
+            <Contents mt={2}>
+              Activity SubjectId: <Title>{item && item.subjectId}</Title>
+            </Contents>
+          </Link>
+
+          <Link to={item.objectId}>
+            <Contents mt={2}>
+              Activity ObjectID: <Title>{item && item.objectId}</Title>
+            </Contents>
+          </Link>
+
+          <Contents mt={2}>
+            Activity Verb: <Title>{item && item.verb.verbDisplay}</Title>
+          </Contents>
+        </FeedItem>
+      ))}
+    </>
   );
 };
+
+export interface ActorPropsType {
+  activityItem: Activity;
+  actor?: Actor;
+  createdAt: string;
+  event: string;
+  threadUrl?: string;
+  communityName: string;
+  communityLink: string;
+}
 
 export interface ActorProps {
   actor?: Actor;
@@ -75,7 +89,8 @@ export interface ActorProps {
   communityName: string;
   communityLink: string;
 }
-export const ActorComp: FC<ActorProps> = ({
+
+export const ActorComp: FC<ActorPropsType> = ({
   actor,
   createdAt,
   event,
@@ -112,36 +127,37 @@ export const ActorComp: FC<ActorProps> = ({
 };
 
 export interface SmallActorProps {
-  actor: Actor;
-  commentActor?: Actor;
-  event: string;
-  threadUrl?: string;
+  activityItem: Activity;
 }
 
-export const SmallActorComp: FC<SmallActorProps> = ({ actor, commentActor, event, threadUrl }) => {
+export const SmallActorComp: FC<SmallActorProps> = ({ activityItem }) => {
+  const { user } = useUserById(activityItem.subjectId);
+  const initials = useMemo(() => user?.profile?.name || '', [user]);
+  const icon = useMemo(() => user?.profile?.icon || '', [user]);
+
   return (
-    <Member sx={{ alignItems: 'center !important' }}>
-      <Avatar
-        size="s"
-        initials={commentActor ? commentActor.name : actor.name}
-        src={commentActor ? commentActor.icon : actor.icon}
-        variant="avatar"
-      />
-      <MemberInfo sx={{ marginTop: 0 }} ml={2}>
-        <Flex alignItems="center">
-          <Flex flex={1}>
-            <Name>
-              <Link to={commentActor ? commentActor.link : actor.link}>
-                {commentActor ? commentActor.name : actor.name}
-              </Link>
-            </Name>
-            <TextEvent sx={{ textTransform: 'lowercase' }} variant="text" ml={1}>
-              {threadUrl ? <Link to={threadUrl}>{event}</Link> : event}
-            </TextEvent>
+    <BrowserRouter>
+      <Member sx={{ alignItems: 'center !important' }}>
+        <Avatar
+          size="s"
+          initials={initials}
+          src={`${process.env.REACT_APP_GRAPHQL_IMG_LINK}${icon}`}
+          variant="avatar"
+        />
+        <MemberInfo sx={{ marginTop: 0 }} ml={2}>
+          <Flex alignItems="center">
+            <Flex flex={1}>
+              <Name>
+                <Link to={`${user?.id}`}>{user?.profile?.name || ''}</Link>
+              </Name>
+              <TextEvent sx={{ textTransform: 'lowercase' }} variant="text" ml={1}>
+                <Title variant="subhead">{activityItem?.verb.verbDisplay.toUpperCase()}</Title>
+              </TextEvent>
+            </Flex>
           </Flex>
-        </Flex>
-      </MemberInfo>
-    </Member>
+        </MemberInfo>
+      </Member>
+    </BrowserRouter>
   );
 };
 
@@ -153,6 +169,7 @@ const CommunityName = styled(Link)`
 
 const TextEvent = styled(Text)`
   color: ${props => props.theme.colors.dark};
+
   a {
     font-weight: 600;
     color: ${props => props.theme.colors.darker};
@@ -179,6 +196,7 @@ const Name = styled(Text)`
   display: flex;
   align-items: center;
   flex-direction: row;
+
   a {
     font-weight: 800;
     display: flex;
@@ -193,13 +211,19 @@ const Name = styled(Text)`
 const Member = styled(Flex)`
   align-items: stretch;
 `;
-
+export const Title = styled(Text)`
+  display: inline-block;
+  font-size: ${typography.size.m1};
+  color: ${props => props.theme.colors.dark};
+  text-decoration: none !important;
+  margin-left: 10px;
+  margin-right: 10px;
+`;
 const MemberInfo = styled(Box)`
   width: 100%;
   margin-top: -4px;
 `;
 
-const Wrapper = styled(Box)``;
 const FeedItem = styled(Box)`
   position: relative;
   padding: 16px;
@@ -212,8 +236,10 @@ const FeedItem = styled(Box)`
   border-radius: 4px;
   background: ${props => props.theme.colors.appInverse};
   margin-bottom: 8px;
+
   a {
     text-decoration: none;
+
     &:hover {
       text-decoration: underline;
     }

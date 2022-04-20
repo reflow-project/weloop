@@ -3,6 +3,7 @@ import React, { FC, useMemo } from 'react';
 import { Props, User as UserPageUI } from 'ui/pages/user';
 import { InventoryPage } from '../inventory/InventoryPage';
 import { useUserById } from '../../../fe/user/useUserById';
+import { ActivityPreview } from '../../../ui/modules/ActivityPreview';
 
 export enum UserPageTab {
   Starred,
@@ -14,15 +15,16 @@ export enum UserPageTab {
 }
 
 export const UserPage: FC<any> = ({ userId, basePath, tab }) => {
-  const { user } = useUserById(userId);
+  const { user, loading } = useUserById(userId);
   const userPageProps = useMemo<Props>(() => {
     const LikesBoxes = <></>;
-
-    const ActivityBoxes = <></>;
+    const ActivityBoxes = (
+      <ActivityPreview userActivity={user?.userActivities} status={{ Loading: !loading }} />
+    );
     const CollectionsBoxes = <></>;
     const CommunityBoxes = <></>;
 
-    const InventoryBoxes = <InventoryPage />;
+    const InventoryBoxes = <InventoryPage userId={userId} />;
 
     const UserBoxes = <></>;
 
@@ -40,6 +42,6 @@ export const UserPage: FC<any> = ({ userId, basePath, tab }) => {
       UserBoxes
     };
     return props;
-  }, [user, basePath, userId]);
+  }, [user, basePath, userId, loading]);
   return <UserPageUI {...userPageProps} />;
 };

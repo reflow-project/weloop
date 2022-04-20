@@ -14,7 +14,6 @@ import {
 } from '../../../ui/modules/CreateResourcePanel';
 import { useSpatialThingsPagesQuery } from '../EconomicEventManager/EconomicEventManager.generated';
 import { EconomicEventManagerHOC } from '../EconomicEventManager/EconomicEventManagerHOC';
-import { notify } from '../../../fe/lib/graphql/ctx';
 
 export const validationSchema: Yup.ObjectSchema<BasicCreateCollectionFormValues> = Yup.object<
   BasicCreateCollectionFormValues
@@ -132,10 +131,19 @@ export const CreateResourcePanelHOC: FC<Props> = ({
               closeOnClick: true,
               pauseOnHover: true
             });
+          } else {
+            throw new Error(response.errors[0].message);
           }
         })
-        .catch((error: { message: string }) => {
-          notify(error.message, { type: 'error' });
+        .catch(error => {
+          toast.error(error.message, {
+            position: 'top-right',
+            transition: Slide,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true
+          });
         });
     }
   });

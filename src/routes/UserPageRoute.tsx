@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from 'react';
 import { UserPage, UserPageTab } from 'HOC/pages/user/UserPage';
 import { NotFoundHOC } from 'HOC/pages/not-found/NotFound';
-import { RouteComponentProps, RouteProps } from 'react-router-dom';
+import { RouteComponentProps, RouteProps, useRouteMatch } from 'react-router-dom';
 import { WithSidebarTemplate } from 'HOC/templates/WithSidebar/WithSidebar';
 import { locationHelper } from './lib/helper';
 import { useMe } from '../fe/session/useMe';
@@ -11,9 +11,10 @@ interface UserPageRouter {
   tab?: string;
 }
 
-const UserPageRouter: FC<RouteComponentProps<UserPageRouter>> = ({ match }) => {
-  const userId = match.params.userId;
-  const maybeTabStr = match.params.tab as Tab;
+const UserPageRouter: FC<RouteComponentProps<UserPageRouter>> = () => {
+  const { params } = useRouteMatch();
+  const userId = useMemo(() => params.userId, [params]);
+  const maybeTabStr = params.tab as Tab;
   const tab =
     maybeTabStr === 'starred'
       ? UserPageTab.Starred

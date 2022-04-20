@@ -18,7 +18,7 @@ export const useUpdateResource = () => {
   const [updateResourceMut, updateResourceMutStatus] = useUpdateEconomicResourceMutation();
 
   const update = useCallOrNotifyMustLogin(
-    async ({ id, note, image }: any) => {
+    async ({ id, note, image }: { id: string; note?: string; image?: string }) => {
       if (updateResourceMutStatus.loading) {
         return;
       }

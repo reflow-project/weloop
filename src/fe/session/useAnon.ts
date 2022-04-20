@@ -7,8 +7,6 @@ import { useHistory } from 'react-router';
 
 const hostname = process.env.REACT_APP_FRONTEND_HOSTNAME || '';
 
-console.log({ hostname: process.env.REACT_APP_FRONTEND_HOSTNAME }, '______________');
-
 export const useAnon = () => {
   const history = useHistory();
   const updateMe = (proxy: DataProxy, me: any) => {

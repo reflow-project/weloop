@@ -39,7 +39,14 @@ export type HeroUserUserDataFragment = (
   )>, character: Types.Maybe<(
     { __typename: 'Character' }
     & Pick<Types.Character, 'username'>
-  )> }
+  )>, userActivities: Types.Maybe<Array<Types.Maybe<(
+    { __typename: 'Activity' }
+    & Pick<Types.Activity, 'id' | 'subjectId' | 'objectId'>
+    & { verb: Types.Maybe<(
+      { __typename: 'Verb' }
+      & Pick<Types.Verb, 'verb' | 'verbDisplay'>
+    )> }
+  )>>> }
 );
 
 export const HeroUserUserDataFragmentDoc = gql`
@@ -53,6 +60,15 @@ export const HeroUserUserDataFragmentDoc = gql`
   }
   character {
     username
+  }
+  userActivities {
+    id
+    subjectId
+    objectId
+    verb {
+      verb
+      verbDisplay
+    }
   }
 }
     `;
@@ -68,7 +84,7 @@ export const UserDataDocument = gql`
  * __useUserDataQuery__
  *
  * To run a query within a React component, call `useUserDataQuery` and pass it any options that fit your needs.
- * When your component renders, `useUserDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useUserDataQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -90,7 +106,7 @@ export type UserDataQueryHookResult = ReturnType<typeof useUserDataQuery>;
 export type UserDataLazyQueryHookResult = ReturnType<typeof useUserDataLazyQuery>;
 export type UserDataQueryResult = ApolloReactCommon.QueryResult<UserDataQuery, UserDataQueryVariables>;
 export const UserDataBiIdDocument = gql`
-    query userDataBiID($id: ID!) {
+    query userDataBiId($id: ID!) {
   user(filter: {id: $id}) {
     ...HeroUserUserData
   }
@@ -101,7 +117,7 @@ export const UserDataBiIdDocument = gql`
  * __useUserDataBiIdQuery__
  *
  * To run a query within a React component, call `useUserDataBiIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useUserDataBiIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useUserDataBiIdQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -133,30 +149,30 @@ export interface UserDataQueryOperation {
 export const UserDataQueryName:UserDataQueryOperation['operationName'] = 'userData'
 
 export const UserDataQueryRefetch = (
-  variables:UserDataQueryVariables,
+  variables:UserDataQueryVariables, 
   context?:any
 )=>({
   query:UserDataDocument,
   variables,
   context
 })
-
+      
 
 
 export interface UserDataBiIdQueryOperation {
-  operationName: 'userDataBiID'
+  operationName: 'userDataBiId'
   result: UserDataBiIdQuery
   variables: UserDataBiIdQueryVariables
   type: 'query'
 }
-export const UserDataBiIdQueryName:UserDataBiIdQueryOperation['operationName'] = 'userDataBiID'
+export const UserDataBiIdQueryName:UserDataBiIdQueryOperation['operationName'] = 'userDataBiId'
 
 export const UserDataBiIdQueryRefetch = (
-  variables:UserDataBiIdQueryVariables,
+  variables:UserDataBiIdQueryVariables, 
   context?:any
 )=>({
-  query: UserDataBiIdDocument,
+  query:UserDataBiIdDocument,
   variables,
   context
 })
-
+      

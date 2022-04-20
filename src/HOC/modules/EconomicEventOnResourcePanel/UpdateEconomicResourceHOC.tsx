@@ -60,8 +60,8 @@ export const UpdateEconomicResourceHOC: FC<Props> = ({ done, resource, ...props 
     onSubmit: (values: UpdateResourceVariables) => {
       return update({
         id: resource.id,
-        note: values.note,
-        image: values.image
+        note: values.note || '',
+        image: values.image || ''
       })
         .then((response: any) => {
           if (!response.errors) {
@@ -75,10 +75,19 @@ export const UpdateEconomicResourceHOC: FC<Props> = ({ done, resource, ...props 
             });
             done();
           } else {
-            console.log(response.errors[0].message);
+            throw new Error(response.errors[0].message);
           }
         })
-        .catch((error: any) => console.log(error));
+        .catch((error: any) =>
+          toast.error(`Resource wasn't updated: ${error.message}`, {
+            position: 'top-right',
+            transition: Slide,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true
+          })
+        );
     }
   });
 

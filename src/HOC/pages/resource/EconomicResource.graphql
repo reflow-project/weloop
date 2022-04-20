@@ -113,6 +113,11 @@ query economicResource($id: ID!) {
   }
 }
 
+query getEconomicResourceName($id: ID!) {
+  economicResource(id: $id) {
+    name
+  }
+}
 
 fragment OnhandQuantity on EconomicResource {
   onhandQuantity {

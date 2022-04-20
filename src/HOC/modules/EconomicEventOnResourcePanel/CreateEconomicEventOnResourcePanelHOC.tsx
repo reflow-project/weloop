@@ -164,10 +164,19 @@ export const CreateEconomicEventOnResourcePanelHOC: FC<Props> = ({ done, resourc
             });
             done();
           } else {
-            console.log(response.errors[0].message);
+            throw new Error(response.errors[0].message);
           }
         })
-        .catch((error: any) => console.log(error));
+        .catch(error => {
+          toast.error(error.message, {
+            position: 'top-right',
+            transition: Slide,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true
+          });
+        });
     }
   });
 
