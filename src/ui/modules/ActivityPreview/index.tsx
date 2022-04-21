@@ -27,6 +27,9 @@ export interface ActivityLoading {
 export interface Activity {
   id: string;
   objectId: string;
+  object: {
+    __typename: string;
+  };
   subjectId: string;
   verb: {
     verbDisplay: string;
@@ -36,31 +39,25 @@ export interface Activity {
 
 export type Props = ActivityLoaded | ActivityLoading;
 
-export const ActivityPreview: FC<any> = ({ userActivity }) => {
-  if (userActivity?.status === Status.Loading) {
-    return <Trans>loading...</Trans>;
-  }
-
-  return (
+export const ActivityPreview: FC<any> = ({ userActivity }) =>
+  !(userActivity?.status === Status.Loading) ? (
     <>
       {userActivity?.map((item: Activity) => (
         <FeedItem mb={2} key={item.id}>
           <SmallActorComp activityItem={item} />
+          {/*<Contents mt={2}>*/}
+          {/*    Activity ID: <Title>{item && item.id}</Title>*/}
+          {/*</Contents>*/}
+
+          {/*<Link to={item.subjectId}>*/}
+          {/*    <Contents mt={2}>*/}
+          {/*        Activity SubjectId: <Title>{item && item.subjectId}</Title>*/}
+          {/*    </Contents>*/}
+          {/*</Link>*/}
+
           <Contents mt={2}>
-            Activity ID: <Title>{item && item.id}</Title>
+            Activity Object: <Title>{item && item.object.__typename}</Title>
           </Contents>
-
-          <Link to={item.subjectId}>
-            <Contents mt={2}>
-              Activity SubjectId: <Title>{item && item.subjectId}</Title>
-            </Contents>
-          </Link>
-
-          <Link to={item.objectId}>
-            <Contents mt={2}>
-              Activity ObjectID: <Title>{item && item.objectId}</Title>
-            </Contents>
-          </Link>
 
           <Contents mt={2}>
             Activity Verb: <Title>{item && item.verb.verbDisplay}</Title>
@@ -68,8 +65,9 @@ export const ActivityPreview: FC<any> = ({ userActivity }) => {
         </FeedItem>
       ))}
     </>
+  ) : (
+    <Trans>loading...</Trans>
   );
-};
 
 export interface ActorPropsType {
   activityItem: Activity;

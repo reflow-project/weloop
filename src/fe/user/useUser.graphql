@@ -3,7 +3,6 @@ user(filter: {username: $username}) {
     ...HeroUserUserData
   }
 }
-
 query userDataBiId($id: ID!) {
   user(filter: {id: $id}) {
     ...HeroUserUserData
@@ -25,6 +24,9 @@ fragment HeroUserUserData on User {
     id
     subjectId
     objectId
+    object {
+      __typename
+    }
     verb {
       verb
       verbDisplay
