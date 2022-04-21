@@ -42,7 +42,7 @@ export type HeroUserUserDataFragment = (
   )>, userActivities: Types.Maybe<Array<Types.Maybe<(
     { __typename: 'Activity' }
     & Pick<Types.Activity, 'id' | 'subjectId' | 'objectId'>
-    & { verb: Types.Maybe<(
+    & { object: Types.Maybe<{ __typename: 'Activity' } | { __typename: 'Category' } | { __typename: 'EconomicEvent' } | { __typename: 'Intent' } | { __typename: 'Post' } | { __typename: 'Process' } | { __typename: 'SpatialThing' } | { __typename: 'Tag' } | { __typename: 'User' }>, verb: Types.Maybe<(
       { __typename: 'Verb' }
       & Pick<Types.Verb, 'verb' | 'verbDisplay'>
     )> }
@@ -65,6 +65,9 @@ export const HeroUserUserDataFragmentDoc = gql`
     id
     subjectId
     objectId
+    object {
+      __typename
+    }
     verb {
       verb
       verbDisplay

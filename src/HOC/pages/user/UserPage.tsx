@@ -16,6 +16,7 @@ export enum UserPageTab {
 
 export const UserPage: FC<any> = ({ userId, basePath, tab }) => {
   const { user, loading } = useUserById(userId);
+
   const userPageProps = useMemo<Props>(() => {
     const LikesBoxes = <></>;
     const ActivityBoxes = (
