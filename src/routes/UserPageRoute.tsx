@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from 'react';
 import { UserPage, UserPageTab } from 'HOC/pages/user/UserPage';
 import { NotFoundHOC } from 'HOC/pages/not-found/NotFound';
-import { RouteComponentProps, RouteProps, useRouteMatch } from 'react-router-dom';
+import { Redirect, RouteComponentProps, RouteProps, useRouteMatch } from 'react-router-dom';
 import { WithSidebarTemplate } from 'HOC/templates/WithSidebar/WithSidebar';
 import { locationHelper } from './lib/helper';
 import { useMe } from '../fe/session/useMe';
@@ -31,6 +31,7 @@ const UserPageRouter: FC<RouteComponentProps<UserPageRouter>> = () => {
       : null;
 
   const { me } = useMe();
+  const loggedIn = !!me?.user?.id || localStorage.getItem('APOLLO#AUTH_TOKEN');
   const userIdentificatior = useMemo(
     () => (userId ? userId : me?.users && me?.users[0] && me?.users[0]?.character?.username),
     [me, userId]
@@ -50,10 +51,12 @@ const UserPageRouter: FC<RouteComponentProps<UserPageRouter>> = () => {
   if (!props) {
     return <NotFoundHOC />;
   }
-  return (
+  return loggedIn ? (
     <WithSidebarTemplate>
       <UserPage {...props} />
     </WithSidebarTemplate>
+  ) : (
+    <Redirect to={'/login'} />
   );
 };
 
