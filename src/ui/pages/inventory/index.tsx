@@ -119,7 +119,7 @@ export const Inventory: React.FC<Props> = ({ userId, inventory, done, children, 
           <PaginationWrapper>
             <PaginationComponent
               size="sm"
-              totalItems={0}
+              totalItems={inventory.length || 0}
               pageSize={PAGE_LIMIT}
               onSelect={handlePagination}
               maxPaginationNumbers={MAX_PAGINATION_NUMBERS}

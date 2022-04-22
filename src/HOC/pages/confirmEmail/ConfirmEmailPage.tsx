@@ -19,7 +19,7 @@ export const ConfirmEmailPage: FC<ConfirmEmailPage> = ({ token }) => {
 
   useEffect(() => {
     if (welcomeUsername) {
-      // setTimeout(() => push('/'), 2000);
+      setTimeout(() => push('/'), 2000);
     }
   }, [welcomeUsername, push]);
 

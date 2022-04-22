@@ -5,15 +5,7 @@ import { Link } from 'react-feather';
 import { Route, Switch } from 'react-router-dom';
 import { Box, Flex, Text } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
-import {
-  HomeBox,
-  List,
-  MainContainer,
-  MenuList,
-  MenuItem,
-  WrapperCont,
-  ButtonIcon
-} from 'ui/elements/Layout';
+import { HomeBox, List, MenuList, MenuItem, WrapperCont, ButtonIcon } from 'ui/elements/Layout';
 import { Nav, NavItem, Panel, PanelTitle, WrapperPanel } from 'ui/elements/Panel';
 import { LoadMore } from 'ui/modules/Loadmore';
 import styled from 'ui/themes/styled';
@@ -60,7 +52,7 @@ export const User: React.FC<Props> = ({
   loadMoreActivities
 }) => {
   return (
-    <MainContainer>
+    <>
       <HomeBox>
         <WrapperCont>
           <Box mb={2}>
@@ -100,7 +92,7 @@ export const User: React.FC<Props> = ({
           </Panel>
         ) : null}
       </WrapperPanel>
-    </MainContainer>
+    </>
   );
 };
 
