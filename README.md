@@ -1,6 +1,6 @@
 # WeLoop
 
-**WeLoop is a React/TypeScript client for ZenPub and a key component of ReflowOS**
+**WeLoop is a React/TypeScript client for BonFire (formerly ZenPub) and a key component of ReflowOS**
 
 ![Deployment](https://github.com/reflow-project/weloop/workflows/Deployment/badge.svg)
 
