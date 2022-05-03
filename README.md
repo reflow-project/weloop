@@ -4,6 +4,10 @@
 
 ![Deployment](https://github.com/reflow-project/weloop/workflows/Deployment/badge.svg)
 
+⚠️ **We're migrating WeLoop from ZenPub to Bonfire to make it compatible with the latest version of Reflow OS. 🛠️ Temporary use the following repository for the Bonfire compatible version https://github.com/fablabbcn/weloop-bonfire/** 
+
+
+
 ## About the project
 
 This app is based on [CommonsPub](http://commonspub.org), a project to create a generic federated server, based on the `ActivityPub` and `ActivityStreams` web standards and originally developed as part of [moodle.net](https://moodle.net/).
