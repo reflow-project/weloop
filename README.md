@@ -111,7 +111,7 @@ Manually use yarn build to generate the `./build` folder including the index.htm
 
 ### Github Pages
 
-WeLoop main repository uses **Github Actions** to automatically deploy the repository default branch as a public website using **Github Pages** every time changes are pushed. Anyone can **fork** the existing repository and deploy their own version quickly. Custom domains are defined via a `./build/CNAME` following the standard Github pages workflow. Two **Github Secrets** can be defined to customize the app `REACT_APP_GRAPHQL_ENDPOINT` and `REACT_APP_SENTRY_API_KEY`. Learn more about them in the Customize your instance basic settings and Remote monitorings sections.
+WeLoop main repository uses **Github Actions** to automatically deploy the repository default branch as a public website using **Github Pages** every time changes are pushed. Anyone can **fork** the existing repository and deploy their own instance quickly. Custom domains are defined via a `./build/CNAME` following the standard Github pages workflow. **Github Secrets** can be defined to customize the app `REACT_APP_GRAPHQL_ENDPOINT`, `REACT_APP_FRONTEND_HOSTNAME` and `REACT_APP_SENTRY_API_KEY`. Learn more about them in the Customize your instance basic settings and Remote monitorings sections.
 
 ## Remote monitoring
 
