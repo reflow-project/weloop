@@ -5,7 +5,7 @@
 ![Deployment](https://github.com/reflow-project/weloop/workflows/Deployment/badge.svg)
 
 ⚠️ **We're migrating WeLoop from ZenPub to Bonfire to make it compatible with the latest version of Reflow OS**
-🛠️ **Temporary use the following repository for the Bonfire compatible version https://github.com/fablabbcn/weloop-bonfire/** 
+🛠️ **Temporary use the following repository for the Bonfire compatible version https://github.com/reflow-project/weloop-bonfire/** 
 
 
 
